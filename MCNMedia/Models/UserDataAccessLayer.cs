@@ -68,7 +68,7 @@ namespace MCNMedia_Dev.Models
                 con.Close();
             }
         }
-        //To Update the records of a particluar employee  
+        //To Update the records of a particluar User
         public void UpdateUser(User user)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -87,7 +87,7 @@ namespace MCNMedia_Dev.Models
                 con.Close();
             }
         }
-        //Get the details of a particular employee  
+        //Get the details of a particular User  
         public User GetUserData(int? id)
         {
             User user = new User();
