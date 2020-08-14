@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\TestProjects\\MCNMedia_Dev\\MCNMedia_Dev\\MCNMedia_Dev.csproj": {}
+    "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {}
   },
   "projects": {
-    "D:\\TestProjects\\MCNMedia_Dev\\MCNMedia_Dev\\MCNMedia_Dev.csproj": {
+    "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TestProjects\\MCNMedia_Dev\\MCNMedia_Dev\\MCNMedia_Dev.csproj",
+        "projectUniqueName": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
         "projectName": "MCNMedia_Dev",
-        "projectPath": "D:\\TestProjects\\MCNMedia_Dev\\MCNMedia_Dev\\MCNMedia_Dev.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "D:\\TestProjects\\MCNMedia_Dev\\MCNMedia_Dev\\obj\\",
+        "projectPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
+        "packagesPath": "C:\\Users\\Adam computer\\.nuget\\packages\\",
+        "outputPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Adam computer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -37,6 +40,20 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.21, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -55,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
