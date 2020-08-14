@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,7 +10,7 @@ namespace MCNMedia_Dev.Models
 {
     public class UserDataAccessLayer
     {
-        string connectionString = "Put Your Connection string here";
+        string connectionString = "server=localhost;port=3306;user=root;password=Pyram1dCona;database=mcnmedia_dev";
         private string v;
 
         public UserDataAccessLayer(string v)
@@ -23,12 +24,12 @@ namespace MCNMedia_Dev.Models
         {
             List<User> Balobj = new List<User>();
 
-            using (SqlConnection  con = new SqlConnection(connectionString))
+            using (MySqlConnection  con = new MySqlConnection(connectionString))
             {
-                SqlCommand Cmd = new SqlCommand("ProcedureName", con);
+                MySqlCommand Cmd = new MySqlCommand("ProcedureName", con);
                 Cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                SqlDataReader rdr = Cmd.ExecuteReader();
+                MySqlDataReader rdr = Cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     User user = new User();
@@ -53,15 +54,15 @@ namespace MCNMedia_Dev.Models
         //To Add new User record    
         public void AddUser(User user)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (MySqlConnection con = new MySqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("spUser_Add", con);
+                MySqlCommand cmd = new MySqlCommand("spUser_Add", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("FirstName", user.FirstName);
                 cmd.Parameters.AddWithValue("LastName", user.LastName);
                 cmd.Parameters.AddWithValue("EmailAddress", user.EmailAddress);
                 cmd.Parameters.AddWithValue("LoginPassword", user.LoginPassword);
-                cmd.Parameters.AddWithValue("@UpdateBy", user.UpdatedBy);
+                cmd.Parameters.AddWithValue("UserId", user.UpdatedBy);
                 cmd.Parameters.AddWithValue("RoleId", user.RoleId);
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -71,9 +72,9 @@ namespace MCNMedia_Dev.Models
         //To Update the records of a particluar User
         public void UpdateUser(User user)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (MySqlConnection con = new MySqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("spUpdateEmployee", con);
+                MySqlCommand cmd = new MySqlCommand("spUpdateEmployee", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserId", user.UserId);
                 cmd.Parameters.AddWithValue("@FName", user.FirstName);
@@ -91,12 +92,12 @@ namespace MCNMedia_Dev.Models
         public User GetUserData(int? id)
         {
             User user = new User();
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (MySqlConnection con = new MySqlConnection(connectionString))
             {
                 string sqlQuery = "SELECT * FROM tblusers WHERE UserId= " + id;
-                SqlCommand cmd = new SqlCommand(sqlQuery, con);
+                MySqlCommand cmd = new MySqlCommand(sqlQuery, con);
                 con.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
+                MySqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     user.UserId = Convert.ToInt32(rdr["UserId"]);
@@ -113,9 +114,9 @@ namespace MCNMedia_Dev.Models
         //To Delete the record on a particular User 
         public void DeleteUser(int? id)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (MySqlConnection con = new MySqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("ProcedureName", con);
+                MySqlCommand cmd = new MySqlCommand("ProcedureName", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("UserId", id);
                 con.Open();

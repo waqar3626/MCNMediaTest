@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HubSolution\\MCNMedia\\WorkingProjects\\MCNMedia\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {}
+    "D:\\TestProjects\\MCNMedia\\MCNMedia\\MCNMedia.csproj": {}
   },
   "projects": {
-    "D:\\HubSolution\\MCNMedia\\WorkingProjects\\MCNMedia\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {
+    "D:\\TestProjects\\MCNMedia\\MCNMedia\\MCNMedia.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HubSolution\\MCNMedia\\WorkingProjects\\MCNMedia\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
-        "projectName": "MCNMedia_Dev",
-        "projectPath": "D:\\HubSolution\\MCNMedia\\WorkingProjects\\MCNMedia\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
+        "projectUniqueName": "D:\\TestProjects\\MCNMedia\\MCNMedia\\MCNMedia.csproj",
+        "projectName": "MCNMedia",
+        "projectPath": "D:\\TestProjects\\MCNMedia\\MCNMedia\\MCNMedia.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "D:\\HubSolution\\MCNMedia\\WorkingProjects\\MCNMedia\\trunk\\MCNMedia\\obj\\",
+        "outputPath": "D:\\TestProjects\\MCNMedia\\MCNMedia\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -37,16 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "dependencies": {
-            "MySql.Data": {
-              "target": "Package",
-              "version": "[8.0.21, )"
-            },
-            "MySqlConnector": {
-              "target": "Package",
-              "version": "[1.0.1, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
