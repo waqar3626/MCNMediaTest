@@ -7,11 +7,13 @@ namespace MCNMedia_Dev.Models
 {
     public class User
     {
-        public int User_Id { get; set; }
-        public string First_Name { get; set; }
-        public string Last_Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EmailAddress { get; set; }
+        public string LoginPassword { get; set; }
+        public int UpdatedBy { get; set; }
+        public int RoleId { get; set; }
 
     }
 }
