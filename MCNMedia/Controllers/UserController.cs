@@ -9,7 +9,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class UserController : Controller
     {
-        UserDataAccessLayer aa = new UserDataAccessLayer("a");
+        UserDataAccessLayer userDataAccess = new UserDataAccessLayer("a");
 
         [HttpGet]
         public IActionResult AddUser()
@@ -18,18 +18,33 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult ListUser()
+        {
+             List<User> usr = userDataAccess.GetAllUser().ToList<User>();
+             return View(usr);
+        }
+
+
+
         [HttpPost()]
         public IActionResult AddUser(User usr)
         {
 
             //User usr = new User();
             //UpdateModel();
+            userDataAccess.AddUser(usr);
+            return RedirectToAction("ListUser");
+           // return View();
+        }
 
+        [HttpGet()]
+        public IActionResult GetAlluser()
+        {
 
-            aa.AddUser(usr);
-
-
-
+            //User usr = new User();
+            //UpdateModel();
+            userDataAccess.GetAllUser();
             return View();
         }
     }
