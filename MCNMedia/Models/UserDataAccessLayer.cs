@@ -10,120 +10,104 @@ namespace MCNMedia_Dev.Models
 {
     public class UserDataAccessLayer
     {
-        string connectionString = "server=localhost;port=3306;user=root;password=Uxair95566!^&;database=mcnmedia_dev";
+        AwesomeDal.DatabaseConnect _dc;
         private string v;
+
+        public UserDataAccessLayer()
+        {
+            _dc = new AwesomeDal.DatabaseConnect();
+
+        }
 
         public UserDataAccessLayer(string v)
         {
             this.v = v;
+            _dc = new AwesomeDal.DatabaseConnect();
         }
-
 
         //To View all Users details 
         public IEnumerable<User> GetAllUser()
         {
             List<User> Balobj = new List<User>();
-
-            using (MySqlConnection con = new MySqlConnection(connectionString))
+            _dc.ClearParameters();
+            _dc.AddParameter("UsrId", -1);
+            _dc.AddParameter("FName", "");
+            _dc.AddParameter("LName", "");
+            _dc.AddParameter("EmailAdd", "");
+            DataTable dataTable = _dc.ReturnDataTable("spUser_Search");
+            foreach(DataRow dataRow in dataTable.Rows)
             {
-                MySqlCommand Cmd = new MySqlCommand("spUser_GetAll", con);
-                Cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                MySqlDataReader rdr = Cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    User user = new User();
-                    user.UserId = Convert.ToInt32(rdr["UserId"]);
-                    user.FirstName = rdr["FirstName"].ToString();
-                    user.LastName = rdr["LastName"].ToString();
-                    user.EmailAddress = rdr["EmailAddress"].ToString();
-                    user.LoginPassword = rdr["LoginPassword"].ToString();
-                    //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
-                    user.RoleId = Convert.ToInt32(rdr["RoleId"]);
+                User user = new User();
+                user.UserId = Convert.ToInt32(dataRow["UserId"]);
+                user.FirstName = dataRow["FirstName"].ToString();
+                user.LastName = dataRow["LastName"].ToString();
+                user.EmailAddress = dataRow["EmailAddress"].ToString();
+                user.LoginPassword = dataRow["LoginPassword"].ToString();
+                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
+                user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
 
 
-                    Balobj.Add(user);
-                }
-                con.Close();
+                Balobj.Add(user);
             }
             return Balobj;
         }
 
-
-
         //To Add new User record    
         public void AddUser(User user)
         {
-            using (MySqlConnection con = new MySqlConnection(connectionString))
-            {
-                MySqlCommand cmd = new MySqlCommand("spUser_Add", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("FirstName", user.FirstName);
-                cmd.Parameters.AddWithValue("LastName", user.LastName);
-                cmd.Parameters.AddWithValue("EmailAddress", user.EmailAddress);
-                cmd.Parameters.AddWithValue("LoginPassword", user.LoginPassword);
-                cmd.Parameters.AddWithValue("UserId", user.UpdatedBy);
-                cmd.Parameters.AddWithValue("RoleId", user.RoleId);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
+            _dc.ClearParameters();
+            _dc.AddParameter("FirstName", user.FirstName);
+            _dc.AddParameter("LastName", user.LastName);
+            _dc.AddParameter("EmailAddress", user.EmailAddress);
+            _dc.AddParameter("LoginPassword", user.LoginPassword);
+            _dc.AddParameter("UserId", user.UserId);
+            _dc.AddParameter("RoleId", user.RoleId);
+            _dc.Execute("spUser_Add");
         }
         //To Update the records of a particluar User
         public void UpdateUser(User user)
         {
-            using (MySqlConnection con = new MySqlConnection(connectionString))
-            {
-                MySqlCommand cmd = new MySqlCommand("spUser_Update", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("UsrId", user.UserId);
-                cmd.Parameters.AddWithValue("FName", user.FirstName);
-                cmd.Parameters.AddWithValue("LName", user.LastName);
-                cmd.Parameters.AddWithValue("EmailAdd", user.EmailAddress);
-                //cmd.Parameters.AddWithValue("@Password", user.LoginPassword);
-                cmd.Parameters.AddWithValue("UpdateBy", user.UpdatedBy);
-                cmd.Parameters.AddWithValue("RoleId", user.RoleId);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
+            _dc.ClearParameters();
+            _dc.AddParameter("UsrId", user.UserId);
+            _dc.AddParameter("FName", user.FirstName);
+            _dc.AddParameter("LName", user.LastName);
+            _dc.AddParameter("EmailAdd", user.EmailAddress);
+            //_dc.AddParameter("@Password", user.LoginPassword);
+            _dc.AddParameter("UpdateBy", user.UpdatedBy);
+            _dc.AddParameter("RoleId", user.RoleId);
+            _dc.Execute("spUser_Update");
         }
+
         //Get the details of a particular User  
-        public User GetUserData(int id)
-        {
-            User user = new User();
-            using (MySqlConnection con = new MySqlConnection(connectionString))
-            {
-                string sqlQuery = "SELECT * FROM tblusers WHERE UserId= " + id;
-                MySqlCommand cmd = new MySqlCommand(sqlQuery, con);
-                con.Open();
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    user.UserId = Convert.ToInt32(rdr["UserId"]);
-                    user.FirstName = rdr["FirstName"].ToString();
-                    user.LastName = rdr["LastName"].ToString();
-                    user.EmailAddress = rdr["EmailAddress"].ToString();
-                    user.LoginPassword = rdr["LoginPassword"].ToString();
-                    //user.UpdatedBy = Convert.ToInt32(rdr["Updatedby"]);
-                    user.RoleId = Convert.ToInt32(rdr["RoleId"]);
-                }
-            }
-            return user;
-        }
+        //public User GetUserData(int id)
+        //{
+        //    User user = new User();
+        //    using (MySqlConnection con = new MySqlConnection(connectionString))
+        //    {
+        //        string sqlQuery = "SELECT * FROM tblusers WHERE UserId= " + id;
+        //        MySqlCommand cmd = new MySqlCommand(sqlQuery, con);
+        //        con.Open();
+        //        MySqlDataReader rdr = cmd.ExecuteReader();
+        //        while (rdr.Read())
+        //        {
+        //            user.UserId = Convert.ToInt32(rdr["UserId"]);
+        //            user.FirstName = rdr["FirstName"].ToString();
+        //            user.LastName = rdr["LastName"].ToString();
+        //            user.EmailAddress = rdr["EmailAddress"].ToString();
+        //            user.LoginPassword = rdr["LoginPassword"].ToString();
+        //            //user.UpdatedBy = Convert.ToInt32(rdr["Updatedby"]);
+        //            user.RoleId = Convert.ToInt32(rdr["RoleId"]);
+        //        }
+        //    }
+        //    return user;
+        //}
         //To Delete the record on a particular User 
         public void DeleteUser(int id)
         {
-            using (MySqlConnection con = new MySqlConnection(connectionString))
-            {
-                MySqlCommand cmd = new MySqlCommand("spUser_Delete", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("UsrId", id);
-                cmd.Parameters.AddWithValue("UpdateBy", 1);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
+            _dc.ClearParameters();
+            _dc.AddParameter("UsrId", id);
+            _dc.AddParameter("UpdateBy", 1);
+            _dc.Execute("spUser_Update");
         }
     }
 }
