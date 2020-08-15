@@ -9,9 +9,9 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.UserId)
-            </th>*@
+            </th>*
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -37,9 +37,9 @@
 
 @foreach (var item in Model) {
         <tr>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.UserId)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -59,9 +59,9 @@
                 @Html.DisplayFor(modelItem => item.RoleId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "Edit", new {  id=item.UserId}) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
             </td>
         </tr>
 }
