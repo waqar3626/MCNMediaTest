@@ -10,7 +10,7 @@ namespace MCNMedia_Dev.Models
 {
     public class UserDataAccessLayer
     {
-        string connectionString = "server=localhost;port=3306;user=root;password=Pyram1dCona;database=mcnmedia_dev";
+        string connectionString = "server=localhost;port=3306;user=root;password=Khalid123;database=mcnmedia_dev";
         private string v;
 
         public UserDataAccessLayer(string v)
@@ -26,19 +26,19 @@ namespace MCNMedia_Dev.Models
 
             using (MySqlConnection  con = new MySqlConnection(connectionString))
             {
-                MySqlCommand Cmd = new MySqlCommand("ProcedureName", con);
+                MySqlCommand Cmd = new MySqlCommand("spUser_GetAll", con);
                 Cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 MySqlDataReader rdr = Cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     User user = new User();
-                    user.UserId = Convert.ToInt32(rdr["UserId"]);
+                    //user.UserId = Convert.ToInt32(rdr["UserId"]);
                     user.FirstName = rdr["FirstName"].ToString();
                     user.LastName = rdr["LastName"].ToString();
                     user.EmailAddress = rdr["EmailAddress"].ToString();
-                    user.LoginPassword= rdr["LoginPassword"].ToString();
-                    user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
+                    user.LoginPassword = rdr["LoginPassword"].ToString();
+                    //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
                     user.RoleId = Convert.ToInt32(rdr["RoleId"]);
 
 
