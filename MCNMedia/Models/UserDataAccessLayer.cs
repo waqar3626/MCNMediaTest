@@ -10,7 +10,7 @@ namespace MCNMedia_Dev.Models
 {
     public class UserDataAccessLayer
     {
-        string connectionString = "server=localhost;port=3306;user=root;password=Khalid123;database=mcnmedia_dev";
+        string connectionString = "server=localhost;port=3306;user=root;password=Uxair95566!^&;database=mcnmedia_dev";
         private string v;
 
         public UserDataAccessLayer(string v)
@@ -24,7 +24,7 @@ namespace MCNMedia_Dev.Models
         {
             List<User> Balobj = new List<User>();
 
-            using (MySqlConnection  con = new MySqlConnection(connectionString))
+            using (MySqlConnection con = new MySqlConnection(connectionString))
             {
                 MySqlCommand Cmd = new MySqlCommand("spUser_GetAll", con);
                 Cmd.CommandType = CommandType.StoredProcedure;
@@ -33,7 +33,7 @@ namespace MCNMedia_Dev.Models
                 while (rdr.Read())
                 {
                     User user = new User();
-                    //user.UserId = Convert.ToInt32(rdr["UserId"]);
+                    user.UserId = Convert.ToInt32(rdr["UserId"]);
                     user.FirstName = rdr["FirstName"].ToString();
                     user.LastName = rdr["LastName"].ToString();
                     user.EmailAddress = rdr["EmailAddress"].ToString();
@@ -74,22 +74,22 @@ namespace MCNMedia_Dev.Models
         {
             using (MySqlConnection con = new MySqlConnection(connectionString))
             {
-                MySqlCommand cmd = new MySqlCommand("spUpdateEmployee", con);
+                MySqlCommand cmd = new MySqlCommand("spUser_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UserId", user.UserId);
-                cmd.Parameters.AddWithValue("@FName", user.FirstName);
-                cmd.Parameters.AddWithValue("@LName", user.LastName);
-                cmd.Parameters.AddWithValue("@Email", user.EmailAddress);
-                cmd.Parameters.AddWithValue("@Password", user.LoginPassword);
-                cmd.Parameters.AddWithValue("@UpdateBy", user.UpdatedBy);
-                cmd.Parameters.AddWithValue("@roleId", user.RoleId);
+                cmd.Parameters.AddWithValue("UsrId", user.UserId);
+                cmd.Parameters.AddWithValue("FName", user.FirstName);
+                cmd.Parameters.AddWithValue("LName", user.LastName);
+                cmd.Parameters.AddWithValue("EmailAdd", user.EmailAddress);
+                //cmd.Parameters.AddWithValue("@Password", user.LoginPassword);
+                cmd.Parameters.AddWithValue("UpdateBy", user.UpdatedBy);
+                cmd.Parameters.AddWithValue("RoleId", user.RoleId);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
         }
         //Get the details of a particular User  
-        public User GetUserData(int? id)
+        public User GetUserData(int id)
         {
             User user = new User();
             using (MySqlConnection con = new MySqlConnection(connectionString))
@@ -101,24 +101,25 @@ namespace MCNMedia_Dev.Models
                 while (rdr.Read())
                 {
                     user.UserId = Convert.ToInt32(rdr["UserId"]);
-                    user.FirstName = rdr["FName"].ToString();
-                    user.LastName = rdr["LName"].ToString();
-                    user.EmailAddress = rdr["Email"].ToString();
-                    user.LoginPassword = rdr["Password"].ToString();
-                    user.UpdatedBy = Convert.ToInt32(rdr["Updateby"]);
+                    user.FirstName = rdr["FirstName"].ToString();
+                    user.LastName = rdr["LastName"].ToString();
+                    user.EmailAddress = rdr["EmailAddress"].ToString();
+                    user.LoginPassword = rdr["LoginPassword"].ToString();
+                    //user.UpdatedBy = Convert.ToInt32(rdr["Updatedby"]);
                     user.RoleId = Convert.ToInt32(rdr["RoleId"]);
                 }
             }
             return user;
         }
         //To Delete the record on a particular User 
-        public void DeleteUser(int? id)
+        public void DeleteUser(int id)
         {
             using (MySqlConnection con = new MySqlConnection(connectionString))
             {
-                MySqlCommand cmd = new MySqlCommand("ProcedureName", con);
+                MySqlCommand cmd = new MySqlCommand("spUser_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("UserId", id);
+                cmd.Parameters.AddWithValue("UsrId", id);
+                cmd.Parameters.AddWithValue("UpdateBy", 1);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
