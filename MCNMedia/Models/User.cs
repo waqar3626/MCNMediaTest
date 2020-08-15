@@ -22,6 +22,6 @@ namespace MCNMedia_Dev.Models
         public int UpdatedBy { get; set; }
         [Required(ErrorMessage ="Select Your Role Id")]
         public int RoleId { get; set; }
-
+        public int ID { get; internal set; }
     }
 }
