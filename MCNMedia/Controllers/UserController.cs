@@ -16,7 +16,7 @@ namespace MCNMedia_Dev.Controllers
         {
             return View();
         }
-
+        
 
         [HttpGet]
         public IActionResult ListUser()
@@ -25,7 +25,31 @@ namespace MCNMedia_Dev.Controllers
              return View(usr);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        { 
+            User user = userDataAccess.GetUserData(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
 
+            if (id == null)
+            {
+                return NotFound();
+            }
+            User user = userDataAccess.GetUserData(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
 
         [HttpPost()]
         public IActionResult AddUser(User usr)
@@ -46,6 +70,30 @@ namespace MCNMedia_Dev.Controllers
             //UpdateModel();
             userDataAccess.GetAllUser();
             return View();
+        }
+
+        [HttpPost]
+        
+        public IActionResult Edit(int id, [Bind] User user)
+        {
+            if (id != user.UserId)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                userDataAccess.UpdateUser(user);
+                return RedirectToAction("ListUser");
+            }
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+       
+        public IActionResult DeleteConfirmed(int id)
+        {
+            userDataAccess.DeleteUser(id);
+            return RedirectToAction("ListUser");
         }
     }
 }
