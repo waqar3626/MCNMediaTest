@@ -78,29 +78,45 @@ namespace MCNMedia_Dev.Models
             _dc.Execute("spUser_Update");
         }
 
-        //Get the details of a particular User  
-        //public User GetUserData(int id)
-        //{
-        //    User user = new User();
-        //    using (MySqlConnection con = new MySqlConnection(connectionString))
-        //    {
-        //        string sqlQuery = "SELECT * FROM tblusers WHERE UserId= " + id;
-        //        MySqlCommand cmd = new MySqlCommand(sqlQuery, con);
-        //        con.Open();
-        //        MySqlDataReader rdr = cmd.ExecuteReader();
-        //        while (rdr.Read())
-        //        {
-        //            user.UserId = Convert.ToInt32(rdr["UserId"]);
-        //            user.FirstName = rdr["FirstName"].ToString();
-        //            user.LastName = rdr["LastName"].ToString();
-        //            user.EmailAddress = rdr["EmailAddress"].ToString();
-        //            user.LoginPassword = rdr["LoginPassword"].ToString();
-        //            //user.UpdatedBy = Convert.ToInt32(rdr["Updatedby"]);
-        //            user.RoleId = Convert.ToInt32(rdr["RoleId"]);
-        //        }
-        //    }
-        //    return user;
-        //}
+        //Get the details of a particular User
+        public User GetUserData(int id)
+        {
+            User user = new User();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("UserId", id);
+            DataTable dataTable = _dc.ReturnDataTable("spUser_GetbyId");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                user.UserId = Convert.ToInt32(dataRow["UserId"]);
+                user.FirstName = dataRow["FirstName"].ToString();
+                user.LastName = dataRow["LastName"].ToString();
+                user.EmailAddress = dataRow["EmailAddress"].ToString();
+                user.LoginPassword = dataRow["LoginPassword"].ToString();
+                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
+                user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
+            }
+
+            //            using (MySqlConnection con = new MySqlConnection(connectionString))
+            //{
+            //    string sqlQuery = "SELECT * FROM tblusers WHERE UserId= " + id;
+            //    MySqlCommand cmd = new MySqlCommand(sqlQuery, con);
+            //    con.Open();
+            //    MySqlDataReader rdr = cmd.ExecuteReader();
+            //    while (rdr.Read())
+            //    {
+            //        user.UserId = Convert.ToInt32(rdr["UserId"]);
+            //        user.FirstName = rdr["FirstName"].ToString();
+            //        user.LastName = rdr["LastName"].ToString();
+            //        user.EmailAddress = rdr["EmailAddress"].ToString();
+            //        user.LoginPassword = rdr["LoginPassword"].ToString();
+            //        //user.UpdatedBy = Convert.ToInt32(rdr["Updatedby"]);
+            //        user.RoleId = Convert.ToInt32(rdr["RoleId"]);
+            //    }
+            //}
+            return user;
+        }
+
         //To Delete the record on a particular User 
         public void DeleteUser(int id)
         {
