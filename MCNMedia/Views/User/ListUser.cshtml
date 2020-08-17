@@ -1,69 +1,118 @@
 ﻿@model IEnumerable<MCNMedia_Dev.Models.User>
-
+@using System.Web;
 @{
-    ViewData["Title"] = "ListUser";
+    ViewData["Title"] = "ManageUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript">
 
-<h1>ListUser</h1>
+    $(document).ready(function () {
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>*
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoginPassword)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.UpdatedBy)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.RoleId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+        $("#ADDEmployee").on("click", function (e) {
+            var url = $(this).attr('href');
+            $("#dialog-edit").dialog({
+                title: 'Add New Employee',
+                autoOpen: false,
+                resizable: false,
+                height: 455,
+                width: 550,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+                open: function (event, ui) {
+                    $(this).load(url);
 
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoginPassword)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.UpdatedBy)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.UserId}) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                },
+                close: function (event, ui) {
+                    $(this).dialog('close');
+                }
+            });
+
+            $("#dialog-edit").dialog('open');
+            return false;
+        });
+    });
+</script>
+
+                <div class="card">
+                    <div class="card-body">
+                        <a id="ADDEmployee" class="btn btn-success btn-sm float-right" href="../User/AddUser"> <i class="fa fa-plus"></i> Add User</a>
+                        <h3>Manage Users</h3>
+                        <br />
+                        <div class="">
+                            @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
+                            {
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            @*<th>
+                                                    @Html.DisplayNameFor(model => model.UserId)
+                                                </th>*@
+                                            <th>
+                                                First Name
+                                            </th>
+                                            <th>
+                                                Last Name
+                                            </th>
+                                            <th>
+                                                Email Address
+                                            </th>
+                                            <th>
+                                                Login Password
+                                            </th>
+                                            @*<th>
+                                                    @Html.DisplayNameFor(model => model.UpdatedBy)
+                                                </th>*@
+                                            <th>
+                                                Role
+                                            </th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                @*<td>
+                                                        @Html.DisplayFor(modelItem => item.UserId)
+                                                    </td>*@
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.LastName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.LoginPassword)
+                                                </td>
+                                                @*<td>
+                                                        @Html.DisplayFor(modelItem => item.UpdatedBy)
+                                                    </td>*@
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.RoleId)
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Edit", "User", new { id=item.UserId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                                    @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
+                                                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+           

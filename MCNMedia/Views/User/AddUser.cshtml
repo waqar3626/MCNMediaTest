@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <form asp-action="AddUser">
@@ -9,14 +10,14 @@
     <div class="card">
         <div class="card-body">
             <h4 class="modal-title">Add New User</h4>
-            
+
             <div class="form-group row">
                 <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                     <input asp-for="FirstName" class="form-control" placeholder="First Name" />
                 </div>
-                
+
             </div>
             <div class="form-group row">
                 <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
@@ -24,7 +25,7 @@
                     <span asp-validation-for="LastName" class="text-danger"></span>
                     <input asp-for="LastName" class="form-control" placeholder="Last Name" />
                 </div>
-                
+
             </div>
             <div class="form-group row">
                 <label asp-for="EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
@@ -32,7 +33,7 @@
                     <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     <input asp-for="EmailAddress" class="form-control" placeholder="Email" />
                 </div>
-                
+
             </div>
             <div class="form-group row">
                 <label asp-for="LoginPassword" class="col-sm-3 col-form-label">Login Password</label>
@@ -40,9 +41,9 @@
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
                     <input asp-for="LoginPassword" class="form-control" placeholder="Password" />
                 </div>
-                
+
             </div>
-            
+
             <div class="form-group row">
                 <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
                 <div class="col-sm-9">
@@ -50,8 +51,10 @@
                     <input asp-for="RoleId" class="form-control text-small" placeholder="Role" />
                 </div>
             </div>
-            <input type="submit" value="Create" class="btn btn-primary" />
-            @*<a asp-action="Index" class="btn btn-primary">Back to List</a>*@
+            <div class="float-right">
+                <button type="submit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add User</button>
+                <a id="back" class="btn btn-secondary btn-md " href="../User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
+            </div>
         </div>
     </div>
 

@@ -123,7 +123,7 @@ namespace MCNMedia_Dev.Models
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
             _dc.AddParameter("UpdateBy", 1);
-            _dc.Execute("spUser_Update");
+            _dc.Execute("spUser_Delete");
         }
     }
 }

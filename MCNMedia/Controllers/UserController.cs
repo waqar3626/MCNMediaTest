@@ -76,16 +76,12 @@ namespace MCNMedia_Dev.Controllers
         
         public IActionResult Edit(int id, [Bind] User user)
         {
-            if (id != user.UserId)
-            {
-                return NotFound();
-            }
             if (ModelState.IsValid)
             {
                 userDataAccess.UpdateUser(user);
                 return RedirectToAction("ListUser");
             }
-            return View(user);
+            return View();
         }
 
         [HttpPost, ActionName("Delete")]
