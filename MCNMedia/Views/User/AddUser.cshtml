@@ -11,7 +11,7 @@
         <div class="card-body">
             <h4 class="modal-title">Add New User</h4>
 
-            <div class="form-group row">
+            <div class="form-group row"> 
                 <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -39,7 +39,7 @@
                 <label asp-for="LoginPassword" class="col-sm-3 col-form-label">Login Password</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
-                    <input asp-for="LoginPassword" class="form-control" placeholder="Password" />
+                    <input asp-for="LoginPassword" type="password" class="form-control" placeholder="Password" />
                 </div>
 
             </div>

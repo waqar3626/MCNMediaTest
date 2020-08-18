@@ -78,7 +78,7 @@ namespace MCNMedia_Dev.Controllers
         {
             if (ModelState.IsValid)
             {
-                userDataAccess.UpdateUser(user);
+                userDataAccess.UpdateUser(user); 
                 return RedirectToAction("ListUser");
             }
             return View();

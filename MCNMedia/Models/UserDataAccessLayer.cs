@@ -60,7 +60,7 @@ namespace MCNMedia_Dev.Models
             _dc.AddParameter("LastName", user.LastName);
             _dc.AddParameter("EmailAddress", user.EmailAddress);
             _dc.AddParameter("LoginPassword", user.LoginPassword);
-            _dc.AddParameter("UserId", user.UserId);
+            _dc.AddParameter("UserId", user.UpdatedBy);
             _dc.AddParameter("RoleId", user.RoleId);
             _dc.Execute("spUser_Add");
         }
@@ -84,7 +84,7 @@ namespace MCNMedia_Dev.Models
             User user = new User();
 
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", id);
+            _dc.AddParameter("UsrId", id);
             DataTable dataTable = _dc.ReturnDataTable("spUser_GetbyId");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -123,7 +123,7 @@ namespace MCNMedia_Dev.Models
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
             _dc.AddParameter("UpdateBy", 1);
-            _dc.Execute("spUser_Delete");
+            _dc.ReturnBool("spUser_Delete");
         }
     }
 }
