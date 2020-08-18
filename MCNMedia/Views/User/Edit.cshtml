@@ -5,58 +5,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="AddUser">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="modal-title">Edit User</h4>
             <input type="hidden" asp-for="UserId" />
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
+           
+
+            <div class="form-group row">
+                <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+            <div class="form-group row">
+                <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <input asp-for="LastName" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+            <div class="form-group row">
+                <label asp-for="EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    <input asp-for="EmailAddress" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EmailAddress" class="control-label"></label>
-                <input asp-for="EmailAddress" class="form-control" />
-                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            <div class="form-group row">
+                <label asp-for="LoginPassword" class="col-sm-3 col-form-label">Login Password</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="LoginPassword" class="text-danger"></span>
+                    <input asp-for="LoginPassword" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LoginPassword" class="control-label"></label>
-                <input asp-for="LoginPassword" class="form-control" />
-                <span asp-validation-for="LoginPassword" class="text-danger"></span>
+            
+            <div class="form-group row">
+                <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                    <input asp-for="RoleId" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="UpdatedBy" class="control-label"></label>
-                <input asp-for="UpdatedBy" class="form-control" />
-                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleId" class="control-label"></label>
-                <input asp-for="RoleId" class="form-control" />
-                <span asp-validation-for="RoleId" class="text-danger"></span>
-            </div>
-             
             <div class="float-right">
                 <button type="submit" value="Update" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
                 <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    @*<a asp-action="Index">Back to List</a>*@
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

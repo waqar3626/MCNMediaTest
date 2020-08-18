@@ -7,10 +7,12 @@
     <title>@ViewData["Title"] - ThemeForMCN</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
     <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">
@@ -23,8 +25,8 @@
         <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="~/theme/index.html"><img src="~/theme/images/logo.svg" class="mr-2" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="~/theme/index.html"><img src="~/theme/images/logo-mini.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo mr-5" href="~/theme/index.html"><img src="https://cdn.mcnmedia.tv/images/logo.svg" class="mr-2" alt="MCN" /></a>
+                <a class="navbar-brand brand-logo-mini" href="~/theme/index.html"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="MCN" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -33,131 +35,131 @@
                 <ul class="navbar-nav mr-lg-2">
                     <li class="nav-item nav-search d-none d-lg-block">
                         <div class="input-group">
-                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                                <span class="input-group-text" id="search">
-                                    <i class="ti-search"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                            @*<div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                    <span class="input-group-text" id="search">
+                                        <i class="ti-search"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">*@
                         </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item dropdown mr-1">
-                        <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                            <i class="ti-email mx-0"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                            <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="https://via.placeholder.com/36x36" alt="image" class="profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow">
-                                    <h6 class="preview-subject ellipsis font-weight-normal">
-                                        David Grey
-                                    </h6>
-                                    <p class="font-weight-light small-text text-muted mb-0">
-                                        The meeting is cancelled
-                                    </p>
-                                </div>
+                    @*<li class="nav-item dropdown mr-1">
+                            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+                                <i class="ti-email mx-0"></i>
                             </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="https://via.placeholder.com/36x36" alt="image" class="profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow">
-                                    <h6 class="preview-subject ellipsis font-weight-normal">
-                                        Tim Cook
-                                    </h6>
-                                    <p class="font-weight-light small-text text-muted mb-0">
-                                        New product launch
-                                    </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="https://via.placeholder.com/36x36" alt="image" class="profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow">
-                                    <h6 class="preview-subject ellipsis font-weight-normal">
-                                        Johnson
-                                    </h6>
-                                    <p class="font-weight-light small-text text-muted mb-0">
-                                        Upcoming board meeting
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                            <i class="ti-bell mx-0"></i>
-                            <span class="count"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-success">
-                                        <i class="ti-info-alt mx-0"></i>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                                <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="https://via.placeholder.com/36x36" alt="image" class="profile-pic">
                                     </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                                    <p class="font-weight-light small-text mb-0 text-muted">
-                                        Just now
-                                    </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-warning">
-                                        <i class="ti-settings mx-0"></i>
+                                    <div class="preview-item-content flex-grow">
+                                        <h6 class="preview-subject ellipsis font-weight-normal">
+                                            David Grey
+                                        </h6>
+                                        <p class="font-weight-light small-text text-muted mb-0">
+                                            The meeting is cancelled
+                                        </p>
                                     </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
-                                    <p class="font-weight-light small-text mb-0 text-muted">
-                                        Private message
-                                    </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-info">
-                                        <i class="ti-user mx-0"></i>
+                                </a>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="https://via.placeholder.com/36x36" alt="image" class="profile-pic">
                                     </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                                    <p class="font-weight-light small-text mb-0 text-muted">
-                                        2 days ago
-                                    </p>
-                                </div>
+                                    <div class="preview-item-content flex-grow">
+                                        <h6 class="preview-subject ellipsis font-weight-normal">
+                                            Tim Cook
+                                        </h6>
+                                        <p class="font-weight-light small-text text-muted mb-0">
+                                            New product launch
+                                        </p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="https://via.placeholder.com/36x36" alt="image" class="profile-pic">
+                                    </div>
+                                    <div class="preview-item-content flex-grow">
+                                        <h6 class="preview-subject ellipsis font-weight-normal">
+                                            Johnson
+                                        </h6>
+                                        <p class="font-weight-light small-text text-muted mb-0">
+                                            Upcoming board meeting
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                                <i class="ti-bell mx-0"></i>
+                                <span class="count"></span>
                             </a>
-                        </div>
-                    </li>
-                    <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="https://via.placeholder.com/40x40" alt="profile" />
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
-                                <i class="ti-settings text-primary"></i>
-                                Settings
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-success">
+                                            <i class="ti-info-alt mx-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                        <p class="font-weight-light small-text mb-0 text-muted">
+                                            Just now
+                                        </p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-warning">
+                                            <i class="ti-settings mx-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                        <p class="font-weight-light small-text mb-0 text-muted">
+                                            Private message
+                                        </p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-info">
+                                            <i class="ti-user mx-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                        <p class="font-weight-light small-text mb-0 text-muted">
+                                            2 days ago
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-profile dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                <img src="https://via.placeholder.com/40x40" alt="profile" />
                             </a>
-                            <a class="dropdown-item">
-                                <i class="ti-power-off text-primary"></i>
-                                Logout
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                <a class="dropdown-item">
+                                    <i class="ti-settings text-primary"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item">
+                                    <i class="ti-power-off text-primary"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-settings d-none d-lg-flex">
+                            <a class="nav-link" href="#">
+                                <i class="ti-more"></i>
                             </a>
-                        </div>
-                    </li>
-                    <li class="nav-item nav-settings d-none d-lg-flex">
-                        <a class="nav-link" href="#">
-                            <i class="ti-more"></i>
-                        </a>
-                    </li>
+                        </li>*@
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                     <span class="ti-layout-grid2"></span>
@@ -168,7 +170,7 @@
         <div class="container-fluid page-body-wrapper">
             <!-- partial:../../partials/_settings-panel.html -->
             <div class="theme-setting-wrapper">
-                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                @*<div id="settings-trigger"><i class="ti-settings"></i></div>*@
                 <div id="theme-settings" class="settings-panel">
                     <i class="settings-close ti-close"></i>
                     <p class="settings-heading">SIDEBAR SKINS</p>
@@ -341,15 +343,17 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="~/theme/index.html">
-                            <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Dashboard</span>
+                        <a class="nav-link" href="/User/AddUser">
+                            <i class="ti-user menu-icon"> </i>
+                            <span class="menu-title"> Add User</span>
                         </a>
                     </li>
+
+
                     <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/widgets/widgets.html">
-                            <i class="ti-settings menu-icon"></i>
-                            <span class="menu-title">Widgets</span>
+                        <a class="nav-link" href="/User/ListUser">
+                            <i class="mdi mdi-account-multiple menu-icon"></i>
+                            <span class="menu-title">User List</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -374,236 +378,236 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
-                            <i class="ti-view-list menu-icon"></i>
-                            <span class="menu-title">Advanced UI</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="ui-advanced">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/dragula.html">Dragula</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/clipboard.html">Clipboard</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/context-menu.html">Context menu</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/slider.html">Sliders</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/carousel.html">Carousel</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/colcade.html">Colcade</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/loaders.html">Loaders</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                            <i class="ti-clipboard menu-icon"></i>
-                            <span class="menu-title">Form elements</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="form-elements">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/basic_elements.html">Basic Elements</a></li>
-                                <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/advanced_elements.html">Advanced Elements</a></li>
-                                <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/validation.html">Validation</a></li>
-                                <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/wizard.html">Wizard</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
-                            <i class="ti-eraser menu-icon"></i>
-                            <span class="menu-title">Editors</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="editors">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/text_editor.html">Text editors</a></li>
-                                <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/code_editor.html">Code editors</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                            <i class="ti-bar-chart-alt menu-icon"></i>
-                            <span class="menu-title">Charts</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="charts">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/chartjs.html">ChartJs</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/morris.html">Morris</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/flot-chart.html">Flot</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/google-charts.html">Google charts</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/sparkline.html">Sparkline js</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/c3.html">C3 charts</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/chartist.html">Chartists</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/justGage.html">JustGage</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                            <i class="ti-layout menu-icon"></i>
-                            <span class="menu-title">Tables</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="tables">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/basic-table.html">Basic table</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/data-table.html">Data table</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/js-grid.html">Js-grid</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/sortable-table.html">Sortable table</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/ui-features/popups.html">
-                            <i class="ti-export menu-icon"></i>
-                            <span class="menu-title">Popups</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/ui-features/notifications.html">
-                            <i class="ti-bell menu-icon"></i>
-                            <span class="menu-title">Notifications</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                            <i class="ti-face-smile menu-icon"></i>
-                            <span class="menu-title">Icons</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="icons">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/flag-icons.html">Flag icons</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/mdi.html">Mdi icons</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/font-awesome.html">Font Awesome</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/simple-line-icon.html">Simple line icons</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/themify.html">Themify icons</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#maps" aria-expanded="false" aria-controls="maps">
-                            <i class="ti-map menu-icon"></i>
-                            <span class="menu-title">Maps</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="maps">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/maps/mapael.html">Mapael</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/maps/vector-map.html">Vector Map</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/maps/google-maps.html">Google Map</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                            <i class="ti-layers-alt menu-icon"></i>
-                            <span class="menu-title">User Pages</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="auth">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/login.html"> Login </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/login-2.html"> Login 2 </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/register.html"> Register </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/register-2.html"> Register 2 </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/lock-screen.html"> Lockscreen </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-                            <i class="ti-help-alt menu-icon"></i>
-                            <span class="menu-title">Error pages</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="error">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/error-404.html"> 404 </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/error-500.html"> 500 </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-                            <i class="ti-layers menu-icon"></i>
-                            <span class="menu-title">General Pages</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="general-pages">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/blank-page.html"> Blank Page </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/profile.html"> Profile </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/faq.html"> FAQ </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/faq-2.html"> FAQ 2 </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/news-grid.html"> News grid </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/timeline.html"> Timeline </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/search-results.html"> Search Results </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/portfolio.html"> Portfolio </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#e-commerce" aria-expanded="false" aria-controls="e-commerce">
-                            <i class="ti-shopping-cart menu-icon"></i>
-                            <span class="menu-title">E-commerce</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="e-commerce">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/invoice.html"> Invoice </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/pricing-table.html"> Pricing Table </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/orders.html"> Orders </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/apps/email.html">
-                            <i class="ti-email menu-icon"></i>
-                            <span class="menu-title">E-mail</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/apps/calendar.html">
-                            <i class="ti-calendar menu-icon"></i>
-                            <span class="menu-title">Calendar</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/apps/todo.html">
-                            <i class="ti-check-box menu-icon"></i>
-                            <span class="menu-title">Todo List</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/apps/gallery.html">
-                            <i class="ti-gallery menu-icon"></i>
-                            <span class="menu-title">Gallery</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/theme/pages/documentation/documentation.html">
-                            <i class="ti-write menu-icon"></i>
-                            <span class="menu-title">Documentation</span>
-                        </a>
-                    </li>
+                    @*<li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+                                <i class="ti-view-list menu-icon"></i>
+                                <span class="menu-title">Advanced UI</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-advanced">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/dragula.html">Dragula</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/clipboard.html">Clipboard</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/context-menu.html">Context menu</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/slider.html">Sliders</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/carousel.html">Carousel</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/colcade.html">Colcade</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/ui-features/loaders.html">Loaders</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                                <i class="ti-clipboard menu-icon"></i>
+                                <span class="menu-title">Form elements</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="form-elements">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/basic_elements.html">Basic Elements</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/advanced_elements.html">Advanced Elements</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/validation.html">Validation</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/wizard.html">Wizard</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
+                                <i class="ti-eraser menu-icon"></i>
+                                <span class="menu-title">Editors</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="editors">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/text_editor.html">Text editors</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="~/theme/pages/forms/code_editor.html">Code editors</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                                <i class="ti-bar-chart-alt menu-icon"></i>
+                                <span class="menu-title">Charts</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="charts">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/chartjs.html">ChartJs</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/morris.html">Morris</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/flot-chart.html">Flot</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/google-charts.html">Google charts</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/sparkline.html">Sparkline js</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/c3.html">C3 charts</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/chartist.html">Chartists</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/charts/justGage.html">JustGage</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                                <i class="ti-layout menu-icon"></i>
+                                <span class="menu-title">Tables</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="tables">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/basic-table.html">Basic table</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/data-table.html">Data table</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/js-grid.html">Js-grid</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/tables/sortable-table.html">Sortable table</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/ui-features/popups.html">
+                                <i class="ti-export menu-icon"></i>
+                                <span class="menu-title">Popups</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/ui-features/notifications.html">
+                                <i class="ti-bell menu-icon"></i>
+                                <span class="menu-title">Notifications</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                                <i class="ti-face-smile menu-icon"></i>
+                                <span class="menu-title">Icons</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="icons">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/flag-icons.html">Flag icons</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/mdi.html">Mdi icons</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/font-awesome.html">Font Awesome</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/simple-line-icon.html">Simple line icons</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/icons/themify.html">Themify icons</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#maps" aria-expanded="false" aria-controls="maps">
+                                <i class="ti-map menu-icon"></i>
+                                <span class="menu-title">Maps</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="maps">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/maps/mapael.html">Mapael</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/maps/vector-map.html">Vector Map</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/maps/google-maps.html">Google Map</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                                <i class="ti-layers-alt menu-icon"></i>
+                                <span class="menu-title">User Pages</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="auth">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/login.html"> Login </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/login-2.html"> Login 2 </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/register.html"> Register </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/register-2.html"> Register 2 </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/lock-screen.html"> Lockscreen </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+                                <i class="ti-help-alt menu-icon"></i>
+                                <span class="menu-title">Error pages</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="error">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/error-404.html"> 404 </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/error-500.html"> 500 </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
+                                <i class="ti-layers menu-icon"></i>
+                                <span class="menu-title">General Pages</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="general-pages">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/blank-page.html"> Blank Page </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/profile.html"> Profile </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/faq.html"> FAQ </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/faq-2.html"> FAQ 2 </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/news-grid.html"> News grid </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/timeline.html"> Timeline </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/search-results.html"> Search Results </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/portfolio.html"> Portfolio </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#e-commerce" aria-expanded="false" aria-controls="e-commerce">
+                                <i class="ti-shopping-cart menu-icon"></i>
+                                <span class="menu-title">E-commerce</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="e-commerce">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/invoice.html"> Invoice </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/pricing-table.html"> Pricing Table </a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/theme/pages/samples/orders.html"> Orders </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/apps/email.html">
+                                <i class="ti-email menu-icon"></i>
+                                <span class="menu-title">E-mail</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/apps/calendar.html">
+                                <i class="ti-calendar menu-icon"></i>
+                                <span class="menu-title">Calendar</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/apps/todo.html">
+                                <i class="ti-check-box menu-icon"></i>
+                                <span class="menu-title">Todo List</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/apps/gallery.html">
+                                <i class="ti-gallery menu-icon"></i>
+                                <span class="menu-title">Gallery</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/theme/pages/documentation/documentation.html">
+                                <i class="ti-write menu-icon"></i>
+                                <span class="menu-title">Documentation</span>
+                            </a>
+                        </li>*@
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper">
-                    <div class="container">
-                        <main role="main" class="pb-3">
-                            @RenderBody()
-                        </main>
-                    </div>
-                </div>
+                @*<div class="content-wrapper">*@
+                @*<div class="container">*@
+                <main role="main">
+                    @RenderBody()
+                </main>
+                @*</div>*@
+                @*</div>*@
                 <!-- content-wrapper ends -->
                 <!-- partial:~/theme/partials/_footer.html -->
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">MCN media 2020</span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
                     </div>
                 </footer>
@@ -616,11 +620,6 @@
     <!-- container-scroller -->
 
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Crud_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -628,8 +627,6 @@
     <!-- plugins:js -->
     <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="~/theme/js/off-canvas.js"></script>
     <script src="~/theme/js/hoverable-collapse.js"></script>
@@ -637,8 +634,15 @@
     <script src="~/theme/js/settings.js"></script>
     <script src="~/theme/js/todolist.js"></script>
     <!-- endinject -->
-    <!-- Custom js for this page-->
-    <!-- End custom js for this page-->
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - MCN - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
     @RenderSection("Scripts", required: false)
+    @*@RenderSection("PluginForPage", required:true)*@
 </body>
 </html>
