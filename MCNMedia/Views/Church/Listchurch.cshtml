@@ -82,7 +82,7 @@
                     {
                         <tr>
                             <td>
-                                <a href="@Url.Action("Listchurch", "Church")" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
+                                <a href="@Url.Action("ChurchDetails", "Church",new { chId = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
 
                             </td>
                             @*<td>

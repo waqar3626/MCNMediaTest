@@ -90,5 +90,12 @@ namespace MCNMedia_Dev.Controllers
             churchDataAccess.DeleteChurch(id);
             return RedirectToAction("Listchurch");
         }
+
+
+        [HttpGet]
+        public IActionResult ChurchDetails()
+        {
+            return View();
+        }
     }
 }
