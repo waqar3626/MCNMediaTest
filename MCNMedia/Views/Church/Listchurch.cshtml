@@ -1,0 +1,146 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Church>
+
+@{
+    ViewData["Title"] = "Listchurch";
+}
+
+<h1>Listchurch</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ChurchId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ChurchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UniqueChurchId)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Town)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CountyId)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Website)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ImageURl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Blurb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Featured)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UniqueIdentifier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepeatRecordings)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Switch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShowOnWebsite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayOrder)
+            </th>
+            <th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ChurchId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ChurchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniqueChurchId)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Town)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CountyId)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ImageURl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Blurb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Featured)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniqueIdentifier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatRecordings)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Switch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShowOnWebsite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayOrder)
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.ChurchId }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.ChurchId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

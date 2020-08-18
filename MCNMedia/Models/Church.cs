@@ -57,9 +57,13 @@ namespace MCNMedia_Dev.Models
         public string UniqueIdentifier { get; set; }
 
         [Required(ErrorMessage = "Repeat Recordings is Required")]
-        public int RepeatRecordings { get; set; }
+        public Boolean RepeatRecordings { get; set; }
         [Required(ErrorMessage = "Switch is Required")]
         public int Switch { get; set; }
+        [Required(ErrorMessage = "ShowOnWebsite is Required")]
+        public Boolean ShowOnWebsite { get; set; }
+        [Required(ErrorMessage = "DisplayOrder is Required")]
+        public int DisplayOrder { get; set; }
 
     }
 }
