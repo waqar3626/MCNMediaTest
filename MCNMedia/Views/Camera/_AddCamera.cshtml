@@ -1,0 +1,47 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+@using (Html.BeginForm("Camera", "AddCamera", FormMethod.Post))
+{
+    <div class="grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Camera</h4>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label"> Tab Name</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Cameras.TabName, new { @class = "form-control", @id = "tabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        @Html.HiddenFor(model => model.Cameras.CameraId, new { @id = "CameraId" })
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label"> Camera RTSP</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Cameras.CameraRtsp, new { @class = "form-control", @id = "cameraRtsp", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label"> HTTP Port</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Cameras.HttpPort, new { @class = "form-control", @id = "httpPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label"> RTSP Port</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Cameras.RtspPort, new { @class = "form-control", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    </div>
+
+                </div>
+                <div class="float-right">
+                    <button type="submit" value="Update" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Add Camera</button>
+                    <a id="back" class="btn btn-secondary btn-sm  " href="../Church/Listchurch"><i class="fa fa-chevron-left"></i> Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

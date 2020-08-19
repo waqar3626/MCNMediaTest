@@ -1,4 +1,4 @@
-﻿@model MCNMedia_Dev.Models.Church
+﻿@model MCNMedia_Dev.Models.GenericModel
 
 @{
     List<SelectListItem> ClientTypes = Lists.GetClientTypeList();
@@ -10,29 +10,30 @@
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">New Church Information</h4>
+                <h4 class="card-title"> Church Information</h4>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="ChurchId" />
+                <input type="hidden" asp-for="Churches.ChurchId" />
+                @*<input type="hidden" value="Churches.ChurchId" id="ChurchId" name="ChurchId" />*@
                 <div class="form-group row">
-                    <label asp-for="ChurchName" class="col-sm-3 col-form-label">Church Name</label>
+                    <label asp-for="Churches.ChurchName" class="col-sm-3 col-form-label">Church Name</label>
                     <div class="col-sm-9">
-                        <input asp-for="ChurchName" class="form-control" />
-                        <span asp-validation-for="ChurchName" class="text-danger"></span>
+                        <input asp-for="Churches.ChurchName" class="form-control" />
+                        <span asp-validation-for="Churches.ChurchName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="ClientTypeId" class="col-sm-3 col-form-label">Client Type</label>
+                    <label asp-for="Churches.ClientTypeId" class="col-sm-3 col-form-label">Client Type</label>
                     <div class="col-sm-9">
-                        @*<input asp-for="ClientTypeId" class="form-control" />*@
-                        @Html.DropDownList("ClientTypeId", ClientTypes, new { @class = "form-control" })
-                        <span asp-validation-for="ClientTypeId" class="text-danger"></span>
+                        @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                        @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })
+                        <span asp-validation-for="Churches.ClientTypeId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="UniqueChurchId" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.UniqueChurchId" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="UniqueChurchId" class="form-control" />
-                        <span asp-validation-for="UniqueChurchId" class="text-danger"></span>
+                        <input asp-for="Churches.UniqueChurchId" class="form-control" />
+                        <span asp-validation-for="Churches.UniqueChurchId" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -43,25 +44,25 @@
             <div class="card-body">
                 <h4 class="card-title">Location Details</h4>
                 <div class="form-group row">
-                    <label asp-for="Address" class="col-sm-3 col-form-label">Address</label>
+                    <label asp-for="Churches.Address" class="col-sm-3 col-form-label">Address</label>
                     <div class="col-sm-9">
-                        <input asp-for="Address" class="form-control" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
+                        <input asp-for="Churches.Address" class="form-control" />
+                        <span asp-validation-for="Churches.Address" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Town" class="col-sm-3 col-form-label">Town</label>
+                    <label asp-for="Churches.Town" class="col-sm-3 col-form-label">Town</label>
                     <div class="col-sm-3">
-                        <input asp-for="Town" class="form-control" />
-                        <span asp-validation-for="Town" class="text-danger"></span>
+                        <input asp-for="Churches.Town" class="form-control" />
+                        <span asp-validation-for="Churches.Town" class="text-danger"></span>
                     </div>
                     @*</div>
                         <div class="form-group row">*@
-                    <label asp-for="CountyId" class="col-sm-3 col-form-label text-center">County</label>
+                    <label asp-for="Churches.CountyId" class="col-sm-3 col-form-label text-center">County</label>
                     <div class="col-sm-3">
-                        @*<input asp-for="CountyId" class="form-control" />*@
-                        @Html.DropDownList("CountyId", CountyList, new { @class = "form-control" })
-                        <span asp-validation-for="CountyId" class="text-danger"></span>
+                        @*<input asp-for="Churches.CountyId" class="form-control" />*@
+                        @Html.DropDownList("Churches.CountyId", CountyList, new { @class = "form-control" })
+                        <span asp-validation-for="Churches.CountyId" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -72,24 +73,24 @@
             <div class="card-body">
                 <h4 class="card-title">Contact Details</h4>
                 <div class="form-group row">
-                    <label asp-for="Website" class="col-sm-3 col-form-label">Website</label>
+                    <label asp-for="Churches.Website" class="col-sm-3 col-form-label">Website</label>
                     <div class="col-sm-9">
-                        <input asp-for="Website" class="form-control" />
-                        <span asp-validation-for="Website" class="text-danger"></span>
+                        <input asp-for="Churches.Website" class="form-control" />
+                        <span asp-validation-for="Churches.Website" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
+                    <label asp-for="Churches.EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
                     <div class="col-sm-3">
-                        <input asp-for="EmailAddress" class="form-control" />
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        <input asp-for="Churches.EmailAddress" class="form-control" />
+                        <span asp-validation-for="Churches.EmailAddress" class="text-danger"></span>
                     </div>
                     @*</div>
                         <div class="form-group row">*@
-                    <label asp-for="Phone" class="col-sm-3 col-form-label text-center">Phone</label>
+                    <label asp-for="Churches.Phone" class="col-sm-3 col-form-label text-center">Phone</label>
                     <div class="col-sm-3">
-                        <input asp-for="Phone" class="form-control" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        <input asp-for="Churches.Phone" class="form-control" />
+                        <span asp-validation-for="Churches.Phone" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -100,70 +101,70 @@
             <div class="card-body">
                 <h4 class="card-title">Need a Title</h4>
                 <div class="form-group row">
-                    <label asp-for="ImageURl" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.ImageURl" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="ImageURl" class="form-control" />
-                        <span asp-validation-for="ImageURl" class="text-danger"></span>
+                        <input asp-for="Churches.ImageURl" class="form-control" />
+                        <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Blurb" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.Blurb" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="Blurb" class="form-control" />
-                        <span asp-validation-for="Blurb" class="text-danger"></span>
+                        <input asp-for="Churches.Blurb" class="form-control" />
+                        <span asp-validation-for="Churches.Blurb" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Slug" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.Slug" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="Slug" class="form-control" />
-                        <span asp-validation-for="Slug" class="text-danger"></span>
+                        <input asp-for="Churches.Slug" class="form-control" />
+                        <span asp-validation-for="Churches.Slug" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Notice" class="col-sm-3 col-form-label">Notice</label>
+                    <label asp-for="Churches.Notice" class="col-sm-3 col-form-label">Notice</label>
                     <div class="col-sm-9">
-                        <input asp-for="Notice" class="form-control" />
-                        <span asp-validation-for="Notice" class="text-danger"></span>
+                        <input asp-for="Churches.Notice" class="form-control" />
+                        <span asp-validation-for="Churches.Notice" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Featured" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.Featured" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="Featured" class="form-control" />
-                        <span asp-validation-for="Featured" class="text-danger"></span>
+                        <input asp-for="Churches.Featured" class="form-control" />
+                        <span asp-validation-for="Churches.Featured" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="UniqueIdentifier" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.UniqueIdentifier" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="UniqueIdentifier" class="form-control" />
-                        <span asp-validation-for="UniqueIdentifier" class="text-danger"></span>
+                        <input asp-for="Churches.UniqueIdentifier" class="form-control" />
+                        <span asp-validation-for="Churches.UniqueIdentifier" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="RepeatRecordings" class="col-sm-3 col-form-label"> Repeat Recording</label>
+                    <label asp-for="Churches.RepeatRecordings" class="col-sm-3 col-form-label"> Repeat Recording</label>
                     <div class="col-sm-9">
-                        <input class="" asp-for="RepeatRecordings" />
+                        <input class="" asp-for="Churches.RepeatRecordings" />
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Switch" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.Switch" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="Switch" class="form-control" />
-                        <span asp-validation-for="Switch" class="text-danger"></span>
+                        <input asp-for="Churches.Switch" class="form-control" />
+                        <span asp-validation-for="Churches.Switch" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" asp-for="ShowOnWebsite" /> @Html.DisplayNameFor(model => model.ShowOnWebsite)
+                        <input class="form-check-input" asp-for="Churches.ShowOnWebsite" /> @Html.DisplayNameFor(model => model.Churches.ShowOnWebsite)
                     </label>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="DisplayOrder" class="col-sm-3 col-form-label"></label>
+                    <label asp-for="Churches.DisplayOrder" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="DisplayOrder" class="form-control" />
-                        <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                        <input asp-for="Churches.DisplayOrder" class="form-control" />
+                        <span asp-validation-for="Churches.DisplayOrder" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="float-right">

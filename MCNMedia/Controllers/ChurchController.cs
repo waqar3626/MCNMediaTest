@@ -99,25 +99,28 @@ namespace MCNMedia_Dev.Controllers
         {
             int churchId = Convert.ToInt32(HttpContext.Request.Query["chId"].ToString());
             Church church = churchDataAccess.GetChurchData(churchId);
+            GenericModel gm = new GenericModel();
+            gm.Churches = church;
             if (church == null)
             {
                 return NotFound();
             }
-            return View(church);
+            return View(gm);
         }
 
         
         [HttpPost]
 
-        public IActionResult UpdateChurch(int ChurchId, [Bind] Church church)
+        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church)
         {
-            if (ChurchId != church.ChurchId)
-            {
-                return NotFound();
-            }
+            //if (ChurchId != church.Churches.ChurchId)
+            //{
+            //    return NotFound();
+            //}
+            ChurchId = church.Churches.ChurchId;
             if (ModelState.IsValid)
             {
-                churchDataAccess.UpdateChurch(church);
+                churchDataAccess.UpdateChurch(church.Churches);
              
                 var queryString = new { chId = ChurchId };
                 return RedirectToAction("ChurchDetails","Church",queryString);
