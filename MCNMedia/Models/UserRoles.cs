@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace MCNMedia_Dev.Models
 {
-
     public class UserRoles
     {
         public int RoleId { get; set; }
-        public String RoleName { get; set; }
+        public string RoleName { get; set; }
     }
-
 }

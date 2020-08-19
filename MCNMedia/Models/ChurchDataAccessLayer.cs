@@ -158,5 +158,19 @@ namespace MCNMedia_Dev.Models
             _dc.AddParameter("UserId", 1);
             _dc.ReturnBool("spChurch_Delete");
         }
+
+        public DataTable GetClientTypeList()
+        { 
+            _dc.ClearParameters();
+            return _dc.ReturnDataTable("spClientTypes_Get");
+                       
+        }
+
+        public DataTable GetCountyList()
+        { 
+            _dc.ClearParameters();
+             return _dc.ReturnDataTable("spCounty_Get");
+
+        }
     }
 }

@@ -1,7 +1,8 @@
-﻿
+﻿@model MCNMedia_Dev.Models.Church
 @{
     ViewData["Title"] = "ChurchDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
+  
 }
 
 <div class="col-12">
@@ -29,16 +30,15 @@
                 <li class="nav-item">
                     <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-sticky-note-o text-info"></i> Add Notice</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-cogs text-info"></i> Set Up</a>
+                </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
-                    <div class="media">
-                        <img class="mr-3 w-25 rounded" src="https://via.placeholder.com/115x115" alt="sample image">
+                    <div class="media"> 
                         <div class="media-body">
-                            <h4 class="mt-0">Why choose us?</h4>
-                            <p>
-                                Information
-                            </p>
+                            @Html.Partial("~/Views/Church/_ChurchInfo.cshtml") 
                         </div>
                     </div>
                 </div>

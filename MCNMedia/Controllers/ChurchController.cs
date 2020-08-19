@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MCNMedia_Dev.Controllers
 {
     public class ChurchController : Controller
     {
-       
+
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer("a");
 
         [HttpGet]
@@ -64,7 +66,7 @@ namespace MCNMedia_Dev.Controllers
         {
             churchDataAccess.AddChurch(church);
             return RedirectToAction("Listchurch");
-           
+
         }
 
 
@@ -95,7 +97,33 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult ChurchDetails()
         {
-            return View();
+            int churchId = Convert.ToInt32(HttpContext.Request.Query["chId"].ToString());
+            Church church = churchDataAccess.GetChurchData(churchId);
+            if (church == null)
+            {
+                return NotFound();
+            }
+            return View(church);
         }
+
+        
+        [HttpPost]
+
+        public IActionResult UpdateChurch(int ChurchId, [Bind] Church church)
+        {
+            if (ChurchId != church.ChurchId)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                churchDataAccess.UpdateChurch(church);
+             
+                var queryString = new { chId = ChurchId };
+                return RedirectToAction("ChurchDetails","Church",queryString);
+            }
+            return View(church);
+        }
+
     }
 }
