@@ -16,7 +16,6 @@ namespace MCNMedia_Dev.Models
         public UserDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
-
         }
 
         public UserDataAccessLayer(string v)
@@ -44,13 +43,31 @@ namespace MCNMedia_Dev.Models
                 user.EmailAddress = dataRow["EmailAddress"].ToString();
                 user.LoginPassword = dataRow["LoginPassword"].ToString();
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
-                user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
+                user.RoleName = dataRow["RoleName"].ToString();
 
 
                 Balobj.Add(user);
             }
             return Balobj;
         }
+
+        // get user role
+        public IEnumerable<UserRoles> GetRoles()
+        {
+            List<UserRoles> Balobj = new List<UserRoles>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spRole_Get");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                UserRoles role = new UserRoles();
+                role.RoleId = Convert.ToInt32(dataRow["RoleId"]);
+                role.RoleName = dataRow["RoleName"].ToString();
+                Balobj.Add(role);
+            }
+            return Balobj;
+        }
+
 
         //To Add new User record    
         public void AddUser(User user)
