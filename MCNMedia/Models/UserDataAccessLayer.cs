@@ -56,7 +56,7 @@ namespace MCNMedia_Dev.Models
         {
             List<UserRoles> Balobj = new List<UserRoles>();
             _dc.ClearParameters();
-            DataTable dataTable = _dc.ReturnDataTable("spRole_Get");
+            DataTable dataTable = _dc.ReturnDataTable("spRoles_Get");
 
             foreach (DataRow dataRow in dataTable.Rows)
             {
