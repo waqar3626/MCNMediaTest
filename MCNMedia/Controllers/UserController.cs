@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MySql.Data.MySqlClient;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -14,6 +18,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult AddUser()
         {
+            LoadDDL();
             return View();
         }
         
@@ -33,23 +38,24 @@ namespace MCNMedia_Dev.Controllers
             {
                 return NotFound();
             }
+            LoadDDL();
             return View(user);
         }
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
+        //[HttpGet]
+        //public IActionResult Delete(int id)
+        //{
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-            User user = userDataAccess.GetUserData(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    User user = userDataAccess.GetUserData(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(user);
+        //}
 
         [HttpPost()]
         public IActionResult AddUser(User usr)
@@ -76,20 +82,32 @@ namespace MCNMedia_Dev.Controllers
         
         public IActionResult Edit(int id, [Bind] User user)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 userDataAccess.UpdateUser(user); 
                 return RedirectToAction("ListUser");
-            }
-            return View();
+            //}
+            //return View();
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpGet]
        
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult Delete(int id)
         {
             userDataAccess.DeleteUser(id);
             return RedirectToAction("ListUser");
+        }
+
+        public void LoadDDL()
+        {
+            IEnumerable<UserRoles> RoleList= userDataAccess.GetRoles();
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (var item in RoleList)
+            {
+                selectListItems.Add(new SelectListItem { Text = item.RoleName.ToString(), Value = item.RoleId.ToString() });
+            }
+            ViewBag.State = selectListItems;
+            
         }
     }
 }

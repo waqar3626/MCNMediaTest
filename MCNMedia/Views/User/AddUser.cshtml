@@ -17,7 +17,6 @@
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                     <input asp-for="FirstName" class="form-control" placeholder="First Name" />
                 </div>
-
             </div>
             <div class="form-group row">
                 <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
@@ -31,7 +30,7 @@
                 <label asp-for="EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                    <input asp-for="EmailAddress" class="form-control" placeholder="Email" />
+                    <input asp-for="EmailAddress" class="form-control" placeholder="Email" type="email" />
                 </div>
 
             </div>
@@ -39,7 +38,7 @@
                 <label asp-for="LoginPassword" class="col-sm-3 col-form-label">Login Password</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
-                    <input asp-for="LoginPassword" type="password" class="form-control" placeholder="Password" />
+                    <input asp-for="LoginPassword" class="form-control" placeholder="Password" />
                 </div>
 
             </div>
@@ -48,7 +47,10 @@
                 <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="RoleId" class="text-danger"></span>
-                    <input asp-for="RoleId" class="form-control text-small" placeholder="Role" />
+                    @*<input asp-for="RoleId" class="form-control text-small" placeholder="Role" />*@
+                    <select asp-for="RoleId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
+                        <option>--Select Role--</option>
+                    </select>
                 </div>
             </div>
             <div class="float-right">

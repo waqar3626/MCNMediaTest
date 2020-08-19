@@ -11,7 +11,7 @@
         <div class="card-body">
             <h4 class="modal-title">Edit User</h4>
             <input type="hidden" asp-for="UserId" />
-           
+
 
             <div class="form-group row">
                 <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
@@ -31,26 +31,36 @@
                 <label asp-for="EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                    <input asp-for="EmailAddress" class="form-control" />
+                    <input asp-for="EmailAddress" class="form-control" type="email" />
                 </div>
             </div>
             <div class="form-group row">
                 <label asp-for="LoginPassword" class="col-sm-3 col-form-label">Login Password</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
-                    <input asp-for="LoginPassword" class="form-control" />
+                    <input asp-for="LoginPassword" class="form-control"/>
                 </div>
             </div>
-            
+
             <div class="form-group row">
                 <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="RoleId" class="text-danger"></span>
-                    <input asp-for="RoleId" class="form-control" />
+                    <select asp-for="RoleId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
+                        <option>--Select Role--</option>
+                    </select>
                 </div>
             </div>
+
+            @*<div class="form-group row">
+            <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
+            <div class="col-sm-9">
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+                <input asp-for="RoleId" class="form-control" />
+            </div>
+        </div>*@
             <div class="float-right">
-                <button type="submit" value="Update" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
                 <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
             </div>
         </div>
