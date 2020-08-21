@@ -1,0 +1,36 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Cameras.CameraName" class="control-label"></label>
+                <input asp-for="Cameras.CameraName" class="form-control" />
+                <span asp-validation-for="Cameras.CameraName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cameras.CameraUrl" class="control-label"></label>
+                <input asp-for="Cameras.CameraUrl" class="form-control" />
+                <span asp-validation-for="Cameras.CameraUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cameras.HttpPort" class="control-label"></label>
+                <input asp-for="Cameras.HttpPort" class="form-control" />
+                <span asp-validation-for="Cameras.HttpPort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cameras.RtspPort" class="control-label"></label>
+                <input asp-for="Cameras.RtspPort" class="form-control" />
+                <span asp-validation-for="Cameras.RtspPort" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

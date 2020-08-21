@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -13,6 +14,7 @@ namespace MCNMedia_Dev.Controllers
     {
 
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer("a");
+        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer("a");
 
         [HttpGet]
         public IActionResult AddChurch()
@@ -97,18 +99,27 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult ChurchDetails()
         {
-            int churchId = Convert.ToInt32(HttpContext.Request.Query["chId"].ToString());
-            Church church = churchDataAccess.GetChurchData(churchId);
             GenericModel gm = new GenericModel();
-            gm.Churches = church;
-            if (church == null)
+            if (!string.IsNullOrEmpty(HttpContext.Request.Query["chId"].ToString()))
             {
-                return NotFound();
+                int churchId = Convert.ToInt32(HttpContext.Request.Query["chId"].ToString());
+
+                HttpContext.Session.SetInt32("ChurchId", churchId);
+
+                Church church = churchDataAccess.GetChurchData(churchId);
+
+                gm.Churches = church;
+                if (church == null)
+                {
+                    return NotFound();
+                }
+                gm.LCameras = camDataAccess.GetAllCameras();
+                return View(gm);
             }
-            return View(gm);
+            return RedirectToAction("Listchurch", "Church");
         }
 
-        
+
         [HttpPost]
 
         public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church)
@@ -118,12 +129,13 @@ namespace MCNMedia_Dev.Controllers
             //    return NotFound();
             //}
             ChurchId = church.Churches.ChurchId;
+
             if (ModelState.IsValid)
             {
                 churchDataAccess.UpdateChurch(church.Churches);
-             
+
                 var queryString = new { chId = ChurchId };
-                return RedirectToAction("ChurchDetails","Church",queryString);
+                return RedirectToAction("ChurchDetails", "Church", queryString);
             }
             return View(church);
         }

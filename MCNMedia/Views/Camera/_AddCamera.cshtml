@@ -2,46 +2,152 @@
 @{
 
 }
-@using (Html.BeginForm("Camera", "AddCamera", FormMethod.Post))
+<script src="~/theme/js/modal-demo.js"></script>
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $('#createAccount').click(function () {
+
+    //        //$("#AccountModal").modal('show');
+    //        // $('#AccountModal').modalPopLite({ openButton: '#clicker', closeButton: '#close-btn' });
+
+    //    });
+    //});
+</script>
+
+@using (Html.BeginForm("AddCamera", "Camera", FormMethod.Post))
+
 {
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Camera</h4>
+                @*<h4 class="card-title">Camera</h4>*@
+
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label"> Tab Name</label>
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(model => model.Cameras.TabName, new { @class = "form-control", @id = "tabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    <label class="col-sm-3 col-form-label text-center"> Tab Name</label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.Cameras.CameraName, new { @class = "form-control form-control-sm", @id = "tabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                         @Html.HiddenFor(model => model.Cameras.CameraId, new { @id = "CameraId" })
+                        @Html.HiddenFor(model => model.Cameras.ChurchId, new { @id = "ChurchId" })
                     </div>
-
+                    @*</div>
+                        <div class="form-group row">*@
+                    <label class="col-sm-3 col-form-label text-center"> Camera RTSP</label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.Cameras.CameraUrl, new { @class = "form-control form-control-sm", @id = "cameraRtsp", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label"> Camera RTSP</label>
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(model => model.Cameras.CameraRtsp, new { @class = "form-control", @id = "cameraRtsp", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    <label class="col-sm-3 col-form-label text-center"> HTTP Port</label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.Cameras.HttpPort, new { @class = "form-control form-control-sm", @id = "httpPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                     </div>
-
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label"> HTTP Port</label>
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(model => model.Cameras.HttpPort, new { @class = "form-control", @id = "httpPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    @*</div>
+                        <div class="form-group row">*@
+                    <label class="col-sm-3 col-form-label text-center"> RTSP Port</label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.Cameras.RtspPort, new { @class = "form-control form-control-sm", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                     </div>
-
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label"> RTSP Port</label>
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(model => model.Cameras.RtspPort, new { @class = "form-control", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
-                    </div>
-
                 </div>
                 <div class="float-right">
-                    <button type="submit" value="Update" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Add Camera</button>
-                    <a id="back" class="btn btn-secondary btn-sm  " href="../Church/Listchurch"><i class="fa fa-chevron-left"></i> Back</a>
+                    <button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Add Camera</button>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " href="../Church/Listchurch"><i class="fa fa-chevron-left text-white"></i> Back</a>
                 </div>
             </div>
         </div>
     </div>
 }
+<div class="card">
+    <div class="card-body">
+
+        <div class="">
+            @using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
+            {
+
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Tab Name
+                            </th>
+                            <th>
+                                Camera RTSP
+                            </th>
+                            <th>
+                                HTTP Port
+                            </th>
+                            <th>
+                                RTSP Port
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.LCameras)
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CameraName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CameraUrl)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HttpPort)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RtspPort)
+                                </td>
+                                <td>
+                                    <a onclick="Open(@item.CameraId)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>
+                                    <a href="@Url.Action("Delete", "Camera", new { id=item.CameraId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+            }
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Camera Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="Preview">
+                        @Html.Partial("~/Views/Camera/_EditCamera.cshtml", Model.Cameras)
+                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+        <script type="text/javascript">
+    function Open(camId) {
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditCamera", "Camera")',
+            data: { id: camId },
+            success: function (data) {
+                $('#Preview').html(data);
+                $('#EditModal').modal('show');
+            }
+        })
+    }
+        </script>

@@ -1,111 +1,141 @@
-﻿@model MCNMedia_Dev.Models.GenericModel 
+﻿@model MCNMedia_Dev.Models.GenericModel
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "ChurchDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
-  
+    ViewBag.TabName = @HttpContextAccessor.HttpContext.Session.GetString("TabName");
+    @HttpContextAccessor.HttpContext.Session.SetString("TabName", "");
 }
+<script type="text/javascript">
+    
+    $(document).ready(function () {
 
+        var curTabName = '@ViewBag.TabName';
+        if (curTabName == '') {
+            $("#Information-tab").click();
+        }
+        else {
+            $("#"+curTabName+"-tab").click();
+        }
+        
+});
+
+</script>
 <div class="col-12">
-<div class="col-md-12 col-xl-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Church Details</h4> 
-            <ul class="nav nav-tabs" role="tablist">
+    <div class="col-md-12 col-xl-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Church Details</h4>
+                <h3>@ViewData["message"]</h3>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link  active" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="true"><i class="fa fa-info-circle text-info"></i> Information</a>
+                    </li>
+                    @*@if (ViewBag.Tab == "Camera")
+            {
                 <li class="nav-item">
-                    <a class="nav-link active" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="true"><i class="fa fa-info-circle text-info"></i> Information</a>
+                    <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="false"><i class="fa fa-camera-retro text-success"></i> Add Camera</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info"></i> Add Slideshow</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="Video-tab" data-toggle="tab" href="#Video-1" role="tab" aria-controls="Video-1" aria-selected="false"><i class="fa fa-file-video-o text-danger"></i> Add Video</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false"><i class="fa fa-picture-o text-success"></i> Add Picture</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-sticky-note-o text-info"></i> Add Notice</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-cogs text-info"></i> Set Up</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
-                    <div class="media"> 
-                        <div class="media-body">
-                            @Html.Partial("~/Views/Church/_ChurchInfo.cshtml") 
+            }
+            else
+            {*@
+                    <li class="nav-item">
+                        <a class="nav-link" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="false"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
+                    </li>
+                    @*}*@
+                    <li class="nav-item">
+                        <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info"></i>  Slideshow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Video-tab" data-toggle="tab" href="#Video-1" role="tab" aria-controls="Video-1" aria-selected="false"><i class="fa fa-file-video-o text-danger"></i>  Video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false"><i class="fa fa-picture-o text-success"></i>  Picture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-sticky-note-o text-info"></i>  Notice</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Setup-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-cogs text-info"></i> Set Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Message-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-envelope-o text-info"></i> Message</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/Church/_ChurchInfo.cshtml")
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
-                    <div class="media">
-                        <div class="media-body">
-                            @Html.Partial("~/Views/Camera/_AddCamera.cshtml")
+                    <div class="tab-pane fade" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/Camera/_AddCamera.cshtml")
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="Slideshow-tab">
+                            <h4>Slideshow </h4>
+                            <p>
+                                Feel free to contact us if you have any questions!
+                            </p>
+                            <p>
+                                <i class="ti-headphone-alt text-info"></i>
+                                +123456789
+                            </p>
+                            <p>
+                                <i class="ti-email text-success"></i>
+                                contactus@example.com
+                            </p>
+                        </div>
+                        <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
+                            <h4>Video</h4>
+                            <p>
+                                Feel free to contact us if you have any questions!
+                            </p>
+                            <p>
+                                <i class="ti-headphone-alt text-info"></i>
+                                +123456789
+                            </p>
+                            <p>
+                                <i class="ti-email text-success"></i>
+                                contactus@example.com
+                            </p>
+                        </div>
+                        <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
+                            <h4>Picture</h4>
+                            <p>
+                                Feel free to contact us if you have any questions!
+                            </p>
+                            <p>
+                                <i class="ti-headphone-alt text-info"></i>
+                                +123456789
+                            </p>
+                            <p>
+                                <i class="ti-email text-success"></i>
+                                contactus@example.com
+                            </p>
+                        </div>
+                        <div class="tab-pane fade" id="Notice-1" role="tabpanel" aria-labelledby="Notice-tab">
+                            <h4>Notice</h4>
+                            <p>
+                                Feel free to contact us if you have any questions!
+                            </p>
+                            <p>
+                                <i class="ti-headphone-alt text-info"></i>
+                                +123456789
+                            </p>
+                            <p>
+                                <i class="ti-email text-success"></i>
+                                contactus@example.com
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="Slideshow-tab">
-                    <h4>Slideshow </h4>
-                    <p>
-                        Feel free to contact us if you have any questions!
-                    </p>
-                    <p>
-                        <i class="ti-headphone-alt text-info"></i>
-                        +123456789
-                    </p>
-                    <p>
-                        <i class="ti-email text-success"></i>
-                        contactus@example.com
-                    </p>
-                </div>
-                <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
-                    <h4>Video</h4>
-                    <p>
-                        Feel free to contact us if you have any questions!
-                    </p>
-                    <p>
-                        <i class="ti-headphone-alt text-info"></i>
-                        +123456789
-                    </p>
-                    <p>
-                        <i class="ti-email text-success"></i>
-                        contactus@example.com
-                    </p>
-                </div>
-                <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
-                    <h4>Picture</h4>
-                    <p>
-                        Feel free to contact us if you have any questions!
-                    </p>
-                    <p>
-                        <i class="ti-headphone-alt text-info"></i>
-                        +123456789
-                    </p>
-                    <p>
-                        <i class="ti-email text-success"></i>
-                        contactus@example.com
-                    </p>
-                </div>
-                <div class="tab-pane fade" id="Notice-1" role="tabpanel" aria-labelledby="Notice-tab">
-                    <h4>Notice</h4>
-                    <p>
-                        Feel free to contact us if you have any questions!
-                    </p>
-                    <p>
-                        <i class="ti-headphone-alt text-info"></i>
-                        +123456789
-                    </p>
-                    <p>
-                        <i class="ti-email text-success"></i>
-                        contactus@example.com
-                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
