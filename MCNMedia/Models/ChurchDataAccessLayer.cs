@@ -97,10 +97,10 @@ namespace MCNMedia_Dev.Models
         public void AddChurch(Church church)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("UserId",church.UpdateBy);
             _dc.AddParameter("ChurchName", church.ChurchName);
             _dc.AddParameter("ClientTypeId", church.ClientTypeId);
-            _dc.AddParameter("UniqueChurchId", church.UniqueChurchId);
+            _dc.AddParameter("UniqueChurchId", Guid.NewGuid().ToString());
             _dc.AddParameter("Address", church.Address);
             _dc.AddParameter("Town", church.Town);
             _dc.AddParameter("CountyId", church.CountyId);
@@ -109,10 +109,10 @@ namespace MCNMedia_Dev.Models
             _dc.AddParameter("Phone", church.Phone);
             _dc.AddParameter("ImageURL", church.ImageURl);
             _dc.AddParameter("Blurb", church.Blurb);
-            _dc.AddParameter("Slug", church.Slug);
+            _dc.AddParameter("Slug", Guid.NewGuid().ToString());
             _dc.AddParameter("Notice", church.Notice);
             _dc.AddParameter("Featured", church.Featured);
-            _dc.AddParameter("UniqueIdentifier", church.UniqueIdentifier);
+            _dc.AddParameter("UniqueIdentifier", Guid.NewGuid().ToString());
             _dc.AddParameter("RepeatRecordings", church.RepeatRecordings);
             _dc.AddParameter("Switch", church.Switch);
             _dc.AddParameter("ShowOnWebsite", church.ShowOnWebsite);
