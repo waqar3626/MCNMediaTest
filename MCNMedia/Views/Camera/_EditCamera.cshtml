@@ -3,34 +3,74 @@
 
 }
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-6">
+        <video width="320" height="240" controls>
+            <source src=http://techslides.com/demos/sample-videos/small.webm type=video/webm>
+            <source src=http://techslides.com/demos/sample-videos/small.ogv type=video/ogg>
+            <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+            <source src=http://techslides.com/demos/sample-videos/small.3gp type=video/3gp>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="col-sm-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <input type="hidden" asp-for="Cameras.CameraId" id="CamId" />
             <div class="form-group">
-                <label asp-for="Cameras.CameraName" class="control-label"></label>
-                <input asp-for="Cameras.CameraName" class="form-control" />
+                <label asp-for="Cameras.CameraName" class="control-label">Tab Name</label>
+                <input asp-for="Cameras.CameraName" class="form-control" id="CamName" />
                 <span asp-validation-for="Cameras.CameraName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cameras.CameraUrl" class="control-label"></label>
+                <label asp-for="Cameras.CameraUrl" class="control-label">Camera RTSP</label>
                 <input asp-for="Cameras.CameraUrl" class="form-control" />
                 <span asp-validation-for="Cameras.CameraUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cameras.HttpPort" class="control-label"></label>
+                <label asp-for="Cameras.HttpPort" class="control-label">HTTP Port</label>
                 <input asp-for="Cameras.HttpPort" class="form-control" />
                 <span asp-validation-for="Cameras.HttpPort" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cameras.RtspPort" class="control-label"></label>
+                <label asp-for="Cameras.RtspPort" class="control-label">RTSP Port</label>
                 <input asp-for="Cameras.RtspPort" class="form-control" />
                 <span asp-validation-for="Cameras.RtspPort" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a onclick="Openit(CamId.value)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Update</i></a>
+                @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
+                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
             </div>
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    function Openit(camId) {
+        
+        var CameraId = $('#CamId').val();
+        var CameraName = $('#CamName').val();
+        var CameraUrl = $('#Cameras_CameraUrl').val();
+        var HttpPort = $('#Cameras_HttpPort').val();
+        var RtspPort = $('#Cameras_RtspPort').val();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Camera/UpdateCamera/",
+            //data: camObj,
+
+            data: { CameraId: CameraId, CameraName: CameraName, CameraUrl: CameraUrl, HttpPort: HttpPort, RtspPort: RtspPort },
+
+            //   contentType: "application/json;charset=UTF-8",
+            //  dataType: "json",
+            success: function (result) {
+                loadData();
+                $('#EditModal').modal('hide');  
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>

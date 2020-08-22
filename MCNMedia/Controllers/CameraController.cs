@@ -32,12 +32,12 @@ namespace MCNMedia_Dev.Controllers
 
                 camDataAccess.AddCamera(cam.Cameras);
                 gm.ResultMessage = "Camera Added Sucessfully";
-          
+
                 gm.LCameras = camDataAccess.GetAllCameras();
                 HttpContext.Session.SetString("TabName", "Camera");
                 var queryString = new { chId = churchId };
 
-               
+
                 return RedirectToAction("ChurchDetails", "Church", queryString);
             }
             return RedirectToAction("Listchurch", "Church");
@@ -49,9 +49,39 @@ namespace MCNMedia_Dev.Controllers
 
             GenericModel gm = new GenericModel();
             gm.Cameras = camDataAccess.GetCameraById(id);
-          //  return View(gm);
+            //  return View(gm);
             return PartialView("_EditCamera", gm);
         }
-       
+
+        public IActionResult DeleteCamera(int id)
+        {
+
+            GenericModel gm = new GenericModel();
+            bool res = camDataAccess.DeleteCamera(id);
+            return Json(res);
+        }
+
+        public JsonResult GetAllCameras()
+        {
+            List<Camera> cameraInfo = camDataAccess.GetAllCameras().ToList();
+            return Json(cameraInfo);
+            // return Json(new { data = cameraInfo });
+
+        }
+
+        public JsonResult UpdateCamera(string CameraId, string CameraName, string CameraUrl, string HttpPort, string RtspPort)
+        {
+            Camera CamUpdate = new Camera();
+            CamUpdate.CameraId = Convert.ToInt32(CameraId);
+            CamUpdate.CameraName = CameraName;
+            CamUpdate.CameraUrl = CameraUrl;
+            CamUpdate.HttpPort = HttpPort;
+            CamUpdate.RtspPort = RtspPort;
+
+            int res = camDataAccess.Updatecamera(CamUpdate);
+
+
+            return Json(res);
+        }
     }
 }

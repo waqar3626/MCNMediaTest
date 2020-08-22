@@ -93,6 +93,25 @@ namespace MCNMedia_Dev.Models
             }
             return camera;
         }
+
+        public int Updatecamera(Camera camera)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", camera.CameraId);
+            _dc.AddParameter("CamName", camera.CameraName);
+            _dc.AddParameter("CamRtsp", camera.RtspPort);
+            _dc.AddParameter("CamHttp", camera.HttpPort);
+            _dc.AddParameter("UpdateBy", 1);
+
+            return _dc.Execute("spcamera_Update");
+        }
+        public bool DeleteCamera(int camId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", camId);
+            _dc.AddParameter("UpdatedBy", 1);
+            return _dc.ReturnBool("spCamera_Delete");
+        }
     }
 
     
