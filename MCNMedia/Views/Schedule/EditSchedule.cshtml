@@ -4,6 +4,11 @@
     ViewData["Title"] = "EditSchedule";
 }
 
+
+@{
+    List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
+}
+
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
@@ -15,10 +20,9 @@
                 <label asp-for="ChurchId" class="col-sm-3 col-form-label">Church</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
-                    @*<input asp-for="RoleId" class="form-control text-small" placeholder="Role" />*@
-                    <select asp-for="ChurchId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
-                        <option>--Select Church--</option>
-                    </select>
+                    @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                    @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control" })
+                    <span asp-validation-for="ChurchId" class="text-danger"></span>
                 </div>
             </div>
 

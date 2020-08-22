@@ -17,14 +17,14 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult AddSchedule()
         {
-            LoadDDLChurch();
+            
             return View();
         }
 
         [HttpGet]
         public IActionResult AdddSchedule()
         {
-            LoadDDLChurch();
+            
             return View();
         }
 
@@ -32,7 +32,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost()]
         public IActionResult AddSchedule(Schedule sch)
         {
-            LoadDDLChurch();
+            
             scheduleDataAccess.AddSchedule(sch);
             return RedirectToAction("ListSchedule");
         }
@@ -65,7 +65,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 return NotFound();
             }
-            LoadDDLChurch();
+            
             return View(schedule);
         }
 
@@ -84,18 +84,6 @@ namespace MCNMedia_Dev.Controllers
         {
             scheduleDataAccess.DeleteSchedule(id);
             return RedirectToAction("ListSchedule");
-        }
-
-        public void LoadDDLChurch()
-        {
-            IEnumerable<DDLChurch> churches = scheduleDataAccess.GetDDLChurch();
-            List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var item in churches)
-            {
-                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
-            }
-            ViewBag.State = selectListItems;
-
         }
     }
 }
