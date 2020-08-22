@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Schedule>
+
+@{
+    ViewData["Title"] = "ListSchedule";
+}
+
+<div class="card">
+    <div class="card-body">
+        <a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add User</a>
+        <h3>Manage Schedules</h3>
+        <br />
+        <div class="">
+            @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
+            {
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @*<th>
+                                    @Html.DisplayNameFor(model => model.UserId)
+                                </th>*@
+                            <th>
+                                Church Name
+                            </th> 
+                            <th>
+                                Event Name
+                            </th>
+                            <th>
+                                Event Date
+                            </th>
+                            <th>
+                                Event Time
+                            </th>
+                            <th>
+                                Event Day
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.UserId)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                </td> 
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EventName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EventDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EventTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EventDay)
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    @*<input type="hidden" asp-for="UserId" />*@
+                                    @*<Button class="btn btn-danger btn-sm" data-toggle="tooltip" asp-action="Delete"><i class="fa fa-trash"></i></Button>*@
+                                    <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
