@@ -104,22 +104,5 @@ namespace MCNMedia_Dev.Repository
             _dc.ReturnBool("spSchedule_Delete");
         }
 
-        public IEnumerable<DDLChurch> GetDDLChurch()
-        {
-            List<DDLChurch> Balobj = new List<DDLChurch>();
-            _dc.ClearParameters();
-            DataTable dataTable = _dc.ReturnDataTable("spchurches_Get");
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                DDLChurch church = new DDLChurch();
-                church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                church.ChurchName = dataRow["ChurchName"].ToString();
-                Balobj.Add(church);
-            }
-            return Balobj;
-        }
-
-
     }
 }
