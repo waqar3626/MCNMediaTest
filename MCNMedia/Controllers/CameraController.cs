@@ -6,6 +6,7 @@ using MCNMedia_Dev.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using Microsoft.AspNetCore.Http;
+using MCNMedia_Dev.Repository;
 
 namespace MCNMedia_Dev.Controllers
 {

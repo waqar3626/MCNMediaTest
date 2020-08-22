@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static MCNMedia_Dev.Models.Church;
 using Microsoft.AspNetCore.Http;
+using MCNMedia_Dev.Repository;
 
 namespace MCNMedia_Dev.Controllers
 {

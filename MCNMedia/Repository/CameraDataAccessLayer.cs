@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using MCNMedia_Dev.Models;
 
-namespace MCNMedia_Dev.Models
+namespace MCNMedia_Dev.Repository
 {
     public class CameraDataAccessLayer
     {

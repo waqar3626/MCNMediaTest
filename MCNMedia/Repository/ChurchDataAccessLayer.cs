@@ -4,8 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using static MCNMedia_Dev.Models.Church;
+using MCNMedia_Dev.Models;
 
-namespace MCNMedia_Dev.Models
+namespace MCNMedia_Dev.Repository
 {
     public class ChurchDataAccessLayer
     {
