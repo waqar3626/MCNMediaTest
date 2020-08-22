@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Recording>
+
+@{
+    ViewData["Title"] = "ListRecording";
+}
+
+
+
+<div class="card">
+    <div class="card-body">
+        <a id="ADDEmployee" class="btn btn-success btn-sm float-right" href="../Recording/AddRecording"> <i class="fa fa-plus"></i> Add Recording</a>
+        <h3>Manage Recordings</h3>
+        <br />
+        <div class="">
+            @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
+            {
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @*<th>
+                                    @Html.DisplayNameFor(model => model.RecordingId)
+                                </th>*@
+                            <th>
+                               Title
+                            </th>
+                            <th>
+                                URL
+                            </th>
+                            <th>
+                                Church
+                            </th>
+                            <th>
+                               Date
+                            </th>
+                            <th>
+                                Time
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.RecordingId)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RecordingTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RecordingURl)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Time)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "Recording", new { id=item.RecordingId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+
+            }
+        </div>
+
+    </div>
+</div>
