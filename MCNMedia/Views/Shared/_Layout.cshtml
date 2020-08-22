@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+
+    <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
     <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -380,6 +383,19 @@
                             <span class="menu-title">Church Details</span>
                         </a>
                     </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Recording/AddRecording">
+                            <i class="mdi mdi-account-multiple menu-icon"></i>
+                            <span class="menu-title">Add Recording</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Recording/ListRecording">
+                            <i class="mdi mdi-account-multiple menu-icon"></i>
+                            <span class="menu-title">Recording List</span>
+                        </a>
+                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -622,11 +638,11 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                <div class="container">
-                <main role="main">
-                    @RenderBody()
-                </main>
-                </div>
+                    <div class="container">
+                        <main role="main">
+                            @RenderBody()
+                        </main>
+                    </div>
                 </div>
                 <!-- content-wrapper ends -->
                 <!-- partial:~/theme/partials/_footer.html -->
@@ -658,7 +674,18 @@
     <script src="~/theme/js/template.js"></script>
     <script src="~/theme/js/settings.js"></script>
     <script src="~/theme/js/todolist.js"></script>
+
     <!-- endinject -->
+    <!-- DateTimePicker -->
+    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/theme/vendors/jquery-asColor/jquery-asColor.min.js"></script>
+    <script src="~/theme/vendors/jquery-asGradient/jquery-asGradient.min.js"></script>
+    <script src="~/theme/vendors/jquery-asColorPicker/jquery-asColorPicker.min.js"></script>
+    <script src="~/theme/vendors/moment/moment.min.js"></script>
+    <script src="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/theme/js/formpickers.js"></script>
+    <!--End DateTimePicker-->
 
 
     <footer class="border-top footer text-muted">
