@@ -17,8 +17,13 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Select the Client Type Id")]
         public int ClientTypeId { get; set; }
 
-        [Required(ErrorMessage = "Select the Unique church Id")]
-        public string UniqueChurchId { get; set; }
+        private string _UniqueChurchId = string.Empty;
+        public string UniqueChurchId
+        {
+            get { return _UniqueChurchId; }
+            set => _UniqueChurchId = Guid.NewGuid().ToString();
+
+        }
 
         [Required(ErrorMessage = "Address is Required")]
         public string Address { get; set; }
@@ -38,31 +43,33 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Phone Number is Required")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "Image URL is Required")]
+        public int UpdateBy { get; set; }
         public string ImageURl { get; set; }
-
-        [Required(ErrorMessage = "Blurb is Required")]
         public string Blurb { get; set; }
 
-        [Required(ErrorMessage = "Slug is Required")]
-        public string Slug { get; set; }
+        private string _Slug = string.Empty;
+        public string Slug
+        {
+            get { return _Slug; }
+            set => _Slug = Guid.NewGuid().ToString();
+        }
 
-        [Required(ErrorMessage = "Notice is Required")]
         public string Notice { get; set;}
 
-        [Required(ErrorMessage = "Featured is Required")]
         public int Featured { get; set; }
-
-        [Required(ErrorMessage = "Unique Identifier is Required")]
-        public string UniqueIdentifier { get; set; }
-
-        [Required(ErrorMessage = "Repeat Recordings is Required")]
+        
+        private string _UniqueIdentifier = string.Empty;
+        public string UniqueIdentifier
+        {
+            get { return _UniqueIdentifier; }
+            set => _UniqueIdentifier = Guid.NewGuid().ToString();
+        }
         public Boolean RepeatRecordings { get; set; }
-        [Required(ErrorMessage = "Switch is Required")]
+       
         public int Switch { get; set; }
-        [Required(ErrorMessage = "ShowOnWebsite is Required")]
+     
         public Boolean ShowOnWebsite { get; set; }
-        [Required(ErrorMessage = "DisplayOrder is Required")]
+     
         public int DisplayOrder { get; set; }
 
         public string ClientTypeTitle { get; set; }

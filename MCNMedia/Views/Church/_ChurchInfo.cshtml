@@ -29,13 +29,7 @@
                         <span asp-validation-for="Churches.ClientTypeId" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.UniqueChurchId" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.UniqueChurchId" class="form-control" />
-                        <span asp-validation-for="Churches.UniqueChurchId" class="text-danger"></span>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -93,86 +87,13 @@
                         <span asp-validation-for="Churches.Phone" class="text-danger"></span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Need a Title</h4>
-                <div class="form-group row">
-                    <label asp-for="Churches.ImageURl" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.ImageURl" class="form-control" />
-                        <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.Blurb" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.Blurb" class="form-control" />
-                        <span asp-validation-for="Churches.Blurb" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.Slug" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.Slug" class="form-control" />
-                        <span asp-validation-for="Churches.Slug" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.Notice" class="col-sm-3 col-form-label">Notice</label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.Notice" class="form-control" />
-                        <span asp-validation-for="Churches.Notice" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.Featured" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.Featured" class="form-control" />
-                        <span asp-validation-for="Churches.Featured" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.UniqueIdentifier" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.UniqueIdentifier" class="form-control" />
-                        <span asp-validation-for="Churches.UniqueIdentifier" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.RepeatRecordings" class="col-sm-3 col-form-label"> Repeat Recording</label>
-                    <div class="col-sm-9">
-                        <input class="" asp-for="Churches.RepeatRecordings" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.Switch" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.Switch" class="form-control" />
-                        <span asp-validation-for="Churches.Switch" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Churches.ShowOnWebsite" /> @Html.DisplayNameFor(model => model.Churches.ShowOnWebsite)
-                    </label>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.DisplayOrder" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.DisplayOrder" class="form-control" />
-                        <span asp-validation-for="Churches.DisplayOrder" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="float-right">
-                    <button type="submit" value="Update" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update</button>
-                    <a id="back" class="btn btn-secondary btn-sm  " href="../Church/Listchurch"><i class="fa fa-chevron-left"></i> Back</a>
-                </div>
-
-            </div>
-            </div>
-        </div>
-        }
+    
+    <div class="float-right">
+        <button type="submit" value="Update" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update</button>
+        <a id="back" class="btn btn-secondary btn-sm  " href="../Church/Listchurch"><i class="fa fa-chevron-left"></i> Back</a>
+    </div>
+}

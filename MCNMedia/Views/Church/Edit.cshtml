@@ -27,11 +27,7 @@
                 </select>
           
             </div>
-            <div class="form-group">
-                <label asp-for="UniqueChurchId" class="control-label"></label>
-                <input asp-for="UniqueChurchId" class="form-control" />
-                <span asp-validation-for="UniqueChurchId" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
@@ -65,56 +61,7 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageURl" class="control-label"></label>
-                <input asp-for="ImageURl" class="form-control" />
-                <span asp-validation-for="ImageURl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Blurb" class="control-label"></label>
-                <input asp-for="Blurb" class="form-control" />
-                <span asp-validation-for="Blurb" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notice" class="control-label"></label>
-                <input asp-for="Notice" class="form-control" />
-                <span asp-validation-for="Notice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Featured" class="control-label"></label>
-                <input asp-for="Featured" class="form-control" />
-                <span asp-validation-for="Featured" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UniqueIdentifier" class="control-label"></label>
-                <input asp-for="UniqueIdentifier" class="form-control" />
-                <span asp-validation-for="UniqueIdentifier" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="RepeatRecordings" /> @Html.DisplayNameFor(model => model.RepeatRecordings)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Switch" class="control-label"></label>
-                <input asp-for="Switch" class="form-control" />
-                <span asp-validation-for="Switch" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ShowOnWebsite" /> @Html.DisplayNameFor(model => model.ShowOnWebsite)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DisplayOrder" class="control-label"></label>
-                <input asp-for="DisplayOrder" class="form-control" />
-                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

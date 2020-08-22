@@ -124,25 +124,17 @@ namespace MCNMedia_Dev.Models
         public void UpdateChurch(Church church)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("ChurchId", church.ChurchId);
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("ChurchID1", church.ChurchId);
+            _dc.AddParameter("UserId", church.UpdateBy);
             _dc.AddParameter("ChurchName", church.ChurchName);
             _dc.AddParameter("ClientTypeId", church.ClientTypeId);
-            _dc.AddParameter("UniqueChurchId", church.UniqueChurchId);
             _dc.AddParameter("Address", church.Address);
             _dc.AddParameter("Town", church.Town);
             _dc.AddParameter("CountyId", church.CountyId);
             _dc.AddParameter("Website", church.Website);
             _dc.AddParameter("EmailAddress", church.EmailAddress);
             _dc.AddParameter("Phone", church.Phone);
-            _dc.AddParameter("ImageURL", church.ImageURl);
-            _dc.AddParameter("Blurb", church.Blurb);
-            _dc.AddParameter("Slug", church.Slug);
-            _dc.AddParameter("Notice", church.Notice);
-            _dc.AddParameter("Featured", church.Featured);
-            _dc.AddParameter("UniqueIdentifier", church.UniqueIdentifier);
-            _dc.AddParameter("RepeatRecordings", church.RepeatRecordings);
-            _dc.AddParameter("Switch", church.Switch);
+            _dc.AddParameter("ImageURL", "Empty");
             _dc.AddParameter("ShowOnWebsite", church.ShowOnWebsite);
             _dc.AddParameter("DisplayOrder", church.DisplayOrder);
             _dc.Execute("spChurch_Update");
@@ -191,18 +183,26 @@ namespace MCNMedia_Dev.Models
             _dc.ReturnBool("spChurch_Delete");
         }
 
+        public DataTable GetChurchDDL()
+        {
+            _dc.ClearParameters();
+            return _dc.ReturnDataTable("spchurches_Get");
+
+        }
+
         public DataTable GetClientTypeList()
-        { 
+        {
             _dc.ClearParameters();
             return _dc.ReturnDataTable("spClientTypes_Get");
-                       
+
         }
 
         public DataTable GetCountyList()
-        { 
+        {
             _dc.ClearParameters();
-             return _dc.ReturnDataTable("spCounty_Get");
+            return _dc.ReturnDataTable("spCounty_Get");
 
         }
     }
 }
+    
