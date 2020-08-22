@@ -11,7 +11,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class RecordingController : Controller
     {
-        RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer("a");
+        RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
         [HttpGet]
         public IActionResult AddRecording()
         {

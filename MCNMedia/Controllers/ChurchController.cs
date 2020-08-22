@@ -15,8 +15,8 @@ namespace MCNMedia_Dev.Controllers
     public class ChurchController : Controller
     {
 
-        ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer("a");
-        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer("a");
+        ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
+        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
         [HttpGet]
         public IActionResult AddChurch()

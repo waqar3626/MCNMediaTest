@@ -10,16 +10,9 @@ namespace MCNMedia_Dev.Repository
     public class CameraDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-        private string v;
 
         public CameraDataAccessLayer()
         {
-            _dc = new AwesomeDal.DatabaseConnect();
-        }
-
-        public CameraDataAccessLayer(string v)
-        {
-            this.v = v;
             _dc = new AwesomeDal.DatabaseConnect();
         }
 

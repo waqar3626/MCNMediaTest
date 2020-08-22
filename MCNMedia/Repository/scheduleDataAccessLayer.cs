@@ -10,17 +10,11 @@ namespace MCNMedia_Dev.Repository
     public class scheduleDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-        private string v;
+
         public scheduleDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
-        public scheduleDataAccessLayer(string v)
-        {
-            this.v = v;
-            _dc = new AwesomeDal.DatabaseConnect();
-        }
-
 
         //To Add new Schedule record    
         public void AddSchedule(Schedule schedules)

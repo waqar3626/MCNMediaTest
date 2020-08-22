@@ -11,18 +11,11 @@ namespace MCNMedia_Dev.Repository
     public class ChurchDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-        private string v;
 
         public ChurchDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
 
-        }
-
-        public ChurchDataAccessLayer(string v)
-        {
-            this.v = v;
-            _dc = new AwesomeDal.DatabaseConnect();
         }
 
         //To View all Churches details 

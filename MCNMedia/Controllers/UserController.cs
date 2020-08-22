@@ -14,7 +14,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class UserController : Controller
     {
-        UserDataAccessLayer userDataAccess = new UserDataAccessLayer("a");
+        UserDataAccessLayer userDataAccess = new UserDataAccessLayer();
 
         [HttpGet]
         public IActionResult AddUser()

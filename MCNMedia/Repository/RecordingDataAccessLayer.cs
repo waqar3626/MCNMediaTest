@@ -10,18 +10,12 @@ namespace MCNMedia_Dev.Repository
     public class RecordingDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-        private string v;
 
         public RecordingDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
 
-        public RecordingDataAccessLayer(string v)
-        {
-            this.v = v;
-            _dc = new AwesomeDal.DatabaseConnect();
-        }
         //To View all Recordings details
         public IEnumerable<Recording> GetAllRecording()
         {

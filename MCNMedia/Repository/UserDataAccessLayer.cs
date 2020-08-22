@@ -12,16 +12,8 @@ namespace MCNMedia_Dev.Repository
     public class UserDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-        private string v;
-
         public UserDataAccessLayer()
         {
-            _dc = new AwesomeDal.DatabaseConnect();
-        }
-
-        public UserDataAccessLayer(string v)
-        {
-            this.v = v;
             _dc = new AwesomeDal.DatabaseConnect();
         }
 

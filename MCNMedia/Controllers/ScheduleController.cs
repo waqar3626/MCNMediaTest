@@ -11,7 +11,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class ScheduleController : Controller
     {
-        scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer("a");
+        scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();
 
 
         [HttpGet]

@@ -12,7 +12,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class CameraController : Controller
     {
-        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer("a");
+        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
         GenericModel gm = new GenericModel();
         public IActionResult Index()
         {
