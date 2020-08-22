@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static MCNMedia_Dev.Models.Church;
 using Microsoft.AspNetCore.Http;
 
 namespace MCNMedia_Dev.Controllers
@@ -19,6 +20,8 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult AddChurch()
         {
+            LoadClientDDL();
+            LoadCountyDDL();
             return View();
         }
 
@@ -45,21 +48,8 @@ namespace MCNMedia_Dev.Controllers
             {
                 return NotFound();
             }
-            return View(church);
-        }
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-            Church church = churchDataAccess.GetChurchData(id);
-            if (church == null)
-            {
-                return NotFound();
-            }
+            LoadClientDDL();
+            LoadCountyDDL();
             return View(church);
         }
 
@@ -68,12 +58,9 @@ namespace MCNMedia_Dev.Controllers
         {
             churchDataAccess.AddChurch(church);
             return RedirectToAction("Listchurch");
-
         }
 
-
         [HttpPost]
-
         public IActionResult Edit(int id, [Bind] Church church)
         {
             if (id != church.ChurchId)
@@ -87,9 +74,8 @@ namespace MCNMedia_Dev.Controllers
             }
             return View(church);
         }
-        [HttpPost, ActionName("Delete")]
 
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult Delete(int id)
         {
             churchDataAccess.DeleteChurch(id);
             return RedirectToAction("Listchurch");
@@ -119,6 +105,29 @@ namespace MCNMedia_Dev.Controllers
             return RedirectToAction("Listchurch", "Church");
         }
 
+        public void LoadClientDDL()
+        {
+            IEnumerable<ClientType> clientList = churchDataAccess.GetClients();
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (var item in clientList)
+            {
+                selectListItems.Add(new SelectListItem { Text = item.ClientTypeTitle.ToString(), Value = item.ClientTypeId.ToString() });
+            }
+            ViewBag.ClientTypes = selectListItems;
+        }
+
+            public void LoadCountyDDL()
+        {
+            IEnumerable<Counties> countyList = churchDataAccess.GetCounties();
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (var item in countyList)
+            {
+                selectListItems.Add(new SelectListItem { Text = item.CountyName.ToString(), Value = item.CountyId.ToString() });
+            }
+            ViewBag.Counties = selectListItems;
+
+        }
+
 
         [HttpPost]
 
@@ -139,6 +148,5 @@ namespace MCNMedia_Dev.Controllers
             }
             return View(church);
         }
-
     }
 }

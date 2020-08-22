@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using static MCNMedia_Dev.Models.Church;
 
 namespace MCNMedia_Dev.Models
 {
@@ -36,11 +37,11 @@ namespace MCNMedia_Dev.Models
                 Church church = new Church();
                 church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 church.ChurchName = dataRow["ChurchName"].ToString();
-                church.ClientTypeId = Convert.ToInt32(dataRow["ClientTypeId"]);
+                church.ClientTypeTitle = dataRow["ClientTypeTitle"].ToString();
                 church.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
                 church.Address = dataRow["Address"].ToString();
                 church.Town = dataRow["Town"].ToString();
-                church.CountyId = Convert.ToInt32(dataRow["CountyId"]);
+                church.CountyName = dataRow["CountyName"].ToString();
                 church.Website = dataRow["Website"].ToString();
                 church.EmailAddress = dataRow["EmailAddress"].ToString();
                 church.Phone = dataRow["Phone"].ToString();
@@ -61,6 +62,37 @@ namespace MCNMedia_Dev.Models
             return Balobj;
         }
 
+        public IEnumerable<ClientType> GetClients()
+        {
+            List<ClientType> Balobj = new List<ClientType>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spClientTypes_Get");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                ClientType client = new ClientType();
+                client.ClientTypeId = Convert.ToInt32(dataRow["ClientTypeId"]);
+                client.ClientTypeTitle = dataRow["ClientTypeTitle"].ToString();
+                Balobj.Add(client);
+            }
+            return Balobj;
+        }
+
+        public IEnumerable<Counties> GetCounties()
+        {
+            List<Counties> Balobj = new List<Counties>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spCounties_Get");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Counties county = new Counties();
+                county.CountyId = Convert.ToInt32(dataRow["CountyId"]);
+                county.CountyName = dataRow["CountyName"].ToString();
+                Balobj.Add(county);
+            }
+            return Balobj;
+        }
         //To Add new Church record    
         public void AddChurch(Church church)
         {
