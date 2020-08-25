@@ -21,13 +21,6 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult AdddSchedule()
-        {
-            
-            return View();
-        }
-
 
         [HttpPost()]
         public IActionResult AddSchedule(Schedule sch)
