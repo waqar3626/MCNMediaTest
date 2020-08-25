@@ -5,8 +5,8 @@
     List<SelectListItem>
         CountyList = Lists.GetCountyList();
 }
-@using (Html.BeginForm("UpdateChurch", "Church", FormMethod.Post))
-{
+@using (Html.BeginForm("UpdateChurch", "Church", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -14,82 +14,98 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Churches.ChurchId" />
                 @*<input type="hidden" value="Churches.ChurchId" id="ChurchId" name="ChurchId" />*@
-                <div class="form-group row">
-                    <label asp-for="Churches.ChurchName" class="col-sm-3 col-form-label">Church Name</label>
-                    <div class="col-sm-9">
-                        <input asp-for="Churches.ChurchName" class="form-control" />
-                        <span asp-validation-for="Churches.ChurchName" class="text-danger"></span>
+                <div class="form-group">
+                    <div class="col-lg-4 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <input asp-for="Churches.ImageURl" type="file" name="ImageURl2" class="dropify" />
+                                <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label asp-for="Churches.ClientTypeId" class="col-sm-3 col-form-label">Client Type</label>
-                    <div class="col-sm-9">
-                        @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                        @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })
-                        <span asp-validation-for="Churches.ClientTypeId" class="text-danger"></span>
+                <div class="form-group" style="margin-left:450px;">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label asp-for="Churches.ChurchName">Church Name</label>
+                            <input asp-for="Churches.ChurchName" class="form-control" />
+                            <span asp-validation-for="Churches.ChurchName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label asp-for="Churches.ClientTypeId">Client Type</label>
+                            @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                            @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })
+                            <span asp-validation-for="Churches.ClientTypeId" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
-    <div class="grid-margin stretch-card">
+    <div class="form-group row">
+    <div class="col-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Location Details</h4>
                 <div class="form-group row">
-                    <label asp-for="Churches.Address" class="col-sm-3 col-form-label">Address</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
+                        <label asp-for="Churches.Address">Address</label>
                         <input asp-for="Churches.Address" class="form-control" />
                         <span asp-validation-for="Churches.Address" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Churches.Town" class="col-sm-3 col-form-label">Town</label>
-                    <div class="col-sm-3">
+                   
+                    <div class="col-sm-6">
+                        <label asp-for="Churches.Town">Town</label>
                         <input asp-for="Churches.Town" class="form-control" />
                         <span asp-validation-for="Churches.Town" class="text-danger"></span>
                     </div>
                     @*</div>
                         <div class="form-group row">*@
-                    <label asp-for="Churches.CountyId" class="col-sm-3 col-form-label text-center">County</label>
-                    <div class="col-sm-3">
-                        @*<input asp-for="Churches.CountyId" class="form-control" />*@
-                        @Html.DropDownList("Churches.CountyId", CountyList, new { @class = "form-control" })
-                        <span asp-validation-for="Churches.CountyId" class="text-danger"></span>
-                    </div>
+                    
+                <div class="col-sm-6">
+                    <label asp-for="Churches.CountyId" class=" text-center">County</label>
+                    @*<input asp-for="Churches.CountyId" class="form-control" />*@
+                    @Html.DropDownList("Churches.CountyId", CountyList, new { @class = "form-control" })
+                    <span asp-validation-for="Churches.CountyId" class="text-danger"></span>
+                </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="grid-margin stretch-card">
+    <div class="col-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Contact Details</h4>
                 <div class="form-group row">
-                    <label asp-for="Churches.Website" class="col-sm-3 col-form-label">Website</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
+                        <label asp-for="Churches.Website">Website</label>
                         <input asp-for="Churches.Website" class="form-control" />
                         <span asp-validation-for="Churches.Website" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Churches.EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
+                        <label asp-for="Churches.EmailAddress">Email Address</label>
                         <input asp-for="Churches.EmailAddress" class="form-control" />
                         <span asp-validation-for="Churches.EmailAddress" class="text-danger"></span>
                     </div>
                     @*</div>
                         <div class="form-group row">*@
-                    <label asp-for="Churches.Phone" class="col-sm-3 col-form-label text-center">Phone</label>
-                    <div class="col-sm-3">
-                        <input asp-for="Churches.Phone" class="form-control" />
-                        <span asp-validation-for="Churches.Phone" class="text-danger"></span>
-                    </div>
+                <div class="col-sm-6">
+                    <label asp-for="Churches.Phone" class=" text-center">Phone</label>
+                    <input asp-for="Churches.Phone" class="form-control" />
+                    <span asp-validation-for="Churches.Phone" class="text-danger"></span>
+                </div>
                 </div>
 
             </div>
         </div>
+    </div>
     </div>
     
     <div class="float-right">

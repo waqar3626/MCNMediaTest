@@ -128,7 +128,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("Website", church.Website);
             _dc.AddParameter("EmailAddress", church.EmailAddress);
             _dc.AddParameter("Phone", church.Phone);
-            _dc.AddParameter("ImageURL", "Empty");
+            _dc.AddParameter("ImageURL", church.ImageURl);
             _dc.AddParameter("ShowOnWebsite", church.ShowOnWebsite);
             _dc.AddParameter("DisplayOrder", church.DisplayOrder);
             _dc.Execute("spChurch_Update");

@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static MCNMedia_Dev.Models.Church;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using MCNMedia_Dev.Repository;
+using System.IO;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -17,6 +19,15 @@ namespace MCNMedia_Dev.Controllers
 
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+
+        private IHostingEnvironment environment;
+
+        public ChurchController(IHostingEnvironment _environment)
+        {
+            environment = _environment;
+        }
+
+
 
         [HttpGet]
         public IActionResult AddChurch()
@@ -56,8 +67,24 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost()]
-        public IActionResult AddChurch(Church church)
+        public IActionResult AddChurch(Church church, IFormFile imageURl2)
         {
+            string contentPath = this.environment.ContentRootPath;
+            string dirPath = Path.Combine("Uploads", "ProfileImages");
+            string path = Path.Combine(contentPath, dirPath);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+
+            string fileName = Path.GetFileName(imageURl2.FileName);
+            using (var stream = System.IO.File.Create(Path.Combine(path, fileName)))
+            {
+                imageURl2.CopyTo(stream);
+                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+            }
+            church.ImageURl = Path.Combine(dirPath, fileName);
             churchDataAccess.AddChurch(church);
             return RedirectToAction("Listchurch");
         }
@@ -118,7 +145,7 @@ namespace MCNMedia_Dev.Controllers
             ViewBag.ClientTypes = selectListItems;
         }
 
-            public void LoadCountyDDL()
+        public void LoadCountyDDL()
         {
             IEnumerable<Counties> countyList = churchDataAccess.GetCounties();
             List<SelectListItem> selectListItems = new List<SelectListItem>();
@@ -133,21 +160,38 @@ namespace MCNMedia_Dev.Controllers
 
         [HttpPost]
 
-        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church)
+        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2)
         {
-            //if (ChurchId != church.Churches.ChurchId)
-            //{
-            //    return NotFound();
-            //}
+
+            string contentPath = this.environment.ContentRootPath;
+            string dirPath = Path.Combine("Uploads", "ProfileImages");
+            string path = Path.Combine(contentPath, dirPath);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+
+            string fileName = Path.GetFileName(imageURl2.FileName);
+            using (var stream = System.IO.File.Create(Path.Combine(path, fileName)))
+            {
+                imageURl2.CopyTo(stream);
+                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+            }
+
+            church.Churches.ImageURl = Path.Combine(dirPath, fileName);
+
             ChurchId = church.Churches.ChurchId;
 
             if (ModelState.IsValid)
             {
+                
                 churchDataAccess.UpdateChurch(church.Churches);
 
                 var queryString = new { chId = ChurchId };
                 return RedirectToAction("ChurchDetails", "Church", queryString);
             }
+
             return View(church);
         }
     }
