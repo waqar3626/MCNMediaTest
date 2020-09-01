@@ -9,7 +9,8 @@ namespace MCNMedia_Dev.Models
     {
         public Church Churches { get; set; }
         public Camera Cameras { get; set; }
-
+        public MediaChurch Pictures { get; set; }
+        public IEnumerable<MediaChurch> ListPicture { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
 
         public string ResultMessage { get; set; } = "";

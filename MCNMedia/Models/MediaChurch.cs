@@ -12,10 +12,12 @@ namespace MCNMedia_Dev.Models
         public string MediaType { get; set; }
         public string MediaURL { get; set; }
         public string MediaName { get; set; }
-        public string CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         public int CreatedBy { get; set; }
-        public string UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public int UpdatedBy { get; set; }
+        public int ChurchId { get; set; }
+        public string ChurchName { get; set; }
 
     }
 

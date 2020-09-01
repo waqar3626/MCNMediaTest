@@ -1,0 +1,78 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+<div class="row">
+    <div class="col-sm-6">
+        <video width="320" height="240" controls>
+            <source src=http://techslides.com/demos/sample-videos/small.webm type=video/webm>
+            <source src=http://techslides.com/demos/sample-videos/small.ogv type=video/ogg>
+            <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+            <source src=http://techslides.com/demos/sample-videos/small.3gp type=video/3gp>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="col-sm-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Pictures.ChurchMediaId" id="ChurchMedId" />
+            @*<div class="form-group">
+                <label asp-for="Pictures.MediaName" class="control-label">Media Name</label>
+                <input asp-for="Pictures.MediaName" class="form-control" id="MediaName" />
+                <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Pictures.TabName" class="control-label">Tab Name</label>
+                <input asp-for="Pictures.TabName" class="form-control" />
+                <span asp-validation-for="Pictures.TabName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pictures.MediaURL" class="control-label">Picture URL</label>
+                <input asp-for="Pictures.MediaURL" class="form-control" />
+                <span asp-validation-for="Pictures.MediaURL" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Pictures.MediaType" class="control-label">Media Type</label>
+                <input asp-for="Pictures.MediaType" class="form-control" />
+                <span asp-validation-for="Pictures.MediaType" class="text-danger"></span>
+            </div>*@
+
+
+            <div class="form-group">
+                <a onclick="UpdateOpenit(ChurchMediaId.value)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Update</i></a>
+                @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
+                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function UpdateOpenit(ChurchMediaId) {
+
+        var ChurchMediaId = $('#ChurchMedId').val();
+        //var MediaName = $('#MediaName').val();
+        var TabName = $('#Pictures_TabName').val();
+        var MediaURL = $('#Pictures_MediaURL').val();
+        //var MediaType = $('#Pictures_MediaType').val();
+       
+
+
+        $.ajax({
+            type: "POST",
+            url: "/MediaChurch/UpdatePicture/",
+            //data: camObj,
+
+            data: { ChurchMediaId: ChurchMediaId, TabName: TabName, MediaURL: MediaURL},
+
+            //   contentType: "application/json;charset=UTF-8",
+            //  dataType: "json",
+            success: function (result) {
+                loadData();
+                $('#EditPicModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>
