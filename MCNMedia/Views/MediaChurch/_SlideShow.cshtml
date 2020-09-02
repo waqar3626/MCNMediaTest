@@ -21,6 +21,9 @@
                             Tab Name
                         </th>
                         <th>
+                            File Name
+                        </th>
+                        <th>
                             Created By
                         </th>
                         <th>
@@ -89,10 +92,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        loadData1();
+        loadSlideShow();
     });
 
-    function loadData1() {
+    function loadSlideShow() {
         $.ajax({
             url: "/MediaChurch/GetSlideShowByTypeId",
             type: "GET",
@@ -105,9 +108,9 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += '<td>' + item.tabName + '</td>';
+                    html += '<td>' + item.mediaName + '</td>';
                     html += '<td>' + item.createdBy + '</td>';
                     html += '<td>' + item.createdAt + '</td>';
-                    //html += '<td>' + item.rtspPort + '</td>';
                     html += ' <td>';
                     html += '<a onclick="EditSlideShow(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
                     html += '<a onclick="DeleteSlideShow(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
@@ -153,7 +156,7 @@
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                loadData1();
+                loadSlideShow();
                 if (result) { alert("Record Deleted");}
             },
             error: function (errormessage) {

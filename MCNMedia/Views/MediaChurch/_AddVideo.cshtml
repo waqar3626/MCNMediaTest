@@ -1,0 +1,65 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+
+@using (Html.BeginForm("AddVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="row">
+    <div class="col">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<input type="hidden" asp-for="Cameras.CameraId" id="CamId" />*@
+            <div class="form-group">
+                
+                <input asp-for="Media.MediaURL" class="form-control dropify" id="VidFile" type="file" name="MediaURl3" />
+                <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Media.TabName" class="control-label">Tab Name</label>
+                <input asp-for="Media.TabName" class="form-control" id="AddMedVidTabName" />
+                <span asp-validation-for="Media.TabName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="float-right">
+                    <a onclick="AddVid()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white">Add</i></a>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function AddVid() {
+
+       
+        var VidTabName = document.getElementById('AddMedVidTabName').value;
+        var formData = new FormData();
+        formData.append("mediaType", "Video");
+        formData.append("AddVidTabName", VidTabName);
+        var input = document.getElementById('VidFile');
+        formData.append("mediaFile", input.files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/MediaChurch/AddVideo/",
+
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+
+            //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
+
+
+            success: function (result) {
+                loadVideo();
+                $('#AddddModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>
+}

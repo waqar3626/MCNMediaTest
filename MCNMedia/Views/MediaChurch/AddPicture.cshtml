@@ -28,18 +28,6 @@
                         @Html.HiddenFor(model => model.Media.ChurchId, new { @id = "ChurchId" })
                     </div>
                 </div>
-                @*<div class="form-group row">
-                    <label class="col-sm-3 col-form-label text-center"> Media Type</label>
-                    <div class="col-sm-3">
-                        @Html.TextBoxFor(model => model.Pictures.MediaType, new { @class = "form-control form-control-sm", @id = "Media Type", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
-                    </div>*@
-                @*</div>
-                    <div class="form-group row">*@
-                @*<label class="col-sm-3 col-form-label text-center"> RTSP Port</label>
-                            <div class="col-sm-3">
-                                @Html.TextBoxFor(model => model.Pictures.RtspPort, new { @class = "form-control form-control-sm", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
-                            </div>
-                    </div>*@
             <div class="float-right">
                 <a onclick="AddPicOpenit()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Add </i></a>
                 <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
@@ -65,7 +53,7 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
-                loadData();
+                loadPicture();
                 $('#AddModal').modal('hide');
             },
             error: function (errormessage) {

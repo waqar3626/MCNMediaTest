@@ -18,30 +18,11 @@ namespace MCNMedia_Dev.Repository
 
         
 
-        //public IEnumerable<Picture> GetAllPictures()
-        //{
-        //    List<Picture> Balobj = new List<Picture>();
-        //    _dc.ClearParameters();
-        //    _dc.AddParameter("CamName", "");
-        //    DataTable dataTable = _dc.ReturnDataTable("Sp_ProcedureName");
-        //    foreach (DataRow dataRow in dataTable.Rows)
-        //    {
-        //        Picture picture = new Picture();
-        //        Picture.ChurchMediaId = Convert.ToInt32(dataRow["CameraId"]);
-        //        Picture.MediaType = dataRow["CameraName"].ToString();
-        //        Picture.HttpPort = dataRow["HttpPort"].ToString();
-        //        Picture.CameraUrl = dataRow["CameraUrl"].ToString();
-        //        Picture.RtspPort = dataRow["RtspPort"].ToString();
-        //        Picture.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
-        //        Picture.ChurchName = dataRow["ChurchName"].ToString();
-        //        Balobj.Add(picture);
-        //    }
-        //    return Balobj;
-        //}
+        
         public int AddMedia(MediaChurch media)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", media.CreatedBy);
+            _dc.AddParameter("UserId", 1);
             _dc.AddParameter("MedType", media.MediaType);
             _dc.AddParameter("MedTabName", media.TabName);
             _dc.AddParameter("MedURL", media.MediaURL);
@@ -53,6 +34,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<MediaChurch> GetByMediaType(string medType)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
+            
 
             _dc.ClearParameters();
             _dc.AddParameter("MedType", medType);
@@ -62,8 +44,9 @@ namespace MCNMedia_Dev.Repository
                 MediaChurch mdChurch = new MediaChurch();
                 mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
                 mdChurch.TabName= dataRow["TabName"].ToString();
+                mdChurch.MediaName= dataRow["MediaName"].ToString();
                 mdChurch.CreatedAt = Convert.ToDateTime( dataRow["CreatedAt"].ToString());
-                mdChurch.CreatedBy =Convert.ToInt32(dataRow["CreatedBy"].ToString());
+                mdChurch.CreatedBy = dataRow["FirstName"].ToString();
                 Balobj.Add(mdChurch);
             }
             return Balobj;
