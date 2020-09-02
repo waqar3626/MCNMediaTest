@@ -22,7 +22,7 @@ namespace MCNMedia_Dev.Controllers
         {
             environment = _environment;
         }
-        private string ImageReturn(IFormFile ImageURl3)
+        private string MediaReturn(IFormFile MediaURl3)
         {
             string contentPath = this.environment.ContentRootPath;
             string dirPath = Path.Combine("Uploads", "Pictures");
@@ -33,11 +33,11 @@ namespace MCNMedia_Dev.Controllers
             }
 
             string fileName = Guid.NewGuid().ToString() +
-            System.IO.Path.GetExtension(ImageURl3.FileName);
+            System.IO.Path.GetExtension(MediaURl3.FileName);
             //string fileName = Path.GetFileName(imageURl2.FileName);
             using (var stream = System.IO.File.Create(Path.Combine(path, fileName)))
             {
-                ImageURl3.CopyTo(stream);
+                MediaURl3.CopyTo(stream);
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
             }
             return Path.Combine(dirPath, fileName);
@@ -47,16 +47,16 @@ namespace MCNMedia_Dev.Controllers
         {
 
             GenericModel gm = new GenericModel();
-            gm.ListPicture = medchurchDataAccess.GetPictureByMediaType();
+           // gm.ListMedia = medchurchDataAccess.GetByMediaType();
             return View(gm);
         }
 
         [HttpPost]
-        public IActionResult AddMedia(string mediaType, string AddPicTabName, IFormFile mediaFile)
+        public JsonResult AddMedia(string mediaType, string AddPicTabName, IFormFile mediaFile)
         {
             MediaChurch mediaChurch = new MediaChurch();
             mediaChurch.MediaName = Path.GetFileName(mediaFile.FileName);
-            mediaChurch.MediaURL = ImageReturn(mediaFile);
+            mediaChurch.MediaURL = MediaReturn(mediaFile);
             mediaChurch.MediaType = mediaType;
             mediaChurch.TabName = AddPicTabName;
 
@@ -64,43 +64,104 @@ namespace MCNMedia_Dev.Controllers
             {
                 int res = medchurchDataAccess.AddMedia(mediaChurch);
             }
-            return RedirectToAction("Listchurch", "Church");
+            return Json(1);
         }
+        [HttpPost]
+        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFile mediaFile)
+        {
+            MediaChurch mediaChurch = new MediaChurch();
+            mediaChurch.MediaName = Path.GetFileName(mediaFile.FileName);
+            mediaChurch.MediaURL = MediaReturn(mediaFile);
+            mediaChurch.MediaType = mediaType;
+            mediaChurch.TabName = AddSlideshowTabName;
 
-        public IActionResult EditPicture(int id)
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+            {
+                int res = medchurchDataAccess.AddMedia(mediaChurch);
+            }
+            return Json(1);
+        }
+        public IActionResult EditMedia(int id)
         {
             GenericModel gm = new GenericModel();
-            gm.Pictures = medchurchDataAccess.GetPictureById(id);
+            gm.Media = medchurchDataAccess.GetMediaById(id);
             //  return View(gm);
             return PartialView("EditPicture", gm);
+        }
+
+        public IActionResult EditSlide(int id)
+        {
+            GenericModel gm = new GenericModel();
+            gm.Media = medchurchDataAccess.GetMediaById(id);
+            //  return View(gm);
+            return PartialView("_EditSlideShow", gm);
         }
         public IActionResult DeletePicture(int id)
         {
 
             GenericModel gm = new GenericModel();
-            bool res = medchurchDataAccess.DeletePicture(id);
+            bool res = medchurchDataAccess.DeleteMedia(id);
+            return Json(res);
+        }
+        public IActionResult DeleteSlide(int id)
+        {
+
+            GenericModel gm = new GenericModel();
+            bool res = medchurchDataAccess.DeleteMedia(id);
             return Json(res);
         }
 
-        public JsonResult GetPictureByTypeId()
+        public JsonResult GetMediaByTypeId(string medType)
         {
-            List<MediaChurch> pictureInfo = medchurchDataAccess.GetPictureByMediaType().ToList();
-            return Json(pictureInfo);
-            // return Json(new { data = cameraInfo });
+            List<MediaChurch> medInfo = medchurchDataAccess.GetByMediaType(medType).ToList();
+            return Json(medInfo);
+
+        }
+        public JsonResult GetSlideShowByTypeId(string medType)
+        {
+            List<MediaChurch> slideInfo = medchurchDataAccess.GetByMediaType(medType).ToList();
+            return Json(slideInfo);
 
         }
 
-        public JsonResult UpdatePicture(string ChurchMediaId, string TabName, string MediaURL, IFormFile ImageURl3)
-        {
-            //pic.Pictures.ImageURl = ImageReturn(ImageURl3); 
-            MediaChurch pictureUpdate = new MediaChurch();
-            pictureUpdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
-            //pictureUpdate.MediaName = MediaName;
-            pictureUpdate.TabName = TabName;
-            pictureUpdate.MediaURL = MediaURL;
-            //pictureUpdate.MediaType = MediaType;
+        //public JsonResult UpdateMedia(string ChurchMediaId, string TabName, string MediaURL, IFormFile ImageURl3)
+        //{
+        //    //pic.Pictures.ImageURl = ImageReturn(ImageURl3); 
+        //    MediaChurch medUpdate = new MediaChurch();
+        //    medUpdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
+        //    //pictureUpdate.MediaName = MediaName;
+        //    medUpdate.TabName = TabName;
+        //    medUpdate.MediaURL = MediaURL;
+        //    //pictureUpdate.MediaType = MediaType;
 
-            int res = medchurchDataAccess.UpdatePicture(pictureUpdate);
+        //    int res = medchurchDataAccess.UpdateMedia(medUpdate);
+
+
+        //    return Json(res);
+        //}
+
+        public JsonResult UpdateMedia(String ChurchMediaId, IFormFile mediaFile, string mediaType, String EditPictureTabName)
+        {
+            MediaChurch mediaupdate = new MediaChurch();
+            mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
+            mediaupdate.TabName = EditPictureTabName;
+            mediaupdate.MediaURL = MediaReturn(mediaFile);
+            mediaupdate.MediaType = mediaType;
+            mediaupdate.MediaName = mediaFile.FileName.ToString();
+            int res = medchurchDataAccess.UpdateMedia(mediaupdate);
+
+
+            return Json(res);
+        }
+        public JsonResult UpdateSlide(string ChurchMediaId, IFormFile mediaFile, string mediaType, String EditSlideShowTabName)
+        {
+            MediaChurch mediaupdate = new MediaChurch();
+            mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
+            mediaupdate.TabName = EditSlideShowTabName;
+            mediaupdate.MediaURL = MediaReturn(mediaFile);
+            mediaupdate.MediaType = mediaType;
+            mediaupdate.MediaName = mediaFile.FileName.ToString();
+            int res = medchurchDataAccess.UpdateMedia(mediaupdate);
 
 
             return Json(res);

@@ -8,17 +8,17 @@
     @HttpContextAccessor.HttpContext.Session.SetString("TabName", "");
 }
 <script type="text/javascript">
-    
+
     $(document).ready(function () {
 
-        var curTabName = '@ViewBag.TabName';
+        @*var curTabName = '@ViewBag.TabName';
         if (curTabName == '') {
             $("#Information-tab").click();
         }
         else {
             $("#"+curTabName+"-tab").click();
-        }
-        
+        }*@
+
 });
 
 </script>
@@ -33,13 +33,13 @@
                         <a class="nav-link  active" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="true"><i class="fa fa-info-circle text-info"></i> Information</a>
                     </li>
                     @*@if (ViewBag.Tab == "Camera")
-            {
-                <li class="nav-item">
-                    <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
-                </li>
-            }
-            else
-            {*@
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
+                            </li>
+                        }
+                        else
+                        {*@
                     <li class="nav-item">
                         <a class="nav-link" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="false"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
                     </li>
@@ -71,71 +71,78 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="tab-pane fade" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
                         <div class="media">
                             <div class="media-body">
                                 @Html.Partial("~/Views/Camera/_AddCamera.cshtml")
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="Slideshow-tab">
-                            <h4>Slideshow </h4>
-                            <p>
-                                Feel free to contact us if you have any questions!
-                            </p>
-                            <p>
-                                <i class="ti-headphone-alt text-info"></i>
-                                +123456789
-                            </p>
-                            <p>
-                                <i class="ti-email text-success"></i>
-                                contactus@example.com
-                            </p>
+                    </div>
+
+                    <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/MediaChurch/_Pictures.cshtml")
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
-                            <h4>Video</h4>
-                            <p>
-                                Feel free to contact us if you have any questions!
-                            </p>
-                            <p>
-                                <i class="ti-headphone-alt text-info"></i>
-                                +123456789
-                            </p>
-                            <p>
-                                <i class="ti-email text-success"></i>
-                                contactus@example.com
-                            </p>
+                    </div>
+
+                    <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="Slideshow-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/MediaChurch/_Slideshow.cshtml")
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
-                            <h4>Picture</h4>
-                            <p>
-                                Feel free to contact us if you have any questions!
-                            </p>
-                            <p>
-                                <i class="ti-headphone-alt text-info"></i>
-                                +123456789
-                            </p>
-                            <p>
-                                <i class="ti-email text-success"></i>
-                                contactus@example.com
-                            </p>
-                        </div>
-                        <div class="tab-pane fade" id="Notice-1" role="tabpanel" aria-labelledby="Notice-tab">
-                            <h4>Notice</h4>
-                            <p>
-                                Feel free to contact us if you have any questions!
-                            </p>
-                            <p>
-                                <i class="ti-headphone-alt text-info"></i>
-                                +123456789
-                            </p>
-                            <p>
-                                <i class="ti-email text-success"></i>
-                                contactus@example.com
-                            </p>
-                        </div>
+                    </div>
+
+
+
+                    <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
+                        <h4>Video</h4>
+                        <p>
+                            Feel free to contact us if you have any questions!
+                        </p>
+                        <p>
+                            <i class="ti-headphone-alt text-info"></i>
+                            +123456789
+                        </p>
+                        <p>
+                            <i class="ti-email text-success"></i>
+                            contactus@example.com
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
+                        <h4>Picture</h4>
+                        <p>
+                            Feel free to contact us if you have any questions!
+                        </p>
+                        <p>
+                            <i class="ti-headphone-alt text-info"></i>
+                            +123456789
+                        </p>
+                        <p>
+                            <i class="ti-email text-success"></i>
+                            contactus@example.com
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="Notice-1" role="tabpanel" aria-labelledby="Notice-tab">
+                        <h4>Notice</h4>
+                        <p>
+                            Feel free to contact us if you have any questions!
+                        </p>
+                        <p>
+                            <i class="ti-headphone-alt text-info"></i>
+                            +123456789
+                        </p>
+                        <p>
+                            <i class="ti-email text-success"></i>
+                            contactus@example.com
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
+

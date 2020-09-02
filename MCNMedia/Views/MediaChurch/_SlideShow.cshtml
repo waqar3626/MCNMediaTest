@@ -4,24 +4,15 @@
 }
 <script src="~/theme/js/modal-demo.js"></script>
 <script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#createAccount').click(function () {
-
-    //        //$("#AccountModal").modal('show');
-    //        // $('#AccountModal').modalPopLite({ openButton: '#clicker', closeButton: '#close-btn' });
-
-    //    });
-    //});
+ 
 </script>
 
 
 <div class="card">
     <div class="card-body">
-        <a id="AddPicture" class="btn btn-success btn-sm float-right text-white" onclick="AddPicture()"> <i class="fa fa-plus text-white"></i> Add Picture</a>
+        <a id="AddSlideShow1" class="btn btn-success btn-sm float-right text-white" onclick="AddSlideShow()"> <i class="fa fa-plus text-white"></i> Add SlideShow</a>
         <div class="">
-            @*@using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
-                {*@
-
+           
             <table class="table">
                 <thead>
                     <tr>
@@ -30,7 +21,7 @@
                             Tab Name
                         </th>
                         <th>
-                           Created By
+                            Created By
                         </th>
                         <th>
                             Created At
@@ -39,30 +30,30 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody class="PicList">
-
+                <tbody class="SlideShowList">
                 </tbody>
             </table>
 
 
-            @*}*@
+           
         </div>
 
     </div>
 </div>
+
 <div class="row">
     <div class="col-12 grid-margin">
-        <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="AddSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> Picture Detail</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"> Slide Show Detail</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
                     </div>
-                    <div class="modal-body" id="AddPreview">
-                        @Html.Partial("~/Views/MediaChurch/AddPicture.cshtml", Model.Media)
+                    <div class="modal-body" id="AddSlideShowPreview">
+                        @Html.Partial("~/Views/MediaChurch/_AddSlideShow.cshtml", Model.Media)
                     </div>
                     @*<div class="modal-footer">
                             <button type="button" class="btn btn-success">Submit</button>
@@ -75,17 +66,17 @@
 </div>
 <div class="row">
     <div class="col-12 grid-margin">
-        <div class="modal fade" id="EditPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="EditSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Picture</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit SlideShow</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
                     </div>
-                    <div class="modal-body" id="EditPicPreview">
-                        @Html.Partial("~/Views/MediaChurch/EditPicture.cshtml", Model.Media)
+                    <div class="modal-body" id="EditSlideShowPreview">
+                        @Html.Partial("~/Views/MediaChurch/_EditSlideShow.cshtml", Model.Media)
                     </div>
                     @*<div class="modal-footer">
                             <button type="button" class="btn btn-success">Submit</button>
@@ -98,15 +89,15 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-       loadData();
+        loadData1();
     });
 
-    function loadData() {
+    function loadData1() {
         $.ajax({
-            url: "/MediaChurch/GetMediaByTypeId",
+            url: "/MediaChurch/GetSlideShowByTypeId",
             type: "GET",
+            data: { medType:"SlideShow"},
             contentType: "application/json;charset=utf-8",
-            data: { medType: "Picture" },
             dataType: "json",
             success: function (result) {
                 var html = '';
@@ -118,12 +109,12 @@
                     html += '<td>' + item.createdAt + '</td>';
                     //html += '<td>' + item.rtspPort + '</td>';
                     html += ' <td>';
-                    html += '<a onclick="OpenEditVideo(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
-                    html += '<a onclick="Delete(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                    html += '<a onclick="EditSlideShow(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                    html += '<a onclick="DeleteSlideShow(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
                     html += ' </td>';
                     html += '</tr>';
                 });
-                $('.PicList').html(html);
+                $('.SlideShowList').html(html);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -131,20 +122,20 @@
         });
     }
 
-     function AddPicture() {
+    function AddSlideShow() {
 
-    $('#AddModal').modal('show');
+    $('#AddSlideShowModal').modal('show');
 
       }
 
-    function OpenEditVideo(churchMediaId) {
+    function EditSlideShow(churchMediaId) {
         $.ajax({
         type: "Get",
-        url: '@Url.Action("EditMedia", "MediaChurch")',
+        url: '@Url.Action("EditSlide", "MediaChurch")',
             data: { id: churchMediaId },
         success: function (data) {
-            $('#EditPicPreview').html(data);
-            $('#EditPicModal').modal('show');
+            $('#EditSlideShowPreview').html(data);
+            $('#EditSlideShowModal').modal('show');
         }
         })
 
@@ -152,17 +143,17 @@
     }
 
 
-    function Delete(churchMediaId) {
-    var ans = confirm("Are you sure you want to delete this Picture?");
+    function DeleteSlideShow(churchMediaId) {
+    var ans = confirm("Are you sure you want to delete this SlideShow?");
     if (ans) {
         $.ajax({
-            url: "/MediaChurch/DeletePicture/" + churchMediaId,
+            url: "/MediaChurch/DeleteSlide/" + churchMediaId,
             type: "POST",
-          
+
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                loadData();
+                loadData1();
                 if (result) { alert("Record Deleted");}
             },
             error: function (errormessage) {

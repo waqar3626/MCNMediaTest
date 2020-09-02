@@ -49,13 +49,13 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId2", media.ChurchId);
             return _dc.Execute("spChurchMedia_Add");
         }
-
-        public IEnumerable<MediaChurch> GetPictureByMediaType()
+        
+        public IEnumerable<MediaChurch> GetByMediaType(string medType)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
 
             _dc.ClearParameters();
-            _dc.AddParameter("MedType", "Picture");
+            _dc.AddParameter("MedType", medType);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetByMediaType");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -68,38 +68,39 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-        public MediaChurch GetPictureById(int ChMediaId)
+        public MediaChurch GetMediaById(int ChMediaId)
         {
-            MediaChurch picture = new MediaChurch();
+            MediaChurch mediaChurch = new MediaChurch();
 
             _dc.ClearParameters();
             _dc.AddParameter("ChMediaId", ChMediaId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetById");
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                picture.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"]);
-                picture.TabName = dataRow["TabName"].ToString();
-                picture.MediaType = dataRow["MediaType"].ToString();
-                picture.MediaURL = dataRow["MediaURL"].ToString();
-                picture.MediaName = dataRow["MediaName"].ToString();
+                mediaChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"]);
+                mediaChurch.TabName = dataRow["TabName"].ToString();
+                mediaChurch.MediaType = dataRow["MediaType"].ToString();
+                mediaChurch.MediaURL = dataRow["MediaURL"].ToString();
+                mediaChurch.MediaName = dataRow["MediaName"].ToString();
 
             }
-            return picture;
+            return mediaChurch;
         }
 
 
-        public int UpdatePicture(MediaChurch picture)
+        public int UpdateMedia(MediaChurch med)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("MediaId", picture.ChurchMediaId);
-            _dc.AddParameter("MedTabName", picture.TabName);
-            _dc.AddParameter("MedURL", picture.MediaURL);
-            //_dc.AddParameter("MedName", picture.MediaName);
-            _dc.AddParameter("UserId", picture.UpdatedBy);
+            _dc.AddParameter("MediaId", med.ChurchMediaId);
+            _dc.AddParameter("MedTabName", med.TabName);
+            _dc.AddParameter("MedURL", med.MediaURL);
+            _dc.AddParameter("MedName", med.MediaName);
+            _dc.AddParameter("UserId", med.UpdatedBy);
 
             return _dc.Execute("spChurchMedia_Update");
         }
-        public bool DeletePicture(int ChMediaId)
+
+        public bool DeleteMedia(int ChMediaId)
         {
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", ChMediaId);

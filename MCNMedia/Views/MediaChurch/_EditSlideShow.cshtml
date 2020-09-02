@@ -3,25 +3,23 @@
 
 }
 <div class="row">
-    
     <div class="col-sm-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Media.ChurchMediaId" class="form-control dropify" id="ChurchMedId" />
+            <input type="hidden" asp-for="Media.ChurchMediaId" class="form-control dropify" id="ChMedId" />
             @*<div class="form-group">
             <label asp-for="Pictures.MediaName" class="control-label">Media Name</label>
             <input asp-for="Pictures.MediaName" class="form-control" id="MediaName" />
             <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
         </div>*@
-
             <div class="form-group">
                 @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
-                <input asp-for="Media.MediaURL" class="form-control" type="file" name="MediaURl3" />
+                <input asp-for="Media.MediaURL" class="form-control " id="slideShowMediaURL" type="file" name="MediaURl3" />
                 <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Media.TabName" class="control-label">Tab Name</label>
-                <input asp-for="Media.TabName" class="form-control" />
+                <input asp-for="Media.TabName" class="form-control" id="eeslideshowTabName" />
                 <span asp-validation-for="Media.TabName" class="text-danger"></span>
             </div>
             @*<div class="form-group">
@@ -32,7 +30,7 @@
 
 
             <div class="form-group">
-                <a onclick="UpdatePicture()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Update</i></a>
+                <a onclick="UpdateSlideShow()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Update</i></a>
                 @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
                 <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
             </div>
@@ -40,27 +38,27 @@
     </div>
 </div>
 <script type="text/javascript">
-    function UpdatePicture() {
-
-        var ChurchMediaId = $('#ChurchMedId').val();
-        var EditPictureTabName = document.getElementById('Media_TabName').value;
+    function UpdateSlideShow() {
+        
+        var churchMediaId = $('#ChMedId').val();
+        var editSlideShowTabName = document.getElementById('eeslideshowTabName').value;
         var formData = new FormData();
-        formData.append("ChurchMediaId", ChurchMediaId);
-        formData.append("mediaType", "Picture");
-        formData.append("EditPictureTabName", EditPictureTabName);
-        var input = document.getElementById('Media_MediaURL');
+        formData.append("ChurchMediaId", churchMediaId);
+        formData.append("mediaType", "SlideShow");
+        formData.append("EditSlideShowTabName", editSlideShowTabName);
+        var input = document.getElementById('slideShowMediaURL');
         formData.append("mediaFile", input.files[0]);
 
         $.ajax({
             type: "POST",
-            url: "/MediaChurch/UpdateMedia/",
+            url: "/MediaChurch/UpdateSlide/",
             data: formData,
 
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
-                loadData();
-                $('#EditPicModal').modal('hide');
+                loadData1();
+                $('#EditSlideShowModal').modal('hide');
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
