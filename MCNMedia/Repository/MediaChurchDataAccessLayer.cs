@@ -31,17 +31,18 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurchMedia_Add");
         }
         
-        public IEnumerable<MediaChurch> GetByMediaType(string medType)
+        public IEnumerable<MediaChurch> GetByMediaType(string medType,int ChrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
-            
+
+            MediaChurch mdChurch = new MediaChurch();
 
             _dc.ClearParameters();
+            _dc.AddParameter("chrId", ChrId);
             _dc.AddParameter("MedType", medType);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetByMediaType");
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                MediaChurch mdChurch = new MediaChurch();
                 mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
                 mdChurch.TabName= dataRow["TabName"].ToString();
                 mdChurch.MediaName= dataRow["MediaName"].ToString();

@@ -54,7 +54,9 @@ namespace MCNMedia_Dev.Controllers
         public JsonResult ListVideo(string medType)
         {
             MediaChurch mdChurch = new MediaChurch();
-            List<MediaChurch> vidList = medchurchDataAccess.GetByMediaType(medType).ToList();
+            int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+
+            List<MediaChurch> vidList = medchurchDataAccess.GetByMediaType(medType, churchId).ToList();
             return Json(vidList);
         }
         public IActionResult EditVideo(int id)
@@ -174,13 +176,15 @@ namespace MCNMedia_Dev.Controllers
 
         public JsonResult GetMediaByTypeId(string medType)
         {
-            List<MediaChurch> medInfo = medchurchDataAccess.GetByMediaType(medType).ToList();
+            int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            List<MediaChurch> medInfo = medchurchDataAccess.GetByMediaType(medType, churchId).ToList();
             return Json(medInfo);
 
         }
         public JsonResult GetSlideShowByTypeId(string medType)
         {
-            List<MediaChurch> slideInfo = medchurchDataAccess.GetByMediaType(medType).ToList();
+            int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            List<MediaChurch> slideInfo = medchurchDataAccess.GetByMediaType(medType, churchId).ToList();
             return Json(slideInfo);
 
         }
