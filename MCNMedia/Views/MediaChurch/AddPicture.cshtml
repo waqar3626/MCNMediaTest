@@ -29,7 +29,7 @@
                     </div>
                 </div>
             <div class="float-right">
-                <a onclick="AddPicOpenit()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Add </i></a>
+                <a onclick="AddPictures()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Add </i></a>
                 <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
             </div>
             </div>
@@ -38,7 +38,7 @@
 }
 
 <script type="text/javascript">
-    function AddPicOpenit() {
+    function AddPictures() {
         var pictureTabName = document.getElementById('picTabName').value;
         var formData = new FormData();
         formData.append("mediaType", "Picture");

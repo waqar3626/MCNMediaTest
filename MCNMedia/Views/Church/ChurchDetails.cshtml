@@ -57,7 +57,7 @@
                         <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-sticky-note-o text-info"></i>  Notice</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="Setup-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-cogs text-info"></i> Set Up</a>
+                        <a class="nav-link" id="Setup-tab" data-toggle="tab" href="#Setup-1" role="tab" aria-controls="Setup-1" aria-selected="false"><i class="fa fa-cogs text-info"></i> Set Up</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="Message-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-envelope-o text-info"></i> Message</a>
@@ -92,6 +92,27 @@
                         <div class="media">
                             <div class="media-body">
                                 @Html.Partial("~/Views/MediaChurch/_Slideshow.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/MediaChurch/_ListVideo.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Notice-1" role="tabpanel" aria-labelledby="Notice-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/Notice/_ListNotice.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Setup-1" role="tabpanel" aria-labelledby="Setup-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/SetUp/InsertSetUp.cshtml")
                             </div>
                         </div>
                     </div>

@@ -129,6 +129,8 @@ namespace MCNMedia_Dev.Controllers
                     return NotFound();
                 }
                 gm.LCameras = camDataAccess.GetAllCameras();
+                SetUpDataAccessLayer setupdataaccess = new SetUpDataAccessLayer();
+                gm.ChurchSetUp = setupdataaccess.getSetUp(churchId);
                 return View(gm);
             }
             return RedirectToAction("Listchurch", "Church");

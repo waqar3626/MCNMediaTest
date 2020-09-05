@@ -13,6 +13,10 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
 
+        public Notice Notices { get; set; }
+        public IEnumerable<Notice> ListNotice { get; set; }
+        public SetUp ChurchSetUp { get; set; }
+
         public string ResultMessage { get; set; } = "";
     }
 }

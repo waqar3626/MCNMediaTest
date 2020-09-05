@@ -1,0 +1,109 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+<form method="post" asp-controller="SetUp" asp-action="InsertSetUp">
+
+    <div class="grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-12">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="=form-group row">
+                            <div class="col-sm-6">
+                                <label asp-for="ChurchSetUp.SelectServer" class="control-label">Select server</label>
+                                <input asp-for="ChurchSetUp.SelectServer" class="form-control" />
+                                <span asp-validation-for="ChurchSetUp.SelectServer" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label asp-for="ChurchSetUp.InternetProvider" class="control-label"> Internet Provider</label>
+                                <input asp-for="ChurchSetUp.InternetProvider" class="form-control" />
+                                <span asp-validation-for="ChurchSetUp.InternetProvider" class="text-danger"></span>
+                            </div>
+                        </div> </br>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label asp-for="ChurchSetUp.RouterModel" class="control-label">Router Model</label>
+                                <input asp-for="ChurchSetUp.RouterModel" class="form-control" />
+                                <span asp-validation-for="ChurchSetUp.RouterModel" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="ChurchSetUp.RouterUserName" class="control-label">Router UserName</label>
+                                <input asp-for="ChurchSetUp.RouterUserName" class="form-control" />
+                                <span asp-validation-for="ChurchSetUp.RouterUserName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label asp-for="ChurchSetUp.RouterPassword" class="control-label">Router Password</label>
+                                <input asp-for="ChurchSetUp.RouterPassword" class="form-control" />
+                                <span asp-validation-for="ChurchSetUp.RouterPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row col-12">
+                            <div class="form-group form-check col-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="ChurchSetUp.Aerials" /> @Html.DisplayNameFor(model => model.ChurchSetUp.Aerials)
+                                </label>
+                            </div>
+                            <div class="form-group form-check col-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="ChurchSetUp.Switch" /> @Html.DisplayNameFor(model => model.ChurchSetUp.Switch)
+                                </label>
+                            </div>
+                            <div class="form-group form-check col-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="ChurchSetUp.HomePlugs" /> @Html.DisplayNameFor(model => model.ChurchSetUp.HomePlugs)
+                                </label>
+                            </div>
+                            <div class="form-group form-check col-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="ChurchSetUp.DirectWire" /> @Html.DisplayNameFor(model => model.ChurchSetUp.DirectWire)
+                                </label>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                <label asp-for="ChurchId" class="control-label"></label>
+                                <input asp-for="ChurchId" class="form-control" />
+                                <span asp-validation-for="ChurchId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ChurchName" class="control-label"></label>
+                                <input asp-for="ChurchName" class="form-control" />
+                                <span asp-validation-for="ChurchName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CreatedAt" class="control-label"></label>
+                                <input asp-for="CreatedAt" class="form-control" />
+                                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CreatedBy" class="control-label"></label>
+                                <input asp-for="CreatedBy" class="form-control" />
+                                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="UpdatedAt" class="control-label"></label>
+                                <input asp-for="UpdatedAt" class="form-control" />
+                                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="UpdatedBy" class="control-label"></label>
+                                <input asp-for="UpdatedBy" class="form-control" />
+                                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+                            </div>*@
+                        <div class="float-right">
+                            <button type="Submit" class="btn btn-primary "><i class="fa fa-plus"></i> Save </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

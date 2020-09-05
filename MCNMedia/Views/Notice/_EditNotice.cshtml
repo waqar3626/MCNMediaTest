@@ -1,0 +1,66 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+
+
+@using (Html.BeginForm("UpdateNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Notices.ChurchNoticeId" id="chNoticeId" />
+                <div class="form-group">
+                    <label asp-for="Notices.NoticeTitle" class="control-label">Title</label>
+                    <input asp-for="Notices.NoticeTitle" class="form-control" id="editnoticeTitle" />
+                    <span asp-validation-for="Notices.NoticeTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notices.NoticeName" class="control-label">Notice</label>
+                    <input asp-for="Notices.NoticeName" class="form-control" id="editNoticeName" />
+                    <span asp-validation-for="Notices.NoticeName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a onclick="UpdateNotice()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white">Update</i></a>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        function UpdateNotice() {
+
+            var churchNoticeId = $('#chNoticeId').val();
+            var formData = new FormData();
+            var noticeTitle = document.getElementById('editnoticeTitle').value;
+            formData.append("ChurchNoticeId", churchNoticeId);
+            formData.append("NoticeTitle", noticeTitle);
+            var noticeName = document.getElementById('editNoticeName').value;
+            formData.append("NoticeName", noticeName);
+
+            $.ajax({
+                type: "POST",
+                url: "/Notice/UpdateNotice/",
+
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+
+
+                success: function (result) {
+                    loadNotice();
+                    $('#EditNoticeModal').modal('hide');
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+
+    </script>
+}

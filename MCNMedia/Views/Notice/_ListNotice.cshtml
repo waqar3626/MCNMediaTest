@@ -1,0 +1,167 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+<script src="~/theme/js/modal-demo.js"></script>
+<script type="text/javascript">
+
+</script>
+
+<div class="card">
+    <div class="card-body">
+        <div class="float-right">
+            <button type="submit" value="Add" class="btn btn-primary btn-sm " onclick="AddNotice()"><i class="fa fa-plus"></i> Add Notice</button>
+        </div>
+
+        <div class="">
+
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                           Title
+                        </th>
+                        <th>
+                            Notice
+                        </th>
+                        <th>
+                            Created by
+                        </th>
+                        <th>
+                            Created Date
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="noticeList">
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddNoticeModal" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Notice</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddNoticePreview">
+                        @Html.Partial("~/Views/Notice/_AddNotice.cshtml", Model.Notices)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditNoticeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Notice</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditNoticePreview">
+                        @Html.Partial("~/Views/Notice/_EditNotice.cshtml", Model.Notices)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        loadNotice();
+    });
+
+    function loadNotice() {
+        $.ajax({
+            url: "/Notice/GetAllNotice",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.noticeTitle  + '</td>';
+                    html += '<td>' + item.noticeName  + '</td>';
+                    html += '<td>' + item.createdBy + '</td>';
+                    html += '<td>' + item.createdAt  + '</td>';
+                    html += ' <td>';
+
+                    html += '<a onclick="EditNotice(' + item.churchNoticeId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                    html += '<a onclick="DeleteNotice(' + item.churchNoticeId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                    html += ' </td>';
+                    html += '</tr>';
+                });
+                $('.noticeList').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function AddNotice() {
+
+        $('#AddNoticeModal').modal('show');
+
+            }
+    function EditNotice(churchNoticeId) {
+         $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditNotice", "Notice")',
+             data: { id: churchNoticeId },
+            success: function (data) {
+                $('#EditNoticePreview').html(data);
+                $('#EditNoticeModal').modal('show');
+
+            }
+        })
+
+
+            }
+
+    function DeleteNotice(churchMediaId) {
+    var ans = confirm("Are you sure you want to delete this Notice?");
+    if (ans) {
+        $.ajax({
+            url: "/Notice/DeleteNotice/" + churchMediaId,
+            type: "POST",
+
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadNotice();
+                if (result) { alert("Record Deleted");}
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    }
+
+
+</script>

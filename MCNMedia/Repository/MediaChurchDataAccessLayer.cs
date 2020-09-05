@@ -35,7 +35,7 @@ namespace MCNMedia_Dev.Repository
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
 
-            MediaChurch mdChurch = new MediaChurch();
+            
 
             _dc.ClearParameters();
             _dc.AddParameter("chrId", ChrId);
@@ -43,6 +43,7 @@ namespace MCNMedia_Dev.Repository
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetByMediaType");
             foreach (DataRow dataRow in dataTable.Rows)
             {
+                MediaChurch mdChurch = new MediaChurch();
                 mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
                 mdChurch.TabName= dataRow["TabName"].ToString();
                 mdChurch.MediaName= dataRow["MediaName"].ToString();
@@ -52,12 +53,12 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-        public MediaChurch GetMediaById(int ChMediaId)
+        public MediaChurch GetMediaById(int chMediaId)
         {
             MediaChurch mediaChurch = new MediaChurch();
 
             _dc.ClearParameters();
-            _dc.AddParameter("ChMediaId", ChMediaId);
+            _dc.AddParameter("mediaId", chMediaId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetById");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -84,10 +85,10 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurchMedia_Update");
         }
 
-        public bool DeleteMedia(int ChMediaId)
+        public bool DeleteMedia(int chMediaId)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("MediaId", ChMediaId);
+            _dc.AddParameter("MediaId", chMediaId);
             _dc.AddParameter("UserId",1);
             return _dc.ReturnBool("spChurchMedia_Delete");
         }

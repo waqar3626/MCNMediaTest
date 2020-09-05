@@ -1,0 +1,62 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+
+@using (Html.BeginForm("AddNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col">
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @*<input type="hidden" asp-for="Notices.CameraId" id="CamId" />*@
+                <div class="form-group">
+                    <label asp-for="Notices.NoticeTitle" class="control-label">Title</label>
+                    <input asp-for="Notices.NoticeTitle" class="form-control" id="addnoticeTitle" />
+                    <span asp-validation-for="Notices.NoticeTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notices.NoticeName" class="control-label">Notice</label>
+                    <input asp-for="Notices.NoticeName" class="form-control" id="addNoticeName" />
+                    <span asp-validation-for="Notices.NoticeName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="float-right">
+                        <a onclick="AddNotice1()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white">Add</i></a>
+                        <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function AddNotice1() {
+
+            var formData = new FormData();
+            var noticeTitle = document.getElementById('addnoticeTitle').value;
+            formData.append("NoticeTitle", noticeTitle);
+            var noticeName = document.getElementById('addNoticeName').value;
+            formData.append("NoticeName", noticeName);
+          
+
+            $.ajax({
+                type: "POST",
+                url: "/Notice/AddNotice/",
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+
+              
+                success: function (result) {
+                    loadNotice();
+                    $('#AddNoticeModal').modal('hide');
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+    </script>
+}
