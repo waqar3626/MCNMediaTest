@@ -31,7 +31,7 @@ namespace MCNMedia_Dev
             //services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:Default"]));
             services.AddControllersWithViews();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
