@@ -22,8 +22,8 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("ScheduleEventName", schedules.EventName);
             _dc.AddParameter("ScheduleEventDate", schedules.EventDate);
-            _dc.AddParameter("ScheduleEventDay", schedules.EventDay);
-            _dc.AddParameter("ScheduleEventTime", schedules.EventDay);
+            _dc.AddParameter("ScheduleEventDay", Enum.Parse(typeof(EventDay), schedules.EventDay).ToString());
+            _dc.AddParameter("ScheduleEventTime", schedules.EventTime);
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("CreatedBy", 1);
             //_dc.AddParameter("RoleId", schedules.RoleId);
@@ -47,7 +47,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = Convert.ToDateTime(dataRow["ScheduleEventDay"].ToString());
+                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
@@ -73,7 +73,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = Convert.ToDateTime(dataRow["ScheduleEventDay"].ToString());
+                schedule.EventDay = (dataRow["ScheduleEventDay"].ToString());
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
                 //schedule.RoleId = Convert.ToInt32(dataRow["RoleId"]);
@@ -88,7 +88,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchId", schedule.ScheduleId);
             _dc.AddParameter("SchName", schedule.EventName);
             _dc.AddParameter("SchDate", schedule.EventDate);
-            _dc.AddParameter("SchDay", schedule.EventDay);
+            _dc.AddParameter("SchDay", Enum.Parse(typeof(EventDay), schedule.EventDay).ToString());
             _dc.AddParameter("SchTime", schedule.EventTime);
             _dc.AddParameter("UpdateBy", schedule.UpdatedBy);
             //_dc.AddParameter("RoleId", schedule.RoleId);

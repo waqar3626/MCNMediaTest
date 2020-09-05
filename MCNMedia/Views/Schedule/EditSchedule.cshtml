@@ -51,7 +51,9 @@
                 <label asp-for="EventDay" class="col-sm-3 col-form-label">Event Day</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="EventDay" class="text-danger"></span>
-                    <input asp-for="EventDay" class="form-control" placeholder="Event Day" />
+                    <select asp-for="EventDay" class="form-control" asp-items="Html.GetEnumSelectList<EventDay>()">
+                        <option selected="selected" value="">Please select A Day</option>
+                    </select>
                 </div>
             </div>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,9 @@ namespace MCNMedia_Dev.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM/dd/yyyy}")]
         public DateTime EventDate { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:ddd}")]
-        public DateTime EventDay { get; set; }
+        public String EventDay { get; set; }
+        [EnumDataType(typeof(DayOfWeek))]
+        public EventDay Days { get; set; }
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
         [DataType(DataType.Time)]
         public DateTime EventTime { get; set; }
@@ -29,5 +32,24 @@ namespace MCNMedia_Dev.Models
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         //public Nullable<DateTime> DelDt { get; set; }
 
+    }
+    public enum EventDay
+    {
+
+        [Description("Monday")]
+        Monday,
+        [Description("Tuesday")]
+        Tuesday,
+        [Description("Wednesday")]
+        Wednesday,
+        [Description("Thursday")]
+        Thursday,
+        [Description("Friday")]
+        Friday,
+        [Description("Saturday")]
+        Saturday,
+        [Description("Sunday")]
+        Sunday
+        
     }
 }

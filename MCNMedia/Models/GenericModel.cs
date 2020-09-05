@@ -10,6 +10,7 @@ namespace MCNMedia_Dev.Models
         public Church Churches { get; set; }
         public Camera Cameras { get; set; }
         public MediaChurch Media { get; set; }
+        public Announcement Announcement { get; set; }
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
 

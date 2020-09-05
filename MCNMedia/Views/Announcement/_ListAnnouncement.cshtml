@@ -1,0 +1,161 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+@*<script src="~/theme/js/modal-demo.js"></script>
+<script type="text/javascript">
+
+</script>*@
+
+<div class="card">
+    <div class="card-body">
+        <div class="float-right">
+            <button type="submit" value="Add" class="btn btn-primary btn-sm " onclick="AddAnnouncement()"><i class="fa fa-plus"></i> Add Announcement</button>
+        </div>
+
+        <div class="">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Announcement
+                        </th>
+                        <th>
+                            Created Date
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="announcementList">
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddAnnouncementPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Announcement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddPreview">
+                        @Html.Partial("~/Views/Announcement/_AddAnnouncement.cshtml", Model.Announcement)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Announcement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditAnnouncementPreview">
+                        @Html.Partial("~/Views/Announcement/_EditAnnouncement.cshtml", Model.Announcement)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        loadAnnouncement();
+    });
+
+    function loadAnnouncement() {
+        $.ajax({
+            url: "/Announcement/ListAnnouncement",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.announcementTitle  + '</td>';
+                    html += '<td>' + item.announcementText + '</td>';
+                    html += '<td>' + item.createdAt  + '</td>';
+                    html += ' <td>';
+
+                    html += '<a onclick="EditAnnouncement(' + item.churchAnnouncementId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                    html += '<a onclick="Delete(' + item.churchAnnouncementId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                    html += ' </td>';
+                    html += '</tr>';
+                });
+                $('.announcementList').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function AddAnnouncement() {
+
+        $('#AddAnnouncementPopUp').modal('show');
+
+    }
+
+    function EditAnnouncement(churchAnnouncementId) {
+         $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditAnnouncement", "Announcement")',
+             data: { id: churchAnnouncementId },
+            success: function (data) {
+                $('#EditAnnouncementPreview').html(data);
+                $('#EditAnnouncementModal').modal('show');
+
+            }
+        })
+    }
+
+    function Delete(churchAnnouncementId) {
+    var ans = confirm("Are you sure you want to delete this Announcement?");
+    if (ans) {
+        $.ajax({
+            url: "/Announcement/DeleteAnnouncement/" + churchAnnouncementId,
+            type: "POST",
+
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadAnnouncement();
+                if (result) { alert("Record Deleted");}
+            },
+            error: function (errormessage) {
+               // alert(errormessage.responseText);
+            }
+        });
+    }
+    }
+
+
+</script>
