@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using MCNMedia_Dev.Repository;
 using System.IO;
+using MCNMedia_Dev._Helper;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -20,9 +21,9 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
-        private IHostingEnvironment environment;
+        private IWebHostEnvironment environment;
 
-        public ChurchController(IHostingEnvironment _environment)
+        public ChurchController(IWebHostEnvironment _environment)
         {
             environment = _environment;
         }
@@ -69,23 +70,10 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost()]
         public IActionResult AddChurch(Church church, IFormFile imageURl2)
         {
-            string contentPath = this.environment.ContentRootPath;
-            string dirPath = Path.Combine("Uploads", "ProfileImages");
-            string path = Path.Combine(contentPath, dirPath);
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-
             string fileName = Path.GetFileName(imageURl2.FileName);
-            using (var stream = System.IO.File.Create(Path.Combine(path, fileName)))
-            {
-                imageURl2.CopyTo(stream);
-                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
-            }
-            church.ImageURl = Path.Combine(dirPath, fileName).Replace(@"\",@"/");
+            church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
             churchDataAccess.AddChurch(church);
+            ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
             return RedirectToAction("Listchurch");
         }
 
@@ -164,36 +152,17 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2)
         {
-
-            string contentPath = this.environment.ContentRootPath;
-            string dirPath = Path.Combine("Uploads", "ProfileImages");
-            string path = Path.Combine(contentPath, dirPath);
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-
             string fileName = Path.GetFileName(imageURl2.FileName);
-            using (var stream = System.IO.File.Create(Path.Combine(path, fileName)))
-            {
-                imageURl2.CopyTo(stream);
-                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
-            }
-
-            church.Churches.ImageURl = Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
-
+            church.Churches.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
+            ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
             ChurchId = church.Churches.ChurchId;
 
             if (ModelState.IsValid)
             {
-                
                 churchDataAccess.UpdateChurch(church.Churches);
-
                 var queryString = new { chId = ChurchId };
                 return RedirectToAction("ChurchDetails", "Church", queryString);
             }
-
             return View(church);
         }
     }

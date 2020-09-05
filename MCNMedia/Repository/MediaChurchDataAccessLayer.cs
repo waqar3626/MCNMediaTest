@@ -53,12 +53,12 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-        public MediaChurch GetMediaById(int chMediaId)
+        public MediaChurch GetMediaById(int mediaId)
         {
             MediaChurch mediaChurch = new MediaChurch();
 
             _dc.ClearParameters();
-            _dc.AddParameter("mediaId", chMediaId);
+            _dc.AddParameter("mediaId", mediaId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetById");
             foreach (DataRow dataRow in dataTable.Rows)
             {

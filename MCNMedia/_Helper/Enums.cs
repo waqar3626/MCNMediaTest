@@ -7,5 +7,16 @@ namespace MCNMedia_Dev._Helper
 {
     public class Enums
     {
+
+
+    }
+
+    public enum UploadingAreas
+    {
+        ChurchProfileImage,
+        Picture,
+        Video,
+        SlideShow,
+        UserProfileImage
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MCNMedia_Dev.CronJobs;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -34,9 +35,26 @@ namespace MCNMedia_Dev
             services.AddControllersWithViews();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(100);//You can set Time   
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddCronJob<CronJobEveryMinute>(c =>
+              {
+                  c.TimeZoneInfo = TimeZoneInfo.Local;
+                  c.CronExpression = @"* * * * *";
+              });
+
+            //services.AddCronJob<MyCronJob1>(c =>
+            //{
+            //    c.TimeZoneInfo = TimeZoneInfo.Local;
+            //    c.CronExpression = @"*/5 * * * *";
+            //});
+            //services.AddCronJob<MyCronJob2>(c =>
+            //{
+            //    c.TimeZoneInfo = TimeZoneInfo.Local;
+            //    c.CronExpression = @"* * * * *";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +72,7 @@ namespace MCNMedia_Dev
 
             app.UseRouting();
             app.UseSession();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseStaticFiles(new StaticFileOptions
