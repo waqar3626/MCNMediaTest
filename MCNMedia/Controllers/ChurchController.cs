@@ -84,7 +84,7 @@ namespace MCNMedia_Dev.Controllers
                 imageURl2.CopyTo(stream);
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
             }
-            church.ImageURl = Path.Combine(dirPath, fileName);
+            church.ImageURl = Path.Combine(dirPath, fileName).Replace(@"\",@"/");
             churchDataAccess.AddChurch(church);
             return RedirectToAction("Listchurch");
         }
@@ -179,7 +179,7 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
             }
 
-            church.Churches.ImageURl = Path.Combine(dirPath, fileName);
+            church.Churches.ImageURl = Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
 
             ChurchId = church.Churches.ChurchId;
 

@@ -12,39 +12,39 @@
                     <h4 class="card-title">New Church Information</h4>
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                    <div class="col-lg-4 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                               
-                                <input asp-for="ImageURl" type="file" name="ImageURl2" class="dropify" />
-                                <span asp-validation-for="ImageURl" class="text-danger"></span>
+                    <div class="form-group row">
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <input asp-for="ImageURl" type="file" id="UploadImage" name="ImageURl2" class="dropify"/>
+                                    <span asp-validation-for="ImageURl" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    </div>
-                    <div class="form-group " style=" margin-left:550px;">
-
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label asp-for="ChurchName"> Church Name</label>
-                                <input asp-for="ChurchName" class="form-control" />
-                                <span asp-validation-for="ChurchName" class="text-danger"></span>
+                       
+                        <div class="col-sm-6">
+                            <div class=" form-group row">
+                                <div class="col-sm-12">
+                                    <label asp-for="ChurchName"> Church Name </label>
+                                    <input asp-for="ChurchName" class="form-control" />
+                                    <span asp-validation-for="ChurchName" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row ">
-                            <div class="col-sm-12">
-                                <label asp-for="ClientTypeId">Client Type </label>
-                                @*<input asp-for="ClientTypeId" class="form-control" />*@
-                                <span asp-validation-for="ClientTypeId" class="text-danger"></span>
-                                <select asp-for="ClientTypeId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.ClientTypes,"Value","Text"))">
-                                    <option>--Select Client--</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label asp-for="ClientTypeId">Client Type </label>
+                                    @*<input asp-for="ClientTypeId" class="form-control" />*@
+                                    <span asp-validation-for="ClientTypeId" class="text-danger"></span>
+                                    <select asp-for="ClientTypeId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.ClientTypes,"Value","Text"))">
+                                        <option>--Select Client--</option>
+                                    </select>
+                                </div>
                             </div>
 
-                        </div>
-                    </div>
 
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
