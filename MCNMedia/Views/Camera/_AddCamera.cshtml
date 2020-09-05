@@ -140,10 +140,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        loadData();
+        loadCamera();
     });
 
-    function loadData() {
+    function loadCamera() {
         $.ajax({
             url: "/Camera/GetAllCameras",
             type: "GET",
@@ -160,7 +160,7 @@
                     html += '<td>' + item.rtspPort + '</td>';
                     html += ' <td>';
                     html += '<a onclick="Open(' + item.cameraId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
-                    html += '<a onclick="Delete(' + item.cameraId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                    html += '<a onclick="DeleteCamera(' + item.cameraId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
                     html += ' </td>';
                     html += '</tr>';
                 });
@@ -184,18 +184,16 @@
         })
             }
 
-    function Delete(camId) {
+    function DeleteCamera(camId) {
     var ans = confirm("Are you sure you want to delete this camera?");
     if (ans) {
         $.ajax({
             url: "/Camera/DeleteCamera/" + camId,
             type: "POST",
-           // url: '@Url.Action("DeleteCamera", "Camera")',
-            //data: { id: camId },
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                loadData();
+                loadCamera();
                 if (result) { alert("Record Deleted");}
             },
             error: function (errormessage) {
