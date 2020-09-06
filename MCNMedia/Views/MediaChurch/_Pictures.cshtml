@@ -149,8 +149,11 @@
         success: function (data) {
             $('#EditPicPreview').html(data);
             $('#EditPicModal').modal('show');
-        }
-        })
+            },
+            error: function (errormessage) {
+                // alert(errormessage.responseText);
+            }
+        });
 
 
     }
