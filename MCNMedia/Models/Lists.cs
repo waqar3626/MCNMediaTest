@@ -72,5 +72,25 @@ namespace MCNMedia_Dev.Models
             }
             return list;
         }
+        public static List<SelectListItem> GetUsers()
+        {
+            UserAssignChurchesDataAccessLayer userAssignChurchesDataAccess = new UserAssignChurchesDataAccessLayer();
+            var userDDl = userAssignChurchesDataAccess.GetUserDDL();
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem
+            {
+                Text = "--Select--",
+                Value = "0"
+            });
+            foreach (DataRow dr in userDDl.Rows)
+            {
+                list.Add(new SelectListItem
+                {
+                    Text = dr["FirstName"].ToString(),
+                    Value = dr["UserId"].ToString()
+                });
+            }
+            return list;
+        }
     }
 }
