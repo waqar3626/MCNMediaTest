@@ -21,6 +21,7 @@ namespace MCNMedia_Dev.Controllers
       [HttpGet]
         public IActionResult AssignChurchesToUser()
         {
+           
             UserAssignChurches uAChurches = new UserAssignChurches();
             List<SelectListItem> items = new List<SelectListItem>();
             IEnumerable<UserAssignChurches> churchList = userAssignDataAcessLayer.GetChurchList();
@@ -30,64 +31,89 @@ namespace MCNMedia_Dev.Controllers
                 selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
             }
 
-           
-            
+
+            ViewBag.ErrorMessage = "Error";
             return View(selectListItems);
             
         }
+        [HttpPost]
+        public IActionResult AssignChurchesToUser(List<SelectListItem> Data, int UserId)
+        {
+            try
+            {
+                UserAssignChurches userAssignChurches = new UserAssignChurches();
 
-        public ActionResult Index()
+                foreach (SelectListItem item in Data)
+                {
+                    if (item.Selected)
+                    {
+                        userAssignChurches.ChurchId = Convert.ToInt32(item.Value);
+                        userAssignChurches.UserId = UserId;
+                        userAssignChurches.CreatedBy = 1;
+                        userAssignDataAcessLayer.AddUserChurch(userAssignChurches);
+
+                    }
+
+                }
+                return RedirectToAction("GetUserAssignChurches");
+            }
+            catch (Exception)
+            {
+
+                ViewBag.ErrorMessage = "ErrorMessage";
+                return RedirectToAction("AssignChurchesToUser");
+            }
+ 
+
+        }
+
+        public IActionResult GetUserAssignChurches() {
+
+            IEnumerable<UserAssignChurches> userAssignChurchesList =  userAssignDataAcessLayer.GetUserAssignChurchesList();
+            return View(userAssignChurchesList);
+        }
+
+        [HttpGet]
+        public IActionResult EditAssignChurchesUser(int id)
 
         {
-            List<UserAssignChurches> data = new List<UserAssignChurches>();
+            ViewBag.Churches = userAssignDataAcessLayer.GetSingleUserAssignChurches(id);
+            UserAssignChurches uAChurches = new UserAssignChurches();
             List<SelectListItem> items = new List<SelectListItem>();
-            IEnumerable<UserAssignChurches> churchList = userAssignDataAcessLayer.GetChurchList();
+            IEnumerable<UserAssignChurches> churchList = userAssignDataAcessLayer.GetUserAssignedChurches(id);
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (var item in churchList)
             {
-                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString(), Selected = item.Assigned  });
+                ViewBag.UserId = item.UserId;
             }
-           
-            
-            return View(selectListItems);
-        }
+                     
+               return View(selectListItems);
+            }
 
-        [HttpPost]
-        public ActionResult Index(List<SelectListItem> items)
+            [HttpPost]
+        public IActionResult EditAssignChurchesUser(List<SelectListItem> Data, int UserId)
         {
-            ViewBag.Message = "Selected Items:\\n";
-            foreach (SelectListItem item in items)
+
+            UserAssignChurches userAssignChurches = new UserAssignChurches();
+
+            userAssignDataAcessLayer.DeleteUserChurches(UserId);
+
+            foreach (SelectListItem item in Data)
             {
                 if (item.Selected)
                 {
-                    ViewBag.Message += string.Format("{0}\\n", item.Text);
+                    userAssignChurches.ChurchId = Convert.ToInt32(item.Value);
+                    userAssignChurches.UserId = UserId;
+                    userAssignChurches.CreatedBy = 1;
+                    userAssignDataAcessLayer.AddUserChurch(userAssignChurches);
+
                 }
+
             }
-            return View(items);
+            return RedirectToAction("GetUserAssignChurches");
 
         }
-            //public void LoadUser()
-            //{
-            //    IEnumerable<UserAssignChurches> userList = userAssignDataAcessLayer.GetUsers();
-            //    List<SelectListItem> selectListItems = new List<SelectListItem>();
-            //    foreach (var item in userList)
-            //    {
-            //        selectListItems.Add(new SelectListItem { Text = item.FirstName.ToString(), Value = item.UserId.ToString() });
-            //    }
-            //    ViewBag.UserList = selectListItems;
+    }
 
-            //}
-            //public void LoadChruchList()
-            //{
-            //    IEnumerable<UserAssignChurches> churchList = userAssignDataAcessLayer.GetChurchList();
-            //    List<SelectListItem> selectListItems = new List<SelectListItem>();
-            //    foreach (var item in churchList)
-            //    {
-            //        selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
-            //    }
-            //    ViewBag.ChurchList = selectListItems;
-
-            //}
-
-        }
 }

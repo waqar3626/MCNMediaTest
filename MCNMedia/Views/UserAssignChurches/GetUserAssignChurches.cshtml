@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.UserAssignChurches>
+@{
+    ViewData["Title"] = "GetUserAssignChurches";
+}
+    <div class="card">
+        <div class="card-body">
+            @*<a id="ADDEmployee" class="btn btn-success btn-sm float-right" asp-controller="userA"> <i class="fa fa-plus"></i> Add Church</a>*@
+            <h4>Manage User Assign Churches</h4>
+            <br />
+            <div class="">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                           
+                            <th>
+                                User Name
+                            </th>
+                            <th>
+                                Assign Churches
+                            </th>
+                           
+                            
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td>
+                                    @{
+                                        var Church = item.ChurchName.ToString();
+                                        var Name = Church.Split("|");
+
+                                        foreach (string churchName in Name)
+                                        {
+                                            
+                                            <label>@churchName</label>
+                                            <br />
+                                        }
+
+
+                                    }
+
+
+
+
+                                </td>
+                            
+                          
+                                <td>
+                                    <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+

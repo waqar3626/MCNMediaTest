@@ -1,52 +1,28 @@
-﻿@model List<SelectListItem>;
-
-
+﻿
+@model List<SelectListItem>;
 
 
 @{
-
     List<SelectListItem> userddl = Lists.GetUsers();
+    
 
-    ViewData["Title"] = "AssignChurchesToUser";
+    ViewData["Title"] = "EditAssignChurchesUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-
-<h1>AssignChurchesToUser</h1>
+<hr />
 <div class="grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            @{
-                var Check = "abc";
-
-                if (ViewBag.ErrorMessage != null)
-                {
-                    Check = ViewBag.ErrorMessage.ToString();
-
-                }
-                if (Check == "ErrorMessage")
-                {
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger">
-                               Church Already Assign to the User
-
-                            </div>
-                        </div>
-                    </div>
-
-                }
-
-            }
             <div class="row">
                 <div class="col-md-12">
-                    <form method="post" asp-action="AssignChurchesToUser" enctype="multipart/form-data">
+                    <form method="post" asp-action="EditAssignChurchesUser" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="col-sm-6">
                             <label class=" text-center"> User </label>
-                            @Html.DropDownList("UserId", userddl, new { @class = "form-control" })
+                            @Html.DropDownList("UserId", userddl, "ViewBag.UserId", new { @class = "form-control" })
                             <span class="text-danger"></span>
                         </div>
 
@@ -63,7 +39,9 @@
                                 <div class="form-group">
                                     <div class="form-check">
                                         <label class="form-check-label">
+
                                             @Html.CheckBoxFor(m => m[i].Selected, new { @class = "form-check-inline" })
+
                                             @Html.DisplayFor(m => m[i].Text)
                                         </label>
                                     </div>
@@ -81,8 +59,7 @@
 
 
                         <div class="float-right">
-                            <button type="submit" value="Create" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i>Add </button>
-                            <a id="back" class="btn btn-secondary btn-sm  " href="../UserAssignChurches/GetUserAssignChurches"><i class="fa fa-chevron-left"></i> Back</a>
+                            <button type="submit" value="Create" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i>Submit </button>
                         </div>
                     </form>
                 </div>
@@ -90,8 +67,6 @@
         </div>
     </div>
 </div>
-
-
 
 @if (ViewBag.Message != null)
 {
@@ -106,3 +81,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
