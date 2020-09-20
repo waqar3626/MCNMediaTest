@@ -41,15 +41,31 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Listchurch()
         {
-            List<Church> church = churchDataAccess.GetAllChurch().ToList<Church>();
+
+            LoadClientDDL();
+            LoadCountyDDL();
+            Church chr = new Church();
+            chr.ChurchId = 1;
+            chr.CountyId = -1;
+            chr.ClientTypeId = -1;
+            chr.ChurchName = "";
+            chr.EmailAddress = "";
+            chr.Phone = "";
+            List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
             return View(church);
 
         }
         [HttpGet()]
         public IActionResult GetAllChurch()
         {
-
-            churchDataAccess.GetAllChurch();
+            Church chr = new Church();
+            chr.ChurchId = 1;
+            chr.CountyId = -1;
+            chr.ClientTypeId = -1;
+            chr.ChurchName = "";
+            chr.EmailAddress = "";
+            chr.Phone = "";
+            churchDataAccess.GetAllChurch(chr);
             return View();
         }
 
@@ -147,6 +163,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
+        
 
         [HttpPost]
 
@@ -164,6 +181,29 @@ namespace MCNMedia_Dev.Controllers
                 return RedirectToAction("ChurchDetails", "Church", queryString);
             }
             return View(church);
+        }
+
+        public IActionResult Search(string ChurchName, int ClientType, string EmailAddress, int Country, string PhoneNo)
+        {
+            LoadClientDDL();
+            LoadCountyDDL();
+
+           
+            
+            Church chr = new Church();
+            chr.ChurchId = 1;
+            chr.ChurchName = ChurchName;
+            chr.ClientTypeId = ClientType;
+            chr.EmailAddress = EmailAddress;
+            chr.CountyId = Country;
+            chr.Phone = PhoneNo;
+            List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+            return View("/Views/Church/Listchurch.cshtml", church);
+
+            
+
+
+
         }
     }
 }

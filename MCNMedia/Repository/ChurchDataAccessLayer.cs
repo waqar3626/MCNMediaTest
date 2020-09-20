@@ -19,12 +19,18 @@ namespace MCNMedia_Dev.Repository
         }
 
         //To View all Churches details 
-        public IEnumerable<Church> GetAllChurch()
+        public IEnumerable<Church> GetAllChurch(Church chr)
         {
             List<Church> Balobj = new List<Church>();
             _dc.ClearParameters();
-            _dc.AddParameter("ChurchId", 1);
-            _dc.AddParameter("ChurchName", "");
+            _dc.AddParameter("ChurchId", chr.ChurchId);
+            _dc.AddParameter("ChurchName", chr.ChurchName);
+            _dc.AddParameter("ClientType", chr.ClientTypeId);
+            _dc.AddParameter("Country", chr.CountyId);
+            _dc.AddParameter("EmailAdd", chr.EmailAddress);
+            _dc.AddParameter("PhoneNo", chr.Phone);
+
+
             DataTable dataTable = _dc.ReturnDataTable("spChurch_Search");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -197,6 +203,8 @@ namespace MCNMedia_Dev.Repository
             return _dc.ReturnDataTable("spCounty_Get");
 
         }
+
+        
     }
 }
     

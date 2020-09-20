@@ -60,39 +60,7 @@ namespace MCNMedia_Dev.Repository
             return setup;
         }
 
-        //public Church GetChurchData(int id)
-        //{
-        //    Church church = new Church();
-
-        //    _dc.ClearParameters();
-        //    _dc.AddParameter("ChurchId", id);
-        //    DataTable dataTable = _dc.ReturnDataTable("spChurch_GetById");
-        //    foreach (DataRow dataRow in dataTable.Rows)
-        //    {
-        //        church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-        //        church.ChurchName = dataRow["ChurchName"].ToString();
-        //        church.ClientTypeId = Convert.ToInt32(dataRow["ClientTypeId"]);
-        //        church.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
-        //        church.Address = dataRow["Address"].ToString();
-        //        church.Town = dataRow["Town"].ToString();
-        //        church.CountyId = Convert.ToInt32(dataRow["CountyId"]);
-        //        church.Website = dataRow["Website"].ToString();
-        //        church.EmailAddress = dataRow["EmailAddress"].ToString();
-        //        church.Phone = dataRow["Phone"].ToString();
-        //        church.ImageURl = dataRow["ImageURL"].ToString();
-        //        church.Blurb = dataRow["Blurb"].ToString();
-        //        church.Slug = dataRow["Slug"].ToString();
-        //        church.Notice = dataRow["Notice"].ToString();
-        //        church.Featured = Convert.ToInt32(dataRow["Featured"]);
-        //        church.UniqueIdentifier = dataRow["UniqueIdentifier"].ToString();
-        //        church.RepeatRecordings = Convert.ToBoolean(dataRow["RepeatRecordings"]);
-        //        church.Switch = Convert.ToInt32(dataRow["Switch"]);
-        //        church.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
-        //        church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
-
-        //    }
-        //    return church;
-        //}
+        
 
     }
 }

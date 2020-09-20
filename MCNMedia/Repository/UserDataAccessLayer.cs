@@ -18,26 +18,28 @@ namespace MCNMedia_Dev.Repository
         }
 
         //To View all Users details 
-        public IEnumerable<User> GetAllUser()
+        public IEnumerable<User> GetAllUser(User usr)
         {
             List<User> Balobj = new List<User>();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", -1);
-            _dc.AddParameter("FName", "");
-            _dc.AddParameter("LName", "");
-            _dc.AddParameter("EmailAdd", "");
-            DataTable dataTable = _dc.ReturnDataTable("spUser_Search");
+            _dc.AddParameter("FName", usr.FirstName);
+            _dc.AddParameter("LName", usr.LastName);
+            _dc.AddParameter("EmailAdd", usr.EmailAddress);
+            _dc.AddParameter("Rolech", usr.RoleName);
+            DataTable dataTable = _dc.ReturnDataTable("spUser_Churches_Search");
             foreach(DataRow dataRow in dataTable.Rows)
             {
                 User user = new User();
                 user.UserId = Convert.ToInt32(dataRow["UserId"]);
+                user.ChurchName = dataRow["churchname"].ToString();
                 user.FirstName = dataRow["FirstName"].ToString();
                 user.LastName = dataRow["LastName"].ToString();
                 user.EmailAddress = dataRow["EmailAddress"].ToString();
                 user.LoginPassword = dataRow["LoginPassword"].ToString();
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
                 user.RoleName = dataRow["RoleName"].ToString();
-
+                user.UserName=user.FirstName + " " + user.LastName;
 
                 Balobj.Add(user);
             }

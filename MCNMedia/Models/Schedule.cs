@@ -21,8 +21,9 @@ namespace MCNMedia_Dev.Models
         public String EventDay { get; set; }
         [EnumDataType(typeof(DayOfWeek))]
         public EventDay Days { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
-        [DataType(DataType.Time)]
+      //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
+       [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm tt}")]
         public DateTime EventTime { get; set; }
         public int UpdatedBy { get; set; }
         public DateTime CreatedAt { get; set; }

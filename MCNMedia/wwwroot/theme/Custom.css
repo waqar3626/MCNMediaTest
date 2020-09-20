@@ -1,0 +1,204 @@
+﻿.schedule-container-video {
+    background: #372548;
+    border-radius: 0 0 10px 10px;
+    color: #fff;
+    position: relative;
+    overflow: hidden
+}
+
+@media screen and (max-width:63.99875em) {
+    .schedule-container-video {
+        border-radius: 0
+    }
+}
+
+.schedule-container-video .slick-slider {
+    padding: 30px 0 40px
+}
+
+@media screen and (max-width:63.99875em) {
+    .schedule-container-video .slick-slider {
+        padding: 14px 0
+    }
+}
+
+.schedule-container-video:after {
+    right: auto;
+    left: 0;
+    background: transparent;
+    background: -webkit-gradient(linear,left top,right top,color-stop(25%,#372548),to(rgba(0,212,255,0)));
+    background: linear-gradient(90deg,#372548 25%,rgba(0,212,255,0))
+}
+
+.schedule-container-video:before {
+    background: transparent;
+    background: -webkit-gradient(linear,right top,left top,color-stop(25%,#372548),to(rgba(0,212,255,0)));
+    background: linear-gradient(-90deg,#372548 25%,rgba(0,212,255,0))
+}
+
+h3 {
+    font-size: 23px;
+    margin: 0 0 30px;
+    font-weight: 400
+}
+
+    h3 small {
+        font-family: Baloo Paaji\ 2,serif;
+        background: hsla(0,0%,100%,.1);
+        border-radius: 200px;
+        padding: 16px 20px 16px 30px;
+        font-size: 15px;
+        position: relative;
+        top: 0;
+        float: right;
+        height: 30px
+    }
+
+        h3 small i {
+            margin: auto;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            font-size: 13px;
+            height: 13px;
+            line-height: 0
+        }
+
+.schedule-day {
+    padding: 0 30px;
+    border-right: 2px solid hsla(0,0%,100%,.1)
+}
+
+@media screen and (max-width:63.99875em) {
+    .schedule-day {
+        padding: 0 10px
+    }
+}
+
+.schedule-days {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important
+}
+
+.schedule-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background: hsla(0,0%,100%,.2);
+    border-radius: 200px;
+    padding: 10px 20px;
+    margin: 0 0 20px
+}
+
+    .schedule-item div:last-child {
+        margin-left: auto
+    }
+
+    .schedule-item .has-tip {
+        border: 0;
+        margin: 1px 0 0;
+        float: left;
+        display: block
+    }
+
+.get-help-container {
+    background: #372548;
+    padding: 30px 30px 40px;
+    border-radius: 15px;
+    color: #fff;
+    margin-top: 20px
+}
+
+    .get-help-container h2 {
+        color: #fff;
+        font-weight: 400;
+        font-size: 2.5rem
+    }
+
+    .get-help-container p {
+        font-family: Verdana,Geneva,Tahoma,sans-serif;
+        color: hsla(0,0%,100%,.5)
+    }
+
+    .get-help-container .button {
+        background: hsla(0,0%,100%,.1)
+    }
+
+.slick-slider .slick-list {
+    -webkit-transition: height .5s ease-in-out;
+    transition: height .5s ease-in-out
+}
+
+.slick-next, .slick-prev {
+    font-size: 0;
+    position: absolute;
+    z-index: 999;
+    height: 100%;
+    outline: none;
+    top: 0
+}
+
+    .slick-next.slick-disabled, .slick-prev.slick-disabled {
+        display: none !important
+    }
+
+    .slick-next:before, .slick-prev:before {
+        width: 10px;
+        height: 20px;
+        font-family: Font Awesome\ 5 Pro;
+        font-size: 20px;
+        font-weight: 900;
+        color: #fff;
+        padding: 0 0 0 20px
+    }
+
+.slick-prev {
+    left: 10px
+}
+
+    .slick-prev:before {
+        content: "\F053"
+    }
+
+.slick-next {
+    padding: 0 20px 0 0;
+    right: 10px
+}
+
+    .slick-next:before {
+        content: "\F054"
+    }
+
+.no-mass-container {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 210px 0;
+    border-radius: 10px 10px 0 0
+}
+
+    .no-mass-container *, .no-mass-container h2 {
+        color: #fff
+    }
+
+@media screen and (max-width:63.99875em) {
+    .no-mass-container {
+        padding: 100px 0;
+        border-radius: 0
+    }
+}
+
+#irelandMap {
+    max-width: 600px
+}
+
+    #irelandMap path {
+        stroke: #000;
+        fill: #372548
+    }
+
+        #irelandMap path:hover {
+            fill: #51366a !important
+        }

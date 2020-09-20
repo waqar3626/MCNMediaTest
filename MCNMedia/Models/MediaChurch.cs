@@ -16,7 +16,7 @@ namespace MCNMedia_Dev.Models
         public string MediaURL { get; set; }
         public string MediaName { get; set; }
         public DateTime CreatedAt { get; set; }
-        public String CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int UpdatedBy { get; set; }
 

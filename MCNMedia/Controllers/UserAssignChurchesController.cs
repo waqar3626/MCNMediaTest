@@ -15,6 +15,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class UserAssignChurchesController : Controller
     {
+        UserDataAccessLayer userDataAccess = new UserDataAccessLayer();
         UserAssignChurchesDataAccessLayer userAssignDataAcessLayer = new UserAssignChurchesDataAccessLayer();
 
       
@@ -111,8 +112,15 @@ namespace MCNMedia_Dev.Controllers
                 }
 
             }
-            return RedirectToAction("GetUserAssignChurches");
+            return RedirectToAction(nameof(ListUser));
 
+        }
+        [HttpGet]
+        public IActionResult ListUser()
+        {
+            User user = new User();
+            List<User> usr = userDataAccess.GetAllUser(user).ToList<User>();
+            return View("/Views/User/ListUser.cshtml",usr);
         }
     }
 

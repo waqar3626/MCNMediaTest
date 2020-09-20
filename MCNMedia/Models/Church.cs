@@ -79,13 +79,13 @@ namespace MCNMedia_Dev.Models
         public class ClientType
         {
             public int ClientTypeId { get; set; }
-            public String ClientTypeTitle { get; set; }
+            public string ClientTypeTitle { get; set; }
         }
 
         public class Counties
         {
             public int CountyId { get; set; }
-            public String CountyName { get; set; }
+            public string CountyName { get; set; }
         }
 
 

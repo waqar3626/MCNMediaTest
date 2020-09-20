@@ -87,7 +87,8 @@ namespace MCNMedia_Dev.Models
                 list.Add(new SelectListItem
                 {
                     Text = dr["FirstName"].ToString(),
-                    Value = dr["UserId"].ToString()
+                    Value = dr["UserId"].ToString(),
+                   
                 });
             }
             return list;

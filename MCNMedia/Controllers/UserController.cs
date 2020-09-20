@@ -27,7 +27,8 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult ListUser()
         {
-             List<User> usr = userDataAccess.GetAllUser().ToList<User>();
+            User user = new User();
+             List<User> usr = userDataAccess.GetAllUser(user).ToList<User>();
              return View(usr);
         }
 
@@ -75,7 +76,8 @@ namespace MCNMedia_Dev.Controllers
 
             //User usr = new User();
             //UpdateModel();
-            userDataAccess.GetAllUser();
+            User usr = new User();
+            userDataAccess.GetAllUser(usr);
             return View();
         }
 
@@ -99,6 +101,19 @@ namespace MCNMedia_Dev.Controllers
             return RedirectToAction("ListUser");
         }
 
+        [HttpPost]
+        public IActionResult Search(string FirstName, string LastName, string EmailAddress, string Role) 
+        {
+            
+            User usr = new User();
+            usr.FirstName = FirstName;
+            usr.LastName = LastName;
+            usr.EmailAddress = EmailAddress;
+            usr.RoleName = Role;
+            List<User> user = userDataAccess.GetAllUser(usr).ToList<User>();
+            return View("/Views/User/ListUser.cshtml",user);
+        }
+
         public void LoadDDL()
         {
             IEnumerable<UserRoles> RoleList= userDataAccess.GetRoles();
@@ -110,5 +125,7 @@ namespace MCNMedia_Dev.Controllers
             ViewBag.State = selectListItems;
             
         }
+
+      
     }
 }

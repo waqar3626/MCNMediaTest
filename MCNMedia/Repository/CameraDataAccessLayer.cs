@@ -27,7 +27,7 @@ namespace MCNMedia_Dev.Repository
                 Camera camera = new Camera();
                 camera.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                 camera.CameraName = dataRow["CameraName"].ToString();
-                camera.HttpPort = dataRow["HttpPort"].ToString(); 
+                camera.HttpPort = dataRow["HttpPort"].ToString();
                 camera.CameraUrl = dataRow["CameraUrl"].ToString();
                 camera.RtspPort = dataRow["RtspPort"].ToString();
                 camera.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
@@ -108,5 +108,5 @@ namespace MCNMedia_Dev.Repository
         }
     }
 
-    
+
 }

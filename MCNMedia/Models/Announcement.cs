@@ -9,8 +9,8 @@ namespace MCNMedia_Dev.Models
     {
         public int ChurchAnnouncementId { get; set; }
         public int ChurchId { get; set; }
-        public String AnnouncementTitle { get; set; }
-        public String AnnouncementText { get; set; }
+        public string AnnouncementTitle { get; set; }
+        public string AnnouncementText { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

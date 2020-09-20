@@ -50,7 +50,7 @@ namespace MCNMedia_Dev.Controllers
 
             GenericModel gm = new GenericModel();
             gm.Cameras = camDataAccess.GetCameraById(id);
-            //  return View(gm);
+            // return View(gm);
             return PartialView("_EditCamera", gm);
         }
 

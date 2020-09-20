@@ -4,156 +4,228 @@
     ViewData["Title"] = "Listchurch";
 }
 
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>Search User</h3>
+            <div class="">
+                <form method="post" asp-action="Search" asp-controller="church">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Church Name</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBox("ChurchName", "", new { @class = "form-control", @placeholder = "Enter Church Name" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Client Type</label>
+                                <div class="col-sm-8">
+                                    <select name="ClientType" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.ClientTypes,"Value","Text"))">
+                                        <option value="-1">--Select Client--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Email Address</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBox("EmailAddress", "", new { @class = "form-control", @placeholder = "Enter Email Address" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Country</label>
+                                <div class="col-sm-8">
+                                    <select name="Country" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Counties,"Value","Text"))">
+                                        <option value="-1">--Select County--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Phone No</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBox("PhoneNo", "", new { @class = "form-control", @placeholder = "Enter Phone No" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group  row">
+                                <label class="col-sm-4 col-form-label"></label>
+                                <div class="col-sm-8">
+                                    <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-table-search"></i>Search</button>
+                                    <a asp-controller="church" asp-action="ListChurch" class="btn btn-warning btn-sm"><i class="mdi mdi-cancel"></i>Cancel</a>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 <div class="card">
     <div class="card-body">
         <a id="ADDEmployee" class="btn btn-success btn-sm float-right" href="../Church/AddChurch"> <i class="fa fa-plus"></i> Add Church</a>
         <h3>Manage Churches</h3>
         <br />
         <div class="">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Details
-                        </th>
-                        <th>
-                            Church Name
-                        </th>
-                        <th>
-                            Client Type 
-                        </th>
-                        @*<th>
-                            @Html.DisplayNameFor(model => model.UniqueChurchId)
-                        </th>*@
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.Address)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Town)
-                            </th>*@
-                    <th>
-                        County
-                    </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.Website)
-                            </th>*@
-                    <th>
-                        Email Address
-                    </th>
-                    <th>
-                        Phone
-                    </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.ImageURl)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Blurb)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Slug)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Notice)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Featured)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.UniqueIdentifier)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.RepeatRecordings)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Switch)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ShowOnWebsite)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DisplayOrder)
-                            </th>
-                            <th></th>*@
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+            <div class="table-responsive">
+                <table id="order-listing" class="table">
+                    <thead>
                         <tr>
+                            <th>Preview</th>
+                            <th>
+                                Details
+                            </th>
+                            <th>
+                                Church Name
+                            </th>
+                            <th>
+                                Client Type
+                            </th>
+                            @*<th>
+                        @Html.DisplayNameFor(model => model.UniqueChurchId)
+                    </th>*@
+                            @*<th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Town)
+                    </th>*@
+                            <th>
+                                County
+                            </th>
+                            @*<th>
+                        @Html.DisplayNameFor(model => model.Website)
+                    </th>*@
+                            <th>
+                                Email Address
+                            </th>
+                            <th>
+                                Phone
+                            </th>
+                            @*<th>
+                        @Html.DisplayNameFor(model => model.ImageURl)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Blurb)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Slug)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Notice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Featured)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UniqueIdentifier)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RepeatRecordings)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Switch)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShowOnWebsite)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DisplayOrder)
+                    </th>
+                    <th></th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Preview", "Preview",new { chId = item.ChurchId })" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="fa fa-plus"></i></a>
+
+                            </td>
                             <td>
                                 <a href="@Url.Action("ChurchDetails", "Church",new { chId = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
 
                             </td>
                             @*<td>
-                                    @Html.DisplayFor(modelItem => item.ChurchId)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ChurchName)
+            @Html.DisplayFor(modelItem => item.ChurchId)
+        </td>*@
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.ChurchName,new { @class = "text-wrap" })
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ClientTypeTitle)
                             </td>
                             @*<td>
-                                @Html.DisplayFor(modelItem => item.UniqueChurchId)
-                            </td>*@
+            @Html.DisplayFor(modelItem => item.UniqueChurchId)
+        </td>*@
                             @*<td>
-                                    @Html.DisplayFor(modelItem => item.Address)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Town)
-                                </td>*@
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Town)
+        </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.CountyName)
                             </td>
                             @*<td>
-                                    @Html.DisplayFor(modelItem => item.Website)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmailAddress)
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>*@
+                            <td class = "text-wrap">
+                                @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Phone)
                             </td>
                             @*<td>
-                                    @Html.DisplayFor(modelItem => item.ImageURl)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Blurb)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Slug)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Notice)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Featured)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UniqueIdentifier)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RepeatRecordings)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Switch)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ShowOnWebsite)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DisplayOrder)
-                                </td>*@
+            @Html.DisplayFor(modelItem => item.ImageURl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Blurb)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Slug)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Featured)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UniqueIdentifier)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RepeatRecordings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Switch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShowOnWebsite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayOrder)
+        </td>*@
                             @*<td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.ChurchId }) |
-                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.ChurchId })
-                                </td>*@
+            @Html.ActionLink("Edit", "Edit", new { id = item.ChurchId }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ChurchId })
+        </td>*@
                         </tr>
-                    }
-                </tbody>
-            </table>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>

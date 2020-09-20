@@ -29,6 +29,23 @@ namespace MCNMedia_Dev
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // For Google and Facebook Authentication
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        options.ClientId = "";
+            //        options.ClinetSecret = "";
+
+//    })
+//      .AddFacebook(options =>
+//       {
+//           options.AppId = "";
+//           options.AppSecret = "";
+//       });
+
+#if DEBUG
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+#endif
             //services.Add(new ServiceDescriptor(typeof(UserDataAccessLayer), new UserDataAccessLayer(Configuration.GetConnectionString("Default"))));
             //services.Add(new ServiceDescriptor(typeof(ChurchDataAccessLayer), new ChurchDataAccessLayer(Configuration.GetConnectionString("Default"))));
             //services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:Default"]));

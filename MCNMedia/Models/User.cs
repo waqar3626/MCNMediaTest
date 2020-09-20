@@ -31,6 +31,12 @@ namespace MCNMedia_Dev.Models
 
         public string RoleName { get; set; }
 
+        public int ChurchId { get; set; }
+
+        public string ChurchName { get; set; }
+
+        public string UserName { get; set; }
+
         public int ID { get; internal set; }
     }
 }
