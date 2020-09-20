@@ -25,6 +25,8 @@ namespace MCNMedia_Dev.Models
        [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm tt}")]
         public DateTime EventTime { get; set; }
+
+        public Boolean IsRepeated { get; set; }
         public int UpdatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
 

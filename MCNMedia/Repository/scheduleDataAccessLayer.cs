@@ -25,6 +25,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ScheduleEventDay", Enum.Parse(typeof(EventDay), schedules.EventDay).ToString());
             _dc.AddParameter("ScheduleEventTime", schedules.EventTime);
             _dc.AddParameter("ChurchId", schedules.ChurchId);
+            _dc.AddParameter("IsRepeated", schedules.IsRepeated);
+
             _dc.AddParameter("CreatedBy", 1);
             //_dc.AddParameter("RoleId", schedules.RoleId);
             _dc.Execute("spschedule_Add");

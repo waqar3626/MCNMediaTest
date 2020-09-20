@@ -16,25 +16,23 @@
             <h4 class="modal-title">Add New Schedule</h4>
 
             <div class="form-group row">
-                <label asp-for="ChurchId" class="col-sm-3 col-form-label">Church</label>
-                <div class="col-sm-9">
+                <label asp-for="ChurchId" class="col-sm-2 col-form-label">Church</label>
+                <div class="col-sm-4">
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                     @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
                     @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control" })
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label asp-for="EventName" class="col-sm-3 col-form-label">Event Name</label>
-                <div class="col-sm-9">
+           
+                <label asp-for="EventName" class="col-sm-2 col-form-label">Event Name</label>
+                <div class="col-sm-4">
                     <span asp-validation-for="EventName" class="text-danger"></span>
                     <input type="text" asp-for="EventName" class="form-control" placeholder="Event Name" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Event By : </label>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="eventBy" checked="" onclick="ShowDateDiv()">
@@ -43,7 +41,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-3">
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="eventBy" onclick="ShowDayDiv()">
@@ -52,33 +50,39 @@
                         </label>
                     </div>
                 </div>
-            </div>
-            <div class="form-group row" id="divDate">
-                <label asp-for="EventDate" class="col-sm-3 col-form-label">Event Date</label>
-                <div class="col-sm-9">
-                    <span asp-validation-for="EventDate" class="text-danger"></span>
-                    <div id="datepicker-popup" class="input-group date datepicker">
-                        <input type="text" asp-for="EventDate" class="form-control" placeholder="Event Date" />
-                        <span class="input-group-addon input-group-append border-left">
-                            <span class="ti-calendar input-group-text"></span>
-                        </span>
+                <div class="col-sm-3">
+                    <div class="form-check" id="CheckBox">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsRepeated" /> @Html.DisplayNameFor(model => model.IsRepeated)
+                        </label>
                     </div>
                 </div>
             </div>
+            <div class="form-group row">
+              
+                    <label asp-for="EventDate" id="EventLabel" class="col-sm-2 col-form-label">Event Date</label>
+                    <div class="col-sm-4" id="EventInput">
+                        <span asp-validation-for="EventDate" class="text-danger"></span>
+                        <div id="datepicker-popup" class="input-group date datepicker">
+                            <input type="text" asp-for="EventDate" class="form-control" placeholder="Event Date" />
+                            <span class="input-group-addon input-group-append border-left">
+                                <span class="ti-calendar input-group-text"></span>
+                            </span>
+                        </div>
+                    </div>
+                
 
-            <div class="form-group row" id="divDay">
-                <label asp-for="EventDay" class="col-sm-3 col-form-label">Event Day</label>
-                <div class="col-sm-9">
+            
+                <label asp-for="EventDay" id="EventDayLabel" class="col-sm-2 col-form-label">Event Day</label>
+                <div class="col-sm-4" id="EventDayInput">
                     <span asp-validation-for="EventDay" class="text-danger"></span>
                     <select asp-for="EventDay" class="form-control" asp-items="Html.GetEnumSelectList<EventDay>()">
                         <option selected="selected" value="">Please select Day</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label asp-for="EventTime" class="col-sm-3 col-form-label">Event Time</label>
-                <div class="col-sm-9">
+            
+                <label asp-for="EventTime" class="col-sm-2 col-form-label">Event Time</label>
+                <div class="col-sm-4">
                     <span asp-validation-for="EventTime" class="text-danger"></span>
                     <div class="input-group date" id="timepicker-example" data-target-input="nearest">
                         <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
@@ -101,18 +105,33 @@
 </form>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#CheckBox').hide();
+        $('#EventDayLabel').hide();
+        $('#EventDayInput').hide();
+        $('#EventLabel').show();
+        $('#EventInput').show();
+
+    });
     function ShowDateDiv() {
        
-        $('#divDay').collapse('hide');
-        $('#divDate').collapse('show');
+        $('#CheckBox').hide();
+        $('#EventDayLabel').hide();
+        $('#EventDayInput').hide();
+        $('#EventLabel').show();
+        $('#EventInput').show();
 
         //document.getElementById('divDay').style.display = 'none';
         //document.getElementById('divDate').style.display = 'block';
 
     }
     function ShowDayDiv() {
-        $('#divDate').collapse('hide');
-        $('#divDay').collapse('show');
+        $('#CheckBox').show();
+        $('#EventDayLabel').show();
+        $('#EventDayInput').show();
+        $('#EventLabel').hide();
+        $('#EventInput').hide();
+
 
     }
 

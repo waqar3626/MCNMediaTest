@@ -84,7 +84,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost()]
-        public IActionResult AddChurch(Church church, IFormFile imageURl2)
+        public IActionResult AddChurch(Church church, IFormFile imageURl2,string ImageURl2)
         {
             string fileName = Path.GetFileName(imageURl2.FileName);
             church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
@@ -167,11 +167,18 @@ namespace MCNMedia_Dev.Controllers
 
         [HttpPost]
 
-        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2)
+        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl)
         {
-            string fileName = Path.GetFileName(imageURl2.FileName);
-            church.Churches.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
-            ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+            string fileName = "";
+            if (imageURl2 != null)
+            {
+                 fileName = Path.GetFileName(imageURl2.FileName);
+                church.Churches.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
+            }
+            else {
+                church.Churches.ImageURl = ImageUrl;
+            }
+                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
             ChurchId = church.Churches.ChurchId;
 
             if (ModelState.IsValid)
