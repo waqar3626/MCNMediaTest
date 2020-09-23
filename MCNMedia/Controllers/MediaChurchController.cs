@@ -65,14 +65,25 @@ namespace MCNMedia_Dev.Controllers
             return PartialView("EditPicture", gm);
         }
 
-        public JsonResult UpdateMedia(String ChurchMediaId, IFormFile mediaFile, string mediaType, String EditPictureTabName)
+        public JsonResult UpdateMedia(String ChurchMediaId, IFormFile mediaFile, string mediaType, String EditPictureTabName, string MediaUrl, string MediaName)
         {
             MediaChurch mediaupdate = new MediaChurch();
+
+
+            if (mediaFile != null)
+            {
+                mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
+                mediaupdate.MediaName = mediaFile.FileName.ToString();
+            }
+            else
+            {
+                mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaName = MediaName;
+
+            }
             mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
             mediaupdate.TabName = EditPictureTabName;
-            mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
             mediaupdate.MediaType = mediaType;
-            mediaupdate.MediaName = mediaFile.FileName.ToString();
             int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
 
 
@@ -125,14 +136,27 @@ namespace MCNMedia_Dev.Controllers
             return PartialView("_EditVideo", gm);
         }
 
-        public JsonResult UpdateVideo(int ChurchMediaId, IFormFile mediaFile, string mediaType, String EditVidTabName)
+        public JsonResult UpdateVideo(int ChurchMediaId, IFormFile mediaFile, string mediaType, String EditVidTabName, string MediaUrl, string MediaName)
         {
             MediaChurch mediaupdate = new MediaChurch();
+
+            if (mediaFile != null)
+            {
+                mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"))); // Church Id would be needed
+
+                mediaupdate.MediaName = mediaFile.FileName.ToString();
+            }
+            else
+            {
+                mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaName = MediaName;
+
+            }
+
             mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
             mediaupdate.TabName = EditVidTabName;
-            mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"))); // Church Id would be needed
             mediaupdate.MediaType = mediaType;
-            mediaupdate.MediaName = mediaFile.FileName.ToString();
+
             int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
             return Json(res);
         }
@@ -181,13 +205,24 @@ namespace MCNMedia_Dev.Controllers
             return PartialView("_EditSlideShow", gm);
         }
 
-        public JsonResult UpdateSlide(string ChurchMediaId, IFormFile mediaFile, string mediaType, String EditSlideShowTabName)
+        public JsonResult UpdateSlide(string ChurchMediaId, IFormFile mediaFile, string mediaType, String EditSlideShowTabName, string MediaUrl, string MediaName)
         {
             MediaChurch mediaupdate = new MediaChurch();
+            if (mediaFile != null)
+            {
+                mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShow, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
+                mediaupdate.MediaName = mediaFile.FileName.ToString();
+            }
+            else
+            {
+                mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaName = MediaName;
+
+            }
+
             mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
             mediaupdate.TabName = EditSlideShowTabName;
-            mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShow, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
-            mediaupdate.MediaName = mediaFile.FileName.ToString();
+
             int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
             return Json(res);
         }

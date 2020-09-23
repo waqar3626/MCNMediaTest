@@ -23,6 +23,8 @@
 
                     <input asp-for="Media.MediaURL" class="form-control dropify" id="EditVidFile" type="file" name="MediaURl3" />
                     <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+                    <input type="hidden" id="HdnMediaUrl1" asp-for="Media.MediaURL" />
+                    <input type="hidden" id="HdnMediaName1" asp-for="Media.MediaName" />
                 </div>
                 <div class="form-group">
                     <label asp-for="Media.TabName" class="control-label">Tab Name</label>
@@ -58,10 +60,16 @@
 
             var churchMediaId = $('#chmedId').val();
             var editVidTabName = document.getElementById('medEditVideoTabName').value;
+            var mediaUrl = $('#HdnMediaUrl1').val();
+   
+            var mediaName = $('#HdnMediaName1').val();
+         
             var formData = new FormData();
             formData.append("ChurchMediaId", churchMediaId);
             formData.append("mediaType", "Video");
             formData.append("EditVidTabName", editVidTabName);
+            formData.append("MediaUrl", mediaUrl);
+            formData.append("MediaName", mediaName);
             var input = document.getElementById('EditVidFile');
             formData.append("mediaFile", input.files[0]);
 

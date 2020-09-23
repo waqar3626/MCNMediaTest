@@ -17,6 +17,8 @@
                 @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
                 <input asp-for="Media.MediaURL" class="form-control dropify" id="slideShowMediaURL" type="file" name="MediaURl3" />
                 <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+                <input type="hidden" id="HdnMediaUrl" asp-for="Media.MediaURL" />
+                <input type="hidden" id="HdnMediaName" asp-for="Media.MediaName" />
             </div>
             <div class="form-group">
                 <label asp-for="Media.TabName" class="control-label">Tab Name</label>
@@ -54,10 +56,14 @@
         
         var churchMediaId = $('#ChMedId').val();
         var editSlideShowTabName = document.getElementById('eeslideshowTabName').value;
+        var mediaUrl = $('#HdnMediaUrl').val();
+        var mediaName = $('#HdnMediaName').val();
         var formData = new FormData();
         formData.append("ChurchMediaId", churchMediaId);
         formData.append("mediaType", "SlideShow");
         formData.append("EditSlideShowTabName", editSlideShowTabName);
+        formData.append("MediaUrl", mediaUrl);
+        formData.append("MediaName", mediaName);
         var input = document.getElementById('slideShowMediaURL');
         formData.append("mediaFile", input.files[0]);
 

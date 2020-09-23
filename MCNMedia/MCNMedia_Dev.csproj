@@ -18,4 +18,8 @@
     <ProjectReference Include="..\AwesomeDal\AwesomeDal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+  </ItemGroup>
+
 </Project>

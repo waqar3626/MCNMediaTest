@@ -55,7 +55,7 @@ namespace MCNMedia_Dev.Repository
                 church.Switch = Convert.ToInt32(dataRow["Switch"]);
                 church.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
                 church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
-
+                church.Password= dataRow["Password"].ToString();
 
                 Balobj.Add(church);
             }
@@ -117,6 +117,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("Switch", church.Switch);
             _dc.AddParameter("ShowOnWebsite", church.ShowOnWebsite);
             _dc.AddParameter("DisplayOrder", church.DisplayOrder);
+            _dc.AddParameter("Password", church.Password);
             _dc.Execute("spChurch_Add");
         }
 
@@ -137,6 +138,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ImageURL", church.ImageURl);
             _dc.AddParameter("ShowOnWebsite", church.ShowOnWebsite);
             _dc.AddParameter("DisplayOrder", church.DisplayOrder);
+            _dc.AddParameter("ChurchPassword", church.Password);
             _dc.Execute("spChurch_Update");
         }
 
@@ -164,6 +166,7 @@ namespace MCNMedia_Dev.Repository
                 church.Blurb = dataRow["Blurb"].ToString();
                 church.Slug = dataRow["Slug"].ToString();
                 church.Notice = dataRow["Notice"].ToString();
+                church.Password = dataRow["Password"].ToString();
                 church.Featured = Convert.ToInt32(dataRow["Featured"]);
                 church.UniqueIdentifier = dataRow["UniqueIdentifier"].ToString();
                 church.RepeatRecordings = Convert.ToBoolean(dataRow["RepeatRecordings"]);

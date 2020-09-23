@@ -76,12 +76,16 @@ namespace MCNMedia_Dev.Models
 
         public string CountyName { get; set; }
 
+        [Required(ErrorMessage = "Password is Required")]
+        public string Password { get; set; } 
+
         public class ClientType
         {
             public int ClientTypeId { get; set; }
             public string ClientTypeTitle { get; set; }
         }
 
+        
         public class Counties
         {
             public int CountyId { get; set; }

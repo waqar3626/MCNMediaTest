@@ -2,17 +2,6 @@
 @{
 
 }
-<script src="~/theme/js/modal-demo.js"></script>
-<script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#createAccount').click(function () {
-
-    //        //$("#AccountModal").modal('show');
-    //        // $('#AccountModal').modalPopLite({ openButton: '#clicker', closeButton: '#close-btn' });
-
-    //    });
-    //});
-</script>
 
 @using (Html.BeginForm("AddCamera", "Camera", FormMethod.Post))
 
@@ -50,158 +39,11 @@
                 </div>
                 <div class="float-right">
                     <button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Add Camera</button>
-                    <a id="back" class="btn btn-secondary btn-sm text-white " href="../Church/Listchurch"><i class="fa fa-chevron-left text-white"></i> Back</a>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                 </div>
             </div>
         </div>
     </div>
 }
-<div class="card">
-    <div class="card-body">
-
-        <div class="">
-            @*@using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
-                {*@
-
-            <table class="table">
-                <thead>
-                    <tr>
-
-                        <th>
-                            Tab Name
-                        </th>
-                        <th>
-                            Camera RTSP
-                        </th>
-                        <th>
-                            HTTP Port
-                        </th>
-                        <th>
-                            RTSP Port
-                        </th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="CamList">
-
-                    @*@foreach (var item in Model.LCameras)
-                    {
-                        <tr>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CameraName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CameraUrl)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.HttpPort)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RtspPort)
-                            </td>
-                            <td>
-                                <a onclick="Open(@item.CameraId)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>
-                                <a onclick="Delete(@item.CameraId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    }*@
-                </tbody>
-            </table>
 
 
-            @*}*@
-        </div>
-
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 grid-margin">
-        <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Camera Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="Preview">
-                        @Html.Partial("~/Views/Camera/_EditCamera.cshtml", Model.Cameras)
-                    </div>
-                    @*<div class="modal-footer">
-                            <button type="button" class="btn btn-success">Submit</button>
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                        </div>*@
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        loadCamera();
-    });
-
-    function loadCamera() {
-        $.ajax({
-            url: "/Camera/GetAllCameras",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var html = '';
-                
-                $.each(result, function (key, item) {
-                    html += '<tr>';
-                    html += '<td>' + item.cameraName + '</td>';
-                    html += '<td>' + item.cameraUrl + '</td>';
-                    html += '<td>' + item.httpPort + '</td>';
-                    html += '<td>' + item.rtspPort + '</td>';
-                    html += ' <td>';
-                    html += '<a onclick="Open(' + item.cameraId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
-                    html += '<a onclick="DeleteCamera(' + item.cameraId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
-                    html += ' </td>';
-                    html += '</tr>';
-                });
-                $('.CamList').html(html);
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-
-    function Open(camId) {
-        $.ajax({
-            type: "Get",
-            url: '@Url.Action("EditCamera", "Camera")',
-            data: { id: camId },
-            success: function (data) {
-                $('#Preview').html(data);
-                $('#EditModal').modal('show');
-            }
-        })
-            }
-
-    function DeleteCamera(camId) {
-    var ans = confirm("Are you sure you want to delete this camera?");
-    if (ans) {
-        $.ajax({
-            url: "/Camera/DeleteCamera/" + camId,
-            type: "POST",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                loadCamera();
-                if (result) { alert("Record Deleted");}
-            },
-            error: function (errormessage) {
-               // alert(errormessage.responseText);
-            }
-        });
-    }
-    }
-
-    
-</script>

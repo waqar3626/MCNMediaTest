@@ -1,24 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {}
+    "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {}
   },
   "projects": {
-    "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\AwesomeDal\\AwesomeDal.csproj": {
+    "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\AwesomeDal\\AwesomeDal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\AwesomeDal\\AwesomeDal.csproj",
+        "projectUniqueName": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\AwesomeDal\\AwesomeDal.csproj",
         "projectName": "AwesomeDal",
-        "projectPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\AwesomeDal\\AwesomeDal.csproj",
-        "packagesPath": "C:\\Users\\Adam computer\\.nuget\\packages\\",
-        "outputPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\AwesomeDal\\obj\\",
+        "projectPath": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\AwesomeDal\\AwesomeDal.csproj",
+        "packagesPath": "C:\\Users\\waqar\\.nuget\\packages\\",
+        "outputPath": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\AwesomeDal\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Adam computer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\waqar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -77,25 +78,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {
+    "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\MCNMedia\\MCNMedia_Dev.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
+        "projectUniqueName": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
         "projectName": "MCNMedia_Dev",
-        "projectPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
-        "packagesPath": "C:\\Users\\Adam computer\\.nuget\\packages\\",
-        "outputPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\MCNMedia\\obj\\",
+        "projectPath": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\MCNMedia\\MCNMedia_Dev.csproj",
+        "packagesPath": "C:\\Users\\waqar\\.nuget\\packages\\",
+        "outputPath": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\MCNMedia\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Adam computer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\waqar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -107,8 +109,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\AwesomeDal\\AwesomeDal.csproj": {
-                "projectPath": "F:\\MCNWorkingCopy\\MCNMedia.git\\trunk\\AwesomeDal\\AwesomeDal.csproj"
+              "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\AwesomeDal\\AwesomeDal.csproj": {
+                "projectPath": "D:\\HubSolution\\SVNWorkingCopy\\MCN\\trunk\\AwesomeDal\\AwesomeDal.csproj"
               }
             }
           }
@@ -122,6 +124,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Cronos": {
+              "target": "Package",
+              "version": "[0.7.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[3.1.7, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.4, )"
@@ -133,6 +143,14 @@
             "MySqlConnector": {
               "target": "Package",
               "version": "[1.0.1, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.2, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.9, )"
             }
           },
           "imports": [
@@ -153,7 +171,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

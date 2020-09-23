@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-group">
                 <label asp-for="ChurchName" class="control-label"></label>
                 <input asp-for="ChurchName" class="form-control" />
@@ -25,9 +25,14 @@
                 <select asp-for="ClientTypeId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
                     <option>--Select Client--</option>
                 </select>
-          
+
             </div>
-            
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
@@ -44,7 +49,7 @@
                 <select asp-for="CountyId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
                     <option>--Select County--</option>
                 </select>
-               
+
             </div>
             <div class="form-group">
                 <label asp-for="Website" class="control-label"></label>
@@ -61,7 +66,7 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
