@@ -162,7 +162,8 @@ namespace MCNMedia_Dev.Repository
                 church.Website = dataRow["Website"].ToString();
                 church.EmailAddress = dataRow["EmailAddress"].ToString();
                 church.Phone = dataRow["Phone"].ToString();
-                church.ImageURl = dataRow["ImageURL"].ToString();
+                string res = dataRow["ImageURL"].ToString();
+                
                 church.Blurb = dataRow["Blurb"].ToString();
                 church.Slug = dataRow["Slug"].ToString();
                 church.Notice = dataRow["Notice"].ToString();
@@ -173,6 +174,16 @@ namespace MCNMedia_Dev.Repository
                 church.Switch = Convert.ToInt32(dataRow["Switch"]);
                 church.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
                 church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
+
+                string res2 = res.Substring(0, 1);
+                if (res2 != "/")
+                {
+                    church.ImageURl = "/" + res;
+                }
+                else
+                {
+                    church.ImageURl = res;
+                }
 
             }
             return church;
