@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Crmf;
 
@@ -14,19 +15,14 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
         scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();
+        RecordingDataAccessLayer recordingDataAccess = new RecordingDataAccessLayer();
+        PreviewChurchesDataAccessLayer previewChurchesDataAccess = new PreviewChurchesDataAccessLayer();
+        GenericModel gm = new GenericModel();
 
         #region church info
+      
+       
 
-        //[HttpGet]
-        //public IActionResult ChurchInfo(int churchId)
-        //{
-        //    Church church = chdataAccess.GetChurchData(1);
-        //    if (church == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(church);
-        //} 
         [HttpGet]
         public IActionResult ChurchInfo(int churchId)
         {
@@ -36,23 +32,49 @@ namespace MCNMedia_Dev.Controllers
                 return NotFound();
             }
             return View(church);
+           
+        }
+        
+        public JsonResult GetChurchInfoById(int churchId)
+        {
+            Church church = chdataAccess.GetChurchData(churchId);
+            HttpContext.Session.SetInt32("ChurchId1", churchId);
+           
+            List<Church> churchInfo = new List<Church>();
+            churchInfo.Add(church);
+            return Json(churchInfo);
+            // return Json(new { data = cameraInfo });
+
         }
 
+        public IActionResult PreviewClient(int chId)
+        {
+            gm.Churches = previewChurchesDataAccess.GetPreviewChurch(chId);
+            return View(gm);
+        }
+
+        [HttpPost]
         public IActionResult UpdateChurchInfo([Bind] Church church)
         {
 
             chdataAccess.UpdateChurch(church);
-            return RedirectToAction("Client");
+            return RedirectToAction("ChurchInfo");
 
         }
         #endregion
 
         #region Announcement
-        public IActionResult Announcement(int id)
+        [HttpGet]
+        public IActionResult Announcement()
         {
+           
+            int  id= (int)HttpContext.Session.GetInt32("ChurchId1");
             GenericModel gm = new GenericModel();
-            gm.Announcement = AnnouncementDataAccessLayer.GetAnnouncementById(1);
-            gm.Churches = chdataAccess.GetChurchData(1);
+            gm.LAnnouncement = AnnouncementDataAccessLayer.GetAnnouncement(id);
+            gm.Churches= chdataAccess.GetChurchData(id);
+            //List<Announcement> announcementsList = AnnouncementDataAccessLayer.GetAnnouncement(id).ToList();
+            //gm.Churches = chdataAccess.GetChurchData(1);
+
             return View(gm);
         }
 
@@ -68,14 +90,18 @@ namespace MCNMedia_Dev.Controllers
         #region Camera
         public IActionResult CameraDetail()
         {
-            return View();
+            int id = (int)HttpContext.Session.GetInt32("ChurchId1");
+            gm.Churches = chdataAccess.GetChurchData(id);
+            return View(gm);
         }
         #endregion
 
         #region StreamToFaceBook
         public IActionResult StreamToFaceBook()
         {
-            return View();
+            int id = (int)HttpContext.Session.GetInt32("ChurchId1");
+            gm.Churches = chdataAccess.GetChurchData(id);
+            return View(gm);
         }
         #endregion
 
@@ -88,9 +114,15 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult ScheduleAndRecording()
         {
+            int id = (int)HttpContext.Session.GetInt32("ChurchId1");
             GenericModel gm = new GenericModel();
-            gm.LSchedules = scheduleDataAccess.GetAllSchedule();
-            gm.Churches = chdataAccess.GetChurchData(1);
+            //gm.LSchedules = scheduleDataAccess.GetAllSchedule(id);
+            //gm.LRecordings = recordingDataAccess.GetAllRecording(id);
+            //gm.Churches = chdataAccess.GetChurchData(id);
+            gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
+            gm.LRecordings = previewChurchesDataAccess.GetAllPreviewRecording(id);
+            gm.Churches = chdataAccess.GetChurchData(id);
+            //gm.Churches = previewChurchesDataAccess.GetPreviewChurch(id);
             Redirect("ScheduleAndRecording");
             return View(gm);
         }

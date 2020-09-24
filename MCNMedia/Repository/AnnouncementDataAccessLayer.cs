@@ -33,13 +33,13 @@ namespace MCNMedia_Dev.Repository
         {
             List<Announcement> Balobj = new List<Announcement>();
 
-            Announcement announcement = new Announcement();
 
             _dc.ClearParameters();
             _dc.AddParameter("chrId", ChrId);
             DataTable dataTable = _dc.ReturnDataTable("spAnnouncement_GetByChurchId");
             foreach (DataRow dataRow in dataTable.Rows)
             {
+                Announcement announcement = new Announcement();
                 announcement.ChurchAnnouncementId = Convert.ToInt32(dataRow["ChurchAnnouncementId"].ToString());
                 //announcement.ChurchId = Convert.ToInt32(dataRow["TabName"].ToString());
                 announcement.AnnouncementTitle = dataRow["AnnouncementTitle"].ToString();
@@ -73,6 +73,25 @@ namespace MCNMedia_Dev.Repository
             }
             return announcement;
         }
+
+        public Announcement GetClientAnnouncementById(int chid)
+        {
+            Announcement announcement = new Announcement();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", chid);
+            DataTable dataTable = _dc.ReturnDataTable("spClientAnnouncement_ByChurchId");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                announcement.ChurchAnnouncementId = Convert.ToInt32(dataRow["ChurchAnnouncementId"]);
+                announcement.AnnouncementTitle = dataRow["AnnouncementTitle"].ToString();
+                announcement.AnnouncementText = dataRow["Announcement"].ToString();
+
+            }
+            return announcement;
+        }
+
+
 
 
         public int UpdateAnnouncement(Announcement announcement)

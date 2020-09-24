@@ -1,4 +1,4 @@
-﻿
+﻿@model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "StreamToFaceBook";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
@@ -6,6 +6,24 @@
 
 }
 
+<!-- Plugin css for this page -->
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+<!-- End plugin css for this page -->
+
+<div class="card">
+    <div class="card-body">
+        <div class=".display2">Facebook Live Stream</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="owl-carousel owl-theme video-carousel">
+            <div class="item-video" style="width:700px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
+
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-body">
         <div class="card bg-dark d-flex">
@@ -29,3 +47,16 @@
 
     </div>
 </div>
+
+
+
+<!-- plugin js for this page -->
+<script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<!-- endinject -->
+<!-- Custom js for this page-->
+
+<script src="~/theme/js/owl-carousel.js"></script>
+<!-- End custom js for this page-->

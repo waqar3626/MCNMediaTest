@@ -15,6 +15,7 @@ namespace MCNMedia_Dev.Models
 
         public Recording Recordings { get; set; }
         public Announcement Announcement { get; set; }
+        public IEnumerable<Announcement> LAnnouncement { get; set; }
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
 

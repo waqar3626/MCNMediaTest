@@ -109,23 +109,29 @@ namespace MCNMedia_Dev.Repository
                 user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
             }
 
-            //            using (MySqlConnection con = new MySqlConnection(connectionString))
-            //{
-            //    string sqlQuery = "SELECT * FROM tblusers WHERE UserId= " + id;
-            //    MySqlCommand cmd = new MySqlCommand(sqlQuery, con);
-            //    con.Open();
-            //    MySqlDataReader rdr = cmd.ExecuteReader();
-            //    while (rdr.Read())
-            //    {
-            //        user.UserId = Convert.ToInt32(rdr["UserId"]);
-            //        user.FirstName = rdr["FirstName"].ToString();
-            //        user.LastName = rdr["LastName"].ToString();
-            //        user.EmailAddress = rdr["EmailAddress"].ToString();
-            //        user.LoginPassword = rdr["LoginPassword"].ToString();
-            //        //user.UpdatedBy = Convert.ToInt32(rdr["Updatedby"]);
-            //        user.RoleId = Convert.ToInt32(rdr["RoleId"]);
-            //    }
-            //}
+          
+            return user;
+        }
+
+        public User UserLogin(User usr)
+        {
+            User user = new User();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("EmailAdd", usr.EmailAddress);
+            _dc.AddParameter("logPassword", usr.LoginPassword);
+
+            DataTable dataTable = _dc.ReturnDataTable("spUser_Login");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                user.UserId = Convert.ToInt32(dataRow["UserId"]);
+                user.FirstName = dataRow["FirstName"].ToString();
+                user.LastName = dataRow["LastName"].ToString();
+                user.EmailAddress = dataRow["EmailAddress"].ToString();
+                user.LoginPassword = dataRow["LoginPassword"].ToString();
+                  }
+
+
             return user;
         }
 

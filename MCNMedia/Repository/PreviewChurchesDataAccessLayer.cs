@@ -21,9 +21,6 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("chId", ChId);
 
-
-         
-
             DataTable dataTable = _dc.ReturnDataTable("spChurches_Preview");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -47,7 +44,7 @@ namespace MCNMedia_Dev.Repository
             List<Camera> Balobj = new List<Camera>();
             _dc.ClearParameters();
             _dc.AddParameter("chId",chId );
-            DataTable dataTable = _dc.ReturnDataTable("spCamera_PrivewChurches");
+            DataTable dataTable = _dc.ReturnDataTable("spCamera_PreviewChurches");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Camera camera = new Camera();

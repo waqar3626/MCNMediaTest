@@ -9,32 +9,68 @@
 <link rel="stylesheet" href="~/theme/vendors/quill/quill.snow.css">
 <link rel="stylesheet" href="~/theme/vendors/simplemde/simplemde.min.css">
 <!-- End plugin css for this page -->
-<form asp-action="UpdateAnnouncement">
-    <div class="card">
-        <div class="card-body">
-            @*<h4 class="card-title">Announcement</h4>
-                <textarea id="simpleMde" asp-for="Announcement.AnnouncementText">
-                </textarea>*@
 
-            <div class="form-group">
-                <label asp-for="Announcement.AnnouncementTitle" class="control-label">Announcement Title</label>
-                <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="AddAnnouncementTitle" />
-                <span asp-validation-for="Announcement.AnnouncementTitle" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <textarea id="simpleMde" asp-for="Announcement.AnnouncementText">
-            </textarea>
-            </div>
-            <div class="form-group">
-                <div class="float-right">
-                    <button type="submit" value="Update" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update</button>
-                </div>
-            </div>
+
+
+
+<div class="card">
+    <div class="card-body">
+        @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
+        <h3>Manage Announcements</h3>
+        <br />
+        <div class="">
+            <table class="table">
+                <thead>
+                    <tr>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.UserId)
+                            </th>*@
+                         <th>
+                            Title
+                        </th>
+                        <th>
+                            Announcement
+                        </th>
+                        <th>
+                            Created Date
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.LAnnouncement)
+                    {
+                    <tr>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>*@
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.ChurchName)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AnnouncementTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AnnouncementText)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditAnnouncement", "Announcement", new { id=item.ChurchAnnouncementId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                            @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
         </div>
     </div>
-
-</form>
+</div>
 
 <!-- plugin js for this page -->
 <script src="~/theme/vendors/summernote/dist/summernote-bs4.min.js"></script>

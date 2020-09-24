@@ -5,12 +5,12 @@
 
 }
 <div class="row">
-    <div class="col-9">
+    <div class="col-10">
 
         <div class="card">
             <div class="card-body">
                 @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
-                <h3>Manage Schedules And Recording</h3>
+                <h3>Manage Schedules</h3>
                 <br />
                 <div class="">
                     <table class="table">
@@ -41,9 +41,9 @@
                                     @*<td>
                                             @Html.DisplayFor(modelItem => item.UserId)
                                         </td>*@
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EventName)
                                     </td>
@@ -100,8 +100,33 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            </tbody>
+                           <tbody>
+                            @foreach (var item in Model.LRecordings)
+                            {
+                                <tr>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.UserId)
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecordingTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecordingURl)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Time)
+                                    </td>
+
+                                    <td>
+                                        <a href="@Url.Action("EditRecording", "Recording", new { id=item.RecordingId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                         </table>
                     }
                 </div>
@@ -114,7 +139,7 @@
     </div>
 
 
-    <div class="card col-3">
+    <div class="card col-2">
         <div class="card-body">
             <h5><i class="ti-settings icon-menu"> </i> Schedule option</h5>
             <div style="font-size:10px">

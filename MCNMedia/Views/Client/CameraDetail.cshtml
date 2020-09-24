@@ -1,4 +1,4 @@
-﻿
+﻿@model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "CameraDetail";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
@@ -27,26 +27,37 @@
 <link rel="stylesheet" href="~/theme/vendors/jquery-file-upload/uploadfile.css">
 <link rel="stylesheet" href="~/theme/vendors/jquery-tags-input/jquery.tagsinput.min.css">
 <link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
 <!-- End plugin css for this page -->
 
-<h1>CameraDetail</h1>
 
-<div class="card">
-    <div class="card-body">
-        <div class=".display2">Camera Detail</div>
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-body">
+                <div class=".display2">Media</div>
+                </br>
+                <div class="owl-carousel owl-theme video-carousel">
+                    <div class="item-video" style="width:700px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-body">
+
+                <input name="tags" id="tags" value="Add Slide Show ,Add Video, Add Picture , Add Mobile Streaming" />
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="col-lg-6">
-    <div class="card-body">
-        <h4 class="card-title">Input Tag</h4>
-        <p class="card-description">Type to add a new tag</p>
-        <input name="tags" id="tags" value="Add Slide Show ,Add Video, Add Picture , Add Mobile Streaming" />
-    </div>
-</div>
-
-
-
 <!-- plugin js for this page -->
 <script src="~/theme/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
 <script src="~/theme/vendors/jquery-asColor/jquery-asColor.min.js"></script>
@@ -62,6 +73,7 @@
 <script src="~/theme/vendors/dropzone/dropzone.js"></script>
 <script src="~/theme/vendors/jquery.repeater/jquery.repeater.min.js"></script>
 <script src="~/theme/vendors/inputmask/jquery.inputmask.bundle.js"></script>
+<script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="~/theme/js/off-canvas.js"></script>
@@ -79,5 +91,6 @@
 <script src="~/theme/js/jquery-file-upload.js"></script>
 <script src="~/theme/js/formpickers.js"></script>
 <script src="~/theme/js/form-repeater.js"></script>
+<script src="~/theme/js/owl-carousel.js"></script>
 <script src="~/theme/js/inputmask.js"></script>
 <!-- End custom js for this page-->
