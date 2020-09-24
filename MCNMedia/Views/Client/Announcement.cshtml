@@ -26,7 +26,7 @@
                         @*<th>
                                 @Html.DisplayNameFor(model => model.UserId)
                             </th>*@
-                         <th>
+                        <th>
                             Title
                         </th>
                         <th>
@@ -43,27 +43,31 @@
                 <tbody>
                     @foreach (var item in Model.LAnnouncement)
                     {
-                    <tr>
-                        @*<td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>*@
-                        @*<td>
-            @Html.DisplayFor(modelItem => item.ChurchName)
-        </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AnnouncementTitle)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AnnouncementText)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedAt)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("EditAnnouncement", "Announcement", new { id=item.ChurchAnnouncementId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                            @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
-                        </td>
-                    </tr>
+                        <tr>
+                           item.chur
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>*@
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AnnouncementTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AnnouncementText)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedAt)
+
+                            </td>
+                            <td>
+
+                             <a onclick="EditAnnouncement( @item.ChurchAnnouncementId)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>
+                                
+                                @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -71,6 +75,27 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Announcement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditAnnouncementPreview">
+                        @Html.Partial("~/Views/Announcement/_EditAnnouncement.cshtml", Model.Announcement)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- plugin js for this page -->
 <script src="~/theme/vendors/summernote/dist/summernote-bs4.min.js"></script>
@@ -81,3 +106,19 @@
 <!-- Custom js for this page-->
 <script src="~/theme/js/editorDemo.js"></script>
 <!-- End custom js for this page-->
+<script type="text/javascript">
+    function EditAnnouncement(churchAnnouncementId) {
+     
+        $.ajax({
+             
+            type: "Get",
+            url: '@Url.Action("EditAnnouncement", "Announcement")',
+             data: { id: churchAnnouncementId },
+            success: function (data) {
+                $('#EditAnnouncementPreview').html(data);
+                $('#EditAnnouncementModal').modal('show');
+
+            }
+        })
+    }
+</script>

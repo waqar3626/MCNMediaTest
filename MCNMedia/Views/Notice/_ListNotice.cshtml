@@ -110,7 +110,7 @@
                     html += '<td>' + item.createdAt  + '</td>';
                     html += ' <td>';
 
-                    html += '<a onclick="EditNotice(' + item.churchNoticeId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                    html += '<a onclick="EditNotice(' + item.churchNoticeId + ')" id="summernote-edit" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
                     html += '<a onclick="DeleteNotice(' + item.churchNoticeId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
                     html += ' </td>';
                     html += '</tr>';

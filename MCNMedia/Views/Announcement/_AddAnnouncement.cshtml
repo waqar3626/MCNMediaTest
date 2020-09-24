@@ -17,9 +17,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Announcement.AnnouncementText" class="control-label">Announcement Text</label>
-                    <input asp-for="Announcement.AnnouncementText" class="form-control" id="AddAnnouncementText" />
-                    <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="Announcement.AnnouncementText" class="control-label">Notice</label>
+
+                        <textarea id="summernote-basic1" asp-for="Announcement.AnnouncementText"></textarea>
+
+                        <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
+
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -36,8 +41,9 @@
 
 
         var announcementTitle = document.getElementById('AddAnnouncementTitle').value;
-        var formData = new FormData();
-        var announcementText = document.getElementById('AddAnnouncementText').value;
+        
+        var announcementText = $("#summernote-basic1").summernote('code');
+
         var formData = new FormData();
         formData.append("announceTittle", announcementTitle);
         formData.append("announceText", announcementText);

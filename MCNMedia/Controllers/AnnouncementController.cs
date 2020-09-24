@@ -43,7 +43,7 @@ namespace MCNMedia_Dev.Controllers
             }
             return RedirectToAction("Listchurch", "Church");
         }
-        
+
 
         public IActionResult EditAnnouncement(int id)
         {
@@ -63,7 +63,7 @@ namespace MCNMedia_Dev.Controllers
             return Json(res);
         }
 
-        public JsonResult UpdateAnnouncement(int churchAnnounceId, string editAnnounceTitle, String editAnnounceText)
+        public JsonResult UpdateAnnouncement(int churchAnnounceId, string editAnnounceTitle, string editAnnounceText)
         {
             Announcement announcement = new Announcement();
             announcement.ChurchAnnouncementId = Convert.ToInt32(churchAnnounceId);
@@ -76,5 +76,6 @@ namespace MCNMedia_Dev.Controllers
             return Json(res);
         }
 
+  
     }
 }

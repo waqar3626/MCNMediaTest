@@ -5,67 +5,72 @@
 
 }
 <div class="row">
-    <div class="col-10">
+    <div class="col-9">
 
         <div class="card">
             <div class="card-body">
                 @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
                 <h3>Manage Schedules</h3>
                 <br />
-                <div class="">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                @*<th>
-                                        @Html.DisplayNameFor(model => model.UserId)
-                                    </th>*@
-                                <th>
-                                    Event Name
-                                </th>
-                                <th>
-                                    Event Date
-                                </th>
-                                <th>
-                                    Event Time
-                                </th>
-                                <th>
-                                    Event Day
-                                </th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.LSchedules)
-                            {
-                                <tr>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.UserId)
-                                        </td>*@
-                                    @*<td>
-                                        @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EventName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EventDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EventTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EventDay)
-                                    </td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="order-listing" class="table">
+                                <thead>
+                                    <tr>
+                                        @*<th>
+                            @Html.DisplayNameFor(model => model.UserId)
+                        </th>*@
+                                        <th>
+                                            Event Name
+                                        </th>
+                                        <th>
+                                            Event Date
+                                        </th>
+                                        <th>
+                                            Event Time
+                                        </th>
+                                        <th>
+                                            Event Day
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LSchedules)
+                                    {
+                                        <tr>
+                                            @*<td>
+                                @Html.DisplayFor(modelItem => item.UserId)
+                            </td>*@
+                                            @*<td>
+                                @Html.DisplayFor(modelItem => item.ChurchName)
+                            </td>*@
+                                            <td class="text-wrap" >
+                                                @Html.DisplayFor(modelItem => item.EventName,new {@class="text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventDate, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventTime, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventDay, new { @class = "text-wrap" })
+                                            </td>
 
-                                    <td>
-                                        <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                                            <td>
+                                                <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
 
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,61 +80,63 @@
             <div class="card-body">
                 <h3>Manage Recordings</h3>
                 <br />
-                <div class="">
-                    @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
-                    {
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
+                        {
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    @*<th>
-                                            @Html.DisplayNameFor(model => model.RecordingId)
-                                        </th>*@
-                                    <th>
-                                        Title
-                                    </th>
-                                    <th>
-                                        URL
-                                    </th>
-                                    <th>
-                                        Date
-                                    </th>
-                                    <th>
-                                        Time
-                                    </th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                           <tbody>
-                            @foreach (var item in Model.LRecordings)
-                            {
-                                <tr>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.UserId)
-                                        </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RecordingTitle)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RecordingURl)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Date)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Time)
-                                    </td>
+                            <table  class="table">
+                                <thead>
+                                    <tr>
+                                        @*<th>
+                            @Html.DisplayNameFor(model => model.RecordingId)
+                        </th>*@
+                                        <th>
+                                            Title
+                                        </th>
+                                        <th>
+                                            URL
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Time
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LRecordings)
+                                    {
+                                        <tr>
+                                            @*<td>
+                                @Html.DisplayFor(modelItem => item.UserId)
+                            </td>*@
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.RecordingTitle, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.RecordingURl, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.Date, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.Time, new { @class = "text-wrap" })
+                                            </td>
 
-                                    <td>
-                                        <a href="@Url.Action("Edit", "Recording", new { id=item.RecordingId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                        </table>
-                    }
-                </div>
+                                            <td>
+                                                <a href="@Url.Action("Edit", "Recording", new { id=item.RecordingId })" class="btn btn-primary btn-sm " data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    </div>
 
             </div>
         </div>
@@ -139,18 +146,22 @@
     </div>
 
 
-    <div class="card col-2">
-        <div class="card-body">
-            <h5><i class="ti-settings icon-menu"> </i> Schedule option</h5>
-            <div style="font-size:10px">
-                <p><input id="Radio1" type="radio" name="Recording" /> Hide All Recording</p>
-                <br />
-                <br />
-                <p><input id="Radio2" type="radio" name="Recording" /> Allow user to download recording</p>
-                <br />
-                <br />
-                <p><input id="Radio3" type="radio" name="Recording" /> Hide Schedule</p>
-            </div>
-        </div>
-    </div>
+    <div class="card col-3">
+        <div class="card-body ">
+            <div class="display-5 "><center><i class="ti-settings icon-menu"> </i> Schedule option</center></div>
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item pt-4 pb-2 ">
+                        <input id="Radio1" type="radio" name="Recording" /> Hide All Recording
+                    </li>
+                    <li class="nav-item pt-2 pb-2">
+                        <input id="Radio2" type="radio" name="Recording" /> Allow user to download recording
+                    </li>
+                    <li class="nav-item pt-2 pb-2">
+                        <p><input id="Radio3" type="radio" name="Recording" /> Hide Schedule</li>
+                    </ul>
+                </nav>
 </div>
+        </div>
+    </div>
+

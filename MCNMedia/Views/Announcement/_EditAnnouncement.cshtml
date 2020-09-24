@@ -6,86 +6,85 @@
 
 <!-- Plugin css for this page -->
 <link rel="stylesheet" href="~/theme/vendors/summernote/dist/summernote-bs4.css">
-<link rel="stylesheet" href="~/theme/vendors/quill/quill.snow.css">
-<link rel="stylesheet" href="~/theme/vendors/simplemde/simplemde.min.css">
+
 <!-- End plugin css for this page -->
 
 
- 
-    <div class="row">
-        <div class="col">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Announcement.ChurchAnnouncementId" id="chAnnoId" />
 
-                <div class="form-group">
-                    <label asp-for="Announcement.AnnouncementTitle" class="control-label">Announcement Title</label>
-                    <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="editAnnouncementTitle" />
-                    <span asp-validation-for="Announcement.AnnouncementTitle" class="text-danger"></span>
-                </div>
+<div class="row">
+    <div class="col">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Announcement.ChurchAnnouncementId" id="chAnnoId" />
 
-                <div class="form-group">
-                    <label asp-for="Announcement.AnnouncementText" class="control-label">Announcement Text</label>
-                    @*<input asp-for="Announcement.AnnouncementText" class="form-control" id="editAnnouncementText" />*@
-                    <textarea asp-for="Announcement.AnnouncementText" style="display:normal !important;" class="form-control" id="simpleMde" name="simpleMde">
-                    </textarea>
-                    <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <label asp-for="Announcement.AnnouncementTitle" class="control-label">Announcement Title</label>
+                <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="editAnnouncementTitle" />
+                <span asp-validation-for="Announcement.AnnouncementTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Announcement.AnnouncementText" class="control-label">Announcement Text</label>
+                @*<input asp-for="Announcement.AnnouncementText" class="form-control" id="editAnnouncementText" />*@
+                <textarea id="summernote-basic2" asp-for="Announcement.AnnouncementText"></textarea>
+                <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
+            </div>
 
 
-                <div class="form-group">
-                    <a onclick="UpdateAnnouncement()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white">Update</i></a>
-                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
-                </div>
-            </form>
-        </div>
+            <div class="form-group">
+                <a onclick="UpdateAnnouncement()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white">Update</i></a>
+                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+            </div>
+        </form>
     </div>
+</div>
 
 
-    <script type="text/javascript">
-        function UpdateAnnouncement() {
+<script type="text/javascript">
+    function UpdateAnnouncement() {
 
-            var churchAnnounceId = $('#chAnnoId').val();
-            var editAnnounceText = $('textarea[name="simpleMde"]').html();
-            var editAnnounceTitle = document.getElementById('editAnnouncementTitle').value;
-            //var editAnnounceText = document.getElementsByName('Announcement_AnnouncementText').value;
-            alert(editAnnounceText);
-            var formData = new FormData();
-            formData.append("churchAnnounceId", churchAnnounceId);
-            formData.append("editAnnounceTitle", editAnnounceTitle);
-            formData.append("editAnnounceText", editAnnounceText);
+        var churchAnnounceId = $('#chAnnoId').val();
+        var editAnnounceTitle = $('#editAnnouncementTitle').val();
+       
+        editAnnounceText = $("#summernote-basic2").summernote('code');
+        //var editAnnounceText = document.getElementsByName('Announcement_AnnouncementText').value;
+  
+        var formData = new FormData();
+        formData.append("churchAnnounceId", churchAnnounceId);
+        formData.append("editAnnounceTitle", editAnnounceTitle);
+        formData.append("editAnnounceText", editAnnounceText);
 
-            //var TabName11 = $('#MediaChurchs_TabName').val();
+        //var TabName11 = $('#MediaChurchs_TabName').val();
 
-            $.ajax({
-                type: "POST",
-                url: "/Announcement/UpdateAnnouncement/",
+        $.ajax({
+            type: "POST",
+            url: "/Announcement/UpdateAnnouncement/",
 
-                data: formData,
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
-
-
-                success: function (result) {
-                    loadAnnouncement();
-                    $('#EditAnnouncementModal').modal('hide');
-                },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
-                }
-            });
-        }
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
 
 
-    </script>
- 
+            success: function (result) {
+                loadAnnouncement();
+                $('#EditAnnouncementModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>
+
 
 <!-- plugin js for this page -->
 <script src="~/theme/vendors/summernote/dist/summernote-bs4.min.js"></script>
-<script src="~/theme/vendors/tinymce/tinymce.min.js"></script>
-<script src="~/theme/vendors/quill/quill.min.js"></script>
-<script src="~/theme/vendors/simplemde/simplemde.min.js"></script>
+
 <!-- End plugin js for this page -->
+
+<!-- endinject -->
+<script src="~/theme/vendors/summernote/demo.summernote.js"></script>
 <!-- Custom js for this page-->
-<script src="~/theme/js/editorDemo.js"></script>
 <!-- End custom js for this page-->
