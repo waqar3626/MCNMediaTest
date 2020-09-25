@@ -44,7 +44,7 @@
                     @foreach (var item in Model.LAnnouncement)
                     {
                         <tr>
-                           item.chur
+                           
                             @*<td>
                                     @Html.DisplayFor(modelItem => item.UserId)
                                 </td>*@
@@ -52,10 +52,12 @@
                                     @Html.DisplayFor(modelItem => item.ChurchName)
                                 </td>*@
                             <td>
+                                
                                 @Html.DisplayFor(modelItem => item.AnnouncementTitle)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.AnnouncementText)
+                                @Html.Raw(item.AnnouncementText)
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreatedAt)
