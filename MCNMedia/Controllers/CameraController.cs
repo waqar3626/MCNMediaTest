@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -16,7 +17,7 @@ namespace MCNMedia_Dev.Controllers
         GenericModel gm = new GenericModel();
         public IActionResult Index()
         {
-
+          
             GenericModel gm = new GenericModel();
             gm.LCameras = camDataAccess.GetAllCameras();
             return View(gm);
@@ -28,6 +29,7 @@ namespace MCNMedia_Dev.Controllers
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
             {
+               
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 cam.Cameras.ChurchId = churchId;
 
@@ -84,5 +86,7 @@ namespace MCNMedia_Dev.Controllers
 
             return Json(res);
         }
+
+      
     }
 }

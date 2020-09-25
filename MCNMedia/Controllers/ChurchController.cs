@@ -41,9 +41,10 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Listchurch()
         {
-
+            LoadServerDDL();
             LoadClientDDL();
             LoadCountyDDL();
+           
             Church chr = new Church();
             chr.ChurchId = 1;
             chr.CountyId = -1;
@@ -121,6 +122,7 @@ namespace MCNMedia_Dev.Controllers
             GenericModel gm = new GenericModel();
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["chId"].ToString()))
             {
+                LoadServerDDL();
                 int churchId = Convert.ToInt32(HttpContext.Request.Query["chId"].ToString());
 
                 HttpContext.Session.SetInt32("ChurchId", churchId);
@@ -210,6 +212,18 @@ namespace MCNMedia_Dev.Controllers
             
 
 
+
+        }
+
+        public void LoadServerDDL()
+        {
+            IEnumerable<Server> serverList = camDataAccess.GetServer();
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (var item in serverList)
+            {
+                selectListItems.Add(new SelectListItem { Text = item.ServerName.ToString(), Value = item.ServerId.ToString() });
+            }
+            ViewBag.Server = selectListItems;
 
         }
     }

@@ -36,7 +36,11 @@
                 <input asp-for="Cameras.RtspPort" class="form-control" />
                 <span asp-validation-for="Cameras.RtspPort" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="Cameras.ServerName" class="control-label">Server</label>
+                <input asp-for="Cameras.ServerName" class="form-control " readonly="readonly" id="CamName" />
+                <span asp-validation-for="Cameras.ServerName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <a onclick="Openit(CamId.value)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Update</i></a>
                 @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@

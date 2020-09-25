@@ -17,6 +17,9 @@ namespace MCNMedia_Dev.Models
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
         public int ServerId { get; set; }
+        public string ServerName { get; set; }
+        public string ServerIP { get; set; }
+
         public string App { get; set; }
         public string CreatedAt { get; set; }
         public int CreatedBy { get; set; }
@@ -25,4 +28,17 @@ namespace MCNMedia_Dev.Models
 
         public string StreamingProtocol { get; set; }
     }
-}
+
+
+    public class Server {
+
+        public int ServerId { get; set; }
+
+        public string ServerName { get; set; }
+
+        public string ServerIP { get; set; }
+
+
+
+    }
+} 

@@ -38,6 +38,9 @@
                         <th>
                             RTSP Port
                         </th>
+                        <th>
+                            Server
+                        </th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -136,10 +139,12 @@
                 
                 $.each(result, function (key, item) {
                     html += '<tr>';
+                   
                     html += '<td>' + item.cameraName + '</td>';
                     html += '<td>' + item.cameraUrl + '</td>';
                     html += '<td>' + item.httpPort + '</td>';
                     html += '<td>' + item.rtspPort + '</td>';
+                    html += '<td>' + item.serverName + '</td>';
                     html += ' <td>';
                     html += '<a onclick="Open(' + item.cameraId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
                     html += '<a onclick="DeleteCamera(' + item.cameraId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';

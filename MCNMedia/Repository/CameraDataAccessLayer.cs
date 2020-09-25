@@ -32,6 +32,10 @@ namespace MCNMedia_Dev.Repository
                 camera.RtspPort = dataRow["RtspPort"].ToString();
                 camera.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
                 camera.ChurchName = dataRow["ChurchName"].ToString();
+                camera.ServerId = Convert.ToInt32(dataRow["ServerId"]);
+                camera.ServerName = dataRow["ServerName"].ToString();
+                camera.ServerIP = dataRow["ServerIP"].ToString();
+
                 Balobj.Add(camera);
             }
             return Balobj;
@@ -68,6 +72,11 @@ namespace MCNMedia_Dev.Repository
                 camera.CameraUrl = dataRow["CameraUrl"].ToString();
                 camera.HttpPort = dataRow["HttpPort"].ToString();
                 camera.RtspPort = dataRow["RtspPort"].ToString();
+                camera.ServerId= Convert.ToInt32(dataRow["ServerId"]);
+                camera.ServerName = dataRow["ServerName"].ToString();
+                camera.ServerIP = dataRow["ServerIP"].ToString();
+
+
                 //camera.Town = dataRow["Town"].ToString();
                 //camera.CountyId = Convert.ToInt32(dataRow["CountyId"]);
                 //camera.Website = dataRow["Website"].ToString();
@@ -106,7 +115,27 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("UpdatedBy", 1);
             return _dc.ReturnBool("spCamera_Delete");
         }
+        public IEnumerable<Server> GetServer()
+        {
+            List<Server> Balobj = new List<Server>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spServer_Get");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Server server = new Server();
+                server.ServerId = Convert.ToInt32(dataRow["ServerId"]);
+                server.ServerName = dataRow["ServerName"].ToString();
+                server.ServerIP = dataRow["ServerIP"].ToString();
+
+                Balobj.Add(server);
+            }
+            return Balobj;
+
+        }
+
     }
+
 
 
 }
