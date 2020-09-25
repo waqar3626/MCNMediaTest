@@ -31,6 +31,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 return NotFound();
             }
+            
             return View(church);
            
         }

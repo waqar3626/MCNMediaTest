@@ -204,6 +204,15 @@ namespace MCNMedia_Dev.Repository
 
         }
 
+        public DataTable GetUserAssignChurchDDL(int id)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("usrId", id);
+            return _dc.ReturnDataTable("spuserChurches_Get");
+
+        }
+
+
         public DataTable GetClientTypeList()
         {
             _dc.ClearParameters();

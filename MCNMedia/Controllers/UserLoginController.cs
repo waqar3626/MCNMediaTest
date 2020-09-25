@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MCNMedia_Dev.Controllers
@@ -13,6 +14,8 @@ namespace MCNMedia_Dev.Controllers
         UserDataAccessLayer _userDataAccess = new UserDataAccessLayer();
         public ViewResult UserLogin()
         {
+            ModelState.Clear();
+            HttpContext.Session.Clear();
             return View();
         }
 
@@ -22,14 +25,32 @@ namespace MCNMedia_Dev.Controllers
             User usr = _userDataAccess.UserLogin(user);
             if (usr.UserId > 0)
             {
-
+                if(usr.RoleName.ToLower()=="admin")
+                { 
                 return View("/Views/Home/Home.cshtml");
+                }
+                else if (usr.RoleName.ToLower() == "client")
+                {
+                    
+                    HttpContext.Session.SetInt32("UserId", usr.UserId);
+                    return RedirectToAction("ChurchInfo", "Client", usr.UserId);
+                }
+                else
+                {
+                    return ViewBag.IsSuccess = 2;
+                }
             }
             else {
                 ViewBag.IsSuccess = 3;
               
-            return View();
+                   return View();
             }
         }
+
+   
+
+       
     }
+
+   
 }

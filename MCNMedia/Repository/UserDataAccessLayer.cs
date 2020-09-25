@@ -129,7 +129,9 @@ namespace MCNMedia_Dev.Repository
                 user.LastName = dataRow["LastName"].ToString();
                 user.EmailAddress = dataRow["EmailAddress"].ToString();
                 user.LoginPassword = dataRow["LoginPassword"].ToString();
-                  }
+                user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
+                user.RoleName = dataRow["RoleName"].ToString();
+            }
 
 
             return user;
