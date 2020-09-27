@@ -17,7 +17,7 @@
 
 <div class="card">
     <div class="card-body">
-        <a id="AddCamera1" class="btn btn-success btn-sm float-right text-white" onclick="AddCamera()"> <i class="fa fa-plus text-white"></i> Add Camera</a>
+        <button type="submit" id="AddCamera1" class="btn btn-outline-behance btn-sm float-right " onclick="AddCamera()"> <i class="mdi mdi-plus"></i> Add New Camera</button>
         <div class="">
             @*@using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
             {*@
@@ -80,10 +80,10 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddCameraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
+            <div class="modal-dialog mt-4" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> Slide Show Detail</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Camera </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
@@ -103,10 +103,10 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Camera Details</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Camera</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>

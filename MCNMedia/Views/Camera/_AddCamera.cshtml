@@ -44,12 +44,12 @@
                     <div class="col-sm-4">
                         <span asp-validation-for="Cameras.ServerName" class="text-danger"></span>
                         <select asp-for="Cameras.ServerId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Server,"Value","Text"))">
-                            <option>--Select County--</option>
+                            <option>--Select Server--</option>
                         </select>
                     </div>
                 </div> 
                 <div class="float-right">
-                    <button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Add Camera</button>
+                    <button type="submit" value="Add" class="btn btn-success btn-sm text-white"><i class="mdi mdi-content-save"></i> Add</button>
                     <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                 </div>
             </div>

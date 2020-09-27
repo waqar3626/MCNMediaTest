@@ -1,14 +1,14 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
-
 }
 
 
 <!-- Plugin css for this page -->
-<link rel="stylesheet" href="~/theme/vendors/summernote/dist/summernote-bs4.css">
-
 <!-- End plugin css for this page -->
 
+<link rel="stylesheet" href="~/theme/vendors/summernote/dist/summernote-bs4.css">
+<link rel="stylesheet" href="~/theme/vendors/quill/quill.snow.css">
+<link rel="stylesheet" href="~/theme/vendors/simplemde/simplemde.min.css">
 
 
 <div class="row">
@@ -26,13 +26,13 @@
             <div class="form-group">
                 <label asp-for="Announcement.AnnouncementText" class="control-label">Announcement Text</label>
                 @*<input asp-for="Announcement.AnnouncementText" class="form-control" id="editAnnouncementText" />*@
-                <textarea id="summernote-basic2" asp-for="Announcement.AnnouncementText"></textarea>
+                <textarea id="tinyMceExample" asp-for="Announcement.AnnouncementText"></textarea>
                 <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
             </div>
 
 
-            <div class="form-group">
-                <a onclick="UpdateAnnouncement()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white">Update</i></a>
+            <div class="form-group float-right">
+                <a onclick="UpdateAnnouncement()" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i>Update</a>
                 <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
             </div>
         </form>
@@ -45,10 +45,11 @@
 
         var churchAnnounceId = $('#chAnnoId').val();
         var editAnnounceTitle = $('#editAnnouncementTitle').val();
-       
-        editAnnounceText = $("#summernote-basic2").summernote('code');
+
+        editAnnounceText = tinymce.get("tinyMceExample").getContent();
+          
         //var editAnnounceText = document.getElementsByName('Announcement_AnnouncementText').value;
-  
+
         var formData = new FormData();
         formData.append("churchAnnounceId", churchAnnounceId);
         formData.append("editAnnounceTitle", editAnnounceTitle);
@@ -78,13 +79,13 @@
 
 </script>
 
-
-<!-- plugin js for this page -->
 <script src="~/theme/vendors/summernote/dist/summernote-bs4.min.js"></script>
-
+<script src="~/theme/vendors/tinymce/tinymce.min.js"></script>
+<script src="~/theme/vendors/quill/quill.min.js"></script>
+<script src="~/theme/vendors/simplemde/simplemde.min.js"></script>
 <!-- End plugin js for this page -->
+<!-- Custom js for this page-->
+<script src="~/theme/js/editorDemo.js"></script>
 
-<!-- endinject -->
-<script src="~/theme/vendors/summernote/demo.summernote.js"></script>
 <!-- Custom js for this page-->
 <!-- End custom js for this page-->

@@ -41,8 +41,8 @@
                 <input asp-for="Cameras.ServerName" class="form-control " readonly="readonly" id="CamName" />
                 <span asp-validation-for="Cameras.ServerName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <a onclick="Openit(CamId.value)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fa fa-plus text-white"> Update</i></a>
+            <div class="form-group float-right">
+                <a onclick="Openit(CamId.value)" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"> </i>Update</a>
                 @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
                 <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
             </div>

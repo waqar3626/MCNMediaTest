@@ -9,6 +9,8 @@ namespace MCNMedia_Dev.Models
     {
         public Church Churches { get; set; }
         public Camera Cameras { get; set; }
+
+        public User Users { get; set; }
         public MediaChurch Media { get; set; }
 
         public Schedule Schedules { get; set; }
@@ -18,6 +20,8 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<Announcement> LAnnouncement { get; set; }
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
+
+        public IEnumerable<User> LUsers { get; set; }
 
         public IEnumerable<Schedule> LSchedules { get; set; }
 

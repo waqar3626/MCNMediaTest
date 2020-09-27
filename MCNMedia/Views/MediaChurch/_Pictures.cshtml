@@ -17,8 +17,10 @@
 
 <div class="card">
     <div class="card-body">
-        <a id="AddPicture" class="btn btn-success btn-sm float-right text-white" onclick="AddPicture()"> <i class="fa fa-plus text-white"></i> Add Picture</a>
-        <div class="">
+        <div class="float-right">
+            <button type="submit" id="AddPicture" class="btn btn-outline-behance btn-sm " onclick="AddPicture()"> <i class="fa fa-plus "></i> Add New Picture</button>
+        </div>
+            <div class="">
             @*@using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
                 {*@
 
@@ -56,10 +58,10 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4"  role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> Picture Detail</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Picture</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
@@ -79,7 +81,7 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="EditPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4"  role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Edit Picture</h5>

@@ -10,7 +10,7 @@
 
 <div class="card">
     <div class="card-body">
-        <a id="AddSlideShow1" class="btn btn-success btn-sm float-right text-white" onclick="AddSlideShow()"> <i class="fa fa-plus text-white"></i> Add SlideShow</a>
+        <button type="submit" id="AddSlideShow1" class="btn btn-outline-behance btn-sm float-right " onclick="AddSlideShow()"> <i class="mdi mdi-plus"></i> Add New SlideShow</button>
         <div class="">
            
             <table class="table">
@@ -47,10 +47,10 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> Slide Show Detail</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add SlideShow</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
@@ -70,7 +70,7 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="EditSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="max-width:60%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Edit SlideShow</h5>
