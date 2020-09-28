@@ -108,6 +108,11 @@
 </form>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#ddlid").prop("selectedIndex", 0); // here 0 means select first option
+        onChangeFunction();
+    });
       function onChangeFunction() {
 
 

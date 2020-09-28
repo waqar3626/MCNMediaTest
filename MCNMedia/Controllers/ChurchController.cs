@@ -33,6 +33,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult AddChurch()
         {
+           
             LoadClientDDL();
             LoadCountyDDL();
             return View();
@@ -46,6 +47,9 @@ namespace MCNMedia_Dev.Controllers
             LoadCountyDDL();
            
             Church chr = new Church();
+
+            HttpContext.Session.SetInt32("ClientType", 0);
+            HttpContext.Session.SetInt32("County", 0);
             chr.ChurchId = 1;
             chr.CountyId = -1;
             chr.ClientTypeId = -1;
@@ -148,7 +152,7 @@ namespace MCNMedia_Dev.Controllers
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (var item in clientList)
             {
-                selectListItems.Add(new SelectListItem { Text = item.ClientTypeTitle.ToString(), Value = item.ClientTypeId.ToString() });
+                selectListItems.Add(new SelectListItem { Text = item.ClientTypeTitle.ToString(), Value = item.ClientTypeId.ToString()});
             }
             ViewBag.ClientTypes = selectListItems;
         }
@@ -192,19 +196,20 @@ namespace MCNMedia_Dev.Controllers
             return View(church);
         }
 
-        public IActionResult Search(string ChurchName, int ClientType, string EmailAddress, int Country, string PhoneNo)
+        public IActionResult Search(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo)
         {
             LoadClientDDL();
             LoadCountyDDL();
 
            
-            
+         HttpContext.Session.SetInt32("ClientType", ClientType);
+            HttpContext.Session.SetInt32("County", County);
             Church chr = new Church();
             chr.ChurchId = 1;
             chr.ChurchName = ChurchName;
             chr.ClientTypeId = ClientType;
             chr.EmailAddress = EmailAddress;
-            chr.CountyId = Country;
+            chr.CountyId = County;
             chr.Phone = PhoneNo;
             List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
             return View("/Views/Church/Listchurch.cshtml", church);
