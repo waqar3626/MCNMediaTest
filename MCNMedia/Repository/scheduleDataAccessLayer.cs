@@ -67,7 +67,7 @@ namespace MCNMedia_Dev.Repository
             Schedule schedule = new Schedule();
 
             _dc.ClearParameters();
-            _dc.AddParameter("schId", id);
+            _dc.AddParameter("SchId", id);
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetById");
             foreach (DataRow dataRow in dataTable.Rows)
             {

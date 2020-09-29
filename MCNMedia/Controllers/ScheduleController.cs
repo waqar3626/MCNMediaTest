@@ -23,10 +23,21 @@ namespace MCNMedia_Dev.Controllers
 
 
         [HttpPost()]
-        public IActionResult AddSchedule(Schedule sch)
+        public IActionResult AddSchedule(Schedule sch, int EventBy)
         {
-            
+            if (EventBy == 1)
+            {
+                sch.EventDay = sch.EventDate.ToString("dddd");
+                sch.IsRepeated = false;
+
+            }
+            if (EventBy == 2)
+            {
+                sch.EventDate = Convert.ToDateTime("");
+            }
+                        
             scheduleDataAccess.AddSchedule(sch);
+
             return RedirectToAction("ListSchedule");
         }
 

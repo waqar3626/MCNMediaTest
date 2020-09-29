@@ -1,8 +1,11 @@
-﻿@model MCNMedia_Dev.Models.GenericModel
+﻿@using Microsoft.AspNetCore.Http;
+@model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "StreamToFaceBook";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
 
+    int churchId = (int)Context.Session.GetInt32("ChurchId");
+    List<SelectListItem> SelectList = Lists.GetCameraDDL(churchId);
 
 }
 
@@ -12,36 +15,42 @@
 <!-- End plugin css for this page -->
 
 <div class="card">
-    <div class="card-body">
-        <div class="display-3">Facebook Live Stream</div>
+    <div class="card-body bg-facebook">
+        <div class="display-3 text-white font-weight-bolder" ><i class="ti-facebook pr-3"  ></i>Facebook Live Stream</div>
     </div>
 
     <div class="row">
         <div class="col-sm-12">
             <div class="owl-carousel owl-theme video-carousel">
-                <div class="item-video" style="width:800px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
+                <div class="item-video" style="width:950px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
 
             </div>
         </div>
     </div>
 </div>
-<div class="card">
+<div class="card mt-3" >
     <div class="card-body">
-        <div class="card bg-dark d-flex">
+        <div class="form-group row p-3 pb-0">
+
+            @Html.DropDownList("CameraId", SelectList, new { @class = "form-control", @id = "ddlid" })
+            @*@Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })*@
+            <span class="text-danger"></span>
+        </div>
+        <div class="card bg-facebook d-flex">
             <div class="card-body">
-                <div class="d-flex flex-row align-items-center">
+                <div class="d-flex flex-row align-items-center ">
                     <i class="ti-facebook text-white icon-md"></i>
                     <div class="ml-3">
-                        <h3 class="text-white">
+                        <h3 class="text-white bold weigh">
                             Stream to FaceBook
                             <button type="button" class="btn btn-success">online</button>
-                            <button type="button" class="btn btn-facebook"><i class="ti-facebook text-white icon-md"></i>Revoke Face Book Access</button>
+                            <button type="button" class="btn btn-outline-behance text-white"><i class="ti-facebook text-white icon-md"></i>Revoke Face Book Access</button>
                         </h3>
                     </div>
                 </div>
             </div>
         </div>
-        <p>your live stream will be broad cast on 'Church Name'</p>
+        <p class="text-muted pt-2">your live stream will be broad cast on 'Church Name'</p>
         <button type="button" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Stop Streaming</button>
         <button type="button" class="btn btn-dark">Change</button>
 

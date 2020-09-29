@@ -184,6 +184,7 @@ namespace MCNMedia_Dev.Controllers
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
             {
+               
                 int res = mediaChurchDataAccess.AddMedia(mediaChurch);
             }
             return Json(1);

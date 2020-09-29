@@ -19,9 +19,11 @@ namespace MCNMedia_Dev.Controllers
         {
           
             GenericModel gm = new GenericModel();
-            gm.LCameras = camDataAccess.GetAllCameras();
+            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.LCameras = camDataAccess.GetAllCameras(churchId);
             return View(gm);
         }
+
 
 
         [HttpPost]
@@ -36,12 +38,18 @@ namespace MCNMedia_Dev.Controllers
                 camDataAccess.AddCamera(cam.Cameras);
                 gm.ResultMessage = "Camera Added Sucessfully";
 
-                gm.LCameras = camDataAccess.GetAllCameras();
+                gm.LCameras = camDataAccess.GetAllCameras(churchId);
                 HttpContext.Session.SetString("TabName", "Camera");
                 var queryString = new { chId = churchId };
 
-
+                if (HttpContext.Session.GetString("UserType") == "admin") {
                 return RedirectToAction("ChurchDetails", "Church", queryString);
+                }
+               else if (HttpContext.Session.GetString("UserType") == "client")
+                {
+                    return RedirectToAction("CameraDetail", "client", queryString);
+
+                }
             }
             return RedirectToAction("Listchurch", "Church");
         }
@@ -66,7 +74,8 @@ namespace MCNMedia_Dev.Controllers
 
         public JsonResult GetAllCameras()
         {
-            List<Camera> cameraInfo = camDataAccess.GetAllCameras().ToList();
+             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            List<Camera> cameraInfo = camDataAccess.GetAllCameras(churchId).ToList();
             return Json(cameraInfo);
             // return Json(new { data = cameraInfo });
 

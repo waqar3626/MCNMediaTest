@@ -212,6 +212,14 @@ namespace MCNMedia_Dev.Repository
 
         }
 
+        public DataTable GetCameraDDL(int id)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("chId", id);
+            return _dc.ReturnDataTable("spCameraddl_Get");
+
+        }
+
 
         public DataTable GetClientTypeList()
         {

@@ -16,10 +16,11 @@ namespace MCNMedia_Dev.Repository
             _dc = new AwesomeDal.DatabaseConnect();
         }
 
-        public IEnumerable<Camera> GetAllCameras()
+        public IEnumerable<Camera> GetAllCameras(int ChurchId)
         {
             List<Camera> Balobj = new List<Camera>();
             _dc.ClearParameters();
+            _dc.AddParameter("churchId", ChurchId);
             _dc.AddParameter("CamName", "");
             DataTable dataTable = _dc.ReturnDataTable("spCamera_Search");
             foreach (DataRow dataRow in dataTable.Rows)

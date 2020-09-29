@@ -9,18 +9,18 @@
             <input type="hidden" asp-for="Media.ChurchMediaId" class="form-control dropify" id="ChMedId" />
             <input type="hidden" asp-for="Media.MediaURL" class="form-control" id="slideUrl" />
             @*<div class="form-group">
-            <label asp-for="Pictures.MediaName" class="control-label">Media Name</label>
-            <input asp-for="Pictures.MediaName" class="form-control" id="MediaName" />
-            <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
-        </div>*@
-        <div class="form-group row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
-                <input asp-for="Media.MediaURL" class="form-control dropify" id="slideShowMediaURL" type="file" name="MediaURl3" />
-                <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
-                <input type="hidden" id="HdnMediaUrl" asp-for="Media.MediaURL" />
-                <input type="hidden" id="HdnMediaName" asp-for="Media.MediaName" />
+                    <label asp-for="Pictures.MediaName" class="control-label">Media Name</label>
+                    <input asp-for="Pictures.MediaName" class="form-control" id="MediaName" />
+                    <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
+                </div>*@
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
+                    <input asp-for="Media.MediaURL" class="form-control dropify" id="slideShowMediaURL" type="file" name="MediaURl3" />
+                    <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+                    <input type="hidden" id="HdnMediaUrl" asp-for="Media.MediaURL" />
+                    <input type="hidden" id="HdnMediaName" asp-for="Media.MediaName" />
                 </div>
                 <div class="col-2"></div>
             </div>
@@ -29,19 +29,17 @@
                 <input asp-for="Media.TabName" class="form-control" id="eeslideshowTabName" />
                 <span asp-validation-for="Media.TabName" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="Pictures.MediaType" class="control-label">Media Type</label>
-            <input asp-for="Pictures.MediaType" class="form-control" />
-            <span asp-validation-for="Pictures.MediaType" class="text-danger"></span>
-        </div>*@
+        
 
-
-            <div class="form-group float-right">
+        
+            <div class="float-right text-right">
                 <a onclick="UpdateSlideShow()" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
                 @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
                 <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
             </div>
-</form>
+       
+
+        </form>
     </div>
 </div>
 <script type="text/javascript">
@@ -57,7 +55,7 @@
 
     });
     function UpdateSlideShow() {
-        
+
         var churchMediaId = $('#ChMedId').val();
         var editSlideShowTabName = document.getElementById('eeslideshowTabName').value;
         var mediaUrl = $('#HdnMediaUrl').val();
@@ -88,3 +86,5 @@
         });
     }
 </script>
+
+

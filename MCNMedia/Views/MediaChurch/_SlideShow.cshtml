@@ -26,9 +26,9 @@
                         <th>
                             Created By
                         </th>
-                        <th>
-                            Created At
-                        </th>
+                         <th>
+                             Created Date
+                         </th>
 
                         <th>Actions</th>
                     </tr>
@@ -106,11 +106,11 @@
                 var html = '';
 
                 $.each(result, function (key, item) {
-                    html += '<tr>';
-                    html += '<td>' + item.tabName + '</td>';
-                    html += '<td>' + item.mediaName + '</td>';
-                    html += '<td>' + item.createdBy + '</td>';
-                    html += '<td>' + item.createdAt + '</td>';
+                    html += '<tr >';
+                    html += '<td class="text-wrap">' + item.tabName + '</td>';
+                    html += '<td class="text-wrap">' + item.mediaName + '</td>';
+                    html += '<td class="text-wrap">' + item.createdBy + '</td>';
+                    html += '<td class="text-wrap">' + item.createdAt + '</td>';
                     html += ' <td>';
                     html += '<a onclick="EditSlideShow(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
                     html += '<a onclick="DeleteSlideShow(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';

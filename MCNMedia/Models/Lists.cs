@@ -112,5 +112,29 @@ namespace MCNMedia_Dev.Models
             }
             return list;
         }
+
+        public static List<SelectListItem> GetCameraDDL(int ChurchId)
+        {
+
+            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
+            var ChurchDDL = churchDataAccess.GetCameraDDL(ChurchId);
+            var list = new List<SelectListItem>();
+
+            list.Add(new SelectListItem
+            {
+                Text = "--Select--",
+                Value = "0"
+            });
+            foreach (DataRow dr in ChurchDDL.Rows)
+            {
+
+                list.Add(new SelectListItem
+                {
+                    Text = dr["CameraName"].ToString(),
+                    Value = dr["CameraId"].ToString()
+                });
+            }
+            return list;
+        }
     }
 }

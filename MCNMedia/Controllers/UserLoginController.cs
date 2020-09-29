@@ -26,12 +26,14 @@ namespace MCNMedia_Dev.Controllers
             if (usr.UserId > 0)
             {
                 if(usr.RoleName.ToLower()=="admin")
-                { 
-                return View("/Views/Home/Home.cshtml");
+                {
+                HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
+                    return View("/Views/Home/Home.cshtml");
                 }
                 else if (usr.RoleName.ToLower() == "client")
                 {
-                    
+                    HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
+                   
                     HttpContext.Session.SetInt32("UserId", usr.UserId);
                     return RedirectToAction("ChurchInfo", "Client", usr.UserId);
                 }

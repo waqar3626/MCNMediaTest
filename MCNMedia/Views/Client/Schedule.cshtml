@@ -1,11 +1,56 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Schedule";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
 
 }
 <div class="row">
-    <div class="col-9">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body">
+                <h3>Search </h3>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label ">Church</label>
+                    <div class="col-sm-4">
+                        <select name="ClientType" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Church,"Value","Text",Context.Session.GetInt32("ClientType")))">
+                            <option value="-1">--Select Church--</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Event Date</label>
+                    <div class="col-sm-4">
+                        <div id="datepicker-popup" class="input-group date datepicker">
+                            <input type="text" name="EventDate" class="form-control" placeholder="Event Date" />
+                            <span class="input-group-addon input-group-append border-left">
+                                <span class="ti-calendar input-group-text"></span>
+                            </span>
+                        </div>
+                       @* @Html.TextBox("ScheduleDate", "", new { @class = "form-control", @placeholder = "Enter Church Name" })*@
+
+                    </div>
+                    <label class="col-sm-2 col-form-label ">Schedule Date</label>
+                    <div class="col-sm-4 pt-2">
+                        <select name="EventDay" class="form-control" asp-items="Html.GetEnumSelectList<EventDay>()">
+                            <option selected="selected" value="">Please select Day</option>
+                        </select>
+                      @*  @Html.TextBox("ScheduleDay", "", new { @class = "form-control", @placeholder = "Enter Church Name" })*@
+
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 pt-3">
+                        <button type="submit" class="btn btn-info btn-sm text-white"><i class="ti-search text-white"></i>Search</button>
+                        <a asp-controller="Client" asp-action="Schedule" class="btn btn-warning btn-sm text-white"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-3">
+    <div class="col-12">
 
         <div class="card">
             <div class="card-body">
@@ -19,8 +64,8 @@
                                 <thead>
                                     <tr>
                                         @*<th>
-                            @Html.DisplayNameFor(model => model.UserId)
-                        </th>*@
+                                                @Html.DisplayNameFor(model => model.UserId)
+                                            </th>*@
                                         <th>
                                             Event Name
                                         </th>
@@ -41,13 +86,13 @@
                                     {
                                         <tr>
                                             @*<td>
-                                @Html.DisplayFor(modelItem => item.UserId)
-                            </td>*@
+                                                    @Html.DisplayFor(modelItem => item.UserId)
+                                                </td>*@
                                             @*<td>
-                                @Html.DisplayFor(modelItem => item.ChurchName)
-                            </td>*@
-                                            <td class="text-wrap" >
-                                                @Html.DisplayFor(modelItem => item.EventName,new {@class="text-wrap" })
+                                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                                </td>*@
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventName, new { @class = "text-wrap" })
                                             </td>
                                             <td class="text-wrap">
                                                 @Html.DisplayFor(modelItem => item.EventDate, new { @class = "text-wrap" })
@@ -61,6 +106,7 @@
 
                                             <td>
                                                 <a href="@Url.Action("EditScheduleClient", "Client", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm ti-printer" data-toggle="tooltip" data-placement="bottom" title="Print"></a>
                                                 @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
                                             </td>
                                         </tr>
@@ -81,22 +127,6 @@
     </div>
 
 
-    <div class="card col-3">
-        <div class="card-body ">
-            <div class="display-5 "><center><i class="ti-settings icon-menu"> </i> Schedule option</center></div>
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav">
-                    <li class="nav-item pt-4 pb-2 ">
-                        <input id="Radio1" type="radio" name="Recording" /> Hide All Recording
-                    </li>
-                    <li class="nav-item pt-2 pb-2">
-                        <input id="Radio2" type="radio" name="Recording" /> Allow user to download recording
-                    </li>
-                    <li class="nav-item pt-2 pb-2">
-                        <p><input id="Radio3" type="radio" name="Recording" /> Hide Schedule</li>
-                    </ul>
-                </nav>
+
 </div>
-        </div>
-    </div>
 
