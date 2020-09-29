@@ -6,6 +6,7 @@ using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Org.BouncyCastle.Asn1.Crmf;
 
 namespace MCNMedia_Dev.Controllers
@@ -106,14 +107,14 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
-        #region ScheduleAndRecording
+        #region Schedule
         //public IActionResult ScheduleAndRecording()
         //{
         //    return View();
         //}
 
         [HttpGet]
-        public IActionResult ScheduleAndRecording()
+        public IActionResult Schedule()
         {
             int id = (int)HttpContext.Session.GetInt32("ChurchId1");
             GenericModel gm = new GenericModel();
@@ -121,13 +122,91 @@ namespace MCNMedia_Dev.Controllers
             //gm.LRecordings = recordingDataAccess.GetAllRecording(id);
             //gm.Churches = chdataAccess.GetChurchData(id);
             gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
-            gm.LRecordings = previewChurchesDataAccess.GetAllPreviewRecording(id);
             gm.Churches = chdataAccess.GetChurchData(id);
             //gm.Churches = previewChurchesDataAccess.GetPreviewChurch(id);
-            Redirect("ScheduleAndRecording");
+            Redirect("Schedule");
             return View(gm);
+        
+        }
+        [HttpGet]
+        public IActionResult Recording()
+        {
+            int id = (int)HttpContext.Session.GetInt32("ChurchId1");
+            GenericModel gm = new GenericModel();
+            gm.LRecordings = previewChurchesDataAccess.GetAllPreviewRecording(id);
+            gm.Churches = chdataAccess.GetChurchData(id);
+            Redirect("Recording");
+            return View(gm);
+
         }
 
+
+        [HttpGet]
+        public IActionResult EditRecordingClient(int id)
+        {
+            int id1 = (int)HttpContext.Session.GetInt32("ChurchId1");
+            GenericModel gm = new GenericModel();
+           
+            gm.Churches = chdataAccess.GetChurchData(id1);
+        gm.Recordings = recordingDataAccess.GetRecordingData(id);
+            if (gm.Recordings == null)
+            {
+                return NotFound();
+            }
+            LoadChurchesDDL();
+
+            return View(gm);
+            
+        }
+
+        
+        [HttpPost]
+        public IActionResult EditRecordingClient(GenericModel gm)
+        {
+
+            recordingDataAccess.UpdateRecording(gm.Recordings);
+            return RedirectToAction("Recording");
+
+        }
+
+      
+        
+        [HttpGet]
+        public IActionResult EditScheduleClient(int id)
+        {
+            int id2 = (int)HttpContext.Session.GetInt32("ChurchId1");
+            GenericModel gm = new GenericModel();
+            gm.Churches = chdataAccess.GetChurchData(id2);
+            gm.Schedules= scheduleDataAccess.GetScheduleDataBtId(id);
+            if (gm.Schedules == null)
+            {
+                return NotFound();
+            }
+            LoadChurchesDDL();
+            return View(gm);
+        }
         #endregion
+
+        [HttpPost]
+        public IActionResult EditScheduleClient(GenericModel gm)
+        {
+            
+            scheduleDataAccess.UpdateSchedule(gm.Schedules);
+            return RedirectToAction("Schedule");
+        
+        }
+        public void LoadChurchesDDL()
+        {
+            IEnumerable<Recording> RecordList = recordingDataAccess.GetChurches();
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (var item in RecordList)
+            {
+                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+            }
+            ViewBag.State = selectListItems;
+
+        }
+
+
     }
 }

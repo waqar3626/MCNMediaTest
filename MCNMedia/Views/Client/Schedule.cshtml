@@ -1,6 +1,6 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
-    ViewData["Title"] = "ScheduleAndRecording";
+    ViewData["Title"] = "Schedule";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
 
 }
@@ -60,7 +60,7 @@
                                             </td>
 
                                             <td>
-                                                <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a href="@Url.Action("EditScheduleClient", "Client", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                                 @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
                                             </td>
                                         </tr>
@@ -75,71 +75,6 @@
             </div>
         </div>
         <br />
-
-        <div class="card">
-            <div class="card-body">
-                <h3>Manage Recordings</h3>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
-                        {
-
-                            <table  class="table">
-                                <thead>
-                                    <tr>
-                                        @*<th>
-                            @Html.DisplayNameFor(model => model.RecordingId)
-                        </th>*@
-                                        <th>
-                                            Title
-                                        </th>
-                                        <th>
-                                            URL
-                                        </th>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Time
-                                        </th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.LRecordings)
-                                    {
-                                        <tr>
-                                            @*<td>
-                                @Html.DisplayFor(modelItem => item.UserId)
-                            </td>*@
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.RecordingTitle, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.RecordingURl, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Date, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Time, new { @class = "text-wrap" })
-                                            </td>
-
-                                            <td>
-                                                <a href="@Url.Action("Edit", "Recording", new { id=item.RecordingId })" class="btn btn-primary btn-sm " data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                                @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                    </div>
-                    </div>
-
-            </div>
-        </div>
 
 
 

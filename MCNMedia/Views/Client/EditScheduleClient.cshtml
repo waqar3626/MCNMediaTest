@@ -1,0 +1,86 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+
+@{
+    ViewData["Title"] = "EditScheduleClient";
+    Layout = "~/Views/Shared/_NestedLayout.cshtml";
+}
+
+
+@{
+    List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
+}
+
+
+<form asp-action="EditScheduleClient" method="post" asp-controller="Client">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="modal-title">Edit Schedule</h4>
+            <input type="hidden" asp-for="Schedules.ScheduleId" />
+
+            <div class="form-group row">
+                <label asp-for="Schedules.ChurchId" class="col-sm-3 col-form-label">Church</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Schedules.ChurchId" class="text-danger"></span>
+                    @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                    @Html.DropDownList("Schedules.ChurchId", SelectList, new { @class = "form-control" })
+                    <span asp-validation-for="Schedules.ChurchId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Schedules.EventName" class="col-sm-3 col-form-label">Event Name</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Schedules.EventName" class="text-danger"></span>
+                    <input type="text" asp-for="Schedules.EventName" class="form-control" placeholder="Event Name" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Schedules.EventDate" class="col-sm-3 col-form-label">Event Date</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Schedules.EventDate" class="text-danger"></span>
+                    <div id="datepicker-popup" class="input-group date datepicker">
+                        <input type="text" asp-for="Schedules.EventDate" class="form-control" placeholder="Event Date" />
+                        <span class="input-group-addon input-group-append border-left">
+                            <span class="ti-calendar input-group-text"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Schedules.EventDay" class="col-sm-3 col-form-label">Event Day</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Schedules.EventDay" class="text-danger"></span>
+                    <select asp-for="Schedules.EventDay" class="form-control" asp-items="Html.GetEnumSelectList<EventDay>()">
+                        <option selected="selected" value="">Please select A Day</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Schedules.EventTime" class="col-sm-3 col-form-label">Event Time</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Schedules.EventTime" class="text-danger"></span>
+                    <div class="input-group date" id="timepicker-example" data-target-input="nearest">
+                        <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
+                            <input type="text" asp-for="Schedules.EventTime" class="form-control datetimepicker-input" data-target="#timepicker-example" placeholder="Event Time" />
+                            <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="float-right">
+                <button type="submit" value="Update"  class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+
