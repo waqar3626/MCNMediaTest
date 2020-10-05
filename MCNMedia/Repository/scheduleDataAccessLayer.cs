@@ -41,6 +41,38 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchName", "");
             _dc.AddParameter("ChrId", -1);
             //_dc.AddParameter("EmailAdd", "");
+            DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetAll");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule schedule = new Schedule();
+                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+                schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
+                //schedule.RoleName = dataRow["RoleName"].ToString();
+
+
+                Balobj.Add(schedule);
+            }
+            return Balobj;
+        }
+
+
+
+        public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate,string EventDay,int EventBy)
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", ChurchId);
+            _dc.AddParameter("SchDate", EventDate);
+            _dc.AddParameter("SchDay", EventDay);
+            _dc.AddParameter("EveBy", EventBy);
+
+            //_dc.AddParameter("EmailAdd", "");
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_Search");
             foreach (DataRow dataRow in dataTable.Rows)
             {

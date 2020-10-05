@@ -13,12 +13,12 @@ namespace MCNMedia_Dev.Models
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
         [Required]
-        public String EventName { get; set; }
+        public string EventName { get; set; }
         //[DisplayFormat(DataFormatString = "{0:yyyy/MMM/dd}")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM/dd/yyyy}")]
         public DateTime EventDate { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:ddd}")]
-        public String EventDay { get; set; }
+        public string EventDay { get; set; }
         [EnumDataType(typeof(DayOfWeek))]
         public EventDay Days { get; set; }
       //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]

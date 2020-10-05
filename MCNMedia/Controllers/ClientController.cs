@@ -14,6 +14,7 @@ namespace MCNMedia_Dev.Controllers
     
     public class ClientController : Controller
     {
+
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
         scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();
@@ -21,6 +22,7 @@ namespace MCNMedia_Dev.Controllers
         PreviewChurchesDataAccessLayer previewChurchesDataAccess = new PreviewChurchesDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
         GenericModel gm = new GenericModel();
+
 
         #region church info
       
@@ -67,6 +69,8 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
+
+
         #region Announcement
         [HttpGet]
         public IActionResult Announcement()
@@ -91,6 +95,8 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
+
+
         #region Camera
         public IActionResult CameraDetail()
 
@@ -105,6 +111,8 @@ namespace MCNMedia_Dev.Controllers
        
         #endregion
 
+
+
         #region StreamToFaceBook
         public IActionResult StreamToFaceBook()
         {
@@ -114,16 +122,19 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
+
+
         #region Schedule
         //public IActionResult ScheduleAndRecording()
         //{
         //    return View();
         //}
 
+
         [HttpGet]
         public IActionResult Schedule()
         {
-            LoadCameraDDL();
+        
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
             GenericModel gm = new GenericModel();
             //gm.LSchedules = scheduleDataAccess.GetAllSchedule(id);
@@ -212,7 +223,11 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult EditScheduleClient(GenericModel gm)
         {
-            
+            if (gm.Schedules.EventDay == null)
+            {
+                gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
+
+            }
             scheduleDataAccess.UpdateSchedule(gm.Schedules);
             return RedirectToAction("Schedule");
         
@@ -229,24 +244,6 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        public void LoadCameraDDL()
-        {
-            Church chr = new Church();
-            chr.ChurchId = 1;
-            chr.CountyId = -1;
-            chr.ClientTypeId = -1;
-            chr.ChurchName = "";
-            chr.EmailAddress = "";
-            chr.Phone = "";
-          
-            IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr); 
-
-            List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var item in ChurchList)
-            {
-                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
-            }
-            ViewBag.Church = selectListItems;
-        }
+       
     }
 }

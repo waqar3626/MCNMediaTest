@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
 
 }
+<style>
+    .nav-link {
+        display: block;
+        padding: 0.5rem 1rem !important;
+    }
+</style>
 
 
 <!-- Plugin css for this page -->
@@ -35,66 +41,85 @@
 <div class="row">
     <div class="col-sm-12 grid-margin stretch-card d-none d-md-flex w-100">
 
-        <div class="card p-3">
-            <div class="row">
 
-                <div class="col-12">
-                    <ul class="nav nav-tabs " role="tablist">
-                        <li class="nav-item ">
-                            <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
-                        </li>
-                        @*}*@
-                        <li class="nav-item">
-                            <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info"></i>  Slideshow</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" id="Video-tab" data-toggle="tab" href="#Video-1" role="tab" aria-controls="Video-1" aria-selected="false"><i class="fa fa-file-video-o text-danger"></i>  Video</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false"><i class="fa fa-picture-o text-success"></i>  Picture</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
-                            <div class="media">
-                                <div class="media-body">
-                                    @Html.Partial("~/Views/Camera/_Camera.cshtml")
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-10">
+                        <div class="tab-content tab-content-vertical" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="Camera-1" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <div class="media">
+
+                                    <div class="media-body">
+                                        @Html.Partial("~/Views/Camera/_Camera.cshtml")
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                <div class="media">
 
-                        <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
-                            <div class="media">
-                                <div class="media-body">
-                                    @Html.Partial("~/Views/MediaChurch/_Pictures.cshtml")
+                                    <div class="media-body">
+                                        @Html.Partial("~/Views/MediaChurch/_Pictures.cshtml")
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <div class="media">
 
-                        <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
-                            <div class="media">
-                                <div class="media-body">
-                                    @Html.Partial("~/Views/MediaChurch/_ListVideo.cshtml")
+                                    <div class="media-body">
+
+                                        @Html.Partial("~/Views/MediaChurch/_ListVideo.cshtml")
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <div class="media">
 
-                        <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="Slideshow-tab">
-                            <div class="media">
-                                <div class="media-body">
-                                    @Html.Partial("~/Views/MediaChurch/_Slideshow.cshtml")
+                                    <div class="media-body">
+
+                                        @Html.Partial("~/Views/MediaChurch/_Slideshow.cshtml")
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-2 ">
+                        <ul class="nav nav-pills nav-pills-vertical nav-pills-info" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true">
+                                    <i class="fa fa-camera-retro text-dark">
+                                    </i>  Camera
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false">
+                                    <i class="fa fa-picture-o text-success">
+                                    </i>  Picture
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="Video-tab" data-toggle="tab" href="#Video-1" role="tab" aria-controls="Video-1" aria-selected="false">
+                                    <i class="fa fa-file-video-o text-danger"></i>
+                                    Video
+                                </a>
 
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false">
+                                    <i class="mdi mdi-folder-multiple-image text-primary"></i> Slideshow
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-
             </div>
-
-
         </div>
+
+
 
     </div>
 </div>
@@ -120,4 +145,3 @@
 <script src="~/theme/js/jquery-file-upload.js"></script>
 
 <!-- End custom js for this page-->
-
