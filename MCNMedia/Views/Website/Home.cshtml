@@ -1,0 +1,415 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Church>;
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+@{
+    int id = -1;
+    if (Context.Session.GetInt32("countryId").HasValue)
+    {
+        id = (int)Context.Session.GetInt32("countryId");
+    }
+    List<SelectListItem> SelectList = Lists.GetCountyList(id);
+}
+<style>
+    .blur {
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    .selectWrapper {
+        border-radius: 40px;
+        display: inline-block;
+        overflow: hidden;
+        background: #cccccc;
+        border: 1px solid #cccccc;
+    }
+
+    .main-timeline {
+        font-family: 'Nunito Sans', sans-serif;
+        position: relative;
+    }
+
+        .main-timeline:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .main-timeline .timeline {
+            width: 50%;
+            margin: 0 10px 30px 0;
+            float: left;
+        }
+
+        .main-timeline .timeline-content {
+            color: #fff;
+            text-align: right;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+            .main-timeline .timeline-content:hover {
+                text-decoration: none;
+            }
+
+            .main-timeline .timeline-content:before,
+            .main-timeline .timeline-content:after {
+                content: "";
+                background: #E91E63;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: -1;
+                -webkit-clip-path: polygon(10% 0, 100% 10%, 95% 100%, 0 90%);
+                clip-path: polygon(10% 0, 100% 10%, 95% 100%, 0 90%);
+            }
+
+            .main-timeline .timeline-content:after {
+                background-color: #000;
+                z-index: -2;
+                -webkit-clip-path: polygon(10% 10%, 95% 0, 90% 90%, 5% 100%);
+                clip-path: polygon(10% 10%, 95% 0, 90% 90%, 5% 100%);
+            }
+
+        .main-timeline .timeline-icon {
+            color: #fff;
+            background-color: #E91E63;
+            font-size: 40px;
+            text-align: center;
+            line-height: 90px;
+            height: 90px;
+            width: 90px;
+            border-radius: 50%;
+            box-shadow: 0 0 7px #000, 0 0 0 22px #fff,0 0 10px 20px #000;
+            display: block;
+            transform: translateY(-50%);
+            position: absolute;
+            top: 60%;
+            right: -45px;
+        }
+
+        .main-timeline .inner-content {
+            padding: 30px 85px 40px 40px;
+        }
+
+        .main-timeline .title {
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0 0 10px;
+        }
+
+        .main-timeline .description {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .main-timeline .timeline:nth-child(even) {
+            float: right;
+            margin: 0 0 30px 10px;
+        }
+
+            .main-timeline .timeline:nth-child(even) .timeline-content {
+                text-align: left;
+            }
+
+                .main-timeline .timeline:nth-child(even) .timeline-content:before,
+                .main-timeline .timeline:nth-child(even) .timeline-content:after {
+                    transform: rotateY(180deg);
+                }
+
+            .main-timeline .timeline:nth-child(even) .timeline-icon {
+                left: -45px;
+                right: auto;
+            }
+
+            .main-timeline .timeline:nth-child(even) .inner-content {
+                padding: 30px 40px 40px 85px;
+            }
+
+        .main-timeline .timeline:nth-child(4n+2) .timeline-content:before,
+        .main-timeline .timeline:nth-child(4n+2) .timeline-icon {
+            background-color: #2196F3;
+        }
+
+        .main-timeline .timeline:nth-child(4n+3) .timeline-content:before,
+        .main-timeline .timeline:nth-child(4n+3) .timeline-icon {
+            background-color: #009688;
+        }
+
+        .main-timeline .timeline:nth-child(4n+4) .timeline-content:before,
+        .main-timeline .timeline:nth-child(4n+4) .timeline-icon {
+            background-color: #FF5722;
+        }
+
+    .media screen and (max-width:767px) {
+        .main-timeline .timeline
+    
+    {
+        width: 100%;
+        margin: 0 0 40px;
+    }
+
+    .main-timeline .timeline-content,
+    .main-timeline .timeline:nth-child(even) .timeline-content {
+        text-align: left;
+        margin: 0 0 0 40px;
+    }
+
+        .main-timeline .timeline-content:before,
+        .main-timeline .timeline-content:after {
+            transform: rotateY(180deg);
+        }
+
+        .main-timeline .timeline-content:before {
+            -webkit-clip-path: polygon(3% 0, 100% 5%, 97% 100%, 0 95%);
+            clip-path: polygon(3% 0, 100% 5%, 97% 100%, 0 95%);
+        }
+
+    .main-timeline .timeline-icon,
+    .main-timeline .timeline:nth-child(even) .timeline-icon {
+        font-size: 30px;
+        line-height: 60px;
+        height: 60px;
+        width: 60px;
+        box-shadow: 0 0 5px #000, 0 0 0 10px #fff,0 0 10px 7px #000;
+        right: auto;
+        left: -30px;
+        top: 50%;
+    }
+
+    .main-timeline .inner-content,
+    .main-timeline .timeline:nth-child(even) .inner-content {
+        padding: 30px 20px 40px 50px;
+    }
+
+    .main-timeline .title {
+        font-size: 18px;
+    }
+    }
+</style>
+<div class="card h-100 w-auto " style="background-color:#1e1625">
+
+    <div class="card-body">
+
+        <div class="pt-4 font-weight-bolder text-center text-white ">
+            <h1>Welcome to MCN Media</h1>
+            <h2>Europe's Leading Specialists in Live Streaming</h2>
+        </div>
+        <div class="row pt-5 justify-content-center">
+            <div class="row text-center">
+                @foreach (Church church in Model)
+                {
+                    <div class="text-white col-lg-2 col-md-4 col-sm-12 text-wrap">
+                        <a href="@Url.Action("Preview", "Preview",new { chId = church.ChurchId })" title="Preview">
+                            <img src="@church.ImageURl" class="auth-img-bg rounded-circle mb-2 " style="width:250px; height:250px;" alt="profile image" />
+                            <h4 class="text-wrap text-white">@church.ChurchName</h4>
+                        </a>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+        <div class="row pt-5 justify-content-center">
+                <div class=" selectWrapper col-md-4 col-sm-12 ">
+                    @*<label  class=" text-center">County</label>*@
+                    @*<input asp-for="CountyId" class="form-control" />*@
+                    <span class="text-danger"></span>
+                    <select id="select2" name="countryId" onchange="DoPostBack();" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
+                        <option value="-1">--Select Country--</option>
+                    </select>
+                </div>
+                <div class="col-md-1 col-sm-12 pt-3"></div>
+                <div class=" selectWrapper col-md-4 col-sm-12 ">
+                    @*<label  class=" text-center">County</label>*@
+                    @*<input asp-for="CountyId" class="form-control" />*@
+                    <span class="text-danger"></span>
+
+                    <select name="County" class="form-control" id="County">
+                    </select>
+
+                </div>
+           
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 bg-secondary">
+
+        <div class="row ">
+            <div class="col-sm-5 p-0 m-0">
+                <img src="~/Images/Inner image 1.jpg" class="img-fluid w-100 h-100 blur " />
+            </div>
+            <div class="col-sm-7 justify-content-center ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-timeline">
+                                <center>
+                                    <div class="display-3 justify-content-center pt-5 text-white font-weight-bolder">Do you want to start streaming?</div>
+                                </center>
+                                <div class="timeline mt-4">
+                                    <a href="#" class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <i class="fa fa-video-camera"></i>
+                                        </div>
+                                        <div class="inner-content">
+                                            <h3 class="title">HD Streaming</h3>
+                                            <p class="description">
+
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="timeline">
+                                    <a href="#" class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <i class="fa fa-rss"></i>
+                                        </div>
+                                        <div class="inner-content">
+                                            <h3 class="title">International Access</h3>
+                                            <p class="description">
+
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="timeline">
+                                    <a href="#" class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <i class="fa fa-lock"></i>
+                                        </div>
+                                        <div class="inner-content">
+                                            <h3 class="title">Password Protection</h3>
+                                            <p class="description">
+
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="timeline">
+                                    <a href="#" class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <i class="fa fa-universal-access"></i>
+
+                                        </div>
+                                        <div class="inner-content">
+                                            <h3 class="title">Access for Sick / Elderly</h3>
+                                            <p class="description">
+
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="timeline">
+                                    <a href="#" class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <i class="fa fa-globe"></i>
+                                        </div>
+                                        <div class="inner-content">
+                                            <h3 class="title">Viewing Abroad</h3>
+                                            <p class="description">
+
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="timeline">
+                                    <a href="#" class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <i class="fa fa-cogs"></i>
+                                        </div>
+                                        <div class="inner-content">
+                                            <h3 class="title">Full Website Integration</h3>
+                                            <p class="description">
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @*<div class="col-sm-7 justify-content-center ">
+                        <center>
+                            <div class="display-3 justify-content-center pt-5 text-white font-weight-bolder">Do you want to start streaming?</div>
+                        </center>
+                        <div class="row ">
+                            <div class="col-2"></div>
+                            <ul class="column small-4 large-5 pt-4 pl-3 text-white display-5 ">
+                                <li>HD Streaming</li>
+                                <li>International Access</li>
+                                <li>Password Protection</li>
+
+                            </ul>
+                            <div class="col-2"></div>
+
+                            <ul class="column small-4 large-5 pt-4 text-white pl-3 text-white display-5">
+                                <li>Access for Sick / Elderly</li>
+                                <li>Viewing Abroad</li>
+                                <li>Full Website Integration</li>
+
+                            </ul>
+
+                        </div>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        DoPostBack();
+    });
+    function DoPostBack() {
+        var CountryId = document.getElementById('select2').value;
+  
+        $.ajax({
+            url: "/WebSite/LoadCountyDDL",
+            type: "GET",
+            data: { countryId: CountryId },
+            contentType: "application/json;charset=utf-8",
+            datatype: "json", 
+            success: function (result) {
+                var s;
+                $.each(result, function (key, item) {
+                    s += '<option value="' + item.countyId + '">' + item.countyName + '</option>'
+                    
+                });
+
+                $("#County").html(s);
+
+
+               
+
+
+            },
+            error: function (errormessage) {
+               
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>

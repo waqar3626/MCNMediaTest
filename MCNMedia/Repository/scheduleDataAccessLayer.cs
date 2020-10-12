@@ -138,5 +138,31 @@ namespace MCNMedia_Dev.Repository
             _dc.ReturnBool("spSchedule_Delete");
         }
 
+        public IEnumerable<Schedule> GetWebsiteSchedule()
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+   
+
+            //_dc.AddParameter("EmailAdd", "");
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_ScheduleList");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule schedule = new Schedule();
+                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+             
+
+
+                Balobj.Add(schedule);
+            }
+            return Balobj;
+        }
+
+
     }
 }

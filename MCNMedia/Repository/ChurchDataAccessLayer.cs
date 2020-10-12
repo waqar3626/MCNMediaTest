@@ -78,10 +78,11 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        public IEnumerable<Counties> GetCounties()
+        public IEnumerable<Counties> GetCounties(int country)
         {
             List<Counties> Balobj = new List<Counties>();
             _dc.ClearParameters();
+            _dc.AddParameter("cntryId", country);
             DataTable dataTable = _dc.ReturnDataTable("spCounties_Get");
 
             foreach (DataRow dataRow in dataTable.Rows)
@@ -90,6 +91,23 @@ namespace MCNMedia_Dev.Repository
                 county.CountyId = Convert.ToInt32(dataRow["CountyId"]);
                 county.CountyName = dataRow["CountyName"].ToString();
                 Balobj.Add(county);
+            }
+            return Balobj;
+        }
+
+
+        public IEnumerable<Church> GetCountries()
+        {
+            List<Church> Balobj = new List<Church>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spCountries_Get");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Church country = new Church();
+                country.CountryId = Convert.ToInt32(dataRow["CountryId"]);
+                country.CountryName = dataRow["CountryName"].ToString();
+                Balobj.Add(country);
             }
             return Balobj;
         }
@@ -117,7 +135,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("Switch", church.Switch);
             _dc.AddParameter("ShowOnWebsite", church.ShowOnWebsite);
             _dc.AddParameter("DisplayOrder", church.DisplayOrder);
-            _dc.AddParameter("Password", church.Password);
+            _dc.AddParameter("ChurchPassword", church.Password);
             _dc.Execute("spChurch_Add");
         }
 
@@ -204,6 +222,8 @@ namespace MCNMedia_Dev.Repository
 
         }
 
+       
+
         public DataTable GetUserAssignChurchDDL(int id)
         {
             _dc.ClearParameters();
@@ -228,14 +248,91 @@ namespace MCNMedia_Dev.Repository
 
         }
 
-        public DataTable GetCountyList()
+        public DataTable GetCountyList(int country)
         {
             _dc.ClearParameters();
-            return _dc.ReturnDataTable("spCounty_Get");
+            _dc.AddParameter("cntryId", country);
+            return  _dc.ReturnDataTable("spCounties_Get");
+           
+
+        }
+        public DataTable GetCountriesList()
+        {
+            _dc.ClearParameters();
+            return _dc.ReturnDataTable("spCountries_Get");
 
         }
 
-        
+        public IEnumerable<Church> GetWebsiteChurch()
+        {
+            List<Church> Balobj = new List<Church>();
+       
+
+
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_GetRandom_Churches");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Church church = new Church();
+                church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                church.ChurchName = dataRow["ChurchName"].ToString();
+             
+                church.Address = dataRow["Address"].ToString();
+                church.Town = dataRow["Town"].ToString();
+                church.CountyName = dataRow["CountyName"].ToString();
+                church.Website = dataRow["Website"].ToString();
+                church.EmailAddress = dataRow["EmailAddress"].ToString();
+                church.Phone = dataRow["Phone"].ToString();
+                string res = dataRow["ImageURL"].ToString();
+                   string res2 = res.Substring(0, 1);
+                if (res2 != "/")
+                {
+                    church.ImageURl = "/" + res;
+                }
+                else
+                {
+                    church.ImageURl = res;
+                }
+
+                Balobj.Add(church);
+            }
+            return Balobj;
+        }
+
+        public IEnumerable<Church> GetByClientTypeChurch(int clientTypeId)
+        {
+            List<Church> Balobj = new List<Church>();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("cTypeId", clientTypeId);
+
+            DataTable dataTable = _dc.ReturnDataTable("spChurch_GetByClientType");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Church church = new Church();
+                church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                church.ChurchName = dataRow["ChurchName"].ToString();
+                church.ClientTypeId = Convert.ToInt32(dataRow["ClientTypeId"]);
+                church.Address = dataRow["Address"].ToString();
+                church.Town = dataRow["Town"].ToString();
+                church.Website = dataRow["Website"].ToString();
+                church.EmailAddress = dataRow["EmailAddress"].ToString();
+                church.Phone = dataRow["Phone"].ToString();
+                string res = dataRow["ImageURL"].ToString();
+                string res2 = res.Substring(0, 1);
+                if (res2 != "/")
+                {
+                    church.ImageURl = "/" + res;
+                }
+                else
+                {
+                    church.ImageURl = res;
+                }
+
+                Balobj.Add(church);
+            }
+            return Balobj;
+        }
+
     }
 }
     

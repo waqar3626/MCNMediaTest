@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Church>
+@{
+    ViewData["Title"] = "Churches";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+<!------ Include the above in your HEAD tag ---------->
+<div class="card">
+    <div class="card-body">
+        <Marquee><h2>CHURCHES</h2></Marquee>
+    </div>
+
+</div>
+<div class="card bg-light">
+
+    <div class="card-body">
+        <div class="row ">
+            <div col-sm-12>
+                <div class="row portfolio-grid">
+                    @foreach (Church ch in Model)
+                    {
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                            <a href="@Url.Action("Preview", "Preview",new { chId = ch.ChurchId })" title="Preview">
+                                <figure class="effect-text-in">
+                                    <img src="@ch.ImageURl" style="height:400px; width:800px !important" alt="image" />
+                                    <figcaption>
+                                        <h4>@ch.ChurchName</h4>
+                                        <p>address : @ch.Address ||  Phone : @ch.Phone || Email : @ch.EmailAddress || Website : @ch.Website </p>
+
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </div>
+
+
+                    }
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

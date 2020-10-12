@@ -1,0 +1,235 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - ThemeForMCN</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+    <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+    <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="~/theme/vendors/css/horizontal-layout-light/style.css">
+   
+    <link rel="shortcut icon" href="~/theme/vendors/images/favicon.png" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/theme/css/horizontal-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/theme/images/favicon.png" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <style type="text/css">
+
+    .bgImage { background-image: url("/Images/pexels-david-dibert-1207965.jpg ") }
+</style>
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_horizontal-navbar.html -->
+        <div class="horizontal-menu ">
+            <nav class="navbar top-navbar col-lg-12 col-12 p-0">
+                <div class="container">
+                    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                        <a class="navbar-brand brand-logo" href="/Client/ChurchInfo"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo-mini" href="/Client/ChurchInfo"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="logo" /></a>
+                    </div>
+                    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                        <ul class="navbar-nav mr-lg-2">
+                            <li class="nav-item nav-search d-none d-lg-block">
+                            </li>
+                        </ul>
+
+                        <ul class="navbar-nav ">
+                            <li class="nav-item nav-search d-none d-lg-block ">
+                                <div class="input-group ">
+                                    <div class="input-group-prepend hover-cursor border-dark" id="navbar-search-icon">
+                                        <span class="input-group-text" id="search">
+                                            <i class="ti-search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                                </div>
+                            </li>
+                        </ul>
+
+
+
+                    </div>
+                </div>
+            </nav>
+            <nav class="bottom-navbar">
+                <div class="container ">
+                    <ul class="nav page-navigation">
+                        <li class="nav-item col-sm-2">
+                            <a class="nav-link" href="/Website/Home">
+                                <i class="fa fa-home menu-icon "></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item col-sm-2">
+                            <a class="nav-link" href="/Website/Churches">
+                                <i class="  mdi mdi-camera  menu-icon "></i>
+                                <span class="menu-title">Churches</span>
+                            </a>
+                        </li>
+                        <li class="nav-item col-sm-2">
+                            <a class="nav-link" href="/Website/Cathedrals">
+                                <i class="  mdi mdi-camera  menu-icon "></i>
+                                <span class="menu-title">Cathedrals</span>
+                            </a>
+                        </li>
+                        <li class="nav-item col-sm-2">
+                            <a class="nav-link" href="/Website/FuneralHomes">
+                                <i class="  mdi mdi-camera  menu-icon "></i>
+                                <span class="menu-title">Funeral Homes</span>
+                            </a>
+                        </li>
+                        <li class="nav-item col-sm-2">
+                            <a class="nav-link" href="/Website/Schedules">
+                                <i class="  mdi mdi-calendar-clock menu-icon"></i>
+                                <span class="menu-title">Schedule</span>
+                            </a>
+                        </li>
+                        <li class="nav-item col-sm-2">
+                            <a class="nav-link" href="/Website/ContactUs">
+                                <i class=" mdi mdi-phone-plus  menu-icon"></i>
+                                <span class="menu-title">Contact Us</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+
+
+        @RenderBody()
+
+        <!-- partial -->
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+
+        <div class="footer" style="background-color:blanchedalmond">
+
+            <div class="row text-white justify-content-center">
+
+
+                <div class=" card col-sm-4 rounded " style="background-color:#1e1625">
+
+                    <h2 class="  text-center  mt-3 ">CONTACT INFO</h2>
+
+                    <div class="fa fa-home display-5 mt-4">
+                        <span>
+                            Euro Streaming Services T/A MCN Media,<br>
+                            <p>Unit 8 Ballysaggart Business Complex,8</p>
+                            <br><p>Beechvalley Way,Dungannon,BT70 1BS,</p><br>
+                            Northern Ireland
+                        </span>
+                            
+                        
+                          
+                        
+                    </div>
+
+
+                    <div class="fa fa-phone mt-3 display-5 text-white"><a href="tel:+442887729580" class="text-white m-2">+44 2887729580</a></div>
+                    <div class="fa fa-envelope text-white mt-3 display-5  mb-3"><a href="mailto:support@watchmcnmedia.tv" class="text-white m-2">support@watchmcnmedia.tv</a></div>
+
+
+                </div>
+                <div class=" card col-sm-3 ml-2 rounded" style="background-color:#1e1625">
+                    <h2 class="text-center mt-3">QUICK LINKS</h2>
+                    <ul class="bullet-line-list display-5 mt-4 text-white">
+                        <li>
+                            <a class="nav-link text-white" href="/Website/Churches">
+                                Churches
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-white" href="/Website/Cathedrals">
+                                Cathedrals
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-white" href="/Website/FuneralHomes">
+                                Funeral Homes
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link text-white" href="/Website/Schedules">
+                                Schedules
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-white" href="/Website/ContactUs">
+                                Contact Us
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class=" card col-sm-4 ml-2 rounded" style="background-color:#1e1625">
+                    <h2 class="text-center  mt-3">FOLLOW US</h2>
+                    <ul class="et-social-icons display-5 mt-4">
+                        <li class=" fa fa-facebook-square">
+                            <a href="https://www.facebook.com/pages/Church-Services-TV/157606014288500" class="text-white">
+                                Facebook
+                            </a>
+                        </li>
+                        <br />
+                        <li class="fa fa-twitter-square mt-2">
+                            <a href="https://twitter.com/ChurchServiceTV" class="text-white">
+                                Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+    <!-- container-scroller -->
+    <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+   
+
+    <script src="~/theme/vendors/datatables.net/jquery.dataTables.js"></script>
+    <!-- plugins:js -->
+    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/theme/js/off-canvas.js"></script>
+    <script src="~/theme/js/hoverable-collapse.js"></script>
+    <script src="~/theme/js/template.js"></script>
+    <script src="~/theme/js/settings.js"></script>
+    <script src="~/theme/js/todolist.js"></script>
+    <script src="~/theme/js/owl-carousel.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <!-- End custom js for this page-->
+</body>
+
+</html>

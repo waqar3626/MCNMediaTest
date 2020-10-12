@@ -39,7 +39,10 @@ namespace MCNMedia_Dev.Controllers
 
         public JsonResult GetAllNotice()
         {
-            List<Notice> noticeInfo = noticeDataAccess.GetAllNotices().ToList();
+            Notice notice = new Notice();
+
+            int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            List<Notice> noticeInfo = noticeDataAccess.GetAllNotices(churchId).ToList();
             return Json(noticeInfo);
            
         }

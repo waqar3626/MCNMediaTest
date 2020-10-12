@@ -88,8 +88,8 @@ namespace MCNMedia_Dev.Controllers
             return View(church);
         }
 
-        [HttpPost()]
-        public IActionResult AddChurch(Church church, IFormFile imageURl2,string ImageURl2)
+        [HttpPost]
+        public IActionResult AddChurch(Church church, IFormFile imageURl2)
         {
             string fileName = Path.GetFileName(imageURl2.FileName);
             church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
@@ -159,7 +159,7 @@ namespace MCNMedia_Dev.Controllers
 
         public void LoadCountyDDL()
         {
-            IEnumerable<Counties> countyList = churchDataAccess.GetCounties();
+            IEnumerable<Counties> countyList = churchDataAccess.GetCounties(-1);
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (var item in countyList)
             {

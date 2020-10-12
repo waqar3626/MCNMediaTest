@@ -3,7 +3,7 @@
 @{
     List<SelectListItem> ClientTypes = Lists.GetClientTypeList();
     List<SelectListItem>
-        CountyList = Lists.GetCountyList();
+        CountyList = Lists.GetCountyList(-1);
 }
 @using (Html.BeginForm("UpdateChurch", "Church", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {

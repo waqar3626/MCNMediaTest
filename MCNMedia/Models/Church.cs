@@ -34,6 +34,11 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Select the County Id")]
         public int CountyId { get; set; }
 
+
+        [Required(ErrorMessage = "Select the Country Id")]
+        public int CountryId { get; set; }
+        public string CountryName  { get; set; }
+
         [Required(ErrorMessage = "Website Name is Required")]
         public string Website { get; set; }
 

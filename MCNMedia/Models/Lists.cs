@@ -10,10 +10,10 @@ namespace MCNMedia_Dev.Models
 {
     public static class Lists
     {
-        public static List<SelectListItem> GetCountyList()
+        public static List<SelectListItem> GetCountyList(int id)
         {
             ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
-            var counties = churchDataAccess.GetCountyList();
+            var counties = churchDataAccess.GetCountyList(id);
             var list = new List<SelectListItem>();
             list.Add(new SelectListItem
             {
@@ -26,6 +26,27 @@ namespace MCNMedia_Dev.Models
                 {
                     Text = dr["CountyName"].ToString(),
                     Value = dr["CountyId"].ToString()
+                });
+            }
+            return list;
+        }
+
+        public static List<SelectListItem> GetCountriesList()
+        {
+            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
+            var counties = churchDataAccess.GetCountriesList();
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem
+            {
+                Text = "--Select--",
+                Value = "0"
+            });
+            foreach (DataRow dr in counties.Rows)
+            {
+                list.Add(new SelectListItem
+                {
+                    Text = dr["CountryName"].ToString(),
+                    Value = dr["CountryId"].ToString()
                 });
             }
             return list;
