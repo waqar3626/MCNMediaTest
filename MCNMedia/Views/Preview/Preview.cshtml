@@ -1,7 +1,22 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Preview";
-    Layout = "_Layout";
+
+    if (Context.Session.GetString("UserType").ToLower() == "admin")
+    {
+        Layout = "_Layout";
+    }
+    else if (Context.Session.GetString("UserType").ToLower() == "client")
+    {
+        Layout = "_NestedLayout";
+    }
+    else if (Context.Session.GetString("UserType").ToLower() == "website")
+    {
+
+        Layout = "_LayoutWebsite";
+    }
+
 
 
 

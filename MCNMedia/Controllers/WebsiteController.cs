@@ -18,8 +18,8 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Home()
         {
             LoadCountryDDL();
-           
 
+            HttpContext.Session.SetString("UserType", "website");
             List<Church> churches = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
             return View(churches);
         }
