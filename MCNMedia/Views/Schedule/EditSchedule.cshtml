@@ -50,7 +50,7 @@
                 <div class="col-sm-9">
                     <span asp-validation-for="EventDay" class="text-danger"></span>
                     <select asp-for="EventDay" class="form-control" asp-items="Html.GetEnumSelectList<EventDay>()">
-                        <option  value="">Please select A Day</option>
+                        <option value="">Please select A Day</option>
                     </select>
                 </div>
             </div>
@@ -67,7 +67,23 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group row">
+                <label asp-for="Length" class="col-sm-2 col-form-label">Duration</label>
+                <div class="col-sm-4">
+                    <span asp-validation-for="Length" class="text-danger"></span>
+                    <input type="text" asp-for="Length" class="form-control" placeholder="Length" />
+                </div>
+                <label asp-for="LengthUnit" class="col-sm-2 col-form-label">Duration Unit</label>
 
+                <div class="col-sm-4 ">
+                    <span asp-validation-for="LengthUnit" class="text-danger"></span>
+                    <select asp-for="LengthUnit" class="form-control" id="LenghtUnit">
+                        <option value="Minutes" name="LenghtUnit">Minutes</option>
+                        <option value="Hours" name="LenghtUnit">Hours</option>
+                    </select>
+                </div>
+
+            </div>
 
             <div class="float-right">
                 <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>

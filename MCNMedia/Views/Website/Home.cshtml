@@ -227,8 +227,6 @@
 
         <div class="row pt-5 justify-content-center">
                 <div class=" selectWrapper col-md-4 col-sm-12 ">
-                    @*<label  class=" text-center">County</label>*@
-                    @*<input asp-for="CountyId" class="form-control" />*@
                     <span class="text-danger"></span>
                     <select id="select2" name="countryId" onchange="DoPostBack();" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
                         <option value="-1">--Select Country--</option>
@@ -236,8 +234,6 @@
                 </div>
                 <div class="col-md-1 col-sm-12 pt-3"></div>
                 <div class=" selectWrapper col-md-4 col-sm-12 ">
-                    @*<label  class=" text-center">County</label>*@
-                    @*<input asp-for="CountyId" class="form-control" />*@
                     <span class="text-danger"></span>
 
                     <select name="County" class="form-control" id="County">
@@ -350,30 +346,7 @@
                 </div>
 
             </div>
-            @*<div class="col-sm-7 justify-content-center ">
-                        <center>
-                            <div class="display-3 justify-content-center pt-5 text-white font-weight-bolder">Do you want to start streaming?</div>
-                        </center>
-                        <div class="row ">
-                            <div class="col-2"></div>
-                            <ul class="column small-4 large-5 pt-4 pl-3 text-white display-5 ">
-                                <li>HD Streaming</li>
-                                <li>International Access</li>
-                                <li>Password Protection</li>
-
-                            </ul>
-                            <div class="col-2"></div>
-
-                            <ul class="column small-4 large-5 pt-4 text-white pl-3 text-white display-5">
-                                <li>Access for Sick / Elderly</li>
-                                <li>Viewing Abroad</li>
-                                <li>Full Website Integration</li>
-
-                            </ul>
-
-                        </div>
-                </div>*@
-
+          
         </div>
     </div>
 </div>

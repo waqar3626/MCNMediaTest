@@ -24,6 +24,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ScheduleEventDate", schedules.EventDate);
             _dc.AddParameter("ScheduleEventDay", Enum.Parse(typeof(EventDay), schedules.EventDay).ToString());
             _dc.AddParameter("ScheduleEventTime", schedules.EventTime);
+            _dc.AddParameter("ScheduleLength", schedules.Length);
+            _dc.AddParameter("LengthUnit", schedules.LengthUnit);
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("IsRepeated", schedules.IsRepeated);
 
@@ -52,8 +54,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
-                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
-                //schedule.RoleName = dataRow["RoleName"].ToString();
+               
 
 
                 Balobj.Add(schedule);
@@ -109,8 +110,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = (dataRow["ScheduleEventDay"].ToString());
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
-                //schedule.RoleId = Convert.ToInt32(dataRow["RoleId"]);
+                schedule.Length = Convert.ToInt32(dataRow["Length"]);
+                schedule.LengthUnit = dataRow["LengthUnit"].ToString();
             }
             return schedule;
         }
@@ -124,8 +125,10 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchDate", schedule.EventDate);
             _dc.AddParameter("SchDay", Enum.Parse(typeof(EventDay), schedule.EventDay).ToString());
             _dc.AddParameter("SchTime", schedule.EventTime);
+             _dc.AddParameter("Lngth", schedule.Length);
+            _dc.AddParameter("LngthUnit", schedule.LengthUnit);
             _dc.AddParameter("UpdateBy", schedule.UpdatedBy);
-            //_dc.AddParameter("RoleId", schedule.RoleId);
+        
             _dc.Execute("spSchedule_Update");
         }
 

@@ -23,7 +23,7 @@
                     @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control" })
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                 </div>
-           
+
                 <label asp-for="EventName" class="col-sm-2 col-form-label">Event Name</label>
                 <div class="col-sm-4">
                     <span asp-validation-for="EventName" class="text-danger"></span>
@@ -59,20 +59,20 @@
                 </div>
             </div>
             <div class="form-group row">
-              
-                    <label asp-for="EventDate" id="EventLabel" class="col-sm-2 col-form-label">Event Date</label>
-                    <div class="col-sm-4" id="EventInput">
-                        <span asp-validation-for="EventDate" class="text-danger"></span>
-                        <div id="datepicker-popup" class="input-group date datepicker">
-                            <input type="text" asp-for="EventDate" class="form-control" placeholder="Event Date" />
-                            <span class="input-group-addon input-group-append border-left">
-                                <span class="ti-calendar input-group-text"></span>
-                            </span>
-                        </div>
-                    </div>
-                
 
-            
+                <label asp-for="EventDate" id="EventLabel" class="col-sm-2 col-form-label">Event Date</label>
+                <div class="col-sm-4" id="EventInput">
+                    <span asp-validation-for="EventDate" class="text-danger"></span>
+                    <div id="datepicker-popup" class="input-group date datepicker">
+                        <input type="text" asp-for="EventDate" class="form-control" placeholder="Event Date" />
+                        <span class="input-group-addon input-group-append border-left">
+                            <span class="ti-calendar input-group-text"></span>
+                        </span>
+                    </div>
+                </div>
+
+
+
                 <label asp-for="EventDay" id="EventDayLabel" class="col-sm-2 col-form-label">Event Day</label>
                 <div class="col-sm-4" id="EventDayInput">
                     <span asp-validation-for="EventDay" class="text-danger"></span>
@@ -80,7 +80,7 @@
                         <option selected="selected" value="">Please select Day</option>
                     </select>
                 </div>
-            
+
                 <label asp-for="EventTime" class="col-sm-2 col-form-label">Event Time</label>
                 <div class="col-sm-4">
                     <span asp-validation-for="EventTime" class="text-danger"></span>
@@ -92,7 +92,23 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group row">
+                <label asp-for="Length" class="col-sm-2 col-form-label">Duration</label>
+                <div class="col-sm-4">
+                    <span asp-validation-for="Length" class="text-danger"></span>
+                    <input type="text" asp-for="Length" class="form-control" placeholder="Length" />
+                </div>
+                <label asp-for="LengthUnit" class="col-sm-2 col-form-label">Duration Unit</label>
 
+                <div class="col-sm-4 ">
+                    <span asp-validation-for="LengthUnit" class="text-danger"></span>
+                    <select asp-for="LengthUnit"  class="form-control" id="LenghtUnit">
+                        <option value="Minutes" name="LenghtUnit">Minutes</option>
+                        <option value="Hours" name="LenghtUnit">Hours</option>
+                    </select>
+                </div>
+
+            </div>
 
             <div class="float-right">
                 <button type="submit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
