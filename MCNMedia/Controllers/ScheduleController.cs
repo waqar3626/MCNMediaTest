@@ -24,14 +24,19 @@ namespace MCNMedia_Dev.Controllers
 
 
         [HttpPost()]
-        public IActionResult AddSchedule(Schedule sch,int eventBy)
+        public IActionResult AddSchedule(Schedule sch)
         {
-            if (eventBy == 1)
+            if (sch.ScheduleBy == 1)
             {
                 sch.EventDay = sch.EventDate.ToString("dddd");
                 sch.IsRepeated = false;
 
             }
+            else if (sch.ScheduleBy == 2)
+            {
+                sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
+            }
+
            
 
                 scheduleDataAccess.AddSchedule(sch);
@@ -50,10 +55,15 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult Edit(int id, [Bind] Schedule schedule)
         {
-            if (schedule.EventDay == null)
+            if (schedule.ScheduleBy == 1)
             {
                 schedule.EventDay = schedule.EventDate.ToString("dddd");
+                schedule.IsRepeated = false;
 
+            }
+            else if (schedule.ScheduleBy == 2)
+            {
+                schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
             }
             //if (ModelState.IsValid)
             //{

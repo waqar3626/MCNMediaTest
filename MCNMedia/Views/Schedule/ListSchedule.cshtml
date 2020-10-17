@@ -94,12 +94,13 @@
             @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
             {
 
-                <table class="table">
+            <div class="table-responsive">
+                <table id="order-listing" class="table">
                     <thead>
                         <tr>
                             @*<th>
-                                    @Html.DisplayNameFor(model => model.UserId)
-                                </th>*@
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </th>*@
                             <th>
                                 Church Name
                             </th>
@@ -107,13 +108,16 @@
                                 Event Name
                             </th>
                             <th>
-                                Event Date
+                                Event Date/Day
                             </th>
                             <th>
                                 Event Time
                             </th>
                             <th>
-                                Event Day
+                                Duration
+                            </th>
+                            <th>
+                                Repeated
                             </th>
                             <th>Actions</th>
                         </tr>
@@ -123,24 +127,43 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.UserId)
-                                    </td>*@
-                                <td>
+
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName)
                                 </td>
-                                <td>
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.EventName)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EventDate)
+                                <td class="text-wrap">
+                                    @if (item.ScheduleBy == 1 && item.EventDate != Convert.ToDateTime("0001-01-01 00:00:00"))
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EventDate)
+                                    }
+                                    else if (item.ScheduleBy == 2 && item.EventDate == Convert.ToDateTime("0001-01-01 00:00:00"))
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EventDay)
+                                    }
                                 </td>
-                                <td>
+
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.EventTime)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EventDay)
+                                <td class="text-wrap">
+                                    @item.Length  @item.LengthUnit
                                 </td>
+                                @if (item.IsRepeated == true)
+                                {
+                                    <td class="text-wrap">
+                                        Yes
+                                    </td>
+                                }
+                                else if (item.IsRepeated == false)
+                                {
+                                    <td class="text-wrap">
+                                        No
+                                    </td>
+                                }
+
 
                                 <td>
                                     <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
@@ -148,15 +171,16 @@
                                     @*<Button class="btn btn-danger btn-sm" data-toggle="tooltip" asp-action="Delete"><i class="fa fa-trash"></i></Button>*@
                                     <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                     @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
 
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
-            }
-        </div>
+                </div>
+                }
+            </div>
     </div>
 </div><script type="text/javascript">
     

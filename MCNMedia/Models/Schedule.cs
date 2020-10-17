@@ -21,13 +21,17 @@ namespace MCNMedia_Dev.Models
         public string EventDay { get; set; }
         [EnumDataType(typeof(DayOfWeek))]
         public EventDay Days { get; set; }
-      //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
-       [DataType(DataType.Time)]
+        //  [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
+        [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm tt}")]
         public DateTime EventTime { get; set; }
 
         public int Length { get; set; }
         public string LengthUnit { get; set; }
+
+        public string Password { get; set; }
+
+        public int ScheduleBy  {get; set;}
         public Boolean IsRepeated { get; set; }
         public int UpdatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
