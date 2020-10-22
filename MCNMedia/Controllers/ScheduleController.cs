@@ -13,6 +13,7 @@ namespace MCNMedia_Dev.Controllers
     {
         scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
+        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
 
         [HttpGet]
@@ -29,7 +30,7 @@ namespace MCNMedia_Dev.Controllers
             if (sch.ScheduleBy == 1)
             {
                 sch.EventDay = sch.EventDate.ToString("dddd");
-                sch.IsRepeated = false;
+               
 
             }
             else if (sch.ScheduleBy == 2)
@@ -37,9 +38,9 @@ namespace MCNMedia_Dev.Controllers
                 sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
             }
 
-           
 
-                scheduleDataAccess.AddSchedule(sch);
+            sch.IsRepeated = false;
+            scheduleDataAccess.AddSchedule(sch);
             return RedirectToAction("ListSchedule");
         }
 
@@ -58,7 +59,7 @@ namespace MCNMedia_Dev.Controllers
             if (schedule.ScheduleBy == 1)
             {
                 schedule.EventDay = schedule.EventDate.ToString("dddd");
-                schedule.IsRepeated = false;
+               
 
             }
             else if (schedule.ScheduleBy == 2)
@@ -67,6 +68,7 @@ namespace MCNMedia_Dev.Controllers
             }
             //if (ModelState.IsValid)
             //{
+            schedule.IsRepeated = false;
             scheduleDataAccess.UpdateSchedule(schedule);
             return RedirectToAction("ListSchedule");
             //}
@@ -134,7 +136,16 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
+        public JsonResult LoadCameraDDL(int ChurchId)
+        {
+            List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId).ToList();
+
+            return Json(countyList);
+
+        }
+
     }
 
-    
+
+
 }

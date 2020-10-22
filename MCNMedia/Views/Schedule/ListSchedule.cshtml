@@ -116,9 +116,7 @@
                             <th>
                                 Duration
                             </th>
-                            <th>
-                                Repeated
-                            </th>
+                           
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -149,30 +147,15 @@
                                     @Html.DisplayFor(modelItem => item.EventTime)
                                 </td>
                                 <td class="text-wrap">
-                                    @item.Length  @item.LengthUnit
+                                    @item.Length  Minutes
                                 </td>
-                                @if (item.IsRepeated == true)
-                                {
-                                    <td class="text-wrap">
-                                        Yes
-                                    </td>
-                                }
-                                else if (item.IsRepeated == false)
-                                {
-                                    <td class="text-wrap">
-                                        No
-                                    </td>
-                                }
+                              
 
 
                                 <td>
                                     <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @*<input type="hidden" asp-for="UserId" />*@
-                                    @*<Button class="btn btn-danger btn-sm" data-toggle="tooltip" asp-action="Delete"><i class="fa fa-trash"></i></Button>*@
-                                    <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                                    @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
-
+                                      <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                              
                                 </td>
                             </tr>
                         }

@@ -29,7 +29,9 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("IsRepeated", schedules.IsRepeated);
             _dc.AddParameter("SchPassword", schedules.Password);
-            _dc.AddParameter("SchBy", schedules.ScheduleBy);
+            _dc.AddParameter("SchBy", schedules.ScheduleBy); 
+            _dc.AddParameter("SchCameraId", schedules.CameraId); 
+
             _dc.AddParameter("CreatedBy", 1);
             //_dc.AddParameter("RoleId", schedules.RoleId);
             _dc.Execute("spschedule_Add");
@@ -60,7 +62,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.Length = Convert.ToInt32(dataRow["Length"]);
                 schedule.LengthUnit = dataRow["LengthUnit"].ToString();
-
+                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+                schedule.CameraName = dataRow["CameraName"].ToString();
 
                 Balobj.Add(schedule);
             }
@@ -96,6 +99,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.Length = Convert.ToInt32(dataRow["Length"]);
                 schedule.LengthUnit = dataRow["LengthUnit"].ToString();
+                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+                schedule.CameraName = dataRow["CameraName"].ToString();
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
                 //schedule.RoleName = dataRow["RoleName"].ToString();
 
@@ -126,6 +131,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.ScheduleBy = Convert.ToInt32(dataRow["ScheduleBy"]);
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
+                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+               
             }
             return schedule;
         }
@@ -145,7 +152,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchPassword", schedule.Password);
             _dc.AddParameter("SchBy", schedule.ScheduleBy);
             _dc.AddParameter("IsRepeated", schedule.IsRepeated);
-          
+            _dc.AddParameter("SchCameraId", schedule.CameraId);
 
             _dc.Execute("spSchedule_Update");
         }

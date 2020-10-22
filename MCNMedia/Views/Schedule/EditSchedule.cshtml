@@ -19,7 +19,7 @@
                 <div class="col-sm-4">
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                     @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                    @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control" })
+                    @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control", @id = "ddlChurchId", @onchange = "DoPostBack();" })
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                 </div>
 
@@ -29,14 +29,13 @@
                     <input type="text" asp-for="EventName" class="form-control" placeholder="Event Name" />
                 </div>
             </div>
-
             <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Event By : </label>
+                <label class="col-sm-3 col-form-label">Occur By : </label>
                 <div class="col-sm-3">
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" asp-for="ScheduleBy" value="1" checked="" onclick="ShowDateDiv()">
-                            Date
+                            Only Once
                             <i class="input-helper"></i>
                         </label>
                     </div>
@@ -45,36 +44,20 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" asp-for="ScheduleBy" value="2" onclick="ShowDayDiv()">
-                            Day
+                            Weekly
                             <i class="input-helper"></i>
                         </label>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="form-check" id="CheckBox">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="IsRepeated" /> @Html.DisplayNameFor(model => model.IsRepeated)
-                        </label>
-                    </div>
+                @*<div class="col-sm-3">
+                <div class="form-check" id="CheckBox">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsRepeated" /> @Html.DisplayNameFor(model => model.IsRepeated)
+                    </label>
                 </div>
+            </div>*@
             </div>
             <div class="form-group row">
-                <label asp-for="EventDay" id="EventDayLabel" class="col-sm-2 col-form-label">Event Day</label>
-                <div class="col-sm-4" id="EventDayInput">
-                    <span asp-validation-for="EventDay" class="text-danger"></span>
-                    <select asp-for="EventDay" class="form-control" id="EventDay">
-                        <option selected="selected" value="">Please select Day</option>
-                        <option value="Monday" name="EventDay">Monday</option>
-                        <option value="Tuesday" name="EventDay">Tuesday</option>
-                        <option value="Wednesday" name="EventDay">Wednesday</option>
-                        <option value="Thursday" name="EventDay">Thursday</option>
-                        <option value="Friday" name="EventDay">Friday</option>
-                        <option value="Saturday" name="EventDay">Saturday</option>
-                        <option value="Sunday" name="EventDay">Sunday</option>
-
-                    </select>
-                </div>
-
 
                 <label asp-for="EventDate" id="EventLabel" class="col-sm-2 col-form-label">Event Date</label>
                 <div class="col-sm-4" id="EventInput">
@@ -89,6 +72,24 @@
 
 
 
+                <label asp-for="EventDay" id="EventDayLabel" class="col-sm-2 col-form-label">Event Day</label>
+                <div class="col-sm-4" id="EventDayInput">
+                    <span asp-validation-for="EventDay" class="text-danger"></span>
+
+
+                    <select asp-for="EventDay" class="form-control" id="EventDay">
+                        <option selected="selected" value="">Please select Day</option>
+                        <option value="Monday" name="EventDay">Monday</option>
+                        <option value="Tuesday" name="EventDay">Tuesday</option>
+                        <option value="Wednesday" name="EventDay">Wednesday</option>
+                        <option value="Thursday" name="EventDay">Thursday</option>
+                        <option value="Friday" name="EventDay">Friday</option>
+                        <option value="Saturday" name="EventDay">Saturday</option>
+                        <option value="Sunday" name="EventDay">Sunday</option>
+
+                    </select>
+
+                </div>
 
                 <label asp-for="EventTime" class="col-sm-2 col-form-label">Event Time</label>
                 <div class="col-sm-4">
@@ -102,65 +103,78 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="Length" class="col-sm-2 col-form-label">Duration</label>
-                <div class="col-sm-4">
-                    <span asp-validation-for="Length" class="text-danger"></span>
-                    <input type="text" asp-for="Length" class="form-control" placeholder="Length" />
+                <label class="col-sm-2 col-form-label">Record Schedule</label>
+                <div class="col-sm-10 pt-3">
+                    <div class="custom-control custom-switch lg">
+                        <input type="checkbox" class="custom-control-input control" id="customSwitch2">
+                        <label class="custom-control-label" for="customSwitch2">Do you want to Record that Schedule</label>
+
+                    </div>
+
+
                 </div>
-                <label asp-for="LengthUnit" class="col-sm-2 col-form-label">Duration Unit</label>
+            </div>
+            <div class="form-group row" id="DivRecordData">
+                <label asp-for="CameraId" class="col-sm-2 col-form-label">Camera</label>
 
                 <div class="col-sm-4 ">
-                    <span asp-validation-for="LengthUnit" class="text-danger"></span>
-                    <select asp-for="LengthUnit" class="form-control" id="LenghtUnit">
-                        <option value="Minutes" name="LenghtUnit">Minutes</option>
-                        <option value="Hours" name="LenghtUnit">Hours</option>
+                    <span asp-validation-for="CameraId" class="text-danger"></span>
+                    <select asp-for="CameraId" name="CameraId" class="form-control" id="CameraId">                                                    </select>
+                </div>
+
+                <label asp-for="Length" class="col-sm-2 col-form-label">Duration</label>
+
+                <div class="col-sm-4 ">
+                    <span asp-validation-for="Length" class="text-danger"></span>
+                    <select asp-for="Length" class="form-control" id="Lenght">
+                        <option value="30" name="Length">30 Minutes</option>
+                        <option value="40" name="Length">40 Minutes</option>
+                        <option value="60" name="Length">1 Hour</option>
+                        <option value="75" name="Length">1 Hour 15 Minutes</option>
+                        <option value="90" name="Length">1 Hour 30 Minutes</option>
+                        <option value="105" name="Length">1 Hour 45 Minutes</option>
+                        <option value="120" name="Length">2 Hour </option>
+
+
                     </select>
                 </div>
-                @if (Model.Password != "")
-                {
-                    <label asp-for="Password" id="lblPassword" class="col-sm-2 col-form-label">Password</label>
-                    <div class="col-sm-4 " id="SchPassword">
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                        <input type="text" asp-for="Password" class="form-control" placeholder="Password" />
-                    </div>
-                    <div class="col-sm-6" id="btnSchdule">
-                        <div class="float-right">
-                            <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
-                            <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-sm-12" id="btnSchdule">
-                        <div class="float-right">
-                            <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
-                            <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
-                        </div>
-                    </div>
-                }
             </div>
-          
-            @*<div class="modal fade" id="exampleModal-3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-3" aria-hidden="true">
-                <div class="modal-dialog modal-md">
-                    <div class="modal-content">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10 pt-3">
+                    <div class="custom-control custom-switch lg">
+                        <input type="checkbox" class="custom-control-input control" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">Do you want to Add Password</label>
 
-                        <div class="modal-body">
-                            <center>
-                                <i class="fa fa-info-circle text-info" style="font-size:6em"></i>
+                    </div>
 
 
-                                <h3 class="display-4 text-info">Do you want to add password?</h3>
-                            </center>
-                            <div class="float-right">
-                                <button type="button" id="btnYes" value="Yes" class="btn btn-success">Yes</button>
-                                <button type="button" id="btnNo" value="No" class="btn btn-danger">No</button>
-                            </div>
-                        </div>
-
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Password" id="lblPassword" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-4 " id="SchPassword">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input type="text" asp-for="Password" class="form-control" placeholder="Password" />
+                </div>
+                <div class="col-sm-6" id="btnSchdule">
+                    <div class="float-right">
+                        <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                        <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
                     </div>
                 </div>
-            </div>*@
+
+
+
+                <div class="col-sm-12" id="btnSchdulecol12">
+                    <div class="float-right">
+                        <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                        <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -169,12 +183,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //$('#CheckBox').hide();
-        //$('#EventDayLabel').hide();
-        //$('#EventDayInput').hide();
-        //$('#EventLabel').show();
-        //$('#EventInput').show();
+
+
+        DoPostBack();
         var modelJSValue = '@Model.ScheduleBy';
+
 
         if (modelJSValue== 1) {
             ShowDateDiv();
@@ -186,14 +199,89 @@
             ShowDayDiv();
         }
 
+        var modelpaswordValue = '@Model.Password';
+        if (modelpaswordValue.length > 1) {
+
+            ShowPassword();
+            $('#customSwitch1').attr('checked', true);
+        }
+        else {
+            HidePassword();
+        }
+
+        var modelRecordData = '@Model.Length';
+        var modelCameraId = '@Model.CameraId';
+
+        if (modelRecordData > 0 && modelCameraId > 0) {
+
+          
+
+
+            ShowRecordData();
+            $('#customSwitch2').attr('checked', true);
+
+        }
+        else {
+            HideRecordData();
+        }
+
 
 
 
 
     });
-    function ShowDateDiv() {
 
-        $('#CheckBox').hide();
+    $('#customSwitch1').change(function () {
+        if (this.checked) {
+            ShowPassword();
+        }
+
+        else {
+            HidePassword();
+        }
+
+
+    });
+
+    $('#customSwitch2').change(function () {
+        if (this.checked) {
+            ShowRecordData();
+        }
+
+        else {
+            HideRecordData();
+        }
+
+
+    });
+
+    function HidePassword() {
+        $('#lblPassword').hide();
+        $('#SchPassword').hide();
+        $('#btnSchdule').hide();
+        $('#btnSchdulecol12').show();
+    }
+
+    function ShowPassword() {
+        $('#lblPassword').show();
+        $('#SchPassword').show();
+        $('#btnSchdule').show();
+        $('#btnSchdulecol12').hide();
+    }
+
+    function HideRecordData() {
+        $('#DivRecordData').hide();
+
+    }
+
+    function ShowRecordData() {
+        $('#DivRecordData').show();
+
+    }
+    function ShowDateDiv() {
+        $('#EventDayLabel').hide();
+
+
         $('#EventDayLabel').hide();
         $('#EventDayInput').hide();
         $('#EventLabel').show();
@@ -204,13 +292,43 @@
 
     }
     function ShowDayDiv() {
-        $('#CheckBox').show();
+
         $('#EventDayLabel').show();
         $('#EventDayInput').show();
         $('#EventLabel').hide();
         $('#EventInput').hide();
 
 
+    }
+
+    function DoPostBack() {
+        var ChurchId = document.getElementById('ddlChurchId').value;
+
+        $.ajax({
+            url: "/Schedule/LoadCameraDDL",
+            type: "GET",
+            data: { ChurchId: ChurchId },
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (result) {
+                var s = '<option value="0">--Select Camera--</option>';
+                $.each(result, function (key, item) {
+                    s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
+
+                });
+
+                $("#CameraId").html(s);
+                $('#CameraId').val('@Model.CameraId');
+
+
+
+
+            },
+            error: function (errormessage) {
+
+                alert(errormessage.responseText);
+            }
+        });
     }
 
 </script>

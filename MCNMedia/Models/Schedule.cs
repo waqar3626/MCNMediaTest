@@ -29,6 +29,8 @@ namespace MCNMedia_Dev.Models
         public int Length { get; set; }
         public string LengthUnit { get; set; }
 
+        public int CameraId  { get; set; }
+        public string CameraName { get; set; }
         public string Password { get; set; }
 
         public int ScheduleBy  {get; set;}
