@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewData["Title"] - ThemeForMCN</title>
+    <title>@ViewData["Title"] - MCN</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
@@ -30,6 +30,17 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
+    @using Microsoft.AspNetCore.Http
+
+    @if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
+    {
+        Context.Response.Redirect("../UserLogin/UserLogin");
+    }
+    else if (Context.Session.GetString("UserType").ToString() != "client")
+    {
+        Context.Session.Clear();
+        Context.Response.Redirect("../UserLogin/UserLogin");
+    }
     <div class="container-scroller">
         <!-- partial:../../partials/_horizontal-navbar.html -->
         <div class="horizontal-menu">
@@ -180,10 +191,10 @@
     <script src="~/theme/js/dropify.js"></script>
     <script src="~/theme/js/dropzone.js"></script>
     <script src="~/theme/js/jquery-file-upload.js"></script>
-  
 
-    
-  
+
+
+
     <!-- endinject -->
     <!-- Custom js for this page-->
     <!-- End custom js for this page-->

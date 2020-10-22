@@ -42,7 +42,7 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        public void AddCamera(Camera camera)
+        public int AddCamera(Camera camera)
         {
             _dc.ClearParameters();
             _dc.AddParameter("CreatedBy", 1);
@@ -56,7 +56,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", camera.ChurchId);
             _dc.AddParameter("ServerId", camera.ServerId);
             _dc.AddParameter("App", camera.App);
-            _dc.Execute("spCamera_Add");
+             return _dc.ReturnInt("spCamera_Add");
         }
 
         public Camera GetCameraById(int camId)

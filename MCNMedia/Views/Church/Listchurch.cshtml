@@ -80,7 +80,6 @@
                 <table id="order-listing" class="table">
                     <thead>
                         <tr>
-
                             <th>
                                 Details
                             </th>
@@ -90,21 +89,9 @@
                             <th>
                                 Client Type
                             </th>
-                            @*<th>
-                                    @Html.DisplayNameFor(model => model.UniqueChurchId)
-                                </th>*@
-                            @*<th>
-                                    @Html.DisplayNameFor(model => model.Address)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Town)
-                                </th>*@
                             <th>
                                 County
                             </th>
-                            @*<th>
-                                    @Html.DisplayNameFor(model => model.Website)
-                                </th>*@
                             <th>
                                 Email Address
                             </th>
@@ -112,72 +99,24 @@
                                 Phone
                             </th>
                             <th>Preview</th>
-                            @*<th>
-                                    @Html.DisplayNameFor(model => model.ImageURl)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Blurb)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Slug)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Notice)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Featured)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UniqueIdentifier)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.RepeatRecordings)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Switch)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ShowOnWebsite)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.DisplayOrder)
-                                </th>
-                                <th></th>*@
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
-
                                 <td>
                                     <a href="@Url.Action("ChurchDetails", "Church",new { chId = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
-
                                 </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.ChurchId)
-                                    </td>*@
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ClientTypeTitle)
                                 </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.UniqueChurchId)
-                                    </td>*@
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.Address)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Town)
-                                    </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CountyName)
                                 </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.Website)
-                                    </td>*@
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
                                 </td>
@@ -186,43 +125,7 @@
                                 </td>
                                 <td>
                                     <a href="@Url.Action("Preview", "Preview",new { chId = item.ChurchId })" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
-
                                 </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.ImageURl)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Blurb)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Slug)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Notice)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Featured)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.UniqueIdentifier)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RepeatRecordings)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Switch)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ShowOnWebsite)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DisplayOrder)
-                                    </td>*@
-                                @*<td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.ChurchId }) |
-                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.ChurchId })
-                                    </td>*@
                             </tr>
                         }
                     </tbody>

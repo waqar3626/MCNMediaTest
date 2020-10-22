@@ -17,13 +17,8 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Select the Client Type Id")]
         public int ClientTypeId { get; set; }
 
-        private string _UniqueChurchId = string.Empty;
-        public string UniqueChurchId
-        {
-            get { return _UniqueChurchId; }
-            set => _UniqueChurchId = Guid.NewGuid().ToString();
 
-        }
+        public string UniqueChurchId { get; set; }
 
         [Required(ErrorMessage = "Address is Required")]
         public string Address { get; set; }
@@ -52,23 +47,13 @@ namespace MCNMedia_Dev.Models
         public string ImageURl { get; set; }
         public string Blurb { get; set; }
 
-        private string _Slug = string.Empty;
-        public string Slug
-        {
-            get { return _Slug; }
-            set => _Slug = Guid.NewGuid().ToString();
-        }
+        public string Slug { get; set; }
 
         public string Notice { get; set;}
 
         public int Featured { get; set; }
         
-        private string _UniqueIdentifier = string.Empty;
-        public string UniqueIdentifier
-        {
-            get { return _UniqueIdentifier; }
-            set => _UniqueIdentifier = Guid.NewGuid().ToString();
-        }
+        public string UniqueIdentifier { get; set; }
         public Boolean RepeatRecordings { get; set; }
        
         public int Switch { get; set; }

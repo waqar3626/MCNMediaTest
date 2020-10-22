@@ -8,6 +8,10 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using System.Data;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -17,47 +21,53 @@ namespace MCNMedia_Dev.Controllers
         GenericModel gm = new GenericModel();
         public IActionResult Index()
         {
-          
+
             GenericModel gm = new GenericModel();
             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.LCameras = camDataAccess.GetAllCameras(churchId);
             return View(gm);
         }
 
-
-
         [HttpPost]
         public IActionResult AddCamera(GenericModel cam)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
             {
-               
+
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 cam.Cameras.ChurchId = churchId;
 
-                camDataAccess.AddCamera(cam.Cameras);
-                gm.ResultMessage = "Camera Added Sucessfully";
-
-                gm.LCameras = camDataAccess.GetAllCameras(churchId);
-                HttpContext.Session.SetString("TabName", "Camera");
-                var queryString = new { chId = churchId };
-
-                if (HttpContext.Session.GetString("UserType") == "admin") {
-                return RedirectToAction("ChurchDetails", "Church", queryString);
-                }
-               else if (HttpContext.Session.GetString("UserType") == "client")
+                int cameraId = camDataAccess.AddCamera(cam.Cameras);
+                if (cameraId > 0)
                 {
-                    return RedirectToAction("CameraDetail", "client", queryString);
+                    MCNMedia_Dev.WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+                    wowzaHelper.RequestCamera(churchId, cameraId, cam.Cameras.CameraUrl);
 
+                    gm.ResultMessage = "Camera Added Sucessfully";
+
+                    gm.LCameras = camDataAccess.GetAllCameras(churchId);
+                    HttpContext.Session.SetString("TabName", "Camera");
+                    var queryString = new { chId = churchId };
+
+                    if (HttpContext.Session.GetString("UserType") == "admin")
+                    {
+                        return RedirectToAction("ChurchDetails", "Church", queryString);
+                    }
+                    else if (HttpContext.Session.GetString("UserType") == "client")
+                    {
+                        return RedirectToAction("CameraDetail", "client", queryString);
+                    }
+                }
+                else
+                {
+                    gm.ResultMessage = "Error occured please try later";
                 }
             }
             return RedirectToAction("Listchurch", "Church");
         }
 
-
         public IActionResult EditCamera(int id)
         {
-
             GenericModel gm = new GenericModel();
             gm.Cameras = camDataAccess.GetCameraById(id);
             // return View(gm);
@@ -66,7 +76,6 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult DeleteCamera(int id)
         {
-
             GenericModel gm = new GenericModel();
             bool res = camDataAccess.DeleteCamera(id);
             return Json(res);
@@ -74,11 +83,9 @@ namespace MCNMedia_Dev.Controllers
 
         public JsonResult GetAllCameras()
         {
-             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
             List<Camera> cameraInfo = camDataAccess.GetAllCameras(churchId).ToList();
             return Json(cameraInfo);
-            // return Json(new { data = cameraInfo });
-
         }
 
         public JsonResult UpdateCamera(string CameraId, string CameraName, string CameraUrl, string HttpPort, string RtspPort)
@@ -91,11 +98,12 @@ namespace MCNMedia_Dev.Controllers
             CamUpdate.RtspPort = RtspPort;
 
             int res = camDataAccess.Updatecamera(CamUpdate);
-
-
+            int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            WowzaApi.WowzaHelper api = new WowzaApi.WowzaHelper();
+            api.RequestCamera(Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")), CamUpdate.CameraId, CamUpdate.CameraUrl);
+            //api.StartRecording(churchId, CamUpdate.CameraId);
+            //api.StopRecording(churchId, CamUpdate.CameraId);
             return Json(res);
         }
-
-      
     }
 }

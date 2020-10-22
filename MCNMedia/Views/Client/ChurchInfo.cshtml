@@ -6,7 +6,9 @@
 
 }
 @{
-    int usrId = (int)Context.Session.GetInt32("UserId");
+    int usrId = -1;
+    if(Context.Session.GetInt32("UserId") != null)
+        usrId =(int)Context.Session.GetInt32("UserId");
     List<SelectListItem> SelectList = Lists.GetUserAssignChurchListForDDL(usrId);
 
 

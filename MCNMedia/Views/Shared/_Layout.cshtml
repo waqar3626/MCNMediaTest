@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewData["Title"] - ThemeForMCN</title>
+    <title>@ViewData["Title"] - MCN</title>
     <!-- plugins:css -->
 
 
@@ -50,13 +50,22 @@
     <link rel="shortcut icon" href="~/theme/images/favicon.png" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
+    @*<link href="~/css/video.css" rel="stylesheet" />*@
     <link href="~/theme/Custom.css" rel="stylesheet" />
-
 
 </head>
 <body>
+    @using Microsoft.AspNetCore.Http
 
+    @if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
+    {
+    Context.Response.Redirect("../UserLogin/UserLogin");
+    }
+    else if (Context.Session.GetString("UserType").ToString() !=  "admin")
+    {
+    Context.Session.Clear();
+    Context.Response.Redirect("../UserLogin/UserLogin");
+    }
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -287,32 +296,27 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/User/ListUser">
-                            <i class="mdi mdi-account-multiple menu-icon"></i>
-                            <span class="menu-title">Users</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a class="nav-link" href="/Church/Listchurch">
                             <i class="mdi mdi-christianity-outline menu-icon"></i>
                             <span class="menu-title"> Churches </span>
                         </a>
                     </li>
-
-
-
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="ListSchedule" asp-controller="Schedule">
+                            <i class="mdi mdi-calendar-clock menu-icon"></i>
+                            <span class="menu-title">Schedules </span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Recording/ListRecording">
                             <i class="mdi mdi-camcorder-box  menu-icon"></i>
                             <span class="menu-title">Recordings </span>
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="ListSchedule" asp-controller="Schedule">
-                            <i class="mdi mdi-calendar-clock menu-icon"></i>
-                            <span class="menu-title">Schedules </span>
+                        <a class="nav-link" href="/User/ListUser">
+                            <i class="mdi mdi-account-multiple menu-icon"></i>
+                            <span class="menu-title">Users</span>
                         </a>
                     </li>
                 </ul>
