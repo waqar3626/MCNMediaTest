@@ -186,15 +186,15 @@
 
 
         DoPostBack();
-        var modelJSValue = '@Model.ScheduleBy';
+        var modelJSValue = '@Model.IsRepeated';
 
 
-        if (modelJSValue== 1) {
+        if (modelJSValue==false) {
             ShowDateDiv();
 
         }
 
-        else if (modelJSValue == 2) {
+        else if (modelJSValue == true) {
 
             ShowDayDiv();
         }

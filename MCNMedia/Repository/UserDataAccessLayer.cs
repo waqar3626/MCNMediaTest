@@ -85,7 +85,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("FName", user.FirstName);
             _dc.AddParameter("LName", user.LastName);
             _dc.AddParameter("EmailAdd", user.EmailAddress);
-            //_dc.AddParameter("@Password", user.LoginPassword);
+            //_dc.AddParameter("Password", user.LoginPassword);
             _dc.AddParameter("UpdateBy", user.UpdatedBy);
             _dc.AddParameter("RoleId", user.RoleId);
             _dc.Execute("spUser_Update");

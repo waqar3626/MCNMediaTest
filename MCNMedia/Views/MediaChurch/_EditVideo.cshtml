@@ -6,7 +6,13 @@
 
 @using (Html.BeginForm("UpdateVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+<div class="form-group row p-3" id="alertDiv12">
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert" id="alertLabel12">
 
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-6">
         <video width="320" height="300" id="ViewVideo" controls>
@@ -45,6 +51,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#alertDiv12').hide();
+            
             var filedropper = $('#EditVidFile').dropify();
             filedropper = filedropper.data('dropify');
             filedropper.resetPreview();
@@ -58,7 +67,8 @@
 
         });
         function UpdateVid() {
-
+            var ss = "";
+            var Check = false;
             var churchMediaId = $('#chmedId').val();
             var editVidTabName = document.getElementById('medEditVideoTabName').value;
             var mediaUrl = $('#HdnMediaUrl1').val();
@@ -66,27 +76,68 @@
             var mediaName = $('#HdnMediaName1').val();
          
             var formData = new FormData();
+            
+            var input = document.getElementById('EditVidFile');
+
+            var fileExtension = ['mp4', 'flv', 'avi'];
+
+            if (input.files[0] != null) {
+                if ($.inArray($('#EditVidFile').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    Check = true;
+                    ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+
+                    $('#alertLabel12').html(ss);
+                    $('#alertDiv12').show();
+                    return;
+                    $('#EditVidModal').modal('show');
+
+
+                }
+            }
+            else if ($.inArray($('#HdnMediaUrl1').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+
+                $('#alertLabel12').html(ss);
+                $('#alertDiv12').show();
+                return;
+                $('#EditVidModal').modal('show');
+
+            }
+             
+
+            if (editVidTabName == '')
+            {
+                ss += '<label >Please provide a valid Tab Name </label>';
+
+                
+                $('#alertLabel12').html(ss);
+                $('#alertDiv12').show();
+                return;
+                $('#EditVidModal').modal('show');
+            }
             formData.append("ChurchMediaId", churchMediaId);
             formData.append("mediaType", "Video");
             formData.append("EditVidTabName", editVidTabName);
             formData.append("MediaUrl", mediaUrl);
             formData.append("MediaName", mediaName);
-            var input = document.getElementById('EditVidFile');
+            
             formData.append("mediaFile", input.files[0]);
 
 
             //var TabName11 = $('#MediaChurchs_TabName').val();
 
             $.ajax({
+             
+
                 type: "POST",
                 url: "/MediaChurch/UpdateVideo/",
 
                 data: formData,
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,  // tell jQuery not to set contentType
-
-
+                
                 success: function (result) {
+               
                     loadVideo();
                     $('#EditVidModal').modal('hide');
                 },

@@ -15,6 +15,8 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
+       
+
 
         [HttpGet]
         public IActionResult AddSchedule()
@@ -27,48 +29,60 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost()]
         public IActionResult AddSchedule(Schedule sch)
         {
-            if (sch.ScheduleBy == 1)
+            if (sch.IsRepeated == false)
             {
                 sch.EventDay = sch.EventDate.ToString("dddd");
                
 
             }
-            else if (sch.ScheduleBy == 2)
+            else 
             {
                 sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
             }
 
 
-            sch.IsRepeated = false;
+           
             scheduleDataAccess.AddSchedule(sch);
             return RedirectToAction("ListSchedule");
         }
 
         [HttpGet]
-        public IActionResult ListSchedule()
+        public JsonResult ListSch()
         {
+           
             LoadChurchDDL();
-            List<Schedule> sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
-            return View(sch);
+            List<Schedule> Sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
+            return Json   (Sch);
+
+        }
+
+        [HttpGet]
+        public ViewResult ListSchedule()
+        {
+            GenericModel gm = new GenericModel();
+
+            LoadChurchDDL();
+            gm.LSchedules = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
+            return View(gm);
 
         }
 
         [HttpPost]
         public IActionResult Edit(int id, [Bind] Schedule schedule)
         {
-            if (schedule.ScheduleBy == 1)
+            if (schedule.IsRepeated == false)
             {
                 schedule.EventDay = schedule.EventDate.ToString("dddd");
                
 
             }
-            else if (schedule.ScheduleBy == 2)
+            else if (schedule.IsRepeated == true)
             {
                 schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
             }
             //if (ModelState.IsValid)
             //{
-            schedule.IsRepeated = false;
+            
             scheduleDataAccess.UpdateSchedule(schedule);
             return RedirectToAction("ListSchedule");
             //}
@@ -79,13 +93,15 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult EditSchedule(int id)
         {
-            Schedule schedule = scheduleDataAccess.GetScheduleDataBtId(id);
-            if (schedule == null)
+            GenericModel gm = new GenericModel();
+             gm.Schedules = scheduleDataAccess.GetScheduleDataBtId(id);
+
+            if (gm.Schedules == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(gm);
         }
 
 
@@ -126,13 +142,13 @@ namespace MCNMedia_Dev.Controllers
         }
 
         public IActionResult SearchSchedule(int Church, DateTime EventDate,string EventDay,int eventBy) {
-           
-            
-           
+
+            GenericModel gm = new GenericModel();         
           
             List<Schedule> sch = scheduleDataAccess.GetSearchSchedule(Church, EventDate, EventDay,eventBy).ToList<Schedule>();
+            gm.LSchedules = sch;
             LoadChurchDDL();
-            return View("/Views/Schedule/ListSchedule.cshtml",sch);
+            return View("/Views/Schedule/ListSchedule.cshtml",gm);
 
         }
 

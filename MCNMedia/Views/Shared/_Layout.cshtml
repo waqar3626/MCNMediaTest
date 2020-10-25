@@ -59,12 +59,12 @@
 
     @if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
     {
-    Context.Response.Redirect("../UserLogin/UserLogin");
+        Context.Response.Redirect("../UserLogin/UserLogin");
     }
-    else if (Context.Session.GetString("UserType").ToString() !=  "admin")
+    else if (Context.Session.GetString("UserType").ToString() != "admin")
     {
-    Context.Session.Clear();
-    Context.Response.Redirect("../UserLogin/UserLogin");
+        Context.Session.Clear();
+        Context.Response.Redirect("../UserLogin/UserLogin");
     }
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
@@ -368,7 +368,7 @@
     <!-- endinject -->
     <!-- DateTimePicker -->
     <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
-
+ 
     <script src="~/theme/vendors/sweetalert/sweetalert.min.js"></script>
     <script src="~/theme/vendors/jquery.avgrund/jquery.avgrund.min.js"></script>
     <!-- End plugin js for this page-->
@@ -422,6 +422,9 @@
 
     <script src="~/theme/js/alerts.js"></script>
     <script src="~/theme/js/avgrund.js"></script>
+
+    <script src="~/theme/js/FormValidation.js"></script>
+    <script src="~/theme/js/bt-maxLength.js"></script>
     <!-- End custom js for this page-->
     <!-- End custom js for this page-->
 

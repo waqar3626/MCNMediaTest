@@ -5,68 +5,132 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form asp-action="Edit">
+<form asp-action="Edit" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
         <div class="card-body">
-            <h4 class="modal-title">Edit User</h4>
-            <input type="hidden" asp-for="UserId" />
+            <h4 class="modal-title">Add New User</h4>
+            <div class="form-group row p-3" id="alertDiv">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert" id="alertLabel">
 
-
+                    </div>
+                </div>
+            </div>
             <div class="form-group row">
-                <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
+                <label asp-for="FirstName" for="validationCustom01" class="col-sm-3 col-form-label">First Name *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
-                    <input asp-for="FirstName" class="form-control" />
+                    <input asp-for="FirstName" class="form-control" id="validationCustom01" placeholder="First Name" required />
                 </div>
+
             </div>
             <div class="form-group row">
-                <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
+                <label asp-for="LastName" for="validationCustom02" class="col-sm-3 col-form-label">Last Name *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LastName" class="text-danger"></span>
-                    <input asp-for="LastName" class="form-control" />
+                    <input asp-for="LastName" class="form-control" placeholder="Last Name" id="validationCustom02" required />
                 </div>
+                
             </div>
             <div class="form-group row">
-                <label asp-for="EmailAddress" class="col-sm-3 col-form-label">Email Address</label>
+                <label asp-for="EmailAddress" for="validationCustom03" class="col-sm-3 col-form-label">Email Address *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                    <input asp-for="EmailAddress" class="form-control" type="email" />
+                    <input asp-for="EmailAddress" class="form-control" placeholder="Email" type="email" id="validationCustom03" required />
                 </div>
+                
             </div>
             <div class="form-group row">
-                <label asp-for="LoginPassword" class="col-sm-3 col-form-label">Login Password</label>
+                <label asp-for="LoginPassword" for="validationCustom04" class="col-sm-3 col-form-label">Login Password *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
-                    <input asp-for="LoginPassword" class="form-control"/>
+                    <input asp-for="LoginPassword" class="form-control" readonly="readonly" placeholder="Password" id="validationCustom04" required />
                 </div>
+                
             </div>
 
             <div class="form-group row">
-                <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
+                <label asp-for="RoleId" class="col-sm-3 col-form-label">Role *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="RoleId" class="text-danger"></span>
+                    @*<input asp-for="RoleId" class="form-control text-small" placeholder="Role" />*@
                     <select asp-for="RoleId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
-                        <option>--Select Role--</option>
+                        <option value="0">--Select Role--</option>
                     </select>
                 </div>
+
+
             </div>
 
             @*<div class="form-group row">
-            <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
-            <div class="col-sm-9">
-                <span asp-validation-for="RoleId" class="text-danger"></span>
-                <input asp-for="RoleId" class="form-control" />
-            </div>
-        </div>*@
+                    <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
+                    <div class="col-sm-9">
+                        <span asp-validation-for="RoleId" class="text-danger"></span>
+                        <input asp-for="RoleId" class="form-control" />
+                    </div>
+                </div>*@
             <div class="float-right">
-                <button type="submit" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                <button type="submit" id="ValUserUpdate" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
                 <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
             </div>
         </div>
     </div>
 </form>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+
+    $(document).ready(function () {
+
+
+        $('#alertDiv').hide();
+    });
+    $('#ValUserUpdate').click(function () {
+
+        var s = "";
+
+
+        if ($('#validationCustom01').val() == '') {
+
+            s += '<label>Please Provide a Valid First Name</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+
+        if ($('#validationCustom02').val() == '') {
+
+            s += '<label>Please Provide a Valid Last Name</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom03').val() == '') {
+
+            s += '<label>Please Provide a Valid Email Address</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom04').val() == '') {
+
+            s += '<label>Please Provide a Valid Login Password</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#select1').val() == '0') {
+
+            $('#select1').attr('class', 'form-control border-danger');
+
+            s += '<label>Please Provide a Valid Role</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+
+
+
+
+    });
+</script>

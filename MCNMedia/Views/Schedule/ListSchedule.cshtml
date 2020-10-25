@@ -1,186 +1,154 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.Schedule>
+﻿@model MCNMedia_Dev.Models.GenericModel
 
 
 @{
     ViewData["Title"] = "ListSchedule";
 }
 
-<div class="row pb-3">
-    <div class="col-md-12">
-        <div class="card">
 
-            <div class="card-body">
-                @using (Html.BeginForm("SearchSchedule", "Schedule", FormMethod.Post))
-                {
-                    <h3>Search </h3>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Search Schedule By : </label>
-                        <div class="col-sm-3">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="eventBy" value="1" checked="" onclick="ShowChurchDiv()">
-                                  Church Name
-                                    <i class="input-helper"></i>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="eventBy" value="2" onclick="ShowDateDiv()">
-                                    Date of Schedule
-                                    <i class="input-helper"></i>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="eventBy" value="3" onclick="ShowDayDiv()">
-                                    Day of Schedule
-                                    <i class="input-helper"></i>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                        <div class="form-group row">
-
-                            <label class="col-sm-2 col-form-label " id="EventChurchName">Church</label>
-                            <div class="col-sm-4" id="EventInput">
-                                <select name="Church" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Church, "Value", "Text"))">
-                                    <option value="-1">--Select Church--</option>
-                                </select>
-                            </div>
-                            <label class="col-sm-2 col-form-label" id="EventScheduleDate">Schedule Date</label>
-                            <div class="col-sm-4" id="EventDateInput">
-                                <div id="datepicker-popup"  class="input-group date datepicker">
-                                    <input type="text" name="EventDate" class="form-control" placeholder="Event Date" />
-                                    <span class="input-group-addon input-group-append border-left">
-                                        <span class="ti-calendar input-group-text"></span>
-                                    </span>
-                                </div>
-                                @* @Html.TextBox("ScheduleDate", "", new { @class = "form-control", @placeholder = "Enter Church Name" })*@
-
-                            </div>
-                            <label class="col-sm-2 col-form-label " id="EventScheduleDay">Schedule Day</label>
-                            <div class="col-sm-4 pt-2" id="EventDayInput">
-                                <select name="EventDay"  class="form-control" asp-items="Html.GetEnumSelectList<EventDay>()">
-                                    <option selected="selected" value="">Please select Day</option>
-                                </select>
-                                @*  @Html.TextBox("ScheduleDay", "", new { @class = "form-control", @placeholder = "Enter Church Name" })*@
-
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-4 pt-3">
-                                <button type="submit" class="btn btn-info btn-sm text-white"><i class="ti-search text-white"></i>Search</button>
-                                <a asp-controller="Schedule" asp-action="ListSchedule" class="btn btn-warning btn-sm text-white"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
-                            </div>
-
-                        </div>
-                        }
-                    </div>
-                </div>
-    </div>
-</div>
 
 
 
 <div class="card">
     <div class="card-body">
-        <a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="modal fade" id="AddScheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:70%;">
+                        <div class="modal-content ">
+                            <div class="modal-header">
+                                <h5 class="modal-title " id="exampleModalLabel">Add Schedule </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                                </button>
+                            </div>
+                            <div class="modal-body " id="AddSchedulePreview">
+                                @Html.Partial("~/Views/Schedule/AddSchedule.cshtml", Model.Schedules)
+                            </div>
+                            @*<div class="modal-footer">
+                                    <button type="button" class="btn btn-success">Submit</button>
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" id="AddSchedule1" class="btn btn-outline-behance btn-sm float-right " onclick="AddSchedule()"> <i class="mdi mdi-plus"></i> Add New Schedule</button>
+        @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
         <h3>Manage Schedules</h3>
         <br />
         <div class="">
             @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
             {
 
-            <div class="table-responsive">
-                <table id="order-listing" class="table">
-                    <thead>
-                        <tr>
-                            @*<th>
-                        @Html.DisplayNameFor(model => model.UserId)
-                    </th>*@
-                            <th>
-                                Church Name
-                            </th>
-                            <th>
-                                Event Name
-                            </th>
-                            <th>
-                                Event Date/Day
-                            </th>
-                            <th>
-                                Event Time
-                            </th>
-                            <th>
-                                Duration
-                            </th>
-                           
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                        <thead>
                             <tr>
+                                @*<th>
+                                        @Html.DisplayNameFor(model => model.UserId)
+                                    </th>*@
+                                <th>
+                                    Church Name
+                                </th>
+                                <th>
+                                    Event Name
+                                </th>
+                                <th>
+                                    Event Date/Day
+                                </th>
+                                <th>
+                                    Event Time
+                                </th>
+                                <th>
+                                    Duration
+                                </th>
 
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ChurchName)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.EventName)
-                                </td>
-                                <td class="text-wrap">
-                                    @if (item.ScheduleBy == 1 && item.EventDate != Convert.ToDateTime("0001-01-01 00:00:00"))
-                                    {
-                                        @Html.DisplayFor(modelItem => item.EventDate)
-                                    }
-                                    else if (item.ScheduleBy == 2 && item.EventDate == Convert.ToDateTime("0001-01-01 00:00:00"))
-                                    {
-                                        @Html.DisplayFor(modelItem => item.EventDay)
-                                    }
-                                </td>
-
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.EventTime)
-                                </td>
-                                <td class="text-wrap">
-                                    @item.Length  Minutes
-                                </td>
-                              
-
-
-                                <td>
-                                    <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                      <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                              
-                                </td>
+                                <th>Actions</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="SchList">
+
+                            @foreach (var item in Model.LSchedules)
+                                {
+                                    <tr>
+
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ChurchName)
+                                        </td>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.EventName)
+                                        </td>
+                                        <td class="text-wrap">
+                                            @if (item.IsRepeated == false && item.EventDate != Convert.ToDateTime("0001-01-01 00:00:00"))
+                                            {
+                                                @Html.DisplayFor(modelItem => item.EventDate)
+                                            }
+                                            else if (item.IsRepeated == true && item.EventDate == Convert.ToDateTime("0001-01-01 00:00:00"))
+                                            {
+                                                @Html.DisplayFor(modelItem => item.EventDay)
+                                            }
+                                        </td>
+
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.EventTime)
+                                        </td>
+                                        <td class="text-wrap">
+                                            @item.Length  Minutes
+                                        </td>
+
+
+
+                                        <td>
+                                            <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
                 </div>
-                }
-            </div>
+            }
+        </div>
     </div>
-</div><script type="text/javascript">
-    
+   
+
+</div>
+<script type="text/javascript">
+
     $(document).ready(function () {
-      
+
         $('#EventScheduleDate').hide();
-        $('#EventDateInput').hide(); 
+        $('#EventDateInput').hide();
 
         $('#EventScheduleDay').hide();
-        $('#EventDayInput').hide(); 
+        $('#EventDayInput').hide();
         $('#EventChurchName').show();
         $('#EventInput').show();
 
+        ShowDateDiv();
+        loadSchedule();
     });
+
+     function Open(camId) {
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditCamera", "Camera")',
+            data: { id: camId },
+            success: function (data) {
+                $('#Preview').html(data);
+                $('#EditModal').modal('show');
+            }
+        })
+    }
+
+  
+
     function ShowChurchDiv() {
 
-    
+
         $('#EventScheduleDate').hide();
         $('#EventDateInput').hide();
 
@@ -220,6 +188,19 @@
 
 
     }
+
+    function AddSchedule() {
+
+        $('#AddScheduleModal').modal('show');
+
+    }
+
+    function EditSchedule() {
+
+        $('#EditScheduleModal').modal('show');
+
+    }
+
 
 </script>
 

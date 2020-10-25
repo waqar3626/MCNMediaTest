@@ -1,7 +1,15 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
-   
+
 }
+
+<div class="form-group row p-3" id="alertDiv131">
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert" id="alertLabel131">
+
+        </div>
+    </div>
+</div>
 <div class="row">
 
     <div class="col-sm-12">
@@ -10,32 +18,32 @@
             <input type="hidden" asp-for="Media.ChurchMediaId" class="form-control" id="ChurchMedId" />
             <input type="hidden" asp-for="Media.MediaURL" class="form-control" id="medUrl" />
             @*<div class="form-group">
-            <label asp-for="Pictures.MediaName" class="control-label">Media Name</label>
-            <input asp-for="Pictures.MediaName" class="form-control" id="MediaName" />
-            <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="Pictures.MediaName" class="control-label">Media Name</label>
+                    <input asp-for="Pictures.MediaName" class="form-control" id="MediaName" />
+                    <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
+                </div>*@
 
-        <div class="form-group row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
-                <input asp-for="Media.MediaURL" class="form-control dropify" type="file" name="MediaURl3" />
-                <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
-                <input type="hidden" id="HdnMediaUrl2" asp-for="Media.MediaURL" />
-                <input type="hidden" id="HdnMediaName2" asp-for="Media.MediaName" />
-            </div>
+            <div class="form-group row">
                 <div class="col-2"></div>
-        </div>
+                <div class="col-8">
+                    @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
+                    <input asp-for="Media.MediaURL"  class="form-control dropify" type="file" name="MediaURl3" />
+                    <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+                    <input type="hidden" id="HdnMediaUrl2" asp-for="Media.MediaURL" />
+                    <input type="hidden" id="HdnMediaName2" asp-for="Media.MediaName" />
+                </div>
+                <div class="col-2"></div>
+            </div>
             <div class="form-group">
                 <label asp-for="Media.TabName" class="control-label">Tab Name</label>
                 <input asp-for="Media.TabName" class="form-control" />
                 <span asp-validation-for="Media.TabName" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-            <label asp-for="Pictures.MediaType" class="control-label">Media Type</label>
-            <input asp-for="Pictures.MediaType" class="form-control" />
-            <span asp-validation-for="Pictures.MediaType" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="Pictures.MediaType" class="control-label">Media Type</label>
+                    <input asp-for="Pictures.MediaType" class="form-control" />
+                    <span asp-validation-for="Pictures.MediaType" class="text-danger"></span>
+                </div>*@
 
 
             <div class="form-group float-right">
@@ -47,31 +55,77 @@
     </div>
 </div>
 <script type="text/javascript">
-     $(document).ready(function () {
-         var filedropper = $('#Media_MediaURL').dropify();
-         filedropper = filedropper.data('dropify');
-         filedropper.resetPreview();
-         filedropper.clearElement();
+    $(document).ready(function () {
 
-         filedropper.settings['defaultFile'] = '../' + $('#medUrl').val();
-         filedropper.destroy();
-         filedropper.init();
+        $('#alertDiv131').hide();
+        var filedropper = $('#Media_MediaURL').dropify();
+        filedropper = filedropper.data('dropify');
+        filedropper.resetPreview();
+        filedropper.clearElement();
 
-     });
+        filedropper.settings['defaultFile'] = '../' + $('#medUrl').val();
+        filedropper.destroy();
+        filedropper.init();
+
+
+    });
+
+
 
     function UpdatePicture() {
 
+        var ss = "";
         var ChurchMediaId = $('#ChurchMedId').val();
         var EditPictureTabName = document.getElementById('Media_TabName').value;
+        var input = document.getElementById('Media_MediaURL');
         var mediaUrl = $('#HdnMediaUrl2').val();
         var mediaName = $('#HdnMediaName2').val();
         var formData = new FormData();
+
         formData.append("ChurchMediaId", ChurchMediaId);
         formData.append("mediaType", "Picture");
         formData.append("EditPictureTabName", EditPictureTabName);
         formData.append("MediaUrl", mediaUrl);
         formData.append("MediaName", mediaName);
-        var input = document.getElementById('Media_MediaURL');
+
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+  
+
+        if (input.files[0] != null) {
+            if ($.inArray($('#Media_MediaURL').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+       
+                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+                
+                $('#alertLabel131').html(ss);
+                $('#alertDiv131').show();
+                return;
+                $('#EditPicModal').modal('show');
+
+
+            }
+        }
+        else if ($.inArray($('#HdnMediaUrl2').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+
+            $('#alertLabel131').html(ss);
+            $('#alertDiv131').show();
+          
+            return;
+            $('#EditPicModal').modal('show');
+
+        }
+
+
+        if (EditPictureTabName == '') {
+            ss += '<label >Please provide a valid Tab Name </label>';
+
+
+            $('#alertLabel131').html(ss);
+            $('#alertDiv131').show();
+            return;
+            $('#EditPicModal').modal('show');
+        }
+
         formData.append("mediaFile", input.files[0]);
 
         $.ajax({

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MCNMedia_Dev.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Web;
-using Microsoft.AspNetCore.Http;
+﻿using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Net;
-using System.IO;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace MCNMedia_Dev.Controllers
 {
