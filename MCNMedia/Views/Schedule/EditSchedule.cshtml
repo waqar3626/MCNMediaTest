@@ -7,7 +7,7 @@
     List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
 }
 
-<form asp-action="Edit">
+<form asp-action="Edit" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
         <div class="card-body">
@@ -185,7 +185,7 @@
 
                 <div class="col-sm-12" id="btnSchdulecol12">
                     <div class="float-right">
-                        <button type="submit" id="UpdateScheduleVal" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                        <button type="submit" id="UpdateScheduleVal2" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
                         <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
                     </div>
                 </div>
@@ -408,6 +408,78 @@
         if ($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
 
             
+            $('#validationCustom05').removeAttr('required');
+            $('#validationCustom06').removeAttr('required');
+            $('#alertDiv').hide();
+
+
+
+        }
+
+
+        else {
+            var check = $('#IsRepeated').val();
+
+            if (check == 'true') {
+                s += '<label>Please Provide a valid  Day</label></br>';
+                $('#validationCustom06').attr('class', 'form-control border-danger');
+                $('#alertLabel').html(s);
+
+
+
+            }
+            else {
+                $('#datepicker-popup').attr('class', 'input-group date datepicker border-danger');
+                s += '<label>Please Provide a valid  Date</label></br>';
+
+                $('#alertLabel').html(s);
+
+
+            }
+            $('#alertDiv').show();
+
+        }
+
+        if ($('#validationCustom02').val() == '') {
+            s += '<label>Please Provide a valid  Time</label></br>';
+            $('#timepicker-example').attr('class', 'input-group date border-danger');
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+
+
+
+
+
+
+    });
+    $('#UpdateScheduleVal2').click(function () {
+        var s = "";
+        if ($('#ddlChurchId').val() == '0') {
+            s += '<label>Please Provide a Valid Church</label></br>';
+            $('#ddlChurchId').attr('class', 'form-control border-danger');
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+        else {
+            $('#ddlChurchId').attr('class', 'form-control border-success');
+        }
+
+
+
+        if ($('#validationCustom03').val() == '') {
+            s += '<label>Please Provide a Valid Event Name</label></br>';
+
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+
+
+        if ($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
+
+
             $('#validationCustom05').removeAttr('required');
             $('#validationCustom06').removeAttr('required');
             $('#alertDiv').hide();

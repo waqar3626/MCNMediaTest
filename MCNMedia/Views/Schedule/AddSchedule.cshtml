@@ -179,7 +179,7 @@
                     </div>
                     <div class="col-sm-6" id="btnSchdule">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal"s value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
                             <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                         </div>
@@ -189,7 +189,7 @@
 
                     <div class="col-sm-12" id="btnSchdulecol12">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                            <button type="submit" id="addScheduleVal2" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
                             <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                         </div>
                     </div>
@@ -217,8 +217,81 @@
         
         DoPostBack();
     });
+    $('#addScheduleVal').click(function () {
+        var s = "";
+        if ($('#ddlChurchId').val() == '0') {
+            s += '<label>Please Provide a Valid Church</label></br>';
+            $('#ddlChurchId').attr('class', 'form-control border-danger');
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+        else {
+            $('#ddlChurchId').attr('class', 'form-control border-success');
+        }
 
-    $('#addScheduleVal').click(function ()
+
+
+        if ($('#validationCustom03').val() == '') {
+            s += '<label>Please Provide a Valid Event Name</label></br>';
+
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+
+
+        if ($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
+
+
+            $('#validationCustom05').removeAttr('required');
+            $('#validationCustom06').removeAttr('required');
+            $('#alertDiv').hide();
+
+
+
+        }
+
+
+        else {
+            var check = $('#IsRepeated').val();
+
+            if (check == 'true') {
+                s += '<label>Please Provide a valid  Day</label></br>';
+                $('#validationCustom06').attr('class', 'form-control border-danger');
+                $('#alertLabel').html(s);
+
+
+
+            }
+            else {
+                $('#datepicker-popup').attr('class', 'input-group date datepicker border-danger');
+                s += '<label>Please Provide a valid  Date</label></br>';
+
+                $('#alertLabel').html(s);
+
+
+            }
+            $('#alertDiv').show();
+
+        }
+
+        if ($('#validationCustom02').val() == '') {
+            s += '<label>Please Provide a valid  Time</label></br>';
+            $('#timepicker-example').attr('class', 'input-group date border-danger');
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+
+
+
+
+
+
+    });
+
+
+    $('#addScheduleVal2').click(function ()
     {
         var s = "";
         if ($('#ddlChurchId').val() == '0') {
@@ -235,7 +308,7 @@
 
         if ($('#validationCustom03').val() == '') {
             s += '<label>Please Provide a Valid Event Name</label></br>';
-            alert('ddddddddd');
+           
             $('#alertLabel').html(s);
             $('#alertDiv').show();
         }
@@ -245,7 +318,7 @@
         if ($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0')
         {
 
-            alert('dddddd');
+           
             $('#validationCustom05').removeAttr('required');
             $('#validationCustom06').removeAttr('required');
             $('#alertDiv').hide();
