@@ -50,14 +50,7 @@
                 </div>
 
             </div>
-            <div class="form-group row">
-                <label  for="validationCustom05" class="col-sm-3 col-form-label">Confirm Password *</label>
-                <div class="col-sm-9">
-                    <span  class="text-danger"></span>
-                    <input  class="form-control"  placeholder="Password" id="validationCustom05" required />
-                </div>
-
-            </div>
+          
 
             <div class="form-group row">
                 <label asp-for="RoleId" class="col-sm-3 col-form-label">Role *</label>
@@ -115,6 +108,7 @@
             $('#alertDiv').show();
 
         }
+
         if ($('#validationCustom04').val() == '') {
 
             s += '<label>Please Provide a Valid Login Password</label></br>'
@@ -122,13 +116,16 @@
             $('#alertDiv').show();
 
         }
+      
         if ($('#validationCustom05').val() == '') {
 
             s += '<label>Please Provide a Valid Confirm Password</label></br>'
             $('#alertLabel').html(s);
             $('#alertDiv').show();
+           
 
         }
+
         if ($('#select1').val() == '0') {
 
             $('#select1').attr('class', 'form-control border-danger');

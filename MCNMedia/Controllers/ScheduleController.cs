@@ -93,15 +93,15 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult EditSchedule(int id)
         {
-            GenericModel gm = new GenericModel();
-             gm.Schedules = scheduleDataAccess.GetScheduleDataBtId(id);
+            
+             Schedule Schedules = scheduleDataAccess.GetScheduleDataBtId(id);
 
-            if (gm.Schedules == null)
+            if (Schedules == null)
             {
                 return NotFound();
             }
 
-            return View(gm);
+            return View(Schedules);
         }
 
 

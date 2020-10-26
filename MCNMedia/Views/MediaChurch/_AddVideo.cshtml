@@ -62,15 +62,31 @@
 
 
             }
-            if (input == '') {
+            if (input == '' && VidTabName == '') {
+                $('#VidFile').attr('class', 'form-control border-danger');
                 ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
-                
+                $('#AddMedVidTabName').attr('class', 'form-control border-danger');
+                ss += '<label >Please provide a valid Tab Name </label>';
+
                 $('#alertLabel11').html(ss);
                 $('#alertDiv11').show();
-
+                return;
+                $('#AddddModal').modal('show');
             }
+            else if (input == '' && VidTabName != '')
 
-            if (VidTabName == '') {
+            {
+                $('#VidFile').attr('class', 'form-control border-danger');
+                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+
+
+                $('#alertLabel11').html(ss);
+                $('#alertDiv11').show();
+                return;
+                $('#AddddModal').modal('show');
+            }
+            else if (input != '' && VidTabName == '') {
+                $('#AddMedVidTabName').attr('class', 'form-control border-danger');
                 ss += '<label >Please provide a valid Tab Name </label>';
 
 
@@ -78,6 +94,11 @@
                 $('#alertDiv11').show();
                 return;
                 $('#AddddModal').modal('show');
+            }
+            else {
+                $('#AddMedVidTabName').attr('class', 'form-control');
+                $('#VidFile').attr('class', 'form-controls border-success');
+                $('#alertDiv11').hide();
             }
 
             formData.append("mediaFile", input.files[0]);

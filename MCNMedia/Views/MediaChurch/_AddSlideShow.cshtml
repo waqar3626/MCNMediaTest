@@ -6,66 +6,125 @@
 @using (Html.BeginForm("AddSlideShow", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
 {
-<div class="row">
-    <div class="col-sm-12">
+    
 
-        <div class="form-group row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                @Html.TextBoxFor(model => model.Media.MediaURL, new { @class = "form-control form-control-sm dropify", @id = "slideShow_Url", @name = "MediaURl3", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+    <div class="form-group row p-3" id="alertDiv33">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" id="alertLabel33">
+
             </div>
-            <div class="col-2"></div>
         </div>
-        <div class="form-group">
-            <label asp-for="Media.TabName" class="control-label">Tab Name</label>
-            @Html.TextBoxFor(model => model.Media.TabName, new { @class = "form-control form-control-sm", @id = "slideshowTabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
-            @Html.HiddenFor(model => model.Media.ChurchMediaId, new { @id = "ChurchMediaId" })
-            @Html.HiddenFor(model => model.Media.ChurchId, new { @id = "ChurchId" })
-        </div>
-
-        @*<div class="form-group row">
-            <label class="col-sm-3 col-form-label text-center"> Media Type</label>
-            <div class="col-sm-3">
-                @Html.TextBoxFor(model => model.Pictures.MediaType, new { @class = "form-control form-control-sm", @id = "Media Type", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
-            </div>*@
-        @*</div>
-            <div class="form-group row">*@
-        @*<label class="col-sm-3 col-form-label text-center"> RTSP Port</label>
-                    <div class="col-sm-3">
-                        @Html.TextBoxFor(model => model.Pictures.RtspPort, new { @class = "form-control form-control-sm", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
-                    </div>
-            </div>*@
-        <div class="float-right">
-            <a onclick="AddSlideShowOpen()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"> </i>Add </a>
-            <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
-        </div>
-
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    @Html.TextBoxFor(model => model.Media.MediaURL, new { @class = "form-control form-control-sm dropify", @id = "slideShow_Url", @name = "MediaURl3", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Media.TabName" class="control-label">Tab Name</label>
+                @Html.TextBoxFor(model => model.Media.TabName, new { @class = "form-control form-control-sm", @id = "slideshowTabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                @Html.HiddenFor(model => model.Media.ChurchMediaId, new { @id = "ChurchMediaId" })
+                @Html.HiddenFor(model => model.Media.ChurchId, new { @id = "ChurchId" })
+            </div>
+
+            @*<div class="form-group row">
+                <label class="col-sm-3 col-form-label text-center"> Media Type</label>
+                <div class="col-sm-3">
+                    @Html.TextBoxFor(model => model.Pictures.MediaType, new { @class = "form-control form-control-sm", @id = "Media Type", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                </div>*@
+            @*</div>
+                <div class="form-group row">*@
+            @*<label class="col-sm-3 col-form-label text-center"> RTSP Port</label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.Pictures.RtspPort, new { @class = "form-control form-control-sm", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        </div>
+                </div>*@
+            <div class="float-right">
+                <a onclick="AddSlideShowOpen()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"> </i>Add </a>
+                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+            </div>
+
+        </div>
     </div>
-    }
+}
 
-    <script type="text/javascript">
-        function AddSlideShowOpen() {
-            var slideshowTabName = document.getElementById('slideshowTabName').value;
-            var formData = new FormData();
-            formData.append("mediaType", "SlideShow");
-            formData.append("AddSlideshowTabName", slideshowTabName);
-            var input = document.getElementById('slideShow_Url');
-            formData.append("mediaFile", input.files[0]);
+<script type="text/javascript">
+    $(document).ready(function () {
 
-            $.ajax({
-                type: "POST",
-                url: "/MediaChurch/AddSlide/",
-                data: formData,
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
-                success: function (result) {
-                    loadSlideShow();
-                    $('#AddSlideShowModal').modal('hide');
-                },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
-                }
-            });
+
+        $('#alertDiv33').hide();
+    });
+    function AddSlideShowOpen() {
+        var ss = '';
+        var slideshowTabName = document.getElementById('slideshowTabName').value;
+        var formData = new FormData();
+        formData.append("mediaType", "SlideShow");
+        formData.append("AddSlideshowTabName", slideshowTabName);
+        var input = document.getElementById('slideShow_Url');
+        var fileExtension = ['pptx', 'ppt'];
+        if ($.inArray($('#slideShow_Url').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+
+
+            input = "";
+
+
         }
-    </script>
+        if (input == '' && slideshowTabName == '') {
+            $('#slideShow_Url').attr('class', 'form-control border-danger');
+            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+            $('#slideshowTabName').attr('class', 'form-control border-danger');
+            ss += '<label >Please provide a valid Tab Name </label>';
+
+            $('#alertLabel33').html(ss);
+            $('#alertDiv33').show();
+            return;
+            $('#AddddModal').modal('show');
+        }
+        else if (input == '' && slideshowTabName != '') {
+            $('#slideShow_Url').attr('class', 'form-control border-danger');
+            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+
+
+            $('#alertLabel33').html(ss);
+            $('#alertDiv33').show();
+            return;
+            $('#AddddModal').modal('show');
+        }
+        else if (input != '' && slideshowTabName == '') {
+            $('#slideshowTabName').attr('class', 'form-control border-danger');
+            ss += '<label >Please provide a valid Tab Name </label>';
+
+
+            $('#alertLabel33').html(ss);
+            $('#alertDiv33').show();
+            return;
+            $('#AddddModal').modal('show');
+        }
+        else {
+            $('#slideshowTabName').attr('class', 'form-control');
+            $('#slideShow_Url').attr('class', 'form-controls border-success');
+            $('#alertDiv33').hide();
+        }
+        formData.append("mediaFile", input.files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/MediaChurch/AddSlide/",
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (result) {
+                loadSlideShow();
+                $('#AddSlideShowModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>
