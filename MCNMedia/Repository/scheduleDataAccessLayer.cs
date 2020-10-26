@@ -29,7 +29,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("IsRepeated", schedules.IsRepeated);
             _dc.AddParameter("SchPassword", schedules.Password);
-            _dc.AddParameter("SchBy", schedules.ScheduleBy); 
+         
             _dc.AddParameter("SchCameraId", schedules.CameraId); 
 
             _dc.AddParameter("CreatedBy", 1);
@@ -58,7 +58,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                 schedule.Password = dataRow["Password"].ToString();
-                schedule.ScheduleBy = Convert.ToInt32(dataRow["ScheduleBy"]);
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.Length = Convert.ToInt32(dataRow["Length"]);
                 schedule.LengthUnit = dataRow["LengthUnit"].ToString();
@@ -95,7 +94,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                 schedule.Password = dataRow["Password"].ToString();
-                schedule.ScheduleBy = Convert.ToInt32(dataRow["ScheduleBy"]);
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.Length = Convert.ToInt32(dataRow["Length"]);
                 schedule.LengthUnit = dataRow["LengthUnit"].ToString();
@@ -129,7 +127,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.Length = Convert.ToInt32(dataRow["Length"]);
                 schedule.LengthUnit = dataRow["LengthUnit"].ToString();
                 schedule.Password = dataRow["Password"].ToString();
-                schedule.ScheduleBy = Convert.ToInt32(dataRow["ScheduleBy"]);
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                
@@ -150,7 +147,6 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("LngthUnit", schedule.LengthUnit);
             _dc.AddParameter("UpdateBy", schedule.UpdatedBy);
             _dc.AddParameter("SchPassword", schedule.Password);
-            _dc.AddParameter("SchBy", schedule.ScheduleBy);
             _dc.AddParameter("IsRepeated", schedule.IsRepeated);
             _dc.AddParameter("SchCameraId", schedule.CameraId);
 
