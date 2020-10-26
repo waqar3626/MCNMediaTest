@@ -14,6 +14,7 @@ namespace MCNMedia_Dev.Controllers
     
     public class ClientController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
@@ -31,13 +32,21 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult ChurchInfo(int churchId)
         {
-            Church church = chdataAccess.GetChurchData(churchId);
-            if (church == null)
+            try
             {
-                return NotFound();
+                Church church = chdataAccess.GetChurchData(churchId);
+                if (church == null)
+                {
+                    return NotFound();
+                }
+
+                return View(church);
             }
-            
-            return View(church);
+            catch (Exception e)
+            {
+                ShowMesage("Church Info Errors : " + e.Message);
+                throw;
+            }
            
         }
         
@@ -75,23 +84,36 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Announcement()
         {
-           
-            int  id= (int)HttpContext.Session.GetInt32("ChurchId");
-            GenericModel gm = new GenericModel();
-            gm.LAnnouncement = AnnouncementDataAccessLayer.GetAnnouncement(id);
-            gm.Churches= chdataAccess.GetChurchData(id);
-            //List<Announcement> announcementsList = AnnouncementDataAccessLayer.GetAnnouncement(id).ToList();
-            //gm.Churches = chdataAccess.GetChurchData(1);
+            try
+            {
 
-            return View(gm);
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                GenericModel gm = new GenericModel();
+                gm.LAnnouncement = AnnouncementDataAccessLayer.GetAnnouncement(id);
+                gm.Churches = chdataAccess.GetChurchData(id);
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Announcement Errors :" + e.Message);
+                throw;
+            }
         }
 
         public IActionResult UpdateAnnouncement([Bind] Announcement announcement)
         {
+            try
+            {
 
-            AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
-            return RedirectToAction("Announcement");
+                AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
+                return RedirectToAction("Announcement");
 
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Update Announcement : "+e.Message);
+                throw;
+            }
         }
         #endregion
 
@@ -101,10 +123,18 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult CameraDetail()
 
         {
-            LoadServerDDL();
-            int id = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.Churches = chdataAccess.GetChurchData(id);
-            return View(gm);
+            try
+            {
+                LoadServerDDL();
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                gm.Churches = chdataAccess.GetChurchData(id);
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Camera Detail Errors : " + e.Message);
+                throw;
+            }
         }
 
 
@@ -116,36 +146,43 @@ namespace MCNMedia_Dev.Controllers
         #region StreamToFaceBook
         public IActionResult StreamToFaceBook()
         {
-            int id = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.Churches = chdataAccess.GetChurchData(id);
-            return View(gm);
+            try
+            {
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                gm.Churches = chdataAccess.GetChurchData(id);
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Stream To FaceBook : "+ e.Message);
+                throw;
+            }
         }
         #endregion
 
 
 
         #region Schedule
-        //public IActionResult ScheduleAndRecording()
-        //{
-        //    return View();
-        //}
-
 
         [HttpGet]
         public IActionResult Schedule()
         {
-        
-            int id = (int)HttpContext.Session.GetInt32("ChurchId");
-            GenericModel gm = new GenericModel();
-            //gm.LSchedules = scheduleDataAccess.GetAllSchedule(id);
-            //gm.LRecordings = recordingDataAccess.GetAllRecording(id);
-            //gm.Churches = chdataAccess.GetChurchData(id);
-            gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
-            gm.Churches = chdataAccess.GetChurchData(id);
-            //gm.Churches = previewChurchesDataAccess.GetPreviewChurch(id);
-            Redirect("Schedule");
-            return View(gm);
-        
+            try
+            {
+
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                GenericModel gm = new GenericModel();
+                gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
+                gm.Churches = chdataAccess.GetChurchData(id);
+                Redirect("Schedule");
+                return View(gm);
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Schedule Errors : " + e.Message);
+                throw;
+            }
         }
         [HttpGet]
         public IActionResult Recording()
@@ -163,18 +200,26 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult EditRecordingClient(int id)
         {
-            int id1 = (int)HttpContext.Session.GetInt32("ChurchId");
-            GenericModel gm = new GenericModel();
-           
-            gm.Churches = chdataAccess.GetChurchData(id1);
-        gm.Recordings = recordingDataAccess.GetRecordingData(id);
-            if (gm.Recordings == null)
+            try
             {
-                return NotFound();
-            }
-            LoadChurchesDDL();
+                int id1 = (int)HttpContext.Session.GetInt32("ChurchId");
+                GenericModel gm = new GenericModel();
 
-            return View(gm);
+                gm.Churches = chdataAccess.GetChurchData(id1);
+                gm.Recordings = recordingDataAccess.GetRecordingData(id);
+                if (gm.Recordings == null)
+                {
+                    return NotFound();
+                }
+                LoadChurchesDDL();
+
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Edit Recording Client Errors : " +e.Message);
+                throw;
+            }
             
         }
 
@@ -210,40 +255,71 @@ namespace MCNMedia_Dev.Controllers
 
         public void LoadServerDDL()
         {
-            IEnumerable<Server> serverList = camDataAccess.GetServer();
-            List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var item in serverList)
+            try
             {
-                selectListItems.Add(new SelectListItem { Text = item.ServerName.ToString(), Value = item.ServerId.ToString() });
+                IEnumerable<Server> serverList = camDataAccess.GetServer();
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in serverList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.ServerName.ToString(), Value = item.ServerId.ToString() });
+                }
+                ViewBag.Server = selectListItems;
             }
-            ViewBag.Server = selectListItems;
+            catch (Exception e)
+            {
+                ShowMesage("Load Server Dropdown Errors : " + e.Message );
+                throw;
+            }
 
         }
 
         [HttpPost]
         public IActionResult EditScheduleClient(GenericModel gm)
         {
-            if (gm.Schedules.EventDay == null)
+            try
             {
-                gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
+
+                if (gm.Schedules.EventDay == null)
+                {
+                    gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
+
+                }
+                scheduleDataAccess.UpdateSchedule(gm.Schedules);
+                return RedirectToAction("Schedule");
 
             }
-            scheduleDataAccess.UpdateSchedule(gm.Schedules);
-            return RedirectToAction("Schedule");
-        
+            catch (Exception e)
+            {
+                ShowMesage("Edit Schedule Client Errors : " + e.Message);
+                throw;
+            }
         }
         public void LoadChurchesDDL()
         {
-            IEnumerable<Recording> RecordList = recordingDataAccess.GetChurches();
-            List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var item in RecordList)
+            try
             {
-                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
-            }
-            ViewBag.State = selectListItems;
 
+                IEnumerable<Recording> RecordList = recordingDataAccess.GetChurches();
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in RecordList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                }
+                ViewBag.State = selectListItems;
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Load churches DropDown Errors : " + e.Message);
+                throw;
+            }
         }
 
-       
+        private void ShowMesage(String exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
+        }
+
+
     }
 }

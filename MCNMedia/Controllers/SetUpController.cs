@@ -10,12 +10,13 @@ namespace MCNMedia_Dev.Controllers
 {
     public class SetUpController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         SetUpDataAccessLayer setupDataAccess = new SetUpDataAccessLayer();
         GenericModel gm = new GenericModel();
 
         public IActionResult InsertSetUp()
         {
-           
+
             return View();
 
         }
@@ -23,14 +24,28 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult InsertSetUp(SetUp ChurchSetUp)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+            try
             {
-                int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                ChurchSetUp.ChurchId = churchId;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                    ChurchSetUp.ChurchId = churchId;
 
-                setupDataAccess.InsertSetUp(ChurchSetUp);
-              }
-            return RedirectToAction("Listchurch", "Church");
+                    setupDataAccess.InsertSetUp(ChurchSetUp);
+                }
+                return RedirectToAction("Listchurch", "Church");
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("InsertSetup Errors : " + e.Message);
+                throw;
+            }
+        }
+
+        private void ShowMesage(String exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
         }
 
 

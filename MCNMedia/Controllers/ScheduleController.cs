@@ -11,6 +11,8 @@ namespace MCNMedia_Dev.Controllers
 {
     public class ScheduleController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
@@ -21,147 +23,242 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult AddSchedule()
         {
+            try
+            {
+                return View();
 
-            return View();
+            }
+            catch (Exception e)
+            {
+
+                ShowMesage("Schedule View Errors : " + e.Message);
+                throw;
+            }
+
         }
 
 
         [HttpPost()]
         public IActionResult AddSchedule(Schedule sch)
         {
-            if (sch.IsRepeated == false)
+            try
             {
-                sch.EventDay = sch.EventDate.ToString("dddd");
-               
+
+                if (sch.IsRepeated == false)
+                {
+                    sch.EventDay = sch.EventDate.ToString("dddd");
+
+
+                }
+                else
+                {
+                    sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
+                }
+
+
+
+                scheduleDataAccess.AddSchedule(sch);
+                return RedirectToAction("ListSchedule");
 
             }
-            else 
+            catch (Exception e)
             {
-                sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
-            }
-
-
-           
-            scheduleDataAccess.AddSchedule(sch);
-            return RedirectToAction("ListSchedule");
-        }
+                ShowMesage("Add Schedule Errors : " + e.Message);
+                throw;
+            }}
 
         [HttpGet]
         public JsonResult ListSch()
         {
-           
-            LoadChurchDDL();
-            List<Schedule> Sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
-            return Json   (Sch);
+
+            try
+            {
+                LoadChurchDDL();
+                List<Schedule> Sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
+                return Json(Sch);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("List Schedule Errors : " + e.Message);
+                throw;
+            }
 
         }
 
         [HttpGet]
         public ViewResult ListSchedule()
         {
-            GenericModel gm = new GenericModel();
+            try
+            {
 
-            LoadChurchDDL();
-            gm.LSchedules = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
-            return View(gm);
+                GenericModel gm = new GenericModel();
+                LoadChurchDDL();
+                gm.LSchedules = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
+                return View(gm);
 
+            }
+            catch (Exception e)
+            {
+               
+                ShowMesage("List Schedule Errors : " + e.Message);
+                throw;
+
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(int id, [Bind] Schedule schedule)
         {
-            if (schedule.IsRepeated == false)
+            try
             {
-                schedule.EventDay = schedule.EventDate.ToString("dddd");
-               
 
+                if (schedule.IsRepeated == false)
+                {
+                    schedule.EventDay = schedule.EventDate.ToString("dddd");
+
+
+                }
+                else if (schedule.IsRepeated == true)
+                {
+                    schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
+                }
+
+                scheduleDataAccess.UpdateSchedule(schedule);
+                return RedirectToAction("ListSchedule");
             }
-            else if (schedule.IsRepeated == true)
+            catch (Exception e)
             {
-                schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
-            }
-            //if (ModelState.IsValid)
-            //{
-            
-            scheduleDataAccess.UpdateSchedule(schedule);
-            return RedirectToAction("ListSchedule");
-            //}
-            //return View();
+                ShowMesage("Get edit Schedule Data Errors : " + e.Message);
+                throw;
+            } 
         }
 
 
         [HttpGet]
         public IActionResult EditSchedule(int id)
         {
-            
-             Schedule Schedules = scheduleDataAccess.GetScheduleDataBtId(id);
-
-            if (Schedules == null)
+            try
             {
-                return NotFound();
-            }
 
-            return View(Schedules);
+                Schedule Schedules = scheduleDataAccess.GetScheduleDataBtId(id);
+
+                if (Schedules == null)
+                {
+                    return NotFound();
+                }
+
+                return View(Schedules);
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Edit Schedule Errors : " + e.Message);
+                throw;
+            }
         }
 
 
         [HttpPost]
         public IActionResult UpdateSchedule(int id, [Bind] Schedule schedule)
         {
+            try
+            {
 
-            scheduleDataAccess.UpdateSchedule(schedule);
-            return RedirectToAction("ListUser");
+                scheduleDataAccess.UpdateSchedule(schedule);
+                return RedirectToAction("ListUser");
 
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Update Schedule Errors : " + e.Message);
+                throw;
+            }
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            scheduleDataAccess.DeleteSchedule(id);
-            return RedirectToAction("ListSchedule");
+            try
+            {
+
+                scheduleDataAccess.DeleteSchedule(id);
+                return RedirectToAction("ListSchedule");
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Delete Schedule Errors :" + e.Message);
+                throw;
+            }
         }
 
         public void LoadChurchDDL()
         {
-            Church chr = new Church();
-            chr.ChurchId = -1;
-            chr.CountyId = -1;
-            chr.ClientTypeId = -1;
-            chr.ChurchName = "";
-            chr.EmailAddress = "";
-            chr.Phone = "";
-
-            IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr);
-
-            List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var item in ChurchList)
+            try
             {
-                selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+
+                Church chr = new Church();
+                chr.ChurchId = -1;
+                chr.CountyId = -1;
+                chr.ClientTypeId = -1;
+                chr.ChurchName = "";
+                chr.EmailAddress = "";
+                chr.Phone = "";
+
+                IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr);
+
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in ChurchList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                }
+                ViewBag.Church = selectListItems;
             }
-            ViewBag.Church = selectListItems;
+            catch (Exception e)
+            {
+                ShowMesage("LoadChurch DropDown Errors : " + e.Message);
+                throw;
+            }
         }
 
         public IActionResult SearchSchedule(int Church, DateTime EventDate,string EventDay,int eventBy) {
+            try
+            {
 
-            GenericModel gm = new GenericModel();         
-          
-            List<Schedule> sch = scheduleDataAccess.GetSearchSchedule(Church, EventDate, EventDay,eventBy).ToList<Schedule>();
-            gm.LSchedules = sch;
-            LoadChurchDDL();
-            return View("/Views/Schedule/ListSchedule.cshtml",gm);
+                GenericModel gm = new GenericModel();
 
+                List<Schedule> sch = scheduleDataAccess.GetSearchSchedule(Church, EventDate, EventDay, eventBy).ToList<Schedule>();
+                gm.LSchedules = sch;
+                LoadChurchDDL();
+                return View("/Views/Schedule/ListSchedule.cshtml", gm);
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Search Schedule Errors : " + e.Message);
+                throw;
+            }
         }
 
         public JsonResult LoadCameraDDL(int ChurchId)
         {
-            List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId).ToList();
+            try
+            {
 
-            return Json(countyList);
+                List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId).ToList();
 
+                return Json(countyList);
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Load Camera DropDown  Errors : " + e.Message);
+                throw;
+            }
         }
 
+        private void ShowMesage(String exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
+        }
     }
-
-
-
 }

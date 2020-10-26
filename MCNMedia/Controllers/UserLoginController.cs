@@ -11,6 +11,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class UserLoginController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         UserDataAccessLayer _userDataAccess = new UserDataAccessLayer();
         public ViewResult UserLogin()
         {
@@ -22,36 +23,50 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult UserLogin(User user)
         {
-            User usr = _userDataAccess.UserLogin(user);
-            if (usr.UserId > 0)
+            try
             {
-                if(usr.RoleName.ToLower()=="admin")
+                User usr = _userDataAccess.UserLogin(user);
+                if (usr.UserId > 0)
                 {
-                HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
-                    return View("/Views/Home/Home.cshtml");
-                }
-                else if (usr.RoleName.ToLower() == "client")
-                {
-                    HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
-                   
-                    HttpContext.Session.SetInt32("UserId", usr.UserId);
-                    return RedirectToAction("ChurchInfo", "Client", usr.UserId);
+                    if (usr.RoleName.ToLower() == "admin")
+                    {
+                        HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
+                        return View("/Views/Home/Home.cshtml");
+                    }
+                    else if (usr.RoleName.ToLower() == "client")
+                    {
+                        HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
+
+                        HttpContext.Session.SetInt32("UserId", usr.UserId);
+                        return RedirectToAction("ChurchInfo", "Client", usr.UserId);
+                    }
+                    else
+                    {
+                        return ViewBag.IsSuccess = 2;
+                    }
                 }
                 else
                 {
-                    return ViewBag.IsSuccess = 2;
+                    ViewBag.IsSuccess = 3;
+
+                    return View();
                 }
             }
-            else {
-                ViewBag.IsSuccess = 3;
-              
-                   return View();
+            catch (Exception e)
+            {
+                ShowMesage("User Login Errors : " + e.Message);
+                throw;
             }
         }
 
-   
+        private void ShowMesage(String exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
+        }
 
-       
+
+
+
     }
 
    

@@ -13,70 +13,152 @@ namespace MCNMedia_Dev.Controllers
 {
     public class WebsiteController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         scheduleDataAccessLayer _scheduleDataAccessLayer = new scheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
         public IActionResult Home()
         {
-            LoadCountryDDL();
+            try
+            {
 
-            HttpContext.Session.SetString("UserType", "website");
-            List<Church> churches = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
-            return View(churches);
+                LoadCountryDDL();
+                HttpContext.Session.SetString("UserType", "website");
+                List<Church> churches = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
+                return View(churches);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Home : "+e.Message);
+                throw;
+            }
         }
-       
+
         public IActionResult Schedules()
         {
-            List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule().ToList<Schedule>() ;
-            return View(schedules);
+            try
+            {
+
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule().ToList<Schedule>();
+                return View(schedules);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Schedules Error : " +e.Message);
+                throw;
+            }
         }
-        
+
         public IActionResult ContactUs()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Contact Us : " + e.Message);
+                throw;
+            }
         }
         public IActionResult Churches()
         {
-            List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(-1).ToList();
+            try
+            {
 
-            return View(churches);
+                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(-1).ToList();
+                return View(churches);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Churches : "+e.Message);
+                throw;
+            }
         }
         public IActionResult Cathedrals()
         {
-            LoadCountryDDL();
-            List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
-            return View(churches);
+            try
+            {
+
+                LoadCountryDDL();
+                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
+                return View(churches);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Cathedrals"+e.Message);
+                throw;
+            }
         }
         public IActionResult FuneralHomes()
         {
-            List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(3).ToList();
-            return View(churches);
+            try
+            {
+                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(3).ToList();
+                return View(churches);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("FuneralHomes : "+e.Message);
+                throw;
+            }
         }
 
         public JsonResult LoadCountyDDL(int CountryID)
         {
-            List<Counties> countyList = _churchDataAccessLayer.GetCounties(CountryID).ToList();
-           
-            return Json( countyList);
+            try
+            {
+
+                List<Counties> countyList = _churchDataAccessLayer.GetCounties(CountryID).ToList();
+
+                return Json(countyList);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Load County DropDown : "+e.Message);
+                throw;
+            }
 
         }
 
         public void LoadCountryDDL()
         {
-            IEnumerable<Church> countyList = _churchDataAccessLayer.GetCountries();
-            List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var item in countyList)
+            try
             {
-                selectListItems.Add(new SelectListItem { Text = item.CountryName.ToString(), Value = item.CountryId.ToString() });
-            }
-            ViewBag.Countries = selectListItems;
 
+                IEnumerable<Church> countyList = _churchDataAccessLayer.GetCountries();
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in countyList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.CountryName.ToString(), Value = item.CountryId.ToString() });
+                }
+                ViewBag.Countries = selectListItems;
+
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Load Country DropDown : "+e.Message);
+                throw;
+            }
         }
-       
+
         public IActionResult ProcessForm()
         {
-            LoadCountryDDL();
-            return View("Home");
+            try
+            {
+
+                LoadCountryDDL();
+                return View("Home");
+            }
+            catch (Exception e)
+            {
+                ShowMesage("ProcessForm Errors : " + e.Message);
+                throw;
+            }
+        }
+
+        private void ShowMesage(String exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
         }
     }
-
 }

@@ -10,6 +10,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class PreviewController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         PreviewChurchesDataAccessLayer previewChurchesDataAccessLayer = new PreviewChurchesDataAccessLayer();
         GenericModel gm = new GenericModel();
         public IActionResult Preview(int chId)
@@ -23,7 +24,20 @@ namespace MCNMedia_Dev.Controllers
         }
         public IActionResult Preview2()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                ShowMesage(" Preview2 Errors : " + e.Message);
+                throw;
+            }
+        }
+
+        private void ShowMesage(String exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
         }
     }
 }
