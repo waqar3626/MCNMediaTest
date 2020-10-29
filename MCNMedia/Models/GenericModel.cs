@@ -34,5 +34,8 @@ namespace MCNMedia_Dev.Models
         public SetUp ChurchSetUp { get; set; }
 
         public string ResultMessage { get; set; } = "";
+
+        public Dashboard Dashboards { get; set; }
+        public IEnumerable<Dashboard> LDashboards { get; set; }
     }
 }
