@@ -36,12 +36,12 @@ namespace MCNMedia_Dev
             //        options.ClientId = "";
             //        options.ClinetSecret = "";
 
-//    })
-//      .AddFacebook(options =>
-//       {
-//           options.AppId = "";
-//           options.AppSecret = "";
-//       });
+            //    })
+            //      .AddFacebook(options =>
+            //       {
+            //           options.AppId = "";
+            //           options.AppSecret = "";
+            //       });
 
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -50,10 +50,14 @@ namespace MCNMedia_Dev
             //services.Add(new ServiceDescriptor(typeof(ChurchDataAccessLayer), new ChurchDataAccessLayer(Configuration.GetConnectionString("Default"))));
             //services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:Default"]));
             services.AddControllersWithViews();
+            //services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(100);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time 
+                //options.Cookie.HttpOnly = true;
+                //options.Cookie.IsEssential = true;
             });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddCronJob<CronJobEveryMinute>(c =>
@@ -102,8 +106,37 @@ namespace MCNMedia_Dev
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "Home",
+                    pattern: "Home",
+                    defaults: new { controller = "Website", Action = "Home" });
+                endpoints.MapControllerRoute(
+                    name: "churches",
+                    pattern: "churches",
+                    defaults: new { controller = "Website", Action = "Churches" });
+                endpoints.MapControllerRoute(
+                    name: "Cathedrals",
+                    pattern: "Cathedrals",
+                    defaults: new { controller = "Website", Action = "Cathedrals" });
+                endpoints.MapControllerRoute(
+                    name: "FuneralHomes",
+                    pattern: "FuneralHomes",
+                    defaults: new { controller = "Website", Action = "FuneralHomes" });
+                endpoints.MapControllerRoute(
+                    name: "Schedules",
+                    pattern: "Schedules",
+                    defaults: new { controller = "Website", Action = "Schedules" });
+                endpoints.MapControllerRoute(
+                    name: "ContactUs",
+                    pattern: "ContactUs",
+                    defaults: new { controller = "Website", Action = "ContactUs" });
+                endpoints.MapControllerRoute(
+                    name: "UserLogin",
+                    pattern: "UserLogin",
+                    defaults: new { controller = "UserLogin", Action = "UserLogin" });
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=UserLogin}/{action=UserLogin}/{id?}");
+                    pattern: "{controller=Website}/{action=Home}/{id?}",
+                defaults: new { controller = "Website", Action = "Home" });
             });
         }
     }

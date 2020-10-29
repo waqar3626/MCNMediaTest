@@ -1,6 +1,7 @@
 ﻿using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,44 +17,145 @@ namespace MCNMedia_Dev.WowzaApi
 {
     public class WowzaHelper
     {
-        string serverIP = "52.211.229.30";
-        string port = "8087";
-        string apiVersion = "v2";
-        string servers = "_defaultServer_";
-        string vhosts = "_defaultVHost_";
-        string application = "test";
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        #region Readonly Properties
+
+        private readonly string PORT;
+        private readonly string API_VERSION;
+        private readonly string SERVER;
+        private readonly string VHOST;
+        private readonly string APPLICATION;
+        private readonly string USER_NAME;
+        private readonly string SECURITY_KEY;
+
+        #endregion
+
+        #region Constructor
 
         public WowzaHelper()
         {
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
 
+            var root = builder.Build();
+
+            PORT = root.GetConnectionString("wowza_port");
+            API_VERSION = root.GetConnectionString("wowza_apiVersion");
+            SERVER = root.GetConnectionString("wowza_servers");
+            VHOST = root.GetConnectionString("wowza_vhosts");
+            APPLICATION = root.GetConnectionString("wowza_application");
+            USER_NAME = root.GetConnectionString("wowza_user");
+            SECURITY_KEY = root.GetConnectionString("wowza_secretKey");
         }
 
-        private string GetBasicUri(int cameraId)
+        #endregion
+
+        #region Public Method
+
+        public bool RequestCamera(int churchId, int cameraId, string rtspUrl)
         {
-            serverIP = RetrieveCameraServerIP(cameraId);
-            string uri = $"http://{serverIP}:{port}/{apiVersion}/servers/{servers}/vhosts/{vhosts}/applications/{application}";
-            return uri;
+            try
+            {
+                log.InfoFormat("Request Camera for ChurchId: {0}, CameraId: {1} and RTSP: {2} - Start", churchId, cameraId, rtspUrl);
+                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                if (GetStream(uniqueIdentifier, cameraId))
+                {
+                    // Stream Exists
+                    log.Info("Camera already registered.");
+                    return false;
+                }
+                else
+                {
+                    // Create Stream
+                    bool result = Stream_Create(uniqueIdentifier, cameraId, rtspUrl);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Error Occured - StopRecording. ", ex.Message);
+                return false;
+            }
         }
 
-        private string GetStreamFileData(string churchIdentifier, int cameraId, string rtspUrl)
+        public bool StartRecording(int churchId, int cameraId)
         {
-            string streamName = $"{churchIdentifier}_{cameraId}";
-            string data = "{\"name\": " + streamName + ", \"serverName\": _defaultServer_, \"uri\": " + rtspUrl + "}";
-            abc aa = new abc();
-            aa.Name = streamName;
-            aa.ServerName = "_defaultServer_";
-            aa.Uri = rtspUrl;
-            data = JsonConvert.SerializeObject(aa);
-            return data;
+            try
+            {
+                log.InfoFormat("Recording Start for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
+                RecordingData recordingData = new RecordingData();
+
+                recordingData.recorderName = $"{uniqueIdentifier}_{ cameraId}.stream";
+
+                if (GetStream(uniqueIdentifier, cameraId))
+                {
+                    bool startRec = PostAsync($"{GetBasicUri(cameraId)}/instances/_definst_/streamrecorders", recordingData);
+                    return startRec;
+                }
+                else
+                {
+                    log.Error($"Stream for recording not exists. (ChurchId: {churchId}, CameraId: {cameraId}, Unique Id: {uniqueIdentifier})");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Error Occured - StartRecording. ", ex.Message);
+                return false;
+            }
         }
 
-        private string GetStreamRecorderData(string churchIdentifier, int cameraId)
+        public bool StopRecording(int churchId, int cameraId)
         {
-            string instanceName = $"_{churchIdentifier}_";
-            string recorderName = $"{churchIdentifier}_{cameraId}.stream";
-            string data = "{\"instanceName\":" + instanceName + ",\"fileVersionDelegateName\": \"\", \"serverName\": \"\", \"recorderName\":" + recorderName + ", \"currentSize\": 0, \"segmentSchedule\": \"\", \"startOnKeyFrame\": true, \"outputPath\": \"\", \"currentFile\": \"\", \"saveFieldList\": [ ], \"recordData\": false, \"applicationName\": \"\", \"moveFirstVideoFrameToZero\": false, \"recorderErrorString\": \"\", \"segmentSize\": 0, \"defaultRecorder\": false, \"splitOnTcDiscontinuity\": false, \"version\": \"\", \"baseFile\": \"\", \"segmentDuration\": 0, \"recordingStartTime\": \"\", \"fileTemplate\": \"\", \"backBufferTime\": 0, \"segmentationType\": \"\", \"currentDuration\": 0, \"fileFormat\": \"\", \"recorderState\": \"\", \"option\": \"\" }";
-            return data;
+            try
+            {
+                log.InfoFormat("Recording Stopped for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
+                if (GetStream(uniqueIdentifier, cameraId))
+                {
+                    bool stopRec = PutAsync($"{GetBasicUri(cameraId)}/instances/_definst_/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", "");
+                    return stopRec;
+                }
+                else
+                {
+                    log.Error($"Stream for recording not exists. (ChurchId: {churchId}, CameraId: {cameraId}, Unique Id: {uniqueIdentifier})");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Error Occured - StopRecording. ", ex.Message);
+                return false;
+            }
         }
+
+        #endregion
+
+        #region Helper Data Methods
+
+        private string RetrieveChurchUniqueIdentifier(int churchId)
+        {
+            Church church = new Church();
+            ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+            church = churchDataAccessLayer.GetChurchData(churchId);
+            return church.UniqueIdentifier;
+        }
+
+        private string RetrieveCameraServerIP(int cameraId)
+        {
+            Camera cam = new Camera();
+            CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+            cam = cameraDataAccessLayer.GetCameraById(cameraId);
+            return cam.ServerIP;
+        }
+
+        #endregion
+
+        #region Helper Supporting Methods
 
         private bool GetStream(string churchIdentifier, int cameraId)
         {
@@ -65,62 +167,105 @@ namespace MCNMedia_Dev.WowzaApi
         {
             bool connectStream = false;
             string streamFileName = $"{churchIdentifier}_{cameraId}";
-            string createStreamData = GetStreamFileData(churchIdentifier, cameraId, rtspUrl);
-            abc aa = new abc();
-            aa.Name = streamFileName;
-            aa.ServerName = "_defaultServer_";
-            aa.Uri = rtspUrl;
-            var json = JsonConvert.SerializeObject(aa);
-            bool createStreamFile = PostAsync($"{GetBasicUri(cameraId)}/streamfiles", aa);
+            log.InfoFormat("Add Camera(CameraID: {0}) on wowza having stream file name: {1} - Start", cameraId, streamFileName);
+            
+            StreamFile streamFile = new StreamFile();
+            streamFile.Name = streamFileName;
+            streamFile.ServerName = SERVER;
+            streamFile.Uri = rtspUrl;
+
+            bool createStreamFile = PostAsync($"{GetBasicUri(cameraId)}/streamfiles", streamFile);
             if (createStreamFile)
             {
-                connectStream = PutAsync($"{GetBasicUri(cameraId)}/streamfiles/{streamFileName}/actions/connect?connectAppName={application}&appInstance=_definst_&mediaCasterType=rtp", "");
+                log.Info("Camera added on wowza");
+                connectStream = PutAsync($"{GetBasicUri(cameraId)}/streamfiles/{streamFileName}/actions/connect?connectAppName={APPLICATION}&appInstance=_definst_&mediaCasterType=rtp", "");
+                if (connectStream)
+                    log.Info("Camera connected on wowza successfully");
+                else
+                    log.Error("Somthing went wrong, camera didn't connect sucessfully");
             }
             return connectStream;
         }
 
-        private bool GetAsync(string requestUri, string data = "")
+        private CredentialCache GetCredentials(Uri uri)
         {
-            HttpClient client = CreateHttpClientRequest(requestUri);
-
-            // List data response.
-            HttpResponseMessage response = client.GetAsync("").Result;
-            return response.IsSuccessStatusCode;
-
-
+            var credentialCache = new CredentialCache();
+            credentialCache.Add(
+            new Uri(uri.GetLeftPart(UriPartial.Authority)), // request url's host
+            "Digest", // authentication type 
+            new NetworkCredential(USER_NAME, SECURITY_KEY) // credentials 
+            );
+            return credentialCache;
         }
+
+        private string GetBasicUri(int cameraId)
+        {
+            string serverIP = RetrieveCameraServerIP(cameraId);
+            string uri = $"http://{serverIP}:{PORT}/{API_VERSION}/servers/{SERVER}/vhosts/{VHOST}/applications/{APPLICATION}";
+            return uri;
+        }
+
+        #endregion
+
+        #region Helper Wowza Api Communication
 
         private bool PostAsync(string requestUri, object data)
         {
+            log.Info("Wowza API - Post Event - Start");
+            log.DebugFormat("Wowza Request URL: {0}", requestUri);
             HttpClient client = CreateHttpClientRequest(requestUri);
 
-            var json = JsonConvert.SerializeObject(data);
-            var data2 = new StringContent(json, Encoding.UTF8, "application/json");
+            var jsonData = JsonConvert.SerializeObject(data);
+            log.DebugFormat("Wowza Sending Data: {0}", jsonData);
+            var encodeData = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             // List data response.
-            HttpResponseMessage response = client.PostAsync(requestUri, data2).Result;
+            HttpResponseMessage response = client.PostAsync(requestUri, encodeData).Result;
+            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
+            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
+            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
+            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
+            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+            log.Info("Wowza API - Post Event - End");
             return response.IsSuccessStatusCode;
         }
 
-        private bool PostAsync(string requestUri, string data)
+        private bool GetAsync(string requestUri, string data = "")
         {
+            log.Info("Wowza API - Get Event - Start");
+            log.DebugFormat("Wowza Request URL: {0}", requestUri);
             HttpClient client = CreateHttpClientRequest(requestUri);
-            var data2 = new StringContent(data, Encoding.UTF8, "application/json");
 
+            log.DebugFormat("Wowza Sending Data: {0}", data);
             // List data response.
-            HttpResponseMessage response = client.PostAsync(requestUri, data2).Result;
+            HttpResponseMessage response = client.GetAsync(data).Result;
+            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
+            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
+            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
+            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
+            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+            log.Info("Wowza API - Get Event - End");
             return response.IsSuccessStatusCode;
         }
 
         private bool PutAsync(string requestUri, object data)
         {
+            log.Info("Wowza API - Update Event - Start");
+            log.DebugFormat("Wowza Request URL: {0}", requestUri);
             HttpClient client = CreateHttpClientRequest(requestUri);
 
-            var json = JsonConvert.SerializeObject(data);
-            var data2 = new StringContent(json, Encoding.UTF8, "application/json");
+            var jsonData = JsonConvert.SerializeObject(data);
+            log.DebugFormat("Wowza Sending Data: {0}", jsonData);
+            var encodedData = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             // List data response.
-            HttpResponseMessage response = client.PutAsync(requestUri, data2).Result;
+            HttpResponseMessage response = client.PutAsync(requestUri, encodedData).Result;
+            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
+            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
+            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
+            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
+            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+            log.Info("Wowza API - Update Event - End");
             return response.IsSuccessStatusCode;
         }
 
@@ -139,141 +284,11 @@ namespace MCNMedia_Dev.WowzaApi
             return client;
         }
 
-        private string RequestAPI(string requestUri, string requestType, string data = "")
-        {
-            try
-            {
-                Uri uri = new Uri(requestUri);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-                httpWebRequest.Credentials = GetCredentials(uri);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Accept = "*/*";
-                httpWebRequest.Method = requestType;
-                httpWebRequest.ContentLength = data.Length;
+        #endregion
 
-                //byte[] bytes = Encoding.UTF8.GetBytes(data);
-                //using (Stream stream = httpWebRequest.GetRequestStream())
-                //{
-                //    stream.Write(bytes, 0, bytes.Length);
-                //    stream.Close();
-                //}
-
-                //using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
-                //{
-                //    using (Stream stream = httpResponse.GetResponseStream())
-                //    {
-                //        string json = (new StreamReader(stream)).ReadToEnd();
-                //        return json;
-                //    }
-                //}
-
-                WebResponse webResponse = httpWebRequest.GetResponse();
-
-                //Stream webStream = webResponse.GetResponseStream();
-                //StreamReader responseReader = new StreamReader(webStream);
-                //string response = responseReader.ReadToEnd();
-
-                //var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-                using (var streamReader = new StreamReader(webResponse.GetResponseStream()))
-                {
-                    string answer = streamReader.ReadToEnd();
-                    // string answer = JsonConvert.DeserializeObject<string>(streamReader.ReadToEnd());
-                    return answer;
-                }
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        public string RequestCamera(int churchId, int cameraId, string rtspUrl)
-        {
-            string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
-            if (GetStream(uniqueIdentifier, cameraId))
-            {
-                // Stream Exists
-                bool result = Stream_Create(uniqueIdentifier, cameraId, rtspUrl);
-            }
-            else
-            {
-                bool result = Stream_Create(uniqueIdentifier, cameraId, rtspUrl);
-                // Create Stream
-            }
-            return "";
-        }
-
-        public string StartRecording(int churchId, int cameraId)
-        {
-            string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
-            RecordingData recordingData = new RecordingData();
-            recordingData.recorderName = uniqueIdentifier + "_" + cameraId.ToString() + ".stream";
-
-            string startRecordingData = GetStreamRecorderData(uniqueIdentifier, cameraId);
-            if (GetStream(uniqueIdentifier, cameraId))
-            {
-                bool startRec = PostAsync($"{GetBasicUri(cameraId)}/instances/_definst_/streamrecorders", recordingData);
-                if (startRec)
-                {
-                    return startRec.ToString();
-                }
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        public string StopRecording(int churchId, int cameraId)
-        {
-            string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
-
-            if (GetStream(uniqueIdentifier, cameraId))
-            {
-                bool stopRec = PutAsync($"{GetBasicUri(cameraId)}/instances/_definst_/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", "");
-                if (stopRec)
-                {
-                    return stopRec.ToString();
-                }
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        private  string RetrieveChurchUniqueIdentifier(int churchId)
-        {
-            Church church = new Church();
-            ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
-            church = churchDataAccessLayer.GetChurchData(churchId);
-            return church.UniqueIdentifier;
-        }
-
-        private string RetrieveCameraServerIP(int cameraId)
-        {
-            Camera cam = new Camera();
-            CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
-            cam = cameraDataAccessLayer.GetCameraById(cameraId);
-            return cam.ServerIP;
-        }
-
-        private CredentialCache GetCredentials(Uri uri)
-        {
-            var credentialCache = new CredentialCache();
-            credentialCache.Add(
-            new Uri(uri.GetLeftPart(UriPartial.Authority)), // request url's host
-            "Digest", // authentication type 
-            new NetworkCredential("mcnmedia", "ykdEHGc6XH6e35") // credentials 
-            );
-            return credentialCache;
-        }
     }
 
-    class abc
+    class StreamFile
     {
         public string Name { get; set; }
         public string ServerName { get; set; }
