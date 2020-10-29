@@ -131,6 +131,13 @@ namespace MCNMedia_Dev.Models
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
 
+        public int ChrId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+
+        public string FeedBack { get; set; }
+
+
 
 
     }

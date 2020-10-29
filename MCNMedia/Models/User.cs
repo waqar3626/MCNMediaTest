@@ -10,23 +10,11 @@ namespace MCNMedia_Dev.Models
     {
         [Key]
         public int UserId { get; set; }
-
-        [Required(ErrorMessage ="First Name is Required")]
         public string FirstName { get; set; } 
-
-        [Required (ErrorMessage ="Last  Name is Required")]
-        public string LastName { get; set; }
-
-        [Required (ErrorMessage ="Email Address is Required")]
+        public string LastName { get; set; }     
         public string EmailAddress { get; set; }
-
-        [Required (ErrorMessage ="Login Password is Required")]
         public string LoginPassword { get; set; }
-
-        [Required (ErrorMessage ="Update By is Required")]
         public int UpdatedBy { get; set; }
-
-        [Required(ErrorMessage ="Select Your Role")]
         public int RoleId { get; set; }
 
         public string RoleName { get; set; }
