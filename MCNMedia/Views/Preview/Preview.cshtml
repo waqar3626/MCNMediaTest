@@ -17,6 +17,21 @@
         Layout = "_LayoutWebsite";
     }
 
+    <script src="~/js/jwplayer.js"></script>
+    <script src="~/js/player.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated"></script>
+    <script src="https://content.jwplatform.com/libraries/Z7aSa17m.js"></script>
+
+    <script>
+        var churchid = "481";
+
+        var token = "I4pUwfFbGke1O1fwGgocIv7XnW2T4VeYEPlqDiII";
+        var stream_url = [
+            "https://1502594353.rsc.cdn77.org/live/_ec24837a244400d3f46a8d6d17189782f91bdd20_/ec24837a244400d3f46a8d6d17189782f91bdd20_672.stream/playlist.m3u8",
+        ]
+
+    </script>
+
 
 }
 <style type="text/css">
@@ -57,12 +72,20 @@
 
 <div class="row">
     <div class="col-md-8 border-dark">
-        <div class="row">
+        @*<div class="row">
             <div class="col-sm-12">
                 <div class="owl-carousel owl-theme video-carousel">
                     <div class="item-video" style="width:700px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
 
                 </div>
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="my-video"> </div>
+                <video tabindex="-1" preload="true" class="vjs-tech" id="camera_1_html5_api" src="blob:https://mcnmedia.tv/b6838ef8-258e-4a34-acdc-9e38decc2b30">
+                    <source src="https://1502594353.rsc.cdn77.org/live/_ec24837a244400d3f46a8d6d17189782f91bdd20_/ec24837a244400d3f46a8d6d17189782f91bdd20_672.stream/playlist.m3u8" type="application/vnd.apple.mpegurl">
+                </video>
             </div>
         </div>
         <div class="row">
@@ -248,33 +271,33 @@
 
 
                         <div class="row">
-                        <div class="col-lg-12 grid-margin stretch-card" style=" background: linear-gradient( white 35%, #372548 65%);
+                            <div class="col-lg-12 grid-margin stretch-card" style=" background: linear-gradient( white 35%, #372548 65%);
                         border-top: 8px solid #372548;
                         border-radius: 5px">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 style="color:#372548"> Recordings of past events at Saint Ambrose Barlow</h5></br>
-                                    <div class="row">
-                                        @foreach (var recording in Model.LRecordings)
-                                        {
-                                            <div class="col-sm-4">
-                                                <label>@recording.RecordingTitle</label>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 style="color:#372548"> Recordings of past events at Saint Ambrose Barlow</h5></br>
+                                        <div class="row">
+                                            @foreach (var recording in Model.LRecordings)
+                                            {
+                                                <div class="col-sm-4">
+                                                    <label>@recording.RecordingTitle</label>
                         <p> @recording.Time</p>
                         <a href="@recording.RecordingURl">RecordingUrl</a>
                     </div>
                 }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        </div>
-
-                        @*<div class="form-group row">
-                            <div class="col-sm-7 grid-margin stretch-card">
-                                <video width="320" height="240" controls>
-                                    <source src="movie.mp4" type="video/mp4">
-                                    <source src="movie.ogg" type="video/ogg">
-                                    Your browser does not support the video tag.
-                                </video>
                             </div>
-                            </div>*@
+
+                            @*<div class="form-group row">
+                                <div class="col-sm-7 grid-margin stretch-card">
+                                    <video width="320" height="240" controls>
+                                        <source src="movie.mp4" type="video/mp4">
+                                        <source src="movie.ogg" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                </div>*@

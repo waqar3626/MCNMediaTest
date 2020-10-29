@@ -220,7 +220,7 @@
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();
         filedropper.clearElement();
-        filedropper.settings['defaultFile'] = '../' + '@Model.Churches.ImageURl.ToString()' 
+        filedropper.settings['defaultFile'] =  '@Model.Churches.ImageURl.ToString()';
         filedropper.destroy();
         filedropper.init();
     });

@@ -32,7 +32,7 @@ namespace MCNMedia_Dev.Repository
                 pchurches.Website = dataRow["Website"].ToString();
                 pchurches.EmailAddress = dataRow["EmailAddress"].ToString();
                 pchurches.Phone = dataRow["Phone"].ToString();
-                pchurches.ImageURl = "/" + dataRow["ImageURL"].ToString();
+                pchurches.ImageURl = ("../" + dataRow["ImageURL"].ToString()).Replace("//","/");
                 pchurches.Notice = dataRow["Notice"].ToString();
                 pchurches.Featured = Convert.ToInt32(dataRow["Featured"]);
              

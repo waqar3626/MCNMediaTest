@@ -37,16 +37,16 @@ namespace MCNMedia_Dev.WowzaApi
         {
             IConfigurationBuilder builder = new ConfigurationBuilder();
             builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
-
             var root = builder.Build();
+            var wowzaConfig = root.GetSection("WowzaConfiguration");
 
-            PORT = root.GetConnectionString("wowza_port");
-            API_VERSION = root.GetConnectionString("wowza_apiVersion");
-            SERVER = root.GetConnectionString("wowza_servers");
-            VHOST = root.GetConnectionString("wowza_vhosts");
-            APPLICATION = root.GetConnectionString("wowza_application");
-            USER_NAME = root.GetConnectionString("wowza_user");
-            SECURITY_KEY = root.GetConnectionString("wowza_secretKey");
+            PORT = wowzaConfig["wowza_port"];
+            API_VERSION = wowzaConfig["wowza_apiVersion"];
+            SERVER = wowzaConfig["wowza_servers"];
+            VHOST = wowzaConfig["wowza_vhosts"];
+            APPLICATION = wowzaConfig["wowza_application"];
+            USER_NAME = wowzaConfig["wowza_user"];
+            SECURITY_KEY = wowzaConfig["wowza_secretKey"];
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace MCNMedia_Dev.WowzaApi
             }
             catch (Exception ex)
             {
-                log.ErrorFormat("Error Occured - StopRecording. ", ex.Message);
+                log.ErrorFormat("Error Occured - Request Camera. ", ex.Message);
                 return false;
             }
         }
