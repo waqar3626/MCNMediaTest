@@ -16,6 +16,7 @@ namespace MCNMedia_Dev.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
         scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MCNMedia_Dev.Controllers
@@ -15,29 +16,26 @@ namespace MCNMedia_Dev.Controllers
         GenericModel gm = new GenericModel();
         public IActionResult Preview(int chId)
         {
-        
-            gm.Churches = previewChurchesDataAccessLayer.GetPreviewChurch(chId);
-            gm.LCameras = previewChurchesDataAccessLayer.GetAllPreviewCameras(chId);
-            gm.LSchedules = previewChurchesDataAccessLayer.GetAllPreviewSchedule(chId);
-            gm.LRecordings = previewChurchesDataAccessLayer.GetAllPreviewRecording(chId);
-            return View(gm);
-        }
-        public IActionResult Preview2()
-        {
             try
             {
-                return View();
+                gm.Churches = previewChurchesDataAccessLayer.GetPreviewChurch(chId);
+                gm.LCameras = previewChurchesDataAccessLayer.GetAllPreviewCameras(chId);
+                gm.LSchedules = previewChurchesDataAccessLayer.GetAllPreviewSchedule(chId);
+                gm.LRecordings = previewChurchesDataAccessLayer.GetAllPreviewRecording(chId);
+                return View(gm);
             }
             catch (Exception e)
             {
-                ShowMesage(" Preview2 Errors : " + e.Message);
+                ShowMesage("Preview Errors : " + e.Message);
                 throw;
             }
+        
+            
         }
-
         private void ShowMesage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
         }
     }
 }
+

@@ -11,6 +11,8 @@ namespace MCNMedia_Dev.Controllers
 {
     public class AnnouncementController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
         public IActionResult Index()
         {
@@ -18,64 +20,118 @@ namespace MCNMedia_Dev.Controllers
         }
         public JsonResult ListAnnouncement()
         {
-            Announcement announcement = new Announcement();
-            int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            try
+            {
+                Announcement announcement = new Announcement();
+                int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
 
-            List<Announcement> announcementsList = AnnouncementDataAccessLayer.GetAnnouncement(churchId).ToList();
-            return Json(announcementsList);
+                List<Announcement> announcementsList = AnnouncementDataAccessLayer.GetAnnouncement(churchId).ToList();
+                return Json(announcementsList);
+
+            }
+            catch (Exception e)
+            {
+                ShowMessage("List Announcement Error" + e.Message);
+                throw;
+            }
+          
         }
         [HttpPost]
         public IActionResult AddAnnouncement(string announceTittle, String announceText)
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+            try
             {
-                Announcement announcement = new Announcement();
-                announcement.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    Announcement announcement = new Announcement();
+                    announcement.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
 
-                announcement.AnnouncementTitle = announceTittle;
-                announcement.AnnouncementText = announceText;
+                    announcement.AnnouncementTitle = announceTittle;
+                    announcement.AnnouncementText = announceText;
 
 
-                int res = AnnouncementDataAccessLayer.AddAnnouncement(announcement);
+                    int res = AnnouncementDataAccessLayer.AddAnnouncement(announcement);
 
 
-                return Json(res);
+                    return Json(res);
+                }
+                return RedirectToAction("Listchurch", "Church");
             }
-            return RedirectToAction("Listchurch", "Church");
+            catch (Exception e)
+            {
+                ShowMessage("Add Announcement Error" + e.Message);
+
+                throw;
+            }
+        
         }
 
 
         public IActionResult EditAnnouncement(int id)
         {
+            try
+            {
+                GenericModel gm = new GenericModel();
+                gm.Announcement = AnnouncementDataAccessLayer.GetAnnouncementById(id);
+                return PartialView("_EditAnnouncement", gm);
 
-            GenericModel gm = new GenericModel();
-            gm.Announcement = AnnouncementDataAccessLayer.GetAnnouncementById(id);
-            return PartialView("_EditAnnouncement", gm);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Edit Announcement Error" + e.Message);
+                throw;
+            }
+
+         
 
 
         }
 
         public IActionResult DeleteAnnouncement(int id)
         {
+            try
+            {
+                GenericModel gm = new GenericModel();
+                bool res = AnnouncementDataAccessLayer.DeleteAnnouncement(id);
+                return Json(res);
+            }
+            catch (Exception e)
+            {
+              
+                ShowMessage("Delete Announcement Error" + e.Message);
+                throw;
+            }
 
-            GenericModel gm = new GenericModel();
-            bool res = AnnouncementDataAccessLayer.DeleteAnnouncement(id);
-            return Json(res);
         }
 
         public JsonResult UpdateAnnouncement(int churchAnnounceId, string editAnnounceTitle, string editAnnounceText)
         {
-            Announcement announcement = new Announcement();
-            announcement.ChurchAnnouncementId = Convert.ToInt32(churchAnnounceId);
-            announcement.AnnouncementTitle = editAnnounceTitle;
-            announcement.AnnouncementText = editAnnounceText;
+            try
+            {
+                Announcement announcement = new Announcement();
+                announcement.ChurchAnnouncementId = Convert.ToInt32(churchAnnounceId);
+                announcement.AnnouncementTitle = editAnnounceTitle;
+                announcement.AnnouncementText = editAnnounceText;
 
-            int res = AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
+                int res = AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
 
 
-            return Json(res);
+                return Json(res);
+            }
+            catch (Exception e)
+            {
+
+
+                ShowMessage("Update Announcement Error" + e.Message);
+                throw;
+            }
+            
         }
 
-  
+        private void ShowMessage(string exceptionMessage)
+        {
+            log.Info("Exception: " + exceptionMessage);
+        }
+
     }
 }

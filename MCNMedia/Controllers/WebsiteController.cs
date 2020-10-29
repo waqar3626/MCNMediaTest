@@ -16,6 +16,7 @@ namespace MCNMedia_Dev.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         scheduleDataAccessLayer _scheduleDataAccessLayer = new scheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
+        WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
         public IActionResult Home()
         {
             try
@@ -154,6 +155,14 @@ namespace MCNMedia_Dev.Controllers
                 ShowMesage("ProcessForm Errors : " + e.Message);
                 throw;
             }
+        }
+
+        [HttpPost]
+
+        public IActionResult AddContactForm(Website website)
+        {
+            _websiteDataAccessLayer.AddContactForm(website);
+            return RedirectToAction("Home");
         }
 
         private void ShowMesage(String exceptionMessage)

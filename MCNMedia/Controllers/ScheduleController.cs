@@ -18,7 +18,7 @@ namespace MCNMedia_Dev.Controllers
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
        
-
+ 
 
         [HttpGet]
         public IActionResult AddSchedule()

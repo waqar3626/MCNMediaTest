@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MCNMedia_Dev.Controllers
 {
-
     public class UserAssignChurchesController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,11 +20,10 @@ namespace MCNMedia_Dev.Controllers
         UserDataAccessLayer userDataAccess = new UserDataAccessLayer();
         UserAssignChurchesDataAccessLayer userAssignDataAcessLayer = new UserAssignChurchesDataAccessLayer();
 
-
-        [HttpGet]
+      
+      [HttpGet]
         public IActionResult AssignChurchesToUser()
         {
-
             try
             {
                 UserAssignChurches uAChurches = new UserAssignChurches();
@@ -40,20 +38,20 @@ namespace MCNMedia_Dev.Controllers
 
                 ViewBag.ErrorMessage = "Error";
                 return View(selectListItems);
-
             }
             catch (Exception e)
             {
-                ShowMesage("Assign Church to User Errors  'Get' : " + e.Message);
+                ShowMessage("Assign Church to User Errors  'Get' : " + e.Message);
                 throw;
             }
+           
+            
         }
         [HttpPost]
         public IActionResult AssignChurchesToUser(List<SelectListItem> Data, int UserId)
         {
             try
             {
-
                 try
                 {
                     UserAssignChurches userAssignChurches = new UserAssignChurches();
@@ -81,26 +79,27 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Assign Churches To User Errors  'Post' : " + e.Message);
+                ShowMessage("Assign Churches To User Errors  'Post' : " + e.Message);
                 throw;
             }
-
+          
+ 
 
         }
 
-        public IActionResult GetUserAssignChurches()
-        {
+        public IActionResult GetUserAssignChurches() {
+
             try
             {
                 IEnumerable<UserAssignChurches> userAssignChurchesList = userAssignDataAcessLayer.GetUserAssignChurchesList();
                 return View(userAssignChurchesList);
-
             }
             catch (Exception e)
             {
-                ShowMesage("Get User Assign Churches Errors : " + e.Message);
+                ShowMessage("Get User Assign Churches Errors : " + e.Message);
                 throw;
-            } 
+            }
+            
         }
 
         [HttpGet]
@@ -124,19 +123,21 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Edit Assign Churches User Errors : " + e.Message);
+                ShowMessage("Edit Assign Churches User Errors 'Get' : " + e.Message);
                 throw;
             }
-        }
+           
+            }
 
-        [HttpPost]
+            [HttpPost]
         public IActionResult EditAssignChurchesUser(List<SelectListItem> Data, int UserId)
         {
             try
             {
-
                 UserAssignChurches userAssignChurches = new UserAssignChurches();
+
                 userAssignDataAcessLayer.DeleteUserChurches(UserId);
+
                 foreach (SelectListItem item in Data)
                 {
                     if (item.Selected)
@@ -149,36 +150,27 @@ namespace MCNMedia_Dev.Controllers
                     }
 
                 }
-                return RedirectToAction(nameof(ListUser));
-
+                return RedirectToAction("ListUser", "User");
             }
+
             catch (Exception e)
             {
-                ShowMesage("Edit Assign Churches User Errors  'Post' : " + e.Message);
+                ShowMessage("Assign Churches To User Errors  'Post' : " + e.Message);
                 throw;
             }
-        }
-        [HttpGet]
-        public IActionResult ListUser()
-        {
-            try
-            {
-                User user = new User();
-                List<User> usr = userDataAccess.GetAllUser(user).ToList<User>();
-                return View("/Views/User/ListUser.cshtml", usr);
-            }
-            catch (Exception e)
-            {
-                ShowMesage("List User Errors  'Get' : " + e.Message);
-                throw;
-            }
+           
+
         }
 
 
-        private void ShowMesage(String exceptionMessage)
-        {
-            log.Error("Exception : " + exceptionMessage);
-        }
+            private void ShowMessage(string exceptionMessage)
+            {
+                log.Info("Exception: " + exceptionMessage);
+            }
+
+
 
     }
+
+
 }
