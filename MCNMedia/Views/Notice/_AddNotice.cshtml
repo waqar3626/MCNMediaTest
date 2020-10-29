@@ -10,12 +10,18 @@
 {
     <div class="row">
         <div class="col">
-            <form asp-action="Add">
+            <form asp-action="Add" class="needs-validation" novalidate>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row p-3" id="alertDiv21">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert" id="alertLabel21">
 
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label asp-for="Notices.NoticeTitle" class="control-label">Announcement Title</label>
-                    <input asp-for="Notices.NoticeTitle" class="form-control" id="addnoticeTitle" />
+                    <label asp-for="Notices.NoticeTitle" class="control-label">Notice Title</label>
+                    <input asp-for="Notices.NoticeTitle" class="form-control" id="validationCustom13" placeholder=" Notice Title" required />
                     <span asp-validation-for="Notices.NoticeTitle" class="text-danger"></span>
                 </div>
 
@@ -23,7 +29,7 @@
                     <div class="form-group">
                         <label asp-for="Notices.NoticeName" class="control-label">Notice</label>
 
-                        <textarea id="summernote-basic2" asp-for="Notices.NoticeName"></textarea>
+                        <textarea id="summernote-basic2" asp-for="Notices.NoticeName" placeholder=" Notice " required></textarea>
 
                         <span asp-validation-for="Notices.NoticeName" class="text-danger"></span>
 
@@ -32,10 +38,10 @@
 
 
                 <div class="form-group float-right">
-                 
-                        <a onclick="AddNotice1()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"></i>Add</a>
-                        <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
-                   
+
+                    <a onclick="AddNotice1()"  class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"></i>Add</a>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+
                 </div>
 
             </form>
@@ -43,17 +49,53 @@
     </div>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $('#alertDiv21').hide();
+        });
+        
+
         function AddNotice1() {
-
-            var formData = new FormData();
-            var noticeTitle = document.getElementById('addnoticeTitle').value;
-            formData.append("NoticeTitle", noticeTitle);
-
-
+            var noticeTitle = document.getElementById('validationCustom13').value;
             var noticeName = $("#summernote-basic2").summernote('code');
+            var s = "";
 
-           
 
+            if (noticeTitle == '' && noticeName == '<p><br></p>') {
+                $('#validationCustom13').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Notice Title </label></br>'
+                $('#summernote-basic2').attr('class', 'border-danger');
+                s += '<label>Please Provide a Valid Notice </label></br>';
+                $('#alertLabel21').html(s);
+                $('#alertDiv21').show();
+                return;
+                $('#AddNoticeModal').modal('show');
+
+
+            }
+            else if (noticeName == '<p><br></p>' && noticeTitle != '') {
+                $('#summernote-basic2').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Notice</label></br>';
+                $('#alertLabel21').html(s);
+                $('#alertDiv21').show();
+                return;
+                $('#AddNoticeModal').modal('show');
+
+
+            }
+            else if (noticeName != '<p><br></p>' && noticeTitle == '') {
+                $('#addnoticeTitle').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Notice Title </label></br>'
+                $('#alertLabel21').html(s);
+                $('#alertDiv21').show();
+                return;
+                $('#AddNoticeModal').modal('show');
+
+
+            }
+            var formData = new FormData();     
+            formData.append("NoticeTitle", noticeTitle);
             formData.append("NoticeName", noticeName);
 
 

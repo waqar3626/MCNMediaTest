@@ -43,7 +43,9 @@
                             <span asp-validation-for="EventName" class="text-danger"></span>
 
                             <input type="text" asp-for="EventName" class="form-control" id="validationCustom03" placeholder="Event Name" required />
-                            
+                            <div class="invalid-feedback">
+                                Please provide a valid EventName.
+                            </div>   
                     </div>
                       
                 </div>
@@ -99,7 +101,9 @@
                             <option value="Sunday" name="EventDay">Sunday</option>
 
                         </select>
-                        
+                        <div class="invalid-feedback">
+                            Please provide a valid Event Day.
+                        </div>
                     </div>
 
                     <label asp-for="EventTime" class="col-sm-2 col-form-label" for="validationCustom02">Event Time</label>
@@ -113,7 +117,9 @@
                                     <input type="text" asp-for="EventTime" class="form-control datetimepicker-input" id="validationCustom02" data-target="#timepicker-example" placeholder="Event Time" required />
 
                                     <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
-                                   
+                                    <div class="invalid-feedback">
+                                        Please provide a valid EventTime.
+                                    </div>
                                 </div>
 
 
@@ -153,7 +159,7 @@
                             <option value="75" name="Length">1 Hour 15 Minutes</option>
                             <option value="90" name="Length">1 Hour 30 Minutes</option>
                             <option value="105" name="Length">1 Hour 45 Minutes</option>
-                            <option value="120" name="Length">2 Hour </option>
+                            <option value="120" name="Length">2 Hours</option>
 
 
                         </select>
@@ -179,7 +185,7 @@
                     </div>
                     <div class="col-sm-6" id="btnSchdule">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                            <button type="submit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
                             <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                         </div>
@@ -189,7 +195,7 @@
 
                     <div class="col-sm-12" id="btnSchdulecol12">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal2" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
                             <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                         </div>
                     </div>
@@ -217,57 +223,40 @@
         
         DoPostBack();
     });
+
     $('#addScheduleVal').click(function () {
-        var s = "";
+
         if ($('#ddlChurchId').val() == '0') {
-            s += '<label>Please Provide a Valid Church</label></br>';
-            $('#ddlChurchId').attr('class', 'form-control border-danger');
-            $('#alertLabel').html(s);
+
+            $('#alertLabel').html("Please Provide a valid Church");
             $('#alertDiv').show();
         }
         else {
-            $('#ddlChurchId').attr('class', 'form-control border-success');
-        }
 
-
-
-        if ($('#validationCustom03').val() == '') {
-            s += '<label>Please Provide a Valid Event Name</label></br>';
-
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-
-
-
-        if ($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
+            if($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
 
 
             $('#validationCustom05').removeAttr('required');
             $('#validationCustom06').removeAttr('required');
-            $('#alertDiv').hide();
-
+                $('#alertDiv').hide();
 
 
         }
-
-
         else {
             var check = $('#IsRepeated').val();
 
+
+
             if (check == 'true') {
-                s += '<label>Please Provide a valid  Day</label></br>';
-                $('#validationCustom06').attr('class', 'form-control border-danger');
-                $('#alertLabel').html(s);
+
+                $('#alertLabel').html("Please Provide Day");
 
 
 
             }
             else {
-                $('#datepicker-popup').attr('class', 'input-group date datepicker border-danger');
-                s += '<label>Please Provide a valid  Date</label></br>';
 
-                $('#alertLabel').html(s);
+                $('#alertLabel').text("Please Provide Date");
 
 
             }
@@ -275,94 +264,8 @@
 
         }
 
-        if ($('#validationCustom02').val() == '') {
-            s += '<label>Please Provide a valid  Time</label></br>';
-            $('#timepicker-example').attr('class', 'input-group date border-danger');
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-
-
-
-
-
-
-
-    });
-
-
-    $('#addScheduleVal2').click(function ()
-    {
-        var s = "";
-        if ($('#ddlChurchId').val() == '0') {
-            s += '<label>Please Provide a Valid Church</label></br>';
-            $('#ddlChurchId').attr('class', 'form-control border-danger');
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-        else {
-            $('#ddlChurchId').attr('class', 'form-control border-success');
-        }
-
-
-
-        if ($('#validationCustom03').val() == '') {
-            s += '<label>Please Provide a Valid Event Name</label></br>';
-           
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-
-         
-
-        if ($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0')
-        {
-
-           
-            $('#validationCustom05').removeAttr('required');
-            $('#validationCustom06').removeAttr('required');
-            $('#alertDiv').hide();
-
-
 
         }
-
-        
-        else
-        {
-         var check = $('#IsRepeated').val();
-
-            if (check == 'true')
-            {
-                s += '<label>Please Provide a valid  Day</label></br>';
-            $('#validationCustom06').attr('class', 'form-control border-danger');
-                $('#alertLabel').html(s);
-
-
-
-            }
-            else
-            {
-                $('#datepicker-popup').attr('class', 'input-group date datepicker border-danger');
-                s += '<label>Please Provide a valid  Date</label></br>';
-
-                $('#alertLabel').html(s);
-
-
-            }
-            $('#alertDiv').show();
-
-        }
-
-        if ($('#validationCustom02').val() == '') {
-            s += '<label>Please Provide a valid  Time</label></br>';
-            $('#timepicker-example').attr('class', 'input-group date border-danger');
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-
-
-        
 
      
 
@@ -477,3 +380,6 @@
 
 
 </script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

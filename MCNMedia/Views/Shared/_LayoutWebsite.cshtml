@@ -33,6 +33,48 @@
     <style type="text/css">
 
     .bgImage { background-image: url("/Images/pexels-david-dibert-1207965.jpg ") }
+        .beautifooter {
+            background-image: url( "/Images/WebsitefooterImg.jpg");
+            height: 600px;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .imgstyle {
+            width: 100%;
+            height: 100%;
+            opacity: 0.9;
+            background: #060f2d;
+            position: absolute;
+        }
+        .underline {
+           text-decoration:underline;
+            text-decoration-color: darkgoldenrod;
+
+        }
+        .iconcolor {
+            color: darkgoldenrod;
+            font-size: 1.5em;
+        }
+        .color{
+            color:goldenrod;
+        }
+        .ullist {
+            list-style: none;
+           
+        }
+
+
+
+        .list1::before {
+            background-position: 0 5px;
+            line-height: 1.5625;
+            padding: 0 0 4px 30px;
+            margin-left: 1em;
+            color: goldenrod;
+        }
+       
 </style>
 </head>
 <body>
@@ -125,91 +167,96 @@
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
 
-        <div class="footer" style="background-color:blanchedalmond">
+        <div class="footer  beautifooter p-0" >
+            
+            <div class="row text-white justify-content-center imgstyle">
 
-            <div class="row text-white justify-content-center">
+
+                <div class=" col-lg-3 col-sm-12  ">
+
+                    <h2 class="  mt-3 underline">CONTACT INFO</h2>
+
+                    <div class=" display-5 pt-4">
+                        <div class="row">
+                            <div class="col-sm-2">   <i class="fa fa-home iconcolor"></i></div>
 
 
-                <div class=" card col-sm-4 rounded " style="background-color:#1e1625">
+                            <div class="col-sm-10 pl-0">
+                                Euro Streaming Services T/A MCN Media,
+                                Unit 8 Ballysaggart Business Complex,
+                                8 Beechvalley Way,
+                                Dungannon,
+                                BT70 1BS,<br>
+                                Northern Ireland
+                            </div>
 
-                    <h2 class="  text-center  mt-3 ">CONTACT INFO</h2>
+                        </div>
 
-                    <div class="fa fa-home display-5 mt-4">
-                        <span>
-                            Euro Streaming Services T/A MCN Media,<br>
-                            Unit 8 Ballysaggart Business Complex,
-                            8 <br>Beechvalley Way,
-                            Dungannon,
-                            BT70 1BS,<br>
-                            Northern Ireland
-                        </span>
-                            
-                  
-                          
-                        
+
                     </div>
 
 
-                    <div class="fa fa-phone mt-3 display-5 text-white"><a href="tel:+442887729580" class="text-white m-2">+44 2887729580</a></div>
-                    <div class="fa fa-envelope text-white mt-3 display-5  mb-3"><a href="mailto:support@watchmcnmedia.tv" class="text-white m-2">support@watchmcnmedia.tv</a></div>
+                    <div class="fa fa-phone iconcolor mt-3 display-5 "><a href="tel:+442887729580" class="text-white pl-4">+44 2887729580</a></div>
+                    <div class="fa fa-envelope iconcolor  mt-3 display-5  mb-3"><a href="mailto:support@watchmcnmedia.tv" class="text-white pl-4">support@watchmcnmedia.tv</a></div>
 
 
                 </div>
-                <div class=" card col-sm-3 ml-2 rounded" style="background-color:#1e1625">
-                    <h2 class="text-center mt-3">QUICK LINKS</h2>
-                    <ul class="bullet-line-list display-5 mt-4 text-white">
-                        <li>
-                            <a class="nav-link text-white" href="/Website/Churches">
-                                Churches
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-white" href="/Website/Cathedrals">
-                                Cathedrals
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-white" href="/Website/FuneralHomes">
-                                Funeral Homes
-                            </a>
-                        </li>
+                <div class=" col-lg-1 col-sm-12 "></div>
+                    <div class="col-lg-3 col-sm-12 ">
+                        <h2 class="mt-3 underline">QUICK LINKS</h2>
+                        <ul class="  display-5 mt-4 justify-content-center text-white">
+                            <li Class="iconcolor">
+                                <a class="  nav-link text-white" href="/Website/Churches">
+                                    Churches
+                                </a>
+                            </li>
+                            <li Class="iconcolor">
+                                <a class="nav-link text-white" href="/Website/Cathedrals">
+                                    Cathedrals
+                                </a>
+                            </li>
+                            <li Class="iconcolor">
+                                <a class="nav-link text-white" href="/Website/FuneralHomes">
+                                    Funeral Homes
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="nav-link text-white" href="/Website/Schedules">
-                                Schedules
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-white" href="/Website/ContactUs">
-                                Contact Us
-                            </a>
-                        </li>
+                            <li Class="iconcolor">
+                                <a class="nav-link text-white" href="/Website/Schedules">
+                                    Schedules
+                                </a>
+                            </li>
+                            <li Class="iconcolor">
+                                <a class="nav-link text-white" href="/Website/ContactUs">
+                                    Contact Us
+                                </a>
+                            </li>
 
-                    </ul>
+                        </ul>
 
+                    </div>
+                    <div calss="col-lg-1 col-sm-12"></div>
+                    <div class="col-lg-3  col-sm-12  ">
+                        <h2 class="  mt-3 underline">FOLLOW US</h2>
+                        <ul class="et-social-icons display-5 pt-4  justify-content-center">
+                            <li class=" fa fa-facebook-square iconcolor">
+                                <a href="https://www.facebook.com/pages/Church-Services-TV/157606014288500" class="text-white">
+                                    Facebook
+                                </a>
+                            </li>
+                            <br />
+                            <li class="fa fa-twitter-square iconcolor mt-2">
+                                <a href="https://twitter.com/ChurchServiceTV" class="text-white">
+                                    Twitter
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class=" card col-sm-4 ml-2 rounded" style="background-color:#1e1625">
-                    <h2 class="text-center  mt-3">FOLLOW US</h2>
-                    <ul class="et-social-icons display-5 mt-4">
-                        <li class=" fa fa-facebook-square">
-                            <a href="https://www.facebook.com/pages/Church-Services-TV/157606014288500" class="text-white">
-                                Facebook
-                            </a>
-                        </li>
-                        <br />
-                        <li class="fa fa-twitter-square mt-2">
-                            <a href="https://twitter.com/ChurchServiceTV" class="text-white">
-                                Twitter
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+
+
             </div>
-
-
-
-        </div>
         <!-- partial -->
     </div>
     <!-- main-panel ends -->

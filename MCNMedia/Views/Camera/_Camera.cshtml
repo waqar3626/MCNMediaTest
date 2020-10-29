@@ -4,14 +4,7 @@
 }
 <script src="~/theme/js/modal-demo.js"></script>
 <script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#createAccount').click(function () {
-
-    //        //$("#AccountModal").modal('show');
-    //        // $('#AccountModal').modalPopLite({ openButton: '#clicker', closeButton: '#close-btn' });
-
-    //    });
-    //});
+  
 </script>
 
 
@@ -19,8 +12,7 @@
     <div class="card-body">
         <button type="submit" id="AddCamera1" class="btn btn-outline-behance btn-sm float-right " onclick="AddCamera()"> <i class="mdi mdi-plus"></i> Add New Camera</button>
         <div class="">
-            @*@using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
-            {*@
+          
 
             <table class="table">
                 <thead>
@@ -46,33 +38,11 @@
                 </thead>
                 <tbody class="CamList">
 
-                    @*@foreach (var item in Model.LCameras)
-                    {
-                        <tr>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CameraName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CameraUrl)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.HttpPort)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RtspPort)
-                            </td>
-                            <td>
-                                <a onclick="Open(@item.CameraId)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>
-                                <a onclick="Delete(@item.CameraId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    }*@
                 </tbody>
             </table>
 
 
-            @*}*@
+            
         </div>
 
     </div>

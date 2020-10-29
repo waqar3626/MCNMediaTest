@@ -4,24 +4,29 @@
 }
 
 
-@using (Html.BeginForm("AddAnnouncement", "Announcement", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="row">
-        <div class="col">
-            <form asp-action="Add">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+    <form asp-action="AddAnnouncement" asp-controller="Announcement" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row p-3" id="alertDiv22">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert" id="alertLabel22">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label asp-for="Announcement.AnnouncementTitle" class="control-label">Announcement Title</label>
-                    <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="AddAnnouncementTitle" />
+                    <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="validationCustom12" placeholder=" Announcement Title" required />
                     <span asp-validation-for="Announcement.AnnouncementTitle" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <div class="form-group">
-                        <label asp-for="Announcement.AnnouncementText" class="control-label">Notice</label>
-                        <textarea name="description" id="summernote-basic"></textarea>
-
+                        <label asp-for="Announcement.AnnouncementText" class="control-label">Announcement</label>
+                        <textarea name="description"  id="summernote-basic" placeholder=" Announcement" required></textarea>
 
                         <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
 
@@ -29,26 +34,67 @@
                 </div>
 
                 <div class="form-group float-right">
-                    
-                        <a onclick="Addannouncement()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"></i>Add</a>
-                        <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
-                    
-                </div>
-            </form>
-        </div>
-    </div>
 
+                    <a onclick="Addannouncement()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"></i>Add</a>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
     <!-- plugin js for this page -->
 
- 
+
     <!-- End custom js for this page-->
     <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $('#alertDiv22').hide();
+        });
+     
         function Addannouncement() {
 
 
-            var announcementTitle = document.getElementById('AddAnnouncementTitle').value;
+            var announcementTitle = document.getElementById('validationCustom12').value;
 
             var announcementText = $("#summernote-basic").summernote('code');
+            var s = "";
+
+
+            if (announcementTitle == '' && announcementText == '<p><br></p>') {
+                $('#validationCustom12').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Announcement Title </label></br>'
+                $('#summernote-basic').attr('class', 'border-danger');
+                s += '<label>Please Provide a Valid Announcement</label></br>';
+                $('#alertLabel22').html(s);
+                $('#alertDiv22').show();
+                return;
+                $('#AddAnnouncementPopUp').modal('show');
+
+
+            }
+            else if (announcementText == '<p><br></p>' && announcementTitle != '') {
+                $('#summernote-basic').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Announcement</label></br>';
+                $('#alertLabel22').html(s);
+                $('#alertDiv22').show();
+                return;
+                $('#AddAnnouncementPopUp').modal('show');
+
+
+            }
+            else if (announcementText != '<p><br></p>' && announcementTitle == '') {
+                $('AddAnnouncementTitle').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Announcement Title </label></br>'
+                $('#alertLabel22').html(s);
+                $('#alertDiv22').show();
+                return;
+                $('#AddAnnouncementPopUp').modal('show');
+
+
+            }
 
             var formData = new FormData();
             formData.append("announceTittle", announcementTitle);
@@ -76,4 +122,4 @@
             });
         }
     </script>
-}
+

@@ -4,16 +4,30 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
    
 }
+    <style type="text/css">
+        .color1 {
+            color: goldenrod;
+        }
 
-    <div class="card">
+        .bgcolor {
+            background-color: goldenrod;
+        }
+
+        .bgcolor1 {
+            background-color: #060f2d;
+            color: white;
+        }
+    </style>
+
+    <div class="card bgcolor1" >
         <div class="card-body">
             <marquee> <h2>SCHEDULES </h2></marquee>
         </div>
         
     </div>
-<div class="card bg-info rounded-top">
+<div class="card bgcolor1 rounded-top pt-0">
 
-    <div class="card-body ">
+    <div class="card-body pr-3 ">
 
         <div class=" row fa fa-calendar font-weight-bold text-white  display-4 ">
             <div class="font-weight-bold pl-2 display-4 ">  Schedules for @DateTime.Now.ToString("dddd") - @DateTime.Now.ToString("dd-MMM-yyyy")</div>
@@ -22,7 +36,7 @@
             The Current Time is: <span id="clock"></span> 
         </div>
 
-
+        @*  *@
     </div>
     <div class="row">
         <div class=" bg-white col-12 ml-4 ">
@@ -36,7 +50,7 @@
                             </a>
                         </div>
 
-                        <div class="col-sm-2 text-center"><b><i class="fa fa-clock-o" aria-hidden="true"></i>@schedule.EventTime.ToString("h:mm tt")</b></div>
+                        <div class="col-sm-2 text-center text-black"><b><i class="fa fa-clock-o" aria-hidden="true"></i>@schedule.EventTime.ToString("h:mm tt")</b></div>
                     </div>
 
                 </div><hr>

@@ -9,30 +9,34 @@
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                @*<h4 class="card-title">Camera</h4>*@
+              
+                <div class="form-group row p-3" id="alertDiv41">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert" id="alertLabel41">
 
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label text-center"> Tab Name</label>
+                    <label class="col-sm-2 col-form-label text-center"> Tab Name *</label>
                     <div class="col-sm-4">
                         @Html.TextBoxFor(model => model.Cameras.CameraName, new { @class = "form-control form-control", @id = "tabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                         @Html.HiddenFor(model => model.Cameras.CameraId, new { @id = "CameraId" })
                         @Html.HiddenFor(model => model.Cameras.ChurchId, new { @id = "ChurchId" })
                     </div>
-                    @*</div>
-                        <div class="form-group row">*@
-                    <label class="col-sm-2 col-form-label text-center"> Camera RTSP</label>
+                
+                    <label class="col-sm-2 col-form-label text-center"> Camera RTSP *</label>
                     <div class="col-sm-4">
                         @Html.TextBoxFor(model => model.Cameras.CameraUrl, new { @class = "form-control form-control", @id = "cameraRtsp", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label text-center"> HTTP Port</label>
+                    <label class="col-sm-2 col-form-label text-center"> HTTP Port *</label>
                     <div class="col-sm-4">
                         @Html.TextBoxFor(model => model.Cameras.HttpPort, new { @class = "form-control form-control", @id = "httpPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                     </div>
-                    @*</div>
-                        <div class="form-group row">*@
-                    <label class="col-sm-2 col-form-label text-center"> RTSP Port</label>
+
+                    <label class="col-sm-2 col-form-label text-center"> RTSP Port *</label>
                     <div class="col-sm-4">
                         @Html.TextBoxFor(model => model.Cameras.RtspPort, new { @class = "form-control form-control", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                     </div>
@@ -40,16 +44,16 @@
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label text-center" asp-for="Cameras.ServerName">Server</label>
-                    @*<input asp-for="CountyId" class="form-control" />*@
+
                     <div class="col-sm-4">
                         <span asp-validation-for="Cameras.ServerName" class="text-danger"></span>
-                        <select asp-for="Cameras.ServerId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Server,"Value","Text"))">
-                            <option>--Select Server--</option>
+                        <select asp-for="Cameras.ServerId" id="select41" class="form-control" asp-items="@(new SelectList(@ViewBag.Server,"Value","Text"))">
+                            <option value="0">--Select Server--</option>
                         </select>
                     </div>
-                </div> 
+                </div>
                 <div class="float-right">
-                    <button type="submit" value="Add" class="btn btn-success btn-sm text-white"><i class="mdi mdi-content-save"></i> Add</button>
+                    <button type="submit" id="ValCameraSubmit" value="Add" class="btn btn-success btn-sm text-white"><i class="mdi mdi-content-save"></i> Add</button>
                     <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                 </div>
             </div>
@@ -57,4 +61,56 @@
     </div>
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
 
+
+        $('#alertDiv41').hide();
+    });
+    $('#ValCameraSubmit').click(function () {
+
+        var s = "";
+
+
+        if ($('#tabName').val() == '') {
+            $('#tabName').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Tab Name</label></br>'
+            $('#alertLabel41').html(s);
+            $('#alertDiv41').show();
+
+        }
+        if ($('#cameraRtsp').val() == '') {
+            $('#cameraRtsp').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Camera RTSP </label></br>'
+            $('#alertLabel41').html(s);
+            $('#alertDiv41').show();
+
+        }
+        if ($('#httpPort').val() == '') {
+            $('#httpPort').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid HTTP Port</label></br>'
+            $('#alertLabel41').html(s);
+            $('#alertDiv41').show();
+
+        }
+        if ($('#rtspPort').val() == '') {
+            $('#rtspPort').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid RTSP Port</label></br>'
+            $('#alertLabel41').html(s);
+            $('#alertDiv41').show();
+
+        }
+        
+        if ($('#select41').val() == '0') {
+
+            $('#select41').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Server</label></br>'
+            $('#alertLabel41').html(s);
+            $('#alertDiv41').show();
+        }
+       
+        
+
+    });
+
+</script>

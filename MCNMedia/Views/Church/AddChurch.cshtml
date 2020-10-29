@@ -4,19 +4,26 @@
     ViewData["Title"] = "AddChurch";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    @*<a href="F:\MCNWorkingCopy\MCNMedia.git\trunk\MCNMedia\Controllers\ChurchController.cs">F:\MCNWorkingCopy\MCNMedia.git\trunk\MCNMedia\Controllers\ChurchController.cs</a>*@
-<form asp-action="AddChurch" asp-controller="Church" method="post" enctype="multipart/form-data">
+    
+<form asp-action="AddChurch" asp-controller="Church" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">New Church Information</h4>
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row p-3" id="alertDiv">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert" id="alertLabel">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-lg-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <input asp-for="ImageURl" type="file" id="UploadImage"   name="ImageURl2" class="dropify" />
+                                <input asp-for="ImageURl" type="file" id="UploadImage" name="ImageURl2" class="dropify" />
                                 <span asp-validation-for="ImageURl" class="text-danger"></span>
                             </div>
                         </div>
@@ -25,8 +32,8 @@
                     <div class="col-sm-6">
                         <div class=" form-group row">
                             <div class="col-sm-12">
-                                <label asp-for="ChurchName"> Church Name </label>
-                                <input asp-for="ChurchName" class="form-control" />
+                                <label asp-for="ChurchName" for="validationCustom01">Church Name *</label>
+                                <input asp-for="ChurchName" class="form-control" id="validationCustom01" placeholder="Church Name" required />
                                 <span asp-validation-for="ChurchName" class="text-danger"></span>
                             </div>
                         </div>
@@ -36,15 +43,15 @@
                                 @*<input asp-for="ClientTypeId" class="form-control" />*@
                                 <span asp-validation-for="ClientTypeId" class="text-danger"></span>
                                 <select asp-for="ClientTypeId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.ClientTypes,"Value","Text"))">
-                                    <option>--Select Client--</option>
+                                    <option value="0">--Select Client--</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class=" form-group row">
                             <div class="col-sm-12">
-                                <label asp-for="Password"> Password </label>
-                                <input asp-for="Password" class="form-control" />
+                                <label asp-for="Password" for="validationCustom02">Password * </label>
+                                <input asp-for="Password" class="form-control" id="validationCustom02" placeholder="Password " required />
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                         </div>
@@ -61,25 +68,25 @@
                     <h4 class="card-title">Location Details</h4>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label asp-for="Address"> Address</label>
-                            <input asp-for="Address" class="form-control" />
+                            <label asp-for="Address" for="validationCustom03">Address *</label>
+                            <input asp-for="Address" class="form-control" id="validationCustom03" placeholder="Address " required />
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <label asp-for="Town"> Town</label>
-                            <input asp-for="Town" class="form-control" />
+                            <label asp-for="Town" for="validationCustom04">Town *</label>
+                            <input asp-for="Town" class="form-control" id="validationCustom04" placeholder="Town " required />
                             <span asp-validation-for="Town" class="text-danger"></span>
                         </div>
                         @*</div>
-                            <div class="form-group row">*@
+        <div class="form-group row">*@
                         <div class="col-sm-6">
                             <label asp-for="CountyId" class=" text-center">County</label>
                             @*<input asp-for="CountyId" class="form-control" />*@
                             <span asp-validation-for="CountyId" class="text-danger"></span>
-                            <select asp-for="CountyId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Counties,"Value","Text"))">
-                                <option>--Select County--</option>
+                            <select asp-for="CountyId" id="select2" class="form-control" asp-items="@(new SelectList(@ViewBag.Counties,"Value","Text"))">
+                                <option value="0">--Select County--</option>
                             </select>
                         </div>
                     </div>
@@ -92,22 +99,22 @@
                     <h4 class="card-title">Contact Details</h4>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label asp-for="Website">Website</label>
-                            <input asp-for="Website" class="form-control" />
+                            <label asp-for="Website" for="validationCustom05">Website *</label>
+                            <input asp-for="Website" class="form-control" id="validationCustom05" placeholder="Website " required />
                             <span asp-validation-for="Website" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <label asp-for="EmailAddress">Email Address</label>
-                            <input asp-for="EmailAddress" class="form-control" />
+                            <label asp-for="EmailAddress" for="validationCustom06">Email Address *</label>
+                            <input asp-for="EmailAddress" class="form-control" id="validationCustom06" placeholder="Email Address " required />
                             <span asp-validation-for="EmailAddress" class="text-danger"></span>
                         </div>
                         @*</div>
-                            <div class="form-group row">*@
+                    <div class="form-group row">*@
                         <div class="col-sm-6">
-                            <label asp-for="Phone" class=" text-center">Phone</label>
-                            <input asp-for="Phone" class="form-control" />
+                            <label asp-for="Phone" class=" text-center" for="validationCustom07">Phone *</label>
+                            <input asp-for="Phone" class="form-control" id="validationCustom07" placeholder="Password " required />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
                     </div>
@@ -118,16 +125,93 @@
     </div>
 
     <div class="float-right">
-        <button type="submit" value="Add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Church</button>
+        <button type="submit"  id="ValChurchSubmit" value="Add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Church</button>
         <a id="back" class="btn btn-secondary btn-sm  " href="../Church/Listchurch"><i class="fa fa-chevron-left"></i> Back</a>
     </div>
 
 </form>
 
+<script type="text/javascript">
+    $(document).ready(function () {
 
-@*<div>
-        <a asp-action="Index">Back to List</a>
-    </div>*@
+
+        $('#alertDiv').hide();
+    });
+    $('#ValChurchSubmit').click(function () {
+
+        var s = "";
+
+
+        if ($('#validationCustom01').val() == '') {
+            $('#validationCustom01').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Church Name</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#select1').val() == '0') {
+
+            $('#select1').attr('class', 'form-control border-danger');
+
+            s += '<label>Please Provide a Valid Client Type</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+        if ($('#validationCustom02').val() == '') {
+            $('#validationCustom02').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Password</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+
+        if ($('#validationCustom03').val() == '') {
+            $('#validationCustom03').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Address</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom04').val() == '') {
+            $('#validationCustom04').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Town</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#select2').val() == '0') {
+
+            $('#select2').attr('class', 'form-control border-danger');
+
+            s += '<label>Please Provide a Valid Country</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+        if ($('#validationCustom05').val() == '') {
+            $('#validationCustom05').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Website</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom06').val() == '') {
+            $('#validationCustom06').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Email</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom07').val() == '') {
+            $('#validationCustom07').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Phone</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+
+    });
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -157,7 +157,7 @@
 
     .media screen and (max-width:767px) {
         .main-timeline .timeline
-    
+
     {
         width: 100%;
         margin: 0 0 40px;
@@ -200,49 +200,57 @@
         font-size: 18px;
     }
     }
+    .home1 {
+        background-image: url( "/Images/wbsite church image.jpg");
+        background-position: center center;
+        background-repeat : no-repeat;
+        background-attachment:fixed;
+        background-size:cover;
+           }
 </style>
-<div class="card h-100 w-auto " style="background-color:#1e1625">
+<div class="card h-100 w-auto home1 ">
 
-    <div class="card-body">
+<div class="card-body">
 
-        <div class="pt-4 font-weight-bolder text-center text-white ">
-            <h1>Welcome to MCN Media</h1>
-            <h2>Europe's Leading Specialists in Live Streaming</h2>
-        </div>
-        <div class="row pt-5 justify-content-center">
-            <div class="row text-center">
-                @foreach (Church church in Model)
-                {
-                    <div class="text-white col-lg-2 col-md-4 col-sm-12 text-wrap">
-                        <a href="@Url.Action("Preview", "Preview",new { chId = church.ChurchId })" title="Preview">
-                            <img src="@church.ImageURl" class="auth-img-bg rounded-circle mb-2 " style="width:250px; height:250px;" alt="profile image" />
-                            <h4 class="text-wrap text-white">@church.ChurchName</h4>
-                        </a>
-                    </div>
-                }
-
-
-            </div>
-        </div>
-
-        <div class="row pt-5 justify-content-center">
-                <div class=" selectWrapper col-md-4 col-sm-12 ">
-                    <span class="text-danger"></span>
-                    <select id="select2" name="countryId" onchange="DoPostBack();" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
-                        <option value="-1">--Select Country--</option>
-                    </select>
+    <div class="pt-4 ml-3 font-weight-bolder text-white ">
+        <h2>WELCOME TO</h2>
+        <h1 style="color:darkgoldenrod">MCN MEDIA</h1>
+        <h3>Europe's Leading Specialists in Live Streaming</h3>
+    </div>
+    <div class="row pt-5 justify-content-center">
+        <div class="row text-center">
+            @foreach (Church church in Model)
+            {
+                <div class="text-white col-lg-2 col-md-4 col-sm-12 text-wrap">
+                    <a href="@Url.Action("Preview", "Preview",new { chId = church.ChurchId })" title="Preview">
+                        <img src="@church.ImageURl" class="auth-img-bg rounded-circle mb-2 " style="width:250px; height:250px;" alt="profile image" />
+                        <h4 class="text-wrap text-white">@church.ChurchName</h4>
+                    </a>
                 </div>
-                <div class="col-md-1 col-sm-12 pt-3"></div>
-                <div class=" selectWrapper col-md-4 col-sm-12 ">
-                    <span class="text-danger"></span>
+            }
 
-                    <select name="County" class="form-control" id="County">
-                    </select>
 
-                </div>
-           
         </div>
     </div>
+
+    <div class="row pt-5 justify-content-center">
+        <div class=" selectWrapper col-md-4 col-sm-12 ">
+            <span class="text-danger"></span>
+            <select id="select2" name="countryId" onchange="DoPostBack();" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
+                <option value="-1">--Select Country--</option>
+            </select>
+        </div>
+        <div class="col-md-1 col-sm-12 pt-3"></div>
+        <div class=" selectWrapper col-md-4 col-sm-12 ">
+            <span class="text-danger"></span>
+
+            <select name="County" class="form-control" id="County">
+            </select>
+
+        </div>
+
+    </div>
+</div>
 </div>
 
 
@@ -251,7 +259,8 @@
 
         <div class="row ">
             <div class="col-sm-5 p-0 m-0">
-                <img src="~/Images/Inner image 1.jpg" class="img-fluid w-100 h-100 blur " />
+                
+                <img src="~/Images/Home page Web.jpg" class="img-fluid w-100 h-100 " />
             </div>
             <div class="col-sm-7 justify-content-center ">
                 <div class="container">
@@ -346,7 +355,7 @@
                 </div>
 
             </div>
-          
+
         </div>
     </div>
 </div>
@@ -356,29 +365,29 @@
     });
     function DoPostBack() {
         var CountryId = document.getElementById('select2').value;
-  
+
         $.ajax({
             url: "/WebSite/LoadCountyDDL",
             type: "GET",
             data: { countryId: CountryId },
             contentType: "application/json;charset=utf-8",
-            datatype: "json", 
+            datatype: "json",
             success: function (result) {
                 var s;
                 $.each(result, function (key, item) {
                     s += '<option value="' + item.countyId + '">' + item.countyName + '</option>'
-                    
+
                 });
 
                 $("#County").html(s);
 
 
-               
+
 
 
             },
             error: function (errormessage) {
-               
+
                 alert(errormessage.responseText);
             }
         });

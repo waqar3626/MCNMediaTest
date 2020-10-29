@@ -25,17 +25,14 @@
                             <div class="modal-body " id="AddSchedulePreview">
                                 @Html.Partial("~/Views/Schedule/AddSchedule.cshtml", Model.Schedules)
                             </div>
-                            @*<div class="modal-footer">
-                                    <button type="button" class="btn btn-success">Submit</button>
-                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                                </div>*@
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <button type="submit" id="AddSchedule1" class="btn btn-outline-behance btn-sm float-right " onclick="AddSchedule()"> <i class="mdi mdi-plus"></i> Add New Schedule</button>
-        @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
+        <button type="submit" id="AddSchedule1" class="btn btn-success btn-sm float-right" onclick="AddSchedule()"> <i  class="fa fa-plus"></i> Add Schedule</button>
+       
         <h3>Manage Schedules</h3>
         <br />
         <div class="">
@@ -46,9 +43,7 @@
                     <table id="order-listing" class="table">
                         <thead>
                             <tr>
-                                @*<th>
-                                        @Html.DisplayNameFor(model => model.UserId)
-                                    </th>*@
+                               
                                 <th>
                                     Church Name
                                 </th>
@@ -157,8 +152,7 @@
         $('#EventChurchName').show();
         $('#EventInput').show();
 
-        //document.getElementById('divDay').style.display = 'none';
-        //document.getElementById('divDate').style.display = 'block';
+        
 
     }
 
@@ -172,8 +166,7 @@
         $('#EventDayInput').hide();
         $('#EventChurchName').hide();
         $('#EventInput').hide();
-        //document.getElementById('divDay').style.display = 'none';
-        //document.getElementById('divDate').style.display = 'block';
+       
 
     }
 

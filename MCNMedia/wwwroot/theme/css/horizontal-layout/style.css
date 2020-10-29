@@ -22498,15 +22498,15 @@ dl li {
   position: absolute;
 }
 
-.solid-bullet-list li:before {
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 100%;
-  background: #248afd;
-  z-index: 1;
-}
+    .solid-bullet-list li:before {
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background: #248afd;
+        z-index: 1;
+    }
 
 .solid-bullet-list:after {
   content: "";
@@ -22533,16 +22533,18 @@ dl li {
   position: relative;
 }
 
-.bullet-line-list li:before {
-  width: 15px;
-  height: 15px;
-  left: -30px;
-  top: 0;
-  border: 4px solid #248afd;
-  margin-right: 15px;
-  z-index: 2;
-  background: #ffffff;
-}
+    .bullet-line-list li:before {
+        width: 15px;
+        height: 15px;
+        left: -30px;
+        top: 0;
+        border: 4px solid goldenrod;
+        margin-right: 15px;
+        z-index: 2;
+        background: #ffffff;
+    }
+  
+
 
 .rtl .bullet-line-list li:before {
   left: unset;

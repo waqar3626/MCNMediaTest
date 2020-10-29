@@ -12,47 +12,54 @@
             <div class="card-body">
                 <h4 class="card-title"> Church Information</h4>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row p-3" id="alertDiv">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert" id="alertLabel">
+
+                        </div>
+                    </div>
+                </div>
                 <input type="hidden" asp-for="Churches.ChurchId" />
-                @*<input type="hidden" value="Churches.ChurchId" id="ChurchId" name="ChurchId" />*@
-            <div class="form-group row ">
-                <div class="col-lg-6 grid-margin stretch-card  " style="height:277px;">
-                    <div class="card " style="margin-top:30px;">
-                        <div class="card-body">
+                
+                <div class="form-group row ">
+                    <div class="col-lg-6 grid-margin stretch-card  " style="height:277px;">
+                        <div class="card " style="margin-top:30px;">
+                            <div class="card-body">
 
-                            <input asp-for="Churches.ImageURl" type="file" name="ImageURl2" class="dropify" />
-                            <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
-                            <input type="hidden" asp-for="Churches.ImageURl" name="ImageUrl" />
+                                <input asp-for="Churches.ImageURl" type="file" name="ImageURl2" class="dropify" />
+                                <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
+                                <input type="hidden" asp-for="Churches.ImageURl" name="ImageUrl" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-6">
+                        <div class=" form-group row">
+                            <div class="col-sm-12">
+                                <label asp-for="Churches.ChurchName" for="validationCustom01">Church Name *</label>
+                                <input asp-for="Churches.ChurchName" class="form-control" id="validationCustom01" placeholder="Church Name" required />
+                                <span asp-validation-for="Churches.ChurchName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class=" form-group row">
+                            <div class="col-sm-12">
+                                <label asp-for="Churches.ClientTypeId">Client Type *</label>
+                                @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                                @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })
+                                <span asp-validation-for="Churches.ClientTypeId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class=" form-group row">
+                            <div class="col-sm-12">
+                                <label asp-for="Churches.Password" for="validationCustom02">Password * </label>
+                                <input asp-for="Churches.Password" class="form-control" id="validationCustom02" placeholder="Password " required  />
+                                <span asp-validation-for="Churches.Password" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-              
-
-
-                <div class="col-sm-6">
-                    <div class=" form-group row">
-                        <div class="col-sm-12">
-                            <label asp-for="Churches.ChurchName">Church Name</label>
-                            <input asp-for="Churches.ChurchName" class="form-control" />
-                            <span asp-validation-for="Churches.ChurchName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class=" form-group row">
-                        <div class="col-sm-12">
-                            <label asp-for="Churches.ClientTypeId">Client Type</label>
-                            @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                            @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })
-                            <span asp-validation-for="Churches.ClientTypeId" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class=" form-group row">
-                        <div class="col-sm-12">
-                            <label asp-for="Churches.Password">Password </label>
-                            <input asp-for="Churches.Password" class="form-control" />
-                            <span asp-validation-for="Churches.Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             </div>
         </div>
     </div>
@@ -63,23 +70,23 @@
                 <h4 class="card-title">Location Details</h4>
                 <div class="form-group row">
                     <div class="col-sm-12">
-                        <label asp-for="Churches.Address">Address</label>
-                        <input asp-for="Churches.Address" class="form-control" />
+                        <label asp-for="Churches.Address" for="validationCustom03">Address *</label>
+                        <input asp-for="Churches.Address" class="form-control" id="validationCustom03" placeholder="Address " required  />
                         <span asp-validation-for="Churches.Address" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                    
                     <div class="col-sm-6">
-                        <label asp-for="Churches.Town">Town</label>
-                        <input asp-for="Churches.Town" class="form-control" />
+                        <label asp-for="Churches.Town" for="validationCustom04">Town *</label>
+                        <input asp-for="Churches.Town" class="form-control" id="validationCustom04" placeholder="Town " required  />
                         <span asp-validation-for="Churches.Town" class="text-danger"></span>
                     </div>
                     @*</div>
                         <div class="form-group row">*@
                     
                 <div class="col-sm-6">
-                    <label asp-for="Churches.CountyId" class=" text-center">County</label>
+                    <label asp-for="Churches.CountyId" class=" text-center">County *</label>
                     @*<input asp-for="Churches.CountyId" class="form-control" />*@
                     @Html.DropDownList("Churches.CountyId", CountyList, new { @class = "form-control" })
                     <span asp-validation-for="Churches.CountyId" class="text-danger"></span>
@@ -94,22 +101,22 @@
                 <h4 class="card-title">Contact Details</h4>
                 <div class="form-group row">
                     <div class="col-sm-12">
-                        <label asp-for="Churches.Website">Website</label>
-                        <input asp-for="Churches.Website" class="form-control" />
+                        <label asp-for="Churches.Website" for="validationCustom05">Website *</label>
+                        <input asp-for="Churches.Website" class="form-control" id="validationCustom05" placeholder="Website " required  />
                         <span asp-validation-for="Churches.Website" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label asp-for="Churches.EmailAddress">Email Address</label>
-                        <input asp-for="Churches.EmailAddress" class="form-control" />
+                        <label asp-for="Churches.EmailAddress" for="validationCustom06">Email Address *</label>
+                        <input asp-for="Churches.EmailAddress" class="form-control" id="validationCustom06" placeholder="Email Address " required  />
                         <span asp-validation-for="Churches.EmailAddress" class="text-danger"></span>
                     </div>
                     @*</div>
                         <div class="form-group row">*@
                 <div class="col-sm-6">
-                    <label asp-for="Churches.Phone" class=" text-center">Phone</label>
-                    <input asp-for="Churches.Phone" class="form-control" />
+                    <label asp-for="Churches.Phone" class=" text-center" for="validationCustom07">Phone *</label>
+                    <input asp-for="Churches.Phone" class="form-control"  id="validationCustom07" placeholder="Password " required />
                     <span asp-validation-for="Churches.Phone" class="text-danger"></span>
                 </div>
                 </div>
@@ -120,11 +127,91 @@
     </div>
     
     <div class="float-right">
-        <button type="submit" value="Update" class="btn btn-warning btn-sm  text-white"><i class="mdi mdi-update text-white"></i> Update</button>
+        <button type="submit"  id="ValChurchSubmit" value="Update" class="btn btn-warning btn-sm  text-white"><i class="mdi mdi-update text-white"></i> Update</button>
         <a id="back" class="btn btn-secondary btn-sm text-white " href="../Church/Listchurch"><i class="fa fa-chevron-left text-white"></i> Back</a>
     </div>
 }
 <script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#alertDiv').hide();
+    });
+    $('#ValChurchSubmit').click(function () {
+
+        var s = "";
+
+
+        if ($('#validationCustom01').val() == '') {
+           
+            s += '<label>Please Provide a Valid Church Name</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#select1').val() == '0') {
+
+            $('#select1').attr('class', 'form-control border-danger');
+
+            s += '<label>Please Provide a Valid Client Type</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+
+        if ($('#validationCustom02').val() == '') {
+            $('#validationCustom02').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Password</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+       
+        if ($('#validationCustom03').val() == '') {
+            $('#validationCustom03').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Address</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom04').val() == '') {
+            $('#validationCustom04').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Town</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#select1').val() == '0') {
+
+            $('#select1').attr('class', 'form-control border-danger');
+
+            s += '<label>Please Provide a Valid Country</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+        if ($('#validationCustom05').val() == '') {
+            $('#validationCustom05').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Website</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom06').val() == '') {
+            $('#validationCustom06').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Email</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom07').val() == '') {
+            $('#validationCustom07').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Phone</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+
+    });
+
     $(document).ready(function () {
         //$("#Churches_ImageURl").attr("data-default-file", "http://lofrev.net/wp-content/photos/2017/05/Online_logo_2.png");
         //$('.dropify').dropify();

@@ -10,7 +10,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+    <style type="text/css">
+        #UserId {
+            pointer-events: none;
+        }
+    </style>
 <hr />
 <div class="grid-margin stretch-card">
     <div class="card">
@@ -22,7 +26,7 @@
 
                         <div class="col-sm-6">
                             <label class=" text-center"> User </label>
-                            @Html.DropDownList("UserId", userddl, "ViewBag.UserId", new { @class = "form-control" })
+                            @Html.DropDownList("UserId", userddl, new { @class = "form-control", @readonly = "readonly" })
                             <span class="text-danger"></span>
                         </div>
 
@@ -71,6 +75,7 @@
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">
+
             window.onload = function () {
                 alert("@ViewBag.Message");
             };
