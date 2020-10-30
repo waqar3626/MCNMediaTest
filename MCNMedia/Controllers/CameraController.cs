@@ -30,7 +30,7 @@ namespace MCNMedia_Dev.Controllers
 
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 cam.Cameras.ChurchId = churchId;
-
+                cam.Cameras.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int cameraId = camDataAccess.AddCamera(cam.Cameras);
                 if (cameraId > 0)
                 {
@@ -64,7 +64,6 @@ namespace MCNMedia_Dev.Controllers
         {
             GenericModel gm = new GenericModel();
             gm.Cameras = camDataAccess.GetCameraById(id);
-            // return View(gm);
             return PartialView("_EditCamera", gm);
         }
 
@@ -90,12 +89,12 @@ namespace MCNMedia_Dev.Controllers
             CamUpdate.CameraUrl = CameraUrl;
             CamUpdate.HttpPort = HttpPort;
             CamUpdate.RtspPort = RtspPort;
-
+            CamUpdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
             int res = camDataAccess.Updatecamera(CamUpdate);
             int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
             WowzaApi.WowzaHelper api = new WowzaApi.WowzaHelper();
             api.RequestCamera(Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")), CamUpdate.CameraId, CamUpdate.CameraUrl);
-            //api.StartRecording(churchId, CamUpdate.CameraId);
+			//api.StartRecording(churchId, CamUpdate.CameraId);
             //api.StopRecording(churchId, CamUpdate.CameraId);
             return Json(res);
         }

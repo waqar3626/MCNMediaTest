@@ -43,6 +43,7 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Phone Number is Required")]
         public string Phone { get; set; }
 
+        public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public string ImageURl { get; set; }
         public string Blurb { get; set; }

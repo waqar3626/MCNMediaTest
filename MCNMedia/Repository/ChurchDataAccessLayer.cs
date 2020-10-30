@@ -115,7 +115,7 @@ namespace MCNMedia_Dev.Repository
         public void AddChurch(Church church)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", church.UpdateBy);
+            _dc.AddParameter("UserId", church.CreateBy);
             _dc.AddParameter("ChurchName", church.ChurchName);
             _dc.AddParameter("ClientTypeId", church.ClientTypeId);
             _dc.AddParameter("UniqueChurchId", Guid.NewGuid().ToString());

@@ -22,7 +22,7 @@ namespace MCNMedia_Dev.Repository
         public int AddAnnouncement(Announcement announcement)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("UserId", announcement.CreatedBy);
             _dc.AddParameter("ChurchId", announcement.ChurchId);
             _dc.AddParameter("AnnouncementTitle", announcement.AnnouncementTitle);
             _dc.AddParameter("AnnouncementText", announcement.AnnouncementText);
@@ -41,7 +41,6 @@ namespace MCNMedia_Dev.Repository
             {
                 Announcement announcement = new Announcement();
                 announcement.ChurchAnnouncementId = Convert.ToInt32(dataRow["ChurchAnnouncementId"].ToString());
-                //announcement.ChurchId = Convert.ToInt32(dataRow["TabName"].ToString());
                 announcement.AnnouncementTitle = dataRow["AnnouncementTitle"].ToString();
                 announcement.AnnouncementText = dataRow["Announcement"].ToString();
                 announcement.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
@@ -100,7 +99,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchAnnounId", announcement.ChurchAnnouncementId);
             _dc.AddParameter("AnnouncementTitle", announcement.AnnouncementTitle);
             _dc.AddParameter("AnnouncementText", announcement.AnnouncementText);
-            _dc.AddParameter("UpdateBy", 1);
+            _dc.AddParameter("UpdateBy", announcement.UpdatedBy);
 
             return _dc.Execute("spAnnouncement_Update");
         }

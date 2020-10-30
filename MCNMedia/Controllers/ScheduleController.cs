@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -56,7 +57,7 @@ namespace MCNMedia_Dev.Controllers
                 }
 
 
-
+                sch.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.AddSchedule(sch);
                 return RedirectToAction("ListSchedule");
 
@@ -122,7 +123,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
                 }
-
+                schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.UpdateSchedule(schedule);
                 return RedirectToAction("ListSchedule");
             }
@@ -163,7 +164,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+                schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.UpdateSchedule(schedule);
                 return RedirectToAction("ListUser");
 

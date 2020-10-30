@@ -52,6 +52,7 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
                     mediaChurch.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                    mediaChurch.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     mediaChurch.MediaName = Path.GetFileName(mediaFile.FileName);
                     mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, mediaChurch.ChurchId);
                     mediaChurch.MediaType = mediaType;
@@ -122,6 +123,7 @@ namespace MCNMedia_Dev.Controllers
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditPictureTabName;
                 mediaupdate.MediaType = mediaType;
+                mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
 
 
@@ -165,6 +167,7 @@ namespace MCNMedia_Dev.Controllers
                     {
                         MediaChurch media = new MediaChurch();
                         media.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                        media.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                         media.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, media.ChurchId);
                         media.MediaType = mediaType;
                         media.MediaName = mediaFile.FileName.ToString();
@@ -241,7 +244,7 @@ namespace MCNMedia_Dev.Controllers
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditVidTabName;
                 mediaupdate.MediaType = mediaType;
-
+                mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
                 return Json(res);
             }
@@ -281,6 +284,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 MediaChurch mediaChurch = new MediaChurch();
                 mediaChurch.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                mediaChurch.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 mediaChurch.MediaName = Path.GetFileName(mediaFile.FileName);
                 mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShow, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
                 mediaChurch.MediaType = mediaType;
@@ -353,7 +357,7 @@ namespace MCNMedia_Dev.Controllers
 
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditSlideShowTabName;
-
+                mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
                 return Json(res);
             }

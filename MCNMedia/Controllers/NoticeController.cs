@@ -37,6 +37,7 @@ namespace MCNMedia_Dev.Controllers
 
                 Notice notice = new Notice();
                 notice.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                notice.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 notice.NoticeTitle = NoticeTitle;
                 notice.NoticeName = NoticeName;
 
@@ -108,6 +109,7 @@ namespace MCNMedia_Dev.Controllers
             {
 
                 Notice notice = new Notice();
+                notice.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 notice.ChurchNoticeId = Convert.ToInt32(ChurchNoticeId);
                 notice.NoticeTitle = NoticeTitle;
                 notice.NoticeName = NoticeName;

@@ -12,14 +12,13 @@ namespace MCNMedia_Dev.Models
 
         public User Users { get; set; }
         public MediaChurch Media { get; set; }
-
         public Schedule Schedules { get; set; }
 
         public Recording Recordings { get; set; }
 
         public Announcement Announcement { get; set; }
         public IEnumerable<Announcement> LAnnouncement { get; set; }
-        public Dashboard Dashboards { get; set; }
+public Dashboard Dashboards { get; set; }
         public IEnumerable<Dashboard> LDashboards { get; set; }
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }

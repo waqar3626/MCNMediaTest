@@ -20,7 +20,7 @@ namespace MCNMedia_Dev.Repository
         public void InsertSetUp(SetUp setup)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("UserId", setup.UpdatedBy);
             _dc.AddParameter("SetUpSelectServer", setup.SelectServer);
             _dc.AddParameter("SetUpInternetProvider", setup.InternetProvider);
             _dc.AddParameter("SetUpRouterModel", setup.RouterModel);

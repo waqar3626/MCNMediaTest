@@ -45,7 +45,7 @@ namespace MCNMedia_Dev.Repository
         public int AddCamera(Camera camera)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("CreatedBy", 1);
+            _dc.AddParameter("CreatedBy", camera.CreatedBy);
             _dc.AddParameter("CameraName", camera.CameraName);
             _dc.AddParameter("CameraUrl", camera.CameraUrl);
             _dc.AddParameter("RtspPort", camera.RtspPort);
@@ -78,22 +78,7 @@ namespace MCNMedia_Dev.Repository
                 camera.ServerIP = dataRow["ServerIP"].ToString();
 
 
-                //camera.Town = dataRow["Town"].ToString();
-                //camera.CountyId = Convert.ToInt32(dataRow["CountyId"]);
-                //camera.Website = dataRow["Website"].ToString();
-                //camera.EmailAddress = dataRow["EmailAddress"].ToString();
-                //camera.Phone = dataRow["Phone"].ToString();
-                //camera.ImageURl = dataRow["ImageURL"].ToString();
-                //camera.Blurb = dataRow["Blurb"].ToString();
-                //camera.Slug = dataRow["Slug"].ToString();
-                //camera.Notice = dataRow["Notice"].ToString();
-                //camera.Featured = Convert.ToInt32(dataRow["Featured"]);
-                //camera.UniqueIdentifier = dataRow["UniqueIdentifier"].ToString();
-                //camera.RepeatRecordings = Convert.ToBoolean(dataRow["RepeatRecordings"]);
-                //camera.Switch = Convert.ToInt32(dataRow["Switch"]);
-                //camera.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
-                //camera.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
-
+              
             }
             return camera;
         }
@@ -105,7 +90,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("CamName", camera.CameraName);
             _dc.AddParameter("CamRtsp", camera.RtspPort);
             _dc.AddParameter("CamHttp", camera.HttpPort);
-            _dc.AddParameter("UpdateBy", 1);
+            _dc.AddParameter("UpdateBy", camera.UpdatedBy);
 
             return _dc.Execute("spcamera_Update");
         }

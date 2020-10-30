@@ -37,7 +37,6 @@ namespace MCNMedia_Dev.Repository
                 user.LastName = dataRow["LastName"].ToString();
                 user.EmailAddress = dataRow["EmailAddress"].ToString();
                 user.LoginPassword = dataRow["LoginPassword"].ToString();
-                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
                 user.RoleName = dataRow["RoleName"].ToString();
                 user.UserName=user.FirstName + " " + user.LastName;
 
@@ -46,9 +45,9 @@ namespace MCNMedia_Dev.Repository
 
             return Balobj;
         }
-
-        // get user role
-        public IEnumerable<UserRoles> GetRoles()
+		
+		// get user role
+		public IEnumerable<UserRoles> GetRoles()
         {
             List<UserRoles> Balobj = new List<UserRoles>();
             _dc.ClearParameters();
@@ -63,9 +62,8 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-
-
-        //To Add new User record    
+        
+		//To Add new User record    
         public void AddUser(User user)
         {
             _dc.ClearParameters();
@@ -77,7 +75,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RoleId", user.RoleId);
             _dc.Execute("spUser_Add");
         }
-        //To Update the records of a particluar User
+		//To Update the records of a particluar User
         public void UpdateUser(User user)
         {
             _dc.ClearParameters();
@@ -85,12 +83,10 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("FName", user.FirstName);
             _dc.AddParameter("LName", user.LastName);
             _dc.AddParameter("EmailAdd", user.EmailAddress);
-            //_dc.AddParameter("Password", user.LoginPassword);
             _dc.AddParameter("UpdateBy", user.UpdatedBy);
             _dc.AddParameter("RoleId", user.RoleId);
             _dc.Execute("spUser_Update");
         }
-
         //Get the details of a particular User
         public User GetUserData(int id)
         {
@@ -106,11 +102,8 @@ namespace MCNMedia_Dev.Repository
                 user.LastName = dataRow["LastName"].ToString();
                 user.EmailAddress = dataRow["EmailAddress"].ToString();
                 user.LoginPassword = dataRow["LoginPassword"].ToString();
-                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
                 user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
             }
-
-          
             return user;
         }
 
@@ -133,13 +126,11 @@ namespace MCNMedia_Dev.Repository
                 user.RoleId = Convert.ToInt32(dataRow["RoleId"]);
                 user.RoleName = dataRow["RoleName"].ToString();
             }
-
-
             return user;
         }
-
-        //To Delete the record on a particular User 
-        public void DeleteUser(int id)
+        
+		//To Delete the record on a particular User 
+		public void DeleteUser(int id)
         {
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);

@@ -56,13 +56,9 @@ namespace MCNMedia_Dev.Repository
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 UserAssignChurches userAssignChurches = new UserAssignChurches();
-                //userAssignChurches.UserAssignChurchId= Convert.ToInt32(dataRow["UserChurchId"]);
                 userAssignChurches.UserId= Convert.ToInt32(dataRow["UserId"]);
-               // userAssignChurches.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 userAssignChurches.ChurchName = dataRow["ChurchName"].ToString();
                 userAssignChurches.FirstName= dataRow["fullname"].ToString();
-             
-
               Balobj.Add(userAssignChurches);
             }
               return Balobj;
@@ -81,9 +77,6 @@ namespace MCNMedia_Dev.Repository
             userAssignChurches.UserAssignChurchId = Convert.ToInt32(dataRow["UserChurchId"]);
             userAssignChurches.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
             userAssignChurches.UserId = Convert.ToInt32(dataRow["UserId"]);
-           
-
-
             Balobj.Add(userAssignChurches);
         }
         return Balobj;
@@ -91,14 +84,6 @@ namespace MCNMedia_Dev.Repository
 
        
 
-        //public void UpdateUserChurch(UserAssignChurches uas)
-        //{
-        //    _dc.ClearParameters();
-        //    _dc.AddParameter("UsrId", uas.UserId);
-        //    _dc.AddParameter("ChId", uas.ChurchId);
-        //    _dc.AddParameter("UpdateBy", uas.UpdateBy);
-        //    _dc.Execute("spUser_Church_Update");
-        //}
         public void DeleteUserChurches(int id)
         {
             _dc.ClearParameters();

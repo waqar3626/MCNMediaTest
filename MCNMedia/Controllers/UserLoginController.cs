@@ -28,6 +28,7 @@ namespace MCNMedia_Dev.Controllers
                 User usr = _userDataAccess.UserLogin(user);
                 if (usr.UserId > 0)
                 {
+                    HttpContext.Session.SetInt32("UserId", usr.UserId);
                     if (usr.RoleName.ToLower() == "admin")
                     {
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());

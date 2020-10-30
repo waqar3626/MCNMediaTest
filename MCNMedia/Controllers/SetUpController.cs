@@ -30,7 +30,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                     ChurchSetUp.ChurchId = churchId;
-
+                    ChurchSetUp.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     setupDataAccess.InsertSetUp(ChurchSetUp);
                 }
                 return RedirectToAction("Listchurch", "Church");

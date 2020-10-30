@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -86,6 +87,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                recording.CreatedBy= (int)HttpContext.Session.GetInt32("UserId");
                 recordDataAccess.AddRecording(recording);
                 return RedirectToAction("ListRecording");
 
@@ -104,7 +106,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+                recording.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 recordDataAccess.UpdateRecording(recording);
                 return RedirectToAction("ListRecording");
 

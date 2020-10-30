@@ -59,7 +59,7 @@ namespace MCNMedia_Dev.Controllers
             List<Church> churchInfo = new List<Church>();
             churchInfo.Add(church);
             return Json(churchInfo);
-            // return Json(new { data = cameraInfo });
+          
 
         }
 
@@ -72,7 +72,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult UpdateChurchInfo([Bind] Church church)
         {
-
+            church.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
             chdataAccess.UpdateChurch(church);
             return RedirectToAction("ChurchInfo");
 
@@ -105,7 +105,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+                announcement.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
                 return RedirectToAction("Announcement");
 
@@ -228,7 +228,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult EditRecordingClient(GenericModel gm)
         {
-
+            gm.Recordings.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
             recordingDataAccess.UpdateRecording(gm.Recordings);
             return RedirectToAction("Recording");
 
@@ -285,6 +285,7 @@ namespace MCNMedia_Dev.Controllers
                     gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
 
                 }
+                gm.Schedules.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.UpdateSchedule(gm.Schedules);
                 return RedirectToAction("Schedule");
 

@@ -10,11 +10,17 @@ namespace MCNMedia_Dev.Models
     {
         [Key]
         public int UserId { get; set; }
+
         public string FirstName { get; set; } 
-        public string LastName { get; set; }     
+        public string LastName { get; set; }
+
+
         public string EmailAddress { get; set; }
+
         public string LoginPassword { get; set; }
+
         public int UpdatedBy { get; set; }
+
         public int RoleId { get; set; }
 
         public string RoleName { get; set; }

@@ -15,7 +15,6 @@ namespace MCNMedia_Dev.Repository
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
-
         //To Add new Schedule record    
         public void AddSchedule(Schedule schedules)
         {
@@ -29,15 +28,12 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("IsRepeated", schedules.IsRepeated);
             _dc.AddParameter("SchPassword", schedules.Password);
-         
             _dc.AddParameter("SchCameraId", schedules.CameraId); 
-
-            _dc.AddParameter("CreatedBy", 1);
-            //_dc.AddParameter("RoleId", schedules.RoleId);
+            _dc.AddParameter("CreatedBy", schedules.CreatedBy);
             _dc.Execute("spschedule_Add");
         }
 
-        //To View all Users details 
+		//To View all Users details 
         public IEnumerable<Schedule> GetAllSchedule()
         {
             List<Schedule> Balobj = new List<Schedule>();
@@ -80,7 +76,6 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchDay", EventDay);
             _dc.AddParameter("EveBy", EventBy);
 
-            //_dc.AddParameter("EmailAdd", "");
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_Search");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -179,9 +174,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-             
-
-
                 Balobj.Add(schedule);
             }
             return Balobj;

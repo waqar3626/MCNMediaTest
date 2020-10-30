@@ -64,7 +64,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RecordingURL", recording.RecordingURl);
             _dc.AddParameter("RecordingDate", recording.Date);
             _dc.AddParameter("RecordingTime", recording.Time);
-            _dc.AddParameter("UserId", recording.UpdatedBy);
+            _dc.AddParameter("UserId", recording.CreatedBy);
             _dc.AddParameter("ChurchId", recording.ChurchId);
             _dc.Execute("spRecording_Add");
         }

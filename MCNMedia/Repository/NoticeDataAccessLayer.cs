@@ -16,25 +16,7 @@ namespace MCNMedia_Dev.Repository
             _dc = new AwesomeDal.DatabaseConnect();
         }
 
-        //public IEnumerable<Notice> GetAllNotices()
-        //{
-        //    List<Notice> listnotice = new List<Notice>();
-        //    _dc.ClearParameters();
-        //    _dc.AddParameter("NotTitle", "");
-        //    DataTable dataTable = _dc.ReturnDataTable("spChurchNotice_Search");
-        //    foreach (DataRow dataRow in dataTable.Rows)
-        //    {
-        //        Notice notice = new Notice();
-        //        notice.ChurchNoticeId = Convert.ToInt32(dataRow["ChurchNoticeId"]);
-        //        notice.NoticeTitle = dataRow["NoticeTitle"].ToString();
-        //        notice.NoticeName = dataRow["Notice"].ToString();
-        //        notice.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
-        //        notice.CreatedBy = dataRow["FirstName"].ToString();
-        //        notice.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
-        //        notice.ChurchName = dataRow["ChurchName"].ToString();
-        //        listnotice.Add(notice);
-        //    }
-        //    return listnotice;
+      
         public IEnumerable<Notice> GetAllNotices(int ChrId)
         {
             List<Notice> listnotice = new List<Notice>();
@@ -58,7 +40,7 @@ namespace MCNMedia_Dev.Repository
         public int AddNotice(Notice notice)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("UserId", notice.UpdatedBy);
             _dc.AddParameter("NotTitle", notice.NoticeTitle);
             _dc.AddParameter("Notice2", notice.NoticeName);
             _dc.AddParameter("ChurchId1", notice.ChurchId);

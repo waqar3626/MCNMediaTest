@@ -13,7 +13,7 @@ namespace MCNMedia_Dev.Models
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string CreatedBy { get; set; }
+        public String CreatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int UpdatedBy { get; set; }
     }

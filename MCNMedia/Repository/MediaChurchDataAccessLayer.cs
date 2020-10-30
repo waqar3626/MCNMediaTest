@@ -22,7 +22,7 @@ namespace MCNMedia_Dev.Repository
         public int AddMedia(MediaChurch media)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("UserId", media.UpdatedBy);
             _dc.AddParameter("MedType", media.MediaType);
             _dc.AddParameter("MedTabName", media.TabName);
             _dc.AddParameter("MedURL", media.MediaURL);

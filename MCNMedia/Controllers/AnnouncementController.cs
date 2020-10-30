@@ -48,8 +48,7 @@ namespace MCNMedia_Dev.Controllers
 
                     announcement.AnnouncementTitle = announceTittle;
                     announcement.AnnouncementText = announceText;
-
-
+                announcement.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     int res = AnnouncementDataAccessLayer.AddAnnouncement(announcement);
 
 
@@ -112,7 +111,7 @@ namespace MCNMedia_Dev.Controllers
                 announcement.ChurchAnnouncementId = Convert.ToInt32(churchAnnounceId);
                 announcement.AnnouncementTitle = editAnnounceTitle;
                 announcement.AnnouncementText = editAnnounceText;
-
+            announcement.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
 
 

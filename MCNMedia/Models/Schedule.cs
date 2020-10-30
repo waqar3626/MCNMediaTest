@@ -37,11 +37,7 @@ namespace MCNMedia_Dev.Models
         public Boolean IsRepeated { get; set; }
         public int UpdatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        //[DataType(DataType.Date)]
-        //[Display(Name = "Required delivery date")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        //public Nullable<DateTime> DelDt { get; set; }
+        public int CreatedBy { get; set; }
 
     }
     public enum EventDay
