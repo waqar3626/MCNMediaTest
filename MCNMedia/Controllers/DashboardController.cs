@@ -18,6 +18,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
+
                 gm.Dashboards = dashboardData.GetDashboardInfo();
                 return View(gm);
             }

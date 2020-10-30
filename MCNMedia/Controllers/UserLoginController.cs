@@ -31,7 +31,7 @@ namespace MCNMedia_Dev.Controllers
                     if (usr.RoleName.ToLower() == "admin")
                     {
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
-                        return View("/Views/Home/Home.cshtml");
+                        return RedirectToAction("Dashboard","Dashboard");
                     }
                     else if (usr.RoleName.ToLower() == "client")
                     {

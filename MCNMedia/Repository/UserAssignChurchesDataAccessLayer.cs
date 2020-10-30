@@ -60,7 +60,7 @@ namespace MCNMedia_Dev.Repository
                 userAssignChurches.UserId= Convert.ToInt32(dataRow["UserId"]);
                // userAssignChurches.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 userAssignChurches.ChurchName = dataRow["ChurchName"].ToString();
-                userAssignChurches.FirstName= dataRow["FirstName"].ToString();
+                userAssignChurches.FirstName= dataRow["fullname"].ToString();
              
 
               Balobj.Add(userAssignChurches);

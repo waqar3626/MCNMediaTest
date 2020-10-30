@@ -41,7 +41,7 @@ namespace MCNMedia_Dev.Controllers
                 return NotFound();
             }
             LoadDDL();
-            return View(user);
+            return PartialView(user);
         }
         //[HttpGet]
         //public IActionResult Delete(int id)

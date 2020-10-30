@@ -15,11 +15,7 @@ namespace MCNMedia_Dev.Models
             ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
             var counties = churchDataAccess.GetCountyList(id);
             var list = new List<SelectListItem>();
-            list.Add(new SelectListItem
-            {
-                Text = "--Select--",
-                Value = "0"
-            });
+           
             foreach (DataRow dr in counties.Rows)
             {
                 list.Add(new SelectListItem
@@ -36,11 +32,7 @@ namespace MCNMedia_Dev.Models
             ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
             var counties = churchDataAccess.GetCountriesList();
             var list = new List<SelectListItem>();
-            list.Add(new SelectListItem
-            {
-                Text = "--Select--",
-                Value = "0"
-            });
+           
             foreach (DataRow dr in counties.Rows)
             {
                 list.Add(new SelectListItem
@@ -57,11 +49,7 @@ namespace MCNMedia_Dev.Models
             ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
             var clientTypes = churchDataAccess.GetClientTypeList();
             var list = new List<SelectListItem>();
-            list.Add(new SelectListItem
-            {
-                Text = "--Select--",
-                Value = "0"
-            });
+            
             foreach (DataRow dr in clientTypes.Rows)
             {
                 list.Add(new SelectListItem
@@ -81,7 +69,8 @@ namespace MCNMedia_Dev.Models
             list.Add(new SelectListItem
             {
                 Text = "--Select--",
-                Value = "0"
+                Value = "0",
+              
             });
             foreach (DataRow dr in ChurchDDL.Rows)
             {

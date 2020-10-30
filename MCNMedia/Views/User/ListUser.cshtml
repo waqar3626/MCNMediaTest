@@ -65,19 +65,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Role</label>
+                            <div class="col-sm-4 col-form-label"><label></label></div>
                             <div class="col-sm-8">
-                                @Html.TextBox("Role", "", new { @class = "form-control", @placeholder = "Enter Role" })
+                                <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-table-search"></i>Search</button>
+                                <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm"><i class="mdi mdi-cancel"></i>Cancel</a>
+                            </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-table-search"></i>Search</button>
-                            <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm"><i class="mdi mdi-cancel"></i>Cancel</a>
-                        </div>
-                    </div>
+                   
                 </div>
             </form>
         </div>
@@ -96,24 +92,16 @@
                     @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
                     {
 
-                        <div class="table-responsive">
-                            <table id="order-listing" class="table">
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table id="sortable-table-1" class="table">
                                 <thead>
                                     <tr>
-                                        <th>
-                                           Name
-                                        </th>
                                         
-                                        <th>
-                                            Email Address
-                                        </th>
-                                        <th>
-                                            Assigned Churches
-                                        </th>
-                                        
-                                        <th>
-                                            Role
-                                        </th>
+                                        <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
+                                    
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

@@ -28,11 +28,12 @@
                     <div class="col-sm-4">
                         <span asp-validation-for="ChurchId" class="text-danger"></span>
                         @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                        @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control", @id = "ddlChurchId", @onchange = "DoPostBack();" })
+                        @Html.DropDownList("ChurchId", SelectList, new { @class = "custom-select", @id = "ddlChurchId", @required="required", @onchange = "DoPostBack();" })
+                       
                         <span asp-validation-for="ChurchId" class="text-danger"></span>
                        
                             <div class="invalid-feedback" id="ChurchViladate">
-                               
+                               Please Select the Church 
                             </div>
                         </div>
                  
@@ -57,7 +58,7 @@
 
                         <div class="custom-control custom-switch lg">
                             <input type="checkbox" class="custom-control-input control" asp-for="IsRepeated" name="IsRepeated" id="IsRepeated">
-                            <label class="custom-control-label" for="IsRepeated">Would you like to repeat Event?</label>
+                            <label class="custom-control-label" for="IsRepeated">Would you like to repeat this event?</label>
 
                         </div>
 
@@ -90,8 +91,8 @@
                         <span asp-validation-for="EventDay" class="text-danger"></span>
 
 
-                        <select asp-for="EventDay" class="form-control" id="validationCustom06" required>
-                            <option selected="selected" value="0">Please select Day</option>
+                        <select asp-for="EventDay" class="custom-select" id="validationCustom06" required>
+                            <option selected="selected" disabled value="0">Please select Day</option>
                             <option value="Monday" name="EventDay">Monday</option>
                             <option value="Tuesday" name="EventDay">Tuesday</option>
                             <option value="Wednesday" name="EventDay">Wednesday</option>
@@ -170,7 +171,7 @@
                     <div class="col-sm-12 pt-3">
                         <div class="custom-control custom-switch lg">
                             <input type="checkbox" class="custom-control-input control" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Would you like to password protect this recording?</label>
+                            <label class="custom-control-label" for="customSwitch1">Would you like to password protect this event?</label>
 
                         </div>
 
@@ -211,6 +212,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#ddlChurchId').append("<option value='0' selected disabled>--Select Church--</option>");
         $('#alertDiv').hide();
         $('#EventDayLabel1').hide();
         $('#EventDayInput1').hide();
