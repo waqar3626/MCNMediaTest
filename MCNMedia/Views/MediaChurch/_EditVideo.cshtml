@@ -2,41 +2,42 @@
 @{
 
 }
+<style type="text/css">
 
+    .edit-video > .dropify-wrapper {
+        height: 130px !important;
+    }
+</style>
 
 @using (Html.BeginForm("UpdateVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-<div class="form-group row p-3" id="alertDiv12">
-    <div class="col-md-12">
-        <div class="alert alert-danger" role="alert" id="alertLabel12">
-
+    <div class="form-group row p-3" id="alertDiv12">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" id="alertLabel12">
+                <input type="hidden" id="HdnMediaName1" asp-for="Media.MediaName" />
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <video width="320" height="300" id="ViewVideo" controls>
-            <source src="~/Video/10%20Sec%20Video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-           
-        </video>
-    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="my-video"></div>
+        </div>
         <div class="col-sm-6">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Media.ChurchMediaId" id="chmedId" />
                 <input type="hidden" asp-for="Media.MediaURL" class="form-control" id="vedioUrl" />
-                <div class="form-group">
 
-                    <input asp-for="Media.MediaURL" class="form-control dropify" id="EditVidFile" type="file" name="MediaURl3" />
-                    <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
-                    <input type="hidden" id="HdnMediaUrl1" asp-for="Media.MediaURL" />
-                    <input type="hidden" id="HdnMediaName1" asp-for="Media.MediaName" />
-                </div>
                 <div class="form-group">
                     <label asp-for="Media.TabName" class="control-label">Tab Name</label>
                     <input asp-for="Media.TabName" class="form-control" id="medEditVideoTabName" />
                     <span asp-validation-for="Media.TabName" class="text-danger"></span>
+                </div>
+                <div class="form-group edit-video">
+                    <input asp-for="Media.MediaURL" class="form-control dropify" id="EditVidFile" type="file" name="MediaURl3" />
+                    <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+                    <input type="hidden" id="HdnMediaUrl1" asp-for="Media.MediaURL" />
+                    <input type="hidden" id="HdnMediaName1" asp-for="Media.MediaName" />
                 </div>
                 <div class="form-group float-right">
                     <a onclick="UpdateVid()" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i>Update</a>
@@ -45,56 +46,62 @@
             </form>
         </div>
     </div>
-    
-    }
 
+}
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('#alertDiv12').hide();
-            
-            var filedropper = $('#EditVidFile').dropify();
-            filedropper = filedropper.data('dropify');
-            filedropper.resetPreview();
-            filedropper.clearElement();
-
-            filedropper.settings['defaultFile'] = '../' + $('#vedioUrl').val();
-            filedropper.destroy();
-            filedropper.init();
-
-            $('#DisplayVideo').attr("src", '../' + $('#vedioUrl').val() + '');
-
+<script src="~/js/jwplayer.js"></script>
+<script type="text/javascript">
+    jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
+    jQuery(document).ready(function ($) {
+        var fileURL = '../' + $('#vedioUrl').val();
+        jwplayer('my-video').setup({
+            file: fileURL,
+		image: "../css/jwerror.jpg",
+            width: "100%",
+            aspectratio: "16:9",
+            autostart: 'false',
         });
-        function UpdateVid() {
-            var ss = "";
-            var Check = false;
-            var churchMediaId = $('#chmedId').val();
-            var editVidTabName = document.getElementById('medEditVideoTabName').value;
-            var mediaUrl = $('#HdnMediaUrl1').val();
-   
-            var mediaName = $('#HdnMediaName1').val();
-         
-            var formData = new FormData();
-            
-            var input = document.getElementById('EditVidFile');
+        jwplayer().onError(function () {
+            jwplayer().play();
+        });
+    });
 
-            var fileExtension = ['mp4', 'flv', 'avi'];
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
-            if (input.files[0] != null) {
-                if ($.inArray($('#EditVidFile').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-                    Check = true;
-                    ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+        $('#alertDiv12').hide();
 
-                    $('#alertLabel12').html(ss);
-                    $('#alertDiv12').show();
-                    return;
-                    $('#EditVidModal').modal('show');
+        var filedropper = $('#EditVidFile').dropify();
+        filedropper = filedropper.data('dropify');
+        filedropper.resetPreview();
+        filedropper.clearElement();
 
+        filedropper.settings['defaultFile'] = '../' + $('#vedioUrl').val();
+        filedropper.destroy();
+        filedropper.init();
 
-                }
-            }
-            else if ($.inArray($('#HdnMediaUrl1').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+        $('#DisplayVideo').attr("src", '../' + $('#vedioUrl').val() + '');
+
+    });
+    function UpdateVid() {
+        var ss = "";
+        var Check = false;
+        var churchMediaId = $('#chmedId').val();
+        var editVidTabName = document.getElementById('medEditVideoTabName').value;
+        var mediaUrl = $('#HdnMediaUrl1').val();
+
+        var mediaName = $('#HdnMediaName1').val();
+
+        var formData = new FormData();
+
+        var input = document.getElementById('EditVidFile');
+
+        var fileExtension = ['mp4', 'flv', 'avi'];
+
+        if (input.files[0] != null) {
+            if ($.inArray($('#EditVidFile').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                Check = true;
                 ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
 
                 $('#alertLabel12').html(ss);
@@ -102,50 +109,60 @@
                 return;
                 $('#EditVidModal').modal('show');
 
+
             }
-             
+        }
+        else if ($.inArray($('#HdnMediaUrl1').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
 
-            if (editVidTabName == '')
-            {
-                ss += '<label >Please provide a valid Tab Name </label>';
+            $('#alertLabel12').html(ss);
+            $('#alertDiv12').show();
+            return;
+            $('#EditVidModal').modal('show');
 
-                
-                $('#alertLabel12').html(ss);
-                $('#alertDiv12').show();
-                return;
-                $('#EditVidModal').modal('show');
-            }
-            formData.append("ChurchMediaId", churchMediaId);
-            formData.append("mediaType", "Video");
-            formData.append("EditVidTabName", editVidTabName);
-            formData.append("MediaUrl", mediaUrl);
-            formData.append("MediaName", mediaName);
-            
-            formData.append("mediaFile", input.files[0]);
-
-
-            //var TabName11 = $('#MediaChurchs_TabName').val();
-
-            $.ajax({
-             
-
-                type: "POST",
-                url: "/MediaChurch/UpdateVideo/",
-
-                data: formData,
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
-                
-                success: function (result) {
-               
-                    loadVideo();
-                    $('#EditVidModal').modal('hide');
-                },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
-                }
-            });
         }
 
 
-    </script>
+        if (editVidTabName == '') {
+            ss += '<label >Please provide a valid Tab Name </label>';
+
+
+            $('#alertLabel12').html(ss);
+            $('#alertDiv12').show();
+            return;
+            $('#EditVidModal').modal('show');
+        }
+        formData.append("ChurchMediaId", churchMediaId);
+        formData.append("mediaType", "Video");
+        formData.append("EditVidTabName", editVidTabName);
+        formData.append("MediaUrl", mediaUrl);
+        formData.append("MediaName", mediaName);
+
+        formData.append("mediaFile", input.files[0]);
+
+
+        //var TabName11 = $('#MediaChurchs_TabName').val();
+
+        $.ajax({
+
+
+            type: "POST",
+            url: "/MediaChurch/UpdateVideo/",
+
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+
+            success: function (result) {
+
+                loadVideo();
+                $('#EditVidModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>
