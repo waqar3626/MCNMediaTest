@@ -105,11 +105,11 @@ namespace MCNMedia_Dev.Repository
             return recording;
         }
         //To Delete the record on a particular Recording
-        public void DeleteRecording(int id)
+        public void DeleteRecording(int id,int UpdateBy)
             {
                 _dc.ClearParameters();
                 _dc.AddParameter("RecId", id);
-                _dc.AddParameter("UpdateBy", 1);
+                _dc.AddParameter("UpdateBy", UpdateBy);
                 _dc.Execute("spRecording_Delete");
             }
 

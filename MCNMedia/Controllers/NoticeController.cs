@@ -94,7 +94,8 @@ namespace MCNMedia_Dev.Controllers
             {
 
                 GenericModel gm = new GenericModel();
-                bool res = noticeDataAccess.DeleteNotice(id);
+                int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                bool res = noticeDataAccess.DeleteNotice(id, UpdatedBy);
                 return Json(res);
             }
             catch (Exception e)

@@ -124,8 +124,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
-                recordDataAccess.DeleteRecording(id);
+                int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                recordDataAccess.DeleteRecording(id,UpdatedBy);
                 return RedirectToAction("ListRecording");
 
             }

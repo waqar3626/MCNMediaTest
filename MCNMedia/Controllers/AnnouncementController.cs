@@ -48,7 +48,7 @@ namespace MCNMedia_Dev.Controllers
 
                     announcement.AnnouncementTitle = announceTittle;
                     announcement.AnnouncementText = announceText;
-                announcement.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                    announcement.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     int res = AnnouncementDataAccessLayer.AddAnnouncement(announcement);
 
 
@@ -91,7 +91,8 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
-                bool res = AnnouncementDataAccessLayer.DeleteAnnouncement(id);
+                int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+                bool res = AnnouncementDataAccessLayer.DeleteAnnouncement(id,UpdateBy);
                 return Json(res);
             }
             catch (Exception e)

@@ -77,11 +77,11 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurchNotice_Update");
         }
 
-        public bool DeleteNotice(int chnoticeId)
+        public bool DeleteNotice(int chnoticeId, int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("ChNoticeId", chnoticeId);
-            _dc.AddParameter("UserId", 1);
+            _dc.AddParameter("UserId", UpdateBy);
             return _dc.ReturnBool("spChurchNotice_Delete");
         }
 

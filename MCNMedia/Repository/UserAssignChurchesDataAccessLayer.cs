@@ -84,11 +84,11 @@ namespace MCNMedia_Dev.Repository
 
        
 
-        public void DeleteUserChurches(int id)
+        public void DeleteUserChurches(int id,int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
-            _dc.AddParameter("UpdateBy", 1);
+            _dc.AddParameter("UpdateBy", UpdateBy);
             _dc.ReturnBool("spUser_Churches_Delete");
         }
 

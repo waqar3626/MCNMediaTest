@@ -142,7 +142,8 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
-                bool res = mediaChurchDataAccess.DeleteMedia(id);
+                int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+                bool res = mediaChurchDataAccess.DeleteMedia(id,UpdateBy);
                 return Json(res);
             }
             catch (Exception e)
@@ -262,7 +263,8 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
-                bool res = mediaChurchDataAccess.DeleteMedia(id);
+                int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+                bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
                 return Json(res);
             }
             catch (Exception e)
@@ -374,7 +376,8 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
-                bool res = mediaChurchDataAccess.DeleteMedia(id);
+                int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+                bool res = mediaChurchDataAccess.DeleteMedia(id,UpdateBy);
                 return Json(res);
             }
             catch (Exception e)

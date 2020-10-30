@@ -130,11 +130,11 @@ namespace MCNMedia_Dev.Repository
         }
         
 		//To Delete the record on a particular User 
-		public void DeleteUser(int id)
+		public void DeleteUser(int id,int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
-            _dc.AddParameter("UpdateBy", 1);
+            _dc.AddParameter("UpdateBy", UpdateBy);
             _dc.ReturnBool("spUser_Delete");
         }
     }

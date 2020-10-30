@@ -82,7 +82,8 @@ namespace MCNMedia_Dev.Controllers
        
         public IActionResult Delete(int id)
         {
-            userDataAccess.DeleteUser(id);
+            int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+            userDataAccess.DeleteUser(id,UpdatedBy);
             return RedirectToAction("ListUser");
         }
 

@@ -149,11 +149,11 @@ namespace MCNMedia_Dev.Repository
         }
 
         //To Delete the record on a particular User 
-        public void DeleteSchedule(int id)
+        public void DeleteSchedule(int id,int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("SchId", id);
-            _dc.AddParameter("UpdatedBy", 1);
+            _dc.AddParameter("UpdatedBy", UpdateBy);
             _dc.ReturnBool("spSchedule_Delete");
         }
 

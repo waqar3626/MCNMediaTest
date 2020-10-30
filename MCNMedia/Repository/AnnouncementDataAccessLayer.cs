@@ -48,11 +48,11 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-        public bool DeleteAnnouncement(int ChAnnoaId)
+        public bool DeleteAnnouncement(int ChAnnoaId, int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("AnnouceId", ChAnnoaId);
-            _dc.AddParameter("UpdatedBy", 1);
+            _dc.AddParameter("UpdatedBy", UpdateBy);
             return _dc.ReturnBool("spAnnouncement_Delete");
         }
 

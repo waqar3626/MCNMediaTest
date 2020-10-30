@@ -136,8 +136,8 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 UserAssignChurches userAssignChurches = new UserAssignChurches();
-
-                userAssignDataAcessLayer.DeleteUserChurches(UserId);
+                int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                userAssignDataAcessLayer.DeleteUserChurches(UserId,UpdatedBy);
 
                 foreach (SelectListItem item in Data)
                 {

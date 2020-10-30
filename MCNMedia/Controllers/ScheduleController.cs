@@ -181,8 +181,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
-                scheduleDataAccess.DeleteSchedule(id);
+                int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                scheduleDataAccess.DeleteSchedule(id,UpdatedBy);
                 return RedirectToAction("ListSchedule");
             }
             catch (Exception e)
