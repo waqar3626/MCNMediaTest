@@ -57,8 +57,8 @@
                 <div class="col-sm-9">
                     <span asp-validation-for="RoleId" class="text-danger"></span>
                     @*<input asp-for="RoleId" class="form-control text-small" placeholder="Role" />*@
-                    <select asp-for="RoleId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
-                        <option value="0">--Select Role--</option>
+                    <select asp-for="RoleId" id="select1" class="custom-select" required asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
+                        <option value="0" selected disabled>--Select Role--</option>
                     </select>
                 </div>
 

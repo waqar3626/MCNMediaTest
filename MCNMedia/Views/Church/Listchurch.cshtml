@@ -124,7 +124,7 @@
                                     @Html.DisplayFor(modelItem => item.Phone)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Preview", "Preview",new { chId = item.ChurchId })" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                    <a href="@Url.Action("Preview", "Preview",new { chId = item.ChurchId })" target="_blank" add this to list church class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
                                 </td>
                             </tr>
                         }

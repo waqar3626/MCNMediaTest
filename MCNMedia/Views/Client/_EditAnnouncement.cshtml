@@ -1,0 +1,114 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+}
+
+
+<!-- Plugin css for this page -->
+<!-- End plugin css for this page -->
+
+<link rel="stylesheet" href="~/theme/vendors/summernote/dist/summernote-bs4.css">
+<link rel="stylesheet" href="~/theme/vendors/quill/quill.snow.css">
+<link rel="stylesheet" href="~/theme/vendors/simplemde/simplemde.min.css">
+
+
+<div class="row">
+    <div class="col">
+        <form class="needs-validation" novalidate >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Announcement.ChurchAnnouncementId" id="chAnnoId" />
+
+            <div class="form-group">
+                <label asp-for="Announcement.AnnouncementTitle" class="control-label">Announcement Title</label>
+                <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="validationCustom01" required />
+                <div class="invalid-feedback">
+                    Please Provide a valid Announcement Title
+                </div>
+                <span asp-validation-for="Announcement.AnnouncementTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Announcement.AnnouncementText" class="control-label">Announcement Text</label>
+                @*<input asp-for="Announcement.AnnouncementText" class="form-control" id="editAnnouncementText" />*@
+                <textarea id="tinyMceExample" asp-for="Announcement.AnnouncementText" required></textarea>
+                <div class="invalid-feedback">
+                    Please Provide a valid Announcement
+                </div>
+                <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group float-right">
+                
+                <button type="submit" onclick="UpdateAnnouncement()" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i>Update</button>
+                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/theme/js/FormValidation.js"></script>
+
+<script type="text/javascript">
+    function UpdateAnnouncement() {
+
+        var churchAnnounceId = $('#chAnnoId').val();
+        var editAnnounceTitle = $('#validationCustom01').val();
+
+        editAnnounceText = tinymce.get("tinyMceExample").getContent();
+         
+        //var editAnnounceText = document.getElementsByName('Announcement_AnnouncementText').value;
+
+        var formData = new FormData();
+        formData.append("churchAnnounceId", churchAnnounceId);
+        formData.append("editAnnounceTitle", editAnnounceTitle);
+        formData.append("editAnnounceText", editAnnounceText);
+
+        //var TabName11 = $('#MediaChurchs_TabName').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/Client/UpdateAnnouncement/",
+
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+
+
+            success: function (result) {
+                
+                $('#EditAnnouncementModal').modal('hide');
+                LoadData();
+                window.location.reload();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function LoadData() {
+        $.ajax({
+            type: "GET",
+            url: "/Client/Announcement/",
+
+        
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+
+
+           
+        });
+    }
+
+    
+</script>
+
+<script src="~/theme/vendors/summernote/dist/summernote-bs4.min.js"></script>
+<script src="~/theme/vendors/tinymce/tinymce.min.js"></script>
+<script src="~/theme/vendors/quill/quill.min.js"></script>
+<script src="~/theme/vendors/simplemde/simplemde.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- Custom js for this page-->
+<script src="~/theme/js/editorDemo.js"></script>
+
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->

@@ -100,21 +100,51 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
-        public IActionResult UpdateAnnouncement([Bind] Announcement announcement)
+        [HttpGet]
+        public IActionResult EditAnnouncement(int id)
         {
             try
             {
-                announcement.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
-                return RedirectToAction("Announcement");
+                GenericModel gm = new GenericModel();
+                gm.Announcement = AnnouncementDataAccessLayer.GetAnnouncementById(id);
+                return PartialView("_EditAnnouncement", gm);
 
             }
             catch (Exception e)
             {
-                ShowMesage("Update Announcement : "+e.Message);
+                ShowMesage("Edit Announcement Error" + e.Message);
                 throw;
             }
+
+
+
+
+        }
+
+
+        [HttpPost]
+        public JsonResult UpdateAnnouncement(int churchAnnounceId, string editAnnounceTitle, string editAnnounceText)
+        {
+            try
+            {
+                Announcement announcement = new Announcement();
+                announcement.ChurchAnnouncementId = Convert.ToInt32(churchAnnounceId);
+                announcement.AnnouncementTitle = editAnnounceTitle;
+                announcement.AnnouncementText = editAnnounceText;
+                announcement.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                int res = AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
+
+
+                return Json(res);
+            }
+            catch (Exception e)
+            {
+
+
+                ShowMesage("Update Announcement Error" + e.Message);
+                throw;
+            }
+
         }
         #endregion
 

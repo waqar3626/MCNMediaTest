@@ -90,7 +90,7 @@
                         </button>
                     </div>
                     <div class="modal-body" id="EditAnnouncementPreview">
-                        @Html.Partial("~/Views/Announcement/_EditAnnouncement.cshtml", Model.Announcement)
+                        @Html.Partial("~/Views/Client/_EditAnnouncement.cshtml", Model.Announcement)
                     </div>
                 </div>
             </div>
@@ -112,15 +112,15 @@
     function EditAnnouncement(churchAnnouncementId) {
      
         $.ajax({
-             
+
             type: "Get",
-            url: '@Url.Action("EditAnnouncement", "Announcement")',
-             data: { id: churchAnnouncementId },
+            url: '@Url.Action("EditAnnouncement", "Client")',
+            data: { id: churchAnnouncementId },
             success: function (data) {
                 $('#EditAnnouncementPreview').html(data);
                 $('#EditAnnouncementModal').modal('show');
 
             }
-        })
+        });
     }
 </script>

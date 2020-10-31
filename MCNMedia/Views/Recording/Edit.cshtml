@@ -31,8 +31,8 @@
                     <label asp-for="ChurchId" class="col-sm-3 col-form-label">Church</label>
                     <div class="col-sm-9">
                         <span asp-validation-for="ChurchId" class="text-danger"></span>
-                        <select asp-for="ChurchId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
-                            <option>--Select Church--</option>
+                        <select asp-for="ChurchId" id="select1" class="custom-select" required asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
+                            <option value="0" selected disabled>--Select Church--</option>
                         </select>
                     </div>
                 </div>
