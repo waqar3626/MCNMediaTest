@@ -79,7 +79,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RecDate", recording.Date);
             _dc.AddParameter("RecTime", recording.Time);
             _dc.AddParameter("UpdateBy", recording.UpdatedBy);
-            _dc.AddParameter("ChurchId", recording.ChurchId);
+            _dc.AddParameter("ChrhId", recording.ChurchId);
             _dc.Execute("spRecording_Update");
         }
 
