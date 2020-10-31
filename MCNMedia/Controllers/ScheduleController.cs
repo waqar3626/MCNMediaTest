@@ -32,8 +32,8 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        [HttpPost()]
-        public IActionResult AddSchedule(Schedule sch)
+        [HttpPost]
+        public IActionResult AddSchedule(bool ToggleRecord,Schedule sch)
         {
             try
             {
@@ -46,6 +46,7 @@ namespace MCNMedia_Dev.Controllers
                     sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
                 }
 
+                sch.Record = ToggleRecord;
                 scheduleDataAccess.AddSchedule(sch);
                 return RedirectToAction("ListSchedule");
             }
@@ -79,12 +80,18 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 int churchId = -1;
+                int record = -1;
                 DateTime eventDate = DateTime.Now;
                 string eventDay = DateTime.Now.ToString("dddd");
-                int record = -1;
+                ViewBag.SchDate = DateTime.Now.ToString("MM/dd/yyyy");
+                ViewBag.SchDay = eventDay;
+                ViewBag.SchChurchId = churchId;
+                ViewBag.Schrecord = record;
+              
+               
                 LoadChurchDDL();
                 GenericModel gm = new GenericModel();
-
+                
                 gm.LSchedules = SearchSchedules(churchId, eventDay, eventDate, record);
                 return View(gm);
             }
@@ -96,7 +103,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, [Bind] Schedule schedule)
+        public IActionResult Edit(int id, bool ToggleRecord1, [Bind] Schedule schedule)
         {
             try
             {
@@ -111,6 +118,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
                 }
+                schedule.ScheduleId = id;
+                schedule.Record = ToggleRecord1;
                 schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.UpdateSchedule(schedule);
                 return RedirectToAction("ListSchedule");
@@ -244,14 +253,14 @@ namespace MCNMedia_Dev.Controllers
         /// <param name="eventDate">Event Scheduled Date</param>
         /// <param name="record">Event marked for recording</param>
         /// <returns></returns>
-        public IActionResult Search(int churchId, string eventDay, DateTime eventDate, int record)
+        public IActionResult Search(int churchId, string eventDay, DateTime eventDate, int recordDt)
         {
             try
             {
                 LoadChurchDDL();
                
                 GenericModel gm = new GenericModel();
-                gm.LSchedules  = SearchSchedules(churchId,  eventDay, eventDate,record);
+                gm.LSchedules  = SearchSchedules(churchId,  eventDay, eventDate, recordDt);
                 return View("/Views/Schedule/ListSchedule.cshtml", gm);
             }
             catch (Exception e)
@@ -263,6 +272,10 @@ namespace MCNMedia_Dev.Controllers
 
         private List<Schedule> SearchSchedules(int churchId, string eventDay, DateTime eventDate, int record)
         {
+            ViewBag.SchDate = eventDate.ToString("MM/dd/yyyy");
+            ViewBag.SchDay = eventDay;
+            ViewBag.SchChurchId = churchId;
+            ViewBag.Schrecord = record;
             HttpContext.Session.SetInt32("ChurchId", churchId);
             GenericModel gm = new GenericModel();
             return scheduleDataAccess.GetSearchSchedule(churchId, eventDate, eventDay, record).ToList<Schedule>();

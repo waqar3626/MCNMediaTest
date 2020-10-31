@@ -24,8 +24,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ScheduleEventDate", schedules.EventDate);
             _dc.AddParameter("ScheduleEventDay", schedules.EventDay);
             _dc.AddParameter("ScheduleEventTime", schedules.EventTime);
-            _dc.AddParameter("ScheduleLength", schedules.Length);
-            _dc.AddParameter("LengthUnit", schedules.LengthUnit);
+            _dc.AddParameter("ScheduleLength", schedules.RecordDuration);
+            _dc.AddParameter("SchRecord", schedules.Record);
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("IsRepeated", schedules.IsRepeated);
             _dc.AddParameter("SchPassword", schedules.Password);
@@ -58,8 +58,8 @@ namespace MCNMedia_Dev.Repository
                     schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                     schedule.Password = dataRow["Password"].ToString();
                     schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                    schedule.Length = Convert.ToInt32(dataRow["RecordingDuration"]);
-                    schedule.LengthUnit = dataRow["Record"].ToString();
+                    schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
+                  
                     schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                     schedule.CameraName = dataRow["CameraName"].ToString();
 
@@ -80,7 +80,7 @@ namespace MCNMedia_Dev.Repository
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", ChurchId);
-            _dc.AddParameter("SchDate", EventDate);
+            _dc.AddParameter("SchDate", EventDate.ToString("yyyy-MM-dd"));
             _dc.AddParameter("SchDay", EventDay);
             _dc.AddParameter("isRecord", isRecord);
 
@@ -98,8 +98,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                schedule.Length = Convert.ToInt32(dataRow["RecordingDuration"]);
-                schedule.LengthUnit = dataRow["Record"].ToString();
+                schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
+                
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                 schedule.CameraName = dataRow["CameraName"].ToString();
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
@@ -127,8 +127,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = (dataRow["ScheduleEventDay"].ToString());
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.Length = Convert.ToInt32(dataRow["Length"]);
-                schedule.LengthUnit = dataRow["LengthUnit"].ToString();
+                schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
+                schedule.Record = Convert.ToBoolean(dataRow["Record"]);
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
@@ -146,8 +146,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchDate", schedule.EventDate);
             _dc.AddParameter("SchDay", schedule.EventDay);
             _dc.AddParameter("SchTime", schedule.EventTime);
-             _dc.AddParameter("Lngth", schedule.Length);
-            _dc.AddParameter("LngthUnit", schedule.LengthUnit);
+             _dc.AddParameter("recordingDuration", schedule.RecordDuration);
+            _dc.AddParameter("record", schedule.Record);
             _dc.AddParameter("UpdateBy", schedule.UpdatedBy);
             _dc.AddParameter("SchPassword", schedule.Password);
             _dc.AddParameter("IsRepeated", schedule.IsRepeated);

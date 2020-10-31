@@ -26,14 +26,14 @@ namespace MCNMedia_Dev.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm tt}")]
         public DateTime EventTime { get; set; }
 
-        public int Length { get; set; }
-        public string LengthUnit { get; set; }
+        public int RecordDuration { get; set; }
+ 
 
         public int CameraId  { get; set; }
         public string CameraName { get; set; }
         public string Password { get; set; }
 
-        public int ScheduleBy  {get; set;}
+        public Boolean Record  {get; set;}
         public Boolean IsRepeated { get; set; }
         public int UpdatedBy { get; set; }
         public DateTime CreatedAt { get; set; }

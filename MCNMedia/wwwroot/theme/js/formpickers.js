@@ -14,6 +14,19 @@
       todayHighlight: true,
     });
   }
+    if ($(".datepicker-popup").length) {
+        $('.datepicker-popup').datepicker({
+            enableOnReadonly: true,
+            todayHighlight: true,
+        });
+    }
+
+    if ($("#datepicker-popup2").length) {
+        $('#datepicker-popup2').datepicker({
+            enableOnReadonly: true,
+            todayHighlight: true,
+        });
+    }
   if ($("#inline-datepicker").length) {
     $('#inline-datepicker').datepicker({
       enableOnReadonly: true,

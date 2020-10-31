@@ -12,7 +12,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="modal-title">Edit Schedule</h4>
-            <input type="hidden" asp-for="ScheduleId" />
+            <input type="hidden" name="id" asp-for="ScheduleId" />
 
             <div class="form-group row p-3" id="alertDiv">
                 <div class="col-md-12">
@@ -123,8 +123,9 @@
 
                 <div class="col-sm-12 pt-3">
                     <div class="custom-control custom-switch lg">
-                        <input type="checkbox" class="custom-control-input control" id="customSwitch2">
-                        <label class="custom-control-label" for="customSwitch2">Would you like to record this event?</label>
+                     
+                        <input type="checkbox" class="custom-control-input control" asp-for="Record" name="ToggleRecord1" id="ToggleRecord1">
+                        <label class="custom-control-label" for="ToggleRecord1">Would you like to record this event?</label>
 
                     </div>
 
@@ -139,11 +140,11 @@
                     <select asp-for="CameraId" name="CameraId" class="form-control" id="CameraId">                                                    </select>
                 </div>
 
-                <label asp-for="Length" class="col-sm-2 col-form-label">Duration</label>
+                <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
 
                 <div class="col-sm-4 ">
-                    <span asp-validation-for="Length" class="text-danger"></span>
-                    <select asp-for="Length" class="form-control" id="Lenght">
+                    <span asp-validation-for="RecordDuration" class="text-danger"></span>
+                    <select asp-for="RecordDuration" class="form-control" id="Lenght">
                         <option value="30" name="Length">30 Minutes</option>
                         <option value="40" name="Length">40 Minutes</option>
                         <option value="60" name="Length">1 Hour</option>
@@ -240,19 +241,21 @@
             HidePassword();
         }
 
-        var modelRecordData = '@Model.Length';
-        var modelCameraId = '@Model.CameraId';
+        var modelRecordData = '@Model.Record';
+       
+       
 
-        if (modelRecordData > 0 && modelCameraId > 0) {
+        if (modelRecordData == 'True') {
 
 
 
 
             ShowRecordData();
-            $('#customSwitch2').attr('checked', true);
+            $('#ToggleRecord1').attr('checked', true);
 
         }
         else {
+            $('#ToggleRecord1').attr('checked', false);
             HideRecordData();
         }
 
@@ -295,7 +298,7 @@
 
     });
 
-    $('#customSwitch2').change(function () {
+    $('#ToggleRecord1').change(function () {
         if (this.checked) {
             ShowRecordData();
         }

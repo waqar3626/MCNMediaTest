@@ -9,7 +9,7 @@
     List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
 }
 
-<form asp-action="AddSchedule" class="needs-validation" novalidate>
+<form asp-action="AddSchedule" asp-controller="Schedule" method="post" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
  
 
@@ -71,13 +71,14 @@
                     <div class="col-sm-4" id="EventInput1">
                         <span asp-validation-for="EventDate" class="text-danger"></span>
                         <div id="datepicker-popup" class="input-group date datepicker">
-                            <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" required />
+                            <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" />
 
                             <span class="input-group-addon input-group-append border-left">
                                 <span class="ti-calendar input-group-text"></span>
                             </span>
-
                         </div>
+                      
+
 
                     </div>
                     <div class="invalid-feedback">
@@ -91,7 +92,7 @@
                         <span asp-validation-for="EventDay" class="text-danger"></span>
 
 
-                        <select asp-for="EventDay" class="custom-select" id="validationCustom06" required>
+                        <select asp-for="EventDay" class="custom-select" id="validationCustom06" >
                             <option selected="selected" disabled value="0">Please select Day</option>
                             <option value="Monday" name="EventDay">Monday</option>
                             <option value="Tuesday" name="EventDay">Tuesday</option>
@@ -133,8 +134,8 @@
 
                     <div class="col-sm-12 pt-3">
                         <div class="custom-control custom-switch lg">
-                            <input type="checkbox" class="custom-control-input control" id="customSwitch2">
-                            <label class="custom-control-label" for="customSwitch2">Would you like to record this event?</label>
+                            <input type="checkbox" class="custom-control-input control" asp-for="Record" name="ToggleRecord" id="ToggleRecord">
+                            <label class="custom-control-label" for="ToggleRecord">Would you like to record this event?</label>
 
                         </div>
 
@@ -149,11 +150,11 @@
                         <select asp-for="CameraId" name="CameraId" class="form-control" id="CameraId">                                                    </select>
                     </div>
 
-                    <label asp-for="Length" class="col-sm-2 col-form-label">Duration</label>
+                    <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
 
                     <div class="col-sm-4 ">
-                        <span asp-validation-for="Length" class="text-danger"></span>
-                        <select asp-for="Length" class="form-control" id="Lenght">
+                        <span asp-validation-for="RecordDuration" class="text-danger"></span>
+                        <select asp-for="RecordDuration" class="form-control" id="Lenght">
                             <option value="30" name="Length">30 Minutes</option>
                             <option value="40" name="Length">40 Minutes</option>
                             <option value="60" name="Length">1 Hour</option>
@@ -226,53 +227,53 @@
         DoPostBack();
     });
 
-    $('#addScheduleVal').click(function () {
+    //$('#addScheduleVal').click(function () {
 
-        if ($('#ddlChurchId').val() == '0') {
+    //    if ($('#ddlChurchId').val() == '0') {
 
-            $('#alertLabel').html("Please Provide a valid Church");
-            $('#alertDiv').show();
-        }
-        else {
+    //        $('#alertLabel').html("Please Provide a valid Church");
+    //        $('#alertDiv').show();
+    //    }
+    //    else {
 
-            if($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
-
-
-            $('#validationCustom05').removeAttr('required');
-            $('#validationCustom06').removeAttr('required');
-                $('#alertDiv').hide();
+    //        if($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
 
 
-        }
-        else {
-            var check = $('#IsRepeated').val();
+    //        $('#validationCustom05').removeAttr('required');
+    //        $('#validationCustom06').removeAttr('required');
+    //            $('#alertDiv').hide();
 
 
-
-            if (check == 'true') {
-
-                $('#alertLabel').html("Please Provide Day");
+    //    }
+    //    else {
+    //        var check = $('#IsRepeated').val();
 
 
 
-            }
-            else {
+    //        if (check == 'true') {
 
-                $('#alertLabel').text("Please Provide Date");
-
-
-            }
-            $('#alertDiv').show();
-
-        }
+    //            $('#alertLabel').html("Please Provide Day");
 
 
-        }
+
+    //        }
+    //        else {
+
+    //            $('#alertLabel').text("Please Provide Date");
+
+
+    //        }
+    //        $('#alertDiv').show();
+
+    //    }
+
+
+    //    }
 
      
 
 
-    });
+    //});
     
 
     $('#IsRepeated').change(function () {
@@ -309,7 +310,7 @@
 
     });
 
-    $('#customSwitch2').change(function () {
+    $('#ToggleRecord').change(function () {
         if (this.checked) {
             ShowRecordData();
         }
