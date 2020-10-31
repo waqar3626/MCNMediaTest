@@ -18,92 +18,80 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
-       
- 
-
         [HttpGet]
         public IActionResult AddSchedule()
         {
             try
             {
                 return View();
-
             }
             catch (Exception e)
             {
-
-                ShowMesage("Schedule View Errors : " + e.Message);
+                ShowMessage("Schedule View Errors : " + e.Message);
                 throw;
             }
-
         }
-
 
         [HttpPost()]
         public IActionResult AddSchedule(Schedule sch)
         {
             try
             {
-
                 if (sch.IsRepeated == false)
                 {
                     sch.EventDay = sch.EventDate.ToString("dddd");
-
-
                 }
                 else
                 {
                     sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
                 }
 
-
-                sch.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.AddSchedule(sch);
                 return RedirectToAction("ListSchedule");
-
             }
             catch (Exception e)
             {
-                ShowMesage("Add Schedule Errors : " + e.Message);
-                throw;
-            }}
-
-        [HttpGet]
-        public JsonResult ListSch()
-        {
-
-            try
-            {
-                LoadChurchDDL();
-                List<Schedule> Sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
-                return Json(Sch);
-            }
-            catch (Exception e)
-            {
-                ShowMesage("List Schedule Errors : " + e.Message);
+                ShowMessage("Add Schedule Errors : " + e.Message);
                 throw;
             }
-
         }
+
+        //[HttpGet]
+        //public JsonResult ListSch()
+        //{
+        //    try
+        //    {
+        //        LoadChurchDDL();
+        //        List<Schedule> Sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
+        //        return Json(Sch);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ShowMessage("List Schedule Errors : " + e.Message);
+        //        throw;
+        //    }
+
+        //}
 
         [HttpGet]
         public ViewResult ListSchedule()
         {
             try
             {
-
-                GenericModel gm = new GenericModel();
+                int churchId = -1;
+                DateTime eventDate = DateTime.Now;
+                string eventDay = DateTime.Now.ToString("dddd");
+                int record = -1;
                 LoadChurchDDL();
-                gm.LSchedules = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
-                return View(gm);
+                GenericModel gm = new GenericModel();
 
+                gm.LSchedules = SearchSchedules(churchId, eventDay, eventDate, record);
+                return View(gm);
             }
             catch (Exception e)
             {
-               
-                ShowMesage("List Schedule Errors : " + e.Message);
+                ShowMessage("List Schedule Errors : " + e.Message);
                 throw;
-
             }
         }
 
@@ -129,9 +117,9 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Get edit Schedule Data Errors : " + e.Message);
+                ShowMessage("Get edit Schedule Data Errors : " + e.Message);
                 throw;
-            } 
+            }
         }
 
 
@@ -140,20 +128,17 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 Schedule Schedules = scheduleDataAccess.GetScheduleDataBtId(id);
-
                 if (Schedules == null)
                 {
                     return NotFound();
                 }
 
                 return View(Schedules);
-
             }
             catch (Exception e)
             {
-                ShowMesage("Edit Schedule Errors : " + e.Message);
+                ShowMessage("Edit Schedule Errors : " + e.Message);
                 throw;
             }
         }
@@ -171,7 +156,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Update Schedule Errors : " + e.Message);
+                ShowMessage("Update Schedule Errors : " + e.Message);
                 throw;
             }
         }
@@ -182,12 +167,12 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                scheduleDataAccess.DeleteSchedule(id,UpdatedBy);
+                scheduleDataAccess.DeleteSchedule(id, UpdatedBy);
                 return RedirectToAction("ListSchedule");
             }
             catch (Exception e)
             {
-                ShowMesage("Delete Schedule Errors :" + e.Message);
+                ShowMessage("Delete Schedule Errors :" + e.Message);
                 throw;
             }
         }
@@ -196,7 +181,6 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 Church chr = new Church();
                 chr.ChurchId = -1;
                 chr.CountyId = -1;
@@ -216,48 +200,75 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("LoadChurch DropDown Errors : " + e.Message);
+                ShowMessage("LoadChurch DropDown Errors : " + e.Message);
                 throw;
             }
         }
 
-        public IActionResult SearchSchedule(int Church, DateTime EventDate,string EventDay,int eventBy) {
-            try
-            {
-
-                GenericModel gm = new GenericModel();
-
-                List<Schedule> sch = scheduleDataAccess.GetSearchSchedule(Church, EventDate, EventDay, eventBy).ToList<Schedule>();
-                gm.LSchedules = sch;
-                LoadChurchDDL();
-                return View("/Views/Schedule/ListSchedule.cshtml", gm);
-
-            }
-            catch (Exception e)
-            {
-                ShowMesage("Search Schedule Errors : " + e.Message);
-                throw;
-            }
-        }
+        //public IActionResult SearchSchedule(int Church, DateTime EventDate, string EventDay, int eventBy)
+        //{
+        //    try
+        //    {
+        //        GenericModel gm = new GenericModel();
+        //        List<Schedule> sch = scheduleDataAccess.GetSearchSchedule(Church, EventDate, EventDay, eventBy).ToList<Schedule>();
+        //        gm.LSchedules = sch;
+        //        LoadChurchDDL();
+        //        return View("/Views/Schedule/ListSchedule.cshtml", gm);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ShowMessage("Search Schedule Errors : " + e.Message);
+        //        throw;
+        //    }
+        //}
 
         public JsonResult LoadCameraDDL(int ChurchId)
         {
             try
             {
-
                 List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId).ToList();
-
                 return Json(countyList);
-
             }
             catch (Exception e)
             {
-                ShowMesage("Load Camera DropDown  Errors : " + e.Message);
+                ShowMessage("Load Camera DropDown  Errors : " + e.Message);
                 throw;
             }
         }
 
-        private void ShowMesage(String exceptionMessage)
+        /// <summary>
+        /// This method is used to get <b>Schedule List</b> basis on provided parameters.
+        /// </summary>
+        /// <param name="churchId">Church Id</param>
+        /// <param name="eventDay">Event Scheduled Day</param>
+        /// <param name="eventDate">Event Scheduled Date</param>
+        /// <param name="record">Event marked for recording</param>
+        /// <returns></returns>
+        public IActionResult Search(int churchId, string eventDay, DateTime eventDate, int record)
+        {
+            try
+            {
+                LoadChurchDDL();
+               
+                GenericModel gm = new GenericModel();
+                gm.LSchedules  = SearchSchedules(churchId,  eventDay, eventDate,record);
+                return View("/Views/Schedule/ListSchedule.cshtml", gm);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Search Church  Error" + e.Message);
+                throw;
+            }
+        }
+
+        private List<Schedule> SearchSchedules(int churchId, string eventDay, DateTime eventDate, int record)
+        {
+            HttpContext.Session.SetInt32("ChurchId", churchId);
+            GenericModel gm = new GenericModel();
+            return scheduleDataAccess.GetSearchSchedule(churchId, eventDate, eventDay, record).ToList<Schedule>();
+        }
+
+        private void ShowMessage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
         }

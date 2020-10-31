@@ -10,6 +10,7 @@ namespace MCNMedia_Dev.Repository
     public class scheduleDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public scheduleDataAccessLayer()
         {
@@ -45,36 +46,43 @@ namespace MCNMedia_Dev.Repository
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetAll");
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                Schedule schedule = new Schedule();
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchName = dataRow["ChurchName"].ToString();
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
-                schedule.Password = dataRow["Password"].ToString();
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                schedule.Length = Convert.ToInt32(dataRow["Length"]);
-                schedule.LengthUnit = dataRow["LengthUnit"].ToString();
-                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-                schedule.CameraName = dataRow["CameraName"].ToString();
+                try
+                {
+                    Schedule schedule = new Schedule();
+                    schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                    schedule.ChurchName = dataRow["ChurchName"].ToString();
+                    schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                    schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                    schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+                    schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+                    schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                    schedule.Password = dataRow["Password"].ToString();
+                    schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
+                    schedule.Length = Convert.ToInt32(dataRow["RecordingDuration"]);
+                    schedule.LengthUnit = dataRow["Record"].ToString();
+                    schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+                    schedule.CameraName = dataRow["CameraName"].ToString();
 
-                Balobj.Add(schedule);
+                    Balobj.Add(schedule);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message);
+                }
             }
             return Balobj;
         }
 
 
 
-        public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate,string EventDay,int EventBy)
+        public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate,string EventDay,int isRecord)
         {
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", ChurchId);
             _dc.AddParameter("SchDate", EventDate);
             _dc.AddParameter("SchDay", EventDay);
-            _dc.AddParameter("EveBy", EventBy);
+            _dc.AddParameter("isRecord", isRecord);
 
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_Search");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -90,8 +98,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                schedule.Length = Convert.ToInt32(dataRow["Length"]);
-                schedule.LengthUnit = dataRow["LengthUnit"].ToString();
+                schedule.Length = Convert.ToInt32(dataRow["RecordingDuration"]);
+                schedule.LengthUnit = dataRow["Record"].ToString();
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                 schedule.CameraName = dataRow["CameraName"].ToString();
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);

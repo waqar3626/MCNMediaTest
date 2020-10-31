@@ -1,13 +1,86 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
-
-
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "ListSchedule";
 }
 
 
 
+<div class="card mb-3">
+    <div class="card-body">
+        <h3>Search Schedule</h3>
+        <div class="">
+            <form method="post" asp-action="Search" asp-controller="Schedule">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Church Name</label>
+                            <div class="col-sm-8">
+                                <select name="churchId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Church,"Value","Text",Context.Session.GetInt32("ChurchId")))">
+                                    <option value="-1">--Select Church--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Day</label>
+                            <div class="col-sm-8">
+                                <select name="eventDay" class="form-control">
+                                    <option selected="selected" value="-1">Please select Day</option>
+                                    <option value="Monday" name="eventDay">Monday</option>
+                                    <option value="Tuesday" name="eventDay">Tuesday</option>
+                                    <option value="Wednesday" name="eventDay">Wednesday</option>
+                                    <option value="Thursday" name="eventDay">Thursday</option>
+                                    <option value="Friday" name="eventDay">Friday</option>
+                                    <option value="Saturday" name="eventDay">Saturday</option>
+                                    <option value="Sunday" name="eventDay">Sunday</option>
+                                </select>
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Date</label>
+                            <div class="col-sm-8">
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    <input type="text" name="eventDate" class="form-control" placeholder="Event Date" />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Record</label>
+                            <div class="col-sm-8">
+                                <select name="record" id="select1" class="form-control">
+                                    <option value="-1" name="record">Both</option>
+                                    <option value="1" name="record">With Recording</option>
+                                    <option value="0" name="record">Without Recording</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group  row">
+                            <label class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-info btn-sm text-white"><i class="mdi mdi-table-search text-white"></i>Search</button>
+                                <a asp-controller="Schedule" asp-action="ListSchedule" class="btn btn-warning btn-sm text-white"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-body">
@@ -31,8 +104,8 @@
                 </div>
             </div>
         </div>
-        <button type="submit" id="AddSchedule1" class="btn btn-success btn-sm float-right" onclick="AddSchedule()"> <i  class="fa fa-plus"></i> Add Schedule</button>
-       
+        <button type="submit" id="AddSchedule1" class="btn btn-success btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
+
         <h3>Manage Schedules</h3>
         <br />
         <div class="">
@@ -43,7 +116,7 @@
                     <table id="order-listing" class="table">
                         <thead>
                             <tr>
-                               
+
                                 <th>
                                     Church Name
                                 </th>
@@ -66,49 +139,49 @@
                         <tbody class="SchList">
 
                             @foreach (var item in Model.LSchedules)
-                                {
-                                    <tr>
+                            {
+                                <tr>
 
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.ChurchName)
-                                        </td>
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.EventName)
-                                        </td>
-                                        <td class="text-wrap">
-                                            @if (item.IsRepeated == false && item.EventDate != Convert.ToDateTime("0001-01-01 00:00:00"))
-                                            {
-                                                @Html.DisplayFor(modelItem => item.EventDate)
-                                            }
-                                            else if (item.IsRepeated == true && item.EventDate == Convert.ToDateTime("0001-01-01 00:00:00"))
-                                            {
-                                                @Html.DisplayFor(modelItem => item.EventDay)
-                                            }
-                                        </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ChurchName)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EventName)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @if (item.IsRepeated == false && item.EventDate != Convert.ToDateTime("0001-01-01 00:00:00"))
+                                        {
+                                            @Html.DisplayFor(modelItem => item.EventDate)
+                                        }
+                                        else if (item.IsRepeated == true && item.EventDate == Convert.ToDateTime("0001-01-01 00:00:00"))
+                                        {
+                                            @Html.DisplayFor(modelItem => item.EventDay)
+                                        }
+                                    </td>
 
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.EventTime)
-                                        </td>
-                                        <td class="text-wrap">
-                                            @item.Length  Minutes
-                                        </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EventTime)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @item.Length  Minutes
+                                    </td>
 
 
 
-                                        <td>
-                                            <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    <td>
+                                        <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
-                                        </td>
-                                    </tr>
-                                }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             }
         </div>
     </div>
-   
+
 
 </div>
 <script type="text/javascript">
@@ -139,7 +212,7 @@
         })
     }
 
-  
+
 
     function ShowChurchDiv() {
 
@@ -152,7 +225,7 @@
         $('#EventChurchName').show();
         $('#EventInput').show();
 
-        
+
 
     }
 
@@ -166,7 +239,7 @@
         $('#EventDayInput').hide();
         $('#EventChurchName').hide();
         $('#EventInput').hide();
-       
+
 
     }
 
