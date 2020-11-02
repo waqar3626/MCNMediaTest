@@ -22,24 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Day</label>
-                            <div class="col-sm-8">
-                                <select name="eventDay" id="eventDay" class="form-control">
-                                    <option  value="-1">Please select Day</option>
-                                    <option value="Monday" name="eventDay">Monday</option>
-                                    <option value="Tuesday" name="eventDay">Tuesday</option>
-                                    <option value="Wednesday" name="eventDay">Wednesday</option>
-                                    <option value="Thursday" name="eventDay">Thursday</option>
-                                    <option value="Friday" name="eventDay">Friday</option>
-                                    <option value="Saturday" name="eventDay">Saturday</option>
-                                    <option value="Sunday" name="eventDay">Sunday</option>
-                                </select>
-
-                            </div>
-                        </div>
-                    </div>
+                  
                     <div class="col-md-6">
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Date</label>
@@ -133,6 +116,12 @@
                                 <th>
                                     Duration
                                 </th>
+                                <th>
+                                    Repeated
+                                </th>
+                                <th>
+                                   Recording
+                                </th>
 
                                 <th>Actions</th>
                             </tr>
@@ -141,40 +130,69 @@
 
                             @foreach (var item in Model.LSchedules)
                             {
-                                <tr>
+                            <tr>
 
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.EventName)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @if (item.IsRepeated == false)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.EventDate)
-                                        }
-                                        else if (item.IsRepeated == true)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.EventDay)
-                                        }
-                                    </td>
+                                <td class="text-wrap">
+                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                </td>
+                                <td class="text-wrap">
+                                    @Html.DisplayFor(modelItem => item.EventName)
+                                </td>
+                                <td class="text-wrap">
+                                    @if (item.IsRepeated == false)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EventDate)
+                                    }
+                                    else if (item.IsRepeated == true)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EventDay)
+                                    }
+                                </td>
 
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.EventTime)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @item.RecordDuration  Minutes
-                                    </td>
+                                <td class="text-wrap">
+                                    @Html.DisplayFor(modelItem => item.EventTime)
+                                </td>
+                                <td class="text-wrap">
+                                    @item.RecordDuration  Minutes
+                                </td>
+                                <td class="text-wrap">
+                                    @if (item.IsRepeated)
+                                    {
+                                        <label class="badge-pill badge-success">
+                                            Yes
+                                        </label>
+
+                                    }
+                                    else
+                                    {
+                                        <label class="badge-pill badge-danger">
+                                            No
+                                        </label>
+                                    }
+                                </td>
+                                <td class="text-wrap">
+                                    @if (item.Record)
+                                    {
+                                        <label class="badge-pill badge-success">
+                                            Yes
+                                        </label>
+
+                                    }
+                                    else
+                                    {
+                                        <label class="badge-pill badge-danger">
+                                            No
+                                        </label>
+                                    }
+                                </td>
 
 
+                                <td>
+                                    <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
-                                    <td>
-                                        <a href="@Url.Action("EditSchedule", "Schedule", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -194,8 +212,8 @@
 
 
         var date = '@ViewBag.SchDate';
+      
        
-        var WDay = '@ViewBag.SchDay';
         var ChurchId = '@ViewBag.SchChurchId';
         
         var RecordId = '@ViewBag.Schrecord';
@@ -203,7 +221,7 @@
         $('#recordDt').val(RecordId);
         $('#select1').val(ChurchId);
       
-        $('#eventDay').val(WDay);
+        
         $('#SetEventDate').val(date);
         $('#EventScheduleDate').hide();
         $('#EventDateInput').hide();
@@ -216,7 +234,9 @@
         ShowDateDiv();
         loadSchedule();
     });
-
+ 
+   
+  
      function Open(camId) {
         $.ajax({
             type: "Get",

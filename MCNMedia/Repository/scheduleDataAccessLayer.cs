@@ -99,7 +99,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
-                
+                schedule.Record = Convert.ToBoolean(dataRow["Record"]);
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                 schedule.CameraName = dataRow["CameraName"].ToString();
                 //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
@@ -186,6 +186,27 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+
+        public IEnumerable<Schedule> GetAllChurchSchedule(int ChurchId)
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+            _dc.AddParameter("chId", ChurchId);
+            
+            DataTable dataTable = _dc.ReturnDataTable("spChurchSchedule_Get");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule sch = new Schedule();
+                sch.EventDay = dataRow["ScheduleEventDay"].ToString();
+                sch.EventName = dataRow["Events"].ToString();
+       
+                
+
+                Balobj.Add(sch);
+            }
+            return Balobj;
+        }
+
 
 
     }

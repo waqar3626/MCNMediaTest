@@ -55,7 +55,10 @@
                     <li class="nav-item">
                         <a class="nav-link" id="Announcement-tab" data-toggle="tab" href="#Announcement-1" role="tab" aria-controls="Announcement-1" aria-selected="false"><i class="fa fa-envelope-o text-info"></i> Announcement</a>
                     </li>
-                   
+                    <li class="nav-item">
+                        <a class="nav-link" id="Schedule-tab" data-toggle="tab" href="#Schedule-1" role="tab" aria-controls="Schedule-1" aria-selected="false"><i class="fa fa-calendar text-info"></i> Schedule</a>
+                    </li>
+
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
@@ -128,6 +131,13 @@
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="Schedule-1" role="tabpanel" aria-labelledby="Schedule-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/ChurchSchedule/_ListSchedule.cshtml")
+                            </div>
+                        </div>
+                    </div>
 
 
 

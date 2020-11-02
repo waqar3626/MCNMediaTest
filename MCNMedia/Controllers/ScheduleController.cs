@@ -43,7 +43,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
+                    sch.EventDate = Convert.ToDateTime("1900-01-01 00:00:00");
                 }
 
                 sch.Record = ToggleRecord;
@@ -83,8 +83,8 @@ namespace MCNMedia_Dev.Controllers
                 int record = -1;
                 DateTime eventDate = DateTime.Now;
                 string eventDay = DateTime.Now.ToString("dddd");
-                ViewBag.SchDate = DateTime.Now.ToString("MM/dd/yyyy");
-                ViewBag.SchDay = eventDay;
+                ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+               
                 ViewBag.SchChurchId = churchId;
                 ViewBag.Schrecord = record;
               
@@ -253,12 +253,12 @@ namespace MCNMedia_Dev.Controllers
         /// <param name="eventDate">Event Scheduled Date</param>
         /// <param name="record">Event marked for recording</param>
         /// <returns></returns>
-        public IActionResult Search(int churchId, string eventDay, DateTime eventDate, int recordDt)
+        public IActionResult Search(int churchId, DateTime eventDate, int recordDt)
         {
             try
             {
                 LoadChurchDDL();
-               
+                string eventDay = eventDate.ToString("dddd");
                 GenericModel gm = new GenericModel();
                 gm.LSchedules  = SearchSchedules(churchId,  eventDay, eventDate, recordDt);
                 return View("/Views/Schedule/ListSchedule.cshtml", gm);
@@ -272,8 +272,8 @@ namespace MCNMedia_Dev.Controllers
 
         private List<Schedule> SearchSchedules(int churchId, string eventDay, DateTime eventDate, int record)
         {
-            ViewBag.SchDate = eventDate.ToString("MM/dd/yyyy");
-            ViewBag.SchDay = eventDay;
+            ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
+          
             ViewBag.SchChurchId = churchId;
             ViewBag.Schrecord = record;
             HttpContext.Session.SetInt32("ChurchId", churchId);

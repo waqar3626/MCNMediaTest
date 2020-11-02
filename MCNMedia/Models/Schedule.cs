@@ -15,7 +15,7 @@ namespace MCNMedia_Dev.Models
         [Required]
         public string EventName { get; set; }
         //[DisplayFormat(DataFormatString = "{0:yyyy/MMM/dd}")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime EventDate { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:ddd}")]
         public string EventDay { get; set; }
