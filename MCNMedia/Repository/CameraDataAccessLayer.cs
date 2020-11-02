@@ -56,7 +56,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", camera.ChurchId);
             _dc.AddParameter("ServerId", camera.ServerId);
             _dc.AddParameter("App", camera.App);
-             return _dc.ReturnInt("spCamera_Add");
+            _dc.ReturnInt("spCamera_Add");
+            return 1;
         }
 
         public Camera GetCameraById(int camId)

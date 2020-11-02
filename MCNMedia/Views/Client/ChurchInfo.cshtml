@@ -21,23 +21,31 @@
 
 
 }
-
+<script src="~/theme/js/FormValidation.js"></script>
 <h1>Client</h1>
 <form method="get">
     <div class="card ">
         <div class="card-body">
+            <div class="form-group row p-3" id="alertDiv">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert" id="alertLabel">
+
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group row">
 
                 @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control", @onchange = "javascript:onChangeFunction()", @id = "ddlid" })
                 @*@Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })*@
                 <span class="text-danger"></span>
             </div>
-            
+
 
         </div>
     </div>
 </form>
-<form asp-action="UpdateChurchInfo" method="post">
+<form asp-action="UpdateChurchInfo" method="post" class="needs-validation" novalidate>
     <div class="card">
         <div class="card-body">
             <input type="hidden" />
@@ -57,54 +65,73 @@
                 <div class="col-sm-4">
                     <div class=" form-group row">
                         <div class="col-sm-12">
-
+                            @*id="validationCustom01"*@
                             <input type="hidden" asp-for="CountyId" value="@Model.CountyId" id="CountyId123" />
                             <input type="hidden" asp-for="ClientTypeId" value="@Model.ClientTypeId" id="ClientTypeId123" />
                             <input type="hidden" asp-for="ImageURl" value="@Model.ImageURl" id="ImageURl123" />
                             <label class="form-label">Name</label>
 
-                            @Html.TextBoxFor(Model => Model.ChurchName, new { @class = "form-control" })
+                            @Html.TextBoxFor(Model => Model.ChurchName, new { @class = "form-control", required = "required" })
                             <input type="hidden" asp-for="ChurchId" value="@Model.ChurchId" id="ChurchId123" />
                             @*<input type="text" class="form-control" asp-for="ChurchName"  />*@
+                            <div class="invalid-feedback">
+                                Please Provide a valid Church Name
+                            </div>
                         </div>
                     </div>
                     <div class=" form-group row">
                         <div class="col-sm-12">
                             <label class="form-label">Email</label>
-                            <input type="text" class="form-control" value="@Model.EmailAddress" placeholder="Email" asp-for="EmailAddress" />
-
-
+                            <input type="text" class="form-control" value="@Model.EmailAddress" required placeholder="Email" asp-for="EmailAddress"/>
+                            <div class="invalid-feedback">
+                                Please Provide a valid Email
+                            </div>
                         </div>
                     </div>
                     <div class=" form-group row">
                         <div class="col-sm-12">
                             <label class="form-label">Phone</label>
-                            <input type="text" class="form-control" placeholder="Phone" asp-for="Phone" />
+                            <input type="text" class="form-control" placeholder="Phone" asp-for="Phone" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Phone
+                            </div>
                         </div>
                     </div>
                     <div class=" form-group row">
                         <div class="col-sm-12">
                             <label class="form-label">Address</label>
-                            <input type="text" class="form-control" placeholder="Address" asp-for="Address" />
+                            <input type="text" class="form-control" placeholder="Address" asp-for="Address" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Address
+                            </div>
                         </div>
                     </div>
                     <div class=" form-group row">
                         <div class="col-sm-12">
                             <label class="form-label">Town</label>
-                            <input type="text" class="form-control" placeholder="Town" asp-for="Town" />
+                            <input type="text" class="form-control" placeholder="Town" asp-for="Town" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Town
+                            </div>
                         </div>
                     </div>
                     <div class=" form-group row">
                         <div class="col-sm-12">
                             <label class="form-label">WebSite</label>
-                            <input type="text" class="form-control" placeholder="Address" asp-for="Website" />
+                            <input type="text" class="form-control" placeholder="Address" asp-for="Website" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Website
+                            </div>
                         </div>
 
                     </div>
                     <div class=" form-group row">
                         <div class="col-sm-12">
                             <label class="form-label">Password</label>
-                            <input type="text" id="Password" class="form-control" placeholder="Password" asp-for="Password" />
+                            <input type="text" id="Password" class="form-control" placeholder="Password" asp-for="Password" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Password
+                            </div>
                         </div>
                     </div>
                     <div class="form-group float-right">
@@ -172,4 +199,74 @@
     }
 
 
+</script>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $('#alertDiv').hide();
+    });
+    $('#ValUserSubmit').click(function () {
+
+        var s = "";
+        
+     
+        if ($('#validationCustom01').val() == '') {
+
+            s += '<label>Please Provide a Valid First Name</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        
+        if ($('#validationCustom02').val() == '') {
+
+            s += '<label>Please Provide a Valid Last Name</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+        if ($('#validationCustom03').val() == '') {
+
+            s += '<label>Please Provide a Valid Email Address</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+
+        if ($('#validationCustom04').val() == '') {
+
+            s += '<label>Please Provide a Valid Login Password</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+
+        }
+      
+        if ($('#validationCustom05').val() == '') {
+
+            s += '<label>Please Provide a Valid Confirm Password</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+           
+
+        }
+
+        if ($('#select1').val() == '0') {
+
+            $('#select1').attr('class', 'form-control border-danger');
+
+            s += '<label>Please Provide a Valid Role</label></br>'
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+        }
+      
+
+
+
+
+    });
 </script>
