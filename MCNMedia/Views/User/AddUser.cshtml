@@ -2,71 +2,82 @@
 
 @{
     ViewData["Title"] = "AddUser";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <form asp-action="AddUser" class="needs-validation" novalidate>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <div class="card">
         <div class="card-body">
-            <h4 class="modal-title">Add New User</h4>
-            <div class="form-group row p-3" id="alertDiv">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert" id="alertLabel">
 
-                    </div>
-                </div>
-            </div>
+           
+           
             <div class="form-group row">
                 <label asp-for="FirstName" for="validationCustom01" class="col-sm-3 col-form-label">First Name *</label>
                 <div class="col-sm-9">
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                   
                     <input asp-for="FirstName" class="form-control" id="validationCustom01" placeholder="First Name" required />
-                
+                    <div class="invalid-feedback">
+                        Please Provide a valid First Name
+                    </div>
                 </div>
 
             </div>
             <div class="form-group row">
                 <label asp-for="LastName" for="validationCustom02" class="col-sm-3 col-form-label">Last Name *</label>
                 <div class="col-sm-9">
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                    <input asp-for="LastName" class="form-control" placeholder="Last Name" id="validationCustom02" required />
-                </div>
 
+                    <input asp-for="LastName" class="form-control" placeholder="Last Name" id="validationCustom02" required />
+                  
+                    <div class="invalid-feedback">
+                        Please Provide a valid Last Name
+                    </div>
+                </div>
+               
             </div>
             <div class="form-group row">
                 <label asp-for="EmailAddress" for="validationCustom03" class="col-sm-3 col-form-label">Email Address *</label>
                 <div class="col-sm-9">
-                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    
                     <input asp-for="EmailAddress" class="form-control" placeholder="Email" type="email" id="validationCustom03" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Email Address
+                    </div>
                 </div>
-
+               
             </div>
             <div class="form-group row">
-                <label asp-for="LoginPassword"  for="validationCustom04" class="col-sm-3 col-form-label">Login Password *</label>
+                <label asp-for="LoginPassword" for="validationCustom04" class="col-sm-3 col-form-label">Login Password *</label>
                 <div class="col-sm-9">
-                    <span asp-validation-for="LoginPassword" class="text-danger"></span>
+                   
                     <input asp-for="LoginPassword" min="8" class="form-control" placeholder="Password" id="validationCustom04" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Login Password
+                    </div>
                 </div>
-
+               
             </div>
-          
+
 
             <div class="form-group row">
                 <label asp-for="RoleId" class="col-sm-3 col-form-label">Role *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="RoleId" class="text-danger"></span>
-                    @*<input asp-for="RoleId" class="form-control text-small" placeholder="Role" />*@
-                    <select asp-for="RoleId" id="select1" class="custom-select" required asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
+                    <select asp-for="RoleId" id="select1" required class="custom-select" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
                         <option value="0" selected disabled>--Select Role--</option>
                     </select>
+                    <div class="invalid-feedback">
+                        Please Provide a valid Role
+                    </div>
                 </div>
 
 
             </div>
-            <div class="float-right">
-                <button type="submit" id="ValUserSubmit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add User</button>
-                <a id="back" class="btn btn-secondary btn-md " href="../User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
+            <div class="form-group float-right">
+
+                <button onclick="AddUser()" type="submit" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-content-save text-white"></i>Add</button>
+                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+
             </div>
         </div>
     </div>
@@ -74,70 +85,45 @@
 </form>
 
 
+
 <script>
+   
 
-    $(document).ready(function () {
-
-
-        $('#alertDiv').hide();
-    });
-    $('#ValUserSubmit').click(function () {
-
-        var s = "";
-        
-     
-        if ($('#validationCustom01').val() == '') {
-
-            s += '<label>Please Provide a Valid First Name</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        
-        if ($('#validationCustom02').val() == '') {
-
-            s += '<label>Please Provide a Valid Last Name</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        if ($('#validationCustom03').val() == '') {
-
-            s += '<label>Please Provide a Valid Email Address</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-
-        if ($('#validationCustom04').val() == '') {
-
-            s += '<label>Please Provide a Valid Login Password</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-      
-        if ($('#validationCustom05').val() == '') {
-
-            s += '<label>Please Provide a Valid Confirm Password</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-           
-
-        }
-
-        if ($('#select1').val() == '0') {
-
-            $('#select1').attr('class', 'form-control border-danger');
-
-            s += '<label>Please Provide a Valid Role</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-      
+    function AddUser() {
+             
+        var firstname = document.getElementById('FirstName').value;
+        var lastname = document.getElementById('LastName').value;
+        var emailaddress = document.getElementById('EmailAddress').value;
+        var loginpassword = document.getElementById('LoginPassword').value;
+        var roleid = document.getElementById('RoleId').value;
+        var formData = new FormData();
+        formData.append("firstname", firstname);
+        formData.append("lastname", lastname);
+        formData.append("emailaddress", emailaddress);
+        formData.append("loginpassword", loginpassword);
+        formData.append("roleid", roleid);
 
 
 
+        $.ajax(
+            {
+                type: "POST",
+                url: "/User/AddUser/",
 
-    });
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+
+                success: function (result) {
+                    $('#AddUserPopUp').modal('hide');
+                    loadRecording();
+
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            }
+        );
+    }
 </script>

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -23,24 +22,26 @@ namespace MCNMedia_Dev.Controllers
                 LoadChurchesDDL();
                 return View();
             }
-            catch (Exception e)
+             catch (Exception e)
             {
-                ShowMesage("Add Recording View : "+e.Message);
+                ShowMessage("Add Recording Error 'Get' " + e.Message);
                 throw;
-            } }
+            }
+
+        }
         [HttpGet]
         public IActionResult ListRecording()
         {
             try
             {
-
-                List<Recording> recording = recordDataAccess.GetAllRecording().ToList<Recording>();
-                return View(recording);
-
+                LoadChurchesDDL();
+                GenericModel gm = new GenericModel();
+                gm.LRecordings = recordDataAccess.GetAllRecording().ToList<Recording>();
+                return View(gm);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                ShowMesage("Recording List : "+e.Message);
+                ShowMessage ("List Recording Error" + e.Message);
                 throw;
             }
         }
@@ -49,7 +50,6 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 Recording recording = recordDataAccess.GetRecordingData(id);
                 if (recording == null)
                 {
@@ -57,13 +57,14 @@ namespace MCNMedia_Dev.Controllers
                 }
                 LoadChurchesDDL();
 
-                return View(recording);
+                return PartialView("Edit", recording);
             }
             catch (Exception e)
             {
-                ShowMesage("Get edit recording data : "+e.Message);
+                ShowMessage("Edit Recording Errors 'Get' : " + e.Message);
                 throw;
             }
+            
         }
 
         [HttpGet()]
@@ -76,29 +77,28 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Get All Recording : " + e.Message);
+                ShowMessage("Add Recording Error 'Post' " + e.Message);
                 throw;
             }
-            
+           
         }
 
         [HttpPost]
-        public IActionResult AddRecording(Recording recording)
+        public IActionResult AddRecording(Recording record)
         {
             try
             {
-                recording.CreatedBy= (int)HttpContext.Session.GetInt32("UserId");
-                recordDataAccess.AddRecording(recording);
+                recordDataAccess.AddRecording(record);
                 return RedirectToAction("ListRecording");
-
             }
             catch (Exception e)
             {
-                ShowMesage("Add Recording Error :" + e.Message);
+                ShowMessage("Add Recording Error 'Post' " + e.Message);
                 throw;
-
             }
-        }
+            
+            
+        } 
 
         [HttpPost]
 
@@ -106,41 +106,39 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                recording.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 recordDataAccess.UpdateRecording(recording);
                 return RedirectToAction("ListRecording");
 
             }
             catch (Exception e)
             {
-                ShowMesage("Edit recording error : " + e.Message);
+                ShowMessage("Edit Recording Errors 'Post' : " + e.Message);
                 throw;
             }
-
+            
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+
+        public IActionResult Delete(int id, int UpdateBy)
         {
             try
             {
-                int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                recordDataAccess.DeleteRecording(id,UpdatedBy);
+                recordDataAccess.DeleteRecording(id, UpdateBy);
                 return RedirectToAction("ListRecording");
-
             }
             catch (Exception e)
             {
-                ShowMesage("Delete Recording Error : " + e.Message);
+                ShowMessage("Delete Recording Error " + e.Message);
                 throw;
             }
+            
         }
 
         public void LoadChurchesDDL()
         {
             try
             {
-
                 IEnumerable<Recording> RecordList = recordDataAccess.GetChurches();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in RecordList)
@@ -148,18 +146,19 @@ namespace MCNMedia_Dev.Controllers
                     selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
                 }
                 ViewBag.State = selectListItems;
-
             }
             catch (Exception e)
             {
-                ShowMesage("LoadChurch DropDown Error : "+e.Message);
+                ShowMessage("Load Church Error in Recording " + e.Message);
                 throw;
             }
+           
+
         }
 
-        private void ShowMesage(String exceptionMessage)
+        private void ShowMessage(string exceptionMessage)
         {
-            log.Error("Exception : " + exceptionMessage);
+            log.Info("Exception: "+exceptionMessage);
         }
 
 

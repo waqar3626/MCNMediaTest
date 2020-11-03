@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.Recording>
+﻿@model MCNMedia_Dev.Models.GenericModel
 
 @{
     ViewData["Title"] = "ListRecording";
@@ -8,71 +8,67 @@
 
 <div class="card">
     <div class="card-body">
-        <a id="ADDEmployee" class="btn btn-success btn-sm float-right" href="../Recording/AddRecording"> <i class="fa fa-plus"></i> Add Recording</a>
+        <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-success btn-sm float-right text-white" > <i class="fa fa-plus"></i> Add Recording</a>
         <h3>Manage Recordings</h3>
         <br />
         <div class="">
             @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
             {
 
-                <div class="table-responsive">
-                    <table id="order-listing" class="table">
-                        <thead>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                URL
+                            </th>
+                            <th>
+                                Church
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Time
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.LRecordings)
+                        {
                             <tr>
-                                @*<th>
-                                @Html.DisplayNameFor(model => model.RecordingId)
-                            </th>*@
-                                <th>
-                                    Title
-                                </th>
-                                <th>
-                                    URL
-                                </th>
-                                <th>
-                                    Church
-                                </th>
-                                <th>
-                                    Date
-                                </th>
-                                <th>
-                                    Time
-                                </th>
-                                <th>Actions</th>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RecordingTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RecordingURl)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Time)
+                                </td>
+                                <td>
+                                    <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                   
+
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
+                        }
+                    </tbody>
+                </table>
 
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.RecordingTitle)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.RecordingURl)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.Date)
-
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.Time)
-                                    </td>
-                                    <td class="text-wrap">
-                                        <a href="@Url.Action("Edit", "Recording", new { id=item.RecordingId })" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger " data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                                        @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
-
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
 
 
             }
@@ -80,3 +76,60 @@
 
     </div>
 </div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddRecordingPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Recording</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddRecordPreview">
+                        @Html.Partial("~/Views/Recording/AddRecording.cshtml", Model.Recordings)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditRecordingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Recording</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditRecordingPreview">
+                        @Html.Partial("~/Views/User/Edit.cshtml", Model.Recordings)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function AddRecording1() {
+
+        $('#AddRecordingPopUp').modal('show');
+
+    }
+     function EditRecording(recordingId) {
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Edit", "Recording")',
+            data: { id: recordingId },
+            success: function (data) {
+                $('#EditRecordingPreview').html(data);
+                $('#EditRecordingModal').modal('show');
+            }
+        })
+
+    }
+</script>

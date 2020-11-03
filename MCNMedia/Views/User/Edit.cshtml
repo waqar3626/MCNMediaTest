@@ -2,52 +2,56 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  
 }
 
-<form asp-action="Edit" class="needs-validation" novalidate>
+<form asp-action="UpdateUser" asp-controller="User" method="post" id="CertForm" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
         <div class="card-body">
             <h4 class="modal-title">Add New User</h4>
-            <div class="form-group row p-3" id="alertDiv">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert" id="alertLabel">
-
-                    </div>
-                </div>
-            </div>
+          
             <div class="form-group row">
-                <label asp-for="FirstName" for="validationCustom01" class="col-sm-3 col-form-label">First Name *</label>
+                <label asp-for="FirstName" for="validationCustom10" class="col-sm-3 col-form-label">First Name *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
-                    <input asp-for="FirstName" class="form-control" id="validationCustom01" placeholder="First Name" required />
+                    <input asp-for="FirstName" class="form-control" id="validationCustom10" placeholder="First Name" required />
+                    <input type="hidden" asp-for="UserId" />
+                    <div class="invalid-feedback">
+                        Please Provide a valid First Name
+                    </div>
                 </div>
 
             </div>
             <div class="form-group row">
-                <label asp-for="LastName" for="validationCustom02" class="col-sm-3 col-form-label">Last Name *</label>
+                <label asp-for="LastName" for="validationCustom11" class="col-sm-3 col-form-label">Last Name *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LastName" class="text-danger"></span>
-                    <input asp-for="LastName" class="form-control" placeholder="Last Name" id="validationCustom02" required />
+                    <input asp-for="LastName" class="form-control" placeholder="Last Name" id="validationCustom11" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Last Name
+                    </div>
                 </div>
-                
+
             </div>
             <div class="form-group row">
-                <label asp-for="EmailAddress" for="validationCustom03" class="col-sm-3 col-form-label">Email Address *</label>
+                <label asp-for="EmailAddress" for="validationCustom12" class="col-sm-3 col-form-label">Email Address *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                    <input asp-for="EmailAddress" class="form-control" placeholder="Email" type="email" id="validationCustom03" required />
+                    <input asp-for="EmailAddress" class="form-control" placeholder="Email" type="email" id="validationCustom12" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Email Address
+                    </div>
                 </div>
-                
+
             </div>
             <div class="form-group row">
-                <label asp-for="LoginPassword" for="validationCustom04" class="col-sm-3 col-form-label">Login Password *</label>
+                <label asp-for="LoginPassword" for="validationCustom13" class="col-sm-3 col-form-label">Login Password *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
-                    <input asp-for="LoginPassword" class="form-control" readonly="readonly" placeholder="Password" id="validationCustom04" required />
+                    <input asp-for="LoginPassword" class="form-control" readonly="readonly" placeholder="Password" id="validationCustom13" />
                 </div>
-                
+
             </div>
 
             <div class="form-group row">
@@ -56,22 +60,19 @@
                     <span asp-validation-for="RoleId" class="text-danger"></span>
                     @*<input asp-for="RoleId" class="form-control text-small" placeholder="Role" />*@
                     <select asp-for="RoleId" id="select1" class="custom-select" required asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
-                        <option value="0" selected disabled>--Select Role--</option>
+                        <option value="0" disabled>--Select Role--</option>
                     </select>
+                    <div class="invalid-feedback">
+                        Please Provide a valid Role
+                    </div>
                 </div>
 
 
             </div>
 
-            @*<div class="form-group row">
-                    <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
-                    <div class="col-sm-9">
-                        <span asp-validation-for="RoleId" class="text-danger"></span>
-                        <input asp-for="RoleId" class="form-control" />
-                    </div>
-                </div>*@
+           
             <div class="float-right">
-                <button type="submit" id="ValUserUpdate" value="Update" asp-action="Edit" class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
+                <button type="submit" id="ValUserUpdate" value="Update"  class="btn btn-primary "><i class="fa fa-plus"></i> Update</button>
                 <a id="back" class="btn btn-secondary btn-md " href="/User/ListUser"><i class="fa fa-chevron-left"></i> Back</a>
             </div>
         </div>
@@ -80,57 +81,23 @@
 
 <script>
 
-    $(document).ready(function () {
 
-
-        $('#alertDiv').hide();
+    $(function () {
+        $("#ValUserUpdate").on("click", function (e) {
+            var form = $("#CertForm")[0];
+            var isValid = form.checkValidity();
+            if (!isValid) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else {
+                return true;
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
+        });
     });
-    $('#ValUserUpdate').click(function () {
 
-        var s = "";
-
-
-        if ($('#validationCustom01').val() == '') {
-
-            s += '<label>Please Provide a Valid First Name</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-
-        if ($('#validationCustom02').val() == '') {
-
-            s += '<label>Please Provide a Valid Last Name</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        if ($('#validationCustom03').val() == '') {
-
-            s += '<label>Please Provide a Valid Email Address</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        if ($('#validationCustom04').val() == '') {
-
-            s += '<label>Please Provide a Valid Login Password</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        if ($('#select1').val() == '0') {
-
-            $('#select1').attr('class', 'form-control border-danger');
-
-            s += '<label>Please Provide a Valid Role</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-
-
-
-
-
-    });
+  
+ 
 </script>

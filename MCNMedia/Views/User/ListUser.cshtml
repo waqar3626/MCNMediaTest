@@ -1,38 +1,10 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.User>
+﻿@model MCNMedia_Dev.Models.GenericModel
 @using System.Web;
 @{
     ViewData["Title"] = "ManageUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script type="text/javascript">
 
-    $(document).ready(function () {
-
-        $("#ADDEmployee").on("click", function (e) {
-            var url = $(this).attr('href');
-            $("#dialog-edit").dialog({
-                title: 'Add New Employee',
-                autoOpen: false,
-                resizable: false,
-                height: 455,
-                width: 550,
-                show: { effect: 'drop', direction: "up" },
-                modal: true,
-                draggable: true,
-                open: function (event, ui) {
-                    $(this).load(url);
-
-                },
-                close: function (event, ui) {
-                    $(this).dialog('close');
-                }
-            });
-
-            $("#dialog-edit").dialog('open');
-            return false;
-        });
-    });
-</script>
 <div class="card mb-3">
     <div class="card-body">
         <h3>Search User</h3>
@@ -70,100 +42,181 @@
                                 <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-table-search"></i>Search</button>
                                 <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm"><i class="mdi mdi-cancel"></i>Cancel</a>
                             </div>
-                            </div>
                         </div>
-
-                   
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-        <div class="card">
-            <div class="card-body">
-
-               
-
-                <a id="ADDEmployee" class="btn btn-success btn-sm float-right" href="../User/AddUser"> <i class="fa fa-plus"></i> Add User</a>
-                <h3>Manage Users</h3>
-                <br />
-                <div class="">
-                    @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
-                    {
-
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                            <table id="sortable-table-1" class="table">
-                                <thead>
-                                    <tr>
-                                        
-                                        <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
-                                    
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            @*<td>
-                                                    @Html.DisplayFor(modelItem => item.UserId)
-                                                </td>*@
-                                            <td class="text-wrap">
-                                                
-                                                @Html.DisplayFor(modelItem => item.UserName, new {@class= "text-wrap" })
-                                            </td>
-                                           
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @{
-                                                    var Church = item.ChurchName.ToString();
-                                                    var Name = Church.Split("|");
-
-                                                    foreach (string churchName in Name)
-                                                    {
-
-                                                        <label class="text-wrap">@churchName</label>
-                                                        <br />
-                                                    }
+<div class="card">
+    <div class="card-body">
 
 
-                                                }
-                                            </td>
-                                            @*<td>
-                                                    @Html.DisplayFor(modelItem => item.UpdatedBy)
-                                                </td>*@
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.RoleName)
-                                            </td>
-                                            <td>
-                                                <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
 
-                                                <a href="@Url.Action("Edit", "User", new { id=item.UserId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-
-                                                <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+        <a id="ADDEmployee" onclick="AddUser1()" class="btn btn-success btn-sm float-right text-white"> <i class="fa fa-plus"></i> Add User</a>
+        <h3>Manage Users</h3>
+        <br />
+        <div class="">
+            <form method="get">
 
 
-                                                @*@Html.ActionLink("Edit Record", "Edit", new { id=item.UserId },new { @class="btn btn-success btn-md" })
-        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger btn-md" })*@
+                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                    <table id="sortable-table-1" class="table">
+                        <thead>
+                            <tr>
+                                <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                            @foreach (var item in Model.LUsers)
+                            {
+                                <tr>
+                                    @*<td>
+                                @Html.DisplayFor(modelItem => item.UserId)
+                            </td>*@
+                                    <td class="text-wrap">
+
+                                        @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
+                                        @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap" , @id = "hdnUserId" })
+              
+                                    </td>
+
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
+                                    </td>
+                                    <td class="text-wrap">
+                                        @{
+                                            var Church = item.ChurchName.ToString();
+                                            var Name = Church.Split("|");
+
+                                            foreach (string churchName in Name)
+                                            {
+
+                                                <label class="text-wrap">@churchName</label>
+                                                <br />
+                                            }
 
 
-                    }
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoleName)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                        <a onclick="EditUserClick(@item.UserId)"  id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
+
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
 
+
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddUserPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddUserPreview">
+                        @Html.Partial("~/Views/User/AddUser.cshtml", Model.Users)
+                    </div>
+                </div>
             </div>
         </div>
-    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditUserPreview">
+                        @Html.Partial("~/Views/User/Edit.cshtml", Model.Users)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function EditUserClick(userId) {
+       
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Edit", "User")',
+            data: { id: userId },
+            success: function (data) {
+                $('#EditUserPreview').html(data);
+                $('#EditUserModal').modal('show');
+            }
+        });
+    }
+   
+    function AddUser1() {
+
+
+        $('#AddUserPopUp').modal('show');
+
+    }
+
+
+    $(document).ready(function () {
+
+        $("#ADDEmployee").on("click", function (e) {
+            var url = $(this).attr('href');
+            $("#dialog-edit").dialog({
+                title: 'Add New Employee',
+                autoOpen: false,
+                resizable: false,
+                height: 455,
+                width: 550,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+                open: function (event, ui) {
+                    $(this).load(url);
+
+                },
+                close: function (event, ui) {
+                    $(this).dialog('close');
+                }
+            });
+
+            $("#dialog-edit").dialog('open');
+            return false;
+        });
+    });
+</script>
