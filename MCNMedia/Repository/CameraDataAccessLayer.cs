@@ -16,32 +16,6 @@ namespace MCNMedia_Dev.Repository
             _dc = new AwesomeDal.DatabaseConnect();
         }
 
-        public IEnumerable<Camera> GetAllCameras(int ChurchId)
-        {
-            List<Camera> Balobj = new List<Camera>();
-            _dc.ClearParameters();
-            _dc.AddParameter("churchId", ChurchId);
-            _dc.AddParameter("CamName", "");
-            DataTable dataTable = _dc.ReturnDataTable("spCamera_Search");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Camera camera = new Camera();
-                camera.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-                camera.CameraName = dataRow["CameraName"].ToString();
-                camera.HttpPort = dataRow["HttpPort"].ToString();
-                camera.CameraUrl = dataRow["CameraUrl"].ToString();
-                camera.RtspPort = dataRow["RtspPort"].ToString();
-                camera.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
-                camera.ChurchName = dataRow["ChurchName"].ToString();
-                camera.ServerId = Convert.ToInt32(dataRow["ServerId"]);
-                camera.ServerName = dataRow["ServerName"].ToString();
-                camera.ServerIP = dataRow["ServerIP"].ToString();
-
-                Balobj.Add(camera);
-            }
-            return Balobj;
-        }
-
         public int AddCamera(Camera camera)
         {
             _dc.ClearParameters();
@@ -60,27 +34,53 @@ namespace MCNMedia_Dev.Repository
             return 1;
         }
 
+        public IEnumerable<Camera> GetAllCameras(int ChurchId)
+        {
+            List<Camera> Balobj = new List<Camera>();
+            DataTable dataTable = GetCamera(churchId: ChurchId, cameraId: -1);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Camera camera = BindingCamera(dataRow);
+                Balobj.Add(camera);
+            }
+            return Balobj;
+        }
+
         public Camera GetCameraById(int camId)
         {
             Camera camera = new Camera();
-
-            _dc.ClearParameters();
-            _dc.AddParameter("CamId", camId);
-            DataTable dataTable = _dc.ReturnDataTable("spCamera_GetById");
+            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                camera.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-                camera.CameraName = dataRow["CameraName"].ToString();
-                camera.CameraUrl = dataRow["CameraUrl"].ToString();
-                camera.HttpPort = dataRow["HttpPort"].ToString();
-                camera.RtspPort = dataRow["RtspPort"].ToString();
-                camera.ServerId= Convert.ToInt32(dataRow["ServerId"]);
-                camera.ServerName = dataRow["ServerName"].ToString();
-                camera.ServerIP = dataRow["ServerIP"].ToString();
-
-
-              
+                camera = BindingCamera(dataRow);
             }
+            return camera;
+        }
+
+        private DataTable GetCamera(int churchId, int cameraId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("chrchId", churchId);
+            _dc.AddParameter("camId", cameraId);
+            DataTable dataTable = _dc.ReturnDataTable("spCamera_Get");
+            return dataTable;
+        }
+
+        private Camera BindingCamera(DataRow dataRow)
+        {
+            Camera camera = new Camera();
+            camera.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+            camera.CameraName = dataRow["CameraName"].ToString();
+            camera.HttpPort = dataRow["HttpPort"].ToString();
+            camera.CameraUrl = dataRow["CameraUrl"].ToString();
+            camera.RtspPort = dataRow["RtspPort"].ToString();
+            camera.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
+            camera.ChurchName = dataRow["ChurchName"].ToString();
+            camera.ServerId = Convert.ToInt32(dataRow["ServerId"]);
+            camera.ServerName = dataRow["ServerName"].ToString();
+            camera.ServerIP = dataRow["ServerIP"].ToString();
+            camera.LiveStreamUrl = $"https://{dataRow["ServerIP"]}/live/_{dataRow["UniqueIdentifier"]}_/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
+            camera.LiveStreamUrl = "https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8";
             return camera;
         }
 
@@ -95,6 +95,7 @@ namespace MCNMedia_Dev.Repository
 
             return _dc.Execute("spcamera_Update");
         }
+
         public bool DeleteCamera(int camId)
         {
             _dc.ClearParameters();
@@ -102,6 +103,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("UpdatedBy", 1);
             return _dc.ReturnBool("spCamera_Delete");
         }
+
         public IEnumerable<Server> GetServer()
         {
             List<Server> Balobj = new List<Server>();
@@ -118,7 +120,6 @@ namespace MCNMedia_Dev.Repository
                 Balobj.Add(server);
             }
             return Balobj;
-
         }
 
     }

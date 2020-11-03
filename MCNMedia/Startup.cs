@@ -9,6 +9,7 @@ using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -46,9 +47,6 @@ namespace MCNMedia_Dev
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
-            //services.Add(new ServiceDescriptor(typeof(UserDataAccessLayer), new UserDataAccessLayer(Configuration.GetConnectionString("Default"))));
-            //services.Add(new ServiceDescriptor(typeof(ChurchDataAccessLayer), new ChurchDataAccessLayer(Configuration.GetConnectionString("Default"))));
-            //services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:Default"]));
             services.AddControllersWithViews();
             //services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -57,25 +55,24 @@ namespace MCNMedia_Dev
                 //options.Cookie.HttpOnly = true;
                 //options.Cookie.IsEssential = true;
             });
-
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("en-PK");
+            });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddCronJob<CronJobEveryMinute>(c =>
-              {
-                  c.TimeZoneInfo = TimeZoneInfo.Local;
-                  c.CronExpression = @"* * * * *";
-              });
+            //services.AddCronJob<CronJobEveryMinute>(c =>
+            //  {
+            //      c.TimeZoneInfo = TimeZoneInfo.Local;
+            //      c.CronExpression = @"* * * * *";
+            //  });
 
-            //services.AddCronJob<MyCronJob1>(c =>
-            //{
-            //    c.TimeZoneInfo = TimeZoneInfo.Local;
-            //    c.CronExpression = @"*/5 * * * *";
-            //});
-            //services.AddCronJob<MyCronJob2>(c =>
-            //{
-            //    c.TimeZoneInfo = TimeZoneInfo.Local;
-            //    c.CronExpression = @"* * * * *";
-            //});
+            services.AddCronJob<CronJobEveryFiveMinute>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                c.CronExpression = @"*/5 * * * *";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +87,7 @@ namespace MCNMedia_Dev
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-
+            app.UseRequestLocalization();
             app.UseRouting();
             app.UseSession();
             app.UseStaticFiles();
@@ -133,6 +130,10 @@ namespace MCNMedia_Dev
                     name: "UserLogin",
                     pattern: "UserLogin",
                     defaults: new { controller = "UserLogin", Action = "UserLogin" });
+                endpoints.MapControllerRoute(
+                    name: "DashBoard",
+                    pattern: "DashBoard",
+                    defaults: new { controller = "DashBoard", Action = "DashBoard" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Website}/{action=Home}/{id?}",

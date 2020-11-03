@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
@@ -33,7 +34,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSchedule(bool ToggleRecord,Schedule sch)
+        public IActionResult AddSchedule(bool ToggleRecord, Schedule sch)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    sch.EventDate = Convert.ToDateTime("1900-01-01 00:00:00");
+                    sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
                 }
 
                 sch.Record = ToggleRecord;
@@ -84,14 +85,13 @@ namespace MCNMedia_Dev.Controllers
                 DateTime eventDate = DateTime.Now;
                 string eventDay = DateTime.Now.ToString("dddd");
                 ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
-               
                 ViewBag.SchChurchId = churchId;
                 ViewBag.Schrecord = record;
-              
-               
+
+
                 LoadChurchDDL();
                 GenericModel gm = new GenericModel();
-                
+
                 gm.LSchedules = SearchSchedules(churchId, eventDay, eventDate, record);
                 return View(gm);
             }
@@ -260,7 +260,7 @@ namespace MCNMedia_Dev.Controllers
                 LoadChurchDDL();
                 string eventDay = eventDate.ToString("dddd");
                 GenericModel gm = new GenericModel();
-                gm.LSchedules  = SearchSchedules(churchId,  eventDay, eventDate, recordDt);
+                gm.LSchedules = SearchSchedules(churchId, eventDay, eventDate, recordDt);
                 return View("/Views/Schedule/ListSchedule.cshtml", gm);
             }
             catch (Exception e)
@@ -273,12 +273,47 @@ namespace MCNMedia_Dev.Controllers
         private List<Schedule> SearchSchedules(int churchId, string eventDay, DateTime eventDate, int record)
         {
             ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
-          
             ViewBag.SchChurchId = churchId;
             ViewBag.Schrecord = record;
             HttpContext.Session.SetInt32("ChurchId", churchId);
             GenericModel gm = new GenericModel();
             return scheduleDataAccess.GetSearchSchedule(churchId, eventDate, eventDay, record).ToList<Schedule>();
+        }
+
+        public void StartRecording()
+        {
+            DataTable dt = scheduleDataAccess.GetScheduleReadyToStart();
+            foreach (DataRow dr in dt.Rows)
+            {
+                WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+                int churchId = Convert.ToInt32(dr["ChurchId"]);
+                int cameraId = Convert.ToInt32(dr["CameraId"]);
+                bool res = wowzaHelper.StartRecording(churchId, cameraId);
+                if (res)
+                {
+                    scheduleDataAccess.UpdateScheduleStatus(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 1);
+                    string logMessage = $"Recording started for camera (CameraID: {cameraId}) on {DateTime.Now}";
+                    ActivityLogDataAccessLayer.AddActivityLog("Status Updation", category: "Schedule", message: logMessage, churchId: churchId, userId: -1);
+                }
+            }
+        }
+
+        public void StopRecording()
+        {
+            DataTable dt = scheduleDataAccess.GetScheduleReadyToStop();
+            foreach (DataRow dr in dt.Rows)
+            {
+                WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+                int churchId = Convert.ToInt32(dr["ChurchId"]);
+                int cameraId = Convert.ToInt32(dr["CameraId"]);
+                bool res = wowzaHelper.StopRecording(churchId, cameraId);
+                if (res)
+                {
+                    scheduleDataAccess.UpdateScheduleStatus(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 2);
+                    string logMessage = $"Recording stopped for camera (CameraID: {cameraId}) on {DateTime.Now}";
+                    ActivityLogDataAccessLayer.AddActivityLog("Status Updation", category: "Schedule", message: logMessage, churchId: churchId, userId: -1);
+                }
+            }
         }
 
         private void ShowMessage(String exceptionMessage)

@@ -73,8 +73,6 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-
-
         public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate,string EventDay,int isRecord)
         {
             List<Schedule> Balobj = new List<Schedule>();
@@ -131,8 +129,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.Record = Convert.ToBoolean(dataRow["Record"]);
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-               
+                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);               
             }
             return schedule;
         }
@@ -192,21 +189,42 @@ namespace MCNMedia_Dev.Repository
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
             _dc.AddParameter("chId", ChurchId);
-            
+
             DataTable dataTable = _dc.ReturnDataTable("spChurchSchedule_Get");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Schedule sch = new Schedule();
                 sch.EventDay = dataRow["ScheduleEventDay"].ToString();
                 sch.EventName = dataRow["Events"].ToString();
-       
-                
+
+
 
                 Balobj.Add(sch);
             }
             return Balobj;
         }
 
+        public DataTable GetScheduleReadyToStart()
+        {
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spSchedule_ReadyForStart");
+            return dataTable;
+        }
+
+        public DataTable GetScheduleReadyToStop()
+        {
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spSchedule_ReadyForStop");
+            return dataTable;
+        }
+
+        public void UpdateScheduleStatus(int scheduleId, int scheduleStatus)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("SchId", scheduleId);
+            _dc.AddParameter("SchStatus", scheduleStatus);
+            _dc.Execute("spSchedule_UpdateStatus");
+        }
 
 
     }

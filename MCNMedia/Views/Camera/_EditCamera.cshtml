@@ -2,18 +2,28 @@
 @{
 
 }
+<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+
+<style type="text/css">
+    .vjs-big-play-button {
+        left: 5em !important;
+        top: 4em !important;
+    }
+</style>
 <div class="row">
     <div class="col-sm-6">
-        <video width="320" height="240" id="camera_1_html5_api" class="vjs-tech" preload="auto" data-setup="{&quot;fluid&quot;: true}" tabindex="-1" src="blob:https://mcnmedia.tv/c227d418-07d0-4b18-b896-f7a2c1cf763c" controls>
-         
-            <source src="https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8" type="application/vnd.apple.mpegurl" />
-            Your browser does not support the video tag.
+        <video id='CameraLiveStream' class="video-js vjs-default-skin" width="400" height="300" controls>
+            <source id="LiveStreamSrc" type="application/x-mpegURL">
         </video>
     </div>
     <div class="col-sm-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Cameras.CameraId" id="CamId" />
+            <input type="hidden" asp-for="Cameras.LiveStreamUrl" id="livestreamUrl" />
             <div class="form-group">
                 <label asp-for="Cameras.CameraName" class="control-label">Tab Name</label>
                 <input asp-for="Cameras.CameraName" class="form-control" id="CamName" />
@@ -48,8 +58,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#LiveStreamSrc').attr("src", '' + $('#livestreamUrl').val() + '');
+        var player = videojs('CameraLiveStream');
+        player.autoplay(false);
+    });
+
     function Openit(camId) {
-        
+
         var CameraId = $('#CamId').val();
         var CameraName = $('#CamName').val();
         var CameraUrl = $('#Cameras_CameraUrl').val();
@@ -68,7 +84,7 @@
             //  dataType: "json",
             success: function (result) {
                 loadCamera();
-                $('#EditModal').modal('hide');  
+                $('#EditModal').modal('hide');
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);

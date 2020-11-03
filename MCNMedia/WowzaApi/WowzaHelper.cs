@@ -83,7 +83,7 @@ namespace MCNMedia_Dev.WowzaApi
         {
             try
             {
-                log.InfoFormat("Recording Start for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+                log.InfoFormat("StartRecording Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
                 string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
                 log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
                 RecordingData recordingData = new RecordingData();
@@ -150,7 +150,9 @@ namespace MCNMedia_Dev.WowzaApi
             Camera cam = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
             cam = cameraDataAccessLayer.GetCameraById(cameraId);
-            return cam.ServerIP;
+            if (cam.ServerIP is null)
+                cam.ServerIP = "54.217.38.80";
+            return cam.ServerIP  ;
         }
 
         #endregion
@@ -168,11 +170,11 @@ namespace MCNMedia_Dev.WowzaApi
             bool connectStream = false;
             string streamFileName = $"{churchIdentifier}_{cameraId}";
             log.InfoFormat("Add Camera(CameraID: {0}) on wowza having stream file name: {1} - Start", cameraId, streamFileName);
-            
+
             StreamFile streamFile = new StreamFile();
-            streamFile.Name = streamFileName;
-            streamFile.ServerName = SERVER;
-            streamFile.Uri = rtspUrl;
+            streamFile.name = streamFileName;
+            streamFile.serverName = SERVER;
+            streamFile.uri = rtspUrl;
 
             bool createStreamFile = PostAsync($"{GetBasicUri(cameraId)}/streamfiles", streamFile);
             if (createStreamFile)
@@ -290,9 +292,9 @@ namespace MCNMedia_Dev.WowzaApi
 
     class StreamFile
     {
-        public string Name { get; set; }
-        public string ServerName { get; set; }
-        public string Uri { get; set; }
+        public string name { get; set; }
+        public string serverName { get; set; }
+        public string uri { get; set; }
     }
 
     class RecordingData
@@ -304,7 +306,7 @@ namespace MCNMedia_Dev.WowzaApi
         public int currentSize = 0;
         public string segmentSchedule = "";
         public bool startOnKeyFrame = true;
-        public string outputPath = "";
+        public string outputPath = "/usr/local/WowzaStreamingEngine/content/recording";
         public string currentFile = "";
         public string[] saveFieldList = new string[] { };
         public bool recordData = false;

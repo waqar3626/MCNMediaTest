@@ -27,15 +27,14 @@ namespace MCNMedia_Dev.Models
         public int UpdatedBy { get; set; }
 
         public string StreamingProtocol { get; set; }
+        public string LiveStreamUrl { get; internal set; }
     }
 
 
     public class Server {
 
         public int ServerId { get; set; }
-
         public string ServerName { get; set; }
-
         public string ServerIP { get; set; }
 
 
