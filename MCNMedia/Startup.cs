@@ -61,11 +61,11 @@ namespace MCNMedia_Dev
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //services.AddCronJob<CronJobEveryMinute>(c =>
-            //  {
-            //      c.TimeZoneInfo = TimeZoneInfo.Local;
-            //      c.CronExpression = @"* * * * *";
-            //  });
+            services.AddCronJob<CronJobEveryMinute>(c =>
+              {
+                  c.TimeZoneInfo = TimeZoneInfo.Local;
+                  c.CronExpression = @"* * * * *";
+              });
 
             services.AddCronJob<CronJobEveryFiveMinute>(c =>
             {
