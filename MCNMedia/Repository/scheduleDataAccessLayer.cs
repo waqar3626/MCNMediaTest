@@ -17,7 +17,7 @@ namespace MCNMedia_Dev.Repository
             _dc = new AwesomeDal.DatabaseConnect();
         }
         //To Add new Schedule record    
-        public void AddSchedule(Schedule schedules)
+        public int AddSchedule(Schedule schedules)
         {
             _dc.ClearParameters();
             _dc.AddParameter("ScheduleEventName", schedules.EventName);
@@ -31,7 +31,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchPassword", schedules.Password);
             _dc.AddParameter("SchCameraId", schedules.CameraId); 
             _dc.AddParameter("CreatedBy", schedules.CreatedBy);
-            _dc.Execute("spschedule_Add");
+            return _dc.Execute("spschedule_Add");
         }
 
 		//To View all Users details 
@@ -73,6 +73,8 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
+
+
         public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate,string EventDay,int isRecord)
         {
             List<Schedule> Balobj = new List<Schedule>();
@@ -109,7 +111,7 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        //Get the details of a particular User
+        //Get the details of a particular Schedule
         public Schedule GetScheduleDataBtId(int id)
         {
             Schedule schedule = new Schedule();
@@ -129,12 +131,13 @@ namespace MCNMedia_Dev.Repository
                 schedule.Record = Convert.ToBoolean(dataRow["Record"]);
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);               
+                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+               
             }
             return schedule;
         }
 
-        //To Update the records of a particluar User
+        //To Update the records of a particluar Schedule
         public void UpdateSchedule(Schedule schedule)
         {
             _dc.ClearParameters();
@@ -162,14 +165,36 @@ namespace MCNMedia_Dev.Repository
             _dc.ReturnBool("spSchedule_Delete");
         }
 
-        public IEnumerable<Schedule> GetWebsiteSchedule()
+        public IEnumerable<Schedule> GetWebsiteSchedule_WhatsOnNow()
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+
+
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNow");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule schedule = new Schedule();
+                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+
+
+
+                Balobj.Add(schedule);
+            }
+            return Balobj;
+        }
+        public IEnumerable<Schedule> GetWebsiteSchedule_TodaySchedules()
         {
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
    
 
-            //_dc.AddParameter("EmailAdd", "");
-            DataTable dataTable = _dc.ReturnDataTable("spWebsite_ScheduleList");
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Schedule schedule = new Schedule();
@@ -183,7 +208,6 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-
         public IEnumerable<Schedule> GetAllChurchSchedule(int ChurchId)
         {
             List<Schedule> Balobj = new List<Schedule>();
@@ -203,6 +227,30 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+
+        public IEnumerable<Schedule> GetWebsiteSchedule_UpComingSchedules()
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_UpComingEvents");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule schedule = new Schedule();
+                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+
+
+
+                Balobj.Add(schedule);
+            }
+            return Balobj;
+        }
+
 
         public DataTable GetScheduleReadyToStart()
         {

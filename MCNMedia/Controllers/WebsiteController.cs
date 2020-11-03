@@ -38,9 +38,11 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
-                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule().ToList<Schedule>();
-                return View(schedules);
+                GenericSchedule gmSch = new GenericSchedule();
+                 gmSch.List1  = _scheduleDataAccessLayer.GetWebsiteSchedule_TodaySchedules().ToList<Schedule>();
+                gmSch.List2 = UpComingSchedules();
+                gmSch.List3 = Schedules_WhatsOnNow();
+                return View(gmSch);
             }
             catch (Exception e)
             {
@@ -48,6 +50,37 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
+        private IEnumerable<Schedule> Schedules_WhatsOnNow()
+        {
+            try
+            {
+
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_WhatsOnNow().ToList<Schedule>();
+                return schedules;
+            }
+            catch (Exception e)
+            {
+
+                ShowMesage("Schedules Error : " + e.Message);
+                throw;
+            }
+        }
+        private IEnumerable<Schedule> UpComingSchedules()
+        {
+            try
+            {
+
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_UpComingSchedules().ToList<Schedule>();
+                return schedules;
+            }
+            catch (Exception e)
+            {
+
+                ShowMesage("Schedules Error : " + e.Message);
+                throw;
+            }
+        }
+
 
         public IActionResult ContactUs()
         {

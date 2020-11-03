@@ -1,30 +1,32 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.Schedule>
+﻿@model MCNMedia_Dev.Models.GenericSchedule
 @{
     ViewData["Title"] = "Schedules";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
-   
+
 }
-    <style type="text/css">
-        .color1 {
-            color: goldenrod;
-        }
+<style type="text/css">
+    .color1 {
+        color: goldenrod;
+    }
+    
+    .bgcolor {
+        background-color: goldenrod;
+    }
 
-        .bgcolor {
-            background-color: goldenrod;
-        }
+    .bgcolor1 {
+        background-color: #060f2d;
+        color: white;
+    }
+</style>
 
-        .bgcolor1 {
-            background-color: #060f2d;
-            color: white;
-        }
-    </style>
-
-    <div class="card bgcolor1" >
-        <div class="card-body">
-            <marquee> <h2>SCHEDULES </h2></marquee>
-        </div>
-        
+<div class="card bgcolor1">
+    <div class="card-body">
+        <h2>SCHEDULES </h2>
     </div>
+
+</div>
+
+
 <div class="card bgcolor1 rounded-top pt-0">
 
     <div class="card-body pr-3 ">
@@ -33,28 +35,105 @@
             <div class="font-weight-bold pl-2 display-4 ">  Schedules for @DateTime.Now.ToString("dddd") - @DateTime.Now.ToString("dd-MMM-yyyy")</div>
         </div>
         <div class="current-time font-weight-bold pt-2 ml-3 text-white  display-4 ">
-            The Current Time is: <span id="clock"></span> 
+            The Current Time is: <span id="clock"></span>
         </div>
 
         @*  *@
     </div>
-    <div class="row">
-        <div class=" bg-white col-12 ml-4 ">
-            @foreach (Schedule schedule in Model)
-            {
-                <div class="Col-sm-12 mt-2">
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <a href="/cameras/" class="text-black">
-                                <b>Daily Mass </b> - @schedule.ChurchName
-                            </a>
-                        </div>
+    <div class="col-12 grid-margin stretch-card d-none d-md-flex">
+        <div class="card">
+            <div class="card-body">
 
-                        <div class="col-sm-2 text-center text-black"><b><i class="fa fa-clock-o" aria-hidden="true"></i>@schedule.EventTime.ToString("h:mm tt")</b></div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <ul class="nav nav-tabs nav-tabs-vertical-custom " role="tablist">
+                            <li class="nav-item bgcolor rounded">
+                                <a class="nav-link active" id="home-tab-custom" data-toggle="tab" href="#home-3" role="tab" aria-controls="home-3" aria-selected="true">
+                                  What's On Now
+                                </a>
+                            </li>
+                            <li class="nav-item bgcolor rounded">
+                                <a class="nav-link  " id="profile-tab-custom" data-toggle="tab" href="#profile-3" role="tab" aria-controls="profile-3" aria-selected="false">
+                                    UpComing Events
+                                </a>
+                            </li>
+                            <li class="nav-item bgcolor rounded">
+                                <a class="nav-link " id="contact-tab-custom" data-toggle="tab" href="#contact-3" role="tab" aria-controls="contact-3" aria-selected="false">
+                                    Today's Schedule
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+                    <div class="col-9 col-lg-6">
+                        <div class="tab-content tab-content-vertical tab-content-vertical-custom">
+                            <div class="tab-pane fade show active" id="home-3" role="tabpanel" aria-labelledby="home-tab-custom">
+                                <div class="row">
+                                    <div class=" bg-white col-12 ml-4 ">
+                                        @foreach (var schedule in Model.List3)
+                                        {
+                                            <div class="Col-sm-12 mt-2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <a href="/cameras/" class="text-black">
+                                                            <b>Daily Mass </b> - @schedule.ChurchName
+                                                        </a>
+                                                    </div>
 
-                </div><hr>
-            }
+                                                    <div class="col-sm-2 text-center text-black"><b><i class="fa fa-clock-o" aria-hidden="true"></i>@schedule.EventTime.ToString("h:mm tt")</b></div>
+                                                </div>
+
+                                            </div><hr>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile-3" role="tabpanel" aria-labelledby="profile-tab-custom">
+                                <div class="row">
+                                    <div class=" bg-white col-12 ml-4 ">
+                                        @foreach (var schedule in Model.List2)
+                                        {
+                                            <div class="Col-sm-12 mt-2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <a href="/cameras/" class="text-black">
+                                                            <b>Daily Mass </b> - @schedule.ChurchName
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col-sm-2 text-center text-black"><b><i class="fa fa-clock-o" aria-hidden="true"></i>@schedule.EventTime.ToString("h:mm tt")</b></div>
+                                                </div>
+
+                                            </div><hr>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="contact-3" role="tabpanel" aria-labelledby="contact-tab-custom">
+                                <div class="row">
+                                    <div class=" bg-white col-12 ml-4 ">
+                                        @foreach (Schedule schedule in Model.List1)
+                                        {
+                                            <div class="Col-sm-12 mt-2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <a href="/cameras/" class="text-black">
+                                                            <b>Daily Mass </b> - @schedule.ChurchName
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col-sm-2 text-center text-black"><b><i class="fa fa-clock-o" aria-hidden="true"></i>@schedule.EventTime.ToString("h:mm tt")</b></div>
+                                                </div>
+
+                                            </div><hr>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
