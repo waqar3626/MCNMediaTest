@@ -162,6 +162,29 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult PlayVideo(int id)
+        {
+            try
+            {
+
+                Recording recording = recordDataAccess.GetRecordingData(id);
+                if (recording == null)
+                {
+                    return NotFound();
+                }
+
+                LoadChurchesDDL();
+                return PartialView("PlayVideo", recording);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Edit Recording Errors 'Get' : " + e.Message);
+                throw;
+            }
+
+        }
+
 
     }
 }

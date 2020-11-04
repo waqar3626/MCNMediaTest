@@ -43,26 +43,30 @@
                         {
                             <tr>
 
-                                <td>
+                                <td class="text-wrap">  
                                     @Html.DisplayFor(modelItem => item.RecordingTitle)
                                 </td>
-                                <td>
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.RecordingURl)
                                 </td>
-                                <td>
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName)
                                 </td>
-                                <td>
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.Date)
 
-                                <td>
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.Time)
                                 </td>
                                 <td>
                                     <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                     <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                   
+                                    @{
+                                        var UrlDownload = "/" + item.RecordingURl;
 
+                                        <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
+                                    }
+                                    <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
                                 </td>
                             </tr>
                         }
@@ -107,7 +111,26 @@
                         </button>
                     </div>
                     <div class="modal-body" id="EditRecordingPreview">
-                        @Html.Partial("~/Views/User/Edit.cshtml", Model.Recordings)
+                        @Html.Partial("~/Views/Recording/Edit.cshtml", Model.Recordings)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="PlayRecordingModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Play Recording</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="PlayRecordingPreview">
+                    <video  id="videoUrl" style="width:700px; height:400px; border:1px solid black;" controls></video>
                     </div>
                 </div>
             </div>
@@ -115,21 +138,31 @@
     </div>
 </div>
 <script>
+    $(document).on("click", ".ti-control-play", function () {
+        var myBookId = $(this).data('id');
+        $(".modal-body #videoUrl").attr("src", '/'+myBookId);
+        // As pointed out in comments, 
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+    
     function AddRecording1() {
 
         $('#AddRecordingPopUp').modal('show');
 
     }
      function EditRecording(recordingId) {
-        $.ajax({
-            type: "Get",
-            url: '@Url.Action("Edit", "Recording")',
-            data: { id: recordingId },
-            success: function (data) {
-                $('#EditRecordingPreview').html(data);
-                $('#EditRecordingModal').modal('show');
-            }
-        })
+         $.ajax({
+             type: "Get",
+             url: '@Url.Action("Edit", "Recording")',
+             data: { id: recordingId },
+             success: function (data) {
+                 $('#EditRecordingPreview').html(data);
+                 $('#EditRecordingModal').modal('show');
+             }
+         });
 
     }
+     
+
 </script>

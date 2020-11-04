@@ -2,8 +2,56 @@
 @{
 
 }
+<style>
+
+    .overlay {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+       
+        z-index: 2;
+        opacity: 0;
+       
+        transition: opacity 200ms ease-in-out;
+        margin:10px 0px 0px 0px;
+    }
+
+        .overlay button {
+            margin: 5px;
+
+          
+        }
+
+
+
+        .overlay:hover {
+            opacity: 0.8;
+        }
+</style>
 <script src="~/theme/js/modal-demo.js"></script>
 <script type="text/javascript">
+    var sizeTheOverlays = function () {
+        $(".overlay").resize().each(function () {
+            var h = $(this).parent().outerHeight();
+            var w = $(this).parent().outerWidth();
+            $(this).css("height", h);
+            $(this).css("width", w);
+        });
+    };
+
+    sizeTheOverlays();
+
+
+    var width = $(window).width();
+    $(window).resize(function () {
+        if ($(this).width() != width) {
+            width = $(this).width();
+            sizeTheOverlays();
+        }
+    });
+
+
 
 </script>
 
@@ -14,7 +62,7 @@
         <div class="">
 
 
-            <table class="table">
+            <table class="table floa ">
                 <thead>
                     <tr>
 
@@ -27,7 +75,9 @@
                     
                     </tr>
                 </thead>
-                <tbody class="SchList ">
+                <tbody class="SchList"  >
+                   
+                    
                 </tbody>
             </table>
 
@@ -104,8 +154,10 @@
                     var str = item.eventName;
                     var array = str.split('|');
                     html += "<td class='text-wrap'>";
-                    $.each(array, function (key, item2) {
-                        html += "<div style='float:left;margin:0px 5px 5px 0px;'><div class='card'> <div class='card-body'>" + item2 + "</div></div></div > ";
+                    $.each(array, function (key, item2)
+
+                    {
+                        html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <button class='btn btn-primary btn-sm' ><i class='fa fa-edit'></i></button><button class='btn btn-danger btn-sm '><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>"+ item2+" </div></div></div> </div>";
 
                     }
                         );
