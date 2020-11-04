@@ -177,13 +177,16 @@ namespace MCNMedia_Dev.Controllers
 
             try
             {
+                LoadDDL();
                 User usr = new User();
                 usr.FirstName = FirstName;
                 usr.LastName = LastName;
                 usr.EmailAddress = EmailAddress;
                 usr.RoleName = Role;
-                List<User> user = userDataAccess.GetAllUser(usr).ToList<User>();
-                return View("/Views/User/ListUser.cshtml", user);
+                //List<User> user = userDataAccess.GetAllUser(usr).ToList<User>();
+                GenericModel gm = new GenericModel();
+                gm.LUsers = userDataAccess.GetAllUser(usr).ToList<User>();
+                return View("/Views/User/ListUser.cshtml", gm);
 
             }
 
