@@ -96,40 +96,26 @@
             @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
             {
 
-                <div class="table-responsive">
-                    <table id="order-listing" class="table">
-                        <thead>
-                            <tr>
+            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                <table id="sortable-table-1" class="table">
+                    <thead>
+                        <tr>
+                            <th class="sortStyle">Church Name<i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Event Name<i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Event Date/Day<i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Event Time <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Duration <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Repeated <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Recording <i class="ti-angle-down"></i></th>
 
-                                <th>
-                                    Church Name
-                                </th>
-                                <th>
-                                    Event Name
-                                </th>
-                                <th>
-                                    Event Date/Day
-                                </th>
-                                <th>
-                                    Event Time
-                                </th>
-                                <th>
-                                    Duration
-                                </th>
-                                <th>
-                                    Repeated
-                                </th>
-                                <th>
-                                   Recording
-                                </th>
+                            <th>Actions</th>
+                        </tr>
 
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="SchList">
+                    </thead>
+                    <tbody class="SchList">
 
-                            @foreach (var item in Model.LSchedules)
-                            {
+                        @foreach (var item in Model.LSchedules)
+                        {
                             <tr>
 
                                 <td class="text-wrap">
@@ -193,10 +179,10 @@
 
                                 </td>
                             </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
             }
         </div>
     </div>
