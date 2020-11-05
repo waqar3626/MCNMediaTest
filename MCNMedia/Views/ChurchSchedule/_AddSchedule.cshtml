@@ -1,0 +1,335 @@
+﻿@model MCNMedia_Dev.Models.Schedule
+
+@{
+    ViewData["Title"] = "Schedule";
+}
+
+
+@{
+    List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
+}
+
+<form asp-action="AddSchedule" asp-controller="Schedule" method="post" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+    <div class="card">
+        <div class="card-body">
+         
+            <div class="form-group row">
+                <label asp-for="ChurchId" class="col-sm-2 col-form-label">Church</label>
+                <div class="col-sm-4">
+                    <span asp-validation-for="ChurchId" class="text-danger"></span>
+                    @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                    @Html.DropDownList("ChurchId", SelectList, new { @class = "custom-select", @id = "ddlChurchId", @required = "required", @onchange = "DoPostBack();" })
+
+                    <span asp-validation-for="ChurchId" class="text-danger"></span>
+
+                    <div class="invalid-feedback" id="ChurchViladate">
+                        Please Select the Church
+                    </div>
+                </div>
+
+
+                <label asp-for="EventName" for="validationCustom03" class="col-sm-2 col-form-label">Event Name</label>
+                <div class="col-sm-4">
+
+                    <span asp-validation-for="EventName" class="text-danger"></span>
+
+                    <input type="text" asp-for="EventName" class="form-control" id="validationCustom03" placeholder="Event Name" required />
+                    <div class="invalid-feedback">
+                        Please provide a valid EventName.
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group row">
+
+                <div class="col-sm-12">
+
+                    <div class="custom-control custom-switch lg">
+                        <input type="checkbox" class="custom-control-input control" asp-for="IsRepeated" name="IsRepeated" id="IsRepeated">
+                        <label class="custom-control-label" for="IsRepeated">Would you like to repeat this event?</label>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label asp-for="EventDate" for="validationCustom05" id="EventLabel1" class="col-sm-2 col-form-label">Event Date</label>
+                <div class="col-sm-4" id="EventInput1">
+                    <span asp-validation-for="EventDate" class="text-danger"></span>
+                    <div id="datepicker-popup" class="input-group date datepicker">
+                        <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" />
+
+                        <span class="input-group-addon input-group-append border-left">
+                            <span class="ti-calendar input-group-text"></span>
+                        </span>
+                    </div>
+
+
+
+                </div>
+                <div class="invalid-feedback">
+                    Please provide a valid Event Date.
+                </div>
+
+
+
+                <label asp-for="EventDay" for="validationCustom06" id="EventDayLabel1" class="col-sm-2 col-form-label">Event Day</label>
+                <div class="col-sm-4" id="EventDayInput1">
+                    <span asp-validation-for="EventDay" class="text-danger"></span>
+
+
+                    <select asp-for="EventDay" class="custom-select" id="validationCustom06">
+                        <option selected="selected" disabled value="0">Please select Day</option>
+                        <option value="Monday" name="EventDay">Monday</option>
+                        <option value="Tuesday" name="EventDay">Tuesday</option>
+                        <option value="Wednesday" name="EventDay">Wednesday</option>
+                        <option value="Thursday" name="EventDay">Thursday</option>
+                        <option value="Friday" name="EventDay">Friday</option>
+                        <option value="Saturday" name="EventDay">Saturday</option>
+                        <option value="Sunday" name="EventDay">Sunday</option>
+
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a valid Event Day.
+                    </div>
+                </div>
+
+                <label asp-for="EventTime" class="col-sm-2 col-form-label" for="validationCustom02">Event Time</label>
+                <div class="col-sm-4">
+                    <span asp-validation-for="EventTime" class="text-danger"></span>
+                    <div class="form-group">
+                        <div class="input-group date " id="timepicker-example" data-target-input="nearest">
+
+                            <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
+
+                                <input type="text" asp-for="EventTime" class="form-control datetimepicker-input" id="validationCustom02" data-target="#timepicker-example" placeholder="Event Time" required />
+
+                                <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid EventTime.
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-sm-12 pt-3">
+                    <div class="custom-control custom-switch lg">
+                        <input type="checkbox" class="custom-control-input control" asp-for="Record" name="ToggleRecord" id="ToggleRecord">
+                        <label class="custom-control-label" for="ToggleRecord">Would you like to record this event?</label>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group row" id="DivRecordData">
+                <label asp-for="CameraId" class="col-sm-2 col-form-label">Camera</label>
+
+                <div class="col-sm-4 ">
+                    <span asp-validation-for="CameraId" class="text-danger"></span>
+                    <select asp-for="CameraId" name="CameraId" class="form-control" id="CameraId">                                                    </select>
+                </div>
+
+                <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
+
+                <div class="col-sm-4 ">
+                    <span asp-validation-for="RecordDuration" class="text-danger"></span>
+                    <select asp-for="RecordDuration" class="form-control" id="Lenght">
+                        <option value="30" name="Length">30 Minutes</option>
+                        <option value="40" name="Length">40 Minutes</option>
+                        <option value="60" name="Length">1 Hour</option>
+                        <option value="75" name="Length">1 Hour 15 Minutes</option>
+                        <option value="90" name="Length">1 Hour 30 Minutes</option>
+                        <option value="105" name="Length">1 Hour 45 Minutes</option>
+                        <option value="120" name="Length">2 Hours</option>
+
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-sm-12 pt-3">
+                    <div class="custom-control custom-switch lg">
+                        <input type="checkbox" class="custom-control-input control" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">Would you like to password protect this event?</label>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Password" id="lblPassword" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-4 " id="SchPassword">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input type="text" asp-for="Password" class="form-control" placeholder="Password" />
+                </div>
+                <div class="col-sm-6" id="btnSchdule">
+                    <div class="float-right">
+                        <button type="submit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                        <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-12" id="btnSchdulecol13">
+                    <div class="float-right">
+                        <button type="submit" id="addScheduleVal" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                        <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ddlChurchId').append("<option value='0' selected disabled>--Select Church--</option>");
+        $('#alertDiv').hide();
+        $('#EventDayLabel1').hide();
+        $('#EventDayInput1').hide();
+        $('#EventLabel1').show();
+        $('#EventInput1').show();
+        $('#IsRepeated').val("false");
+
+        HidePassword();
+        HideRecordData();
+
+        DoPostBack();
+    });
+
+
+
+
+    $('#IsRepeated').change(function () {
+
+        if (this.checked)
+        {
+            $('#EventDayLabel1').show();
+            $('#EventDayInput1').show();
+            $('#EventLabel1').hide();
+            $('#EventInput1').hide();
+            $(this).val("true");
+        }
+
+        else {
+            $('#EventDayLabel1').hide();
+            $('#EventDayInput1').hide();
+            $('#EventLabel1').show();
+            $('#EventInput1').show();
+            $(this).val("false");
+
+        }
+
+
+    });
+    $('#customSwitch1').change(function () {
+        if (this.checked) {
+            ShowPassword();
+        }
+
+        else {
+            HidePassword();
+        }
+
+
+    });
+
+    $('#ToggleRecord').change(function () {
+        if (this.checked) {
+            ShowRecordData();
+        }
+
+        else {
+            HideRecordData();
+        }
+
+
+    });
+
+    function HidePassword() {
+        $('#lblPassword').hide();
+        $('#SchPassword').hide();
+        $('#btnSchdule').hide();
+        $('#btnSchdulecol13').show();
+    }
+
+    function ShowPassword() {
+        $('#lblPassword').show();
+        $('#SchPassword').show();
+        $('#btnSchdule').show();
+        $('#btnSchdulecol13').hide();
+    }
+
+    function HideRecordData() {
+        $('#DivRecordData').hide();
+
+
+    }
+
+    function ShowRecordData() {
+        $('#DivRecordData').show();
+
+
+
+
+    }
+
+
+    function DoPostBack() {
+        var ChurchId = document.getElementById('ddlChurchId').value;
+
+        $.ajax({
+            url: "/Schedule/LoadCameraDDL",
+            type: "GET",
+            data: { ChurchId: ChurchId },
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (result) {
+                var s='<option value="0">--Select Camera--</option>';
+                $.each(result, function (key, item) {
+                    s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
+
+                });
+
+                $("#CameraId").html(s);
+
+
+
+
+
+            },
+            error: function (errormessage) {
+
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

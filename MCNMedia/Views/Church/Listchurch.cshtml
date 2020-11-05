@@ -76,30 +76,19 @@
         <h3>Manage Churches</h3>
         <br />
         <div class="">
-            <div class="table-responsive">
-                <table id="order-listing" class="table">
+            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                <table id="sortable-table-1" class="table">
                     <thead>
                         <tr>
-                            <th>
-                                Details
-                            </th>
-                            <th>
-                                Church Name
-                            </th>
-                            <th>
-                                Client Type
-                            </th>
-                            <th>
-                                County
-                            </th>
-                            <th>
-                                Email Address
-                            </th>
-                            <th>
-                                Phone
-                            </th>
+                            <th class="sortStyle">Details <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Church Name <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle"> Client Type <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle"> County <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Email Address <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle"> Phone <i class="ti-angle-down"></i></th>
                             <th>Preview</th>
                         </tr>
+
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
@@ -125,6 +114,7 @@
                                 </td>
                                 <td>
                                     <a href="@Url.Action("Preview", "Preview",new { chId = item.ChurchId })" target="_blank" add this to list church class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                    <a href="@Url.Action("Delete", "Church", new { id=item.ChurchId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         }

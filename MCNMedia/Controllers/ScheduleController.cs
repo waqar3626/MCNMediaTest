@@ -50,6 +50,7 @@ namespace MCNMedia_Dev.Controllers
                 sch.Record = ToggleRecord;
                 scheduleDataAccess.AddSchedule(sch);
                 return RedirectToAction("ListSchedule");
+            
             }
             catch (Exception e)
             {
@@ -58,22 +59,7 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        //[HttpGet]
-        //public JsonResult ListSch()
-        //{
-        //    try
-        //    {
-        //        LoadChurchDDL();
-        //        List<Schedule> Sch = scheduleDataAccess.GetAllSchedule().ToList<Schedule>();
-        //        return Json(Sch);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ShowMessage("List Schedule Errors : " + e.Message);
-        //        throw;
-        //    }
-
-        //}
+     
 
         [HttpGet]
         public ViewResult ListSchedule()
@@ -214,22 +200,6 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        //public IActionResult SearchSchedule(int Church, DateTime EventDate, string EventDay, int eventBy)
-        //{
-        //    try
-        //    {
-        //        GenericModel gm = new GenericModel();
-        //        List<Schedule> sch = scheduleDataAccess.GetSearchSchedule(Church, EventDate, EventDay, eventBy).ToList<Schedule>();
-        //        gm.LSchedules = sch;
-        //        LoadChurchDDL();
-        //        return View("/Views/Schedule/ListSchedule.cshtml", gm);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ShowMessage("Search Schedule Errors : " + e.Message);
-        //        throw;
-        //    }
-        //}
 
         public JsonResult LoadCameraDDL(int ChurchId)
         {

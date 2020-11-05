@@ -15,27 +15,19 @@
             @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
             {
 
-                <table class="table">
+            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                <table id="sortable-table-1" class="table">
                     <thead>
                         <tr>
-                            
-                            <th>
-                                Title
-                            </th>
-                            <th>
-                                URL
-                            </th>
-                            <th>
-                                Church
-                            </th>
-                            <th>
-                                Date
-                            </th>
-                            <th>
-                                Time
-                            </th>
+                            <th class="sortStyle">Title <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">URL<i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Church<i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Date <i class="ti-angle-down"></i></th>
+                            <th class="sortStyle">Time <i class="ti-angle-down"></i></th>
                             <th>Actions</th>
                         </tr>
+
+
                     </thead>
                     <tbody>
 
@@ -43,7 +35,7 @@
                         {
                             <tr>
 
-                                <td class="text-wrap">  
+                                <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.RecordingTitle)
                                 </td>
                                 <td class="text-wrap">
@@ -73,7 +65,7 @@
                     </tbody>
                 </table>
 
-
+            </div>
 
             }
         </div>

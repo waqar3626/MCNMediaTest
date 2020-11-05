@@ -160,6 +160,14 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spChurch_Update");
         }
 
+        public void DeleteChurch(int id, int UpdateBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", id);
+            _dc.AddParameter("UserId", UpdateBy);
+            _dc.Execute("spChurch_Delete");
+        }
+
         //Get the details of a particular Church
         public Church GetChurchData(int id)
         {
@@ -207,13 +215,7 @@ namespace MCNMedia_Dev.Repository
             return church;
         }
 
-        public void DeleteChurch(int id)
-        {
-            _dc.ClearParameters();
-            _dc.AddParameter("ChurchId", id);
-            _dc.AddParameter("UserId", 1);
-            _dc.ReturnBool("spChurch_Delete");
-        }
+       
 
         public DataTable GetChurchDDL()
         {

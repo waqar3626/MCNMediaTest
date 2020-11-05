@@ -150,7 +150,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                churchDataAccess.DeleteChurch(id);
+                churchDataAccess.DeleteChurch(id, Convert.ToInt32(HttpContext.Session.GetInt32("UserId")));
                 return RedirectToAction("Listchurch");
             }
             catch (Exception e)
@@ -195,6 +195,8 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
+
+       
 
         public void LoadClientDDL()
         {
@@ -266,7 +268,7 @@ namespace MCNMedia_Dev.Controllers
                     var queryString = new { chId = ChurchId };
                     return RedirectToAction("ChurchDetails", "Church", queryString);
                 }
-                return View(church);
+                return View("_ChurchInfo",church);
             }
             catch (Exception e)
             {
