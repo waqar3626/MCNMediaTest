@@ -73,19 +73,16 @@
 <div class="row">
     <div class="col-md-8 border-dark">
         @*<div class="row">
-            <div class="col-sm-12">
-                <div class="owl-carousel owl-theme video-carousel">
-                    <div class="item-video" style="width:700px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
+                <div class="col-sm-12">
+                    <div class="owl-carousel owl-theme video-carousel">
+                        <div class="item-video" style="width:700px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
 
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
         <div class="row">
             <div class="col-sm-12">
                 <div id="my-video"> </div>
-                <video tabindex="-1" preload="true" class="vjs-tech" id="camera_1_html5_api" src="blob:https://mcnmedia.tv/b6838ef8-258e-4a34-acdc-9e38decc2b30">
-                    <source src="https://1502594353.rsc.cdn77.org/live/_ec24837a244400d3f46a8d6d17189782f91bdd20_/ec24837a244400d3f46a8d6d17189782f91bdd20_672.stream/playlist.m3u8" type="application/vnd.apple.mpegurl">
-                </video>
             </div>
         </div>
         <div class="row">
@@ -101,51 +98,90 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 ">
 
-                <div class="owl-carousel owl-theme full-width" style=" background-color: #372548; height:200px;">
-                    @foreach (var item in Model.LSchedules)
-                    {
-                        <div class="item  text-white p-3">
+        @if (Model.ListNotice.Count() > 0)
+        {
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card" style=" background: linear-gradient( white 35%, #372548 65%);
+                        border-top: 8px solid #372548;
+                        border-radius: 5px">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 style="color:#372548"> Notice of @Model.Churches.ChurchName</h3><br />
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="schedule-day ">
-                                        <h3>
-                                            @item.EventDay
-                                            <small><i class="fa fa-calendar"></i>@Html.DisplayFor(modelItem => item.EventDate)</small>
-                                        </h3>
-
-
-
-                                        <div class="schedule-item ">
-                                            <div class="event-name">
-
-                                                @item.EventName
-                                            </div>
-
-                                            <div class="event-time">
-                                                @Html.DisplayFor(modelItem => item.EventTime)
-                                            </div>
-                                        </div>
-
-
+                                @foreach (var notice in Model.ListNotice)
+                                {
+                                    <div class="col-sm-4">
+                                        <br />
+                                        <label>@notice.NoticeTitle</label>
+                                        <p> @notice.NoticeName</p>
                                     </div>
-                                </div>
+                                }
                             </div>
-
-
-
                         </div>
-                    }
-
-
-
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+        @if (Model.LSchedules.Count() > 0)
+        {
+            <div class="row">
+                <div class="col-sm-12 ">
+
+                    <div class="owl-carousel owl-theme full-width" style=" background-color: #372548; height:auto;">
+                        @foreach (var item in Model.LSchedules)
+                        {
+                            <div class="item  text-white p-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="schedule-day ">
+                                            <h3>
+                                                @item.EventDay
+                                                <small><i class="fa fa-calendar"></i>@Html.DisplayFor(modelItem => item.EventDate)</small>
+                                            </h3>
+
+
+
+                                            <div class="schedule-item ">
+                                                <div class="event-name">
+
+                                                    @item.EventName
+                                                </div>
+
+                                                <div class="event-time">
+                                                    @Html.DisplayFor(modelItem => item.EventTime)
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        }
+
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
 
     </div>
+
+
+
     <div class="col-md-4">
         <div class="row">
             <div class="col-sm-12">
@@ -175,7 +211,7 @@
                                 <div class="col-sm-2">
                                     <i class="fa fa-home text-white pl-2"></i>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 pl-4">
                                     @Model.Churches.ChurchName
                                 </div>
                             </div>
@@ -184,7 +220,7 @@
                                 <div class="col-sm-2">
                                     <i class="fa fa-phone  text-white pl-2"></i>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 pl-4">
                                     @Model.Churches.Phone
                                 </div>
                             </div>
@@ -192,7 +228,7 @@
                                 <div class="col-sm-2">
                                     <i class="fa fa-envelope  text-white pl-2"></i>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 pl-4">
                                     <a href="mailto:test_Churches27_7">
                                         @Model.Churches.EmailAddress
                                     </a>
@@ -203,7 +239,7 @@
                                 <div class="col-sm-2">
                                     <i class="fa fa-globe  text-white  pl-2"></i>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 pl-4">
                                     <a target="_blank" href="http://test_Churches27_7">
                                         @Model.Churches.Website
                                     </a>
@@ -222,10 +258,10 @@
                     <h3 style="color:white">
                         Have an Issue?
                     </h3>
-                    </br>
+                    <br />
                     <p style="color:white">We're here to help</p>
-                    </br>
-                    <a href="/contact" class="button">Send us a message</a>
+                    <br />
+                    <a href="~/Website/ContactUs" class="button">Send us a message</a>
                 </div>
             </div>
         </div>
@@ -235,69 +271,70 @@
 
 
 
-
-
-
-
 <div class="row mt-3">
     <div class="col-lg-12 grid-margin stretch-card" style="background: linear-gradient( white 35%, #372548 65%);
         border-top: 8px solid #372548;
         border-radius: 5px">
         <div class="card">
             <div class="card-body">
-                <h3 style="color:#372548">Message from Saint Ambrose Barlow</h3></br>
+                <h3 style="color:#372548">Announcement of @Model.Churches.ChurchName</h3>
+                <br />
                 <div>
-                    <a href="/contact" style="color:black"> <b><u>Make an Act of Spiritual Communion whilst watching a live stream Mass, by saying the following prayer:</u></b></a>
-                </div></br>
+                    @Model.Churches.AnnouncementTitle
+                </div>
                 <div>
-                    <p>
-                        My Jesus, I believe that You are present in the Most Holy Sacrament. </br>
-                        I love You above all things, and I desire to receive You into my soul.</ br >
-                        Since I cannot at this moment receive You sacramentally, come at least spiritually into my heart.</ br >
-                        I embrace You as if You were already there and unite myself wholly to You.</ br >
-                        Never permit me to be separated from You.</ br >
+                    @Model.Churches.AnnouncementText
+                </div>
+                @*<div>
+                        <a href="/contact" style="color:black"> <b><u>Make an Act of Spiritual Communion whilst watching a live stream Mass, by saying the following prayer:</u></b></a>
+                    </div>*@
+                <br />
+                @*<div>
+                        <p>
+                            My Jesus, I believe that You are present in the Most Holy Sacrament. <br />
+                            I love You above all things, and I desire to receive You into my soul.</ br >
+                            Since I cannot at this moment receive You sacramentally, come at least spiritually into my heart.</ br >
+                            I embrace You as if You were already there and unite myself wholly to You.</ br >
+                            Never permit me to be separated from You.</ br >
 
-                        </ p >
-
-
-                        </ div >
-
-                        </ div >
-
-                        </ div >
-
-                        </ div >
-                        </ div >
+                        </p>
 
 
-                        <div class="row">
-                            <div class="col-lg-12 grid-margin stretch-card" style=" background: linear-gradient( white 35%, #372548 65%);
+                    </div>*@
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@*}*@
+
+@if (Model.LRecordings.Count() > 0)
+{
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card" style=" background: linear-gradient( white 35%, #372548 65%);
                         border-top: 8px solid #372548;
                         border-radius: 5px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 style="color:#372548"> Recordings of past events at Saint Ambrose Barlow</h5></br>
-                                        <div class="row">
-                                            @foreach (var recording in Model.LRecordings)
-                                            {
-                                                <div class="col-sm-4">
-                                                    <label>@recording.RecordingTitle</label>
-                        <p> @recording.Time</p>
-                        <a href="@recording.RecordingURl">RecordingUrl</a>
+            <div class="card">
+                <div class="card-body">
+                    <h3 style="color:#372548"> Recordings of @Model.Churches.ChurchName</h3><br />
+                    <div class="row">
+                        @foreach (var recording in Model.LRecordings)
+                        {
+                            <div class="col-sm-4">
+                                <br />
+                                <label>@recording.RecordingTitle</label>
+                                <p> @recording.Time</p>
+                                <a href="@recording.RecordingURl">RecordingUrl</a>
+                            </div>
+                        }
                     </div>
-                }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            @*<div class="form-group row">
-                                <div class="col-sm-7 grid-margin stretch-card">
-                                    <video width="320" height="240" controls>
-                                        <source src="movie.mp4" type="video/mp4">
-                                        <source src="movie.ogg" type="video/ogg">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                </div>*@
+}

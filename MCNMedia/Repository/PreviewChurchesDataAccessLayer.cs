@@ -27,6 +27,8 @@ namespace MCNMedia_Dev.Repository
 
                 pchurches.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 pchurches.ChurchName = dataRow["ChurchName"].ToString();
+                pchurches.AnnouncementTitle = dataRow["AnnouncementTitle"].ToString();
+                pchurches.AnnouncementText = dataRow["Announcement"].ToString();
                 pchurches.Address = dataRow["Address"].ToString();
                 pchurches.Town = dataRow["Town"].ToString();
                 pchurches.Website = dataRow["Website"].ToString();
@@ -86,6 +88,29 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+
+        public IEnumerable<Schedule> GetSchedulePreviewWeekly(int ChurchId)
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+            _dc.AddParameter("chId", ChurchId);
+
+            DataTable dataTable = _dc.ReturnDataTable("spSchedulePreview_Get");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule sch = new Schedule();
+                sch.EventDay = dataRow["ScheduleEventDay"].ToString();
+                sch.EventName = dataRow["Events"].ToString();
+                sch.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                //sch.EventTime = Convert.ToDateTime(dataRow["Times"].ToString());
+
+
+
+                Balobj.Add(sch);
+            }
+            return Balobj;
+        }
+
 
         public IEnumerable<Recording> GetAllPreviewRecording(int chId)
         {

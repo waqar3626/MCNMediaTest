@@ -17,6 +17,8 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Select the Client Type Id")]
         public int ClientTypeId { get; set; }
 
+        public String AnnouncementTitle { get; set; }
+        public String AnnouncementText { get; set; }
 
         public string UniqueChurchId { get; set; }
 

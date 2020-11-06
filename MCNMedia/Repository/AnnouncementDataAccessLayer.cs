@@ -28,6 +28,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("AnnouncementText", announcement.AnnouncementText);
            
             return _dc.Execute("spAnnouncement_Add");
+
         }
         public IEnumerable<Announcement> GetAnnouncement( int ChrId)
         {

@@ -14,12 +14,10 @@ namespace MCNMedia_Dev.Controllers
         SetUpDataAccessLayer setupDataAccess = new SetUpDataAccessLayer();
         GenericModel gm = new GenericModel();
 
-        public IActionResult InsertSetUp()
-        {
-
-            return View();
-
-        }
+        //public IActionResult InsertSetUp()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public IActionResult InsertSetUp(SetUp ChurchSetUp)
@@ -28,12 +26,19 @@ namespace MCNMedia_Dev.Controllers
             {
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-                    int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                    ChurchSetUp.ChurchId = churchId;
+                    ChurchSetUp.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
                     ChurchSetUp.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     setupDataAccess.InsertSetUp(ChurchSetUp);
                 }
-                return RedirectToAction("Listchurch", "Church");
+                int ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                var queryString = new { chId = ChurchId };
+                return RedirectToAction("ChurchDetails", "Church", queryString);
+                //return new RedirectResult(Url.Action("Church", "ChurchDetails", new
+                //{
+                //    id = ChurchId,
+                //    tab = "Church"
+                //}));
+                //http://localhost:56963/OInfoes/Details/539?tab=InsertSetUp
 
             }
             catch (Exception e)
