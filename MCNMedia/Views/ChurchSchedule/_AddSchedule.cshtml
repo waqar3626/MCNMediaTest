@@ -1,15 +1,13 @@
 ﻿@model MCNMedia_Dev.Models.Schedule
+@using Microsoft.AspNetCore.Http; 
 
 @{
     ViewData["Title"] = "Schedule";
 }
 
 
-@{
-    List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
-}
 
-<form asp-action="AddSchedule" asp-controller="Schedule" method="post" class="needs-validation" novalidate>
+<form    class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -17,26 +15,15 @@
         <div class="card-body">
          
             <div class="form-group row">
-                <label asp-for="ChurchId" class="col-sm-2 col-form-label">Church</label>
-                <div class="col-sm-4">
-                    <span asp-validation-for="ChurchId" class="text-danger"></span>
-                    @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                    @Html.DropDownList("ChurchId", SelectList, new { @class = "custom-select", @id = "ddlChurchId", @required = "required", @onchange = "DoPostBack();" })
+               
 
-                    <span asp-validation-for="ChurchId" class="text-danger"></span>
-
-                    <div class="invalid-feedback" id="ChurchViladate">
-                        Please Select the Church
-                    </div>
-                </div>
-
-
+                <input type="hidden" id="HdnSession" value="@Context.Session.GetInt32("ChurchId")" />
                 <label asp-for="EventName" for="validationCustom03" class="col-sm-2 col-form-label">Event Name</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
 
                     <span asp-validation-for="EventName" class="text-danger"></span>
 
-                    <input type="text" asp-for="EventName" class="form-control" id="validationCustom03" placeholder="Event Name" required />
+                    <input type="text" asp-for="EventName" class="form-control" id="EventName" placeholder="Event Name" required />
                     <div class="invalid-feedback">
                         Please provide a valid EventName.
                     </div>
@@ -64,7 +51,7 @@
                 <div class="col-sm-4" id="EventInput1">
                     <span asp-validation-for="EventDate" class="text-danger"></span>
                     <div id="datepicker-popup" class="input-group date datepicker">
-                        <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" />
+                        <input type="text" asp-for="EventDate" class="form-control" id="EventDate" placeholder="Event Date" />
 
                         <span class="input-group-addon input-group-append border-left">
                             <span class="ti-calendar input-group-text"></span>
@@ -85,9 +72,9 @@
                     <span asp-validation-for="EventDay" class="text-danger"></span>
 
 
-                    <select asp-for="EventDay" class="custom-select" id="validationCustom06">
+                    <select asp-for="EventDay" class="custom-select" id="EventDay">
                         <option selected="selected" disabled value="0">Please select Day</option>
-                        <option value="Monday" name="EventDay">Monday</option>
+                        <option value="Monday"  name="EventDay">Monday</option>
                         <option value="Tuesday" name="EventDay">Tuesday</option>
                         <option value="Wednesday" name="EventDay">Wednesday</option>
                         <option value="Thursday" name="EventDay">Thursday</option>
@@ -109,7 +96,7 @@
 
                             <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
 
-                                <input type="text" asp-for="EventTime" class="form-control datetimepicker-input" id="validationCustom02" data-target="#timepicker-example" placeholder="Event Time" required />
+                                <input type="text" asp-for="EventTime" class="form-control datetimepicker-input" id="EventTime" data-target="#timepicker-example" placeholder="Event Time" required />
 
                                 <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
                                 <div class="invalid-feedback">
@@ -140,21 +127,21 @@
 
                 <div class="col-sm-4 ">
                     <span asp-validation-for="CameraId" class="text-danger"></span>
-                    <select asp-for="CameraId" name="CameraId" class="form-control" id="CameraId">                                                    </select>
+                    <select asp-for="CameraId" name="CameraId" class="form-control" id="AddScheduleCameraId">                                                    </select>
                 </div>
 
                 <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
 
                 <div class="col-sm-4 ">
                     <span asp-validation-for="RecordDuration" class="text-danger"></span>
-                    <select asp-for="RecordDuration" class="form-control" id="Lenght">
-                        <option value="30" name="Length">30 Minutes</option>
-                        <option value="40" name="Length">40 Minutes</option>
-                        <option value="60" name="Length">1 Hour</option>
-                        <option value="75" name="Length">1 Hour 15 Minutes</option>
-                        <option value="90" name="Length">1 Hour 30 Minutes</option>
-                        <option value="105" name="Length">1 Hour 45 Minutes</option>
-                        <option value="120" name="Length">2 Hours</option>
+                    <select asp-for="RecordDuration" class="form-control" id="RecordDuration">
+                        <option value="30" name="RecordDuration">30 Minutes</option>
+                        <option value="40" name="RecordDuration">40 Minutes</option>
+                        <option value="60" name="RecordDuration">1 Hour</option>
+                        <option value="75" name="RecordDuration">1 Hour 15 Minutes</option>
+                        <option value="90" name="RecordDuration">1 Hour 30 Minutes</option>
+                        <option value="105" name="RecordDuration">1 Hour 45 Minutes</option>
+                        <option value="120" name="RecordDuration">2 Hours</option>
 
 
                     </select>
@@ -176,11 +163,11 @@
                 <label asp-for="Password" id="lblPassword" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-4 " id="SchPassword">
                     <span asp-validation-for="Password" class="text-danger"></span>
-                    <input type="text" asp-for="Password" class="form-control" placeholder="Password" />
+                    <input type="text" asp-for="Password" class="form-control" placeholder="Password" id="pasword" />
                 </div>
                 <div class="col-sm-6" id="btnSchdule">
                     <div class="float-right">
-                        <button type="submit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                        <button type="submit"   id="addScheduleVal1" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
                         <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                     </div>
@@ -190,7 +177,7 @@
 
                 <div class="col-sm-12" id="btnSchdulecol13">
                     <div class="float-right">
-                        <button type="submit" id="addScheduleVal" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                        <button type="submit"   id="addScheduleVal2" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
                         <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                     </div>
                 </div>
@@ -205,14 +192,73 @@
 </form>
 
 <script type="text/javascript">
+
+    $('#addScheduleVal1').click(function () {
+       
+        checkScheduleAdd();
+    });
+    $('#addScheduleVal2').click(function () {
+       
+        checkScheduleAdd();
+    });
+  
+    function checkScheduleAdd() {
+       
+        var eventName = document.getElementById('EventName').value;
+        var isRepeat = document.getElementById('IsRepeated').value;
+        var eventDate = document.getElementById('EventDate').value;
+        var eventDay = document.getElementById('EventDay').value;
+        var eventTime = document.getElementById('EventTime').value;
+        var recordtoggle = document.getElementById('ToggleRecord').value;
+  
+        var cameraId = document.getElementById('AddScheduleCameraId').value;
+        var recordDuration = document.getElementById('RecordDuration').value;
+        var passwordtoggle = document.getElementById('customSwitch1').value;
+        var password = document.getElementById('pasword').value;
+       
+        var formData = new FormData();
+        formData.append("eventName", eventName);
+        formData.append("isRepeat", isRepeat);
+        formData.append("eventDay", eventDay);
+        formData.append("eventDate", eventDate);
+        formData.append("eventTime", eventTime);
+        formData.append("recordtoggle", recordtoggle);
+        formData.append("recordDuration", recordDuration);
+        formData.append("cameraId", cameraId);
+        formData.append("password", password);
+        formData.append("passwordtoggle", passwordtoggle);
+        $.ajax({
+        type: "POST",
+        url: "/ChurchSchedule/AddChurchSchedule/",
+
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+            contentType:false, // tell jQuery not to set contentType
+            
+        //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
+
+
+            success: function (result) {
+                alert('hello');
+            loadChurchSch();
+            $('#AddChurchScheduleModel').modal('hide');
+        },
+            error: function (errormessage) {
+                alert(errormessage);
+            alert(errormessage.responseText);
+        }
+    });
+
+    }
     $(document).ready(function () {
-        $('#ddlChurchId').append("<option value='0' selected disabled>--Select Church--</option>");
+
         $('#alertDiv').hide();
         $('#EventDayLabel1').hide();
         $('#EventDayInput1').hide();
         $('#EventLabel1').show();
         $('#EventInput1').show();
         $('#IsRepeated').val("false");
+        $('#customSwitch1').val("false");
 
         HidePassword();
         HideRecordData();
@@ -247,10 +293,12 @@
     });
     $('#customSwitch1').change(function () {
         if (this.checked) {
+            $('#customSwitch1').val("true");
             ShowPassword();
         }
 
         else {
+            $('#customSwitch1').val("false");
             HidePassword();
         }
 
@@ -260,6 +308,7 @@
     $('#ToggleRecord').change(function () {
         if (this.checked) {
             ShowRecordData();
+         
         }
 
         else {
@@ -295,12 +344,14 @@
 
 
 
+
     }
 
 
     function DoPostBack() {
-        var ChurchId = document.getElementById('ddlChurchId').value;
 
+        var ChurchId = $('#HdnSession').val();
+       
         $.ajax({
             url: "/Schedule/LoadCameraDDL",
             type: "GET",
@@ -314,8 +365,8 @@
 
                 });
 
-                $("#CameraId").html(s);
-
+                $("#AddScheduleCameraId").html(s);
+             
 
 
 

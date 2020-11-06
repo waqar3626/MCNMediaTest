@@ -16,7 +16,7 @@ namespace MCNMedia_Dev.Repository
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
-        //To Add new Schedule record    
+        //To Add new Schedule record
         public int AddSchedule(Schedule schedules)
         {
             _dc.ClearParameters();
@@ -29,12 +29,14 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", schedules.ChurchId);
             _dc.AddParameter("IsRepeated", schedules.IsRepeated);
             _dc.AddParameter("SchPassword", schedules.Password);
-            _dc.AddParameter("SchCameraId", schedules.CameraId); 
+            _dc.AddParameter("SchCameraId", schedules.CameraId);
             _dc.AddParameter("CreatedBy", schedules.CreatedBy);
+
             return _dc.Execute("spschedule_Add");
+             
         }
 
-		//To View all Users details 
+        //To View all Users details
         public IEnumerable<Schedule> GetAllSchedule()
         {
             List<Schedule> Balobj = new List<Schedule>();
@@ -59,7 +61,7 @@ namespace MCNMedia_Dev.Repository
                     schedule.Password = dataRow["Password"].ToString();
                     schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                     schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
-                  
+
                     schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                     schedule.CameraName = dataRow["CameraName"].ToString();
 
@@ -75,7 +77,7 @@ namespace MCNMedia_Dev.Repository
 
 
 
-        public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate,string EventDay,int isRecord)
+        public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate, string EventDay, int isRecord)
         {
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
@@ -90,7 +92,7 @@ namespace MCNMedia_Dev.Repository
                 Schedule schedule = new Schedule();
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
-            
+
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
@@ -132,7 +134,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-               
+
             }
             return schedule;
         }
@@ -146,7 +148,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchDate", schedule.EventDate);
             _dc.AddParameter("SchDay", schedule.EventDay);
             _dc.AddParameter("SchTime", schedule.EventTime);
-             _dc.AddParameter("recordingDuration", schedule.RecordDuration);
+            _dc.AddParameter("recordingDuration", schedule.RecordDuration);
             _dc.AddParameter("record", schedule.Record);
             _dc.AddParameter("UpdateBy", schedule.UpdatedBy);
             _dc.AddParameter("SchPassword", schedule.Password);
@@ -156,8 +158,8 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spSchedule_Update");
         }
 
-        //To Delete the record on a particular User 
-        public void DeleteSchedule(int id,int UpdateBy)
+        //To Delete the record on a particular User
+        public void DeleteSchedule(int id, int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("SchId", id);
@@ -192,7 +194,7 @@ namespace MCNMedia_Dev.Repository
         {
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
-   
+
 
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today");
             foreach (DataRow dataRow in dataTable.Rows)
