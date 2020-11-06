@@ -145,7 +145,6 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-
        
         public IActionResult Delete(int id)
         {
@@ -162,17 +161,16 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-
         [HttpGet]
         public IActionResult ChurchDetails()
         {
             try
             {
                 GenericModel gm = new GenericModel();
-                if (!string.IsNullOrEmpty(HttpContext.Request.Query["chId"].ToString()))
+                if (!string.IsNullOrEmpty(HttpContext.Request.Query["ch"].ToString()))
                 {
                     LoadServerDDL();
-                    int churchId = Convert.ToInt32(HttpContext.Request.Query["chId"].ToString());
+                    int churchId = Convert.ToInt32(HttpContext.Request.Query["ch"].ToString());
 
                     HttpContext.Session.SetInt32("ChurchId", churchId);
 
@@ -245,7 +243,6 @@ namespace MCNMedia_Dev.Controllers
         
 
         [HttpPost]
-
         public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl)
         {
             try

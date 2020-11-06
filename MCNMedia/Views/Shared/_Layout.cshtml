@@ -60,12 +60,12 @@
 
     @if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
     {
-        Context.Response.Redirect("../UserLogin/UserLogin");
+        Context.Response.Redirect("../UserLogin");
     }
     else if (Context.Session.GetString("UserType").ToString() != "admin")
     {
         Context.Session.Clear();
-        Context.Response.Redirect("../UserLogin/UserLogin");
+        Context.Response.Redirect("../UserLogin");
     }
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
@@ -291,13 +291,13 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/DashBoard/Dashboard">
+                        <a class="nav-link" href="/Admin/Dashboard">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Church/Listchurch">
+                        <a class="nav-link" href="/Admin/Churches">
                             <i class="mdi mdi-christianity-outline menu-icon"></i>
                             <span class="menu-title"> Churches </span>
                         </a>
@@ -309,13 +309,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Recording/ListRecording">
+                        <a class="nav-link" href="/Admin/Recordings">
                             <i class="mdi mdi-camcorder-box  menu-icon"></i>
                             <span class="menu-title">Recordings </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/User/ListUser">
+                        <a class="nav-link" href="/Admin/Users">
                             <i class="mdi mdi-account-multiple menu-icon"></i>
                             <span class="menu-title">Users</span>
                         </a>

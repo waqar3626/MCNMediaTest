@@ -30,8 +30,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", camera.ChurchId);
             _dc.AddParameter("ServerId", camera.ServerId);
             _dc.AddParameter("App", camera.App);
-            _dc.ReturnInt("spCamera_Add");
-            return 1;
+            return _dc.ReturnInt("spCamera_Add");
         }
 
         public IEnumerable<Camera> GetAllCameras(int ChurchId)
@@ -79,8 +78,8 @@ namespace MCNMedia_Dev.Repository
             camera.ServerId = Convert.ToInt32(dataRow["ServerId"]);
             camera.ServerName = dataRow["ServerName"].ToString();
             camera.ServerIP = dataRow["ServerIP"].ToString();
-            camera.LiveStreamUrl = $"https://{dataRow["ServerIP"]}/live/_{dataRow["UniqueIdentifier"]}_/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
-            camera.LiveStreamUrl = "https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8";
+            camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
+            //camera.LiveStreamUrl = "https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8";
             return camera;
         }
 

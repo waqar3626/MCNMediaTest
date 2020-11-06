@@ -93,15 +93,16 @@ namespace MCNMedia_Dev
             app.UseStaticFiles();
             app.UseAuthorization();
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-           Path.Combine(env.ContentRootPath, "Uploads")),
-                RequestPath = "/Uploads"
-            });
+           // app.UseStaticFiles(new StaticFileOptions
+           // {
+           //     FileProvider = new PhysicalFileProvider(
+           //Path.Combine(env.ContentRootPath, "Uploads")),
+           //     RequestPath = "/Uploads"
+           // });
 
             app.UseEndpoints(endpoints =>
             {
+                // Website
                 endpoints.MapControllerRoute(
                     name: "Home",
                     pattern: "Home",
@@ -130,10 +131,43 @@ namespace MCNMedia_Dev
                     name: "UserLogin",
                     pattern: "UserLogin",
                     defaults: new { controller = "UserLogin", Action = "UserLogin" });
+                //Admin
                 endpoints.MapControllerRoute(
                     name: "DashBoard",
-                    pattern: "DashBoard",
+                    pattern: "Admin/DashBoard",
                     defaults: new { controller = "DashBoard", Action = "DashBoard" });
+                endpoints.MapControllerRoute(
+                    name: "AdminChurchDetails",
+                    pattern: "Admin/Church/{id?}",
+                    defaults: new { controller = "Church", Action = "ChurchDetails" });
+                endpoints.MapControllerRoute(
+                    name: "AdminChurches",
+                    pattern: "Admin/Churches",
+                    defaults: new { controller = "Church", Action = "Listchurch" });
+                endpoints.MapControllerRoute(
+                    name: "AddChurch",
+                    pattern: "Admin/Churches/Add",
+                    defaults: new { controller = "Church", Action = "AddChurch" });
+                endpoints.MapControllerRoute(
+                    name: "AdminChurchPreview",
+                    pattern: "Admin/Preview/{id?}",
+                    defaults: new { controller = "Preview", Action = "Preview" });
+                endpoints.MapControllerRoute(
+                    name: "Users",
+                    pattern: "Admin/Users",
+                    defaults: new { controller = "User", Action = "ListUser" });
+                endpoints.MapControllerRoute(
+                    name: "AdminSchedules",
+                    pattern: "Admin/Schedule",
+                    defaults: new { controller = "Schedule", Action = "ListSchedule" });
+                endpoints.MapControllerRoute(
+                    name: "AdminSchedulesEdit",
+                    pattern: "Admin/Schedule/{id?}",
+                    defaults: new { controller = "Schedule", Action = "EditSchedule" });
+                endpoints.MapControllerRoute(
+                    name: "AdminRecordings",
+                    pattern: "Admin/Recordings",
+                    defaults: new { controller = "Recording", Action = "ListRecording" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Website}/{action=Home}/{id?}",

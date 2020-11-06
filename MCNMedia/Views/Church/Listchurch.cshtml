@@ -72,7 +72,7 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <a id="AddNew" class="btn btn-success btn-sm float-right" href="../Church/AddChurch"> <i class="fa fa-plus"></i> Add Church</a>
+        <a id="AddNew" class="btn btn-success btn-sm float-right" href="/Admin/Churches/Add"> <i class="fa fa-plus"></i> Add Church</a>
         <h3>Manage Churches</h3>
         <br />
         <div class="">
@@ -95,7 +95,7 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@Url.Action("ChurchDetails", "Church",new { chId = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
+                                    <a href="@Url.Action("Church", "Admin",new { ch = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
                                 </td>
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
@@ -113,7 +113,7 @@
                                     @Html.DisplayFor(modelItem => item.Phone)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Preview", "Preview",new { chId = item.ChurchId })" target="_blank" add this to list church class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                    <a href="@Url.Action("Preview", "Admin",new { id = item.ChurchId })" target="_blank" add this to list church class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
                                     <a href="@Url.Action("Delete", "Church", new { id=item.ChurchId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

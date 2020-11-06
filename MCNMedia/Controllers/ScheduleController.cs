@@ -44,7 +44,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    sch.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
+                    sch.EventDate = Convert.ToDateTime("1900-01-01 00:00:00");
                 }
 
                 sch.Record = ToggleRecord;

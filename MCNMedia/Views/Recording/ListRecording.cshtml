@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "ListRecording";
 }
-
+<script src="~/js/jwplayer.js"></script>
 
 
 <div class="card">
@@ -20,7 +20,6 @@
                     <thead>
                         <tr>
                             <th class="sortStyle">Title <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">URL<i class="ti-angle-down"></i></th>
                             <th class="sortStyle">Church<i class="ti-angle-down"></i></th>
                             <th class="sortStyle">Date <i class="ti-angle-down"></i></th>
                             <th class="sortStyle">Time <i class="ti-angle-down"></i></th>
@@ -37,9 +36,6 @@
 
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.RecordingTitle)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.RecordingURl)
                                 </td>
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName)
@@ -122,7 +118,7 @@
                         </button>
                     </div>
                     <div class="modal-body" id="PlayRecordingPreview">
-                    <video  id="videoUrl" style="width:700px; height:400px; border:1px solid black;" controls></video>
+                    <div  id="videoUrl"></div>
                     </div>
                 </div>
             </div>
@@ -130,12 +126,25 @@
     </div>
 </div>
 <script>
+    jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
     $(document).on("click", ".ti-control-play", function () {
-        var myBookId = $(this).data('id');
-        $(".modal-body #videoUrl").attr("src", '/'+myBookId);
-        // As pointed out in comments, 
-        // it is unnecessary to have to manually call the modal.
-        // $('#addBookDialog').modal('show');
+        var url = $(this).data('id');
+
+        jwplayer('videoUrl').setup({
+            file: url,
+            image: "../Images/jwerror.jpg",
+            width: "100%",
+            aspectratio: "16:9",
+            //autostart: 'true',
+            "autostart": "viewable",
+            "advertising": {
+                "client": "vast",
+                "tag": ""
+            }
+        });
+        jwplayer().onError(function () {
+            jwplayer().play();
+        }); 
     });
     
     function AddRecording1() {
