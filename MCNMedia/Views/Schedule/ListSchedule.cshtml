@@ -7,8 +7,10 @@
 
 
 <div class="card mb-3">
+    <div class="card-header" style="background-color:#BC986A; color:white;">
+        Search Schedule
+    </div>
     <div class="card-body">
-        <h3>Search Schedule</h3>
         <div class="">
             <form method="post" asp-action="Search" asp-controller="Schedule">
                 <div class="row">
@@ -22,13 +24,13 @@
                             </div>
                         </div>
                     </div>
-                  
+
                     <div class="col-md-6">
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Date</label>
                             <div class="col-sm-8">
-                                <div id="datepicker-popup2"  class="input-group date datepicker">
-                                    <input type="text" id="SetEventDate" name="eventDate" class="form-control" placeholder="Event Date"  />
+                                <div id="datepicker-popup2" class="input-group date datepicker">
+                                    <input type="text" id="SetEventDate" name="eventDate" class="form-control" placeholder="Event Date" />
                                     <span class="input-group-addon input-group-append border-left">
                                         <span class="ti-calendar input-group-text"></span>
                                     </span>
@@ -41,7 +43,7 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Record</label>
                             <div class="col-sm-8">
-                              
+
                                 <select name="recordDt" id="recordDt" class="form-control">
                                     <option selected="selected" value="-1" name="recordDt">Both</option>
                                     <option value="1" name="recordDt">With Recording</option>
@@ -67,6 +69,11 @@
 </div>
 
 <div class="card">
+    <div class="card-header" style="background-color:#BC986A; color:white;">
+        Manage Schedules
+        <button type="submit" id="AddSchedule1" class="btn btn-success btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
+
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-12 grid-margin">
@@ -88,101 +95,99 @@
                 </div>
             </div>
         </div>
-        <button type="submit" id="AddSchedule1" class="btn btn-success btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
-
-        <h3>Manage Schedules</h3>
+        
         <br />
         <div class="">
             @using (Html.BeginForm("ListUser", "User", FormMethod.Post))
             {
 
-            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                <table id="sortable-table-1" class="table">
-                    <thead>
-                        <tr>
-                            <th class="sortStyle">Church Name<i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Event Name<i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Event Date/Day<i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Event Time <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Duration <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Repeated <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Recording <i class="ti-angle-down"></i></th>
-
-                            <th>Actions</th>
-                        </tr>
-
-                    </thead>
-                    <tbody class="SchList">
-
-                        @foreach (var item in Model.LSchedules)
-                        {
+                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                    <table id="sortable-table-1" class="table">
+                        <thead>
                             <tr>
+                                <th class="sortStyle">Church Name<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Event Name<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Event Date/Day<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Event Time <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Duration <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Repeated <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Recording <i class="ti-angle-down"></i></th>
 
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ChurchName)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.EventName)
-                                </td>
-                                <td class="text-wrap">
-                                    @if (item.IsRepeated == false)
-                                    {
-                                        @Html.DisplayFor(modelItem => item.EventDate)
-                                    }
-                                    else if (item.IsRepeated == true)
-                                    {
-                                        @Html.DisplayFor(modelItem => item.EventDay)
-                                    }
-                                </td>
-
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.EventTime)
-                                </td>
-                                <td class="text-wrap">
-                                    @item.RecordDuration  Minutes
-                                </td>
-                                <td class="text-wrap">
-                                    @if (item.IsRepeated)
-                                    {
-                                        <label class="badge-pill badge-success">
-                                            Yes
-                                        </label>
-
-                                    }
-                                    else
-                                    {
-                                        <label class="badge-pill badge-danger">
-                                            No
-                                        </label>
-                                    }
-                                </td>
-                                <td class="text-wrap">
-                                    @if (item.Record)
-                                    {
-                                        <label class="badge-pill badge-success">
-                                            Yes
-                                        </label>
-
-                                    }
-                                    else
-                                    {
-                                        <label class="badge-pill badge-danger">
-                                            No
-                                        </label>
-                                    }
-                                </td>
-
-
-                                <td>
-                                    <a href="@Url.Action("Schedule", "Admin", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-
-                                </td>
+                                <th>Actions</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+
+                        </thead>
+                        <tbody class="SchList">
+
+                            @foreach (var item in Model.LSchedules)
+                            {
+                                <tr>
+
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ChurchName)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EventName)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @if (item.IsRepeated == false)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.EventDate)
+                                        }
+                                        else if (item.IsRepeated == true)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.EventDay)
+                                        }
+                                    </td>
+
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EventTime)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @item.RecordDuration  Minutes
+                                    </td>
+                                    <td class="text-wrap">
+                                        @if (item.IsRepeated)
+                                        {
+                                            <label class="badge-pill badge-success">
+                                                Yes
+                                            </label>
+
+                                        }
+                                        else
+                                        {
+                                            <label class="badge-pill badge-danger">
+                                                No
+                                            </label>
+                                        }
+                                    </td>
+                                    <td class="text-wrap">
+                                        @if (item.Record)
+                                        {
+                                            <label class="badge-pill badge-success">
+                                                Yes
+                                            </label>
+
+                                        }
+                                        else
+                                        {
+                                            <label class="badge-pill badge-danger">
+                                                No
+                                            </label>
+                                        }
+                                    </td>
+
+
+                                    <td>
+                                        <a href="@Url.Action("Schedule", "Admin", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
         </div>
     </div>

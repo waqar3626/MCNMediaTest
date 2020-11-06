@@ -179,11 +179,12 @@
                 $.each(result, function (key, item) {
                     html += '<tr>';
 
-                    html += "<td class='border-right-sm w-25'><div class='card'> <div class='card-body bg-info'> " + item.eventDay + "</div></div ></td > ";
+                    html += "<td class='border-right-sm w-25 p-0'><div class='card'> <div class='card-body bg-info'> " + item.eventDay + "</div></div ></td > ";
                     var str = item.eventName;
                     var array = str.split('|');
-                    html += "<td class='text-wrap'>";
+                    html += "<td class='text-wrap p-0'>";
                     $.each(array, function (key, item2) {
+                        if(item2.length > 0)
                         html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <button onclick='EditChurchSchedule(' + item.schId + ')'  class='btn btn-primary btn-sm' ><i class='fa fa-edit'></i></button><button onclick='DeleteChurchSchedule(' + item.schId + ')' class='btn btn-danger btn-sm '><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + item2 + " </div></div></div> </div>";
 
                     }
@@ -205,9 +206,3 @@
 
 
 
-<div class="view overlay">
-    <td class='border-right-sm'><div class='card'> <div class='card-body bg-info'> " + item.eventDay + "</div></div></td>
-    <div class="mask flex-center rgba-red-strong">
-        <p class="white-text">Strong overlay</p>
-    </div>
-</div>

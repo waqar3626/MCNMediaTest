@@ -167,7 +167,7 @@
                 </div>
                 <div class="col-sm-6" id="btnSchdule">
                     <div class="float-right">
-                        <button type="submit"   id="addScheduleVal1" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                        <a   id="addScheduleVal1" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</a>
                         <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                     </div>
@@ -177,7 +177,7 @@
 
                 <div class="col-sm-12" id="btnSchdulecol13">
                     <div class="float-right">
-                        <button type="submit"   id="addScheduleVal2" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
+                        <a id="addScheduleVal2" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</a>
                         <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                     </div>
                 </div>
@@ -215,7 +215,6 @@
         var recordDuration = document.getElementById('RecordDuration').value;
         var passwordtoggle = document.getElementById('customSwitch1').value;
         var password = document.getElementById('pasword').value;
-       
         var formData = new FormData();
         formData.append("eventName", eventName);
         formData.append("isRepeat", isRepeat);
@@ -227,24 +226,31 @@
         formData.append("cameraId", cameraId);
         formData.append("password", password);
         formData.append("passwordtoggle", passwordtoggle);
+        
         $.ajax({
         type: "POST",
         url: "/ChurchSchedule/AddChurchSchedule/",
-
+           
         data: formData,
         processData: false,  // tell jQuery not to process the data
-            contentType:false, // tell jQuery not to set contentType
+        contentType:false, // tell jQuery not to set contentType
             
         //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
 
 
-            success: function (result) {
-                alert('hello');
-            loadChurchSch();
-            $('#AddChurchScheduleModel').modal('hide');
+            success: function (response) {
+                if (response.success) {
+                    loadChurchSch();
+                    $('#AddChurchScheduleModel').modal('hide');
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                } 
+              
+           
         },
             error: function (errormessage) {
-                alert(errormessage);
+               
             alert(errormessage.responseText);
         }
     });

@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="~/theme/images/favicon.png" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  
+    <link href="~/theme/Loader.css" rel="stylesheet" />
 </head>
 <body>
     @using Microsoft.AspNetCore.Http
@@ -127,6 +127,8 @@
             <div class="content p-4">
                 <div class="container-fluid">
                     <main role="main">
+                        @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
+
                         @RenderBody()
                     </main>
                 </div>
@@ -186,6 +188,24 @@
     <script src="~/theme/js/dropzone.js"></script>
     <script src="~/theme/js/jquery-file-upload.js"></script>
 
+    <script>
+        function displayBusyIndicator() {
+            $('.loading').show();
+        }
+        function displayBusyIndicator2() {
+            $('.loading').hide();
+        }
+        $(window).on('beforeunload', function () {
+            displayBusyIndicator();
+        });
+        $(window).unload(function () {
+            displayBusyIndicator();
+        });
+        s
+        $(document).on('submit', 'form', function () {
+            displayBusyIndicator();
+        });
+    </script>
 
 
 

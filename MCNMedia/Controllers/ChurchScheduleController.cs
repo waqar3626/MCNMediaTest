@@ -33,12 +33,13 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddChurchSchedule(string eventName, bool isRepeat,DateTime eventDate,string eventDay,string eventTime,bool recordtoggle,int cameraId,int recordDuration,bool passwordtoggle,string password)
+        public IActionResult AddChurchSchedule(string eventName, bool isRepeat,DateTime eventDate,string eventDay,string eventTime,bool recordtoggle,int cameraId,int recordDuration,bool passwordtoggle,string password)
         {
           
             try
             {
-                int res = 0;
+               
+
                 Schedule sch = new Schedule();
                  sch.IsRepeated = isRepeat;
                 sch.EventTime = Convert.ToDateTime(eventTime);
@@ -75,11 +76,17 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
                     sch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                    res = SchDataAccess.AddSchedule(sch);
-                   
+                 int   res = SchDataAccess.AddSchedule(sch);
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
+                    
                 }
+                
+
+                    return RedirectToAction("Listchurch", "Church");
+
+                
                
-                return Json(res);
+                
             }
             catch (Exception e)
             {
