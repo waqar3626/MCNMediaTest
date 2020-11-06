@@ -130,6 +130,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                church.CreateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 string fileName = Path.GetFileName(imageURl2.FileName);
                 church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
                 church.CreateBy = (int)HttpContext.Session.GetInt32("UserId");
@@ -150,7 +151,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                churchDataAccess.DeleteChurch(id, Convert.ToInt32(HttpContext.Session.GetInt32("UserId")));
+                int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                churchDataAccess.DeleteChurch(id, UpdateBy);
                 return RedirectToAction("Listchurch");
             }
             catch (Exception e)

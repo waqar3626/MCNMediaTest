@@ -163,7 +163,7 @@ namespace MCNMedia_Dev.Repository
         public void DeleteChurch(int id, int UpdateBy)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("ChrId", id);
+            _dc.AddParameter("ChurchId", id);
             _dc.AddParameter("UserId", UpdateBy);
             _dc.Execute("spChurch_Delete");
         }

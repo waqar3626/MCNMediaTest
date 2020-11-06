@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MySql.Data.MySqlClient;
@@ -85,8 +86,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try {
                 if(ModelState.IsValid)
-                { 
-                   
+                {
+                    usr.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     userDataAccess.AddUser(usr);
                     return RedirectToAction("ListUser");
                 }
@@ -134,9 +135,9 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                if (ModelState.IsValid) { 
-              
-                userDataAccess.UpdateUser(user);
+                if (ModelState.IsValid) {
+                    user.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                    userDataAccess.UpdateUser(user);
                 return RedirectToAction("ListUser");
                 }
                 else
@@ -156,10 +157,12 @@ namespace MCNMedia_Dev.Controllers
 
         [HttpGet]
        
-        public IActionResult Delete(int id, int UpdateBy)
+        public IActionResult Delete(int id)
         {
             try
             {
+                int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+
                 userDataAccess.DeleteUser(id, UpdateBy);
                 return RedirectToAction("ListUser");
             }

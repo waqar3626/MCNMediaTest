@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -87,7 +88,8 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult AddRecording(Recording record)
         {
             try
-            {
+            { 
+                record.CreatedBy= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 recordDataAccess.AddRecording(record);
                 return RedirectToAction("ListRecording");
             }
@@ -105,7 +107,7 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Edit(int id, [Bind] Recording recording)
         {
             try
-            {
+            { recording.UpdatedBy= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 recordDataAccess.UpdateRecording(recording);
                 return RedirectToAction("ListRecording");
 
@@ -120,10 +122,11 @@ namespace MCNMedia_Dev.Controllers
 
         [HttpGet]
 
-        public IActionResult Delete(int id, int UpdateBy)
+        public IActionResult Delete(int id)
         {
             try
             {
+                int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 recordDataAccess.DeleteRecording(id, UpdateBy);
                 return RedirectToAction("ListRecording");
             }
@@ -162,29 +165,6 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult PlayVideo(int id)
-        {
-            try
-            {
-
-                Recording recording = recordDataAccess.GetRecordingData(id);
-                if (recording == null)
-                {
-                    return NotFound();
-                }
-
-                LoadChurchesDDL();
-                return PartialView("PlayVideo", recording);
-            }
-            catch (Exception e)
-            {
-                ShowMessage("Edit Recording Errors 'Get' : " + e.Message);
-                throw;
-            }
-
-        }
-
-
+        
     }
 }

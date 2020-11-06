@@ -54,7 +54,7 @@
                                     <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                     <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                     @{
-                                        var UrlDownload = "/" + item.RecordingURl;
+                                        var UrlDownload = item.RecordingURl;
 
                                         <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
                                     }
@@ -113,7 +113,7 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="PlayRecordingModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog  mt-4" role="document" style="max-width:60%;">
+            <div class="modal-dialog  mt-4" role="document" style="max-width:750px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel1">Play Recording</h5>
