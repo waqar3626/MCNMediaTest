@@ -29,7 +29,8 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "Recording Time is Required")]
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
-       
+
+        public int ScheduleId { get; set; }
     }
   
 }

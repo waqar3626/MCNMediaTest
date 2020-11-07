@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -23,13 +27,14 @@ namespace MCNMedia_Dev.Controllers
                 LoadChurchesDDL();
                 return View();
             }
-             catch (Exception e)
+            catch (Exception e)
             {
                 ShowMessage("Add Recording Error 'Get' " + e.Message);
                 throw;
             }
 
         }
+
         [HttpGet]
         public IActionResult ListRecording()
         {
@@ -40,12 +45,13 @@ namespace MCNMedia_Dev.Controllers
                 gm.LRecordings = recordDataAccess.GetAllRecording().ToList<Recording>();
                 return View(gm);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                ShowMessage ("List Recording Error" + e.Message);
+                ShowMessage("List Recording Error" + e.Message);
                 throw;
             }
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -65,7 +71,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit Recording Errors 'Get' : " + e.Message);
                 throw;
             }
-            
+
         }
 
         [HttpGet()]
@@ -81,15 +87,16 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Add Recording Error 'Post' " + e.Message);
                 throw;
             }
-           
+
         }
 
         [HttpPost]
         public IActionResult AddRecording(Recording record)
         {
             try
-            { 
-                record.CreatedBy= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+            {
+                record.CreatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                record.ScheduleId = -1;
                 recordDataAccess.AddRecording(record);
                 return RedirectToAction("ListRecording");
             }
@@ -98,16 +105,14 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Add Recording Error 'Post' " + e.Message);
                 throw;
             }
-            
-            
-        } 
+        }
 
         [HttpPost]
-
         public IActionResult Edit(int id, [Bind] Recording recording)
         {
             try
-            { recording.UpdatedBy= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+            {
+                recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 recordDataAccess.UpdateRecording(recording);
                 return RedirectToAction("ListRecording");
 
@@ -117,11 +122,10 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit Recording Errors 'Post' : " + e.Message);
                 throw;
             }
-            
+
         }
 
         [HttpGet]
-
         public IActionResult Delete(int id)
         {
             try
@@ -135,7 +139,45 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Delete Recording Error " + e.Message);
                 throw;
             }
-            
+
+        }
+
+        [HttpPost]
+        public void PublishEvent()
+        {
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                Recording record = new Recording();
+                ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
+
+                var responseReader = reader.ReadToEndAsync();
+                log.Debug(responseReader.Result);
+                var publishRecording = JsonConvert.DeserializeObject<PublishRecording>(responseReader.Result);
+
+                DataTable dt = scheduleDataAccess.spSchedule_NotPublished_GetByCamera(Convert.ToInt32(publishRecording.camera_id));
+                if (dt.Rows.Count > 0)
+                {
+                    record.ChurchId = Convert.ToInt32(dt.Rows[0]["ChurchId"]);
+                    record.RecordingTitle = dt.Rows[0]["ScheduleEventName"].ToString();
+                    record.ScheduleId = Convert.ToInt32(dt.Rows[0]["ScheduleId"].ToString());
+                }
+                record.RecordingURl = publishRecording.recording_url;
+                record.Date = DateTime.Now;
+                record.Time = DateTime.Now;
+                record.RecordingTitle = record.RecordingTitle == "" ? $"Recording_{DateTime.Now.ToString("dd-MMM-yyyy:hr:mm:ss")}" : record.RecordingTitle;
+                record.CreatedBy = -1; // Created by system so have no user id
+
+                recordDataAccess.AddRecording(record);
+                if (record.ScheduleId > 0)
+                {
+                    int scheduleStatus = 3;
+                    if (Convert.ToBoolean(dt.Rows[0]["IsRepeated"]))
+                        scheduleStatus = 0;
+                    scheduleDataAccess.UpdateScheduleStatus(record.ScheduleId, scheduleStatus);
+                    string logMessage = $"Recording published for camera (CameraID: {publishRecording.camera_id}) on {DateTime.Now}";
+                    ActivityLogDataAccessLayer.AddActivityLog("Recording Published", category: "Schedule", message: logMessage, churchId: record.ChurchId, userId: -1);
+                }
+            }
         }
 
         public void LoadChurchesDDL()
@@ -155,16 +197,13 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Load Church Error in Recording " + e.Message);
                 throw;
             }
-           
+
 
         }
 
         private void ShowMessage(string exceptionMessage)
         {
-            log.Info("Exception: "+exceptionMessage);
+            log.Info("Exception: " + exceptionMessage);
         }
-
-
-        
     }
 }

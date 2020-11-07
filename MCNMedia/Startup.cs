@@ -131,6 +131,10 @@ namespace MCNMedia_Dev
                     name: "UserLogin",
                     pattern: "UserLogin",
                     defaults: new { controller = "UserLogin", Action = "UserLogin" });
+                endpoints.MapControllerRoute(
+                    name: "Publish",
+                    pattern: "Publish/Recording",
+                    defaults: new { controller = "Recording", Action = "PublishEvent" });
                 //Admin
                 endpoints.MapControllerRoute(
                     name: "DashBoard",

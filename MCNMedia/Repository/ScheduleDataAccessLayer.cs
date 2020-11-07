@@ -7,12 +7,12 @@ using MCNMedia_Dev.Models;
 
 namespace MCNMedia_Dev.Repository
 {
-    public class scheduleDataAccessLayer
+    public class ScheduleDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public scheduleDataAccessLayer()
+        public ScheduleDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
@@ -274,6 +274,15 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchId", scheduleId);
             _dc.AddParameter("SchStatus", scheduleStatus);
             _dc.Execute("spSchedule_UpdateStatus");
+        }
+
+        public DataTable spSchedule_NotPublished_GetByCamera(int cameraId)
+        {
+            List<Recording> Balobj = new List<Recording>();
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", cameraId);
+            DataTable dataTable = _dc.ReturnDataTable("spSchedule_NotPublished_GetByCamera");
+            return dataTable;
         }
 
 

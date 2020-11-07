@@ -23,7 +23,7 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("RecId", -1);
             _dc.AddParameter("RecName", "");
-           DataTable dataTable = _dc.ReturnDataTable("spRecording_Search");
+            DataTable dataTable = _dc.ReturnDataTable("spRecording_Search");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Recording recording = new Recording();
@@ -40,6 +40,7 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+
         public IEnumerable<Recording> GetChurches()
         {
             List<Recording> Balobj = new List<Recording>();
@@ -66,6 +67,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RecordingTime", recording.Time);
             _dc.AddParameter("UserId", recording.CreatedBy);
             _dc.AddParameter("ChurchId", recording.ChurchId);
+            _dc.AddParameter("SchId", recording.ScheduleId);
             _dc.Execute("spRecording_Add");
         }
 
@@ -100,18 +102,18 @@ namespace MCNMedia_Dev.Repository
                 recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
                 recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
 
-            
+
             }
             return recording;
         }
-        //To Delete the record on a particular Recording
-        public void DeleteRecording(int id,int UpdateBy)
-            {
-                _dc.ClearParameters();
-                _dc.AddParameter("RecId", id);
-                _dc.AddParameter("UpdateBy", UpdateBy);
-                _dc.Execute("spRecording_Delete");
-            }
 
+        //To Delete the record on a particular Recording
+        public void DeleteRecording(int id, int UpdateBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("RecId", id);
+            _dc.AddParameter("UpdateBy", UpdateBy);
+            _dc.Execute("spRecording_Delete");
         }
+    }
 }

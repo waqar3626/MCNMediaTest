@@ -17,7 +17,7 @@ namespace MCNMedia_Dev._Helper
         {
             string rootPath = Directory.GetCurrentDirectory();
             string contentDirectory = ContentDirectory(uploadingArea, churchId: "");
-            string path = Path.Combine(rootPath, contentDirectory);
+            string path = Path.Combine(rootPath , "wwwroot", contentDirectory);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -35,7 +35,7 @@ namespace MCNMedia_Dev._Helper
         {
             string rootPath = Directory.GetCurrentDirectory();
             string contentDirectory = ContentDirectory(uploadingArea, churchId.ToString());
-            string path = Path.Combine(rootPath, contentDirectory);
+            string path = Path.Combine(rootPath, "wwwroot", contentDirectory);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -53,7 +53,7 @@ namespace MCNMedia_Dev._Helper
         {
             string rootPath = Directory.GetCurrentDirectory();
             string contentDirectory = ContentDirectory(uploadingArea, churchId: "");
-            string path = Path.Combine(rootPath, contentDirectory);
+            string path = Path.Combine(rootPath, "wwwroot", contentDirectory);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -69,7 +69,7 @@ namespace MCNMedia_Dev._Helper
         {
             string rootPath = Directory.GetCurrentDirectory();
             string contentDirectory = ContentDirectory(uploadingArea,churchId.ToString());
-            string path = Path.Combine(rootPath, contentDirectory);
+            string path = Path.Combine(rootPath, "wwwroot", contentDirectory);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);

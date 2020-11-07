@@ -13,7 +13,7 @@ namespace MCNMedia_Dev.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        scheduleDataAccessLayer SchDataAccess = new scheduleDataAccessLayer();
+        ScheduleDataAccessLayer SchDataAccess = new ScheduleDataAccessLayer();
         GenericModel gm = new GenericModel();
         public JsonResult ListSchedule()
         {

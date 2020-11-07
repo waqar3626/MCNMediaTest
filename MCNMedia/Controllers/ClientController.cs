@@ -19,7 +19,7 @@ namespace MCNMedia_Dev.Controllers
 
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
-        scheduleDataAccessLayer scheduleDataAccess = new scheduleDataAccessLayer();
+        ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
         RecordingDataAccessLayer recordingDataAccess = new RecordingDataAccessLayer();
         PreviewChurchesDataAccessLayer previewChurchesDataAccess = new PreviewChurchesDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();

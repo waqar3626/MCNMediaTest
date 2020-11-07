@@ -14,7 +14,7 @@ namespace MCNMedia_Dev.Controllers
     public class WebsiteController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        scheduleDataAccessLayer _scheduleDataAccessLayer = new scheduleDataAccessLayer();
+        ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
         public IActionResult Home()
