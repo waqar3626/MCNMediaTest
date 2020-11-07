@@ -7,11 +7,11 @@
 
 
 <div class="card">
-    <div class="card-body">
-        <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-success btn-sm float-right text-white" > <i class="fa fa-plus"></i> Add Recording</a>
-        <h3>Manage Recordings</h3>
-        <br />
-        <div class="">
+    <div class="card-header card-header-custom">
+        <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-success btn-sm float-right text-white"> <i class="fa fa-plus"></i> Add Recording</a>
+        Manage Recordings
+    </div>
+        <div class="card-body">
             @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
             {
 
@@ -66,7 +66,7 @@
             }
         </div>
 
-    </div>
+
 </div>
 <div class="row">
     <div class="col-12 grid-margin">

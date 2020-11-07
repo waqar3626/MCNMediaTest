@@ -1,0 +1,136 @@
+﻿/*Top Bar Logo Section*/
+.navbar .navbar-brand-wrapper {
+    background: #2F2C2C;
+    transition: width 0.25s ease, background 0.25s ease;
+    -webkit-transition: width 0.25s ease, background 0.25s ease;
+    -moz-transition: width 0.25s ease, background 0.25s ease;
+    -ms-transition: width 0.25s ease, background 0.25s ease;
+    width: 237px;
+    height: 70px;
+}
+/*********************************************************************/
+
+/*Top Bar Right Section*/
+.navbar .navbar-menu-wrapper {
+    background: #2F2C2C;
+    transition: width 0.25s ease;
+    -webkit-transition: width 0.25s ease;
+    -moz-transition: width 0.25s ease;
+    -ms-transition: width 0.25s ease;
+    color: #ddb500;
+    padding-left: 2.55rem;
+    padding-right: 2.55rem;
+    width: calc(100% - 237px);
+    height: 70px;
+}
+/*********************************************************************/
+
+/*Title Bar Section of Form on each page*/
+.card-header-custom {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #2F2C2C;
+    border-bottom: 1px solid #ddb500;
+     color: #ddb500;
+    text-transform: uppercase;
+}
+/*********************************************************************/
+
+/*Side Bar Section*/
+.sidebar {
+    min-height: calc(100vh - 70px);
+    background: #ddb500;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    padding: 0;
+    width: 237px;
+    z-index: 11;
+    transition: width 0.25s ease, background 0.25s ease;
+    -webkit-transition: width 0.25s ease, background 0.25s ease;
+    -moz-transition: width 0.25s ease, background 0.25s ease;
+    -ms-transition: width 0.25s ease, background 0.25s ease;
+}
+
+    .sidebar .nav:not(.sub-menu) > .nav-item.active {
+        background: #2F2C2C;
+        border-radius: 0.437rem;
+    }
+
+    .sidebar .nav .nav-item .nav-link i.menu-icon {
+        font-size: 1rem;
+        line-height: 1;
+        margin-right: 1rem;
+        color: #2F2C2C;
+    }
+    /*********************************************************************/
+
+    /*Side Bar Active Menu*/
+    .sidebar .nav .nav-item.active > .nav-link i, .sidebar .nav .nav-item.active > .nav-link .menu-title, .sidebar .nav .nav-item.active > .nav-link .menu-arrow {
+        color: #ddb500;
+    }
+  /*  .sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link, .sidebar .nav:not(.sub-menu) > .nav-item:hover[aria-expanded="true"] {
+        background: #ddb500;
+        color: #2F2C2C;
+        border-radius: 0.437rem;
+    }*/
+    .sidebar .nav .nav-item .nav-link {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        white-space: nowrap;
+        padding: 0.75rem 1.937rem 0.75rem 1rem;
+        color: #2F2C2C;
+        -webkit-transition-duration: 0.45s;
+        -moz-transition-duration: 0.45s;
+        -o-transition-duration: 0.45s;
+        transition-duration: 0.45s;
+        transition-property: color;
+        -webkit-transition-property: color;
+    }
+/*********************************************************************/
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    color: #ddb500;
+    background-color: #2F2C2C;
+    border-bottom: 1px solid #ddb500;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+    text-transform: uppercase;
+}
+.login-full-bg {
+    background: url("images/LoginImage.jpg");
+    background-size: auto;
+    background-size: cover;
+}
+.auth .login-half-bg {
+    background: none;
+    background-size: auto;
+    background-size: cover;
+    opacity: 0.7;
+}
+.login-half-right-bg {
+   /* background-image: none;
+    background-color: #ddb500;
+    background-size: auto;
+    background-size: cover;
+    opacity: 0.85;*/
+}
+.auth.auth-img-bg .auth-form-transparent {
+    width: 85%;
+   margin: auto;
+}
+.signIn_panel {
+    background: #ededed;
+    /*   -moz-box-shadow: 0 0 3px 3px #ddd;
+    -webkit-box-shadow: 0 0 3px 3px #ddd;
+    box-shadow: 0 0 3px 3px #ddd;*/
+    padding: 30px 10px;
+    margin-bottom: 10px;
+    width: 50%;
+}
+

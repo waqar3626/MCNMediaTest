@@ -5,8 +5,10 @@
 }
 
 <div class="card mb-3">
+    <div class="card-header card-header-custom">
+        Search Church
+    </div>
     <div class="card-body">
-        <h3>Search Church</h3>
         <div class="">
             <form method="post" asp-action="Search" asp-controller="church">
                 <div class="row">
@@ -71,10 +73,12 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-body">
+    <div class="card-header card-header-custom">
         <a id="AddNew" class="btn btn-success btn-sm float-right" href="/Admin/Churches/Add"> <i class="fa fa-plus"></i> Add Church</a>
-        <h3>Manage Churches</h3>
-        <br />
+       Manage Churches
+    </div>
+    <div class="card-body">
+       
         <div class="">
             <div class="table-sorter-wrapper col-lg-12 table-responsive">
                 <table id="sortable-table-1" class="table">

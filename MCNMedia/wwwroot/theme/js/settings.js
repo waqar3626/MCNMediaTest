@@ -31,8 +31,8 @@
       $(".sidebar-bg-options").removeClass("selected");
       $(this).addClass("selected");
     });
-      $("#sidebar-dark-theme").click();
-      // $("#sidebar-dark-theme")
+
+
     //Navbar Backgrounds
     $(".tiles.primary").on("click" , function(){
       $(".navbar").removeClass(navbar_classes);
@@ -52,7 +52,6 @@
       $(".tiles").removeClass("selected");
       $(this).addClass("selected");
     });
-      $(".tiles.warning").click();
     $(".tiles.danger").on("click" , function(){
       $(".navbar").removeClass(navbar_classes);
       $(".navbar").addClass("navbar-danger");
