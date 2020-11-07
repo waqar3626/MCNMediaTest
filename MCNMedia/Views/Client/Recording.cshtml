@@ -5,10 +5,12 @@
 
 }
 
+<script src="~/js/jwplayer.js"></script>
 <div class="card">
-    <div class="card-body">
+    <div class="card-header" style="background-color:#248afd">
         <h3>Manage Recordings</h3>
-        <br />
+    </div>
+    <div class="card-body">
         <div class="row">
             <div class="col-md-12">
                 @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
@@ -57,9 +59,13 @@
 
                                     <td>
                                         <a href="@Url.Action("EditRecordingClient", "Client", new { id=item.RecordingId })" class="btn btn-primary btn-sm " data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm ti-download" data-toggle="tooltip" data-placement="bottom" title="Download"></a>
 
-                                        @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                                        @{
+                                            var UrlDownload = item.RecordingURl;
+
+                                            <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
+                                        }
+                                        <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
                                     </td>
                                 </tr>
                             }
@@ -71,3 +77,45 @@
 
     </div>
 </div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="PlayRecordingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  mt-4" role="document" style="max-width:750px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Play Recording</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="PlayRecordingPreview">
+                        <div id="videoUrl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
+    $(document).on("click", ".ti-control-play", function () {
+        var url = $(this).data('id');
+
+        jwplayer('videoUrl').setup({
+            file: url,
+            image: "../Images/jwerror.jpg",
+            width: "100%",
+            aspectratio: "16:9",
+            //autostart: 'true',
+            "autostart": "viewable",
+            "advertising": {
+                "client": "vast",
+                "tag": ""
+            }
+        });
+        jwplayer().onError(function () {
+            jwplayer().play();
+        });
+    });
+
+</script>
