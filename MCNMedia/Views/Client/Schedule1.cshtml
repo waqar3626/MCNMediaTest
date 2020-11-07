@@ -1,0 +1,90 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+
+@{
+    ViewData["Title"] = "Schedule";
+    Layout = "~/Views/Shared/_NestedLayout.cshtml";
+
+}
+
+
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
+                <h3>Manage Schedules</h3>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="order-listing" class="table">
+                                <thead>
+                                    <tr>
+                                        @*<th>
+                                                @Html.DisplayNameFor(model => model.UserId)
+                                            </th>*@
+                                        <th>
+                                            Event Name
+                                        </th>
+                                        <th>
+                                            Event Date
+                                        </th>
+                                        <th>
+                                            Event Time
+                                        </th>
+                                        <th>
+                                            Event Day
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LSchedules)
+                                    {
+                                        <tr>
+                                            @*<td>
+                                                    @Html.DisplayFor(modelItem => item.UserId)
+                                                </td>*@
+                                            @*<td>
+                                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                                </td>*@
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventName, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventDate, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventTime, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EventDay, new { @class = "text-wrap" })
+                                            </td>
+
+                                            <td>
+                                                <a href="@Url.Action("EditScheduleClient", "Client", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+
+    </div>
+
+
+
+</div>
+

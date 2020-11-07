@@ -1,90 +1,95 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
-
 @{
-    ViewData["Title"] = "Schedule";
+    ViewData["Title"] = "ChSchedule";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
 
 }
 
+<style>
+    .nav-link {
+        display: block;
+        padding: 0.5rem 1rem !important;
+    }
+</style>
+
+
+<!-- Plugin css for this page -->
+<link rel="stylesheet" href="~/theme/vendors/dropzone/dropzone.css">
+<link rel="stylesheet" href="~/theme/vendors/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bars-1to10.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bars-horizontal.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bars-movie.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bars-pill.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bars-reversed.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bars-square.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/bootstrap-stars.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/css-stars.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/examples.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/fontawesome-stars-o.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-bar-rating/fontawesome-stars.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-asColorPicker/css/asColorPicker.min.css">
+<link rel="stylesheet" href="~/theme/vendors/x-editable/bootstrap-editable.css">
+<link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="~/theme/vendors/dropify/dropify.min.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-file-upload/uploadfile.css">
+<link rel="stylesheet" href="~/theme/vendors/jquery-tags-input/jquery.tagsinput.min.css">
+<link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+<!-- End plugin css for this page -->
 
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-sm-12 grid-margin stretch-card d-none d-md-flex w-100">
+
 
         <div class="card">
             <div class="card-body">
-                @*<a id="ADDSchedule" class="btn btn-success btn-sm float-right" href="../Schedule/AddSchedule"> <i class="fa fa-plus"></i> Add Schedule</a>*@
-                <h3>Manage Schedules</h3>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table id="order-listing" class="table">
-                                <thead>
-                                    <tr>
-                                        @*<th>
-                                                @Html.DisplayNameFor(model => model.UserId)
-                                            </th>*@
-                                        <th>
-                                            Event Name
-                                        </th>
-                                        <th>
-                                            Event Date
-                                        </th>
-                                        <th>
-                                            Event Time
-                                        </th>
-                                        <th>
-                                            Event Day
-                                        </th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.LSchedules)
-                                    {
-                                        <tr>
-                                            @*<td>
-                                                    @Html.DisplayFor(modelItem => item.UserId)
-                                                </td>*@
-                                            @*<td>
-                                                    @Html.DisplayFor(modelItem => item.ChurchName)
-                                                </td>*@
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.EventName, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.EventDate, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.EventTime, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.EventDay, new { @class = "text-wrap" })
-                                            </td>
 
-                                            <td>
-                                                <a href="@Url.Action("EditScheduleClient", "Client", new { id=item.ScheduleId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                                @*<a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>*@
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="tab-content tab-content-vertical" id="v-pills-tabContent">
+                            
+
+                            <div class="tab-pane fade  show active" id="Schedule-1" role="tabpanel" aria-labelledby="Schedule-tab">
+                                <div class="media">
+                                    <div class="media-body">
+                                        @Html.Partial("~/Views/ChurchSchedule/_ListSchedule.cshtml")
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
-
                     </div>
+                   
                 </div>
             </div>
         </div>
-        <br />
 
 
 
     </div>
-
-
-
 </div>
+<!-- plugin js for this page -->
+<script src="~/theme/vendors/dropify/dropify.min.js"></script>
+<script src="~/theme/vendors/jquery-file-upload/jquery.uploadfile.min.js"></script>
+<script src="~/theme/vendors/jquery-tags-input/jquery.tagsinput.min.js"></script>
+<script src="~/theme/vendors/dropzone/dropzone.js"></script>
 
+
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="~/theme/js/off-canvas.js"></script>
+<script src="~/theme/js/hoverable-collapse.js"></script>
+<script src="~/theme/js/template.js"></script>
+<script src="~/theme/js/settings.js"></script>
+<script src="~/theme/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="~/theme/js/x-editable.js"></script>
+<script src="~/theme/js/dropify.js"></script>
+<script src="~/theme/js/dropzone.js"></script>
+<script src="~/theme/js/jquery-file-upload.js"></script>
+
+<!-- End custom js for this page-->

@@ -140,7 +140,7 @@ namespace MCNMedia_Dev.Repository
         }
 
         //To Update the records of a particluar Schedule
-        public void UpdateSchedule(Schedule schedule)
+        public int UpdateSchedule(Schedule schedule)
         {
             _dc.ClearParameters();
             _dc.AddParameter("SchId", schedule.ScheduleId);
@@ -155,7 +155,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("IsRepeated", schedule.IsRepeated);
             _dc.AddParameter("SchCameraId", schedule.CameraId);
 
-            _dc.Execute("spSchedule_Update");
+            return _dc.Execute("spSchedule_Update");
         }
 
         //To Delete the record on a particular User

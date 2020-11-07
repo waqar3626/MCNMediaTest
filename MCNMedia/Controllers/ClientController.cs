@@ -168,8 +168,26 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        public IActionResult Schedule()
 
-       
+        {
+            try
+            {
+                LoadServerDDL();
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                gm.Churches = chdataAccess.GetChurchData(id);
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Schedule Detail Errors : " + e.Message);
+                throw;
+            }
+        }
+
+
+
+
         #endregion
 
 
@@ -196,25 +214,25 @@ namespace MCNMedia_Dev.Controllers
         #region Schedule
 
         [HttpGet]
-        public IActionResult Schedule()
-        {
-            try
-            {
+        //public IActionResult Schedule()
+        //{
+        //    try
+        //    {
 
-                int id = (int)HttpContext.Session.GetInt32("ChurchId");
-                GenericModel gm = new GenericModel();
-                gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
-                gm.Churches = chdataAccess.GetChurchData(id);
-                Redirect("Schedule");
-                return View(gm);
+        //        int id = (int)HttpContext.Session.GetInt32("ChurchId");
+        //        GenericModel gm = new GenericModel();
+        //        gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
+        //        gm.Churches = chdataAccess.GetChurchData(id);
+        //        Redirect("Schedule");
+        //        return View(gm);
 
-            }
-            catch (Exception e)
-            {
-                ShowMesage("Schedule Errors : " + e.Message);
-                throw;
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ShowMesage("Schedule Errors : " + e.Message);
+        //        throw;
+        //    }
+       // }
         [HttpGet]
         public IActionResult Recording()
         {
@@ -266,20 +284,20 @@ namespace MCNMedia_Dev.Controllers
 
       
         
-        [HttpGet]
-        public IActionResult EditScheduleClient(int id)
-        {
-            int id2 = (int)HttpContext.Session.GetInt32("ChurchId");
-            GenericModel gm = new GenericModel();
-            gm.Churches = chdataAccess.GetChurchData(id2);
-            gm.Schedules= scheduleDataAccess.GetScheduleDataBtId(id);
-            if (gm.Schedules == null)
-            {
-                return NotFound();
-            }
-            LoadChurchesDDL();
-            return View(gm);
-        }
+        //[HttpGet]
+        //public IActionResult EditScheduleClient(int id)
+        //{
+        //    int id2 = (int)HttpContext.Session.GetInt32("ChurchId");
+        //    GenericModel gm = new GenericModel();
+        //    gm.Churches = chdataAccess.GetChurchData(id2);
+        //    gm.Schedules= scheduleDataAccess.GetScheduleDataBtId(id);
+        //    if (gm.Schedules == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    LoadChurchesDDL();
+        //    return View(gm);
+        //}
         #endregion
 
 
@@ -305,27 +323,27 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditScheduleClient(GenericModel gm)
-        {
-            try
-            {
+        //public IActionResult EditScheduleClient(GenericModel gm)
+        //{
+        //    try
+        //    {
 
-                if (gm.Schedules.EventDay == null)
-                {
-                    gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
+        //        if (gm.Schedules.EventDay == null)
+        //        {
+        //            gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
 
-                }
-                gm.Schedules.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                scheduleDataAccess.UpdateSchedule(gm.Schedules);
-                return RedirectToAction("Schedule");
+        //        }
+        //        gm.Schedules.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+        //        scheduleDataAccess.UpdateSchedule(gm.Schedules);
+        //        return RedirectToAction("Schedule");
 
-            }
-            catch (Exception e)
-            {
-                ShowMesage("Edit Schedule Client Errors : " + e.Message);
-                throw;
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ShowMesage("Edit Schedule Client Errors : " + e.Message);
+        //        throw;
+        //    }
+        //}
         public void LoadChurchesDDL()
         {
             try
