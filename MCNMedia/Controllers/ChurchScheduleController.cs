@@ -27,7 +27,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 ShowMessage("Add Church Schedule Errors : " + e.Message);
                 throw;
-                throw;
+               
             }
 
         }
@@ -95,8 +95,29 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult EditSchedule(int id)
+        {
+            try
+            {
+                Schedule Schedules = SchDataAccess.GetScheduleDataBtId(id);
+                if (Schedules == null)
+                {
+                    return NotFound();
+                }
+
+                return PartialView("_EditSchedule",Schedules);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Edit Schedule Errors : " + e.Message);
+                throw;
+            }
+        }
+
+
         [HttpPost]
-        public IActionResult Edit(int id, bool ToggleRecord1, [Bind] Schedule schedule)
+        public IActionResult EditSchedule(int id, bool ToggleRecord1, [Bind] Schedule schedule)
         {
             try
             {
@@ -125,25 +146,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult EditSchedule(int id)
-        {
-            try
-            {
-                Schedule Schedules = SchDataAccess.GetScheduleDataBtId(id);
-                if (Schedules == null)
-                {
-                    return NotFound();
-                }
-
-                return View(Schedules);
-            }
-            catch (Exception e)
-            {
-                ShowMessage("Edit Schedule Errors : " + e.Message);
-                throw;
-            }
-        }
+        
 
 
         [HttpPost]
@@ -163,22 +166,23 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
+       
+        public IActionResult DeleteSchedule(int id)
         {
             try
             {
+
+                GenericModel gm = new GenericModel();
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                SchDataAccess.DeleteSchedule(id, UpdatedBy);
-                return RedirectToAction("ListSchedule");
+                bool res = SchDataAccess.DeleteSchedule(id, UpdatedBy);
+                return Json(res);
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Schedule Errors :" + e.Message);
+                ShowMessage("Delete Notice Errors :" + e.Message);
                 throw;
             }
         }
-
 
 
         private void ShowMessage(String exceptionMessage)

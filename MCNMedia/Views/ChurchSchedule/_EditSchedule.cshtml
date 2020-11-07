@@ -7,7 +7,7 @@
 
 }
 
-<form asp-action="_EditSchedule" class="needs-validation" novalidate>
+<form asp-action="_EditSchedule" method="post" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
         <div class="card-body">
@@ -235,7 +235,7 @@
 
 
             success: function (result) {
-                alert('hello');
+               
                 loadChurchSch();
                 $('#EditChurchScheduleModal').modal('hide');
             },
@@ -418,7 +418,7 @@
                 });
 
                 $("#CameraId").html(s);
-                $('#CameraId').val('@Model.CameraId');
+               
 
 
 

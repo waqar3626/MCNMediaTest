@@ -100,7 +100,7 @@
         </div>
     </div>
 </div>
-@*<div class="row">
+<div class="row">
     <div class="col-12 grid-margin">
     <div class="modal fade" id="EditChurchScheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
@@ -118,7 +118,7 @@
     </div>
     </div>
     </div>
-    </div>*@
+    </div>
 <script type="text/javascript">
     function AddChurchSchedule() {
 
@@ -133,9 +133,10 @@
     function EditChurchSchedule(schId) {
          $.ajax({
              type: "Get",
-             url: '@Url.Action("Edit", "Schedule")',
+             url: '@Url.Action("EditSchedule", "ChurchSchedule")',
              data: { id: schId },
              success: function (data) {
+                 alert('hello');
                  $('#EditChurchSchedulePreview').html(data);
                  $('#EditChurchScheduleModal').modal('show');
              }
@@ -149,7 +150,7 @@
         var ans = confirm("Are you sure you want to delete this Church Schedule?");
         if (ans) {
             $.ajax({
-                url: "/Schedule/DeleteSchedule/" + schId,
+                url: "/ChurchSchedule/DeleteSchedule/" + schId,
                 type: "POST",
 
                 contentType: "application/json;charset=UTF-8",
@@ -184,9 +185,10 @@
                     var array = str.split('|');
                     html += "<td class='text-wrap p-0'>";
                     $.each(array, function (key, item2) {
-                        if(item2.length > 0)
-                        html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <button onclick='EditChurchSchedule(' + item.schId + ')'  class='btn btn-primary btn-sm' ><i class='fa fa-edit'></i></button><button onclick='DeleteChurchSchedule(' + item.schId + ')' class='btn btn-danger btn-sm '><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + item2 + " </div></div></div> </div>";
-
+                        if (item2.length > 0) {
+                            var array2 = item2.split(',');
+                            html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <button onclick='EditChurchSchedule(" + array2[1] + ")'  class='btn btn-primary btn-sm' ><i class='fa fa-edit'></i></button><button onclick='DeleteChurchSchedule(" + array2[1] + " )' class='btn btn-danger btn-sm '><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + array2[0]+ " </div></div></div> </div>";
+                        }
                     }
                     );
 
@@ -199,6 +201,41 @@
             }
         });
     }
+
+
+    function EditChurchSchedule(churchScheduleId) {
+         $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditSchedule", "ChurchSchedule")',
+             data: { id: churchScheduleId },
+            success: function (data) {
+                $('#EditChurchScheduleModal').html(data);
+                $('#EditAnnouncementModal').modal('show');
+
+            }
+        })
+    }
+
+    function DeleteChurchSchedule(ScheduleId) {
+        var ans = confirm("Are you sure you want to delete this Schedule?");
+        if (ans) {
+            $.ajax({
+                url: "/ChurchSchedule/DeleteSchedule/" + ScheduleId,
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    loadChurchSch();
+                    if (result) { alert("Schedule Deleted"); }
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+    }
+
+
 
 </script>
 
