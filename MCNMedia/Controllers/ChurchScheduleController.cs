@@ -117,36 +117,72 @@ namespace MCNMedia_Dev.Controllers
 
 
         [HttpPost]
-        public IActionResult EditSchedule(int id, bool ToggleRecord1, [Bind] Schedule schedule)
+        public IActionResult UpdateChurchSchedule(string eventName, bool isRepeat, DateTime eventDate, string eventDay, string eventTime, bool recordtoggle, int cameraId, int recordDuration, bool passwordtoggle, string password,int scheduleId)
         {
+
             try
             {
 
-                if (schedule.IsRepeated == false)
-                {
-                    schedule.EventDay = schedule.EventDate.ToString("dddd");
 
+                Schedule sch = new Schedule();
+                sch.IsRepeated = isRepeat;
+                sch.ScheduleId = scheduleId;
+                sch.EventTime = Convert.ToDateTime(eventTime);
+                if (sch.IsRepeated == false)
+                {
+                    sch.EventDate = eventDate;
+                    sch.EventDay = sch.EventDate.ToString("dddd");
+                }
+                else
+                {
+                    sch.EventDay = eventDay;
+                    sch.EventDate = Convert.ToDateTime("1900-01-01 00:00:00");
+                }
+                sch.EventName = eventName;
+                sch.Record = recordtoggle;
+
+                if (sch.Record == false)
+                {
+                    sch.CameraId = 0;
+                    sch.RecordDuration = 0;
+                }
+                else
+                {
+                    sch.CameraId = cameraId;
+                    sch.RecordDuration = recordDuration;
+                }
+                if (passwordtoggle == false)
+                {
+                    sch.Password = string.Empty;
+                }
+                else
+                {
+                    sch.Password = password;
+                }
+                sch.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    sch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                  int res=  SchDataAccess.UpdateSchedule(sch);
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
 
                 }
-                else if (schedule.IsRepeated == true)
-                {
-                    schedule.EventDate = Convert.ToDateTime("0001-01-01 00:00:00");
-                }
-                schedule.ScheduleId = id;
-                schedule.Record = ToggleRecord1;
-                schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                SchDataAccess.UpdateSchedule(schedule);
-                return RedirectToAction("ListSchedule");
+
+
+                return RedirectToAction("Listchurch", "Church");
+
+
+
+
             }
             catch (Exception e)
             {
-                ShowMessage("Get edit Schedule Data Errors : " + e.Message);
+                ShowMessage("Add Schedule Errors : " + e.Message);
                 throw;
             }
         }
 
 
-        
 
 
         [HttpPost]

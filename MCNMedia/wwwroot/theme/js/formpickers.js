@@ -5,6 +5,12 @@
       format: 'LT'
     });
   }
+    if ($("#timepicker-example2").length) {
+        $('#timepicker-example2').datetimepicker({
+            format: 'LT'
+        });
+    }
+
   if ($(".color-picker").length) {
     $('.color-picker').asColorPicker();
   }
@@ -23,6 +29,12 @@
 
     if ($("#datepicker-popup2").length) {
         $('#datepicker-popup2').datepicker({
+            enableOnReadonly: true,
+            todayHighlight: true,
+        });
+    }
+    if ($("#datepicker-popup3").length) {
+        $('#datepicker-popup3').datepicker({
             enableOnReadonly: true,
             todayHighlight: true,
         });

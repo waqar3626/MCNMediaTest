@@ -102,23 +102,24 @@
 </div>
 <div class="row">
     <div class="col-12 grid-margin">
-    <div class="modal fade" id="EditChurchScheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
-    <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
-    </button>
+        <div class="modal fade" id="EditChurchScheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Announcement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditChurchSchedulePreview">
+                        @Html.Partial("~/Views/ChurchSchedule/_EditSchedule.cshtml", Model.Schedules)
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="modal-body" id="EditChurchSchedulePreview">
-    @Html.Partial("~/Views/ChurchSchedule/_EditSchedule.cshtml", Model.Schedules)
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
+</div>
+
 <script type="text/javascript">
     function AddChurchSchedule() {
 
@@ -130,19 +131,6 @@
         loadChurchSch();
     });
 
-    function EditChurchSchedule(schId) {
-         $.ajax({
-             type: "Get",
-             url: '@Url.Action("EditSchedule", "ChurchSchedule")',
-             data: { id: schId },
-             success: function (data) {
-                 alert('hello');
-                 $('#EditChurchSchedulePreview').html(data);
-                 $('#EditChurchScheduleModal').modal('show');
-             }
-         });
-
-    }
 
 
     function DeleteChurchSchedule(schId) {
@@ -156,6 +144,7 @@
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
+                    
                     loadChurchSch();
                     if (result) { alert("Record Deleted"); }
                 },
@@ -187,7 +176,7 @@
                     $.each(array, function (key, item2) {
                         if (item2.length > 0) {
                             var array2 = item2.split(',');
-                            html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <button onclick='EditChurchSchedule(" + array2[1] + ")'  class='btn btn-primary btn-sm' ><i class='fa fa-edit'></i></button><button onclick='DeleteChurchSchedule(" + array2[1] + " )' class='btn btn-danger btn-sm '><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + array2[0]+ " </div></div></div> </div>";
+                            html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <a onclick='EditChurchSchedule(" + array2[1] + ")'  class='btn btn-primary btn-sm' ><i class='fa fa-edit'></i></a><button onclick='DeleteChurchSchedule(" + array2[1] + " )' class='btn btn-danger btn-sm '><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + array2[0]+ " </div></div></div> </div>";
                         }
                     }
                     );
@@ -208,9 +197,12 @@
             type: "Get",
             url: '@Url.Action("EditSchedule", "ChurchSchedule")',
              data: { id: churchScheduleId },
-            success: function (data) {
-                $('#EditChurchScheduleModal').html(data);
-                $('#EditAnnouncementModal').modal('show');
+             success: function (data) {
+
+                 $('#EditChurchSchedulePreview').html(data);
+                 CheckScheduleData();
+                 $('#EditChurchScheduleModal').modal('show');
+
 
             }
         })

@@ -7,7 +7,7 @@
 
 
 
-<form    class="needs-validation" novalidate>
+<form class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -19,7 +19,7 @@
 
                 <input type="hidden" id="HdnSession" value="@Context.Session.GetInt32("ChurchId")" />
                 <label asp-for="EventName" for="validationCustom03" class="col-sm-2 col-form-label">Event Name</label>
-                <div class="col-sm-6">
+                <div class="col-sm-10">
 
                     <span asp-validation-for="EventName" class="text-danger"></span>
 
@@ -50,7 +50,7 @@
                 <label asp-for="EventDate" for="validationCustom05" id="EventLabel1" class="col-sm-2 col-form-label">Event Date</label>
                 <div class="col-sm-4" id="EventInput1">
                     <span asp-validation-for="EventDate" class="text-danger"></span>
-                    <div id="datepicker-popup" class="input-group date datepicker">
+                    <div id="datepicker-popup2" class="input-group date datepicker">
                         <input type="text" asp-for="EventDate" class="form-control" id="EventDate" placeholder="Event Date" />
 
                         <span class="input-group-addon input-group-append border-left">
@@ -114,15 +114,15 @@
 
                 <div class="col-sm-12 pt-3">
                     <div class="custom-control custom-switch lg">
-                        <input type="checkbox" class="custom-control-input control" asp-for="Record" name="ToggleRecord" id="ToggleRecord">
-                        <label class="custom-control-label" for="ToggleRecord">Would you like to record this event?</label>
+                        <input type="checkbox" class="custom-control-input control" asp-for="Record" name="AddToggleRecord" id="AddToggleRecord">
+                        <label class="custom-control-label" for="AddToggleRecord">Would you like to record this event?</label>
 
                     </div>
 
 
                 </div>
             </div>
-            <div class="form-group row" id="DivRecordData">
+            <div class="form-group row" id="AddDivRecordData">
                 <label asp-for="CameraId" class="col-sm-2 col-form-label">Camera</label>
 
                 <div class="col-sm-4 ">
@@ -151,8 +151,8 @@
 
                 <div class="col-sm-12 pt-3">
                     <div class="custom-control custom-switch lg">
-                        <input type="checkbox" class="custom-control-input control" id="customSwitch1">
-                        <label class="custom-control-label" for="customSwitch1">Would you like to password protect this event?</label>
+                        <input type="checkbox" class="custom-control-input control" id="AddpasswordToggle">
+                        <label class="custom-control-label" for="AddpasswordToggle">Would you like to password protect this event?</label>
 
                     </div>
 
@@ -160,12 +160,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="Password" id="lblPassword" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-4 " id="SchPassword">
+                <label asp-for="Password" id="AddlblPassword" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-4 " id="AddSchPassword">
                     <span asp-validation-for="Password" class="text-danger"></span>
-                    <input type="text" asp-for="Password" class="form-control" placeholder="Password" id="pasword" />
+                    <input type="text" asp-for="Password" class="form-control" placeholder="Password" id="AddTextPassword" />
                 </div>
-                <div class="col-sm-6" id="btnSchdule">
+                <div class="col-sm-6" id="AddbtnSchdule">
                     <div class="float-right">
                         <a   id="addScheduleVal1" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</a>
                         <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
@@ -175,7 +175,7 @@
 
 
 
-                <div class="col-sm-12" id="btnSchdulecol13">
+                <div class="col-sm-12" id="AddbtnSchdulecol12">
                     <div class="float-right">
                         <a id="addScheduleVal2" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</a>
                         <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
@@ -209,12 +209,13 @@
         var eventDate = document.getElementById('EventDate').value;
         var eventDay = document.getElementById('EventDay').value;
         var eventTime = document.getElementById('EventTime').value;
-        var recordtoggle = document.getElementById('ToggleRecord').value;
+        var recordtoggle = document.getElementById('AddToggleRecord').value;
   
         var cameraId = document.getElementById('AddScheduleCameraId').value;
         var recordDuration = document.getElementById('RecordDuration').value;
-        var passwordtoggle = document.getElementById('customSwitch1').value;
-        var password = document.getElementById('pasword').value;
+     
+        var passwordtoggle = document.getElementById('AddpasswordToggle').value;
+        var password = document.getElementById('AddTextPassword').value;
         var formData = new FormData();
         formData.append("eventName", eventName);
         formData.append("isRepeat", isRepeat);
@@ -256,20 +257,24 @@
     });
 
     }
+   
     $(document).ready(function () {
-
+      
         $('#alertDiv').hide();
         $('#EventDayLabel1').hide();
         $('#EventDayInput1').hide();
         $('#EventLabel1').show();
         $('#EventInput1').show();
         $('#IsRepeated').val("false");
-        $('#customSwitch1').val("false");
+        $('#AddpasswordToggle').val("false");
+        $('#AddpasswordToggle').val("false");
+        $('#AddToggleRecord').val("false");
+        
 
-        HidePassword();
-        HideRecordData();
+        AddHidePassword();
+        AddHideRecordData();
 
-        DoPostBack();
+        AddDoPostBack();
     });
 
 
@@ -297,64 +302,70 @@
 
 
     });
-    $('#customSwitch1').change(function () {
+    $('#AddpasswordToggle').change(function () {
+        
         if (this.checked) {
-            $('#customSwitch1').val("true");
-            ShowPassword();
+           
+            $('#AddpasswordToggle').val("true");
+            AddShowPassword();
         }
 
         else {
-            $('#customSwitch1').val("false");
-            HidePassword();
+        
+            $('#AddpasswordToggle').val("false");
+            AddHidePassword();
         }
 
 
     });
 
-    $('#ToggleRecord').change(function () {
+    $('#AddToggleRecord').change(function () {
         if (this.checked) {
-            ShowRecordData();
-         
+            AddShowRecordData();
+            $('#AddToggleRecord').val("true");
         }
 
         else {
-            HideRecordData();
+            AddHideRecordData();
+            $('#AddToggleRecord').val("false");
         }
 
 
     });
 
-    function HidePassword() {
-        $('#lblPassword').hide();
-        $('#SchPassword').hide();
-        $('#btnSchdule').hide();
-        $('#btnSchdulecol13').show();
+    function AddHidePassword() {
+        
+        $('#AddlblPassword').hide();
+        $('#AddSchPassword').hide();
+        $('#AddbtnSchdule').hide();
+        $('#AddbtnSchdulecol12').show();
     }
 
-    function ShowPassword() {
-        $('#lblPassword').show();
-        $('#SchPassword').show();
-        $('#btnSchdule').show();
-        $('#btnSchdulecol13').hide();
+    function AddShowPassword() {
+ 
+        $('#AddlblPassword').show();
+        $('#AddSchPassword').show();
+        $('#AddbtnSchdule').show();
+        $('#AddbtnSchdulecol12').hide();
     }
 
-    function HideRecordData() {
-        $('#DivRecordData').hide();
-
-
-    }
-
-    function ShowRecordData() {
-        $('#DivRecordData').show();
-
-
-
+    function AddHideRecordData() {
+        $('#AddDivRecordData').hide();
 
 
     }
 
+    function AddShowRecordData (){
+        $('#AddDivRecordData').show();
 
-    function DoPostBack() {
+
+
+
+
+    }
+
+
+    function AddDoPostBack() {
 
         var ChurchId = $('#HdnSession').val();
        
