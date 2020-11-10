@@ -65,11 +65,9 @@
                         <div class=" form-group row">
                             <div class="col-sm-12">
                                 <label asp-for="Password" for="validationCustom02">Password </label>
-                                <input asp-for="Password" class="form-control" id="validationCustom02" placeholder="Password " required />
+                                <input asp-for="Password" class="form-control" id="validationCustom02" placeholder="Password " />
 
-                                <div class="invalid-feedback">
-                                    Please Provide a valid Password
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -155,8 +153,8 @@
     </div>
 
     <div class="float-right">
-        <button type="submit"  id="ValChurchSubmit" value="Add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Church</button>
-        <a id="back" class="btn btn-secondary btn-sm  " href="/Admin/Churches"><i class="fa fa-chevron-left"></i> Back</a>
+        <button type="submit"  id="ValChurchSubmit" value="Add" class="btn btn-success btn-sm" title="Add"><i class="mdi mdi-content-save "></i> Add </button>
+        <a id="back" class="btn btn-warning btn-sm text-white " href="/Admin/Churches" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
     </div>
 
 </form>

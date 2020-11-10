@@ -7,7 +7,7 @@
 
 <script src="~/js/jwplayer.js"></script>
 <div class="card">
-    <div class="card-header" style="background-color:#248afd">
+ 
         <h3>Manage Recordings</h3>
     </div>
     <div class="card-body">
@@ -65,7 +65,7 @@
 
                                             <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
                                         }
-                                        <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
+                                        <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
                                     </td>
                                 </tr>
                             }

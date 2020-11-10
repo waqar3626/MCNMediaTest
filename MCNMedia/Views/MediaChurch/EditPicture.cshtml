@@ -39,17 +39,12 @@
                 <input asp-for="Media.TabName" class="form-control" />
                 <span asp-validation-for="Media.TabName" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <label asp-for="Pictures.MediaType" class="control-label">Media Type</label>
-                    <input asp-for="Pictures.MediaType" class="form-control" />
-                    <span asp-validation-for="Pictures.MediaType" class="text-danger"></span>
-                </div>*@
+          
 
 
             <div class="form-group float-right">
-                <a onclick="UpdatePicture()" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
-                @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
-                <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                <a onclick="UpdatePicture()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
+                <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
             </div>
         </form>
     </div>
