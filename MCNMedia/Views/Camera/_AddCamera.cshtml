@@ -3,42 +3,46 @@
 
 }
 
-@using (Html.BeginForm("AddCamera", "Camera", FormMethod.Post))
 
-{
+<form id="AddCameraForm" class="needs-validation">
+
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-              
-                <div class="form-group row p-3" id="alertDiv41">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger" role="alert" id="alertLabel41">
-
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label text-center"> Tab Name *</label>
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.Cameras.CameraName, new { @class = "form-control form-control", @id = "tabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        @Html.TextBoxFor(model => model.Cameras.CameraName, new { @class = "form-control form-control", @id = "AddtabName", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        <div class="invalid-feedback">
+                            Please Provide a valid Camera Tab Name
+                        </div>
                         @Html.HiddenFor(model => model.Cameras.CameraId, new { @id = "CameraId" })
-                        @Html.HiddenFor(model => model.Cameras.ChurchId, new { @id = "ChurchId" })
+                        @Html.HiddenFor(model => model.Cameras.ChurchId, new { @id = "AddChurchId" })
                     </div>
-                
+
                     <label class="col-sm-2 col-form-label text-center"> Camera RTSP *</label>
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.Cameras.CameraUrl, new { @class = "form-control form-control", @id = "cameraRtsp", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "100", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        @Html.TextBoxFor(model => model.Cameras.CameraUrl, new { @class = "form-control form-control", @id = "AddcameraRtsp", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "100", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        <div class="invalid-feedback">
+                            Please Provide a valid Camera RTSP
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label text-center"> HTTP Port *</label>
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.Cameras.HttpPort, new { @class = "form-control form-control", @id = "httpPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        @Html.TextBoxFor(model => model.Cameras.HttpPort, new { @class = "form-control form-control", @id = "AddhttpPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        <div class="invalid-feedback">
+                            Please Provide a valid Http Port
+                        </div>
                     </div>
 
                     <label class="col-sm-2 col-form-label text-center"> RTSP Port *</label>
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.Cameras.RtspPort, new { @class = "form-control form-control", @id = "rtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        @Html.TextBoxFor(model => model.Cameras.RtspPort, new { @class = "form-control form-control", @id = "AddrtspPort", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                        <div class="invalid-feedback">
+                            Please Provide a valid RTSP Port
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -47,70 +51,80 @@
 
                     <div class="col-sm-4">
                         <span asp-validation-for="Cameras.ServerName" class="text-danger"></span>
-                        <select asp-for="Cameras.ServerId" id="select41" class="form-control" asp-items="@(new SelectList(@ViewBag.Server,"Value","Text"))">
-                            <option value="0">--Select Server--</option>
+                        <select asp-for="Cameras.ServerId" id="select41" required class="custom-select" asp-items="@(new SelectList(@ViewBag.Server, "Value", "Text"))">
+                            <option value="0" disabled selected>--Select Server--</option>
                         </select>
+                        <div class="invalid-feedback">
+                            Please Provide a valid RServer Url
+                        </div>
                     </div>
                 </div>
                 <div class="float-right">
-                    <button type="submit" id="ValCameraSubmit" value="Add" class="btn btn-success btn-sm text-white" title="Add"><i class="mdi mdi-content-save"></i> Add</button>
-                    <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                    <a id="ValAddCameraSubmit" value="Add" class="btn btn-success btn-sm text-white"><i class="mdi mdi-content-save"></i> Add</a>
+                    <a id="back" class="btn btn-secondary btn-sm text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                 </div>
             </div>
         </div>
     </div>
-}
-
-<script type="text/javascript">
-    $(document).ready(function () {
 
 
-        $('#alertDiv41').hide();
-    });
-    $('#ValCameraSubmit').click(function () {
-
-        var s = "";
+</form>
 
 
-        if ($('#tabName').val() == '') {
-            $('#tabName').attr('class', 'form-control border-danger');
-            s += '<label>Please Provide a Valid Tab Name</label></br>'
-            $('#alertLabel41').html(s);
-            $('#alertDiv41').show();
+    <script type="text/javascript">
 
+        $(function () {
+            $("#ValAddCameraSubmit").on("click", function (e) {
+                var form = $("#AddCameraForm")[0];
+                var isValid = form.checkValidity();
+                if (!isValid) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            else
+                {
+                    AddNewCamera();
+                }
+                form.classList.add('was-validated');
+                return false; // For testing only to stay on this page
+            });
+        });
+
+        function AddNewCamera() {
+
+          
+            var CameraName = $('#AddtabName').val();
+            var CameraUrl = $('#AddcameraRtsp').val();
+            var HttpPort = $('#AddhttpPort').val();
+            var RtspPort = $('#AddrtspPort').val();
+            var ServerID = $('#select41').val();
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Camera/AddCamera/",
+                //data: camObj,
+
+                data: { CameraName: CameraName, CameraUrl: CameraUrl, HttpPort: HttpPort, RtspPort: RtspPort, ServerID: ServerID },
+
+                //   contentType: "application/json;charset=UTF-8",
+                //  dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+
+                        loadCamera();
+                        $('#AddCameraModal').modal('hide');
+                    } else {
+                        // DoSomethingElse()
+                        alert(response.responseText);
+                    }
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+                
+            });
         }
-        if ($('#cameraRtsp').val() == '') {
-            $('#cameraRtsp').attr('class', 'form-control border-danger');
-            s += '<label>Please Provide a Valid Camera RTSP </label></br>'
-            $('#alertLabel41').html(s);
-            $('#alertDiv41').show();
-
-        }
-        if ($('#httpPort').val() == '') {
-            $('#httpPort').attr('class', 'form-control border-danger');
-            s += '<label>Please Provide a Valid HTTP Port</label></br>'
-            $('#alertLabel41').html(s);
-            $('#alertDiv41').show();
-
-        }
-        if ($('#rtspPort').val() == '') {
-            $('#rtspPort').attr('class', 'form-control border-danger');
-            s += '<label>Please Provide a Valid RTSP Port</label></br>'
-            $('#alertLabel41').html(s);
-            $('#alertDiv41').show();
-
-        }
-        
-        if ($('#select41').val() == '0') {
-
-            $('#select41').attr('class', 'form-control border-danger');
-            s += '<label>Please Provide a Valid Server</label></br>'
-            $('#alertLabel41').html(s);
-            $('#alertDiv41').show();
-        }
-       
-        
-
-    });
-
-</script>
+    </script>

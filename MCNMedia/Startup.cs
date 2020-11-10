@@ -164,10 +164,7 @@ namespace MCNMedia_Dev
                     name: "AdminSchedules",
                     pattern: "Admin/Schedule",
                     defaults: new { controller = "Schedule", Action = "ListSchedule" });
-                endpoints.MapControllerRoute(
-                    name: "AdminSchedulesEdit",
-                    pattern: "Admin/Schedule/{id?}",
-                    defaults: new { controller = "Schedule", Action = "EditSchedule" });
+               
                 endpoints.MapControllerRoute(
                     name: "AdminRecordings",
                     pattern: "Admin/Recordings",

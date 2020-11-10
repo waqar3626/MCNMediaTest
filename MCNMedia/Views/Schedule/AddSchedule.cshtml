@@ -22,7 +22,7 @@
                     <div class="col-sm-4">
                         <span asp-validation-for="ChurchId" class="text-danger"></span>
                         @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                        @Html.DropDownList("ChurchId", SelectList, new { @class = "custom-select", @id = "ddlChurchId", @required="required", @onchange = "DoPostBack();" })
+                        @Html.DropDownList("ChurchId", SelectList, new { @class = "custom-select", @id = "ddlChurchId", @required="required", @onchange = "DoPostBackAdd();" })
                        
                         <span asp-validation-for="ChurchId" class="text-danger"></span>
                        
@@ -64,7 +64,7 @@
                     <label asp-for="EventDate" for="validationCustom05" id="EventLabel1" class="col-sm-2 col-form-label">Event Date</label>
                     <div class="col-sm-4" id="EventInput1">
                         <span asp-validation-for="EventDate" class="text-danger"></span>
-                        <div id="datepicker-popup" class="input-group date datepicker">
+                        <div id="datepicker-popup3" class="input-group date datepicker">
                             <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" />
 
                             <span class="input-group-addon input-group-append border-left">
@@ -215,10 +215,10 @@
         $('#EventInput1').show();
         $('#IsRepeated').val("false");
       
-        HidePassword();
-        HideRecordData();
+        HidePasswordAdd();
+        HideRecordDataAdd();
         
-        DoPostBack();
+        DoPostBackAdd();
     });
 
     //$('#addScheduleVal').click(function () {
@@ -294,11 +294,11 @@
     });
     $('#customSwitch1').change(function () {
         if (this.checked) {
-            ShowPassword();
+            ShowPasswordAdd();
         }
 
         else {
-            HidePassword();
+            HidePasswordAdd();
         }
 
 
@@ -306,37 +306,37 @@
 
     $('#ToggleRecord').change(function () {
         if (this.checked) {
-            ShowRecordData();
+            ShowRecordDataAdd();
         }
 
         else {
-            HideRecordData();
+            HideRecordDataAdd();
         }
 
 
     });
 
-    function HidePassword() {
+    function HidePasswordAdd() {
         $('#lblPassword').hide();
         $('#SchPassword').hide();
         $('#btnSchdule').hide();
         $('#btnSchdulecol12').show();
     }
 
-    function ShowPassword() {
+    function ShowPasswordAdd() {
         $('#lblPassword').show();
         $('#SchPassword').show();
         $('#btnSchdule').show();
         $('#btnSchdulecol12').hide();
     }
 
-    function HideRecordData() {
+    function HideRecordDataAdd() {
         $('#DivRecordData').hide();
    
     
     }
 
-    function ShowRecordData() {
+    function ShowRecordDataAdd() {
         $('#DivRecordData').show();
       
       
@@ -345,7 +345,7 @@
     }
     
 
-    function DoPostBack() {
+    function DoPostBackAdd() {
         var ChurchId = document.getElementById('ddlChurchId').value;
 
         $.ajax({

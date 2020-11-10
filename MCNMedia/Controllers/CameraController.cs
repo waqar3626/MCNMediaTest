@@ -34,41 +34,34 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCamera(GenericModel cam)
+        public IActionResult AddCamera( string CameraName, string CameraUrl, string HttpPort, string RtspPort,int ServerID)
 
         {
             try
             {
+                Camera camera = new Camera();
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
 
                     int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                    cam.Cameras.ChurchId = churchId;
-                    cam.Cameras.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                    int cameraId = camDataAccess.AddCamera(cam.Cameras);
+                    camera.ChurchId = churchId;
+                    camera.CameraName = CameraName;
+                    camera.HttpPort = HttpPort;
+                    camera.RtspPort = RtspPort;
+                    camera.ServerId = ServerID;
+                    camera.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                    int cameraId = camDataAccess.AddCamera(camera);
                     if (cameraId > 0)
                     {
                         MCNMedia_Dev.WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
-                        wowzaHelper.RequestCamera(churchId, cameraId, cam.Cameras.CameraUrl);
+                        wowzaHelper.RequestCamera(churchId, cameraId, camera.CameraUrl);
 
                         gm.ResultMessage = "Camera Added Sucessfully";
 
                         gm.LCameras = camDataAccess.GetAllCameras(churchId);
                         HttpContext.Session.SetString("TabName", "Camera");
                         var queryString = new { chId = churchId };
-
-                        if (HttpContext.Session.GetString("UserType") == "admin")
-                        {
-                            return RedirectToAction("ChurchDetails", "Church", queryString);
-                        }
-                        else if (HttpContext.Session.GetString("UserType") == "client")
-                        {
-                            return RedirectToAction("CameraDetail", "client", queryString);
-                        }
-                    }
-                    else
-                    {
-                        gm.ResultMessage = "Error occured please try later";
+                        return Json(new { success = true, responseText = "The attached file is not supported." });
                     }
                 }
                 return RedirectToAction("Listchurch", "Church");

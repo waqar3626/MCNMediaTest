@@ -152,7 +152,8 @@
         $('#AddRecordingPopUp').modal('show');
 
     }
-     function EditRecording(recordingId) {
+    function EditRecording(recordingId) {
+      
          $.ajax({
              type: "Get",
              url: '@Url.Action("Edit", "Recording")',

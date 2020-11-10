@@ -129,7 +129,7 @@ namespace MCNMedia_Dev.Controllers
                     return NotFound();
                 }
 
-                return View(Schedules);
+                return PartialView("EditSchedule",Schedules);
             }
             catch (Exception e)
             {
@@ -140,21 +140,71 @@ namespace MCNMedia_Dev.Controllers
 
 
         [HttpPost]
-        public IActionResult UpdateSchedule(int id, [Bind] Schedule schedule)
+        public IActionResult UpdateSchedule(string eventName, bool isRepeat, DateTime eventDate, string eventDay, string eventTime, bool recordtoggle, int cameraId, int recordDuration, bool passwordtoggle, string password, int scheduleId,int churchId)
         {
+
             try
             {
-                schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                scheduleDataAccess.UpdateSchedule(schedule);
-                return RedirectToAction("ListUser");
+
+
+                Schedule sch = new Schedule();
+                sch.IsRepeated = isRepeat;
+                sch.ScheduleId = scheduleId;
+                sch.ChurchId = churchId;
+                sch.EventTime = Convert.ToDateTime(eventTime);
+                if (sch.IsRepeated == false)
+                {
+                    sch.EventDate = eventDate;
+                    sch.EventDay = sch.EventDate.ToString("dddd");
+                }
+                else
+                {
+                    sch.EventDay = eventDay;
+                    sch.EventDate = Convert.ToDateTime("1900-01-01 00:00:00");
+                }
+                sch.EventName = eventName;
+                sch.Record = recordtoggle;
+
+                if (sch.Record == false)
+                {
+                    sch.CameraId = 0;
+                    sch.RecordDuration = 0;
+                }
+                else
+                {
+                    sch.CameraId = cameraId;
+                    sch.RecordDuration = recordDuration;
+                }
+                if (passwordtoggle == false)
+                {
+                    sch.Password = string.Empty;
+                }
+                else
+                {
+                    sch.Password = password;
+                }
+                sch.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+               
+                   
+                    int res = scheduleDataAccess.UpdateSchedule(sch);
+
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+
+
+
+
+
+
+
 
             }
             catch (Exception e)
             {
-                ShowMessage("Update Schedule Errors : " + e.Message);
+                ShowMessage("Add Schedule Errors : " + e.Message);
                 throw;
             }
         }
+
 
         [HttpGet]
         public IActionResult Delete(int id)

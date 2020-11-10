@@ -7,7 +7,7 @@
 <div class="card">
     <div class="card-body">
         <div class="float-right">
-            <button type="submit" value="Add" class="btn btn-outline-behance btn-sm " title="Add" onclick="AddNotice()"><i class="fa fa-plus"></i> Add New Notice</button>
+            <button type="submit" value="Add" id="BtnAddNotice" class="btn btn-outline-behance btn-sm " title="Add" onclick="AddNotice()"><i class="fa fa-plus"></i> Add New Notice</button>
         </div>
 
         <div class="">
@@ -98,7 +98,12 @@
             dataType: "json",
             success: function (result) {
                 var html = '';
-
+                if (result.length > 0) {
+                    $('#BtnAddNotice').hide();
+                }
+                else {
+                    $('#BtnAddNotice').show();
+                }
                 $.each(result, function (key, item) {
                     html += '<tr>';
                     html += '<td>' + item.noticeTitle  + '</td>';

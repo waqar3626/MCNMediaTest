@@ -66,12 +66,7 @@ namespace MCNMedia_Dev.Models
             ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
             var ChurchDDL = churchDataAccess.GetChurchDDL();
             var list = new List<SelectListItem>();
-            list.Add(new SelectListItem
-            {
-                Text = "--Select--",
-                Value = "0",
-              
-            });
+           
             foreach (DataRow dr in ChurchDDL.Rows)
             {
                 list.Add(new SelectListItem
