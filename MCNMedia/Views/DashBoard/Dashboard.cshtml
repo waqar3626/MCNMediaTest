@@ -81,41 +81,57 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 grid-margin stretch-card bg-warning ">
-                <div class="card " style="background-color:#004d4d ">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Number of Users</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
-                            <i class="mdi mdi-account-multiple  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
-                        </div>
-                        
+            
+                <div class="col-md-4 grid-margin stretch-card bg-warning ">
+                    <div class="card " style="background-color:#004d4d ">
+
+                        <a href="@Url.Action("ListUser", "User")">
+
+                            <div class="card-body">
+                                
+                                <p class="card-title text-md-center text-xl-left text-white">Number of Users</p>
+                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
+                                    <i class="mdi mdi-account-multiple  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
+                                </div>
+
+                            </div>
+                        </a>
                     </div>
+
                 </div>
-            </div>
+            
             <div class="col-md-4 grid-margin stretch-card ">
                 <div class="card" style="background-color:#006666 ">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Admins</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.AdminCount</h3>
-                            <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                        
-                    </div>
+                    <form asp-action="Search" asp-controller="User" method="post">
+                        <button style="width:350px;background-color:#006666 " type="submit">
+                            <div class="card-body">
+                                <input type="hidden" name="Role" value="1" />
+                                <p class="card-title text-md-center text-xl-left text-white">Admins</p>
+                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.AdminCount</h3>
+                                    <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                </div>
+
+                            </div>
+
+                        </button>
+                    </form>
                 </div>
             </div>
 
             <div class="col-md-4 grid-margin stretch-card bg-warning">
                 <div class="card " style="background-color: #005580">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Clients</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ClientCount</h3>
-                            <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                    <a href="@Url.Action("ListUser", "User")">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Clients</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ClientCount</h3>
+                                <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
                         </div>
-                        
-                    </div>
+                        </a>
                 </div>
             </div>
 
@@ -906,6 +922,21 @@
 
     </div>
 </div>
+<script>
+    $('#UserAdminBtn').click(
+        function () {
+            alert('hello');
+            $.ajax({
+                type: "Post",
+                url: '@Url.Action("Search", "User")',
+                data: { FirstName: '', LastName: '', EmailAddress: '', Role: '1' },
+              
+
+            });
+    }
+    );
+   
+</script>
 
 
 

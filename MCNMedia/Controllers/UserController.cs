@@ -46,7 +46,9 @@ namespace MCNMedia_Dev.Controllers
             {
 
                     LoadDDL();
-                   GenericModel gm = new GenericModel();
+                user.RoleId = -1;
+                ViewBag.UserType = -1;
+                GenericModel gm = new GenericModel();
                    gm.LUsers = userDataAccess.GetAllUser(user).ToList<User>();
                    return View(gm);
 
@@ -175,7 +177,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(string FirstName, string LastName, string EmailAddress, string Role) 
+        public IActionResult Search(string FirstName, string LastName, string EmailAddress, int Role) 
         {
 
             try
@@ -185,7 +187,8 @@ namespace MCNMedia_Dev.Controllers
                 usr.FirstName = FirstName;
                 usr.LastName = LastName;
                 usr.EmailAddress = EmailAddress;
-                usr.RoleName = Role;
+                usr.RoleId = Role;
+                ViewBag.UserType = Role;
                 //List<User> user = userDataAccess.GetAllUser(usr).ToList<User>();
                 GenericModel gm = new GenericModel();
                 gm.LUsers = userDataAccess.GetAllUser(usr).ToList<User>();

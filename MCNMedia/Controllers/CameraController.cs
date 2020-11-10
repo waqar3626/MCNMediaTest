@@ -48,6 +48,7 @@ namespace MCNMedia_Dev.Controllers
                     camera.CameraName = CameraName;
                     camera.HttpPort = HttpPort;
                     camera.RtspPort = RtspPort;
+                    camera.CameraUrl = CameraUrl;
                     camera.ServerId = ServerID;
                     camera.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     int cameraId = camDataAccess.AddCamera(camera);

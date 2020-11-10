@@ -26,7 +26,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("FName", usr.FirstName);
             _dc.AddParameter("LName", usr.LastName);
             _dc.AddParameter("EmailAdd", usr.EmailAddress);
-            _dc.AddParameter("Rolech", usr.RoleName);
+            _dc.AddParameter("Rolech", usr.RoleId);
             DataTable dataTable = _dc.ReturnDataTable("spUser_Churches_Search");
             foreach(DataRow dataRow in dataTable.Rows)
             {
