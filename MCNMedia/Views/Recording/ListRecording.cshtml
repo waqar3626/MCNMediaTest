@@ -8,7 +8,7 @@
 
 <div class="card">
     <div class="card-header card-header-custom">
-        <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-success btn-sm float-right text-white"> <i class="fa fa-plus"></i> Add Recording</a>
+        <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-outline-behance btn-sm float-right " title="Add New"> <i class="fa fa-plus "></i> Add Recording</a>
         Manage Recordings
     </div>
         <div class="card-body">
@@ -47,14 +47,16 @@
                                     @Html.DisplayFor(modelItem => item.Time)
                                 </td>
                                 <td>
-                                    <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
                                     @{
                                         var UrlDownload = item.RecordingURl;
 
                                         <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
                                     }
-                                    <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
+                                    <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
+
                                 </td>
                             </tr>
                         }
