@@ -44,6 +44,7 @@ namespace MCNMedia_Dev.Repository
                 dashboard.TodayScheduleCount = Convert.ToInt32(dataRow["TodaysSchedules"]);
                 dashboard.RecordingCount = Convert.ToInt32(dataRow["TotalRecordings"]);
                 dashboard.TodayRecording = Convert.ToInt32(dataRow["TodaysRecordings"]);
+                dashboard.CameraCount =Convert.ToInt32(dataRow["TotalCameras"]);
             }
             return dashboard;
         }
