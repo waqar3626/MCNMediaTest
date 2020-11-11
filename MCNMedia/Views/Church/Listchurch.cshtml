@@ -51,9 +51,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Phone No</label>
+                            <label class="col-sm-4 col-form-label">Phone</label>
                             <div class="col-sm-8">
-                                @Html.TextBox("PhoneNo", "", new { @class = "form-control", @placeholder = "Enter Phone No" })
+                                @Html.TextBox("PhoneNo", "", new { @class = "form-control", @placeholder = "Phone" })
                             </div>
                         </div>
                     </div>
@@ -80,13 +80,12 @@
     <div class="card-body">
        
         <div class="">
-            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                <table id="sortable-table-1" class="table">
-                    <thead>
+            <div class="table-sorter-wrapper table-responsive">
+                <table id="sortable-table-1"  class="table">
+                    <thead >
                         <tr>
                             <th class="sortStyle">Details <i class="ti-angle-down"></i></th>
                             <th class="sortStyle">Church Name <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle"> Client Type <i class="ti-angle-down"></i></th>
                             <th class="sortStyle"> County <i class="ti-angle-down"></i></th>
                             <th class="sortStyle">Email Address <i class="ti-angle-down"></i></th>
                             <th class="sortStyle"> Phone <i class="ti-angle-down"></i></th>
@@ -103,9 +102,6 @@
                                 </td>
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ClientTypeTitle)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CountyName)

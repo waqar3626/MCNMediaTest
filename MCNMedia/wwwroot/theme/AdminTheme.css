@@ -1,4 +1,8 @@
-﻿/*Top Bar Logo Section*/
+﻿.content-wrapper {
+    padding: 20px 0px !important;
+}
+
+/*Top Bar Logo Section*/
 .navbar .navbar-brand-wrapper {
     background: #2F2C2C;
     transition: width 0.25s ease, background 0.25s ease;
