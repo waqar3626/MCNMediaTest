@@ -92,7 +92,7 @@ namespace MCNMedia_Dev.WowzaApi
 
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
-                    bool startRec = PostAsync($"{GetBasicUri(cameraId)}/instances/_definst_/streamrecorders", recordingData);
+                    bool startRec = PostAsync($"{GetApplicationUrl(cameraId)}/instances/_definst_/streamrecorders", recordingData);
                     return startRec;
                 }
                 else
@@ -117,7 +117,7 @@ namespace MCNMedia_Dev.WowzaApi
                 log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
-                    bool stopRec = PutAsync($"{GetBasicUri(cameraId)}/instances/_definst_/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", "");
+                    bool stopRec = PutAsync($"{GetApplicationUrl(cameraId)}/instances/_definst_/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", "");
                     return stopRec;
                 }
                 else
@@ -162,7 +162,7 @@ namespace MCNMedia_Dev.WowzaApi
         private bool GetStream(string churchIdentifier, int cameraId)
         {
             string streamName = $"{churchIdentifier}_{cameraId}";
-            return GetAsync($"{GetBasicUri(cameraId)}/streamfiles/{streamName}", "");
+            return GetAsync($"{GetApplicationUrl(cameraId)}/streamfiles/{streamName}", "");
         }
 
         private bool Stream_Create(string churchIdentifier, int cameraId, string rtspUrl)
@@ -176,17 +176,33 @@ namespace MCNMedia_Dev.WowzaApi
             streamFile.serverName = SERVER;
             streamFile.uri = rtspUrl;
 
-            bool createStreamFile = PostAsync($"{GetBasicUri(cameraId)}/streamfiles", streamFile);
+            bool createStreamFile = PostAsync($"{GetApplicationUrl(cameraId)}/streamfiles", streamFile);
             if (createStreamFile)
             {
                 log.Info("Camera added on wowza");
-                connectStream = PutAsync($"{GetBasicUri(cameraId)}/streamfiles/{streamFileName}/actions/connect?connectAppName={APPLICATION}&appInstance=_definst_&mediaCasterType=rtp", "");
+                connectStream = PutAsync($"{GetApplicationUrl(cameraId)}/streamfiles/{streamFileName}/actions/connect?connectAppName={APPLICATION}&appInstance=_definst_&mediaCasterType=rtp", "");
                 if (connectStream)
+                {
+                    AddStreamToStartup(cameraId, streamFileName);
                     log.Info("Camera connected on wowza successfully");
+                }
                 else
                     log.Error("Somthing went wrong, camera didn't connect sucessfully");
             }
             return connectStream;
+        }
+
+        private bool AddStreamToStartup(int cameraId, string streamName)
+        {
+            log.InfoFormat("Add Camera Stream(CameraID: {0}) to Startup.XML on wowza having stream file name: {1} - Start", cameraId, streamName);
+
+            StartupStreamFile startupStreamFile = new StartupStreamFile();
+            startupStreamFile.appName = APPLICATION;
+            startupStreamFile.instance = "_definst_";
+            startupStreamFile.mediaCasterType = "rtp";
+            startupStreamFile.serverName = SERVER;
+            startupStreamFile.streamName = streamName;
+            return  PostAsync($"{GetBasicUri(cameraId)}/startupstreams", startupStreamFile);
         }
 
         private CredentialCache GetCredentials(Uri uri)
@@ -200,10 +216,16 @@ namespace MCNMedia_Dev.WowzaApi
             return credentialCache;
         }
 
+        private string GetApplicationUrl(int cameraId)
+        {
+            string uri = $"{GetBasicUri(cameraId)}/applications/{APPLICATION}";
+            return uri;
+        }
+
         private string GetBasicUri(int cameraId)
         {
             string serverIP = RetrieveCameraServerIP(cameraId);
-            string uri = $"http://{serverIP}:{PORT}/{API_VERSION}/servers/{SERVER}/vhosts/{VHOST}/applications/{APPLICATION}";
+            string uri = $"http://{serverIP}:{PORT}/{API_VERSION}/servers/{SERVER}/vhosts/{VHOST}";
             return uri;
         }
 
@@ -295,6 +317,15 @@ namespace MCNMedia_Dev.WowzaApi
         public string name { get; set; }
         public string serverName { get; set; }
         public string uri { get; set; }
+    }
+
+    class StartupStreamFile
+    {
+        public string mediaCasterType { get; set; }
+        public string instance { get; set; }
+        public string appName { get; set; }
+        public string serverName { get; set; }
+        public string streamName { get; set; }
     }
 
     class RecordingData

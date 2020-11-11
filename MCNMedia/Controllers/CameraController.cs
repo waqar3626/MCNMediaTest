@@ -46,6 +46,7 @@ namespace MCNMedia_Dev.Controllers
                     int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                     camera.ChurchId = churchId;
                     camera.CameraName = CameraName;
+                    camera.CameraUrl = CameraUrl;
                     camera.HttpPort = HttpPort;
                     camera.RtspPort = RtspPort;
                     camera.CameraUrl = CameraUrl;
@@ -58,7 +59,6 @@ namespace MCNMedia_Dev.Controllers
                         wowzaHelper.RequestCamera(churchId, cameraId, camera.CameraUrl);
 
                         gm.ResultMessage = "Camera Added Sucessfully";
-
                         gm.LCameras = camDataAccess.GetAllCameras(churchId);
                         HttpContext.Session.SetString("TabName", "Camera");
                         var queryString = new { chId = churchId };
@@ -88,7 +88,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit Camera Error" + e.Message);
                 throw;
             }
-
         }
 
         public IActionResult DeleteCamera(int id)
@@ -136,10 +135,6 @@ namespace MCNMedia_Dev.Controllers
                 CamUpdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = camDataAccess.Updatecamera(CamUpdate);
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                //WowzaApi.WowzaHelper api = new WowzaApi.WowzaHelper();
-                //api.RequestCamera(Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")), CamUpdate.CameraId, CamUpdate.CameraUrl);
-                //api.StartRecording(churchId, CamUpdate.CameraId);
-                //api.StopRecording(churchId, CamUpdate.CameraId);
                 return Json(res);
             }
             catch (Exception e)
