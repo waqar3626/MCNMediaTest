@@ -331,7 +331,14 @@
                     <div class="container">
                         <main role="main">
                             @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
-                           
+                            @if (ViewBag.IsSuccess == 1)
+                            {
+                                <div class="alert alert-success" id="success-alert">
+                                    <button type="button" class="close" data-dismiss="alert">x</button>
+                                    <strong>Success! </strong>   @ViewBag.Message
+                                </div>
+
+                            }
                             @RenderBody()
                         </main>
                     </div>

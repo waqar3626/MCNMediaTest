@@ -10,6 +10,7 @@
         Search User
     </div>
     <div class="card-body">
+
         <div class="">
             <form method="post" asp-action="Search" asp-controller="user">
                 <div class="row">
@@ -39,23 +40,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Email Address</label>
-                            <div class="col-sm-8">
-                                <select id="ddlRoleSearch" name="Role" class="form-control">
-                                    <option value="-1">All</option>
-                                    <option value="1">Admin</option>
-                                    <option value="2">Client</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group row">
                             <div class="col-sm-4 col-form-label"><label></label></div>
                             <div class="col-sm-8">
-                                <button type="submit" class="btn btn-primary btn-sm" title="Search"><i class="mdi mdi-table-search"></i> Search</button>
-                                <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+                                <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-table-search"></i>Search</button>
+                                <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm"><i class="mdi mdi-cancel"></i>Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -65,15 +53,16 @@
     </div>
 </div>
 
+ 
+
+
 <div class="card">
     <div class="card-header card-header-custom">
+        <a id="ADDEmployee" onclick="AddUser1()" class="btn btn-success btn-sm float-right text-white"> <i class="fa fa-plus"></i> Add User</a>
         Manage Users
-        <button id="ADDEmployee" onclick="AddUser1()" class="btn btn-success btn-sm float-right" title="Add New"> <i class="mdi mdi-plus"></i> Add User</button>
     </div>
+    <div class="card-body">
 
-        
-
-        <br />
         <div class="">
             <form method="get">
 
@@ -95,13 +84,13 @@
                             {
                                 <tr>
                                     @*<td>
-                                @Html.DisplayFor(modelItem => item.UserId)
-                            </td>*@
+                                            @Html.DisplayFor(modelItem => item.UserId)
+                                        </td>*@
                                     <td class="text-wrap">
 
                                         @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
-                                        @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap" , @id = "hdnUserId" })
-              
+                                        @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap", @id = "hdnUserId" })
+
                                     </td>
 
                                     <td class="text-wrap">
@@ -127,8 +116,8 @@
                                         @Html.DisplayFor(modelItem => item.RoleName)
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
-                                        <a onclick="EditUserClick(@item.UserId)"  id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                        <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
 
@@ -172,7 +161,7 @@
             <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                        <h5 class="modal-title card-header-custom" id="exampleModalLabel">Edit User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
@@ -210,8 +199,9 @@
 
 
     $(document).ready(function () {
-        var UserTpe = '@ViewBag.UserType';
-        $('#ddlRoleSearch').val(UserTpe);
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+            $(".alert-dismissible").alert('close');
+        });
         $("#ADDEmployee").on("click", function (e) {
             var url = $(this).attr('href');
             $("#dialog-edit").dialog({
@@ -237,24 +227,3 @@
         });
     });
 </script>
-
-<!-- plugins:js -->
-<script src="../../../../vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page-->
-<script src="../../../../vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
-<!-- End plugin js for this page-->
-<!-- inject:js -->
-<script src="~/theme/js/off-canvas.js"></script>
-<script src="~/theme/js/hoverable-collapse.js"></script>
-<script src="~/theme/js/template.js"></script>
-<script src="~/theme/js/settings.js"></script>
-<script src="~/theme/js/todolist.js"></script>
-<!-- endinject -->
-<!-- Custom js for this page-->
-<script src="~/theme/js/toastDemo.js"></script>
-<script src="~/theme/js/desktop-notification.js"></script>
-<!-- End custom js for this page-->
-<!-- Plugin js for this page-->
-<script src="~/theme/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
-<!-- End plugin js for this page-->

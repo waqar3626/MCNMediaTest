@@ -49,7 +49,9 @@ namespace MCNMedia_Dev.Controllers
                 user.RoleId = -1;
                 ViewBag.UserType = -1;
                 GenericModel gm = new GenericModel();
-                   gm.LUsers = userDataAccess.GetAllUser(user).ToList<User>();
+                ViewBag.IsSuccess = Convert.ToInt32(TempData["IsSuccess"]);
+                ViewBag.Message = TempData["Message"];
+                gm.LUsers = userDataAccess.GetAllUser(user).ToList<User>();
                    return View(gm);
 
             }
@@ -91,6 +93,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     usr.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     userDataAccess.AddUser(usr);
+                    TempData["IsSuccess"] = 1;
+                    TempData["Message"] = "User Added Successfully";
                     return RedirectToAction("ListUser");
                 }
                 else
