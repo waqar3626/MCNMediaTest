@@ -294,6 +294,7 @@ namespace MCNMedia_Dev.Controllers
                 chr.EmailAddress = EmailAddress;
                 chr.CountyId = County;
                 chr.Phone = PhoneNo;
+              
                 List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
                 return View("/Views/Church/Listchurch.cshtml", church);
 
