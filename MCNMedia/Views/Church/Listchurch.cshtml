@@ -62,7 +62,7 @@
                         <div class="form-group  row">
                             <label class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white" ></i>Search</button>
+                                <button type="submit" class="btn btn-info btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
                                 <a asp-controller="church" asp-action="ListChurch" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
                             </div>
                         </div>
@@ -74,15 +74,15 @@
 </div>
 <div class="card">
     <div class="card-header card-header-custom">
-        <a id="AddNew" class="btn btn-success btn-sm float-right" title="Add New" href="/Admin/Churches/Add"> <i class="fa fa-plus"></i> Add Church</a>
-       Manage Churches
+        <a id="AddNew" class="btn btn-success btn-sm float-right" onclick="AddChurchPopup()" title="Add New"> <i class="fa fa-plus"></i> Add Church</a>
+        Manage Churches
     </div>
     <div class="card-body">
-       
+
         <div class="">
             <div class="table-sorter-wrapper table-responsive">
-                <table id="sortable-table-1"  class="table">
-                    <thead >
+                <table id="sortable-table-1" class="table">
+                    <thead>
                         <tr>
                             <th class="sortStyle">Details <i class="ti-angle-down"></i></th>
                             <th class="sortStyle">Church Name <i class="ti-angle-down"></i></th>
@@ -125,3 +125,32 @@
 
     </div>
 </div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddChurchPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Church</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddChurchPreview">
+                        @Html.Partial("~/Views/Church/AddChurch.cshtml", new Church())
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function AddChurchPopup() {
+
+
+        $('#AddChurchPopUp').modal('show');
+
+    }
+</script>
+ 
