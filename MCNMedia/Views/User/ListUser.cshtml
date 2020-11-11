@@ -6,8 +6,10 @@
 }
 
 <div class="card mb-3">
+    <div class="card-header card-header-custom">
+        Search User
+    </div>
     <div class="card-body">
-        <h3>Search User</h3>
         <div class="">
             <form method="post" asp-action="Search" asp-controller="user">
                 <div class="row">
@@ -64,12 +66,13 @@
 </div>
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-header card-header-custom">
+        Manage Users
+        <button id="ADDEmployee" onclick="AddUser1()" class="btn btn-success btn-sm float-right" title="Add New"> <i class="mdi mdi-plus"></i> Add User</button>
+    </div>
 
+        
 
-
-        <button id="ADDEmployee" onclick="AddUser1()" class="btn btn-outline-behance btn-sm float-right " title="Add New"> <i class="mdi mdi-plus"></i> Add User</button>
-        <h3>Manage Users</h3>
         <br />
         <div class="">
             <form method="get">
@@ -186,7 +189,7 @@
 
 <script type="text/javascript">
     function EditUserClick(userId) {
-       
+
         $.ajax({
             type: "Get",
             url: '@Url.Action("Edit", "User")',
@@ -197,7 +200,7 @@
             }
         });
     }
-   
+
     function AddUser1() {
 
 
@@ -234,3 +237,24 @@
         });
     });
 </script>
+
+<!-- plugins:js -->
+<script src="../../../../vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="../../../../vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="~/theme/js/off-canvas.js"></script>
+<script src="~/theme/js/hoverable-collapse.js"></script>
+<script src="~/theme/js/template.js"></script>
+<script src="~/theme/js/settings.js"></script>
+<script src="~/theme/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="~/theme/js/toastDemo.js"></script>
+<script src="~/theme/js/desktop-notification.js"></script>
+<!-- End custom js for this page-->
+<!-- Plugin js for this page-->
+<script src="~/theme/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+<!-- End plugin js for this page-->
