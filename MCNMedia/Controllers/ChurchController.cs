@@ -288,7 +288,7 @@ namespace MCNMedia_Dev.Controllers
                 HttpContext.Session.SetInt32("ClientType", ClientType);
                 HttpContext.Session.SetInt32("County", County);
                 Church chr = new Church();
-                chr.ChurchId = 1;
+                
                 chr.ChurchName = ChurchName;
                 chr.ClientTypeId = ClientType;
                 chr.EmailAddress = EmailAddress;
