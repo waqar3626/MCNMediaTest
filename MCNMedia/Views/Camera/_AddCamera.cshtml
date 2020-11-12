@@ -72,6 +72,7 @@
 
 
     <script type="text/javascript">
+       
 
         $(function () {
             $("#ValAddCameraSubmit").on("click", function (e) {
@@ -112,9 +113,11 @@
                 //  dataType: "json",
                 success: function (response) {
                     if (response.success) {
-
+                        
                         loadCamera();
                         $('#AddCameraModal').modal('hide');
+                        $('#AddCameraForm')[0].reset();
+
                     } else {
                         // DoSomethingElse()
                         alert(response.responseText);

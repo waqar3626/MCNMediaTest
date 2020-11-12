@@ -6,11 +6,8 @@
 }
 
 <div class="card mb-3">
-    <div class="card-header card-header-custom">
-        Search User
-    </div>
     <div class="card-body">
-
+        <h3>Search User</h3>
         <div class="">
             <form method="post" asp-action="Search" asp-controller="user">
                 <div class="row">
@@ -40,10 +37,23 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Email Address</label>
+                            <div class="col-sm-8">
+                                <select id="ddlRoleSearch" name="Role" class="form-control">
+                                    <option value="-1">All</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Client</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
                             <div class="col-sm-4 col-form-label"><label></label></div>
                             <div class="col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm"><i class="mdi mdi-table-search"></i>Search</button>
-                                <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm"><i class="mdi mdi-cancel"></i>Cancel</a>
+                                <button type="submit" class="btn btn-primary btn-sm" title="Search"><i class="mdi mdi-table-search"></i> Search</button>
+                                <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -53,16 +63,14 @@
     </div>
 </div>
 
- 
-
-
 <div class="card">
-    <div class="card-header card-header-custom">
-        <a id="ADDEmployee" onclick="AddUser1()" class="btn btn-success btn-sm float-right text-white"> <i class="fa fa-plus"></i> Add User</a>
-        Manage Users
-    </div>
     <div class="card-body">
 
+
+
+        <button id="ADDEmployee" onclick="AddUser1()" class="btn btn-outline-behance btn-sm float-right " title="Add New"> <i class="mdi mdi-plus"></i> Add User</button>
+        <h3>Manage Users</h3>
+        <br />
         <div class="">
             <form method="get">
 
@@ -116,7 +124,7 @@
                                         @Html.DisplayFor(modelItem => item.RoleName)
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
                                         <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
@@ -161,7 +169,7 @@
             <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title card-header-custom" id="exampleModalLabel">Edit User</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
@@ -199,9 +207,8 @@
 
 
     $(document).ready(function () {
-        $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
-            $(".alert-dismissible").alert('close');
-        });
+        var UserTpe = '@ViewBag.UserType';
+        $('#ddlRoleSearch').val(UserTpe);
         $("#ADDEmployee").on("click", function (e) {
             var url = $(this).attr('href');
             $("#dialog-edit").dialog({

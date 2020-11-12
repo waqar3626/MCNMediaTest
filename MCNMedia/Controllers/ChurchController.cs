@@ -267,7 +267,10 @@ namespace MCNMedia_Dev.Controllers
                     var queryString = new { chId = ChurchId };
                     return RedirectToAction("ChurchDetails", "Church", queryString);
                 }
-                return View("_ChurchInfo",church);
+                else {
+                    return View("_ChurchInfo", church);
+                }
+               
             }
             catch (Exception e)
             {
