@@ -18,8 +18,11 @@ namespace MCNMedia_Dev.Models
 
         public Announcement Announcement { get; set; }
         public IEnumerable<Announcement> LAnnouncement { get; set; }
-public Dashboard Dashboards { get; set; }
+        public Dashboard Dashboards { get; set; }
         public IEnumerable<Dashboard> LDashboards { get; set; }
+
+        public DashBoardClient DashBoardClients { get; set; }
+        public IEnumerable<DashBoardClient> LDashBoardClients { get; set; }
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
 
@@ -37,6 +40,6 @@ public Dashboard Dashboards { get; set; }
 
         public string ResultMessage { get; set; } = "";
 
-       
+
     }
 }

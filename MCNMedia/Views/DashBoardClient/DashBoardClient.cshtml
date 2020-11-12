@@ -1,0 +1,160 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{ ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- partial:partials/_horizontal-navbar.html -->
+<!-- partial -->
+
+<div class="row p-3 ">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-12 grid-margin bg-warning">
+                <div class="card bg-primary border-0 position-relative">
+                    <div class="card-body p-2">
+                        @*<h3 class=" text-white">Recordings Details</h3>*@
+                        <div id="performanceOverview" class="carousel slide performance-overview-carousel position-static pt-2" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-md-4 item">
+                                            <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0">
+                                                <div class="icon icon-a text-white mr-3">
+                                                    <i class=" mdi mdi-calendar  icon-lg ml-3"></i>
+                                                </div>
+                                                <div class="content text-white">
+                                                    <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
+                                                        <h3 class="font-weight-light mr-2 mb-1">Today’s Events</h3>
+
+                                                    </div>
+                                                    <div class="col-8 col-md-7 d-flex border-bottom border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                        <h3 class="mb-0">@Model.Dashboards.TodayScheduleCount</h3>
+
+                                                    </div>
+                                                    @*<p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Schedules of an Events</p>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 item">
+                                            <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
+                                                <div class="icon icon-b text-white mr-3">
+                                                    <i class=" mdi mdi-camcorder-box  icon-lg ml-3"></i>
+                                                </div>
+                                                <div class="content text-white">
+                                                    <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
+                                                        <h3 class="font-weight-light mr-2 mb-1">Recordings Events</h3>
+                                                    </div>
+                                                    <div class="col-8 col-md-7 d-flex border-bottom border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                        <h3 class="mb-0">@Model.Dashboards.TodayRecording</h3>
+
+                                                    </div>
+                                                    @*<p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Recordings for Current day of an Events of Churches</p>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 item">
+                                            <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
+                                                <div class="icon icon-c text-white mr-3">
+                                                    <i class="mdi mdi-camcorder-box-off  icon-lg ml-3"></i>
+                                                </div>
+                                                <div class="content text-white">
+                                                    <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
+                                                        <h3 class="font-weight-light mr-2 mb-1">WithOut Recording</h3>
+
+                                                    </div>
+                                                    <div class="col-8 col-md-7 d-flex border-bottom border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                        <h3 class="mb-0">@Model.Dashboards.CameraCount</h3>
+
+                                                    </div>
+                                                    @*<p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Cameras of Churches</p>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="card">
+            <div class="card-header">
+                EventsList
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <form method="get">
+
+
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table id="sortable-table-1" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortStyle">Event Name<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Event Status<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Repeated<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Recording<i class="ti-angle-down"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.LDashBoardClients)
+                                    {
+                        <tr>
+                            <td class="text-wrap">
+
+                                @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+
+                            </td>
+
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsRepeated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RecordingDuration)
+                            </td>
+
+                        </tr>}
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $('#UserAdminBtn').click(
+        function () {
+            alert('hello');
+            $.ajax({
+                type: "Post",
+                url: '@Url.Action("Search", "User")',
+                data: { FirstName: '', LastName: '', EmailAddress: '', Role: '2' },
+
+
+            });
+    }
+    );
+
+</script>
+
+
+
