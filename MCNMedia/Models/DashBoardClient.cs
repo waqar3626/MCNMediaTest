@@ -15,5 +15,15 @@ namespace MCNMedia_Dev.Models
         public string ScheduleStatus { get; set; }
         public int IsRepeated { get; set; }
         public int RecordingDuration { get; set; }
+
+        public int NumberOfPictures { get; set; }
+        public int NumberOfVideo { get; set; }
+        public int NumberOfSlideShow { get; set; }
+        public int NumberOfCameras { get; set; }
+        public int TodaysSchedules { get; set; }
+        public int TotalRecordings { get; set; }
+        public int TodaysRecordings { get; set; }
+        public int TodaysEventsWithOutRecordings { get; set; }
+        public int TodayRecordingDone { get; set; }
     }
 }

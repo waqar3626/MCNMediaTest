@@ -16,12 +16,47 @@ namespace MCNMedia_Dev.Repository
             _dc = new AwesomeDal.DatabaseConnect();
         }
 
-        public IEnumerable<DashBoardClient> GetDashboardClientInfo()
+
+        public Dashboard GetDashboardClientInfoCount(int ChrId)
+        {
+            Dashboard dashboard = new Dashboard();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", ChrId);
+            DataTable dataTable = _dc.ReturnDataTable("spDashboard_CountData");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                dashboard.ChurchCount = Convert.ToInt32(dataRow["NumberOfChurches"]);
+                dashboard.CathedralsCount = Convert.ToInt32(dataRow["Cathedrals"]);
+                dashboard.FuneralsHomeCount = Convert.ToInt32(dataRow["FuneralHomes"]);
+                dashboard.CountryCount = Convert.ToInt32(dataRow["NumberOfCountries"]);
+                dashboard.CountyCount = Convert.ToInt32(dataRow["NumberOfCounties"]);
+                dashboard.RepublicOfIrelandCount = Convert.ToInt32(dataRow["RepublicOfIreland"]);
+                dashboard.NorthrenIrelandCount = Convert.ToInt32(dataRow["NorthernIreland"]);
+                dashboard.EnglandCount = Convert.ToInt32(dataRow["England"]);
+                dashboard.ScotlandCount = Convert.ToInt32(dataRow["Scotland"]);
+                dashboard.USACount = Convert.ToInt32(dataRow["USA"]);
+                dashboard.CanadaCount = Convert.ToInt32(dataRow["Canada"]);
+                dashboard.ISEOfManCount = Convert.ToInt32(dataRow["IseOfMan"]);
+                dashboard.WalesCount = Convert.ToInt32(dataRow["Wales"]);
+                dashboard.UserCount = Convert.ToInt32(dataRow["NumberOfUsers"]);
+                dashboard.AdminCount = Convert.ToInt32(dataRow["Admins"]);
+                dashboard.ClientCount = Convert.ToInt32(dataRow["Clients"]);
+                dashboard.ScheduleCount = Convert.ToInt32(dataRow["Schedules"]);
+                dashboard.TodayScheduleCount = Convert.ToInt32(dataRow["TodaysSchedules"]);
+                dashboard.RecordingCount = Convert.ToInt32(dataRow["TotalRecordings"]);
+                dashboard.TodayRecording = Convert.ToInt32(dataRow["TodaysRecordings"]);
+                dashboard.CameraCount = Convert.ToInt32(dataRow["TotalCameras"]);
+            }
+            return dashboard;
+        }
+
+        public IEnumerable<DashBoardClient> GetDashboardClientInfo(int ChrId)
         {
             List<DashBoardClient> dashBoardClients = new List<DashBoardClient>();
 
             _dc.ClearParameters();
-            _dc.AddParameter("ChrId", 522);
+            _dc.AddParameter("ChrId", ChrId);
             _dc.AddParameter("CurrentDay", "1900-01-01");
             DataTable dataTable = _dc.ReturnDataTable("sp_ClientEventlist");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -39,6 +74,30 @@ namespace MCNMedia_Dev.Repository
                 dashBoardClients.Add(dashBoardClient);
             }
             return dashBoardClients;
+        }
+
+        public DashBoardClient GetCountClientDashBoard(int ChrId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", ChrId);
+            _dc.AddParameter("CurrentDay", "2020-11-13");
+            DataTable dataTable = _dc.ReturnDataTable("spDashBoardClient_CountData");
+            DashBoardClient dashBoardClient = new DashBoardClient();
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+
+                dashBoardClient.NumberOfPictures = Convert.ToInt32(dataRow["NumberOfPictures"]);
+                dashBoardClient.NumberOfVideo = Convert.ToInt32(dataRow["NumberOfVideo"]);
+                dashBoardClient.NumberOfSlideShow = Convert.ToInt32(dataRow["NumberOfSlideShow"]);
+                dashBoardClient.NumberOfCameras = Convert.ToInt32(dataRow["NumberOfCameras"]);
+                dashBoardClient.TodaysSchedules = Convert.ToInt32(dataRow["TodaysSchedules"]);
+                dashBoardClient.TotalRecordings = Convert.ToInt32(dataRow["TotalRecordings"]);
+                dashBoardClient.TodaysRecordings = Convert.ToInt32(dataRow["TodaysRecordings"]);
+                dashBoardClient.TodaysEventsWithOutRecordings = Convert.ToInt32(dataRow["TodaysEventsWithOutRecordings"]);
+                dashBoardClient.TodayRecordingDone = Convert.ToInt32(dataRow["TodayRecordingDone"]);
+            }
+                return dashBoardClient;
         }
 
     }
