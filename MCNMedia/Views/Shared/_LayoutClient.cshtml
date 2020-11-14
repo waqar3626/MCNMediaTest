@@ -18,7 +18,7 @@
 
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link href="~/theme/ClientTheme.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -34,6 +34,18 @@
     <link rel="shortcut icon" href="~/theme/images/favicon.png" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link href="~/theme/Loader.css" rel="stylesheet" />
+    <link href="~/theme/ClientTheme.css" rel="stylesheet" />
+    @inject IHttpContextAccessor HttpContextAccessor
+<script>
+    $(function() {
+       // var t = '@HttpContextAccessor.HttpContext.Request.Query["t"]';
+        var t = '@HttpContextAccessor.HttpContext.Session.GetString("ctabId")';
+        if (t.length) {
+            $('cTabList > li').removeClass('nav-clink-active');
+            $('#cTabList a[href="' + t + '"]').addClass("nav-clink-active");
+        }
+    });
+</script>
 </head>
 <body>
     @using Microsoft.AspNetCore.Http
@@ -50,89 +62,86 @@
     <div class="container-scroller">
         <!-- partial:../../partials/_horizontal-navbar.html -->
         <div class="horizontal-menu">
-            <nav class="navbar top-navbar col-lg-12 col-12 p-0">
-                <div class="container">
-                    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                        <a class="navbar-brand brand-logo" href="/Home"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="logo" /></a>
-                        <a class="navbar-brand brand-logo-mini" href="/Home"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="logo" /></a>
+            <nav class="navbar top-navbar top-navbar-c col-lg-12 col-12 p-0">
+                <div class="container-fluid">
+                    <div class="col-lg-2">
+                        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                            <a class="navbar-brand brand-logo" href="/Home"><img src="~/theme/images/MCNLogo.svg" alt="logo" /></a>
+                            <a class="navbar-brand brand-logo-mini" href="/Home"><img src="~/theme/images/MCNLogo.svg" alt="logo" /></a>
+                        </div>
                     </div>
-                    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                        <ul class="navbar-nav mr-lg-2">
-                            <li class="nav-item nav-search d-none d-lg-block">
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav navbar-nav-right">
-                            <li class="nav-item nav-profile dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                    <img src="https://via.placeholder.com/40x40" alt="profile" />
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a class="dropdown-item">
-                                        <i class="ti-settings text-primary"></i>
-                                        Settings
+                    <div class="col-lg-8 p-0">
+                        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                            <ul class="nav page-navigation" id="cTabList">
+                                <li class="nav-item">
+                                    <a class="nav-link nav-clink" href="/Client/ChurchInfo">
+                                        @*<i class="fa fa-info-circle menu-icon"></i>*@
+                                        <span class="menu-title">General Info</span>
                                     </a>
-                                    <a class="dropdown-item" asp-action="UserLogin" asp-controller="UserLogin">
-                                        <i class="ti-power-off text-primary"></i>
-                                        Logout
+                                </li>
+                                <li class="nav-item">
+
+                                    <a class="nav-link nav-clink" href="/Client/Announcement">
+                                        @*<i class="mdi mdi-bullhorn menu-icon"></i>*@
+                                        <span class="menu-title">Announcement</span>
                                     </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
-                            <span class="ti-menu"></span>
-                        </button>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link nav-clink" href="/Client/CameraDetail">
+                                        @*<i class=" mdi mdi-file-video menu-icon "></i>*@
+                                        <span class="menu-title">Media</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link nav-clink" href="/Client/Schedule">
+                                        @*<i class="mdi mdi-calendar-clock menu-icon"></i>*@
+                                        <span class="menu-title">Schedule</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link nav-clink" href="/Client/Recording">
+                                        @*<i class=" mdi mdi-camcorder menu-icon"></i>*@
+                                        <span class="menu-title">Recording</span>
+                                    </a>
+
+                            </ul>
+                           
+                        </div>
                     </div>
+                    <div class="col-lg-2">
+                        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                            <ul class="navbar-nav mr-lg-2">
+                                <li class="nav-item nav-search d-none d-lg-block">
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav navbar-nav-right">
+                                <li class="nav-item nav-profile dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                        <img src="https://via.placeholder.com/40x40" alt="profile" />
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                        <a class="dropdown-item">
+                                            <i class="ti-settings text-primary"></i>
+                                            Settings
+                                        </a>
+                                        <a class="dropdown-item" asp-action="UserLogin" asp-controller="UserLogin">
+                                            <i class="ti-power-off text-primary"></i>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+                                <span class="ti-menu"></span>
+                            </button>
+                        </div>
+                    </div>
+
+
                 </div>
             </nav>
-            <nav class="bottom-navbar">
-                <div class="container">
-                    <ul class="nav page-navigation">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Client/ChurchInfo">
-                                <i class="fa fa-info-circle menu-icon"></i>
-                                <span class="menu-title">General Info</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="/Client/Announcement">
-                                <i class="mdi mdi-bullhorn menu-icon"></i>
-                                <span class="menu-title">Announcement</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Client/CameraDetail">
-                                <i class=" mdi mdi-file-video menu-icon "></i>
-                                <span class="menu-title">Media</span>
-                            </a>
-                        </li>
-                        @*<li class="nav-item">
-                                <a class="nav-link" href="/Client/StreamToFaceBook">
-                                    <i class="mdi mdi-facebook menu-icon"></i>
-                                    <span class="menu-title">Stream To Facebook</span>
-                                </a>
-                            </li>*@
-                        @*<li class="nav-item">
-                                <a class="nav-link" href="/Client/Schedule1">
-                                    <i class="mdi mdi-calendar-clock menu-icon"></i>
-                                    <span class="menu-title">Schedules</span>
-                                </a>
-                            </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Client/Schedule">
-                                <i class="mdi mdi-calendar-clock menu-icon"></i>
-                                <span class="menu-title">Schedule</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Client/Recording">
-                                <i class=" mdi mdi-camcorder menu-icon"></i>
-                                <span class="menu-title">Recording</span>
-                            </a>
-
-                    </ul>
-                </div>
-            </nav>
+            
         </div>
         <div class="main-panel bg-light">
             <div class="content p-4">

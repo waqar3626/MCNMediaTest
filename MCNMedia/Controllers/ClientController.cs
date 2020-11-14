@@ -40,7 +40,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return NotFound();
                 }
-
+                HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
                 return View(church);
             }
             catch (Exception e)
@@ -92,6 +92,7 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 gm.LAnnouncement = AnnouncementDataAccessLayer.GetAnnouncement(id);
                 gm.Churches = chdataAccess.GetChurchData(id);
+                HttpContext.Session.SetString("ctabId", "/Client/Announcement");
                 return View(gm);
             }
             catch (Exception e)
@@ -159,6 +160,7 @@ namespace MCNMedia_Dev.Controllers
                 LoadServerDDL();
                 int id = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(id);
+                HttpContext.Session.SetString("ctabId", "/Client/CameraDetail");
                 return View(gm);
             }
             catch (Exception e)
@@ -176,6 +178,7 @@ namespace MCNMedia_Dev.Controllers
                 LoadServerDDL();
                 int id = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(id);
+                HttpContext.Session.SetString("ctabId", "/Client/Schedule");
                 return View(gm);
             }
             catch (Exception e)
@@ -240,6 +243,7 @@ namespace MCNMedia_Dev.Controllers
             GenericModel gm = new GenericModel();
             gm.LRecordings = previewChurchesDataAccess.GetAllPreviewRecording(id);
             gm.Churches = chdataAccess.GetChurchData(id);
+            HttpContext.Session.SetString("ctabId", "/Client/Recording");
             Redirect("Recording");
             return View(gm);
 
