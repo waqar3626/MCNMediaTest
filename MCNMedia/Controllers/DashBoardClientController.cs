@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -14,16 +14,16 @@ namespace MCNMedia_Dev.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         DashBoardClientDataAccessLayer dashboardData = new DashBoardClientDataAccessLayer();
-        DashboardDataAccessLayer DashboardDataAccessLayer = new DashboardDataAccessLayer();
-        public IActionResult DashBoardClient()
+        DashboardDataAccessLayer dashboardDataAccessLayer = new DashboardDataAccessLayer();
+        public IActionResult DashBoardClient(int chrid)
         {
             try
             {
                 GenericModel gm = new GenericModel();
                 int ChrId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                gm.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChrId);
-                gm.Dashboards = dashboardData.GetDashboardClientInfoCount(ChrId);
-                gm.DashBoardClients = dashboardData.GetCountClientDashBoard(ChrId);
+                gm.LDashBoardClients = dashboardData.GetDashboardClientInfo(chrid);
+                gm.Dashboards = dashboardData.GetDashboardClientInfoCount(chrid);
+                gm.DashBoardClients = dashboardData.GetCountClientDashBoard(chrid);
                 return View(gm);
             }
             catch (Exception e)

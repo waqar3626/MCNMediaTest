@@ -13,22 +13,28 @@ namespace MCNMedia_Dev.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         DashboardDataAccessLayer dashboardData = new DashboardDataAccessLayer();
-        public IActionResult Dashboard()
+        DashBoardClientDataAccessLayer clientdashboardData = new DashBoardClientDataAccessLayer();
+        public IActionResult Dashboard(int chrid)
         {
             try
             {
                 GenericModel gm = new GenericModel();
 
                 gm.Dashboards = dashboardData.GetDashboardInfo();
+                gm.ListDashboards2 = dashboardData.GetDashboardCountry_Churches();
+                gm.LDashBoardClients = clientdashboardData.GetDashboardClientInfo(-1);
                 return View(gm);
             }
             catch (Exception e)
             {
                 ShowMessage("Dashboard Error" + e.Message);
+                
                 throw;
             }
             
         }
+    
+
 
         private void ShowMessage(string exceptionMessage)
         {
