@@ -8,6 +8,7 @@ namespace MCNMedia_Dev.Models
     public class DashBoardClient
     {
         public int ChurchId { get; set; }
+        public string ChurchName { get; set; }
         public int CameraId { get; set; }
         public String ScheduleEventName { get; set; }
         public String ScheduleEventTime { get; set; }

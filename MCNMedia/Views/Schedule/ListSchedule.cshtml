@@ -71,7 +71,7 @@
 <div class="card">
     <div class="card-header card-header-custom">
         Manage Schedules
-        <button type="submit" id="AddSchedule1" class="btn btn-success btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
+        <button type="submit" id="AddSchedule1" class="btn btn-outline-behance btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
 
     </div>
     <div class="card-body">
@@ -179,7 +179,7 @@
 
 
                                     <td>
-                                        <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
                                     </td>

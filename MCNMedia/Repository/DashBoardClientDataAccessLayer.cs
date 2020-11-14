@@ -15,14 +15,12 @@ namespace MCNMedia_Dev.Repository
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
-
-
-        public Dashboard GetDashboardClientInfoCount(int ChrId)
+        public Dashboard GetDashboardClientInfoCount(int chrid)
         {
             Dashboard dashboard = new Dashboard();
 
             _dc.ClearParameters();
-            _dc.AddParameter("ChrId", ChrId);
+            _dc.AddParameter("ChrId", chrid);
             DataTable dataTable = _dc.ReturnDataTable("spDashboard_CountData");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -51,19 +49,19 @@ namespace MCNMedia_Dev.Repository
             return dashboard;
         }
 
-        public IEnumerable<DashBoardClient> GetDashboardClientInfo(int ChrId)
+        public IEnumerable<DashBoardClient> GetDashboardClientInfo(int chrid)
         {
             List<DashBoardClient> dashBoardClients = new List<DashBoardClient>();
 
             _dc.ClearParameters();
-            _dc.AddParameter("ChrId", ChrId);
+            _dc.AddParameter("ChrId", chrid);
             _dc.AddParameter("CurrentDay", "1900-01-01");
             DataTable dataTable = _dc.ReturnDataTable("sp_ClientEventlist");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 DashBoardClient dashBoardClient = new DashBoardClient();
-
                 dashBoardClient.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                dashBoardClient.ChurchName = dataRow["ChurchName"].ToString();
                 dashBoardClient.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                 dashBoardClient.ScheduleEventName = dataRow["ScheduleEventName"].ToString();
                 dashBoardClient.ScheduleEventTime = dataRow["ScheduleEventTime"].ToString();
@@ -75,11 +73,10 @@ namespace MCNMedia_Dev.Repository
             }
             return dashBoardClients;
         }
-
-        public DashBoardClient GetCountClientDashBoard(int ChrId)
+        public DashBoardClient GetCountClientDashBoard(int chrid)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("ChrId", ChrId);
+            _dc.AddParameter("ChrId", chrid);
             _dc.AddParameter("CurrentDay", "2020-11-13");
             DataTable dataTable = _dc.ReturnDataTable("spDashBoardClient_CountData");
             DashBoardClient dashBoardClient = new DashBoardClient();
@@ -97,8 +94,7 @@ namespace MCNMedia_Dev.Repository
                 dashBoardClient.TodaysEventsWithOutRecordings = Convert.ToInt32(dataRow["TodaysEventsWithOutRecordings"]);
                 dashBoardClient.TodayRecordingDone = Convert.ToInt32(dataRow["TodayRecordingDone"]);
             }
-                return dashBoardClient;
+            return dashBoardClient;
         }
-
     }
 }

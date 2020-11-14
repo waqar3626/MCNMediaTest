@@ -49,5 +49,26 @@ namespace MCNMedia_Dev.Repository
             return dashboard;
         }
 
+        public IEnumerable<Dashboard> GetDashboardCountry_Churches()
+        {
+            List<Dashboard> dashboards = new List<Dashboard>();
+           
+
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spDashboard_Country_Churches");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Dashboard dashboard = new Dashboard();
+                dashboard.CountryName = dataRow["CountryName"].ToString();
+                dashboard.ChurchCount = Convert.ToInt32(dataRow["Churches"]);
+                dashboard.CathedralsCount = Convert.ToInt32(dataRow["Cathedrals"]);
+                dashboard.FuneralsHomeCount = Convert.ToInt32(dataRow["FuneralHomes"]);
+                dashboards.Add(dashboard);
+
+
+            }
+            return dashboards;
+        }
+
     }
 }

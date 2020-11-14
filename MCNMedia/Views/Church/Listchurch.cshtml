@@ -74,7 +74,7 @@
 </div>
 <div class="card">
     <div class="card-header card-header-custom">
-        <a id="AddNew" class="btn btn-success btn-sm float-right" onclick="AddChurchPopup()" title="Add New"> <i class="fa fa-plus"></i> Add Church</a>
+        <a id="AddNew" class="btn btn-outline-behance btn-sm float-right" onclick="AddChurchPopup()" title="Add New"> <i class="fa fa-plus"></i> Add Church</a>
         Manage Churches
     </div>
     <div class="card-body">
@@ -113,7 +113,7 @@
                                     @Html.DisplayFor(modelItem => item.Phone)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Preview", "Admin",new { id = item.ChurchId })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                    <a href="@Url.Action("Preview", "Admin",new { chId = item.ChurchId })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
                                     <a href="@Url.Action("Delete", "Church", new { id=item.ChurchId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

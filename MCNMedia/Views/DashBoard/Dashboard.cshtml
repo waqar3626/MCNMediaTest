@@ -5,19 +5,20 @@
 
 <!-- partial:partials/_horizontal-navbar.html -->
 <!-- partial -->
+  
 
-<div class="row p-3 ">
+<div class="row ">
     <div class="col-12">
         <div class="row">
             <div class="col-md-12 grid-margin bg-warning">
-                <div class="card bg-primary border-0 position-relative">
-                    <div class="card-body p-2">
+                <div class="card  border-0 position-relative" style="background-color: #660033">
+                    <div class="card-body">
                         @*<h3 class=" text-white">Recordings Details</h3>*@
                         <div id="performanceOverview" class="carousel slide performance-overview-carousel position-static pt-2" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <div class="row">
-                                        <div class="col-md-4 item">
+                                        <div class="col-md-4 ">
                                             <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0">
                                                 <div class="icon icon-a text-white mr-3">
                                                     <i class=" mdi mdi-calendar  icon-lg ml-3"></i>
@@ -27,15 +28,15 @@
                                                         <h3 class="font-weight-light mr-2 mb-1">Today’s Schedules</h3>
 
                                                     </div>
-                                                    <div class="col-8 col-md-7 d-flex border-bottom border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                    <div class="col-8 col-md-7 d-flex border-info align-items-center justify-content-between px-0 pb-2 mb-3">
                                                         <h3 class="mb-0">@Model.Dashboards.TodayScheduleCount</h3>
-                    
+
                                                     </div>
                                                     <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Schedules of an Events of Churches </p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 item">
+                                        <div class="col-md-4">
                                             <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
                                                 <div class="icon icon-b text-white mr-3">
                                                     <i class=" mdi mdi-camcorder-box  icon-lg ml-3"></i>
@@ -44,9 +45,9 @@
                                                     <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
                                                         <h3 class="font-weight-light mr-2 mb-1">Today's Recordings</h3>
                                                     </div>
-                                                    <div class="col-8 col-md-7 d-flex border-bottom border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                    <div class="col-8 col-md-7 d-flex  border-info align-items-center justify-content-between px-0 pb-2 mb-3">
                                                         <h3 class="mb-0">@Model.Dashboards.TodayRecording</h3>
-                                                        
+
                                                     </div>
                                                     <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Recordings for Current day of an Events of Churches</p>
                                                 </div>
@@ -62,9 +63,9 @@
                                                         <h3 class="font-weight-light mr-2 mb-1">Total Cameras</h3>
 
                                                     </div>
-                                                    <div class="col-8 col-md-7 d-flex border-bottom border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                    <div class="col-8 col-md-7 d-flex border-info align-items-center justify-content-between px-0 pb-2 mb-3">
                                                         <h3 class="mb-0">@Model.Dashboards.CameraCount</h3>
-                                                        
+
                                                     </div>
                                                     <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Cameras of Churches</p>
                                                 </div>
@@ -81,30 +82,30 @@
             </div>
         </div>
         <div class="row">
-            
-                <div class="col-md-4 grid-margin stretch-card bg-warning ">
-                    <div class="card " style="background-color:#004d4d ">
 
-                        <a href="@Url.Action("ListUser", "User")">
+            <div class="col-md-4 grid-margin stretch-card bg-warning ">
+                <div class="card " style="background-color:#004d4d ">
 
-                            <div class="card-body">
-                                
-                                <p class="card-title text-md-center text-xl-left text-white">Total Users</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
-                                    <i class="mdi mdi-account-multiple  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
-                                </div>
+                    <a href="@Url.Action("ListUser", "User")">
 
+                        <div class="card-body">
+
+                            <p class="card-title text-md-center text-xl-left text-white">Total Users</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
+                                <i class="mdi mdi-account-multiple  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
                             </div>
-                        </a>
-                    </div>
 
+                        </div>
+                    </a>
                 </div>
-            
+
+            </div>
+
             <div class="col-md-4 grid-margin stretch-card ">
-                <div class="card" style="background-color:#006666 ">
+                <div class="card" style="background-color:#008080 ">
                     <form asp-action="Search" asp-controller="User" method="post">
-                        <button style="width:350px;background-color:#006666 " type="submit">
+                        <button style="width:350px;background-color:#008080 " type="submit">
                             <div class="card-body">
                                 <input type="hidden" name="Role" value="1" />
                                 <p class="card-title text-md-center text-xl-left text-white">Admins</p>
@@ -122,9 +123,9 @@
 
             <div class="col-md-4 grid-margin stretch-card bg-warning">
 
-                <div class="card " style="background-color: #005580">
+                <div class="card " style="background-color: #00cccc">
                     <form asp-action="Search" asp-controller="User" method="post">
-                        <button style="width:350px;background-color:#006666 " type="submit">
+                        <button style="width:350px;background-color:#00cccc " type="submit">
                             <div class="card-body">
                                 <input type="hidden" name="Role" value="2" />
                                 <p class="card-title text-md-center text-xl-left text-white">Clients</p>
@@ -137,17 +138,17 @@
 
                         </button>
                     </form>
-            </div>
+                </div>
             </div>
 
         </div>
 
         <div class="row">
             <div class="col-md-4 grid-margin stretch-card  ">
-                
-                <div class="card " style="background-color: #800000 ">
+
+                <div class="card " style="background-color: #b30000 ">
                     <form asp-action="Search" asp-controller="Church" method="post">
-                        <button style="width:350px;background-color:#800000 " type="submit">
+                        <button style="width:350px;background-color:#b30000 " type="submit">
                             <div class="card-body">
                                 <input type="hidden" name="ClientType" value="1" />
                                 <input type="hidden" name="County" value="-1" />
@@ -159,10 +160,10 @@
 
                             </div>
 
-                            </button>
+                        </button>
                     </form>
                 </div>
-                   
+
             </div>
             <div class="col-md-4 grid-margin stretch-card bg-warning ">
 
@@ -179,15 +180,15 @@
                                 </div>
 
                             </div>
-                            
-                            </button>
+
+                        </button>
                     </form>
                 </div>
             </div>
             <div class="col-md-4 grid-margin stretch-card ">
-                <div class="card " style="background-color: firebrick ">
+                <div class="card " style="background-color: #4d0000">
                     <form asp-action="Search" asp-controller="Church" method="post">
-                        <button style="width:350px;background-color:firebrick " type="submit">
+                        <button style="width:350px;background-color:#4d0000 " type="submit">
                             <div class="card-body">
                                 <input type="hidden" name="ClientType" value="3" />
                                 <input type="hidden" name="County" value="-1" />
@@ -198,754 +199,882 @@
                                 </div>
 
                             </div>
-                            </button>
+                        </button>
                     </form>
                 </div>
-                    
+
             </div>
-           
+
+        </div>
+        <div class="row col-lg-12 p-0">
+            <div class="col-lg-6 pl-0">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        COUNTRY & CHURCHES DETAIL
+                    </div>
+
+                    <div class="card-body">
+
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="pt-1 ">
+                                        COUNTRIES
+                                    </th>
+                                    <th class="pt-1 ">
+                                        CHURCHES
+                                    </th>
+                                    <th class="pt-1">
+                                        CATHEDRALS
+                                    </th>
+                                    <th class="pt-1">
+                                        FUNERAL HOMES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var dassh in Model.ListDashboards2)
+                        {
+                                <tr>
+
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => dassh.CountryName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem =>  dassh.ChurchCount)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem =>  dassh.CathedralsCount)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem =>  dassh.FuneralsHomeCount)
+
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="card" style="height:595px; overflow-x: scroll" >
+                    <div class="card-header card-header-custom sticky-top">
+                       Today's Schedule 
+                    </div>
+                    <div class="card-body pl-0">
+
+                        <form method="get">
+
+
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortStyle">Church</th>
+                                        <th class="sortStyle">Event Name</th>
+                                        <th class="sortStyle">Event Status</th>
+                                        <th class="sortStyle">Repeated</th>
+                                        <th class="sortStyle">Duration</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.LDashBoardClients)
+                            {
+                                    <tr>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                                        </td>
+                                        <td class="text-wrap">
+
+                                            @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+
+                                        </td>
+
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td>
+
+                                        <td>
+                                            @if (item.IsRepeated==1)
+                                           {
+                                            <label class="badge-pill badge-success">
+                                                Yes
+                                            </label>
+                                            }
+                                           else
+                                             {
+                                            <label class="badge-pill badge-danger">
+                                                No
+                                            </label>
+                                        }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RecordingDuration)
+                                        </td>
+
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+
+
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         @*<div class="row">
-            <div class="col-md-3 grid-margin stretch-card bg-warning">
-                <div class="card" style="background-color:darkcyan">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Number of Countries</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.CountryCount</h3>
-                            <i class="  mdi mdi-flag text-white icon-md mb-0 mb-md-3 mb-xl-0" style="color:blue;"></i>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 grid-margin stretch-card ">
-                <div class="card" style="background-color:  darkturquoise ">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Number of Counties</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.CountyCount</h3>
-                            <i class="mdi mdi-flag  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 grid-margin stretch-card bg-warning">
-                <div class="card" style="background-color:  darkseagreen">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Total Schedules</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ScheduleCount</h3>
-                            <i class="mdi mdi-calendar-clock icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 grid-margin stretch-card ">
-                <div class="card" style="background-color: cadetblue ">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Today’s Schedules</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.TodayScheduleCount</h3>
-                            <i class=" mdi mdi-calendar  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 grid-margin stretch-card ">
-                <div class="card" style="background-color:darkgoldenrod">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Total Cameras</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">34040</h3>
-                            <i class=" mdi mdi-camera   icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 grid-margin stretch-card bg-warning">
-                <div class="card" style="background-color:chocolate ">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Live Cameras</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">47033</h3>
-                            <i class="  mdi mdi-camera-party-mode  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 grid-margin stretch-card ">
-                <div class="card" style="background-color: peru">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">Offline Cameras</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">40016</h3>
-                            <i class=" mdi mdi-camera-off  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 grid-margin stretch-card bg-warning">
-                <div class="card" style="background-color: tan">
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left text-white">UpComing Events</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">61344</h3>
-                            <i class=" mdi mdi-calendar-check  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>*@
-        <div class="row">
-            <div class="col-md-12 grid-margin stretch-card bg-warning">
-                <div class="card position-relative">
-                    <div class="card-body">
-                        <p class="card-title  text-dark">Countries & Counties Detail</p>
-                        <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-4">
-                                                <h1>@Model.Dashboards.NorthrenIrelandCount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">Northren Ireland</h3>
-                                                <p class="text-muted mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Illinois</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">713</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Washington</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">583</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Mississippi</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">924</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">California</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">664</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Maryland</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">560</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Alaska</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">793</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-4">
-                                                <h1>@Model.Dashboards.RepublicOfIrelandCount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">Republic Of Ireland</h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-4">
-                                                <h1>@Model.Dashboards.EnglandCount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">England </h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-6">
-                                                <h1>@Model.Dashboards.WalesCount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">Wales</h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-4">
-                                                <h1>@Model.Dashboards.USACount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">USA</h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-4">
-                                                <h1>@Model.Dashboards.CanadaCount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">Canada </h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-6">
-                                                <h1>@Model.Dashboards.ISEOfManCount</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">Ise Of Man</h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
-                                            <div class="ml-xl-6">
-                                                <h1>3</h1>
-                                                <p>Counties</p>
-                                                <h3 class="font-weight-light mb-xl-4">Scotland</h3>
-                                                <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive mb-3 mb-md-0">
-                                                        <table class="table table-borderless report-table">
-                                                            <tr>
-                                                                <td class="text-muted">Brazil</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">613</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Argentina</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">483</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Peru</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">824</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Chile</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">564</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Colombia</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">460</h5></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted">Uruguay</td>
-                                                                <td class="w-100 px-0">
-                                                                    <div class="progress progress-md mx-4">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </td>
-                                                                <td><h5 class="font-weight-bold mb-0">693</h5></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                <div class="col-md-3 grid-margin stretch-card bg-warning">
+                    <div class="card" style="background-color:darkcyan">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Number of Countries</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.CountryCount</h3>
+                                <i class="  mdi mdi-flag text-white icon-md mb-0 mb-md-3 mb-xl-0" style="color:blue;"></i>
                             </div>
-                            <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card ">
+                    <div class="card" style="background-color:  darkturquoise ">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Number of Counties</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.CountyCount</h3>
+                                <i class="mdi mdi-flag  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 grid-margin stretch-card bg-warning">
+                    <div class="card" style="background-color:  darkseagreen">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Total Schedules</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ScheduleCount</h3>
+                                <i class="mdi mdi-calendar-clock icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card ">
+                    <div class="card" style="background-color: cadetblue ">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Today’s Schedules</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.TodayScheduleCount</h3>
+                                <i class=" mdi mdi-calendar  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
+            <div class="row">
+                <div class="col-md-3 grid-margin stretch-card ">
+                    <div class="card" style="background-color:darkgoldenrod">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Total Cameras</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">34040</h3>
+                                <i class=" mdi mdi-camera   icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card bg-warning">
+                    <div class="card" style="background-color:chocolate ">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Live Cameras</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">47033</h3>
+                                <i class="  mdi mdi-camera-party-mode  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card ">
+                    <div class="card" style="background-color: peru">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">Offline Cameras</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">40016</h3>
+                                <i class=" mdi mdi-camera-off  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card bg-warning">
+                    <div class="card" style="background-color: tan">
+                        <div class="card-body">
+                            <p class="card-title text-md-center text-xl-left text-white">UpComing Events</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">61344</h3>
+                                <i class=" mdi mdi-calendar-check  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        @*<div class="row">
+                <div class="col-md-12 grid-margin stretch-card bg-warning">
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <p class="card-title  text-dark">Countries & Counties Detail</p>
+                            <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-4">
+                                                    <h1>@Model.Dashboards.NorthrenIrelandCount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">Northren Ireland</h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Illinois</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">713</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Washington</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">583</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Mississippi</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">924</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">California</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">664</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Maryland</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">560</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Alaska</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">793</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-4">
+                                                    <h1>@Model.Dashboards.RepublicOfIrelandCount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">Republic Of Ireland</h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-4">
+                                                    <h1>@Model.Dashboards.EnglandCount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">England </h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-6">
+                                                    <h1>@Model.Dashboards.WalesCount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">Wales</h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-4">
+                                                    <h1>@Model.Dashboards.USACount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">USA</h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-4">
+                                                    <h1>@Model.Dashboards.CanadaCount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">Canada </h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-6">
+                                                    <h1>@Model.Dashboards.ISEOfManCount</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">Ise Of Man</h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-center">
+                                                <div class="ml-xl-6">
+                                                    <h1>3</h1>
+                                                    <p>Counties</p>
+                                                    <h3 class="font-weight-light mb-xl-4">Scotland</h3>
+                                                    <p class="text-muted mb-2 mb-xl-0">It is the period time a user is actively engaged with your website, page or app, etc. The total number of sessions within the date range. </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive mb-3 mb-md-0">
+                                                            <table class="table table-borderless report-table">
+                                                                <tr>
+                                                                    <td class="text-muted">Brazil</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">613</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Argentina</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">483</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Peru</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">824</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Chile</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">564</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Colombia</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">460</h5></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted">Uruguay</td>
+                                                                    <td class="w-100 px-0">
+                                                                        <div class="progress progress-md mx-4">
+                                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h5 class="font-weight-bold mb-0">693</h5></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
 
 
     </div>
@@ -958,12 +1087,14 @@
                 type: "Post",
                 url: '@Url.Action("Search", "User")',
                 data: { FirstName: '', LastName: '', EmailAddress: '', Role: '1' },
-              
+
 
             });
     }
     );
-   
+
+
+
 </script>
 
 
