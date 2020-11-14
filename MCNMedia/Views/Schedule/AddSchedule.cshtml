@@ -181,8 +181,8 @@
                     </div>
                     <div class="col-sm-6" id="btnSchdule">
                         <div class="float-right">
-                            <button type="submit" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add Event</button>
-                            <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                            <button type="submit" id="addScheduleVal24" value="Create" class="btn btn-success btn-sm " title="Add"><i class="fa fa-plus"></i> Add Event</button>
+                            <a id="back" class="btn btn-warning btn-sm   text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                         </div>
                     </div>
@@ -191,7 +191,7 @@
 
                     <div class="col-sm-12" id="btnSchdulecol12">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-success btn-sm " title="Add"><i class="mdi mdi-content-save "></i> Add </button>
+                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-success btn-sm " title="Add"><i class="fa fa-plus "></i>  Add Event </button>
                             <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
         $('#EventLabel1').show();
         $('#EventInput1').show();
         $('#IsRepeated').val("false");
-      
+        $('#ToggleRecord').val('false');
         HidePasswordAdd();
         HideRecordDataAdd();
         
@@ -307,10 +307,12 @@
     $('#ToggleRecord').change(function () {
         if (this.checked) {
             ShowRecordDataAdd();
+            $('#ToggleRecord').val('true');
         }
 
         else {
             HideRecordDataAdd();
+            $('#ToggleRecord').val('false');
         }
 
 
@@ -343,7 +345,30 @@
 
    
     }
-    
+
+    $('#addScheduleVal').click(function () {
+        if ($('#ToggleRecord').val() == 'true' && $('#CameraId').val() == 0) {
+            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
+            
+            return false;
+        }
+        else {
+            return true;
+        }
+
+
+    });
+    $('#addScheduleVal24').click(function () {
+        if ($('#ToggleRecord').val() == 'true' && $('#CameraId').val() == 0) {
+            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
+
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    });
 
     function DoPostBackAdd() {
         var ChurchId = document.getElementById('ddlChurchId').value;

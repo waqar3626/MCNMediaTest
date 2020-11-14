@@ -7,7 +7,7 @@
 
 
 
-<form class="needs-validation" novalidate>
+<form class="needs-validation" novalidate id="AddScheduleChurch">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -167,9 +167,10 @@
                 </div>
                 <div class="col-sm-6" id="AddbtnSchdule">
                     <div class="float-right">
-                        <a   id="addScheduleVal1" value="Create" class="btn btn-primary "><i class="fa fa-plus"></i> Add </a>
-                        <a id="back" class="btn btn-secondary  text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
+                        <a id="addScheduleVal1" value="Create" class="btn btn-success btn-sm text-white " title="Add"><i class="mdi mdi-content-save "></i> Add</a>
+                        <a id="back" class="btn btn-warning btn-sm  text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
+                        
                     </div>
                 </div>
 
@@ -192,18 +193,46 @@
 </form>
 
 <script type="text/javascript">
+    $(function () {
+        $("#addScheduleVal1").on("click", function (e) {
+            var form = $("#AddScheduleChurch")[0];
+            var isValid = form.checkValidity();
+            if (!isValid) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else {
+                checkScheduleAdd();
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
+        });
+    });
+    $(function () {
+        $("#addScheduleVal2").on("click", function (e) {
+            var form = $("#AddScheduleChurch")[0];
+            var isValid = form.checkValidity();
+            if (!isValid) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else {
+                checkScheduleAdd();
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
+        });
+    });
 
-    $('#addScheduleVal1').click(function () {
-       
-        checkScheduleAdd();
-    });
-    $('#addScheduleVal2').click(function () {
-       
-        checkScheduleAdd();
-    });
+
+   
   
     function checkScheduleAdd() {
-       
+        if ($('#AddToggleRecord').val().toLowerCase() == 'true' && $('#AddScheduleCameraId').val() == 0) {
+            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
+
+            return false;
+        }
         var eventName = document.getElementById('EventName').value;
         var isRepeat = document.getElementById('IsRepeated').value;
         var eventDate = document.getElementById('EventDate').value;

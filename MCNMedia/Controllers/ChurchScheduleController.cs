@@ -190,6 +190,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+
                 schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 SchDataAccess.UpdateSchedule(schedule);
                 return RedirectToAction("ListUser");

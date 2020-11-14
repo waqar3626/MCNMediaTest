@@ -48,6 +48,12 @@ namespace MCNMedia_Dev.Controllers
                 }
 
                 sch.Record = ToggleRecord;
+                if (sch.Record == false)
+                {
+                    sch.CameraId = 0;
+                    sch.RecordDuration = 0;
+                }
+               
                 scheduleDataAccess.AddSchedule(sch);
                 return RedirectToAction("ListSchedule");
             

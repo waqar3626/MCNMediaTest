@@ -17,8 +17,9 @@
                 <div class="card-body">
 
                     <input type="hidden" name="id" asp-for="ScheduleId" />
-                    <input type="hidden" id="HdnEditCameraId" asp-for="CameraId" />
+                    <input type="hidden" id="HdnEditRecordID" asp-for="Record" />
                     <input type="hidden" id="HdnEditIsrepeated" asp-for="IsRepeated" />
+                    <input type="hidden" id="HdnEditCameraId" asp-for="CameraId" />
                     <input type="hidden" id="HdnEditScheduleID" asp-for="ScheduleId" />
                     <div class="form-group row">
                         <label asp-for="ChurchId" class="col-sm-2 col-form-label">Church</label>
@@ -212,7 +213,12 @@
     });
 
     function UpdateChurchSchedule() {
+        if ($('#EditRecoredToggle').val().toLowerCase() == 'true' && $('#EditScheduleCameraId').val() == 0) {
+            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
 
+            return false;
+        }
+        
         var eventName = document.getElementById('EditEventName').value;
         var isRepeat = document.getElementById('EditIsRepeated').value;
         var eventDate = document.getElementById('EditEventDate').value;
@@ -270,10 +276,10 @@
 
         $('#EditddlChurchId').append("<option value='0' disabled>--Select Church--</option>");
 
-        var isCheck = ($('#HdnEditIsrepeated').val() == 'True');
+        var isCheck = ($('#HdnEditIsrepeated').val().toLowerCase() == 'true');
 
 
-
+     
         if (isCheck) {
 
             $('#EditEventDayLabel1').show();
@@ -305,21 +311,24 @@
             HidePassword();
         }
 
-        var modelRecordData = $('#HdnEditCameraId').val();
+        
+
+        var IsRecord = ($('#HdnEditRecordID').val().toLowerCase()=='true');
 
 
-
-
-        if (modelRecordData > 0) {
+    
+        if (IsRecord) {
 
             ShowRecordData();
             $('#EditRecoredToggle').attr('checked', true);
+            $('#EditRecoredToggle').val('true');
 
 
 
         }
         else {
             $('#EditRecoredToggle').attr('checked', false);
+            $('#EditRecoredToggle').val('false');
             HideRecordData();
         }
 
@@ -427,8 +436,7 @@
         $('#EditEventLabel').show();
         $('#EventInput').show();
 
-        //document.getElementById('divDay').style.display = 'none';
-        //document.getElementById('divDate').style.display = 'block';
+      
 
     }
     function ShowDayDiv() {

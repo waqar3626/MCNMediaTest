@@ -175,8 +175,9 @@
                     html += "<td class='text-wrap p-0'>";
                     $.each(array, function (key, item2) {
                         if (item2.length > 0) {
+                            var IconRecord ="<i class='fa fa-file-video-o text-danger'></i>"
                             var array2 = item2.split(',');
-                            html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <a onclick='EditChurchSchedule(" + array2[1] + ")'  class='btn btn-primary btn-sm text-white' title='Edit' ><i class='fa fa-edit'></i></a><button onclick='DeleteChurchSchedule(" + array2[1] + " )' class='btn btn-danger btn-sm '  title='Delete' ><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + array2[0]+ " </div></div></div> </div>";
+                            html += "<div class='p-2 float-left'><div class='panel-body '><div class='overlay'> <a onclick='EditChurchSchedule(" + array2[1] + ")'  class='btn btn-primary btn-sm text-white' title='Edit' ><i class='fa fa-edit'></i></a><button onclick='DeleteChurchSchedule(" + array2[1] + " )' class='btn btn-danger btn-sm '  title='Delete' ><i class='mdi mdi-delete'></i></button></div><div class='card'><div class='card-body '>" + array2[0] + "&emsp; " + (array2[2] == 1 ? IconRecord :'') +" </div></div></div> </div>";
                         }
                     }
                     );
