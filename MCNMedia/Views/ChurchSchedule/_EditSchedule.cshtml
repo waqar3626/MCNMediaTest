@@ -2,10 +2,12 @@
 @using Microsoft.AspNetCore.Http;
 
 
-
+@{
+    List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
+}
 <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
 
-<form class="needs-validation" novalidate id="UpdateEditScheduleChurch">
+<form class="needs-validation" novalidate id="EditGeneralSchForm">
     <div class="row">
         <div class="col-sm-12">
 
@@ -15,22 +17,33 @@
                 <div class="card-body">
 
                     <input type="hidden" name="id" asp-for="ScheduleId" />
-                    <input type="hidden" id="HdnEditSession" value="@Context.Session.GetInt32("ChurchId")" />
-                    <input type="hidden" id="HdnEditCameraId" asp-for="CameraId" />
                     <input type="hidden" id="HdnEditRecordID" asp-for="Record" />
                     <input type="hidden" id="HdnEditIsrepeated" asp-for="IsRepeated" />
+                    <input type="hidden" id="HdnEditCameraId" asp-for="CameraId" />
                     <input type="hidden" id="HdnEditScheduleID" asp-for="ScheduleId" />
                     <div class="form-group row">
+                        <label asp-for="ChurchId" class="col-sm-2 col-form-label">Church</label>
+                        <div class="col-sm-4">
+                            <span asp-validation-for="ChurchId" class="text-danger"></span>
+                            @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                            @Html.DropDownList("ChurchId", SelectList, new { @class = "custom-select", @id = "EditddlChurchId", @required = "required", @onchange = "DoPostBackEdit();" })
 
+                            <span asp-validation-for="ChurchId" class="text-danger"></span>
+
+                            <div class="invalid-feedback">
+                                Please Select the Church
+                            </div>
+                        </div>
 
                         <label asp-for="EventName" for="EditEventName" class="col-sm-2 col-form-label">Event Name</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
 
                             <span asp-validation-for="EventName" class="text-danger"></span>
 
                             <input type="text" asp-for="EventName" class="form-control" id="EditEventName" placeholder="Event Name" required />
                             <div class="invalid-feedback">
-                                Please provide a valid EventName.
+                                Please Provide a Valid Event Name
+
                             </div>
                         </div>
 
@@ -64,6 +77,9 @@
                                     <span class="ti-calendar input-group-text"></span>
                                 </span>
                             </div>
+                            <div class="invalid-feedback" id="EditEventDateValidation">
+                                Please provide a valid Event Date.
+                            </div>
                         </div>
 
 
@@ -75,8 +91,8 @@
                             <span asp-validation-for="EventDay" class="text-danger"></span>
 
 
-                            <select asp-for="EventDay" class="form-control" id="EditEventDay" required>
-                                <option selected="selected" value="0">Please select Day</option>
+                            <select asp-for="EventDay" class="custom-select" id="EditEventDay">
+                                <option value="0" disabled>Please select Day</option>
                                 <option value="Monday" name="EditEventDay">Monday</option>
                                 <option value="Tuesday" name="EditEventDay">Tuesday</option>
                                 <option value="Wednesday" name="EditEventDay">Wednesday</option>
@@ -101,7 +117,7 @@
 
                                         <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
                                         <div class="invalid-feedback">
-                                            Please provide a valid EventName.
+                                            Please Select a Valid EventTime
                                         </div>
                                     </div>
 
@@ -129,14 +145,19 @@
 
                         <div class="col-sm-4 ">
                             <span asp-validation-for="CameraId" class="text-danger"></span>
-                            <select asp-for="CameraId" name="CameraId" class="form-control" id="EditScheduleCameraId">                                                    </select>
+                            <select asp-for="CameraId" name="CameraId" class="custom-select" id="EditScheduleCameraId">                                                    </select>
+                            <div class="invalid-feedback">
+                                Please Select a Valid Camera
+                            </div>
                         </div>
 
                         <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
 
                         <div class="col-sm-4 ">
                             <span asp-validation-for="RecordDuration" class="text-danger"></span>
-                            <select asp-for="RecordDuration" class="form-control" id="EditDuration">
+
+                            <select asp-for="RecordDuration" class="custom-select" id="EditDuration">
+                                <option value="0" name="RecordDuration" disabled>--Select--</option>
                                 <option value="30" name="RecordDuration">30 Minutes</option>
                                 <option value="40" name="RecordDuration">40 Minutes</option>
                                 <option value="60" name="RecordDuration">1 Hour</option>
@@ -147,6 +168,9 @@
 
 
                             </select>
+                            <div class="invalid-feedback">
+                                Please Select a Valid Duration
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -166,21 +190,23 @@
                         <div class="col-sm-4 " id="EditSchPassword">
                             <span asp-validation-for="Password" class="text-danger"></span>
                             <input type="text" asp-for="Password" id="SchEditPassword" class="form-control" placeholder="Password" />
+                            <div class="invalid-feedback">
+                                Please Provide a Valid Password
+                            </div>
                         </div>
                         <div class="col-sm-6" id="EditbtnSchdule">
                             <div class="float-right">
-                                <a id="UpdateEditScheduleVal234" value="Update" class="btn btn-success btn-sm text-white  " title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
-                                <a id="back" class="btn btn-warning btn-sm text-white  " title="Back"><i class="fa fa-chevron-left"></i> Back</a>
-
-                                      </div>
+                                <a id="UpdateEditScheduleVal" value="Update" class="btn btn-primary updatebtnclick"><i class="fa fa-plus"></i> Update</a>
+                                <a id="back" class="btn btn-secondary btn-md " data-dismiss="modal" aria-label="Close"><i class="fa fa-chevron-left"></i> Back</a>
+                            </div>
                         </div>
 
 
 
                         <div class="col-sm-12" id="EditbtnSchCol12">
                             <div class="float-right">
-                                <a id="UpdateEditScheduleVal2" value="Update" class="btn btn-success btn-sm text-white  " title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
-                                <a id="back" class="btn btn-warning btn-sm text-white  " title="Back"><i class="fa fa-chevron-left"></i> Back</a>
+                                <a id="UpdateEditScheduleVal2" value="Update" class="btn btn-primary updatebtnclick "><i class="fa fa-plus"></i> Update</a>
+                                <a id="back" class="btn btn-secondary btn-md " data-dismiss="modal" aria-label="Close"><i class="fa fa-chevron-left"></i> Back</a>
                             </div>
                         </div>
 
@@ -197,29 +223,24 @@
 <script src="~/theme/js/formpickers.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#UpdateEditScheduleVal234").on("click", function (e) {
-            var form = $("#UpdateEditScheduleChurch")[0];
+        $(".updatebtnclick").on("click", function (e) {
+            var form = $("#EditGeneralSchForm")[0];
             var isValid = form.checkValidity();
             if (!isValid) {
+                if ($('#EditIsRepeated').val().toLowerCase() == 'false' && $('#EditEventDate').val() == '') {
+
+                    $('#datepicker-popup').attr('class', 'input-group date datepicker border-danger');
+                    $('#EditEventDateValidation').attr('style', 'display:block');
+
+
+
+
+                }
                 e.preventDefault();
                 e.stopPropagation();
             }
             else {
-                UpdateChurchSchedule();
-            }
-            form.classList.add('was-validated');
-            return false; // For testing only to stay on this page
-        });
-    });
-    $(function () {
-        $("#UpdateEditScheduleVal2").on("click", function (e) {
-            var form = $("#UpdateEditScheduleChurch")[0];
-            var isValid = form.checkValidity();
-            if (!isValid) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            else {
+
                 UpdateChurchSchedule();
             }
             form.classList.add('was-validated');
@@ -227,14 +248,13 @@
         });
     });
 
-  
+
+
 
     function UpdateChurchSchedule() {
-        if ($('#EditRecoredToggle').val().toLowerCase() == 'true' && $('#EditScheduleCameraId').val() == 0) {
-            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
 
-            return false;
-        }
+
+
         var eventName = document.getElementById('EditEventName').value;
         var isRepeat = document.getElementById('EditIsRepeated').value;
         var eventDate = document.getElementById('EditEventDate').value;
@@ -247,6 +267,8 @@
         var passwordtoggle = document.getElementById('EditPasswordToggle').value;
         var password = document.getElementById('SchEditPassword').value;
         var scheduleId = document.getElementById('HdnEditScheduleID').value;
+        var churchId = document.getElementById('EditddlChurchId').value;
+
         var NewFormData = new FormData();
         NewFormData.append("eventName", eventName);
         NewFormData.append("isRepeat", isRepeat);
@@ -259,6 +281,7 @@
         NewFormData.append("password", password);
         NewFormData.append("passwordtoggle", passwordtoggle);
         NewFormData.append("scheduleId", scheduleId);
+        NewFormData.append("churchId", churchId);
         $.ajax({
             type: "POST",
             url: "/ChurchSchedule/UpdateChurchSchedule/",
@@ -286,9 +309,9 @@
     }
     function CheckScheduleData() {
 
+        $('#EditddlChurchId').append("<option value='0' disabled>--Select Church--</option>");
 
-
-        var isCheck = ($('#HdnEditIsrepeated').val() == 'True');
+        var isCheck = ($('#HdnEditIsrepeated').val().toLowerCase() == 'true');
 
 
 
@@ -296,9 +319,16 @@
 
             $('#EditEventDayLabel1').show();
             $('#EditEventDayInput').show();
+
             $('#EditEventLabel1').hide();
             $('#EditEventInput1').hide();
+            $('#EditEventDay').attr('required', 'required');
+
+
+
             $('#EditIsRepeated').val("true");
+
+
 
         }
 
@@ -309,41 +339,53 @@
             $('#EditEventLabel1').show();
             $('#EditEventInput1').show();
             $('#EditIsRepeated').val("false");
+            $('#EditEventDate').attr('required', 'required');
         }
 
 
         var modelpaswordValue = $('#SchEditPassword').val();
 
-        if (modelpaswordValue.length > 1) {
+        if (modelpaswordValue.length > 0) {
 
             ShowPassword();
             $('#EditPasswordToggle').attr('checked', true);
+            $('#SchEditPassword').attr('required', 'required');
+
+
         }
         else {
             HidePassword();
+            $('#SchEditPassword').removeAttr('required', 'required');
+
         }
 
-      
+
 
         var IsRecord = ($('#HdnEditRecordID').val().toLowerCase() == 'true');
+
 
 
         if (IsRecord) {
 
             ShowRecordData();
             $('#EditRecoredToggle').attr('checked', true);
-
+            $('#EditRecoredToggle').val('true');
+            $('#EditScheduleCameraId').attr('required', 'required');
+            $('#EditDuration').attr('required', 'required');
 
 
         }
         else {
             $('#EditRecoredToggle').attr('checked', false);
+            $('#EditRecoredToggle').val('false');
+            $('#EditScheduleCameraId').removeAttr('required', 'required');
+            $('#EditDuration').removeAttr('required', 'required');
             HideRecordData();
         }
 
 
-        DoPostBack();
-
+        DoPostBackEdit();
+        $('#EditScheduleCameraId').val($('#HdnEditCameraId').val());
 
     }
 
@@ -366,6 +408,7 @@
             $('#EditEventLabel1').show();
             $('#EditEventInput1').show();
             $('#EditIsRepeated').val('false');
+            $('#EditEventDate').attr('required', 'required');
             $('#EditEventDate').val($.datepicker.formatDate("dd-MMM-yyyy", new Date()));
 
 
@@ -381,6 +424,8 @@
             $('#EditbtnSchdule').show();
             $('#EditbtnSchCol12').hide();
             $('#EditPasswordToggle').val(true);
+            $('#SchEditPassword').attr('required', 'required');
+
         }
 
         else {
@@ -389,6 +434,8 @@
             $('#EditbtnSchdule').hide();
             $('#EditbtnSchCol12').show();
             $('#EditPasswordToggle').val(false);
+            $('#SchEditPassword').removeAttr('required', 'required');
+
         }
 
 
@@ -399,12 +446,17 @@
 
             ShowRecordData();
             $('#EditRecoredToggle').val('true');
+            $('#EditScheduleCameraId').attr('required', 'required');
+            $('#EditDuration').attr('required', 'required');
+
 
         }
 
         else {
             HideRecordData();
             $('#EditRecoredToggle').val('false');
+            $('#EditScheduleCameraId').removeAttr('required', 'required');
+            $('#EditDuration').removeAttr('required', 'required');
         }
 
 
@@ -444,8 +496,7 @@
         $('#EditEventLabel').show();
         $('#EventInput').show();
 
-        //document.getElementById('divDay').style.display = 'none';
-        //document.getElementById('divDate').style.display = 'block';
+
 
     }
     function ShowDayDiv() {
@@ -458,8 +509,9 @@
 
     }
 
-    function DoPostBack() {
-        var ChurchId = $('#HdnEditSession').val();
+    function DoPostBackEdit() {
+
+        var ChurchId = $('#EditddlChurchId').val();
 
 
         $.ajax({
@@ -469,8 +521,9 @@
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (result) {
-                var s = '<option value="0">--Select Camera--</option>';
+                var s = '<option value="0" disabled>--Select Camera--</option>';
                 $.each(result, function (key, item) {
+
                     s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
 
                 });

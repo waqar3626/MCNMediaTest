@@ -71,7 +71,7 @@
 <div class="card">
     <div class="card-header card-header-custom">
         Manage Schedules
-        <button type="submit" id="AddSchedule1" class="btn btn-outline-behance btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
+        <button type="submit" id="AddSchedule1" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddSchedule()"> <i class="fa fa-plus"></i> Add Schedule</button>
 
     </div>
     <div class="card-body">
@@ -180,7 +180,7 @@
 
                                     <td>
                                         <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="@Url.Action("Delete", "Schedule", new { id=item.ScheduleId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                        <a onclick="DeleteSchedule(@item.ScheduleId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>
 
                                     </td>
                                 </tr>
@@ -245,9 +245,7 @@
         loadSchedule();
     });
 
-
-
-     function Open(camId) {
+    function Open(camId) {
         $.ajax({
             type: "Get",
             url: '@Url.Action("EditCamera", "Camera")',
@@ -257,6 +255,35 @@
                 $('#EditModal').modal('show');
             }
         })
+    }
+
+    function DeleteSchedule(ScheduleID) {
+
+        swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your file has been deleted!", {
+        icon: "success",
+
+    });
+
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Delete", "Schedule")',
+            data: { id: ScheduleID },
+
+        });
+      window.location.reload();
+  } else {
+         swal("Your file is safe!");
+  }
+});
     }
 
 
@@ -325,7 +352,7 @@
 
             }
         })
-        
+
     }
 
 </script>

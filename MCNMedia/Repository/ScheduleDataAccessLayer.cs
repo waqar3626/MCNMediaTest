@@ -154,7 +154,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchPassword", schedule.Password);
             _dc.AddParameter("IsRepeated", schedule.IsRepeated);
             _dc.AddParameter("SchCameraId", schedule.CameraId);
-
+            _dc.AddParameter("SchChurchId", schedule.ChurchId);
             return _dc.Execute("spSchedule_Update");
         }
 

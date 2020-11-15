@@ -106,10 +106,10 @@
             dataType: "json",
             success: function (result) {
                 var html = '';
-                
+
                 $.each(result, function (key, item) {
                     html += '<tr>';
-                   
+
                     html += '<td>' + item.cameraName + '</td>';
                     html += '<td>' + item.httpPort + '</td>';
                     html += '<td>' + item.rtspPort + '</td>';
@@ -147,23 +147,40 @@
             }
 
     function DeleteCamera(camId) {
-    var ans = confirm("Are you sure you want to delete this camera?");
-    if (ans) {
-        $.ajax({
+
+        swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+   
+          $.ajax({
             url: "/Camera/DeleteCamera/" + camId,
             type: "POST",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
                 loadCamera();
-                if (result) { alert("Record Deleted");}
+                if (result) {
+                    swal("Poof! Your file has been deleted!", {
+                        icon: "success",
+
+                    });}
             },
             error: function (errormessage) {
                // alert(errormessage.responseText);
             }
         });
-    }
+  } else {
+         swal("Your file is safe!");
+  }
+});
+   
     }
 
-    
+
 </script>

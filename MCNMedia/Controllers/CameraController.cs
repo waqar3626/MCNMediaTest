@@ -60,6 +60,7 @@ namespace MCNMedia_Dev.Controllers
 
                         gm.ResultMessage = "Camera Added Sucessfully";
                         gm.LCameras = camDataAccess.GetAllCameras(churchId);
+                     
                         HttpContext.Session.SetString("TabName", "Camera");
                         var queryString = new { chId = churchId };
                         return Json(new { success = true, responseText = "The attached file is not supported." });

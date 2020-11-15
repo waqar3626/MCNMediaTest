@@ -58,12 +58,12 @@
                         </span>
                     </div>
 
-
+                    <div class="invalid-feedback" id="addChurchSchudevalidation">
+                        Please provide a valid Event Date.
+                    </div>
 
                 </div>
-                <div class="invalid-feedback">
-                    Please provide a valid Event Date.
-                </div>
+               
 
 
 
@@ -127,14 +127,19 @@
 
                 <div class="col-sm-4 ">
                     <span asp-validation-for="CameraId" class="text-danger"></span>
-                    <select asp-for="CameraId" name="CameraId" class="form-control" id="AddScheduleCameraId">                                                    </select>
+                    <select asp-for="CameraId" name="CameraId" class="custom-select" id="AddScheduleCameraId">
+                    </select>
+                    <div class="invalid-feedback">
+                        Please Select A valid Camera
+                    </div>
                 </div>
 
                 <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
 
                 <div class="col-sm-4 ">
                     <span asp-validation-for="RecordDuration" class="text-danger"></span>
-                    <select asp-for="RecordDuration" class="form-control" id="RecordDuration">
+                    <select asp-for="RecordDuration" class="custom-select" id="RecordDuration">
+                        <option value="0" disabled selected>--Select Record Duration--</option>
                         <option value="30" name="RecordDuration">30 Minutes</option>
                         <option value="40" name="RecordDuration">40 Minutes</option>
                         <option value="60" name="RecordDuration">1 Hour</option>
@@ -145,6 +150,9 @@
 
 
                     </select>
+                    <div class="invalid-feedback">
+                        Please Select A valid Duration
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
@@ -164,10 +172,13 @@
                 <div class="col-sm-4 " id="AddSchPassword">
                     <span asp-validation-for="Password" class="text-danger"></span>
                     <input type="text" asp-for="Password" class="form-control" placeholder="Password" id="AddTextPassword" />
+                   <div class="invalid-feedback">
+                       Please Provide a valid Password
+                   </div>
                 </div>
                 <div class="col-sm-6" id="AddbtnSchdule">
                     <div class="float-right">
-                        <a id="addScheduleVal1" value="Create" class="btn btn-success btn-sm text-white " title="Add"><i class="mdi mdi-content-save "></i> Add</a>
+                        <a id="addScheduleVal1" value="Create" class="btn btn-success btn-sm text-white addchurchscheduleclick " title="Add"><i class="mdi mdi-content-save "></i> Add</a>
                         <a id="back" class="btn btn-warning btn-sm  text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                         
@@ -178,7 +189,7 @@
 
                 <div class="col-sm-12" id="AddbtnSchdulecol12">
                     <div class="float-right">
-                        <a id="addScheduleVal2" value="Create" class="btn btn-success btn-sm text-white " title="Add"><i class="mdi mdi-content-save "></i> Add</a>
+                        <a id="addScheduleVal2" value="Create" class="btn btn-success btn-sm text-white addchurchscheduleclick " title="Add"><i class="mdi mdi-content-save "></i> Add</a>
                         <a id="back" class="btn btn-warning btn-sm  text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                     </div>
                 </div>
@@ -194,10 +205,19 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#addScheduleVal1").on("click", function (e) {
+        $(".addchurchscheduleclick").on("click", function (e) {
             var form = $("#AddScheduleChurch")[0];
             var isValid = form.checkValidity();
             if (!isValid) {
+                if ($('#IsRepeated').val().toLowerCase() == 'false' && $('#EventDate').val() == '') {
+
+                    $('#datepicker-popup2').attr('class', 'input-group date datepicker border-danger');
+                    $('#addChurchSchudevalidation').attr('style', 'display:block');
+
+
+
+
+                }
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -208,21 +228,7 @@
             return false; // For testing only to stay on this page
         });
     });
-    $(function () {
-        $("#addScheduleVal2").on("click", function (e) {
-            var form = $("#AddScheduleChurch")[0];
-            var isValid = form.checkValidity();
-            if (!isValid) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            else {
-                checkScheduleAdd();
-            }
-            form.classList.add('was-validated');
-            return false; // For testing only to stay on this page
-        });
-    });
+  
 
 
    
@@ -298,6 +304,8 @@
         $('#AddpasswordToggle').val("false");
         $('#AddpasswordToggle').val("false");
         $('#AddToggleRecord').val("false");
+        $('#EventDate').attr('required', 'required');
+
         
 
         AddHidePassword();
@@ -306,7 +314,18 @@
         AddDoPostBack();
     });
 
+    $('#EventDate').change(function () {
+        if ($('#EventDate').val().length > 0) {
 
+            $('#datepicker-popup2').attr('class', 'input-group date datepicker border-success');
+            $('#addChurchSchudevalidation').removeAttr('style', 'display:block');
+        }
+        else {
+            $('#datepicker-popup2').attr('class', 'input-group date datepicker border-danger');
+            $('#addChurchSchudevalidation').attr('style', 'display:block');
+        }
+
+    });
 
 
     $('#IsRepeated').change(function () {
@@ -318,6 +337,12 @@
             $('#EventLabel1').hide();
             $('#EventInput1').hide();
             $(this).val("true");
+            $('#EventDay').attr('required', 'required');
+            $('#EventDate').removeAttr('required', 'required');
+
+
+           
+       
         }
 
         else {
@@ -326,6 +351,9 @@
             $('#EventLabel1').show();
             $('#EventInput1').show();
             $(this).val("false");
+            $('#EventDay').removeAttr('required', 'required');
+            $('#EventDate').attr('required', 'required');
+        
 
         }
 
@@ -336,12 +364,15 @@
         if (this.checked) {
            
             $('#AddpasswordToggle').val("true");
+            $('#AddTextPassword').attr('required', 'required');
+
             AddShowPassword();
         }
 
         else {
         
             $('#AddpasswordToggle').val("false");
+            $('#AddTextPassword').removeAttr('required', 'required');
             AddHidePassword();
         }
 
@@ -352,11 +383,15 @@
         if (this.checked) {
             AddShowRecordData();
             $('#AddToggleRecord').val("true");
-        }
+            $('#AddScheduleCameraId').attr('required', 'required');
+            $('#RecordDuration').attr('required', 'required');
+               }
 
         else {
             AddHideRecordData();
             $('#AddToggleRecord').val("false");
+            $('#AddScheduleCameraId').removeAttr('required', 'required');
+            $('#RecordDuration').removeAttr('required', 'required');
         }
 
 
@@ -405,7 +440,7 @@
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (result) {
-                var s='<option value="0">--Select Camera--</option>';
+                var s ='<option value="0" disabled selected>--Select Camera--</option>';
                 $.each(result, function (key, item) {
                     s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
 
