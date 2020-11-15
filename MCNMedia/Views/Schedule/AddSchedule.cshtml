@@ -65,19 +65,20 @@
                     <div class="col-sm-4" id="EventInput1">
                         <span asp-validation-for="EventDate" class="text-danger"></span>
                         <div id="datepicker-popup3" class="input-group date datepicker">
-                            <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" />
-
                             <span class="input-group-addon input-group-append border-left">
                                 <span class="ti-calendar input-group-text"></span>
                             </span>
+                            <input type="text" asp-for="EventDate" class="form-control" id="validationCustom05" placeholder="Event Date" />
+                           
+
                         </div>
-                      
+                        <div class="invalid-feedback" id="EventDateValidation" >
+                            Please provide a valid Event Date.
+                        </div>
 
 
                     </div>
-                    <div class="invalid-feedback">
-                        Please provide a valid Event Date.
-                    </div>
+                   
 
 
 
@@ -97,7 +98,7 @@
                             <option value="Sunday" name="EventDay">Sunday</option>
 
                         </select>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" >
                             Please provide a valid Event Day.
                         </div>
                     </div>
@@ -141,14 +142,19 @@
 
                     <div class="col-sm-4 ">
                         <span asp-validation-for="CameraId" class="text-danger"></span>
-                        <select asp-for="CameraId" name="CameraId" class="form-control" id="CameraId">                                                    </select>
+                        <select asp-for="CameraId" name="CameraId" class="custom-select" id="CameraId">
+                        </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Camera.
+                        </div>
                     </div>
 
                     <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
 
                     <div class="col-sm-4 ">
                         <span asp-validation-for="RecordDuration" class="text-danger"></span>
-                        <select asp-for="RecordDuration" class="form-control" id="Lenght">
+                        <select asp-for="RecordDuration" class="custom-select" id="Lenght">
+                            <option value="0" disabled selected>--Select--</option>
                             <option value="30" name="Length">30 Minutes</option>
                             <option value="40" name="Length">40 Minutes</option>
                             <option value="60" name="Length">1 Hour</option>
@@ -159,6 +165,9 @@
 
 
                         </select>
+                        <div class="invalid-feedback">
+                            Please provide a valid Record Duration.
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -177,7 +186,11 @@
                     <label asp-for="Password" id="lblPassword" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-4 " id="SchPassword">
                         <span asp-validation-for="Password" class="text-danger"></span>
-                        <input type="text" asp-for="Password" class="form-control" placeholder="Password" />
+                        <input type="text" asp-for="Password" class="form-control" placeholder="Password" id="TxBxPassword" />
+                        <div class="invalid-feedback">
+                            Please Provide a Valid Password
+                        </div>
+
                     </div>
                     <div class="col-sm-6" id="btnSchdule">
                         <div class="float-right">
@@ -215,60 +228,44 @@
         $('#EventInput1').show();
         $('#IsRepeated').val("false");
         $('#ToggleRecord').val('false');
+        $('#validationCustom05').attr('required', 'required');
+      
         HidePasswordAdd();
         HideRecordDataAdd();
         
         DoPostBackAdd();
     });
 
-    //$('#addScheduleVal').click(function () {
+    $('#addScheduleVal').click(
+        function () {
 
-    //    if ($('#ddlChurchId').val() == '0') {
+            CheckAddScheduleValidate();
+        });
+    $('#addScheduleVal24').click(
+        function () {
 
-    //        $('#alertLabel').html("Please Provide a valid Church");
-    //        $('#alertDiv').show();
-    //    }
-    //    else {
+            CheckAddScheduleValidate();
+        });
 
-    //        if($('#validationCustom05').val() != '' || $('#validationCustom06').val() != '0') {
+    function CheckAddScheduleValidate() {
+        if ($('#IsRepeated').val().toLowerCase() == 'false' && $('#validationCustom05').val() == '') {
+            $('#datepicker-popup3').attr('class', 'input-group date datepicker border-danger');
+            $('#EventDateValidation').attr('style', 'display:block');
+            $('#validationCustom06').removeAttr('required', 'required');
 
+            return false;
 
-    //        $('#validationCustom05').removeAttr('required');
-    //        $('#validationCustom06').removeAttr('required');
-    //            $('#alertDiv').hide();
+        }
+        else  {
 
+            $('#datepicker-popup3').attr('class', 'input-group date datepicker border-success');
+            $('#EventDateValidation').removeAttr('style', 'display:block');
+            return true;
+        }
+        
 
-    //    }
-    //    else {
-    //        var check = $('#IsRepeated').val();
+    }
 
-
-
-    //        if (check == 'true') {
-
-    //            $('#alertLabel').html("Please Provide Day");
-
-
-
-    //        }
-    //        else {
-
-    //            $('#alertLabel').text("Please Provide Date");
-
-
-    //        }
-    //        $('#alertDiv').show();
-
-    //    }
-
-
-    //    }
-
-     
-
-
-    //});
-    
 
     $('#IsRepeated').change(function () {
       
@@ -279,6 +276,13 @@
             $('#EventLabel1').hide();
             $('#EventInput1').hide();
             $(this).val("true");
+            $('#validationCustom05').removeAttr('required', 'required');
+            $('#validationCustom06').attr('required', 'required');
+     
+
+          
+
+            
         }
 
         else {
@@ -287,6 +291,12 @@
             $('#EventLabel1').show();
             $('#EventInput1').show();
             $(this).val("false");
+            $('#validationCustom05').attr('required', 'required');
+            $('#validationCustom06').removeAttr('required', 'required');
+
+
+      
+          
 
         }
 
@@ -295,10 +305,12 @@
     $('#customSwitch1').change(function () {
         if (this.checked) {
             ShowPasswordAdd();
+            $('#TxBxPassword').attr('required', 'required');
         }
 
         else {
             HidePasswordAdd();
+            $('#TxBxPassword').removeAttr('required', 'required');
         }
 
 
@@ -308,11 +320,15 @@
         if (this.checked) {
             ShowRecordDataAdd();
             $('#ToggleRecord').val('true');
+            $('#CameraId').attr('required', 'required');
+            $('#Lenght').attr('required', 'required');
         }
 
         else {
             HideRecordDataAdd();
             $('#ToggleRecord').val('false');
+            $('#CameraId').removeAttr('required', 'required');
+            $('#Lenght').removeAttr('required', 'required');
         }
 
 
@@ -346,29 +362,7 @@
    
     }
 
-    $('#addScheduleVal').click(function () {
-        if ($('#ToggleRecord').val() == 'true' && $('#CameraId').val() == 0) {
-            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
-            
-            return false;
-        }
-        else {
-            return true;
-        }
-
-
-    });
-    $('#addScheduleVal24').click(function () {
-        if ($('#ToggleRecord').val() == 'true' && $('#CameraId').val() == 0) {
-            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
-
-            return false;
-        }
-        else {
-            return true;
-        }
-
-    });
+  
 
     function DoPostBackAdd() {
         var ChurchId = document.getElementById('ddlChurchId').value;
@@ -380,7 +374,7 @@
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (result) {
-                var s='<option value="0">--Select Camera--</option>';
+                var s='<option value="0" disabled selected>--Select Camera--</option>';
                 $.each(result, function (key, item) {
                     s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
 

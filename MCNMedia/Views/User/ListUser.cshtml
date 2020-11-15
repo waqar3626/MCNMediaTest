@@ -124,7 +124,7 @@
                                     <td>
                                         <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
                                         <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                        <a onclick="DeleteUserClick(@item.UserId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
 
 
@@ -193,6 +193,36 @@
                 $('#EditUserModal').modal('show');
             }
         });
+
+    }
+    function DeleteUserClick(UserId) {
+
+        swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your file has been deleted!", {
+        icon: "success",
+
+    });
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Delete", "User")',
+            data: { id: UserId },
+          
+        });
+      window.location.reload();
+  } else {
+         swal("Your file is safe!");
+  }
+});
+
+
     }
 
     function OpenPopup_AddUser() {
