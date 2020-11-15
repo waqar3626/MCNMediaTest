@@ -17,19 +17,24 @@ namespace MCNMedia_Dev.Controllers
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
+        PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+
+        GenericModel gm = new GenericModel();
+
         public IActionResult Home()
         {
             try
             {
-
                 LoadCountryDDL();
                 HttpContext.Session.SetString("UserType", "website");
-                List<Church> churches = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
-                return View(churches);
+                gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
+                gm.LSchedules = UpComingSchedules();
+                gm.CountryList = _placeAccessLayer.GetCountries();
+                return View(gm);
             }
             catch (Exception e)
             {
-                ShowMesage("Home : "+e.Message);
+                ShowMesage("Home : " + e.Message);
                 throw;
             }
         }
@@ -39,17 +44,18 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericSchedule gmSch = new GenericSchedule();
-                 gmSch.List1  = _scheduleDataAccessLayer.GetWebsiteSchedule_TodaySchedules().ToList<Schedule>();
-                gmSch.List2 = UpComingSchedules();
-                gmSch.List3 = Schedules_WhatsOnNow();
+                gmSch.TodaySchedule = _scheduleDataAccessLayer.GetWebsiteSchedule_TodaySchedules().ToList<Schedule>();
+                gmSch.UpcomingSchedule = UpComingSchedules();
+                gmSch.CurrentSchedule = Schedules_WhatsOnNow();
                 return View(gmSch);
             }
             catch (Exception e)
             {
-                ShowMesage("Schedules Error : " +e.Message);
+                ShowMesage("Schedules Error : " + e.Message);
                 throw;
             }
         }
+
         private IEnumerable<Schedule> Schedules_WhatsOnNow()
         {
             try
@@ -65,6 +71,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
+
         private IEnumerable<Schedule> UpComingSchedules()
         {
             try
@@ -81,7 +88,6 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-
         public IActionResult ContactUs()
         {
             try
@@ -94,45 +100,86 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
+
         public IActionResult Churches()
         {
             try
             {
-
-                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(-1).ToList();
-                return View(churches);
+                gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(1).ToList();
+                gm.CountryList = _placeAccessLayer.GetCountries();
+                return View(gm);
             }
             catch (Exception e)
             {
-                ShowMesage("Churches : "+e.Message);
+                ShowMesage("Churches : " + e.Message);
                 throw;
             }
         }
+
         public IActionResult Cathedrals()
         {
             try
             {
-
-                LoadCountryDDL();
-                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
-                return View(churches);
+                gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
+                gm.CountryList = _placeAccessLayer.GetCountries();
+                return View(gm);
             }
             catch (Exception e)
             {
-                ShowMesage("Cathedrals"+e.Message);
+                ShowMesage("Cathedrals" + e.Message);
                 throw;
             }
         }
+
         public IActionResult FuneralHomes()
         {
             try
             {
-                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(3).ToList();
-                return View(churches);
+                gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(3).ToList();
+                gm.CountryList = _placeAccessLayer.GetCountries();
+                return View(gm);
             }
             catch (Exception e)
             {
-                ShowMesage("FuneralHomes : "+e.Message);
+                ShowMesage("FuneralHomes : " + e.Message);
+                throw;
+            }
+        }
+
+        public IActionResult Cameras()
+        {
+            try
+            {
+                List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(clientTypeId: -1).ToList<Church>();
+
+                if (!string.IsNullOrEmpty(HttpContext.Request.Query["Country"].ToString()))
+                {
+                    string countryName = Request.Query["Country"].ToString().Replace("-", " ");
+                    churches = churches.FindAll(x => x.CountryName.ToLower() == countryName.ToLower()).ToList<Church>();
+                }
+
+                if (!string.IsNullOrEmpty(HttpContext.Request.Query["County"].ToString()))
+                {
+                    string countyName = Request.Query["County"].ToString().Replace("-", " ");
+                    churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
+                }
+
+                if (!string.IsNullOrEmpty(HttpContext.Request.Query["Search"].ToString()))
+                {
+                    string searchFilter = Request.Query["Search"].ToString().ToLower();
+                    churches = churches.FindAll(x => x.CountyName.ToLower().Contains(searchFilter) ||
+                    x.Address.ToLower().Contains(searchFilter) ||
+                    x.CountryName.ToLower().Contains(searchFilter) ||
+                    x.CountyName.ToLower().Contains(searchFilter)).ToList<Church>();
+                }
+
+                gm.ChurchList = churches;
+                gm.CountryList = _placeAccessLayer.GetCountries();
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Camera : " + e.Message);
                 throw;
             }
         }
@@ -148,7 +195,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Load County DropDown : "+e.Message);
+                ShowMesage("Load County DropDown : " + e.Message);
                 throw;
             }
 
@@ -170,7 +217,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Load Country DropDown : "+e.Message);
+                ShowMesage("Load Country DropDown : " + e.Message);
                 throw;
             }
         }
@@ -191,11 +238,20 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-
         public IActionResult AddContactForm(Website website)
         {
             _websiteDataAccessLayer.AddContactForm(website);
             return RedirectToAction("Home");
+        }
+
+        public ViewResult Terms()
+        {
+            return View();
+        }
+
+        public ViewResult Privacy()
+        {
+            return View();
         }
 
         private void ShowMesage(String exceptionMessage)

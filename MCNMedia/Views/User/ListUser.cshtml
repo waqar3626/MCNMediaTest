@@ -5,109 +5,105 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="card mb-3">
-        <div class="card-header card-header-custom">
-            Search User
-        </div>
-        <div class="card-body">
-
-            <div class="">
-                <form method="post" asp-action="Search" asp-controller="user">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">First Name</label>
-                                <div class="col-sm-8">
-                                    @Html.TextBox("FirstName", "", new { @class = "form-control", @placeholder = "Enter First Name" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Last Name</label>
-                                <div class="col-sm-8">
-                                    @Html.TextBox("LastName", "", new { @class = "form-control", @placeholder = "Enter Last Name" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Email Address</label>
-                                <div class="col-sm-8">
-                                    @Html.TextBox("EmailAddress", "", new { @class = "form-control", @placeholder = "Enter Email Address" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Role </label>
-                                <div class="col-sm-8">
-                                    <select id="ddlRoleSearch" name="Role" class="form-control">
-                                        <option value="-1">All</option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Client</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <div class="col-sm-4 col-form-label"><label></label></div>
-                                <div class="col-sm-8">
-                                    <button type="submit" class="btn btn-primary btn-sm" title="Search"><i class="mdi mdi-table-search"></i> Search</button>
-                                    <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
-                                </div>
+<div class="card mb-3">
+    <div class="card-header card-header-custom">
+        Search User
+    </div>
+    <div class="card-body">
+        <div class="">
+            <form method="post" asp-action="Search" asp-controller="user">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">First Name</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("FirstName", "", new { @class = "form-control", @placeholder = "Enter First Name" })
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Last Name</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("LastName", "", new { @class = "form-control", @placeholder = "Enter Last Name" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Email Address</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("EmailAddress", "", new { @class = "form-control", @placeholder = "Enter Email Address" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Role </label>
+                            <div class="col-sm-8">
+                                <select id="ddlRoleSearch" name="Role" class="form-control">
+                                    <option value="-1">All</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Client</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-form-label"><label></label></div>
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary btn-sm" title="Search"><i class="mdi mdi-table-search"></i> Search</button>
+                                <a asp-controller="User" asp-action="ListUser" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="card">
-        <div class="card-header card-header-custom">
-            Manage User
-            <a id="ADDEmployee" onclick="AddUser1()" class="btn btn-outline-behance btn-sm float-right " title="Add New"> <i class="mdi mdi-plus"></i> Add User</a>
-            </div>
-            <div class="card-body">
+<div class="card">
+    <div class="card-header card-header-custom">
+        <button id="AddUser" onclick="OpenPopup_AddUser()" class="btn btn-outline-warning btn-custom btn-sm float-right " title="Add New"> <i class="mdi mdi-plus"></i> Add User</button>
+        Manage Users
+    </div>
+    <div class="card-body">
+        <div class="">
+            <form method="get">
+                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                    <table id="sortable-table-1" class="table">
+                        <thead>
+                            <tr>
+                                <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                <div class="">
-                    <form method="get">
-
-
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                            <table id="sortable-table-1" class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach (var item in Model.LUsers)
+                            @foreach (var item in Model.LUsers)
                             {
-                                    <tr>
-                                        @*<td>
-                                        @Html.DisplayFor(modelItem => item.UserId)
-                                    </td>*@
-                                        <td class="text-wrap">
+                                <tr>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.UserId)
+                                        </td>*@
+                                    <td class="text-wrap">
 
-                                            @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
-                                            @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap", @id = "hdnUserId" })
+                                        @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
+                                        @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap", @id = "hdnUserId" })
 
-                                        </td>
+                                    </td>
 
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
-                                        </td>
-                                        <td class="text-wrap">
-                                            @{
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
+                                    </td>
+                                    <td class="text-wrap">
+                                        @{
                                             var Church = item.ChurchName.ToString();
                                             var Name = Church.Split("|");
 
@@ -119,76 +115,75 @@
                                             }
 
 
-                                            }
-                                        </td>
+                                        }
+                                    </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RoleName)
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
-                                            <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoleName)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                        <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", "User", new { id=item.UserId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
 
 
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
                             }
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                    </form>
+                        </tbody>
+                    </table>
                 </div>
 
-            </div>
+
+            </form>
         </div>
-        <div class="row">
-            <div class="col-12 grid-margin">
-                <div class="modal fade" id="AddUserPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
-                                </button>
-                            </div>
-                            <div class="modal-body" id="AddUserPreview">
-                                @Html.Partial("~/Views/User/AddUser.cshtml", Model.Users)
-                            </div>
-                        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddUserPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddUserPreview">
+                        @Html.Partial("~/Views/User/AddUser.cshtml", Model.Users)
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="row">
-            <div class="col-12 grid-margin">
-                <div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
-                                </button>
-                            </div>
-                            <div class="modal-body" id="EditUserPreview">
-                                @Html.Partial("~/Views/User/Edit.cshtml", Model.Users)
-                            </div>
-                        </div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditUserPreview">
+                        @Html.Partial("~/Views/User/Edit.cshtml", Model.Users)
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
 
-        <script type="text/javascript">
+<script type="text/javascript">
     function EditUserClick(userId) {
-
         $.ajax({
             type: "Get",
             url: '@Url.Action("Edit", "User")',
@@ -200,21 +195,17 @@
         });
     }
 
-    function AddUser1() {
-
-
+    function OpenPopup_AddUser() {
         $('#AddUserPopUp').modal('show');
-
     }
-
 
     $(document).ready(function () {
         var UserTpe = '@ViewBag.UserType';
         $('#ddlRoleSearch').val(UserTpe);
-        $("#ADDEmployee").on("click", function (e) {
+        $("#AddUser").on("click", function (e) {
             var url = $(this).attr('href');
             $("#dialog-edit").dialog({
-                title: 'Add New Employee',
+                title: 'Add New User',
                 autoOpen: false,
                 resizable: false,
                 height: 455,
@@ -235,4 +226,4 @@
             return false;
         });
     });
-        </script>
+</script>

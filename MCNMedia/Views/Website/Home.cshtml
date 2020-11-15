@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.Church>;
+﻿@model MCNMedia_Dev.Models.GenericModel;
 @using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Home";
@@ -13,352 +13,352 @@
     }
     List<SelectListItem> SelectList = Lists.GetCountyList(id);
 }
-<style>
-    .blur {
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        -webkit-filter: blur(5px);
-        -moz-filter: blur(5px);
-        -o-filter: blur(5px);
-        -ms-filter: blur(5px);
-        filter: blur(5px);
-    }
 
-    .selectWrapper {
-        border-radius: 40px;
-        display: inline-block;
-        overflow: hidden;
-        background: #cccccc;
-        border: 1px solid #cccccc;
-    }
+<!-- banner slider start -->
+<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/WebsiteAssets/img/banner-1.png" class="d-block h-700" alt="...">
+            <div class="carousel-caption">
+                <h5 class="nexa font-60">MCN MEDIA</h5>
+                <p class="font-36 MyriadPro">
+                    Europe's Leading Specialists <br>
+                    in Live Streaming
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/WebsiteAssets/img/banner-1.png" class="d-block h-700" alt="...">
+            <div class="carousel-caption">
+                <h5 class="nexa font-60">Do you want start streaming?</h5>
+                <p class="font-36 MyriadPro">
+                    <div style="width: 220px; margin: auto; text-align: left;">
+                        <div class="fas fa-video mt-3 display-5 "><span class="text-white pl-4">HD Streaming</span></div>
+                        <br />
+                        <div class="fa fa-rss mt-3 display-5 "><span class="text-white pl-4">International Access</span></div>
+                        <br />
+                        <div class="fa fa-lock mt-3 display-5 "><span class="text-white pl-4">Password Protection</span></div>
+                        <br />
+                        <div class="fa fa-universal-access mt-3 display-5 "><span class="text-white pl-4">Access for Sick / Elderly</span></div>
+                        <br />
+                        <div class="fa fa-globe mt-3 display-5 "><span class="text-white pl-4">Viewing Abroad</span></div>
+                        <br />
+                        <div class="fa fa-cogs mt-3 display-5 "><span class="text-white pl-4">Full Website Integration</span></div>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/WebsiteAssets/img/banner-1.png" class="d-block h-700" alt="...">
+            <div class="carousel-caption">
+                <h5 class="nexa font-60">Contact Us</h5>
+                <p class="font-36 MyriadPro">
+                    <div style="width: 200px; margin: auto; text-align: left;">
+                        <div class="fa fa-phone mt-3 display-5 "><a href="tel:+442887729580" class="text-white pl-4">+44 2887729580</a></div>
+                        <br />
+                        <div class="fa fa-envelope mt-3 display-5  mb-3"><a href="mailto:support@watchmcnmedia.tv" class="text-white pl-4">support@watchmcnmedia.tv</a></div>
+                    </div>
+                </p>
+                <p class="font-36 MyriadPro">
 
-    .main-timeline {
-        font-family: 'Nunito Sans', sans-serif;
-        position: relative;
-    }
-
-        .main-timeline:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-
-        .main-timeline .timeline {
-            width: 50%;
-            margin: 0 10px 30px 0;
-            float: left;
-        }
-
-        .main-timeline .timeline-content {
-            color: #fff;
-            text-align: right;
-            display: block;
-            position: relative;
-            z-index: 1;
-        }
-
-            .main-timeline .timeline-content:hover {
-                text-decoration: none;
-            }
-
-            .main-timeline .timeline-content:before,
-            .main-timeline .timeline-content:after {
-                content: "";
-                background: #E91E63;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                right: 0;
-                z-index: -1;
-                -webkit-clip-path: polygon(10% 0, 100% 10%, 95% 100%, 0 90%);
-                clip-path: polygon(10% 0, 100% 10%, 95% 100%, 0 90%);
-            }
-
-            .main-timeline .timeline-content:after {
-                background-color: #000;
-                z-index: -2;
-                -webkit-clip-path: polygon(10% 10%, 95% 0, 90% 90%, 5% 100%);
-                clip-path: polygon(10% 10%, 95% 0, 90% 90%, 5% 100%);
-            }
-
-        .main-timeline .timeline-icon {
-            color: #fff;
-            background-color: #E91E63;
-            font-size: 40px;
-            text-align: center;
-            line-height: 90px;
-            height: 90px;
-            width: 90px;
-            border-radius: 50%;
-            box-shadow: 0 0 7px #000, 0 0 0 22px #fff,0 0 10px 20px #000;
-            display: block;
-            transform: translateY(-50%);
-            position: absolute;
-            top: 60%;
-            right: -45px;
-        }
-
-        .main-timeline .inner-content {
-            padding: 30px 85px 40px 40px;
-        }
-
-        .main-timeline .title {
-            font-size: 20px;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin: 0 0 10px;
-        }
-
-        .main-timeline .description {
-            font-size: 15px;
-            margin: 0;
-        }
-
-        .main-timeline .timeline:nth-child(even) {
-            float: right;
-            margin: 0 0 30px 10px;
-        }
-
-            .main-timeline .timeline:nth-child(even) .timeline-content {
-                text-align: left;
-            }
-
-                .main-timeline .timeline:nth-child(even) .timeline-content:before,
-                .main-timeline .timeline:nth-child(even) .timeline-content:after {
-                    transform: rotateY(180deg);
-                }
-
-            .main-timeline .timeline:nth-child(even) .timeline-icon {
-                left: -45px;
-                right: auto;
-            }
-
-            .main-timeline .timeline:nth-child(even) .inner-content {
-                padding: 30px 40px 40px 85px;
-            }
-
-        .main-timeline .timeline:nth-child(4n+2) .timeline-content:before,
-        .main-timeline .timeline:nth-child(4n+2) .timeline-icon {
-            background-color: #2196F3;
-        }
-
-        .main-timeline .timeline:nth-child(4n+3) .timeline-content:before,
-        .main-timeline .timeline:nth-child(4n+3) .timeline-icon {
-            background-color: #009688;
-        }
-
-        .main-timeline .timeline:nth-child(4n+4) .timeline-content:before,
-        .main-timeline .timeline:nth-child(4n+4) .timeline-icon {
-            background-color: #FF5722;
-        }
-
-    .media screen and (max-width:767px) {
-        .main-timeline .timeline
-
-    {
-        width: 100%;
-        margin: 0 0 40px;
-    }
-
-    .main-timeline .timeline-content,
-    .main-timeline .timeline:nth-child(even) .timeline-content {
-        text-align: left;
-        margin: 0 0 0 40px;
-    }
-
-        .main-timeline .timeline-content:before,
-        .main-timeline .timeline-content:after {
-            transform: rotateY(180deg);
-        }
-
-        .main-timeline .timeline-content:before {
-            -webkit-clip-path: polygon(3% 0, 100% 5%, 97% 100%, 0 95%);
-            clip-path: polygon(3% 0, 100% 5%, 97% 100%, 0 95%);
-        }
-
-    .main-timeline .timeline-icon,
-    .main-timeline .timeline:nth-child(even) .timeline-icon {
-        font-size: 30px;
-        line-height: 60px;
-        height: 60px;
-        width: 60px;
-        box-shadow: 0 0 5px #000, 0 0 0 10px #fff,0 0 10px 7px #000;
-        right: auto;
-        left: -30px;
-        top: 50%;
-    }
-
-    .main-timeline .inner-content,
-    .main-timeline .timeline:nth-child(even) .inner-content {
-        padding: 30px 20px 40px 50px;
-    }
-
-    .main-timeline .title {
-        font-size: 18px;
-    }
-    }
-    .home1 {
-        background-image: url( "/Images/wbsite church image.jpg");
-        background-position: center center;
-        background-repeat : no-repeat;
-        background-attachment:fixed;
-        background-size:cover;
-           }
-</style>
-<div class="card h-100 w-auto home1 ">
-
-<div class="card-body">
-
-    <div class="pt-4 ml-3 font-weight-bolder text-white ">
-        <h2>WELCOME TO</h2>
-        <h1 style="color:darkgoldenrod">MCN MEDIA</h1>
-        <h3>Europe's Leading Specialists in Live Streaming</h3>
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="row pt-5 justify-content-center">
-        <div class="row text-center">
-            @foreach (Church church in Model)
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<!-- banner slider end -->
+<!-- find curch start -->
+<div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+    Find your Church
+</div>
+<div class="bg-blue pt-5 pb-5">
+    <div class="container">
+        <div class="row m-0">
+            <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 ml-auto">
+                <div class="input-serch-d position-relative">
+                    @*<input list='text_editors' class="empty" placeholder="&#xF002;  Select Country">
+                        <i class="far fa-angle-down srch-dopr-icn"></i>*@
+
+                    <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
+                        <option value="-1">--Select Country--</option>
+                    </select>
+                </div>
+                @*<datalist id="text_editors">
+                        <select multiple size=8>
+                                <option value="Atom">Atom</option>
+                                <option value="Brackets">Brackets</option>
+                                <option value="Notepad ++">Notepad ++</option>
+                                <option value="Notepad">Notepad</option>
+                                <option value="Sublime Text">Sublime Text</option>
+                                <option value="TextEdit">TextEdit</option>
+                                <option value="TextMate">TextMate</option>
+                                <option value="Wordpad">Wordpad</option>
+                            </select>
+                    </datalist>*@
+            </div>
+            <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 mr-auto">
+                <div class="input-serch-d position-relative">
+                    @*<input list='text_editors2' class="empty" placeholder="&#xF002;  Select State">
+                        <i class="far fa-angle-down srch-dopr-icn"></i>*@
+                    <select name="County" class="select-search" id="County" onchange="SearchCameraByCounty();" >
+                        <option value="-1">--Select County--</option>
+                    </select>
+                </div>
+                @* <datalist id="text_editors2">
+
+                    <select multiple size=8>
+                        <option value="Atom">Atom</option>
+                        <option value="Brackets">Brackets</option>
+                        <option value="Notepad ++">Notepad ++</option>
+                        <option value="Notepad">Notepad</option>
+                        <option value="Sublime Text">Sublime Text</option>
+                        <option value="TextEdit">TextEdit</option>
+                        <option value="TextMate">TextMate</option>
+                        <option value="Wordpad">Wordpad</option>
+                    </select>
+                    </datalist>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row m-0 mt-5 mb-5">
+    <div class="col-1 d-lg-block d-none"></div>
+    <div class="col-lg-7  col-md-8 col-sm-6">
+        <div class="row" style="position: sticky; top: 1px;">
+            @foreach (Church church in Model.ChurchList)
             {
-                <div class="text-white col-lg-2 col-md-4 col-sm-12 text-wrap">
+                <div class="col-lg-4 col-md-6 p-2">
                     <a href="@Url.Action("Preview", "Preview",new { chId = church.ChurchId })" title="Preview">
-                        <img src="@church.ImageURl" class="auth-img-bg rounded-circle mb-2 " style="width:250px; height:250px;" alt="profile image" />
-                        <h4 class="text-wrap text-white">@church.ChurchName</h4>
+                        <div class="img-overly position-relative" style="height:179px;">
+                            <img src="@church.ImageURl" class="w-100 h-100" alt="@church.ChurchName">
+                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.CountyName</div>
+                        </div>
                     </a>
                 </div>
             }
-
-
-        </div>
-    </div>
-
-    <div class="row pt-5 justify-content-center">
-        <div class=" selectWrapper col-md-4 col-sm-12 ">
-            <span class="text-danger"></span>
-            <select id="select2" name="countryId" onchange="DoPostBack();" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
-                <option value="-1">--Select Country--</option>
-            </select>
-        </div>
-        <div class="col-md-1 col-sm-12 pt-3"></div>
-        <div class=" selectWrapper col-md-4 col-sm-12 ">
-            <span class="text-danger"></span>
-
-            <select name="County" class="form-control" id="County">
-            </select>
-
-        </div>
-
-    </div>
-</div>
-</div>
-
-
-<div class="row">
-    <div class="col-12 bg-secondary">
-
-        <div class="row ">
-            <div class="col-sm-5 p-0 m-0">
-                
-                <img src="~/Images/Home page Web.jpg" class="img-fluid w-100 h-100 " />
-            </div>
-            <div class="col-sm-7 justify-content-center ">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="main-timeline">
-                                <center>
-                                    <div class="display-3 justify-content-center pt-5 text-white font-weight-bolder">Do you want to start streaming?</div>
-                                </center>
-                                <div class="timeline mt-4">
-                                    <a href="#" class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <i class="fa fa-video-camera"></i>
-                                        </div>
-                                        <div class="inner-content">
-                                            <h3 class="title">HD Streaming</h3>
-                                            <p class="description">
-
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="timeline">
-                                    <a href="#" class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <i class="fa fa-rss"></i>
-                                        </div>
-                                        <div class="inner-content">
-                                            <h3 class="title">International Access</h3>
-                                            <p class="description">
-
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="timeline">
-                                    <a href="#" class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <i class="fa fa-lock"></i>
-                                        </div>
-                                        <div class="inner-content">
-                                            <h3 class="title">Password Protection</h3>
-                                            <p class="description">
-
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="timeline">
-                                    <a href="#" class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <i class="fa fa-universal-access"></i>
-
-                                        </div>
-                                        <div class="inner-content">
-                                            <h3 class="title">Access for Sick / Elderly</h3>
-                                            <p class="description">
-
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="timeline">
-                                    <a href="#" class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <i class="fa fa-globe"></i>
-                                        </div>
-                                        <div class="inner-content">
-                                            <h3 class="title">Viewing Abroad</h3>
-                                            <p class="description">
-
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="timeline">
-                                    <a href="#" class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <i class="fa fa-cogs"></i>
-                                        </div>
-                                        <div class="inner-content">
-                                            <h3 class="title">Full Website Integration</h3>
-                                            <p class="description">
-
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+            @*<div class="col-lg-4 col-md-6 p-2">
+                    <div class="img-overly position-relative">
+                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
+                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-6 p-2">
+                    <div class="img-overly position-relative">
+                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
+                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 p-2">
+                    <div class="img-overly position-relative">
+                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
+                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 p-2">
+                    <div class="img-overly position-relative">
+                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
+                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 p-2">
+                    <div class="img-overly position-relative">
+                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
+                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 p-2">
+                    <div class="img-overly position-relative">
+                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
+                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="border bg-white p-4" style="position: sticky; top: 1px;">
+            @foreach (Place country in Model.CountryList)
+            {
+                <div class="news-wrap mb-3">
+                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14 mb-2" style="width:100%"
+                       href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
+                        @country.PlaceName
+                    </a>
+                </div>
+            }
+            @*  <div class="news-wrap">
+                    <h4 class="news-heading font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2">Recoding of past events St Peter & St Paul's Church </p>
+                    <p class="font-18 mb-0 ">Mass</p>
+                    <p class="font-18 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap">
+                    <h4 class="news-heading font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2">Recoding of past events St Peter & St Paul's Church </p>
+                    <p class="font-18 mb-0 ">Mass</p>
+                    <p class="font-18 mb-0 ">25 Oct 2020</p>
+                </div>
+                <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">*@
+        </div>
+    </div>
+    <div class="col-1 d-lg-block d-none"></div>
+</div>
+<!-- find curch end -->
+<!-- now? start -->
+<div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+    What is on Now ?
+</div>
+<div class="container">
 
+    <div class="table-now">
+        <table class="table table-striped table-sm table-borderless">
+            <tbody>
+                @foreach (var schedule in Model.LSchedules)
+                {
+                    <tr>
+                        <td scope="row" class="font-weight-normal">@schedule.ChurchName</td>
+                        <td class="text-red">
+                            <a href="@Url.Action("Preview", "Preview",new { chId = schedule.ChurchId })" class="text-red">
+                                <b>@schedule.EventName </b>
+                            </a>
+                        </td>
+                        <td scope="row" class="text-red font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="bg-purple pt-5 pb-5 mt-5">
+    <div class="container pt-4 pb-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class='cover'>
+                    <video controls class='video' width='100%'>
+                        <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video"
+                                type="video/mp4" />
+                        <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />
+                        <img src="~/WebsiteAssets/img/video-img.png" alt="">
+                    </video>
+                </div>
             </div>
-
+            <div class="col-md-6 text-center self-center">
+                <span class="text-pink font-36 text-center pt-4 pb-4 container avantgardece ">
+                    Do you want to start streaming?
+                </span> <br>
+                <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">Contact us today</a>
+            </div>
         </div>
     </div>
 </div>
+<!-- now? end -->
+@*
+    <!-- about customer strt -->
+    <div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+        What our happy customers say.?
+    </div>*@
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+    <div class="container">
+        @*
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="customers-testimonials" class="owl-carousel">
+
+                        <!--TESTIMONIAL 1 -->
+                        <div class="item">
+                            <div class="shadow-effect rounded-0 avantgardece">
+                                <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
+                                <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                </div>
+                                <p class="font-14 mb-4">
+                                    “ A great agency who are not only flexible, efficient and
+                                    professional but a group of people who really care about delivering results for you.
+                                    ”
+                                </p>
+                                <p class="font-14 text-center text-warning mb-0 mt-3"> Jonathan Kraus</p>
+                                <p class="font-14 text-center text-warning mb-0 text-lightdark"> berlin - Germany</p>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 1 -->
+                        <!--TESTIMONIAL 2 -->
+                        <div class="item">
+
+                            <div class="shadow-effect rounded-0 avantgardece">
+                                <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
+                                <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                </div>
+                                <p class="font-14 mb-4">
+                                    “ A great agency who are not only flexible, efficient and
+                                    professional but a group of people who really care about delivering results for you.
+                                    ”
+                                </p>
+                                <p class="font-14 text-center text-warning mb-0 mt-3">Kraus Jonathan </p>
+                                <p class="font-14 text-center text-warning mb-0 text-lightdark"> berlin - Germany</p>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 2 -->
+                        <!--TESTIMONIAL 3 -->
+                        <div class="item">
+
+                            <div class="shadow-effect rounded-0 avantgardece">
+                                <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
+                                <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                </div>
+                                <p class="font-14 mb-4">
+                                    “ A great agency who are not only flexible, efficient and
+                                    professional but a group of people who really care about delivering results for you.
+                                    ”
+                                </p>
+                                <p class="font-14 text-center text-warning mb-0 mt-3"> Jona Kraus</p>
+                                <p class="font-14 text-center text-warning mb-0 text-lightdark"> berlin - Germany</p>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 3 -->
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</section>
+<!-- END OF TESTIMONIALS -->
+@*<div class=" font-36 text-center bg-white avantgardece">
+        Contact US
+    </div>
+    <p class="text-center text-muted avantgardece">if you like to take our services</p>
+    <div class="container">
+        <div class="input-set row col-md-8 col-lg-6 ml-auto mr-auto mt-5 mb-5">
+            <input type="text" class="hiring-in pl-2" type="email" placeholder="enter your email">
+            <button class="hired-btn">Hire Me</button>
+        </div>
+    </div>*@
+
 <script>
     $(document).ready(function () {
         DoPostBack();
@@ -373,24 +373,38 @@
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (result) {
-                var s;
+                var s = '<option value="-1">--Select County--</option>';
                 $.each(result, function (key, item) {
                     s += '<option value="' + item.countyId + '">' + item.countyName + '</option>'
-
                 });
-
                 $("#County").html(s);
-
-
-
-
-
             },
             error: function (errormessage) {
-
                 alert(errormessage.responseText);
             }
         });
+    }
+
+    function SearchCameraByCounty() {
+        var filter = "";
+        var countrySelect = document.getElementById("select2");
+        var countryName = countrySelect.options[countrySelect.selectedIndex].text.replace(" ", "-").replace(/\s/g, "-");
+        if (countrySelect.value == "-1") {
+            filter = "Country=all"; 
+        }
+        else {
+            filter = "Country=" + countryName;
+        }
+
+        var countySelect = document.getElementById("County");
+        var countyName = countySelect.options[countySelect.selectedIndex].text;
+        if (countySelect.value == "-1") {
+            filter += "&County=all";
+        }
+        else {
+            filter += "&County=" + countyName;
+        }
+        window.location.href = "/Website/Cameras?" + filter;
     }
 
 

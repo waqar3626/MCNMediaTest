@@ -86,7 +86,7 @@
 
 
                             <select asp-for="EventDay" class="form-control" id="EditEventDay" required>
-                                <option  value="0">Please select Day</option>
+                                <option value="0">Please select Day</option>
                                 <option value="Monday" name="EditEventDay">Monday</option>
                                 <option value="Tuesday" name="EditEventDay">Tuesday</option>
                                 <option value="Wednesday" name="EditEventDay">Wednesday</option>
@@ -178,7 +178,7 @@
                         <div class="col-sm-6" id="EditbtnSchdule">
                             <div class="float-right">
                                 <a id="UpdateEditScheduleVal" value="Update" class="btn btn-primary "><i class="fa fa-plus"></i> Update</a>
-                                <a id="back" class="btn btn-secondary btn-md "><i class="fa fa-chevron-left"></i> Back</a>
+                                <a id="back" class="btn btn-secondary btn-md " data-dismiss="modal" aria-label="Close"><i class="fa fa-chevron-left"></i> Back</a>
                             </div>
                         </div>
 
@@ -187,7 +187,7 @@
                         <div class="col-sm-12" id="EditbtnSchCol12">
                             <div class="float-right">
                                 <a id="UpdateEditScheduleVal2" value="Update" class="btn btn-primary "><i class="fa fa-plus"></i> Update</a>
-                                <a id="back" class="btn btn-secondary btn-md "><i class="fa fa-chevron-left"></i> Back</a>
+                                <a id="back" class="btn btn-secondary btn-md " data-dismiss="modal" aria-label="Close"><i class="fa fa-chevron-left"></i> Back</a>
                             </div>
                         </div>
 
@@ -218,7 +218,7 @@
 
             return false;
         }
-        
+
         var eventName = document.getElementById('EditEventName').value;
         var isRepeat = document.getElementById('EditIsRepeated').value;
         var eventDate = document.getElementById('EditEventDate').value;
@@ -230,8 +230,8 @@
         var recordDuration = document.getElementById('EditDuration').value;
         var passwordtoggle = document.getElementById('EditPasswordToggle').value;
         var password = document.getElementById('SchEditPassword').value;
-        var scheduleId = document.getElementById('HdnEditScheduleID').value; 
-        var churchId = document.getElementById('EditddlChurchId').value; 
+        var scheduleId = document.getElementById('HdnEditScheduleID').value;
+        var churchId = document.getElementById('EditddlChurchId').value;
 
         var NewFormData = new FormData();
         NewFormData.append("eventName", eventName);
@@ -259,7 +259,7 @@
 
                     window.location.reload();
                     $('#EditScheduleModal').modal('hide');
-                 
+
                 } else {
                     // DoSomethingElse()
                     alert(response.responseText);
@@ -279,7 +279,7 @@
         var isCheck = ($('#HdnEditIsrepeated').val().toLowerCase() == 'true');
 
 
-     
+
         if (isCheck) {
 
             $('#EditEventDayLabel1').show();
@@ -311,12 +311,12 @@
             HidePassword();
         }
 
-        
-
-        var IsRecord = ($('#HdnEditRecordID').val().toLowerCase()=='true');
 
 
-    
+        var IsRecord = ($('#HdnEditRecordID').val().toLowerCase() == 'true');
+
+
+
         if (IsRecord) {
 
             ShowRecordData();
@@ -436,7 +436,7 @@
         $('#EditEventLabel').show();
         $('#EventInput').show();
 
-      
+
 
     }
     function ShowDayDiv() {
@@ -450,10 +450,10 @@
     }
 
     function DoPostBackEdit() {
-        
+
         var ChurchId = $('#EditddlChurchId').val();
 
-        
+
         $.ajax({
             url: "/Schedule/LoadCameraDDL",
             type: "GET",
@@ -463,11 +463,11 @@
             success: function (result) {
                 var s = '<option value="0">--Select Camera--</option>';
                 $.each(result, function (key, item) {
-                    
+
                     s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
 
                 });
-             
+
                 $("#EditScheduleCameraId").html(s);
 
 

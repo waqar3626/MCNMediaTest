@@ -4,283 +4,225 @@
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">*@
     <title>@ViewData["Title"] - MCN</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+    <!--<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
     <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
-    <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />-->
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+    <!--<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="~/theme/vendors/css/horizontal-layout-light/style.css">
 
-    <link rel="shortcut icon" href="~/theme/vendors/images/favicon.png" />
+    <link rel="shortcut icon" href="~/theme/vendors/images/favicon.png" />-->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="~/theme/css/horizontal-layout-light/style.css">
+    <!--<link rel="stylesheet" href="~/theme/css/horizontal-layout-light/style.css">-->
     <!-- endinject -->
     <link rel="shortcut icon" href="~/theme/images/favicon.png" />
     <link href="~/theme/Loader.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <style type="text/css">
+    @*
+        <style type="text/css">
 
-        .bgImage {
-            background-image: url("/Images/pexels-david-dibert-1207965.jpg ")
-        }
+            .bgImage {
+                background-image: url("/Images/pexels-david-dibert-1207965.jpg ")
+            }
 
-        .beautifooter {
-            background-image: url( "/Images/WebsitefooterImg.jpg");
-            height: 600px;
-            width: 100vw;
-            overflow: hidden;
-            position: relative;
-        }
+            .beautifooter {
+                background-image: url( "/Images/WebsitefooterImg.jpg");
+                height: 600px;
+                width: 100vw;
+                overflow: hidden;
+                position: relative;
+            }
 
-        .imgstyle {
-            width: 100%;
-            height: 100%;
-            opacity: 0.9;
-            background: #060f2d;
-            position: absolute;
-        }
+            .imgstyle {
+                width: 100%;
+                height: 100%;
+                opacity: 0.9;
+                background: #060f2d;
+                position: absolute;
+            }
 
-        .underline {
-            text-decoration: underline;
-            text-decoration-color: darkgoldenrod;
-        }
+            .underline {
+                text-decoration: underline;
+                text-decoration-color: darkgoldenrod;
+            }
 
-        .iconcolor {
-            color: darkgoldenrod;
-            font-size: 1.5em;
-        }
+            .iconcolor {
+                color: darkgoldenrod;
+                font-size: 1.5em;
+            }
 
-        .color {
-            color: goldenrod;
-        }
+            .color {
+                color: goldenrod;
+            }
 
-        .ullist {
-            list-style: none;
-        }
+            .ullist {
+                list-style: none;
+            }
 
 
 
-        .list1::before {
-            background-position: 0 5px;
-            line-height: 1.5625;
-            padding: 0 0 4px 30px;
-            margin-left: 1em;
-            color: goldenrod;
-        }
-    </style>
+            .list1::before {
+                background-position: 0 5px;
+                line-height: 1.5625;
+                padding: 0 0 4px 30px;
+                margin-left: 1em;
+                color: goldenrod;
+            }
+        </style>*@
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCN Media</title>
+
+    <!-- font-awsome 5 -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- font-awsome 5 -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.1/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://themes.audemedia.com/html/goodgrowth/css/owl.theme.default.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/WebsiteAssets/css/style.css">
 </head>
 <body>
-    <div class="container-scroller">
-        <!-- partial:../../partials/_horizontal-navbar.html -->
-        <div class="horizontal-menu ">
-            <nav class="navbar top-navbar col-lg-12 col-12 p-0">
-                <div class="container">
-                    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                        <a class="navbar-brand brand-logo" href="/Client/ChurchInfo"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="logo" /></a>
-                        <a class="navbar-brand brand-logo-mini" href="/Client/ChurchInfo"><img src="https://cdn.mcnmedia.tv/images/logo.svg" alt="logo" /></a>
+
+    <!-- header start -->
+    <header class="header container p-sm-0">
+        <nav class="navbar navbar-expand-lg navbar-light container-nav  avantgardece text-uppercase pl-0 pr-0">
+            <a class="navbar-brand " href="/Website/Home"><img src="~/WebsiteAssets/img/logo.png" alt="" style="width: 115px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Home">
+                            Home <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Churches">Churches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Cathedrals">Cathedrals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/FuneralHomes">Funeral Homes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Schedules">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 text-lightdark pr-3" href="/Website/ContactUs">Contact us</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="search">
+                        <input class="form-control mr-sm-2 rounded-pill bg-light-gray pr-xl-5 pr-4 font-14"
+                               type="search" placeholder="SEARCH CAMERA" aria-label="Search" id="txtSearch">
+                        <i class="fas fa-search seach-icon" onclick="SearchCamera()"></i>
                     </div>
-                    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                        <ul class="navbar-nav mr-lg-2">
-                            <li class="nav-item nav-search d-none d-lg-block">
-                            </li>
-                        </ul>
+                    <a href="../UserLogin" class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14">Login</a>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <!-- header end -->
+    @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
 
-                        <ul class="navbar-nav ">
-                            <li class="nav-item nav-search d-none d-lg-block ">
-                                <div class="input-group ">
-                                    <div class="input-group-prepend hover-cursor border-dark" id="navbar-search-icon">
-                                        <span class="input-group-text" id="search">
-                                            <i class="ti-search"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
-                                    <a href="../UserLogin" class="btn btn-primary">Login</a>
-                                </div>
-                            </li>
-                        </ul>
-
-
-
-                    </div>
+    @RenderBody()
+    <!-- footer start -->
+    <footer class="footer pt-5 mt-5" style="background-color: #333333;">
+        <div class="container pb-5">
+            <div class="row m-0">
+                <div class="col-md-5 pb-3 col-sm-6 pb-3">
+                    <img src="~/WebsiteAssets/img/footer-img.png" alt=""> <br>
+                    <button class="btn btn-outline-pink mt-4 pt-2 pb-2 pl-4 pr-4 font-14 MyriadPro text-white">BECOME a service provider</button>
                 </div>
-            </nav>
-            <nav class="bottom-navbar">
-                <div class="container ">
-                    <ul class="nav page-navigation">
-                        <li class="nav-item col-sm-2">
-                            <a class="nav-link" href="/Website/Home">
-                                <i class="fa fa-home menu-icon "></i>
-                                <span class="menu-title">Home</span>
-                            </a>
-
-                        </li>
-
-                        <li class="nav-item col-sm-2">
-                            <a class="nav-link" href="/Website/Churches">
-                                <i class="  mdi mdi-camera  menu-icon "></i>
-                                <span class="menu-title">Churches</span>
-                            </a>
-                        </li>
-                        <li class="nav-item col-sm-2">
-                            <a class="nav-link" href="/Website/Cathedrals">
-                                <i class="  mdi mdi-camera  menu-icon "></i>
-                                <span class="menu-title">Cathedrals</span>
-                            </a>
-                        </li>
-                        <li class="nav-item col-sm-2">
-                            <a class="nav-link" href="/Website/FuneralHomes">
-                                <i class="  mdi mdi-camera  menu-icon "></i>
-                                <span class="menu-title">Funeral Homes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item col-sm-2">
-                            <a class="nav-link" href="/Website/Schedules">
-                                <i class="  mdi mdi-calendar-clock menu-icon"></i>
-                                <span class="menu-title">Schedule</span>
-                            </a>
-                        </li>
-                        <li class="nav-item col-sm-2">
-                            <a class="nav-link" href="/Website/ContactUs">
-                                <i class=" mdi mdi-phone-plus  menu-icon"></i>
-                                <span class="menu-title">Contact Us</span>
-                            </a>
-                        </li>
-
-                    </ul>
+                @*<div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
+            <p class="mb-2 font-14 text-white">Customer</p>
+            <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">JOBS</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">CAREER</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">ABOUT US</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
+        </div>*@
+                <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-left">
+                    @*<p class="mb-2 font-14 text-white">MCN On View</p>
+            <a href=""><p class="mb-2 font-12 text-lightdark">LIVE LEADS</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">PRESS</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">SUBSCRIBE US</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">TALK TO US</p></a>
+            <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>*@
                 </div>
-            </nav>
-
+                <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
+                    <p class="mb-2 font-14 text-white">Quick Links</p>
+                    <a href="/Website/Churches"><p class="mb-2 font-12 text-lightdark">CHURCHES</p></a>
+                    <a href="/Website/Cathedrals"><p class="mb-2 font-12 text-lightdark">CATHEDRALS</p></a>
+                    <a href="/Website/FuneralHomes"><p class="mb-2 font-12 text-lightdark">FUNERAL HOMES</p></a>
+                    <a href="/Website/Schedules"><p class="mb-2 font-12 text-lightdark">SCHEDULES</p></a>
+                    <a href="/Website/ContactUs"><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
+                </div>
+                <div class="col-md-3 col-sm-6 pb-3 MyriadPro">
+                    <p class="mb-5 font-14 text-white">Follow Us</p>
+                    <a href="https://www.facebook.com/pages/Church-Services-TV/157606014288500"><i class="fab font-36 text-white pr-2 fa-facebook-square"></i></a>
+                    <a href="https://twitter.com/ChurchServiceTV"><i class="fab font-36 text-white pr-2 fa-twitter-square"></i></a>
+                    @*<a href=""><i class="fab font-36 text-white  fa-google-plus-square"></i></a>*@
+                </div>
+            </div>
         </div>
-        @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
+        <div class="bottom-footer border-top border-light pt-3 pb-3">
+            <div class="container MyriadPro">
+                <div class="font-12 text-white">Copyright 2020 MCN Media. All rights reserved.</div>
+                <a asp-action="Terms" asp-controller="Website" class="text-white font-12">Terms & Conditions</a>
+                <a asp-action="Privacy" asp-controller="Website" class="text-white pl-2 font-12">Privacy Policy</a>
+                @*<a href="" class="text-white pl-2 font-12">Site map</a>*@
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+    <!-- about customer end -->
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- jQuery -->
+    <!-- Bootstrap JS bundle w/ Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.1/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- Bootstrap JS bundle w/ Popper.js -->
+    <script src="~/WebsiteAssets/js/main.js"></script>
 
-        @RenderBody()
+    <div class="container-scroller">
+
+
 
         <!-- partial -->
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-
-        <div class="footer  beautifooter p-0">
-
-            <div class="row text-white justify-content-center imgstyle">
-
-
-                <div class=" col-lg-3 col-sm-12  ">
-
-                    <h2 class="  mt-3 underline">CONTACT INFO</h2>
-
-                    <div class=" display-5 pt-4">
-                        <div class="row">
-                            <div class="col-sm-2">   <i class="fa fa-home iconcolor"></i></div>
-
-
-                            <div class="col-sm-10 pl-0">
-                                Euro Streaming Services T/A MCN Media,
-                                Unit 8 Ballysaggart Business Complex,
-                                8 Beechvalley Way,
-                                Dungannon,
-                                BT70 1BS,<br>
-                                Northern Ireland
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="fa fa-phone iconcolor mt-3 display-5 "><a href="tel:+442887729580" class="text-white pl-4">+44 2887729580</a></div>
-                    <div class="fa fa-envelope iconcolor  mt-3 display-5  mb-3"><a href="mailto:support@watchmcnmedia.tv" class="text-white pl-4">support@watchmcnmedia.tv</a></div>
-
-
-                </div>
-                <div class=" col-lg-1 col-sm-12 "></div>
-                <div class="col-lg-3 col-sm-12 ">
-                    <h2 class="mt-3 underline">QUICK LINKS</h2>
-                    <ul class="  display-5 mt-4 justify-content-center text-white">
-                        <li Class="iconcolor">
-                            <a class="  nav-link text-white" href="/Website/Churches">
-                                Churches
-                            </a>
-                        </li>
-                        <li Class="iconcolor">
-                            <a class="nav-link text-white" href="/Website/Cathedrals">
-                                Cathedrals
-                            </a>
-                        </li>
-                        <li Class="iconcolor">
-                            <a class="nav-link text-white" href="/Website/FuneralHomes">
-                                Funeral Homes
-                            </a>
-                        </li>
-
-                        <li Class="iconcolor">
-                            <a class="nav-link text-white" href="/Website/Schedules">
-                                Schedules
-                            </a>
-                        </li>
-                        <li Class="iconcolor">
-                            <a class="nav-link text-white" href="/Website/ContactUs">
-                                Contact Us
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-                <div calss="col-lg-1 col-sm-12"></div>
-                <div class="col-lg-3  col-sm-12  ">
-                    <h2 class="  mt-3 underline">FOLLOW US</h2>
-                    <ul class="et-social-icons display-5 pt-4  justify-content-center">
-                        <li class=" fa fa-facebook-square iconcolor">
-                            <a href="https://www.facebook.com/pages/Church-Services-TV/157606014288500" class="text-white">
-                                Facebook
-                            </a>
-                        </li>
-                        <br />
-                        <li class="fa fa-twitter-square iconcolor mt-2">
-                            <a href="https://twitter.com/ChurchServiceTV" class="text-white">
-                                Twitter
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-
-
-        </div>
         <!-- partial -->
     </div>
     <!-- main-panel ends -->
     <!-- container-scroller -->
-    <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
 
-
-    <script src="~/theme/vendors/datatables.net/jquery.dataTables.js"></script>
-    <!-- plugins:js -->
-    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="~/theme/js/off-canvas.js"></script>
-    <script src="~/theme/js/hoverable-collapse.js"></script>
-    <script src="~/theme/js/template.js"></script>
-    <script src="~/theme/js/settings.js"></script>
-    <script src="~/theme/js/todolist.js"></script>
-    <script src="~/theme/js/owl-carousel.js"></script>
     <script>
         function displayBusyIndicator() {
             $('.loading').show();
@@ -294,14 +236,19 @@
         $(window).unload(function () {
             displayBusyIndicator();
         });
-        s
         $(document).on('submit', 'form', function () {
             displayBusyIndicator();
         });
+
+        function SearchCamera() {
+            var filter = "";
+            var filterValue = document.getElementById("txtSearch").value;
+            if (filterValue.length > 0) {
+                filter = "?Search=" + filterValue;
+            }
+             window.location.href = "/Website/Cameras" + filter;
+        }
     </script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <!-- End custom js for this page-->
 </body>
 
 </html>

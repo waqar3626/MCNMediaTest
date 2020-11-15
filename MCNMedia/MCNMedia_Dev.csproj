@@ -5,6 +5,44 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Uploads\1\Pictures\5c95c526-8843-4e12-b1d5-957866c3e3df.jpg" />
+    <Content Remove="wwwroot\Uploads\1\Pictures\99384778-d7d8-461b-9baf-2235059b7f40.jpg" />
+    <Content Remove="wwwroot\Uploads\1\Pictures\f99d661d-324f-4070-bd83-df4d9bedeb39.jpg" />
+    <Content Remove="wwwroot\Uploads\1\SlideShows\b394190d-a205-4b95-8185-221d7fd6cea6.pptx" />
+    <Content Remove="wwwroot\Uploads\1\SlideShows\b42e957d-edf8-44fc-ba82-a7267b0c1fbf.jpg" />
+    <Content Remove="wwwroot\Uploads\1\SlideShows\dcbe64a2-cbd9-4741-8fd9-7d4a5c83e0ee.jpg" />
+    <Content Remove="wwwroot\Uploads\1\SlideShows\f3247e3d-8b33-42b4-8c09-fece3c5579f9.jpg" />
+    <Content Remove="wwwroot\Uploads\1\Videos\0e1fc4ed-3311-43a5-9f9f-13cea6a8a442.mp4" />
+    <Content Remove="wwwroot\Uploads\1\Videos\18010e16-ddd0-430d-8975-832ca61392d5.mp4" />
+    <Content Remove="wwwroot\Uploads\1\Videos\7d404bec-d6a8-4036-b12c-9aa95cbb4037.mp4" />
+    <Content Remove="wwwroot\Uploads\1\Videos\8579f8ae-6b8d-4750-81a0-5964e1089573.mp4" />
+    <Content Remove="wwwroot\Uploads\1\Videos\920b0fd4-fefb-4195-b520-f01e1bba69ca.mp4" />
+    <Content Remove="wwwroot\Uploads\1\Videos\f71f880f-15fc-4097-81a4-d2c83700a4d6.mp4" />
+    <Content Remove="wwwroot\Uploads\26\Pictures\2bd8b254-3417-4270-9ee2-e2484d8d1d1f.png" />
+    <Content Remove="wwwroot\Uploads\26\Pictures\b3497e89-3843-4155-8a03-bd02f053d04f.jpg" />
+    <Content Remove="wwwroot\Uploads\26\SlideShows\5ebae0e2-5ae0-4d2e-b400-b6b35021950f.pptx" />
+    <Content Remove="wwwroot\Uploads\26\SlideShows\94fb2769-01b3-4046-a1a7-b384dbc27106.pptx" />
+    <Content Remove="wwwroot\Uploads\26\Videos\6b1b7791-0627-4f64-be92-bc00cb3328e3.mp4" />
+    <Content Remove="wwwroot\Uploads\26\Videos\c5794e44-f46c-4804-aca8-096aa81e00e4.mp4" />
+    <Content Remove="wwwroot\Uploads\4\Videos\dd0c61ff-bab4-434f-80c9-a2bc8af158d6.mp4" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\0be568e2-e339-4382-a4f4-a9b39b0c4c0f.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\1478a48c-5c14-4f13-b576-7fa1924d9d8c.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\17f2e1a8-9e9c-4288-a52c-3176eb263c9a.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\18329ed6-7cf9-496f-834d-d39fc32138a3.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\192b917b-bce1-4550-92ce-c83c46d30aa8.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\2cd578dc-5edd-4d97-b33b-33dc8755ebf8.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\5595cacc-6c14-47b3-89c5-2c1d444b93f9.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\5c0ddef9-8987-49ce-bc1b-1ecf448ec2b0.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\671a1a3f-d02d-460e-a941-71dd286f421b.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\9a138089-ef98-4377-9930-f1db21ebea39.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\a74649d1-9e3f-4c9d-a85d-8df29b7159b3.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\b7338cab-eeca-4645-b286-8c844fca6c5e.jpg" />
+    <Content Remove="wwwroot\Uploads\ProfileImages\eed1f6dc-5cef-4e30-b092-17aef911b45c.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Core" Version="3.5.1.35" />
+    <PackageReference Include="AWSSDK.S3" Version="3.5.4" />
     <PackageReference Include="Cronos" Version="0.7.0" />
     <PackageReference Include="log4net" Version="2.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
@@ -20,6 +58,43 @@
 
   <ItemGroup>
     <Folder Include="Uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Uploads\1\Pictures\5c95c526-8843-4e12-b1d5-957866c3e3df.jpg" />
+    <None Include="wwwroot\Uploads\1\Pictures\99384778-d7d8-461b-9baf-2235059b7f40.jpg" />
+    <None Include="wwwroot\Uploads\1\Pictures\f99d661d-324f-4070-bd83-df4d9bedeb39.jpg" />
+    <None Include="wwwroot\Uploads\1\SlideShows\b394190d-a205-4b95-8185-221d7fd6cea6.pptx" />
+    <None Include="wwwroot\Uploads\1\SlideShows\b42e957d-edf8-44fc-ba82-a7267b0c1fbf.jpg" />
+    <None Include="wwwroot\Uploads\1\SlideShows\dcbe64a2-cbd9-4741-8fd9-7d4a5c83e0ee.jpg" />
+    <None Include="wwwroot\Uploads\1\SlideShows\f3247e3d-8b33-42b4-8c09-fece3c5579f9.jpg" />
+    <None Include="wwwroot\Uploads\1\Videos\0e1fc4ed-3311-43a5-9f9f-13cea6a8a442.mp4" />
+    <None Include="wwwroot\Uploads\1\Videos\18010e16-ddd0-430d-8975-832ca61392d5.mp4" />
+    <None Include="wwwroot\Uploads\1\Videos\7d404bec-d6a8-4036-b12c-9aa95cbb4037.mp4" />
+    <None Include="wwwroot\Uploads\1\Videos\8579f8ae-6b8d-4750-81a0-5964e1089573.mp4" />
+    <None Include="wwwroot\Uploads\1\Videos\920b0fd4-fefb-4195-b520-f01e1bba69ca.mp4" />
+    <None Include="wwwroot\Uploads\1\Videos\f71f880f-15fc-4097-81a4-d2c83700a4d6.mp4" />
+    <None Include="wwwroot\Uploads\26\Pictures\2bd8b254-3417-4270-9ee2-e2484d8d1d1f.png" />
+    <None Include="wwwroot\Uploads\26\Pictures\b3497e89-3843-4155-8a03-bd02f053d04f.jpg" />
+    <None Include="wwwroot\Uploads\26\SlideShows\5ebae0e2-5ae0-4d2e-b400-b6b35021950f.pptx" />
+    <None Include="wwwroot\Uploads\26\SlideShows\94fb2769-01b3-4046-a1a7-b384dbc27106.pptx" />
+    <None Include="wwwroot\Uploads\26\Videos\6b1b7791-0627-4f64-be92-bc00cb3328e3.mp4" />
+    <None Include="wwwroot\Uploads\26\Videos\c5794e44-f46c-4804-aca8-096aa81e00e4.mp4" />
+    <None Include="wwwroot\Uploads\4\Videos\dd0c61ff-bab4-434f-80c9-a2bc8af158d6.mp4" />
+    <None Include="wwwroot\Uploads\ProfileImages\0be568e2-e339-4382-a4f4-a9b39b0c4c0f.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\1478a48c-5c14-4f13-b576-7fa1924d9d8c.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\17f2e1a8-9e9c-4288-a52c-3176eb263c9a.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\18329ed6-7cf9-496f-834d-d39fc32138a3.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\192b917b-bce1-4550-92ce-c83c46d30aa8.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\2cd578dc-5edd-4d97-b33b-33dc8755ebf8.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\5595cacc-6c14-47b3-89c5-2c1d444b93f9.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\5c0ddef9-8987-49ce-bc1b-1ecf448ec2b0.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\671a1a3f-d02d-460e-a941-71dd286f421b.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\9a138089-ef98-4377-9930-f1db21ebea39.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\a74649d1-9e3f-4c9d-a85d-8df29b7159b3.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\b7338cab-eeca-4645-b286-8c844fca6c5e.jpg" />
+    <None Include="wwwroot\Uploads\ProfileImages\eed1f6dc-5cef-4e30-b092-17aef911b45c.jpg" />
+    <None Include="wwwroot\WebsiteAssets\js\main.js" />
   </ItemGroup>
 
 </Project>

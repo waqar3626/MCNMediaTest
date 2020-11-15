@@ -1,7 +1,9 @@
 ﻿using MCNMedia_Dev.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,9 +13,18 @@ namespace MCNMedia_Dev.Repository
     {
         AwesomeDal.DatabaseConnect _dc;
 
+        private readonly string AWS_S3_BUCKET_URI;
+        private readonly string SYSTEM_MODE;
+
         public MediaChurchDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
+            var root = builder.Build();
+            var awsS3bucket = root.GetSection("S3BucketConfiguration");
+            var sysConfig = root.GetSection("SystemConfiguration");
+            AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
         }
 
         
@@ -35,8 +46,6 @@ namespace MCNMedia_Dev.Repository
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
 
-            
-
             _dc.ClearParameters();
             _dc.AddParameter("chrId", ChrId);
             _dc.AddParameter("MedType", medType);
@@ -53,6 +62,7 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+       
         public MediaChurch GetMediaById(int mediaId)
         {
             MediaChurch mediaChurch = new MediaChurch();
@@ -65,7 +75,7 @@ namespace MCNMedia_Dev.Repository
                 mediaChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"]);
                 mediaChurch.TabName = dataRow["TabName"].ToString();
                 mediaChurch.MediaType = dataRow["MediaType"].ToString();
-                mediaChurch.MediaURL = dataRow["MediaURL"].ToString();
+                mediaChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}"; 
                 mediaChurch.MediaName = dataRow["MediaName"].ToString();
 
             }

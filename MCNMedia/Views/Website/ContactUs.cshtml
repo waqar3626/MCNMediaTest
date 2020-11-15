@@ -3,89 +3,114 @@
     ViewData["Title"] = "ContactUs";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
-<style type="text/css">
-    .selectWrapper {
-        border-radius: 40px;
-        display: inline-block;
-        overflow: hidden;
-        background: #cccccc;
-        border: 1px solid #cccccc;
-    }
-    .bgcolor {
-        background-color: goldenrod;
-    }
-
-    .bgcolor1 {
-        background-color: #060f2d;
-        color: white;
-    }
-    .button {
-        background-color: goldenrod;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        border-color: goldenrod;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        border-radius: 12px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
-    
-</style>
-<div class="card bgcolor1" >
-    <div class="card-body">
-        <h2>CONTACT US</h2>
+<div class="bg-blue" style="">
+    <div class="container">
+        <div class="row m-0 ">
+            <div class="text-pink font-36 text-center pt-4 pb-4 avantgardece">
+                CONTACT US
+            </div>
+        </div>
     </div>
-
 </div>
-<div class="col-sm-12 ">
-
+<div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+    Contact Information
 </div>
-
+<div class="row m-0 mb-5">
+    <div class="col-1 d-lg-block d-none"></div>
+    <div class="col-lg-10  col-md-6 col-sm-12">
+        <div class="row text-center">
+            <h4>  Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</h4>
+        </div>
+    </div>
+    <div class="col-1 d-lg-block d-none"></div>
+</div>
+<div class="row m-0 mt-5 mb-5">
+    <div class="col-1 d-lg-block d-none"></div>
+    <div class="col-lg-10  col-md-6 col-sm-12">
+        <div class="row text-center">
+            <div class="col-lg-4 col-md-6 p-2">
+                <div class="position-relative" style="height:179px; border-right: 1px solid #c2c2c247;">
+                    <i class="fa fa-mobile fa-3x text-pink" aria-hidden="true"></i>
+                    <br />
+                    <br />
+                    <h5>Phone</h5>
+                    <div>
+                        +44 2887729580
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 p-2">
+                <div class="position-relative" style="height:179px; border-right: 1px solid #c2c2c247;">
+                    <i class="fa fa-at fa-3x text-pink" aria-hidden="true"></i>
+                    <br />
+                    <br />
+                    <h5>Email</h5>
+                    <div>
+                        Our email is support@watchmcnmedia.tv
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 p-2">
+                <div class="position-relative" style="height:179px;">
+                    <i class="fa fa-map-marker fa-3x text-pink" aria-hidden="true"></i>
+                    <br />
+                    <br />
+                    <h5>Address</h5>
+                    <div>
+                        Euro Streaming Services T/A MCN Media,
+                        <br />
+                        Unit 8 Ballysaggart Business Complex,
+                        <br />
+                        8 Beechvalley Way, Dungannon, BT70 1BS,
+                        <br />
+                        Northern Ireland
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-1 d-lg-block d-none"></div>
+</div>
 <form asp-action="AddContactForm" asp-controller="ClientController" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class=" row">
-        <div class="col-sm-6 " style="background-color:#1e1625">
-            <h4 class="text-center mt-5 text-white">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</h4>
-            <div class="row col-sm-12 mt-5">
-
-                <div class="form-group col-sm-6 text-white">
-                    <label asp-for="ContactName">Name</label>
+    <div class="row m-0 mt-5 mb-5">
+        <div class="col-3 d-lg-block d-none"></div>
+        <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+            <div class="row text-center">
+                <div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+                    Email us now
+                </div>
+                <div class="form-group col-sm-12">
+                    @*<label asp-for="ContactName">Name</label>*@
                     <span asp-validation-for="ContactName" class="text-danger"></span>
-                    <input class="form-control selectWrapper" asp-for="ContactName">
+                    <input class="form-control selectWrapper" asp-for="ContactName" placeholder="Name">
                 </div>
-
-                <div class="form-group col-sm-6 text-white">
-                    <label asp-for="ContactEmail">Email</label>
+                <div class="form-group col-sm-12">
+                    @*<label asp-for="ContactEmail">Email</label>*@
                     <span asp-validation-for="ContactEmail" class="text-danger"></span>
-                    <input class="form-control selectWrapper" asp-for="ContactEmail">
+                    <input class="form-control selectWrapper" asp-for="ContactEmail" placeholder="Email">
                 </div>
-
+                <div class="form-group col-sm-12">
+                    @*<label asp-for="ContactSubject">Subject</label>*@
+                    <span asp-validation-for="ContactSubject" class="text-danger"></span>
+                    <input class="form-control selectWrapper" asp-for="ContactSubject" placeholder="Subject">
+                </div>
+                <div class="form-group col-sm-12">
+                    @*<label class="col-form-label">Message</label>*@
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                    <textarea class="form-control selectWrapper" asp-for="Message" maxlength="150" rows="4" placeholder="Message"></textarea>
+                </div>
+                <div class="form-group col-sm-12 float-right rounded-sm ">
+                    <input type="submit" value="Send" asp-action="AddContactForm" class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14" />
+                </div>
             </div>
-
-
-            <div class="form-group col-sm-12 text-white">
-                <label asp-for="ContactSubject">Subject</label>
-                <span asp-validation-for="ContactSubject" class="text-danger"></span>
-                <input class="form-control selectWrapper" asp-for="ContactSubject">
-            </div>
-            <div class="form-group col-sm-12 text-white">
-                <label class="col-form-label">Message</label>
-                <span asp-validation-for="Message" class="text-danger"></span>
-                <textarea class="form-control selectWrapper" asp-for="Message" maxlength="150" rows="4"></textarea>
-            </div>
-            <div class="form-group col-sm-12 float-right rounded-sm "><input class=" button"  asp-action="AddContactForm" type="submit" value="Send"></div>
-
-
         </div>
-        <div class="col-sm-6 p-0 m-0">
+        <div class="col-1 d-lg-block d-none"></div>
+    </div>
+    <div class="row m-0 mt-5 mb-5">
+        <div class="col-sm-12 p-0 m-0">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2316.746365106911!2d-6.780964684117638!3d54.50269748023756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x320a61ca1b228a11!2sMCN+NI+Ltd!5e0!3m2!1sen!2suk!4v1541503340298"
                     height="550" style="width:100%;border:0" frameborder="0" allowfullscreen></iframe>
         </div>
-
     </div>
 </form>

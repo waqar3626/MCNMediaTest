@@ -5,16 +5,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using static MCNMedia_Dev.Models.Church;
 using MCNMedia_Dev.Models;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace MCNMedia_Dev.Repository
 {
     public class ChurchDataAccessLayer
     {
+        private readonly IConfiguration _config;
         AwesomeDal.DatabaseConnect _dc;
+
+        private readonly string AWS_S3_BUCKET_URI;
+        private readonly string SYSTEM_MODE;
 
         public ChurchDataAccessLayer()
         {
+            //_config = config;
             _dc = new AwesomeDal.DatabaseConnect();
+
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
+            var root = builder.Build();
+            var awsS3bucket = root.GetSection("S3BucketConfiguration");
+            var sysConfig = root.GetSection("SystemConfiguration");
+            AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
+
+            //AWS_S3_BUCKET_URI = _config.GetValue<string>("S3BucketConfiguration:aws_bucket_url");
+
 
         }
 
@@ -45,7 +62,7 @@ namespace MCNMedia_Dev.Repository
                 church.Website = dataRow["Website"].ToString();
                 church.EmailAddress = dataRow["EmailAddress"].ToString();
                 church.Phone = dataRow["Phone"].ToString();
-                church.ImageURl = dataRow["ImageURL"].ToString();
+                church.ImageURl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageURL"]}";
                 church.Blurb = dataRow["Blurb"].ToString();
                 church.Slug = dataRow["Slug"].ToString();
                 church.Notice = dataRow["Notice"].ToString();
@@ -55,7 +72,7 @@ namespace MCNMedia_Dev.Repository
                 church.Switch = Convert.ToInt32(dataRow["Switch"]);
                 church.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
                 church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
-                church.Password= dataRow["Password"].ToString();
+                church.Password = dataRow["Password"].ToString();
 
                 Balobj.Add(church);
             }
@@ -95,7 +112,6 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-
         public IEnumerable<Church> GetCountries()
         {
             List<Church> Balobj = new List<Church>();
@@ -111,6 +127,7 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+
         //To Add new Church record    
         public void AddChurch(Church church)
         {
@@ -189,7 +206,7 @@ namespace MCNMedia_Dev.Repository
                 church.EmailAddress = dataRow["EmailAddress"].ToString();
                 church.Phone = dataRow["Phone"].ToString();
                 //string res = dataRow["ImageURL"].ToString();
-                church.ImageURl  = ("../" + dataRow["ImageURL"].ToString()).Replace("//", "/");
+                church.ImageURl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageURL"].ToString().Replace("//", "/")}";
                 church.Blurb = dataRow["Blurb"].ToString();
                 church.Slug = dataRow["Slug"].ToString();
                 church.Notice = dataRow["Notice"].ToString();
@@ -215,7 +232,7 @@ namespace MCNMedia_Dev.Repository
             return church;
         }
 
-       
+
 
         public DataTable GetChurchDDL()
         {
@@ -224,7 +241,7 @@ namespace MCNMedia_Dev.Repository
 
         }
 
-       
+
 
         public DataTable GetUserAssignChurchDDL(int id)
         {
@@ -254,8 +271,8 @@ namespace MCNMedia_Dev.Repository
         {
             _dc.ClearParameters();
             _dc.AddParameter("cntryId", country);
-            return  _dc.ReturnDataTable("spCounties_Get");
-           
+            return _dc.ReturnDataTable("spCounties_Get");
+
 
         }
         public DataTable GetCountriesList()
@@ -268,7 +285,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Church> GetWebsiteChurch()
         {
             List<Church> Balobj = new List<Church>();
-       
+
 
 
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_GetRandom_Churches");
@@ -277,23 +294,14 @@ namespace MCNMedia_Dev.Repository
                 Church church = new Church();
                 church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 church.ChurchName = dataRow["ChurchName"].ToString();
-             
+
                 church.Address = dataRow["Address"].ToString();
                 church.Town = dataRow["Town"].ToString();
                 church.CountyName = dataRow["CountyName"].ToString();
                 church.Website = dataRow["Website"].ToString();
                 church.EmailAddress = dataRow["EmailAddress"].ToString();
                 church.Phone = dataRow["Phone"].ToString();
-                string res = dataRow["ImageURL"].ToString();
-                   string res2 = res.Substring(0, 1);
-                if (res2 != "/")
-                {
-                    church.ImageURl = "/" + res;
-                }
-                else
-                {
-                    church.ImageURl = res;
-                }
+                church.ImageURl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageURL"]}";
 
                 Balobj.Add(church);
             }
@@ -319,16 +327,11 @@ namespace MCNMedia_Dev.Repository
                 church.Website = dataRow["Website"].ToString();
                 church.EmailAddress = dataRow["EmailAddress"].ToString();
                 church.Phone = dataRow["Phone"].ToString();
-                string res = dataRow["ImageURL"].ToString();
-                string res2 = res.Substring(0, 1);
-                if (res2 != "/")
-                {
-                    church.ImageURl = "/" + res;
-                }
-                else
-                {
-                    church.ImageURl = res;
-                }
+                church.ImageURl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageURL"]}";
+                church.CountyId = Convert.ToInt32(dataRow["CountyId"].ToString());
+                church.CountyName = dataRow["CountyName"].ToString();
+                church.CountryId = Convert.ToInt32(dataRow["CountryId"].ToString());
+                church.CountryName = dataRow["CountryName"].ToString();
 
                 Balobj.Add(church);
             }
@@ -337,4 +340,3 @@ namespace MCNMedia_Dev.Repository
 
     }
 }
-    

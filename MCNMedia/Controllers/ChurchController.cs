@@ -30,8 +30,6 @@ namespace MCNMedia_Dev.Controllers
             environment = _environment;
         }
 
-
-
         [HttpGet]
         public IActionResult AddChurch()
         {
@@ -45,10 +43,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 ShowMessage("Add Church Error" + e.Message);
                 throw;
-
             }
-           
-           
         }
 
         [HttpGet]
@@ -78,9 +73,8 @@ namespace MCNMedia_Dev.Controllers
                     ShowMessage("List Church Error" + e.Message);
                     throw;
             }
-         
-
         }
+       
         [HttpGet()]
         public IActionResult GetAllChurch()
         {
@@ -122,7 +116,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage(" Edit Church Error" + e.Message);
                 throw;
             }
-
         }
 
         [HttpPost]
@@ -196,8 +189,6 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-       
-
         public void LoadClientDDL()
         {
             try
@@ -239,8 +230,6 @@ namespace MCNMedia_Dev.Controllers
            
 
         }
-
-        
 
         [HttpPost]
         public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl)

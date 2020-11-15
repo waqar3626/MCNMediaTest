@@ -1,134 +1,48 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.Church>
+﻿@model MCNMedia_Dev.Models.GenericModel
 @using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Cathedrals";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
-@{
-    int id = -1;
-    if (Context.Session.GetInt32("countryId").HasValue)
-    {
-        id = (int)Context.Session.GetInt32("countryId");
-    }
-    List<SelectListItem>
-    SelectList = Lists.GetCountyList(id);
 
-}
-<style>
-
-
-    .selectWrapper {
-        border-radius: 40px;
-        display: inline-block;
-        overflow: hidden;
-        background: #cccccc;
-        border: 1px solid #cccccc;
-    }
-    .bgcolor {
-        background-color: goldenrod;
-    }
-
-    .bgcolor1 {
-        background-color: #060f2d;
-        color:white;
-    }
-</style>
-<div class="card bgcolor1" >
-    <div class="card-body">
-        <h2>CATHEDRALS </h2>
-    </div>
-
-</div>
-<div class="card h-100 w-auto bgcolor">
-
-    <div class="card bgcolor ">
-
-        <div class="card-body">
-            <div class="row ">
-                <div col-sm-12>
-                    <div class="row portfolio-grid">
-                        @foreach (Church ch in Model)
-                        {
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                <a href="@Url.Action("Preview", "Preview",new { chId = ch.ChurchId })" title="Preview">
-                                    <figure class="effect-text-in">
-                                        <img src="@ch.ImageURl" style="height:400px; width:800px !important" alt="image" />
-                                        <figcaption>
-                                            <h4>@ch.ChurchName</h4>
-                                            <p>address : @ch.Address ||  Phone : @ch.Phone || Email : @ch.EmailAddress || Website : @ch.Website </p>
-
-                                        </figcaption>
-                                    </figure>
-                                </a>
-                            </div>
-
-
-                        }
-
-
-
-                    </div>
-                </div>
+<div class="bg-blue pt-4 pb-4" style=" position: sticky; top: 0px; z-index:5">
+    <div class="container">
+        <div class="row m-0 ">
+            <div class="text-pink font-36 text-center avantgardece">
+                CATHEDRALS
             </div>
         </div>
     </div>
-
-    <div class="row pt-5 justify-content-center mb-3 ">
-        <div class=" selectWrapper col-md-4 col-sm-12 ">
-
-            <span class="text-danger"></span>
-            <select id="select2" name="countryId" onchange="DoPostBack();" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
-                <option value="-1">--Select Country--</option>
-            </select>
-        </div>
-        <div class="col-md-1 col-sm-12 pt-3"></div>
-        <div class=" selectWrapper col-md-4 col-sm-12 ">
-            <span class="text-danger"></span>
-
-            <select name="County" class="form-control" id="County">
-            </select>
-
-        </div>
-
-    </div>
-
-
-
 </div>
-
-<script>
-    $(document).ready(function () {
-        DoPostBack();
-    });
-    function DoPostBack() {
-        var CountryId = document.getElementById('select2').value;
-
-        $.ajax({
-            url: "/WebSite/LoadCountyDDL",
-            type: "GET",
-            data: { countryId: CountryId },
-            contentType: "application/json;charset=utf-8",
-            datatype: "json",
-            success: function (result) {
-                var s;
-                $.each(result, function (key, item) {
-                    s += '<option value="' + item.countyId + '">' + item.countyName + '</option>'
-
-                });
-
-                $("#County").html(s);
-
-
-
-
-
-            },
-            error: function (errormessage) {
-
-                alert(errormessage.responseText);
+<div class="row m-0 mt-5 mb-5">
+    <div class="col-1 d-lg-block d-none"></div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="border bg-white p-4" style="position: sticky; top: 103px;">
+            @foreach (Place country in Model.CountryList)
+            {
+                <div class="news-wrap mb-3">
+                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14 mb-2" style="width:100%"
+                       href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
+                        @country.PlaceName
+                    </a>
+                </div>
             }
-        });
-    }
-
-
-</script>
+        </div>
+    </div>
+    <div class="col-lg-7  col-md-8 col-sm-6">
+        <div class="row" style="position: sticky; top: 103px;">
+            @foreach (Church church in Model.ChurchList)
+            {
+                <div class="col-lg-4 col-md-6 p-2">
+                    <a class="church-preview" href="@Url.Action("Preview", "Preview",new { chId = church.ChurchId })" title="Preview">
+                        <div class="img-overly position-relative" style="height:179px;">
+                            <img src="@church.ImageURl" class="w-100 h-100" alt="@church.ChurchName">
+                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.CountyName</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-1 d-lg-block d-none"></div>
+</div>

@@ -40,6 +40,10 @@ namespace MCNMedia_Dev.Models
 
         public string ResultMessage { get; set; } = "";
 
-       
+        public IEnumerable<Church> ChurchList { get; set; }
+        public IEnumerable<Place> CountryList { get; set; }
+
+
+
     }
 }
