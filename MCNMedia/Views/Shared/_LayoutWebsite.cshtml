@@ -3,87 +3,12 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    @*<meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">*@
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - MCN</title>
-    <!-- plugins:css -->
-    <!--<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
-    <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
-    <link href="~/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />-->
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <!--<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
-    <link rel="stylesheet" href="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="~/theme/vendors/css/horizontal-layout-light/style.css">
-
-    <link rel="shortcut icon" href="~/theme/vendors/images/favicon.png" />-->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!--<link rel="stylesheet" href="~/theme/css/horizontal-layout-light/style.css">-->
-    <!-- endinject -->
     <link rel="shortcut icon" href="~/theme/images/favicon.png" />
     <link href="~/theme/Loader.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @*
-        <style type="text/css">
-
-            .bgImage {
-                background-image: url("/Images/pexels-david-dibert-1207965.jpg ")
-            }
-
-            .beautifooter {
-                background-image: url( "/Images/WebsitefooterImg.jpg");
-                height: 600px;
-                width: 100vw;
-                overflow: hidden;
-                position: relative;
-            }
-
-            .imgstyle {
-                width: 100%;
-                height: 100%;
-                opacity: 0.9;
-                background: #060f2d;
-                position: absolute;
-            }
-
-            .underline {
-                text-decoration: underline;
-                text-decoration-color: darkgoldenrod;
-            }
-
-            .iconcolor {
-                color: darkgoldenrod;
-                font-size: 1.5em;
-            }
-
-            .color {
-                color: goldenrod;
-            }
-
-            .ullist {
-                list-style: none;
-            }
-
-
-
-            .list1::before {
-                background-position: 0 5px;
-                line-height: 1.5625;
-                padding: 0 0 4px 30px;
-                margin-left: 1em;
-                color: goldenrod;
-            }
-        </style>*@
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCN Media</title>
 
     <!-- font-awsome 5 -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -95,6 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.1/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://themes.audemedia.com/html/goodgrowth/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.6.0/tiny-slider.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/WebsiteAssets/css/style.css">
@@ -104,7 +30,7 @@
     <!-- header start -->
     <header class="header container p-sm-0">
         <nav class="navbar navbar-expand-lg navbar-light container-nav  avantgardece text-uppercase pl-0 pr-0">
-            <a class="navbar-brand " href="/Website/Home"><img src="~/WebsiteAssets/img/logo.png" alt="" style="width: 115px;"></a>
+            <a class="navbar-brand " href="/"><img src="~/WebsiteAssets/img/logo.png" alt="" style="width: 115px;"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -113,21 +39,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Home">
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/">
                             Home <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Churches">Churches</a>
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Churches">Churches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Cathedrals">Cathedrals</a>
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Cathedrals">Cathedrals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/FuneralHomes">Funeral Homes</a>
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/FuneralHomes">Funeral Homes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Website/Schedules">Schedule</a>
+                        <a class="nav-link font-14 text-lightdark pr-3" style="border-right: 1px solid #c2c2c247;" href="/Schedules">Schedule</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link font-14 text-lightdark pr-3" href="/Website/ContactUs">Contact us</a>
@@ -157,28 +83,28 @@
                     <button class="btn btn-outline-pink mt-4 pt-2 pb-2 pl-4 pr-4 font-14 MyriadPro text-white">BECOME a service provider</button>
                 </div>
                 @*<div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
-            <p class="mb-2 font-14 text-white">Customer</p>
-            <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">JOBS</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">CAREER</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">ABOUT US</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
-        </div>*@
+                        <p class="mb-2 font-14 text-white">Customer</p>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">JOBS</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">CAREER</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">ABOUT US</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
+                    </div>*@
                 <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-left">
                     @*<p class="mb-2 font-14 text-white">MCN On View</p>
-            <a href=""><p class="mb-2 font-12 text-lightdark">LIVE LEADS</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">PRESS</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">SUBSCRIBE US</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">TALK TO US</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>*@
+                        <a href=""><p class="mb-2 font-12 text-lightdark">LIVE LEADS</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">PRESS</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">SUBSCRIBE US</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">TALK TO US</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>*@
                 </div>
                 <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
                     <p class="mb-2 font-14 text-white">Quick Links</p>
-                    <a href="/Website/Churches"><p class="mb-2 font-12 text-lightdark">CHURCHES</p></a>
-                    <a href="/Website/Cathedrals"><p class="mb-2 font-12 text-lightdark">CATHEDRALS</p></a>
-                    <a href="/Website/FuneralHomes"><p class="mb-2 font-12 text-lightdark">FUNERAL HOMES</p></a>
-                    <a href="/Website/Schedules"><p class="mb-2 font-12 text-lightdark">SCHEDULES</p></a>
-                    <a href="/Website/ContactUs"><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
+                    <a href="/Churches"><p class="mb-2 font-12 text-lightdark">CHURCHES</p></a>
+                    <a href="/Cathedrals"><p class="mb-2 font-12 text-lightdark">CATHEDRALS</p></a>
+                    <a href="/FuneralHomes"><p class="mb-2 font-12 text-lightdark">FUNERAL HOMES</p></a>
+                    <a href="/Schedules"><p class="mb-2 font-12 text-lightdark">SCHEDULES</p></a>
+                    <a href="/ContactUs"><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
                 </div>
                 <div class="col-md-3 col-sm-6 pb-3 MyriadPro">
                     <p class="mb-5 font-14 text-white">Follow Us</p>
@@ -191,8 +117,10 @@
         <div class="bottom-footer border-top border-light pt-3 pb-3">
             <div class="container MyriadPro">
                 <div class="font-12 text-white">Copyright 2020 MCN Media. All rights reserved.</div>
-                <a asp-action="Terms" asp-controller="Website" class="text-white font-12">Terms & Conditions</a>
-                <a asp-action="Privacy" asp-controller="Website" class="text-white pl-2 font-12">Privacy Policy</a>
+                @*<a asp-action="Terms" asp-controller="Website" class="text-white font-12">Terms & Conditions</a>
+                    <a asp-action="Privacy" asp-controller="Website" class="text-white pl-2 font-12">Privacy Policy</a>*@
+                <a href="\Terms" class="text-white font-12">Terms & Conditions</a>
+                <a href="\Privacy" class="text-white pl-2 font-12">Privacy Policy</a>
                 @*<a href="" class="text-white pl-2 font-12">Site map</a>*@
             </div>
         </div>
@@ -208,20 +136,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.1/owl.carousel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.6.0/min/tiny-slider.js"></script>
     <!-- Bootstrap JS bundle w/ Popper.js -->
     <script src="~/WebsiteAssets/js/main.js"></script>
-
-    <div class="container-scroller">
-
-
-
-        <!-- partial -->
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <!-- partial -->
-    </div>
-    <!-- main-panel ends -->
-    <!-- container-scroller -->
 
     <script>
         function displayBusyIndicator() {
@@ -246,7 +163,7 @@
             if (filterValue.length > 0) {
                 filter = "?Search=" + filterValue;
             }
-             window.location.href = "/Website/Cameras" + filter;
+            window.location.href = "/Website/Cameras" + filter;
         }
     </script>
 </body>

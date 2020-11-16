@@ -93,12 +93,12 @@ namespace MCNMedia_Dev
             app.UseStaticFiles();
             app.UseAuthorization();
 
-           // app.UseStaticFiles(new StaticFileOptions
-           // {
-           //     FileProvider = new PhysicalFileProvider(
-           //Path.Combine(env.ContentRootPath, "Uploads")),
-           //     RequestPath = "/Uploads"
-           // });
+            // app.UseStaticFiles(new StaticFileOptions
+            // {
+            //     FileProvider = new PhysicalFileProvider(
+            //Path.Combine(env.ContentRootPath, "Uploads")),
+            //     RequestPath = "/Uploads"
+            // });
 
             app.UseEndpoints(endpoints =>
             {
@@ -128,6 +128,14 @@ namespace MCNMedia_Dev
                     pattern: "ContactUs",
                     defaults: new { controller = "Website", Action = "ContactUs" });
                 endpoints.MapControllerRoute(
+                    name: "TermsAndCondition",
+                    pattern: "Terms",
+                    defaults: new { controller = "Website", Action = "Terms" });
+                endpoints.MapControllerRoute(
+                    name: "PrivacyPolicy",
+                    pattern: "Privacy",
+                    defaults: new { controller = "Website", Action = "Privacy" });
+                endpoints.MapControllerRoute(
                     name: "UserLogin",
                     pattern: "UserLogin",
                     defaults: new { controller = "UserLogin", Action = "UserLogin" });
@@ -135,6 +143,10 @@ namespace MCNMedia_Dev
                     name: "Publish",
                     pattern: "Publish/Recording",
                     defaults: new { controller = "Recording", Action = "PublishEvent" });
+                endpoints.MapControllerRoute(
+                    name: "Profile",
+                    pattern: "Camera/{id?}",
+                    defaults: new { controller = "Website", Action = "Profile" });
                 //Admin
                 endpoints.MapControllerRoute(
                     name: "DashBoard",
@@ -164,7 +176,7 @@ namespace MCNMedia_Dev
                     name: "AdminSchedules",
                     pattern: "Admin/Schedule",
                     defaults: new { controller = "Schedule", Action = "ListSchedule" });
-               
+
                 endpoints.MapControllerRoute(
                     name: "AdminRecordings",
                     pattern: "Admin/Recordings",

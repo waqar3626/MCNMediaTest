@@ -45,7 +45,7 @@ namespace MCNMedia_Dev.Models
 
         public int UpdateBy { get; set; }
         public string ImageURl { get; set; }
-        public string Blurb { get; set; }
+        //public string Blurb { get; set; }
 
         private string _Slug = string.Empty;
         public string Slug
@@ -54,7 +54,7 @@ namespace MCNMedia_Dev.Models
             set => _Slug = Guid.NewGuid().ToString();
         }
 
-        public string Notice { get; set; }
+        //public string Notice { get; set; }
 
         public int Featured { get; set; }
 
@@ -64,7 +64,7 @@ namespace MCNMedia_Dev.Models
             get { return _UniqueIdentifier; }
             set => _UniqueIdentifier = Guid.NewGuid().ToString();
         }
-        public Boolean RepeatRecordings { get; set; }
+        //public Boolean RepeatRecordings { get; set; }
 
         public int Switch { get; set; }
 

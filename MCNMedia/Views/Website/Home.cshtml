@@ -141,50 +141,14 @@
             @foreach (Church church in Model.ChurchList)
             {
                 <div class="col-lg-4 col-md-6 p-2">
-                    <a href="@Url.Action("Preview", "Preview",new { chId = church.ChurchId })" title="Preview">
+                    <a href="@Url.Action("Profile", "Website",new { id = church.ChurchId })" title="Preview">
                         <div class="img-overly position-relative" style="height:179px;">
                             <img src="@church.ImageURl" class="w-100 h-100" alt="@church.ChurchName">
-                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.CountyName</div>
+                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.Town</div>
                         </div>
                     </a>
                 </div>
             }
-            @*<div class="col-lg-4 col-md-6 p-2">
-                    <div class="img-overly position-relative">
-                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
-                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 p-2">
-                    <div class="img-overly position-relative">
-                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
-                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 p-2">
-                    <div class="img-overly position-relative">
-                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
-                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 p-2">
-                    <div class="img-overly position-relative">
-                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
-                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 p-2">
-                    <div class="img-overly position-relative">
-                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
-                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 p-2">
-                    <div class="img-overly position-relative">
-                        <img src="~/WebsiteAssets/img/church-img.png" class="w-100" alt="">
-                        <div class="overlay-text text-white avantgardece">Church of St Patrick <br> Dungiven</div>
-                    </div>
-                </div>*@
         </div>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6">

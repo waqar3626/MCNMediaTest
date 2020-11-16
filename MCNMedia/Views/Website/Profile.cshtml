@@ -1,0 +1,714 @@
+﻿@model MCNMedia_Dev.Models.Profile
+@{
+    ViewData["Title"] = "ChurchProfile";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+
+<!-- banner slider start -->
+<div class='cover-banner' style='background-image: url("../WebsiteAssets/img/banner-1.png");'>
+    <i class="fal fa-play-circle text-white vide-play-in"></i>
+    <video id='CameraLiveStream' controls class='video' width='100%'>
+        @*<source src="https://ak.picdn.net/shutterstock/videos/30099838/preview/stock-footage-orvieto-italy-july-tourists-visit-orvieto-cathedral-duomo-di-orvieto-cattedrale-di-santa.webm" />
+        <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />*@
+        <source id="LiveStreamSrc" type="application/x-mpegURL">
+        <img src="~/WebsiteAssets/img/banner-1.png" alt="">
+    </video>
+</div>
+<!-- banner slider end -->
+<div class="arialNova bg-white" style="z-index: 3000;">
+    <div class="row m-0 mb-3 mt-100" style="background-color: 1c4776;">
+        <div class="col-1 d-xl-block d-none"></div>
+        <div class="col-xl-10">
+            <div class="nav-top mt-0 bg-white">
+                <ul class=" popin font-14 mt-0">
+                    <li class="nav-item dropdown change-pan d-inline-block border-right">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Camera <i class="fal fa-angle-down"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (Camera cam in Model.CameraList)
+                            {
+                                <a class="dropdown-item" href="#" onclick="OpenCamera('@cam.LiveStreamUrl')"> @cam.CameraName </a>
+                            }
+                            @*<a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>*@
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown change-pan d-inline-block border-right">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Videos <i class="fal fa-angle-down"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (MediaChurch vid in Model.VideoList)
+                            {
+                                <a class="dropdown-item" href="#"> @vid.TabName </a>
+                            }
+                            @*<a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>*@
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown change-pan d-inline-block border-right">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Slideshow <i class="fal fa-angle-down"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (MediaChurch slidshow in Model.SlideshowList)
+                            {
+                                <a class="dropdown-item" href="#"> @slidshow.TabName </a>
+                            }
+                            @*<a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>*@
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown change-pan d-inline-block">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Images <i class="fal fa-angle-down"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (MediaChurch pic in Model.PictureList)
+                            {
+                                <a class="dropdown-item" href="#"> @pic.TabName </a>
+                            }
+                            @*<a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>*@
+                        </div>
+                    </li>
+                </ul>
+                <div class="quick-strt text-white font-18">
+                    Quick Start <i class="fal fa-long-arrow-right pl-2"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 d-xl-block d-none"></div>
+    </div>
+    <div class="row m-0  mb-5 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
+        <div class="col-1 d-xl-block d-none"></div>
+        <div class="col-xl-8   col-md-8  pr-md-0 col-sm-7">
+            <div class="row m-0">
+                <div class="col-xl-8 col-lg-6">
+                    <img src="@Model.Churches.ImageURl" alt="" class="main-img">
+                    <p class="font-30">@Model.Churches.ChurchName, @Model.Churches.Town</p>
+                </div>
+                <div class="col-xl-4 col-lg-6 flex-end-md">
+                    <p class="icon-top-s"><i class="fas fa-home" style="padding-right:7px;"></i> @Model.Churches.Address, @Model.Churches.Town</p>
+                    <p class="icon-top-s"><i class="fas fa-envelope" style="padding-right:7px;"></i> @Model.Churches.EmailAddress</p>
+                    <p class="icon-top-s"><i class="fas fa-globe" style="padding-right:7px;"></i> @Model.Churches.Website</p>
+                </div>
+            </div>
+            <div class="praying-slider">
+                <div class="c-product-tray m-0">
+                    <div class="o-wrapper">
+                        <div class="c-product-tray__carousel">
+                            <div class="o-slider-product-tray">
+                                <ul class="o-slider-product-tray__inner pt-3 pb-3 js-slider-product-tray">
+                                    <li class="o-slider-product-tray__slide">
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Monday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                    <li class="o-slider-product-tray__slide">
+
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Tuesday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                    <li class="o-slider-product-tray__slide">
+
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Wednesday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                    <li class="o-slider-product-tray__slide">
+
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Thursday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                    <li class="o-slider-product-tray__slide">
+
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Friday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                    <li class="o-slider-product-tray__slide">
+
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Saturday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                    <li class="o-slider-product-tray__slide">
+
+                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
+                                                Sunday
+                                            </h3>
+                                            <p>
+                                                <span class="time">8:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                            <p class="inner-have">
+                                                <span class="time">8:30 am </span>
+                                                <span class="border-time">
+                                                    <span>
+                                                        <span class=" timing-block">
+                                                            <span class="have-dot">
+                                                                <span class="font-14 font-weight-bold">Prayer</span>
+                                                                <span class="font-12 d-block">8:15 - 8:45</span>
+                                                                <span class="block-red"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </p>
+
+                                            <p>
+                                                <span class="time">9:00 am </span>
+                                                <span class="border-time">
+                                                </span>
+                                            </p>
+                                        </div><!-- /c-product-tile -->
+
+                                    </li><!-- /o-slider-product-tray__slide -->
+
+                                </ul><!-- /o-slider-product-tray__inner -->
+                                <div class="o-slider-product-tray__controls js-controls">
+
+                                    <button class="o-slider-product-tray__button o-slider-product-tray__button--prev">
+                                        <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--prev"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
+                                            <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
+                                        </svg><!-- /o-slider-product-tray__arrow -->
+                                    </button><!-- /o-slider-product-tray__button -->
+
+                                    <button class="o-slider-product-tray__button o-slider-product-tray__button--next">
+                                        <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--next"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
+                                            <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
+                                        </svg><!-- /o-slider-product-tray__arrow -->
+                                    </button><!-- /o-slider-product-tray__button -->
+
+                                </div><!-- /o-slider-product-tray__controls -->
+                            </div><!-- /o-slider-product-tray -->
+                        </div><!-- /c-product-tray__carousel -->
+                    </div><!-- /o-wrapper -->
+                </div><!-- /c-product-tray -->
+            </div>
+            <div class="text-praaa">
+                <div class="font-32 pt-4 pb-4 bg-white font-weight-bold ProximaNova">
+                    @Model.Announcement.AnnouncementTitle
+                </div>
+                <p class="font-16 mb-2">
+                    @Model.Announcement.AnnouncementText
+                </p>
+            </div>
+        </div>
+        <div class="col-xl-2  col-md-4 col-sm-5">
+            <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                </div>
+                <img src="img/newsimg.png" class="mt-2" alt="">
+            </div>
+        </div>
+        <div class="col-1 d-xl-block d-none"></div>
+    </div>
+    <!-- map start -->
+    <div class="row m-0 mt-5 mb-5  pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
+        <div class="col-1 d-xl-block d-none"></div>
+        <div class="col-xl-8  col-md-8  p-lg-0 col-sm-7">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13507.96053149314!2d74.2021541!3d32.177540799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1605436651478!5m2!1sen!2s"
+                    width="" height="" frameborder="0" class="news h-100 w-100" style="border:0;" allowfullscreen=""
+                    aria-hidden="false" tabindex="0"></iframe>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-5">
+            <div class=" font-20 pt-4 pb-4 bg-white   text-center font-weight-bold ProximaNova">
+                Resource Hub
+            </div>
+            <div class="border bg-white news p-4 pr-lg-5">
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">Document</h4>
+                    <p class="font-weight-light mb-3 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">Document</h4>
+                    <p class="font-weight-light mb-3 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+            </div>
+            <div class=" font-20 pt-4 pb-4 bg-white  text-center font-weight-bold ProximaNova">
+                News Letter
+            </div>
+            <div class="border bg-white news p-4 pr-lg-5">
+                <div class="news-wrap">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-3 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 d-xl-block d-none"></div>
+    </div>
+
+    <!-- map end -->
+    <!-- recording start -->
+    <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
+        <div class="col-1 d-xl-block d-none"></div>
+        <div class="col-xl-10">
+            <div class=" font-32 pt-4 pb-4 bg-white">
+                Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
+            </div>
+            <div class="border bg-white pb-4 news pt-4 row m-0">
+                @foreach (Recording recording in Model.RecordingList)
+                {
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                }
+
+                @*<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
+                        </div>
+                        <i class="fal fa-play-circle font-36"></i>
+                    </div>*@
+            </div>
+
+        </div>
+        <div class="col-1 d-xl-block d-none"></div>
+    </div>
+    <!-- recording END -->
+</div>
+<div>
+    <!-- now? start -->
+    @*<div class="bg-purple pt-5 pb-5 mt-5">
+            <div class="container pt-4 pb-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class='cover'>
+                            <video controls class='video' width='100%'>
+                                <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video"
+                                        type="video/mp4" />
+                                <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />
+                                <img src="img/video-img.png" alt="">
+                            </video>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center self-center">
+                        <span class="text-pink font-36 text-center pt-4 pb-4 container avantgardece ">
+                            Do you want to start streaming?
+                        </span> <br>
+                        <a href="" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">
+                            Contact us
+                            today
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <!-- now? end -->@*
+        <!-- about customer strt -->
+        <div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+            What our happy customers say.?
+        </div>
+        <!-- TESTIMONIALS -->
+
+        <section class="testimonials">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="customers-testimonials" class="owl-carousel">
+
+                            <!--TESTIMONIAL 1 -->
+                            <div class="item">
+                                <div class="shadow-effect rounded-0 avantgardece">
+                                    <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
+                                    <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                    </div>
+                                    <p class="font-14 mb-4">
+                                        “ A great agency who are not only flexible, efficient and
+                                        professional but a group of people who really care about delivering results for
+                                        you.
+                                        ”
+                                    </p>
+                                    <p class="font-14 text-center text-black mb-0 mt-3"> Jona Kraus</p>
+                                    <p class="font-14 text-center text-muted mb-0 text-lightdark"> berlin - Germany</p>
+                                </div>
+                            </div>
+                            <!--END OF TESTIMONIAL 1 -->
+                            <!--TESTIMONIAL 2 -->
+                            <div class="item">
+
+                                <div class="shadow-effect rounded-0 avantgardece">
+                                    <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
+                                    <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                    </div>
+                                    <p class="font-14 mb-4">
+                                        “ A great agency who are not only flexible, efficient and
+                                        professional but a group of people who really care about delivering results for
+                                        you.
+                                        ”
+                                    </p>
+
+                                    <p class="font-14 text-center text-black mb-0 mt-3"> Jona Kraus</p>
+                                    <p class="font-14 text-center text-muted mb-0 text-lightdark"> berlin - Germany</p>
+                                </div>
+                            </div>
+                            <!--END OF TESTIMONIAL 2 -->
+                            <!--TESTIMONIAL 3 -->
+                            <div class="item">
+
+                                <div class="shadow-effect rounded-0 avantgardece">
+                                    <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
+                                    <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                        <i class="fal fa-star"></i>
+                                    </div>
+                                    <p class="font-14 mb-4">
+                                        “ A great agency who are not only flexible, efficient and
+                                        professional but a group of people who really care about delivering results for
+                                        you.
+                                        ”
+                                    </p>
+                                    <p class="font-14 text-center text-black mb-0 mt-3"> Jona Kraus</p>
+                                    <p class="font-14 text-center text-muted mb-0 text-lightdark"> berlin - Germany</p>
+                                </div>
+                            </div>
+                            <!--END OF TESTIMONIAL 3 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    *@
+    <!-- END OF TESTIMONIALS -->
+    @*<div class=" font-36 text-center bg-white avantgardece">
+            Contact US
+        </div>
+        <p class="text-center text-muted avantgardece">if you like to take our services</p>
+        <div class="container">
+            <div class="input-set row col-md-8 col-lg-6 ml-auto mr-auto mt-5 mb-5">
+                <input type="text" class="hiring-in pl-2" type="email" placeholder="enter your email">
+                <button class="hired-btn">Hire Me</button>
+            </div>
+        </div>*@
+</div>
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $('#LiveStreamSrc').attr("src", '' + $('#livestreamUrl').val() + '');
+    //    var player = videojs('CameraLiveStream');
+    //    player.autoplay(false);
+    //});
+
+    function OpenCamera(liveUrl) {
+        $('#LiveStreamSrc').attr("src", '' + liveUrl + '');
+        var player = videojs('CameraLiveStream');
+        player.autoplay(false);
+    }
+
+</script>

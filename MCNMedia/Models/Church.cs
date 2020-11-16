@@ -48,15 +48,20 @@ namespace MCNMedia_Dev.Models
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public string ImageURl { get; set; }
+
+        [Obsolete("Blurb is deprecated, please use announcement module instead.")]
         public string Blurb { get; set; }
 
         public string Slug { get; set; }
 
+        [Obsolete("Notice is deprecated, please use notice module instead.")]
         public string Notice { get; set;}
 
         public int Featured { get; set; }
         
         public string UniqueIdentifier { get; set; }
+
+        [Obsolete("RepeatRecordings is deprecated, please use schedule repeat property for repeat recordings instead.")]
         public Boolean RepeatRecordings { get; set; }
        
         public int Switch { get; set; }

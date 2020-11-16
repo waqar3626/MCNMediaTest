@@ -127,6 +127,7 @@ namespace MCNMedia_Dev.Controllers
                 string fileName = Path.GetFileName(imageURl2.FileName);
                 church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
                 church.CreateBy = (int)HttpContext.Session.GetInt32("UserId");
+                church.Slug = ((church.ChurchName + "-" + church.Town).ToLower()).Replace(" ", "-").Replace("'", "").Replace("_","-").Replace("(","-").Replace(".","");
                 churchDataAccess.AddChurch(church);
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 return RedirectToAction("Listchurch");

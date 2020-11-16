@@ -254,6 +254,38 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
+        public IActionResult Profile(int id)
+        {
+            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
+            AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
+            CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+            RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
+            ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
+            MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
+
+
+
+            Profile profileModel = new Profile();
+            string churchSlug = id.ToString();
+            profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( id));
+            profileModel.Announcement = announcementDataAccessLayer.GetAnnouncement(id).First<Announcement>();
+            profileModel.CameraList = camDataAccess.GetAllCameras(id);
+            profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", id).ToList();
+            profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", id).ToList();
+            profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", id).ToList();
+
+            profileModel.Cameras = camDataAccess.GetCameraById(1);
+          //  profileModel.Media = "";
+            profileModel.RecordingList = recordDataAccess.GetAllRecording().ToList<Recording>();
+            profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(id, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
+            //profileModel.Schedules = "";
+            //profileModel.Users = "";
+
+
+
+            return View(profileModel);
+        }
+
         private void ShowMesage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
