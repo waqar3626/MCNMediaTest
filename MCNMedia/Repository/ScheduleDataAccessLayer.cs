@@ -275,6 +275,20 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchStatus", scheduleStatus);
             _dc.Execute("spSchedule_UpdateStatus");
         }
+        public void insertScheduleLog(int scheduleId, int scheduleStatus)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("SchId", scheduleId);
+            _dc.AddParameter("SchStatus", scheduleStatus);
+            _dc.Execute("spScheduleActivityLog");
+        }
+        public void UpdateScheduleLog(int scheduleId, int scheduleStatus)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("SchId", scheduleId);
+            _dc.AddParameter("SchStatus", scheduleStatus);
+            _dc.Execute("spUpdateScheduleLog");
+        }
 
         public DataTable spSchedule_NotPublished_GetByCamera(int cameraId)
         {

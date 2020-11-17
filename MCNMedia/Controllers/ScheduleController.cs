@@ -320,6 +320,9 @@ namespace MCNMedia_Dev.Controllers
                     scheduleDataAccess.UpdateScheduleStatus(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 1);
                     string logMessage = $"Recording started for camera (CameraID: {cameraId}) on {DateTime.Now}";
                     ActivityLogDataAccessLayer.AddActivityLog("Recording Started", category: "Schedule", message: logMessage, churchId: churchId, userId: -1);
+
+                    scheduleDataAccess.insertScheduleLog(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 1);
+
                 }
             }
         }
@@ -338,6 +341,9 @@ namespace MCNMedia_Dev.Controllers
                     scheduleDataAccess.UpdateScheduleStatus(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 2);
                     string logMessage = $"Recording stopped for camera (CameraID: {cameraId}) on {DateTime.Now}";
                     ActivityLogDataAccessLayer.AddActivityLog("Recording Stopped", category: "Schedule", message: logMessage, churchId: churchId, userId: -1);
+
+                    scheduleDataAccess.UpdateScheduleLog(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 2);
+
                 }
             }
         }

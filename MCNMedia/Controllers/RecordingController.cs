@@ -176,6 +176,9 @@ namespace MCNMedia_Dev.Controllers
                     scheduleDataAccess.UpdateScheduleStatus(record.ScheduleId, scheduleStatus);
                     string logMessage = $"Recording published for camera (CameraID: {publishRecording.camera_id}) on {DateTime.Now}";
                     ActivityLogDataAccessLayer.AddActivityLog("Recording Published", category: "Schedule", message: logMessage, churchId: record.ChurchId, userId: -1);
+                    
+                    scheduleDataAccess.UpdateScheduleLog(record.ScheduleId, 3);
+
                 }
             }
         }
