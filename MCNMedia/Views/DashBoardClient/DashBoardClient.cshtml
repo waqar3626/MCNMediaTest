@@ -124,13 +124,13 @@
                 <div class="card">
 
                     <div class="card-body">
-
-                        <p class="card-title text-md-center text-xl-left text-muted">Total Recording Done so far</p>
-                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.DashBoardClients.TotalRecordings</h3>
-                            <i class="mdi mdi-record-rec icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-                        </div>
-
+                        <a href="@Url.Action("Recording","Client")">
+                            <p class="card-title text-md-center text-xl-left text-muted">Total Recording Done so far</p>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.DashBoardClients.TotalRecordings</h3>
+                                <i class="mdi mdi-record-rec icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                            </div>
+                        </a>
                     </div>
 
                 </div>
