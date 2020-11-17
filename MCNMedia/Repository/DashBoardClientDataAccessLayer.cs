@@ -66,7 +66,7 @@ namespace MCNMedia_Dev.Repository
                 dashBoardClient.ScheduleEventName = dataRow["ScheduleEventName"].ToString();
                 dashBoardClient.ScheduleEventTime = dataRow["ScheduleEventTime"].ToString();
                 dashBoardClient.ScheduleEventDate =Convert.ToDateTime( dataRow["ScheduleEventDate"]);
-                dashBoardClient.ScheduleStatus = dataRow["ScheduleStatus"].ToString();
+                dashBoardClient.ScheduleStatus = dataRow["StatusTitle"].ToString();
                 dashBoardClient.IsRepeated = Convert.ToInt32(dataRow["IsRepeated"]);
                 dashBoardClient.RecordingDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
                 dashBoardClients.Add(dashBoardClient);
