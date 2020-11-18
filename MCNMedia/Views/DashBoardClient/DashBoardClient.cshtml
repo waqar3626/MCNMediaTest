@@ -4,14 +4,38 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml"; }
 
 
-<!-- partial:partials/_horizontal-navbar.html -->
-<!-- partial -->
+@{ int usrId = -1;
+    if (Context.Session.GetInt32("UserId") != null)
+        usrId = (int)Context.Session.GetInt32("UserId");
+    List<SelectListItem> ddlChurches = Lists.GetUserAssignChurchListForDDL(usrId);
+
+
+    //string name ="";
+    //string address = "";
+    //name = Model.ChurchName;
+    //address = Model.Address;
+    //string abc = "12345"; }
+}
+
+<form method="get">
+    <div class="card ">
+        <div class="card-body">
+            <div class="form-group row">
+                @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text",ViewBag.ChurchId), new { @class = "form-control", @onchange = "javascript:onChangeChurchClient()", @id = "ddlid" })
+                <span class="text-danger"></span>
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
 
 <div class="row p-3 ">
     <div class="col-12">
         <div class="row">
-            <div class="col-md-12 grid-margin bg-warning">
-                <div class="card bg-primary border-0 position-relative">
+            <div class="col-md-12 grid-margin bg-dark">
+                <div class="card border-0 position-relative" style="background-color: #99004d">
                     <div class="card-body p-2">
                         @*<h3 class=" text-white">Recordings Details</h3>*@
                         <div id="performanceOverview" class="carousel slide performance-overview-carousel position-static pt-2" data-ride="carousel">
@@ -106,14 +130,13 @@
     <div class="col-6">
         <div class="row">
 
-            <div class="col-6 grid-margin stretch-card ">
-                <div class="card">
-
+            <div class="col-6 grid-margin stretch-card">
+                <div class="card" style="background-color: #660066">
                     <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left">Today Event's</p>
+                        <p class="card-title text-md-center text-xl-left text-white">Today Event's</p>
                         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.DashBoardClients.TodaysSchedules</h3>
-                            <i class="mdi mdi-calendar  icon-md text-muted mb-0 mb-md-3 mb-xl-0 "></i>
+                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TodaysSchedules</h3>
+                            <i class="mdi mdi-calendar  icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
                         </div>
                     </div>
                 </div>
@@ -124,12 +147,12 @@
             <div class="col-6 grid-margin stretch-card ">
                 <div class="card">
 
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #b300b3">
                         <a href="@Url.Action("Recording","Client")">
-                            <p class="card-title text-md-center text-xl-left text-muted">Total Recording Done so far</p>
+                            <p class="card-title text-md-center text-xl-left text-white">Total Recording Done so far</p>
                             <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.DashBoardClients.TotalRecordings</h3>
-                                <i class="mdi mdi-record-rec icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TotalRecordings</h3>
+                                <i class="mdi mdi-record-rec icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
                             </div>
                         </a>
                     </div>
@@ -144,11 +167,11 @@
 
                 <div class="card">
 
-                    <div class="card-body">
-                        <p class="card-title text-md-center text-xl-left">With Recording</p>
+                    <div class="card-body" style="background-color:#00539c">
+                        <p class="card-title text-md-center text-xl-left text-white">With Recording</p>
                         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.DashBoardClients.TodaysRecordings</h3>
-                            <i class="mdi mdi-camcorder-box icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 text-white order-xl-0">@Model.DashBoardClients.TodaysRecordings</h3>
+                            <i class="mdi mdi-camcorder-box icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
                         </div>
 
                     </div>
@@ -159,12 +182,12 @@
             <div class="col-md-6 grid-margin stretch-card ">
                 <div class="card ">
 
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #00294d">
 
-                        <p class="card-title text-md-center text-xl-left">withOut Recording</p>
+                        <p class="card-title text-md-center text-xl-left text-white">withOut Recording</p>
                         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.DashBoardClients.TodaysEventsWithOutRecordings</h3>
-                            <i class="mdi mdi-camcorder-box-off icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TodaysEventsWithOutRecordings</h3>
+                            <i class="mdi mdi-camcorder-box-off icon-md mb-0 text-white mb-md-3 mb-xl-0"></i>
                         </div>
                     </div>
                 </div>
@@ -177,7 +200,7 @@
 
     <div class="col-6">
         <div class="card">
-            <div class="card-header" style="background-color:black">
+            <div class="card-header" style="background-color:#1f4a79">
                 <label style="color:white">Today's Schedule</label>
             </div>
             <div class="card-body">
@@ -226,7 +249,8 @@
                                 @Html.DisplayFor(modelItem => item.RecordingDuration)
                             </td>
 
-                        </tr>}
+                        </tr>
+}
                                 </tbody>
                             </table>
                         </div>
@@ -258,4 +282,35 @@
 </script>
 
 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+    });
+      function onChangeChurchClient() {
+
+
+        var churchId = document.getElementById('ddlid').value;
+
+        $.ajax({
+            type: "GET",
+            //url: "/Client/Client/",
+            url: '@Url.Action("ReloadPage", "DashBoardClient")',
+            data: { chrid: churchId },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+          
+            success: function (result) {
+                window.location.reload();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+
+        });
+
+    }
+
+
+</script>
 
