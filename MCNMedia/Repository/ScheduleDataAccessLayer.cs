@@ -33,7 +33,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("CreatedBy", schedules.CreatedBy);
 
             return _dc.Execute("spschedule_Add");
-             
+
         }
 
         //To View all Users details
@@ -164,7 +164,7 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("SchId", id);
             _dc.AddParameter("UpdatedBy", UpdateBy);
-           return _dc.ReturnBool("spSchedule_Delete");
+            return _dc.ReturnBool("spSchedule_Delete");
         }
 
         public IEnumerable<Schedule> GetWebsiteSchedule_WhatsOnNow()

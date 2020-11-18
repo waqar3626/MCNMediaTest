@@ -96,5 +96,13 @@ namespace MCNMedia_Dev.Repository
             }
             return dashBoardClient;
         }
+        public int GetUserAssignTopChurchId(int UsrId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("usrId", UsrId);
+            int ChurchId = _dc.ReturnInt("spUserAssignChurch_GetTopChurchId");
+
+            return ChurchId;
+        }
     }
 }
