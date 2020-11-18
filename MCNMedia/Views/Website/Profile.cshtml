@@ -9,14 +9,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
 <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
 
-<!-- banner slider start -->
-<div class='cover-banner' style='background-image: url("../WebsiteAssets/img/banner-1.png");'>
+<!-- banner" slider start -->
+<div class="cover-banner" style="background-image: url('@Model.Churches.ImageURl');">
     <i class="fal fa-play-circle text-white vide-play-in"></i>
-    <video id='CameraLiveStream' controls class='video' width='100%'>
+    <video id='CameraLiveStream' controls class='video-js vjs-default-skin' style="width:100% !important;height:100% !important;">
         @*<source src="https://ak.picdn.net/shutterstock/videos/30099838/preview/stock-footage-orvieto-italy-july-tourists-visit-orvieto-cathedral-duomo-di-orvieto-cattedrale-di-santa.webm" />
             <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />*@
         <source id="LiveStreamSrc" type="application/x-mpegURL">
-        <img src="~/WebsiteAssets/img/banner-1.png" alt="">
+        @*<img src="~/WebsiteAssets/img/banner-1.png" alt="">*@
     </video>
 </div>
 <!-- banner slider end -->
@@ -34,7 +34,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @foreach (Camera cam in Model.CameraList)
                             {
-                                <a class="dropdown-item" href="#" onclick="OpenCamera('@cam.LiveStreamUrl')"> @cam.CameraName </a>
+                                <a class="dropdown-item" style="cursor:pointer;"   onclick="OpenCamera('@cam.LiveStreamUrl')"> @cam.CameraName </a>
                             }
                             @*<a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
@@ -877,6 +877,7 @@
         $('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs('CameraLiveStream');
         player.autoplay(false);
+        
     }
 
 </script>
