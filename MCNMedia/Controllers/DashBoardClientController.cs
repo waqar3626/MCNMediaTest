@@ -16,24 +16,22 @@ namespace MCNMedia_Dev.Controllers
 
         DashBoardClientDataAccessLayer dashboardData = new DashBoardClientDataAccessLayer();
         DashboardDataAccessLayer dashboardDataAccessLayer = new DashboardDataAccessLayer();
-        public IActionResult DashBoardClient(int chrid)
+        [HttpGet]
+        public IActionResult DashBoardClient()
         {
             try
             {
-                GenericModel gm = new GenericModel();
-                HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
-                int ChrId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                gm.LDashBoardClients = dashboardData.GetDashboardClientInfo(chrid);
-                gm.Dashboards = dashboardData.GetDashboardClientInfoCount(chrid);
-                gm.DashBoardClients = dashboardData.GetCountClientDashBoard(chrid);
-               int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                GenericModel gm1 = new GenericModel();
+                 int ChrId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                gm1.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChrId);
+                gm1.Dashboards = dashboardData.GetDashboardClientInfoCount(ChrId);
+                gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChrId);
+                int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
-
                 HttpContext.Session.SetInt32("ChurchId", UsrAssignChurchId);
-
-
-
-                return View(gm);
+                HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
+                ViewBag.ChurchId = ChrId.ToString();
+                return View(gm1);
             }
             catch (Exception e)
             {
@@ -41,6 +39,12 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
 
+        }
+
+        public JsonResult ReloadPage(int chrid)
+        {
+            HttpContext.Session.SetInt32("ChurchId", chrid);
+            return Json(chrid);
         }
 
         private void ShowMessage(string exceptionMessage)
