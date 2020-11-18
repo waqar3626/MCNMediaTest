@@ -14,14 +14,14 @@
     <i class="fal fa-play-circle text-white vide-play-in"></i>
     <video id='CameraLiveStream' controls class='video' width='100%'>
         @*<source src="https://ak.picdn.net/shutterstock/videos/30099838/preview/stock-footage-orvieto-italy-july-tourists-visit-orvieto-cathedral-duomo-di-orvieto-cattedrale-di-santa.webm" />
-        <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />*@
+            <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />*@
         <source id="LiveStreamSrc" type="application/x-mpegURL">
         <img src="~/WebsiteAssets/img/banner-1.png" alt="">
     </video>
 </div>
 <!-- banner slider end -->
 <div class="arialNova bg-white" style="z-index: 3000;">
-    <div class="row m-0 mb-3 mt-100" style="background-color: 1c4776;">
+    <div class="row m-0 mb-3" style="background-color: #1c4776;">
         <div class="col-1 d-xl-block d-none"></div>
         <div class="col-xl-10">
             <div class="nav-top mt-0 bg-white">
@@ -104,7 +104,7 @@
             <div class="row m-0">
                 <div class="col-xl-8 col-lg-6">
                     <img src="@Model.Churches.ImageURl" alt="" class="main-img">
-                    <p class="font-30">@Model.Churches.ChurchName, @Model.Churches.Town</p>
+                    <p class="font-30 text-pink">@Model.Churches.ChurchName, @Model.Churches.Town</p>
                 </div>
                 <div class="col-xl-4 col-lg-6 flex-end-md">
                     <p class="icon-top-s"><i class="fas fa-home" style="padding-right:7px;"></i> @Model.Churches.Address, @Model.Churches.Town</p>
@@ -118,33 +118,80 @@
                         <div class="c-product-tray__carousel">
                             <div class="o-slider-product-tray">
                                 <ul class="o-slider-product-tray__inner pt-3 pb-3 js-slider-product-tray">
+                                    @*   @foreach (var item in Model.ScheduleList)
+                                        {
+                                            <li class="o-slider-product-tray__slide">
+                                                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                                                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                        @item.EventDay
+                                                    </h3>
+                                                    <p>
+                                                        <span class="time">@Html.DisplayFor(modelItem => item.EventDate) </span>
+                                                    </p>
+                                                    <p class="inner-have">
+                                                            <span>
+                                                                <span class=" timing-block">
+                                                                    <span class="have-dot">
+                                                                        <span class="font-14 font-weight-bold">@item.EventName</span>
+                                                                        <span class="font-12 d-block">@Html.DisplayFor(modelItem => item.EventTime)</span>
+                                                                      @if (item.Record == true)
+                                                                      {
+                                                                          <span class="block-red"></span>
+                                                                      }
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                    </p>
+
+
+                                                </div><!-- /c-product-tile -->
+
+                                            </li>
+                                        }   *@
+
                                     <li class="o-slider-product-tray__slide">
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Monday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay0)
+                                                {
+                                                <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -155,31 +202,47 @@
                                     <li class="o-slider-product-tray__slide">
 
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Tuesday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.AddDays(1).ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay1)
+                                                {
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -190,31 +253,47 @@
                                     <li class="o-slider-product-tray__slide">
 
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Wednesday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.AddDays(2).ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay2)
+                                                {
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -225,31 +304,47 @@
                                     <li class="o-slider-product-tray__slide">
 
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Thursday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.AddDays(3).ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay3)
+                                                {
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime) </span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -260,31 +355,47 @@
                                     <li class="o-slider-product-tray__slide">
 
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Friday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.AddDays(4).ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay4)
+                                                {
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -295,31 +406,47 @@
                                     <li class="o-slider-product-tray__slide">
 
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Saturday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.AddDays(5).ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay5)
+                                                {
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -330,31 +457,47 @@
                                     <li class="o-slider-product-tray__slide">
 
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat">
-                                                Sunday
+                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                                                @System.DateTime.Now.AddDays(6).ToString("dddd")
                                             </h3>
                                             <p>
-                                                <span class="time">8:00 am </span>
+                                                <span class="time">9:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
                                             <p class="inner-have">
-                                                <span class="time">8:30 am </span>
-                                                <span class="border-time">
-                                                    <span>
-                                                        <span class=" timing-block">
-                                                            <span class="have-dot">
-                                                                <span class="font-14 font-weight-bold">Prayer</span>
-                                                                <span class="font-12 d-block">8:15 - 8:45</span>
-                                                                <span class="block-red"></span>
+                                                @foreach (var itm in Model.ScheduleListDay6)
+                                                {
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="border-time">
+                                                        <span>
+                                                            <span class=" timing-block">
+                                                                <span class="have-dot">
+                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                                                    @if (itm.Record == true)
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
+                                                                        </span>
+                                                                        <span class="block-red"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="font-12 d-block">
+                                                                            @itm.EventTime.ToString("hh:mm")
+                                                                        </span>
+                                                                    }
+                                                                </span>
+
                                                             </span>
                                                         </span>
                                                     </span>
-                                                </span>
+                                                    <br />
+                                                    <br />
+                                                }
                                             </p>
-
                                             <p>
-                                                <span class="time">9:00 am </span>
+                                                <span class="time">12:00 am </span>
                                                 <span class="border-time">
                                                 </span>
                                             </p>
@@ -396,121 +539,146 @@
         </div>
         <div class="col-xl-2  col-md-4 col-sm-5">
             <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                </div>
-                <img src="img/newsimg.png" class="mt-2" alt="">
+                @*@foreach (Notice notice in Model.NoticeList)
+                    {
+                        <div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">Notices</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                @notice.NoticeName
+                            </p>
+                            <p class="font-14 mb-0 ">@notice.NoticeTitle</p>
+                            <p class="font-14 mb-0 ">@notice.CreatedAt.ToString("dd MMM yyyy")</p>
+                        </div>
+                    }*@
+                @foreach (Schedule schedule in Model.NowScheduleList)
+                {
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">What's ON nowEvents</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            @schedule.EventName
+                        </p>
+                        <p class="font-14 mb-0 ">@schedule.RecordDuration</p>
+                        <p class="font-14 mb-0 ">@schedule.EventTime</p>
+                    </div>
+                }
+                @* <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                        <p class="font-14 mb-0 ">Mass</p>
+                        <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    </div>
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                        <p class="font-14 mb-0 ">Mass</p>
+                        <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    </div>
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                        <p class="font-14 mb-0 ">Mass</p>
+                        <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    </div>
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                    </div>*@
+                <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">
             </div>
         </div>
         <div class="col-1 d-xl-block d-none"></div>
     </div>
     <!-- map start -->
     <div class="row m-0 mt-5 mb-5  pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
-        <div class="col-1 d-xl-block d-none"></div>
-        <div class="col-xl-8  col-md-8  p-lg-0 col-sm-7">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13507.96053149314!2d74.2021541!3d32.177540799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1605436651478!5m2!1sen!2s"
-                    width="" height="" frameborder="0" class="news h-100 w-100" style="border:0;" allowfullscreen=""
-                    aria-hidden="false" tabindex="0"></iframe>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-5">
-            <div class=" font-20 pt-4 pb-4 bg-white   text-center font-weight-bold ProximaNova">
-                Resource Hub
+        @*<div class="col-1 d-xl-block d-none"></div>
+            <div class="col-xl-8  col-md-8  p-lg-0 col-sm-7">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13507.96053149314!2d74.2021541!3d32.177540799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1605436651478!5m2!1sen!2s"
+                        width="" height="" frameborder="0" class="news h-100 w-100" style="border:0;" allowfullscreen=""
+                        aria-hidden="false" tabindex="0"></iframe>
             </div>
-            <div class="border bg-white news p-4 pr-lg-5">
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">Document</h4>
-                    <p class="font-weight-light mb-3 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+            <div class="col-xl-2 col-md-4 col-sm-5">
+                <div class=" font-20 pt-4 pb-4 bg-white   text-center font-weight-bold ProximaNova">
+                    Resource Hub
                 </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">Document</h4>
-                    <p class="font-weight-light mb-3 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                <div class="border bg-white news p-4 pr-lg-5">
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">Document</h4>
+                        <p class="font-weight-light mb-3 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                        <p class="font-14 mb-0 ">Mass</p>
+                        <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    </div>
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">Document</h4>
+                        <p class="font-weight-light mb-3 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                        <p class="font-14 mb-0 ">Mass</p>
+                        <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    </div>
+                </div>
+                <div class=" font-20 pt-4 pb-4 bg-white  text-center font-weight-bold ProximaNova">
+                    News Letter
+                </div>
+                <div class="border bg-white news p-4 pr-lg-5">
+                    <div class="news-wrap">
+                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                        <p class="font-weight-light mb-3 font-12">
+                            Recoding of past events St Peter & St Paul's
+                            Church
+                        </p>
+                        <p class="font-14 mb-0 ">Mass</p>
+                        <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    </div>
                 </div>
             </div>
-            <div class=" font-20 pt-4 pb-4 bg-white  text-center font-weight-bold ProximaNova">
-                News Letter
-            </div>
-            <div class="border bg-white news p-4 pr-lg-5">
-                <div class="news-wrap">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-3 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-1 d-xl-block d-none"></div>
+            <div class="col-1 d-xl-block d-none"></div>*@
     </div>
 
     <!-- map end -->
     <!-- recording start -->
+    <div class="bg-blue">
+        <div class="container">
+            <div class="row m-0 ">
+                <div class="text-pink font-36 text-center pt-4 pb-4 avantgardece">
+                    Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
         <div class="col-1 d-xl-block d-none"></div>
         <div class="col-xl-10">
-            <div class=" font-32 pt-4 pb-4 bg-white">
-                Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
+            <div class=" font-32 pt-4 pb-4 bg-white text-pink">
+
             </div>
             <div class="border bg-white pb-4 news pt-4 row m-0">
                 @foreach (Recording recording in Model.RecordingList)
                 {
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
                         <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
                         <div class="font-weight-light in-icon-arrow d-inline-block font-12">
                             <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
                         </div>
-                        <i class="fal fa-play-circle font-36"></i>
+                        <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="" class="ply-vid">
+                            <i class="fal fa-play-circle font-36"></i>
+                        </a>
+
                     </div>
                 }
 

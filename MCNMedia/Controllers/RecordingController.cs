@@ -151,6 +151,7 @@ namespace MCNMedia_Dev.Controllers
                 ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
 
                 var responseReader = reader.ReadToEndAsync();
+                ActivityLogDataAccessLayer.AddActivityLog("Recording Published Request", category: "Schedule", message: responseReader.Result, churchId: -1, userId: -1);
                 log.Debug(responseReader.Result);
                 var publishRecording = JsonConvert.DeserializeObject<PublishRecording>(responseReader.Result);
 
@@ -164,7 +165,7 @@ namespace MCNMedia_Dev.Controllers
                 record.RecordingURl = publishRecording.recording_url;
                 record.Date = DateTime.Now;
                 record.Time = DateTime.Now;
-                record.RecordingTitle = record.RecordingTitle == "" ? $"Recording_{DateTime.Now.ToString("dd-MMM-yyyy:hr:mm:ss")}" : record.RecordingTitle;
+                record.RecordingTitle = string.IsNullOrEmpty(record.RecordingTitle) ? $"Recording_{DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss")}" : record.RecordingTitle;
                 record.CreatedBy = -1; // Created by system so have no user id
 
                 recordDataAccess.AddRecording(record);

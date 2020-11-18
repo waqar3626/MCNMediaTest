@@ -178,6 +178,7 @@ namespace MCNMedia_Dev.Repository
             {
                 Schedule schedule = new Schedule();
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
@@ -201,6 +202,7 @@ namespace MCNMedia_Dev.Repository
             {
                 Schedule schedule = new Schedule();
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
@@ -240,6 +242,7 @@ namespace MCNMedia_Dev.Repository
             {
                 Schedule schedule = new Schedule();
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());

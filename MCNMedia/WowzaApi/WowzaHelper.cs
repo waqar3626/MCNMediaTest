@@ -152,7 +152,7 @@ namespace MCNMedia_Dev.WowzaApi
             cam = cameraDataAccessLayer.GetCameraById(cameraId);
             if (cam.ServerIP is null)
                 cam.ServerIP = "54.217.38.80";
-            return cam.ServerIP  ;
+            return cam.ServerIP;
         }
 
         #endregion
@@ -201,8 +201,8 @@ namespace MCNMedia_Dev.WowzaApi
             startupStreamFile.instance = "_definst_";
             startupStreamFile.mediaCasterType = "rtp";
             startupStreamFile.serverName = SERVER;
-            startupStreamFile.streamName = streamName;
-            return  PostAsync($"{GetBasicUri(cameraId)}/startupstreams", startupStreamFile);
+            startupStreamFile.streamName = streamName + ".stream";
+            return PostAsync($"{GetBasicUri(cameraId)}/startupstreams", startupStreamFile);
         }
 
         private CredentialCache GetCredentials(Uri uri)

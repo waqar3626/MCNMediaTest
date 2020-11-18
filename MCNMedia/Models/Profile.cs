@@ -23,5 +23,17 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<Schedule> ScheduleList { get; set; }
         public IEnumerable<Recording> RecordingList { get; set; }
 
+        public IEnumerable<Notice> NoticeList { get; set; }
+        public IEnumerable<Schedule> NowScheduleList { get; set; }
+
+
+
+        public IEnumerable<Schedule> ScheduleListDay0 { get; set; }
+        public IEnumerable<Schedule> ScheduleListDay1 { get; set; }
+        public IEnumerable<Schedule> ScheduleListDay2 { get; set; }
+        public IEnumerable<Schedule> ScheduleListDay3 { get; set; }
+        public IEnumerable<Schedule> ScheduleListDay4 { get; set; }
+        public IEnumerable<Schedule> ScheduleListDay5 { get; set; }
+        public IEnumerable<Schedule> ScheduleListDay6 { get; set; }
     }
 }
