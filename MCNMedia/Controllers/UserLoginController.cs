@@ -39,7 +39,7 @@ namespace MCNMedia_Dev.Controllers
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
 
                         HttpContext.Session.SetInt32("UserId", usr.UserId);
-                        return RedirectToAction("ChurchInfo", "Client", usr.UserId);
+                        return RedirectToAction("DashBoardClient", "DashBoardClient");
                     }
                     else
                     {

@@ -144,8 +144,17 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $("#ddlid").prop("selectedIndex", 0); // here 0 means select first option
+        $("#ddlid").prop("selectedIndex", 0);
+        var filedropper = $('#ImageURl123').dropify();
+        filedropper = filedropper.data('dropify');
+        filedropper.resetPreview();
+        filedropper.clearElement();
+        filedropper.settings['defaultFile'] =  '@Model.ImageURl.ToString()'
+        filedropper.destroy();
+        filedropper.init();// here 0 means select first option
         onChangeFunction();
+
+
     });
       function onChangeFunction() {
 

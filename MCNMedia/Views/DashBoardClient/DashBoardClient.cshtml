@@ -1,4 +1,5 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
+@using Microsoft.AspNetCore.Http;
 @{ ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_LayoutClient.cshtml"; }
 
@@ -103,8 +104,8 @@
     </div>
 
     <div class="col-6">
-    <div class="row">
-       
+        <div class="row">
+
             <div class="col-6 grid-margin stretch-card ">
                 <div class="card">
 
@@ -209,20 +210,18 @@
                                     @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
                                 </td>*@
 
-                        <td>
-                            @if (item.IsRepeated == 1)
-                            {
-                                <label class="badge-pill badge-success">
-                                    Yes
-                                </label>
-                            }
-                            else
-                            {
-                                <label class="badge-pill badge-danger">
-                                    No
-                                </label>
-                            }
-                        </td>
+                            <td>
+                                @if (item.IsRepeated == 1)
+                                {
+                <label class="badge-pill badge-success">
+                    Yes
+                </label> }
+            else
+            {
+<label class="badge-pill badge-danger">
+    No
+</label>}
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.RecordingDuration)
                             </td>

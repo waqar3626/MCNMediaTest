@@ -50,50 +50,50 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Listchurch()
         {
             try {
-                    LoadServerDDL();
-                    LoadClientDDL();
-                    LoadCountyDDL();
+                LoadServerDDL();
+                LoadClientDDL();
+                LoadCountyDDL();
 
-                    Church chr = new Church();
+                Church chr = new Church();
 
-                    HttpContext.Session.SetInt32("ClientType", 0);
-                    HttpContext.Session.SetInt32("County", 0);
-                    chr.ChurchId = 1;
-                    chr.CountyId = -1;
-                    chr.ClientTypeId = -1;
-                    chr.ChurchName = "";
-                    chr.EmailAddress = "";
-                    chr.Phone = "";
-                    List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
-                    return View(church);
+                HttpContext.Session.SetInt32("ClientType", 0);
+                HttpContext.Session.SetInt32("County", 0);
+                chr.ChurchId = 1;
+                chr.CountyId = -1;
+                chr.ClientTypeId = -1;
+                chr.ChurchName = "";
+                chr.EmailAddress = "";
+                chr.Phone = "";
+                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                return View(church);
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
-                    ShowMessage("List Church Error" + e.Message);
-                    throw;
+                ShowMessage("List Church Error" + e.Message);
+                throw;
             }
         }
-       
+
         [HttpGet()]
         public IActionResult GetAllChurch()
         {
             try
             {
-                    Church chr = new Church();
-                    chr.ChurchId = 1;
-                    chr.CountyId = -1;
-                    chr.ClientTypeId = -1;
-                    chr.ChurchName = "";
-                    chr.EmailAddress = "";
-                    chr.Phone = "";
-                    churchDataAccess.GetAllChurch(chr);
-                    return View();
+                Church chr = new Church();
+                chr.ChurchId = 1;
+                chr.CountyId = -1;
+                chr.ClientTypeId = -1;
+                chr.ChurchName = "";
+                chr.EmailAddress = "";
+                chr.Phone = "";
+                churchDataAccess.GetAllChurch(chr);
+                return View();
             }
             catch (Exception e)
             {
-                    ShowMessage(" All Churches Error" + e.Message);
-                    throw;
+                ShowMessage(" All Churches Error" + e.Message);
+                throw;
             }
         }
 
@@ -101,15 +101,15 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Edit(int id)
         {
             try {
-                    Church church = churchDataAccess.GetChurchData(id);
-                    if (church == null)
-                    {
-                        return NotFound();
-                    }
+                Church church = churchDataAccess.GetChurchData(id);
+                if (church == null)
+                {
+                    return NotFound();
+                }
 
-                    LoadClientDDL();
-                    LoadCountyDDL();
-                    return View(church);
+                LoadClientDDL();
+                LoadCountyDDL();
+                return View(church);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-       
+       [HttpGet]
         public IActionResult Delete(int id)
         {
             try

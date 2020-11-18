@@ -216,7 +216,7 @@ namespace MCNMedia_Dev.Controllers
 
         #region Schedule
 
-        [HttpGet]
+        //[HttpGet]
         //public IActionResult Schedule()
         //{
         //    try
@@ -326,7 +326,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        [HttpPost]
+        //[HttpPost]
         //public IActionResult EditScheduleClient(GenericModel gm)
         //{
         //    try

@@ -6,6 +6,7 @@ using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -20,10 +21,18 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
+                HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
                 int ChrId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 gm.LDashBoardClients = dashboardData.GetDashboardClientInfo(chrid);
                 gm.Dashboards = dashboardData.GetDashboardClientInfoCount(chrid);
                 gm.DashBoardClients = dashboardData.GetCountClientDashBoard(chrid);
+               int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
+
+                HttpContext.Session.SetInt32("ChurchId", UsrAssignChurchId);
+
+
+
                 return View(gm);
             }
             catch (Exception e)
