@@ -5,48 +5,15 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 
 }
-@{
-    int usrId = -1;
-    if(Context.Session.GetInt32("UserId") != null)
-        usrId =(int)Context.Session.GetInt32("UserId");
-    List<SelectListItem> SelectList = Lists.GetUserAssignChurchListForDDL(usrId);
 
-
-    //string name ="";
-    //string address = "";
-    //name = Model.ChurchName;
-    //address = Model.Address;
-    //string abc = "12345";
-
-
-
-}
 <script src="~/theme/js/FormValidation.js"></script>
 
-<form method="get">
-    <div class="card ">
-        <div class="card-body">
-            @*<div class="form-group row p-3" id="alertDiv">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert" id="alertLabel">
 
-                    </div>
-                </div>
-            </div>*@
-
-            <div class="form-group row">
-
-                @Html.DropDownList("ChurchId", SelectList, new { @class = "form-control", @onchange = "javascript:onChangeFunction()", @id = "ddlid" })
-                @*@Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "form-control" })*@
-                <span class="text-danger"></span>
-            </div>
-
-
-        </div>
-    </div>
-</form>
 <form asp-action="UpdateChurchInfo" method="post" class="needs-validation" novalidate>
     <div class="card">
+        <div class="card-header card-header-custom">
+            <h3 id="HeaderChurchName">@Model.ChurchName , @Model.Town</h3>
+        </div>
         <div class="card-body">
             <input type="hidden" />
           
@@ -55,7 +22,9 @@
                     <div class="card">
                         <div class="card-body text-center">
                             <div>
-                                <input type="hidden" asp-for="ImageURl" value="@Model.ImageURl" id="ImageURl123" class="dropify" />
+                                <input asp-for="ImageURl" type="file" name="imageUrlMain" class="dropify" />
+                                <span asp-validation-for="ImageURl" class="text-danger"></span>
+                                <input type="hidden" asp-for="ImageURl" name="ImageUrl" id="ImageCheckUrl" />
 
                             </div>
                         </div>
@@ -140,138 +109,17 @@
         </div>
     </div>
 </form>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#ddlid").prop("selectedIndex", 0);
-        var filedropper = $('#ImageURl123').dropify();
+<script>
+    $(document).ready(
+        function () {
+             var filedropper = $('#Churches_ImageURl').dropify();
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();
         filedropper.clearElement();
         filedropper.settings['defaultFile'] =  '@Model.ImageURl.ToString()'
         filedropper.destroy();
-        filedropper.init();// here 0 means select first option
-        onChangeFunction();
-
-
-    });
-      function onChangeFunction() {
-
-
-        var churchId = document.getElementById('ddlid').value;
-        //var formData = new FormData();
-        //formData.append("ddlValue", ddlValue);
-
-        $.ajax({
-            type: "GET",
-            //url: "/Client/Client/",
-            url: '@Url.Action("GetChurchInfoById", "Client")',
-            data: { churchId: churchId },
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var html = '';
-
-                $.each(result, function (key, item) {
-
-                    $("#ChurchName").val(item.churchName) ;
-                    $("#EmailAddress").val(item.emailAddress);
-                    $("#Phone").val(item.phone);
-                    $("#Address").val(item.address);
-                    $("#Town").val(item.town);
-                    $("#Website").val(item.website);
-                    $("#ChurchId123").val(item.churchId);
-                    $("#Password").val(item.password);
-                    $("#ImageUrl12").attr("src", item.imageURl);
-                    $("#CountyId123").val(item.countyId);
-                    $("#ClientTypeId123").val(item.clientTypeId);
-                    $("#ImageURl123").val( item.imageURl);
-
-
-
-                });
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-
-
-            //data: formData,
-            //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
+        filedropper.init();
         });
-
-    }
-
-
 </script>
 
 
-
-<script>
-
-    $(document).ready(function () {
-
-
-        $('#alertDiv').hide();
-    });
-    $('#ValUserSubmit').click(function () {
-
-        var s = "";
-        
-     
-        if ($('#validationCustom01').val() == '') {
-
-            s += '<label>Please Provide a Valid First Name</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        
-        if ($('#validationCustom02').val() == '') {
-
-            s += '<label>Please Provide a Valid Last Name</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-        if ($('#validationCustom03').val() == '') {
-
-            s += '<label>Please Provide a Valid Email Address</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-
-        if ($('#validationCustom04').val() == '') {
-
-            s += '<label>Please Provide a Valid Login Password</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-
-        }
-      
-        if ($('#validationCustom05').val() == '') {
-
-            s += '<label>Please Provide a Valid Confirm Password</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-           
-
-        }
-
-        if ($('#select1').val() == '0') {
-
-            $('#select1').attr('class', 'form-control border-danger');
-
-            s += '<label>Please Provide a Valid Role</label></br>'
-            $('#alertLabel').html(s);
-            $('#alertDiv').show();
-        }
-      
-
-
-
-
-    });
-</script>

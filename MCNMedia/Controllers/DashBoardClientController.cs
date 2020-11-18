@@ -16,6 +16,7 @@ namespace MCNMedia_Dev.Controllers
 
         DashBoardClientDataAccessLayer dashboardData = new DashBoardClientDataAccessLayer();
         DashboardDataAccessLayer dashboardDataAccessLayer = new DashboardDataAccessLayer();
+        ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
         [HttpGet]
         public IActionResult DashBoardClient()
         {
@@ -28,6 +29,7 @@ namespace MCNMedia_Dev.Controllers
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChrId);
                 int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
+                gm1.Churches = churchDataAccessLayer.GetChurchData(Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
                 HttpContext.Session.SetInt32("ChurchId", UsrAssignChurchId);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
                 ViewBag.ChurchId = ChrId.ToString();

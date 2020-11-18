@@ -245,7 +245,17 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    church.Churches.ImageURl = ImageUrl;
+                    int pos = ImageUrl.IndexOf("Upload");
+                    if (pos >= 0)
+                    {
+                        // String after founder  
+
+                        // Remove everything before url but include Upload 
+                        string beforeFounder = ImageUrl.Remove(0, pos);
+                        church.Churches.ImageURl = beforeFounder;
+                    }
+
+                    
                 }
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 ChurchId = church.Churches.ChurchId;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
@@ -31,10 +33,11 @@ namespace MCNMedia_Dev.Controllers
        
 
         [HttpGet]
-        public IActionResult ChurchInfo(int churchId)
+        public IActionResult ChurchInfo()
         {
             try
             {
+                int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 Church church = chdataAccess.GetChurchData(churchId);
                 if (church == null)
                 {
@@ -51,17 +54,8 @@ namespace MCNMedia_Dev.Controllers
            
         }
         
-        public JsonResult GetChurchInfoById(int churchId)
-        {
-            Church church = chdataAccess.GetChurchData(churchId);
-            HttpContext.Session.SetInt32("ChurchId", churchId);
-           
-            List<Church> churchInfo = new List<Church>();
-            churchInfo.Add(church);
-            return Json(churchInfo);
-          
-
-        }
+        
+      
 
         public IActionResult PreviewClient(int chId)
         {
@@ -70,8 +64,28 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateChurchInfo([Bind] Church church)
+        public IActionResult UpdateChurchInfo(Church church, IFormFile imageUrlMain, string ImageUrl)
         {
+
+            string fileName = "";
+            if (imageUrlMain != null)
+            {
+                fileName = Path.GetFileName(imageUrlMain.FileName);
+                church.ImageURl = FileUploadUtility.UploadFile(imageUrlMain, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
+            }
+            else
+            {
+                int pos = ImageUrl.IndexOf("Upload");
+                if (pos >= 0)
+                {
+                    // String after founder  
+                    
+                    // Remove everything before url but include Upload 
+                    string beforeFounder = ImageUrl.Remove(0, pos);
+                    church.ImageURl = beforeFounder;
+                }
+              
+            }
             church.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
             chdataAccess.UpdateChurch(church);
             return RedirectToAction("ChurchInfo");

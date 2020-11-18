@@ -7,21 +7,15 @@
 @{ int usrId = -1;
     if (Context.Session.GetInt32("UserId") != null)
         usrId = (int)Context.Session.GetInt32("UserId");
-    List<SelectListItem> ddlChurches = Lists.GetUserAssignChurchListForDDL(usrId);
+    List<SelectListItem> ddlChurches = Lists.GetUserAssignChurchListForDDL(usrId); }
 
 
-    //string name ="";
-    //string address = "";
-    //name = Model.ChurchName;
-    //address = Model.Address;
-    //string abc = "12345"; }
-}
 
 <form method="get">
     <div class="card ">
         <div class="card-body">
             <div class="form-group row">
-                @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text",ViewBag.ChurchId), new { @class = "form-control", @onchange = "javascript:onChangeChurchClient()", @id = "ddlid" })
+                @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text", ViewBag.ChurchId), new { @class = "form-control", @onchange = "javascript:onChangeChurchClient()", @id = "ddlid" })
                 <span class="text-danger"></span>
             </div>
 
@@ -30,6 +24,33 @@
     </div>
 </form>
 
+<div class="card mt-3 mb-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <img src="@Model.Churches.ImageURl" width="320px" height="250px" />
+            </div>
+            <div class="col-sm-9">
+                <div class="form-group row border-bottom pt-2">
+
+                    <div class="col-sm-6 border-right"><i class="mdi mdi-church fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.ChurchName</div>
+
+                    <div class="col-sm-6 "><i class="mdi mdi-home fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Town</div>
+                </div>      <div class="form-group row border-bottom pt-2">
+
+                    <div class="col-sm-6 border-right"><i class="mdi mdi-email fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.EmailAddress</div>
+
+                    <div class="col-sm-6 "><i class="mdi mdi-phone fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Phone</div>
+                </div>      <div class="form-group row border-bottom pt-2">
+
+                    <div class="col-sm-6 border-right"><i class="mdi mdi-google-maps fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Address</div>
+
+                    <div class="col-sm-6 "><i class="mdi mdi-web fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Website</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row p-3 ">
     <div class="col-12">
@@ -283,10 +304,7 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
 
-
-    });
       function onChangeChurchClient() {
 
 
@@ -299,7 +317,7 @@
             data: { chrid: churchId },
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-          
+
             success: function (result) {
                 window.location.reload();
             },
@@ -313,4 +331,3 @@
 
 
 </script>
-

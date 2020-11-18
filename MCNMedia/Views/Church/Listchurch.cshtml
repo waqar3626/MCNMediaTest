@@ -114,7 +114,7 @@
                                 </td>
                                 <td>
                                     <a href="@Url.Action("Preview", "Admin",new { chId = item.ChurchId })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
-                                    <a href="@Url.Action("Delete", "Church", new { id=item.ChurchId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    <a onclick="DeleteChurchClick(@item.ChurchId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         }
@@ -150,6 +150,36 @@
 
 
         $('#AddChurchPopUp').modal('show');
+
+    }
+
+    function DeleteChurchClick(ChurchId) {
+
+        swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your file has been deleted!", {
+        icon: "success",
+
+    });
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Delete", "Church")',
+            data: { id: ChurchId },
+
+        });
+      window.location.reload();
+  } else {
+         swal("Your file is safe!");
+  }
+});
+
 
     }
 </script>
