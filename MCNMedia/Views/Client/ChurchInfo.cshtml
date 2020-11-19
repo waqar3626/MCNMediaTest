@@ -110,13 +110,13 @@
     </div>
 </form>
 <script>
-    $(document).ready(
-        function () {
-             var filedropper = $('#Churches_ImageURl').dropify();
+    $(document).ready(function () {
+
+        var filedropper = $('#Churches_ImageURl').dropify();
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();
         filedropper.clearElement();
-        filedropper.settings['defaultFile'] =  '@Model.ImageURl.ToString()'
+            filedropper.settings['defaultFile'] = $('#ImageCheckUrl').val(); 
         filedropper.destroy();
         filedropper.init();
         });
