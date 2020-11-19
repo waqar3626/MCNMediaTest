@@ -31,10 +31,12 @@ namespace MCNMedia_Dev.Controllers
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
                 int ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 if (ChurchId > 0) {
+                    
                     gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
                 }
                 else
                 {
+                    HttpContext.Session.SetInt32("ChurchId", UsrAssignChurchId);
                     gm1.Churches = churchDataAccessLayer.GetChurchData(UsrAssignChurchId);
 
                 }
