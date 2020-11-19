@@ -29,8 +29,17 @@ namespace MCNMedia_Dev.Controllers
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChrId);
                 int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
-                gm1.Churches = churchDataAccessLayer.GetChurchData(Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
-                HttpContext.Session.SetInt32("ChurchId", UsrAssignChurchId);
+                int ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                if (ChurchId > 0) {
+                    gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
+                }
+                else
+                {
+                    gm1.Churches = churchDataAccessLayer.GetChurchData(UsrAssignChurchId);
+
+                }
+
+               
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
                 ViewBag.ChurchId = ChrId.ToString();
                 return View(gm1);
