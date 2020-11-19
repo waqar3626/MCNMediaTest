@@ -37,7 +37,13 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                int churchId = 0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                }
+
+
                 Church church = chdataAccess.GetChurchData(churchId);
                 if (church == null)
                 {
@@ -101,8 +107,12 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
-                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                int id = 0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    id = (int)HttpContext.Session.GetInt32("ChurchId");
+                }
+                    
                 GenericModel gm = new GenericModel();
                 gm.LAnnouncement = AnnouncementDataAccessLayer.GetAnnouncement(id);
                 gm.Churches = chdataAccess.GetChurchData(id);
@@ -171,8 +181,14 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                int id = 0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                      id = (int)HttpContext.Session.GetInt32("ChurchId");
+
+                }
                 LoadServerDDL();
-                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                
                 gm.Churches = chdataAccess.GetChurchData(id);
                 HttpContext.Session.SetString("ctabId", "/Client/CameraDetail");
                 return View(gm);

@@ -22,28 +22,31 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                int ChurchId = 0;
                 GenericModel gm1 = new GenericModel();
-                 int ChrId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                gm1.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChrId);
-                gm1.Dashboards = dashboardData.GetDashboardClientInfoCount(ChrId);
-                gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChrId);
                 int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
-                int ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                if (ChurchId > 0) {
+               
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                     
-                    gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("ChurchId", UsrAssignChurchId);
-                    gm1.Churches = churchDataAccessLayer.GetChurchData(UsrAssignChurchId);
-
+                    ChurchId = UsrAssignChurchId;
+                    HttpContext.Session.SetInt32("ChurchId", ChurchId);
                 }
+
+                gm1.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChurchId);
+                gm1.Dashboards = dashboardData.GetDashboardClientInfoCount(ChurchId);
+                gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
+                gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
+               
 
                
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
-                ViewBag.ChurchId = ChrId.ToString();
+                ViewBag.ChurchId = ChurchId.ToString();
                 return View(gm1);
             }
             catch (Exception e)
