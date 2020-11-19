@@ -10,7 +10,7 @@
 <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
 
 <!-- banner" slider start -->
-<div class="cover-banner" style="background-image: url('@Model.Churches.ImageURl');">
+<div class="cover-banner" id="CamerasContainer" style="background-image: url('@Model.Churches.ImageURl');">
     <i class="fal fa-play-circle text-white vide-play-in"></i>
     <video id='CameraLiveStream' controls class='video-js vjs-default-skin' style="width:100% !important;height:100% !important;">
         @*<source src="https://ak.picdn.net/shutterstock/videos/30099838/preview/stock-footage-orvieto-italy-july-tourists-visit-orvieto-cathedral-duomo-di-orvieto-cattedrale-di-santa.webm" />
@@ -19,6 +19,73 @@
         @*<img src="~/WebsiteAssets/img/banner-1.png" alt="">*@
     </video>
 </div>
+<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="500000000000" style=" display: none;">
+    <ol class="carousel-indicators">
+        @{
+            int counter1 = 0;
+        }
+        @foreach (MediaChurch pic in Model.PictureList)
+        {
+            
+            if (counter1 == 0)
+            {
+                counter1 = counter1 + 1;
+                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            }
+            else
+            {
+                <li data-target="#carouselExampleCaptions" data-slide-to='@counter1'></li>
+                counter1 = counter1 + 1;
+            }
+        }
+         
+    </ol>
+    <div class="carousel-inner">
+        @{
+            int counter = 0;
+        }
+
+        @foreach (MediaChurch pic in Model.PictureList)
+        {
+
+            if (counter == 0)
+            {
+                counter = counter + 1;
+                <div class="carousel-item active">
+
+                    <img src="@pic.MediaURL"   class="d-block h-550 slide-image" alt="...">
+                </div>
+            }
+            else
+            {
+                <div class="carousel-item">
+
+                    <img src="@pic.MediaURL" class="d-block h-550  slide-image" alt="...">
+                </div>
+            }
+
+
+
+        }
+
+
+
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<!-- banner" slider start -->
+<div class="church-profile-image" id="VediosContainer" style="display:none;">
+    <i class="fal fa-play-circle text-white vide-play-in"></i>
+    <div id="my-video"></div>
+</div>
+
 <!-- banner slider end -->
 <div class="arialNova bg-white" style="z-index: 3000;">
     <div class="row m-0 mb-3" style="background-color: #1c4776;">
@@ -26,22 +93,24 @@
         <div class="col-xl-10">
             <div class="nav-top mt-0 bg-white">
                 <ul class=" popin font-14 mt-0">
-                    <li class="nav-item dropdown change-pan d-inline-block border-right">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Camera <i class="fal fa-angle-down"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @foreach (Camera cam in Model.CameraList)
-                            {
-                                <a class="dropdown-item" style="cursor:pointer;"   onclick="OpenCamera('@cam.LiveStreamUrl')"> @cam.CameraName </a>
-                            }
-                            @*<a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>*@
-                        </div>
-                    </li>
+
+                    @*<div class="dropdown-menu" aria-labelledby="navbarDropdown">*@
+                    @foreach (Camera cam in Model.CameraList)
+                    {
+                        <li class="nav-item dropdown change-pan d-inline-block border-right">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-item" style="cursor:pointer;" onclick="OpenCamera('@cam.LiveStreamUrl')"> @cam.CameraName </a>
+                            </a>
+                        </li>
+
+                    }
+                    @*<a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>*@
+                    @*</div>*@
+
                     <li class="nav-item dropdown change-pan d-inline-block border-right">
                         <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,7 +119,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @foreach (MediaChurch vid in Model.VideoList)
                             {
-                                <a class="dropdown-item" href="#"> @vid.TabName </a>
+                                <a class="dropdown-item" onclick="OpenVedio('@vid.MediaURL')" href="#"> @vid.TabName </a>
                             }
                             @*<a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
@@ -77,18 +146,9 @@
                     <li class="nav-item dropdown change-pan d-inline-block">
                         <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Images <i class="fal fa-angle-down"></i>
+                            <a class="dropdown-item" href="#" onclick="OpenPictures()"> Images </a>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @foreach (MediaChurch pic in Model.PictureList)
-                            {
-                                <a class="dropdown-item" href="#"> @pic.TabName </a>
-                            }
-                            @*<a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>*@
-                        </div>
+
                     </li>
                 </ul>
                 <div class="quick-strt text-white font-18">
@@ -162,7 +222,7 @@
                                             <p class="inner-have">
                                                 @foreach (var itm in Model.ScheduleListDay0)
                                                 {
-                                                <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
                                                     <span class="border-time">
                                                         <span>
                                                             <span class=" timing-block">
@@ -866,6 +926,7 @@
             </div>
         </div>*@
 </div>
+<script src="~/js/jwplayer.js"></script>
 <script type="text/javascript">
     //$(document).ready(function () {
     //    $('#LiveStreamSrc').attr("src", '' + $('#livestreamUrl').val() + '');
@@ -874,10 +935,60 @@
     //});
 
     function OpenCamera(liveUrl) {
+        var cameras = document.getElementById("CamerasContainer");
+        var images = document.getElementById("carouselExampleCaptions");
+        var vedios = document.getElementById("VediosContainer");
+
+        //if (x.style.display === "none") {
+        cameras.style.display = "block";
+        // } else {
+        images.style.display = "none";
+        vedios.style.display = "none";
+
         $('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs('CameraLiveStream');
         player.autoplay(false);
-        
+
     }
 
+    function OpenPictures() {
+
+        var cameras = document.getElementById("CamerasContainer");
+        var images = document.getElementById("carouselExampleCaptions");
+        var vedios = document.getElementById("VediosContainer");
+        
+        //if (x.style.display === "none") {
+        cameras.style.display = "none";
+        vedios.style.display = "none";
+        // } else {
+        images.style.display = "block";
+        // }
+
+    }
+
+    function OpenVedio(vedioURL) {
+        var cameras = document.getElementById("CamerasContainer");
+        var images = document.getElementById("carouselExampleCaptions");
+        var vedios = document.getElementById("VediosContainer");
+
+        vedios.style.display = "block";
+        cameras.style.display = "none";
+        images.style.display = "none";
+
+
+        jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
+
+        var fileURL = vedioURL;
+        jwplayer('my-video').setup({
+            file: fileURL,
+            image: "../css/jwerror.jpg",
+            width: "100%",
+            aspectratio: "16:9",
+            autostart: 'false',
+        });
+        jwplayer().onError(function () {
+            jwplayer().play();
+        });
+
+    }
 </script>
