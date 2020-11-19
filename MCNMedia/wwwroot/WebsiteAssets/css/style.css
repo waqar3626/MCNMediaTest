@@ -226,9 +226,9 @@
     max-height:550px !important;
 }
 .carousel-inner:before {
-    content: '.';
+   /* content: '.';
     background: #000000ab;
-    color: #000000ab;
+    color: #000000ab;*/
     position: absolute;
     top: 0;
     left: 0;
@@ -263,6 +263,7 @@
 .carousel-caption {
     bottom: unset;
     top: 45px;
+    display: none;
 }
 
 input.empty, .select-search {
