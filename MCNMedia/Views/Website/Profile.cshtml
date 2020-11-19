@@ -610,7 +610,7 @@
                             <p class="font-14 mb-0 ">@notice.CreatedAt.ToString("dd MMM yyyy")</p>
                         </div>
                     }*@
-                @foreach (Schedule schedule in Model.NowScheduleList)
+                @*@foreach (Schedule schedule in Model.NowScheduleList)
                 {
                     <div class="news-wrap mb-3">
                         <h4 class="news-heading font-16 font-weight-bold">What's ON nowEvents</h4>
@@ -620,8 +620,8 @@
                         <p class="font-14 mb-0 ">@schedule.RecordDuration</p>
                         <p class="font-14 mb-0 ">@schedule.EventTime</p>
                     </div>
-                }
-                @* <div class="news-wrap mb-3">
+                }*@
+                 <div class="news-wrap mb-3">
                         <h4 class="news-heading font-16 font-weight-bold">News</h4>
                         <p class="font-weight-light mb-2 font-12">
                             Recoding of past events St Peter & St Paul's
@@ -654,7 +654,7 @@
                             Recoding of past events St Peter & St Paul's
                             Church
                         </p>
-                    </div>*@
+                    </div>
                 <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">
             </div>
         </div>
