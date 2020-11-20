@@ -13,6 +13,7 @@ namespace MCNMedia_Dev.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         UserDataAccessLayer _userDataAccess = new UserDataAccessLayer();
+        UserAssignChurchesDataAccessLayer userAssignDataAcessLayer = new UserAssignChurchesDataAccessLayer();
         public ViewResult UserLogin()
         {
             ModelState.Clear();
@@ -39,7 +40,17 @@ namespace MCNMedia_Dev.Controllers
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
 
                         HttpContext.Session.SetInt32("UserId", usr.UserId);
-                        return RedirectToAction("DashBoardClient", "DashBoardClient");
+              
+                        IEnumerable<UserAssignChurches> churchList = userAssignDataAcessLayer.GetSingleUserAssignChurches(usr.UserId);
+                        if (churchList.Count()>0)
+                        {
+                            return RedirectToAction("DashBoardClient", "DashBoardClient");
+                        }
+                        else
+                        {
+                            ViewBag.IsSuccess = 4;
+                            return View();
+                        }
                     }
                     else
                     {
