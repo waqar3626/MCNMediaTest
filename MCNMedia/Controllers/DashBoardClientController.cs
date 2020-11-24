@@ -17,6 +17,8 @@ namespace MCNMedia_Dev.Controllers
         DashBoardClientDataAccessLayer dashboardData = new DashBoardClientDataAccessLayer();
         DashboardDataAccessLayer dashboardDataAccessLayer = new DashboardDataAccessLayer();
         ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+
         [HttpGet]
         public IActionResult DashBoardClient()
         {
@@ -24,6 +26,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 int ChurchId = 0;
                 GenericModel gm1 = new GenericModel();
+             
                 int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
                
@@ -40,6 +43,7 @@ namespace MCNMedia_Dev.Controllers
 
                 gm1.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChurchId);
                 gm1.Dashboards = dashboardData.GetDashboardClientInfoCount(ChurchId);
+                gm1.LCameras = camDataAccess.GetAllCameras(ChurchId).ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
                
