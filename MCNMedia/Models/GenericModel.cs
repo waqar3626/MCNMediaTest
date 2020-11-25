@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace MCNMedia_Dev.Models
         public PreviewChurch PreviewChurches { get; set; }
         public IEnumerable<PreviewChurch> LPreviewChurches { get; set; }
 
+        
         public Notice Notices { get; set; }
         public IEnumerable<Notice> ListNotice { get; set; }
         public SetUp ChurchSetUp { get; set; }

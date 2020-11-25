@@ -137,5 +137,15 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("UpdateBy", UpdateBy);
             _dc.ReturnBool("spUser_Delete");
         }
+        public void ChangeUserPassword(int UserId ,string Password , int UpdateBy)
+        {
+            _dc.ClearParameters();
+            
+            
+            _dc.AddParameter("UsrId", UserId);
+            _dc.AddParameter("LoginPass", Password);
+            _dc.AddParameter("UpdateBy", UpdateBy);
+            _dc.Execute("spUser_UpdatePassword");
+        }
     }
 }

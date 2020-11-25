@@ -30,6 +30,8 @@ namespace MCNMedia_Dev.Controllers
                 if (usr.UserId > 0)
                 {
                     HttpContext.Session.SetInt32("UserId", usr.UserId);
+                    HttpContext.Session.SetString("UserName", usr.FirstName+" " + usr.LastName);
+                   
                     if (usr.RoleName.ToLower() == "admin")
                     {
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
@@ -76,8 +78,19 @@ namespace MCNMedia_Dev.Controllers
             log.Error("Exception : " + exceptionMessage);
         }
 
+        [HttpPost]
+        public IActionResult ChangeUserPassword(int UserId ,string OldPassword,string NewPassword)
+        {
+            User user = _userDataAccess.GetUserData(UserId);
+            if (user.LoginPassword == OldPassword) {
+                _userDataAccess.ChangeUserPassword(UserId, NewPassword, UserId);
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+            }
+            else {
+                return Json(new { success = false, responseText = "The attached file is not supported." });
 
-
+            }
+        }
 
     }
 

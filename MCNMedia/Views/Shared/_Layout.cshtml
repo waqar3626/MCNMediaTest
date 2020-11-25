@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -48,7 +50,7 @@
     <!-- endinject -->
     <!-- endinject -->
     <link rel="shortcut icon" href="~/theme/images/browser-tab-icon.png" />
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <link href="~/theme/Custom.css" rel="stylesheet" />
@@ -81,8 +83,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a class="dropdown-item">
-                        <i class="ti-settings text-primary"></i>
-                        Settings
+                        <i class="ti-lock text-primary"></i>
+                        Change Password
                     </a>
                     <a class="dropdown-item">
                         <i class="ti-power-off text-primary"></i>
@@ -101,7 +103,16 @@
                             <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg" alt="profile" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-
+                            <span class="dropdown-item border-bottom font-20" >
+                                <i class="ti-user text-primary"></i>
+                                <span class="font-18 text-primary">
+                                    @Context.Session.GetString("UserName")
+                                </span>
+                            </span>
+                            <a class="dropdown-item" onclick="ChangePassword()" data-toggle="tooltip" data-placement="bottom" title="Change">
+                                <i class="ti-lock text-primary"></i>
+                                Change Password
+                            </a>
                             <a class="dropdown-item" asp-action="UserLogin" asp-controller="UserLogin">
                                 <i class="ti-power-off text-primary"></i>
                                 Logout
@@ -340,6 +351,32 @@
 
                             }
                             @RenderBody()
+
+
+                            <div class="row">
+                                <div class="col-12 grid-margin">
+                                    <div class="modal fade" id="ChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog mt-4" role="document" style="max-width:40%;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body " id="Preview">
+
+                                                    @Html.Partial("~/Views/UserLogin/ChangeUserPassword.cshtml")
+                                                </div>
+                                                @*<div class="modal-footer">
+                                                        <button type="button" class="btn btn-success">Submit</button>
+                                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </main>
                     </div>
                 </div>
@@ -450,10 +487,16 @@
         $(window).unload(function () {
             displayBusyIndicator();
         });
-       s
+        s
         $(document).on('submit', 'form', function () {
             displayBusyIndicator();
         });
+
+        function ChangePassword() {
+
+            $('#ChangeModal').modal('show');
+        }
+
     </script>
 
     @RenderSection("Scripts", required: false)

@@ -183,8 +183,8 @@
 
 
                                        <div class="col-sm-8">
-                                           <video id='CameraLiveStream' class="video-js vjs-default-skin w-100 h-100" controls>
-                                               <source id="LiveStreamSrc_@Counter" src="@items.LiveStreamUrl" type="application/x-mpegURL">
+                                           <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100 h-100" controls>
+                                               <source id="LiveStreamSrc" src="@items.LiveStreamUrl" type="application/x-mpegURL">
                                            </video>
                                        </div>
 
@@ -407,7 +407,7 @@
         var count = '@Model.LCameras.Count()';
         var i;
         for ( i= 1; i <= count; i++){
-        var player = videojs('LiveStreamSrc_'+i);
+            var player = videojs('CameraLiveStream_'+i);
         player.autoplay(false);
     }
       
