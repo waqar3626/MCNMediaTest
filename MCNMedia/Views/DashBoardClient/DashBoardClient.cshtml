@@ -34,6 +34,39 @@
     </div>
 </form>
 
+<div class="row mt-4">
+    <div class="col-sm-12">
+        <div class="card ">
+            <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3 text-center">
+                    <img src="@Model.Churches.ImageURl" width="370px" height="250px" />
+                </div>
+                <div class="col-sm-9 ">
+                    <div class="form-group row border-bottom ">
+
+                        <div class="col-sm-6 border-right"><i class="mdi mdi-church fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.ChurchName</div>
+
+                        <div class="col-sm-6 "><i class="mdi mdi-home fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Town</div>
+                 
+                        </div>      <div class="form-group row border-bottom pt-2">
+
+                        <div class="col-sm-6 border-right"><i class="mdi mdi-email fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.EmailAddress</div>
+
+                        <div class="col-sm-6 "><i class="mdi mdi-phone fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Phone</div>
+                    </div>      <div class="form-group row border-bottom pt-2">
+
+                        <div class="col-sm-6 border-right"><i class="mdi mdi-google-maps fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Address</div>
+
+                        <div class="col-sm-6 "><i class="mdi mdi-web fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Website</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+   </div>
 <div class="row p-3">
     <div class="col-12">
         <div class="row">
@@ -132,219 +165,196 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-9">
-        
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card mb-0 ">
-                    <div class="card-body mb-0">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <img src="@Model.Churches.ImageURl" width="320px" height="250px" />
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="form-group row border-bottom pt-2">
+    
+            <div class="col-6">
+               <div class="row">
+                   <div class=" col-12">
+                       @{ 
+                           var Counter = 1;
+                       }
+                       @foreach (var items in Model.LCameras)
+                       {
+                   <div class="row mb-2">
+                       <div class="col-sm-12">
+                           <div class="card ">
+                              
+                               <div class="card-body mb-3 mt-2">
+                                   <div class="row">
 
-                                    <div class="col-sm-6 border-right"><i class="mdi mdi-church fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.ChurchName</div>
 
-                                    <div class="col-sm-6 "><i class="mdi mdi-home fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Town</div>
-                                </div>      <div class="form-group row border-bottom pt-2">
+                                       <div class="col-sm-8">
+                                           <video id='CameraLiveStream' class="video-js vjs-default-skin w-100 h-100" controls>
+                                               <source id="LiveStreamSrc_@Counter" src="@items.LiveStreamUrl" type="application/x-mpegURL">
+                                           </video>
+                                       </div>
 
-                                    <div class="col-sm-6 border-right"><i class="mdi mdi-email fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.EmailAddress</div>
+                                       <div class="col-sm-4">
+                                           <div class="row ">
 
-                                    <div class="col-sm-6 "><i class="mdi mdi-phone fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Phone</div>
-                                </div>      <div class="form-group row border-bottom pt-2">
 
-                                    <div class="col-sm-6 border-right"><i class="mdi mdi-google-maps fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Address</div>
+                                               <div class="col-sm-12 pt-5 text-wrap border-bottom">
+                                                   <i class="mdi mdi-camera fa-3x " style="color: #1f4a79"></i>&nbsp; @items.CameraName
+                                               </div>
+                                               <div class="col-sm-12 pt-5 text-wrap border-bottom">
+                                                   <div class="checkbox" >
+                                                       <label>
+                                                           <input type="checkbox" style="background-color:gray" data-toggle="toggle">
+                                                           Camera ON/OFF
+                                                       </label>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                               </div>
 
-                                    <div class="col-sm-6 "><i class="mdi mdi-web fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Website</div>
+                                           </div>
+                                       </div>
+                           </div>
+                       </div>
+                   </div>
+                           Counter++;
+                       }
+                   </div>
+               </div>
+                <div class="row">
+
+                    <div class="col-6 grid-margin stretch-card">
+                        <div class="card" style="background-color: #660066">
+                            <div class="card-body">
+                                <p class="card-title text-md-center text-xl-left text-white">Today Event's</p>
+                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TodaysSchedules</h3>
+                                    <i class="mdi mdi-calendar  icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
                                 </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6 grid-margin stretch-card ">
+                        <div class="card">
+
+                            <div class="card-body" style="background-color: #b300b3">
+                                <a href="@Url.Action("Recording","Client")">
+                                    <p class="card-title text-md-center text-xl-left text-white">Total Recording Done so far</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TotalRecordings</h3>
+                                        <i class="mdi mdi-record-rec icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+                                </a>
                             </div>
 
                         </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 grid-margin stretch-card">
+
+                        <div class="card">
+
+                            <div class="card-body" style="background-color:#00539c">
+                                <p class="card-title text-md-center text-xl-left text-white">With Recording</p>
+                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 text-white order-xl-0">@Model.DashBoardClients.TodaysRecordings</h3>
+                                    <i class="mdi mdi-camcorder-box icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 grid-margin stretch-card ">
+                        <div class="card ">
+
+                            <div class="card-body" style="background-color: #00294d">
+
+                                <p class="card-title text-md-center text-xl-left text-white">withOut Recording</p>
+                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TodaysEventsWithOutRecordings</h3>
+                                    <i class="mdi mdi-camcorder-box-off icon-md mb-0 text-white mb-md-3 mb-xl-0"></i>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            </div>
-
-                <div class="row pt-2 ">
 
 
-                    <div class="col-4">
-                        <div class="row">
 
-                            <div class="col-12 grid-margin stretch-card">
-                                <div class="card" style="background-color: #660066">
-                                    <div class="card-body">
-                                        <p class="card-title text-md-center text-xl-left text-white">Today Event's</p>
-                                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TodaysSchedules</h3>
-                                            <i class="mdi mdi-calendar  icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <div class="col-12 grid-margin stretch-card ">
-                                <div class="card">
-
-                                    <div class="card-body" style="background-color: #b300b3">
-                                        <a href="@Url.Action("Recording","Client")">
-                                            <p class="card-title text-md-center text-xl-left text-white">Total Recording Done so far</p>
-                                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TotalRecordings</h3>
-                                                <i class="mdi mdi-record-rec icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12 grid-margin stretch-card">
-
-                                <div class="card">
-
-                                    <div class="card-body" style="background-color:#00539c">
-                                        <p class="card-title text-md-center text-xl-left text-white">With Recording</p>
-                                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 text-white order-xl-0">@Model.DashBoardClients.TodaysRecordings</h3>
-                                            <i class="mdi mdi-camcorder-box icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 grid-margin stretch-card ">
-                                <div class="card ">
-
-                                    <div class="card-body" style="background-color: #00294d">
-
-                                        <p class="card-title text-md-center text-xl-left text-white">withOut Recording</p>
-                                        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.DashBoardClients.TodaysEventsWithOutRecordings</h3>
-                                            <i class="mdi mdi-camcorder-box-off icon-md mb-0 text-white mb-md-3 mb-xl-0"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+            <div class="col-sm-6 ">
+                <div class="card stretch-card " >
+                    <div class="card-header" style="background-color:#1f4a79">
+                        <label style="color:white">Today's Schedule</label>
                     </div>
+                    <div class="card-body ">
+                        <div class="">
+                            <form method="get">
 
 
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table id="sortable-table-1" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="sortStyle">Event Name</th>
+                                                @*            <th class="sortStyle">Event Status<i class="ti-angle-down"></i></th>*@
+                                                <th class="sortStyle">Repeated</th>
+                                                <th class="sortStyle">Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                    <div class="col-8 ">
-                        <div class="card stretch-card "style="height:570px">
-                            <div class="card-header" style="background-color:#1f4a79">
-                                <label style="color:white">Today's Schedule</label>
-                            </div>
-                            <div class="card-body " style="overflow-y: scroll">
-                                <div class="">
-                                    <form method="get">
+                                            @foreach (var item in Model.LDashBoardClients)
+                                            {
+                                <tr>
+                                    <td class="text-wrap">
 
+                                        @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
 
-                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table id="sortable-table-1" class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="sortStyle">Event Name</th>
-                                                        @*            <th class="sortStyle">Event Status<i class="ti-angle-down"></i></th>*@
-                                                        <th class="sortStyle">Repeated</th>
-                                                        <th class="sortStyle">Duration</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                    </td>
 
-                                                    @foreach (var item in Model.LDashBoardClients)
-                                                    {
-                                        <tr>
-                                            <td class="text-wrap">
-
-                                                @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
-
-                                            </td>
-
-                                            @*<td class="text-wrap">
+                                    @*<td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
                                     </td>*@
 
-                                            <td>
-                                                @if (item.IsRepeated == 1)
-                                                {
-                                <label class="badge-pill badge-success">
-                                    Yes
-                                </label> }
-                            else
-                            {
-            <label class="badge-pill badge-danger">
-                No
-            </label>}
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.RecordingDuration)
-                                            </td>
+                                    <td>
+                                        @if (item.IsRepeated == 1)
+                                        {
+                        <label class="badge-pill badge-success">
+                            Yes
+                        </label> }
+                    else
+                    {
+    <label class="badge-pill badge-danger">
+        No
+    </label>}
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecordingDuration)
+                                    </td>
 
-                                        </tr>
+                                </tr>
 }
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-
-                                    </form>
+                                        </tbody>
+                                    </table>
                                 </div>
 
-                            </div>
+
+                            </form>
                         </div>
-                    </div>
-                </div>
-           
 
-    </div>
-    <div class="col-sm-3">
-
-
-        @foreach (var items in Model.LCameras)
-        {
-    <div class="row mb-2">
-        <div class="col-sm-12">
-            <div class="card ">
-                <div class="card-header" style="background-color: #1f4a79; color:white" >
-                    
-                    <span class="display-5">@items.CameraName</span>
-                
-                </div>
-                <div class="card-body mb-3 mt-2">
-                    <div class="row">
-                        
-
-                            <div class="col-sm-12">
-                                <video id='CameraLiveStream' class="video-js vjs-default-skin w-100 h-100" controls>
-                                    <source id="LiveStreamSrc_@items.CameraId" src="@items.LiveStreamUrl" type="application/x-mpegURL">
-                                </video>
-                            </div>
-                           
-                 
                     </div>
                 </div>
             </div>
-        </div>
-        </div>}
-    
-
-
-                </div>
-
+     
 </div>
-    
+
+
+
+
 
 
 
@@ -392,5 +402,14 @@
 
     }
 
+    $(document).ready(function () {
 
+        var count = '@Model.LCameras.Count()';
+        var i;
+        for ( i= 1; i <= count; i++){
+        var player = videojs('LiveStreamSrc_'+i);
+        player.autoplay(false);
+    }
+      
+    });
 </script>
