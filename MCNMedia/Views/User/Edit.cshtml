@@ -9,7 +9,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
         <div class="card-body">
-            <h4 class="modal-title">Add New User</h4>
+            
           
             <div class="form-group row">
                 <label asp-for="FirstName" for="validationCustom10" class="col-sm-3 col-form-label">First Name *</label>
@@ -45,11 +45,11 @@
                 </div>
 
             </div>
-            <div class="form-group row">
+            <div class="form-group row " hidden>
                 <label asp-for="LoginPassword" for="validationCustom13" class="col-sm-3 col-form-label">Login Password *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LoginPassword" class="text-danger"></span>
-                    <input asp-for="LoginPassword" class="form-control" readonly="readonly" placeholder="Password" id="validationCustom13" />
+                    <input  asp-for="LoginPassword" class="form-control" readonly="readonly" placeholder="Password" id="validationCustom13" />
                 </div>
 
             </div>
