@@ -91,24 +91,32 @@
 
                     <input asp-for="LoginPassword" type="password" class="form-control" placeholder="Password" id="validationCustom04" required />
 
-                    
+                    <div class="invalid-feedback" id="PasswordAlertLabel">
+                        <ul>
+                            <li>Password field required</li>
+                            <li>password must be atleast 8 character long</li>
+                            <li>password must contain atleast 1 Upper Case letter</li>
+                            <li>password must contain atleast 1 Lower Case letter</li>
+                            <li>password must contain atleast 1 Numeric Digit</li>
+                            <li>password must not contain User First Name or Last Name</li>
+                            <li>password must not contain Sequence of Character of digits number </li>
+                            <li>password must not contain Your First Name & Last Name </li>
 
 
 
-
-
-
+                        </ul>
+                    </div>
                 </div>
 
             </div>
             <div class="form-group row">
-                <label  for="ConfirmPassword" class="col-sm-3 col-form-label">Confirm Password *</label>
+                <label for="ConfirmPassword" class="col-sm-3 col-form-label">Confirm Password *</label>
                 <div class="col-sm-9">
 
-                    <input  type="password" class="form-control" placeholder="Confirm Password" id="ConfirmPassword" required />
+                    <input type="password" class="form-control" placeholder="Confirm Password" id="ConfirmPassword" required />
 
                     <div class="invalid-feedback" id="ConfirmPasswordAlertLabel">
-                       Kindly Provide a valid Password confirm password must match with password
+                        Kindly Provide a valid Password confirm password must match with password
                     </div>
                 </div>
 
@@ -148,8 +156,7 @@
 
     $('#validationCustom04').keyup(function () {
         var Check = CheckValidation();
-        if (check)
-        {
+        if (check) {
 
             $('#PasswordAlertLabel').attr('class', 'invalid-feedback');
             $('#validationCustom04').attr('class', 'form-control');
@@ -160,7 +167,7 @@
         var check = true;
         var FirstName = document.getElementById('validationCustom01').value;
         var LastName = document.getElementById('validationCustom02').value;
-      
+
         var Passwordcheck = document.getElementById('validationCustom04').value;
 
         if ($("#validationCustom04").val().length < 8) {
@@ -174,12 +181,12 @@
         }
         else if
             (!/[a-z]/.test($("#validationCustom04").val())) {
-         
+
 
             check = false;
         }
         else if (!/[A-Z]/.test($("#validationCustom04").val())) {
-         
+
 
             check = false;
         } else if (!/([~,!,@@,#,$,%,^,&,*,-,_,+,=,?,>,<])/.test($("#validationCustom04").val())) {
@@ -189,10 +196,10 @@
         }
         else if (Passwordcheck.toLowerCase().includes(FirstName.toLowerCase()) || Passwordcheck.toLowerCase().includes(LastName.toLowerCase())) {
 
-            
+
             check = false;
         }
-        
+
         if (check == false) {
 
             $('#PasswordAlertLabel').attr('class', 'invalid-feedback2');
@@ -202,7 +209,7 @@
             $('#AddUserPopUp').modal('show');
         }
         else {
-            
+
             $('#PasswordAlertLabel').attr('class', 'invalid-feedback');
             $('#validationCustom04').attr('class', 'form-control');
             return true;
@@ -216,9 +223,9 @@
             var isValid = form.checkValidity();
             var passwordCheck = CheckValidation();
             var ConfirmPassword = CheckConfirmPassword();
-           
+
             if (!isValid) {
-              
+
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -232,7 +239,7 @@
                 e.stopPropagation();
             }
             else {
-             
+
                 return true;
             }
             form.classList.add('was-validated');
@@ -241,14 +248,13 @@
     });
 
 
-    function CheckConfirmPassword()
-    {
+    function CheckConfirmPassword() {
 
         var Password = document.getElementById('validationCustom04').value;
         var ConfirmPassword = document.getElementById('ConfirmPassword').value;
-        
+
         if (!(Password === ConfirmPassword)) {
-           
+
             $('#ConfirmPasswordAlertLabel').attr('class', 'invalid-feedback2');
             $('#ConfirmPassword').attr('class', 'textboxstyle');
 
@@ -257,7 +263,7 @@
 
         }
         else {
-            
+
             $('#ConfirmPasswordAlertLabel').attr('class', 'invalid-feedback');
             $('#ConfirmPassword').attr('class', 'form-control');
             return true;
