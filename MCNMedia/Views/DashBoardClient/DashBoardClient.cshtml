@@ -13,11 +13,19 @@
 <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
 <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+<style>
+    .toggle.ios, .toggle-on.ios, .toggle-off.ios {
+        border-radius: 20rem;
+    }
 
+        .toggle.ios .toggle-handle {
+            border-radius: 20rem;
+        }
+</style>
 <style type="text/css">
     .vjs-big-play-button {
-        left: 5em !important;
-        top: 4em !important;
+        left: 40% !important;
+        top: 40% !important;
     }
 </style>
 
@@ -39,10 +47,10 @@
         <div class="card ">
             <div class="card-body">
             <div class="row">
-                <div class="col-sm-3 text-center">
-                    <img src="@Model.Churches.ImageURl" width="370px" height="250px" />
+                <div class="col-sm-4 text-center">
+                    <img src="@Model.Churches.ImageURl" width="100%" />
                 </div>
-                <div class="col-sm-9 ">
+                <div class="col-sm-8 ">
                     <div class="form-group row border-bottom ">
 
                         <div class="col-sm-6 border-right"><i class="mdi mdi-church fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.ChurchName</div>
@@ -176,31 +184,29 @@
                        {
                    <div class="row mb-2">
                        <div class="col-sm-12">
-                           <div class="card ">
+                           <div class="card " style="height:280px;">
                               
-                               <div class="card-body mb-3 mt-2">
+                               <div class="card-body ">
                                    <div class="row">
 
 
-                                       <div class="col-sm-8">
-                                           <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100 h-100" controls>
+                                       <div class="col-sm-9">
+                                           <video id='CameraLiveStream_@Counter'  class="video-js vjs-default-skin w-100" style="height:230px"  controls>
                                                <source id="LiveStreamSrc" src="@items.LiveStreamUrl" type="application/x-mpegURL">
                                            </video>
                                        </div>
 
-                                       <div class="col-sm-4">
+                                       <div class="col-sm-3">
                                            <div class="row ">
 
 
                                                <div class="col-sm-12 pt-5 text-wrap border-bottom">
-                                                   <i class="mdi mdi-camera fa-3x " style="color: #1f4a79"></i>&nbsp; @items.CameraName
+                                                   <i class="mdi mdi-camera fa-2x " style="color: #1f4a79"></i>&nbsp; @items.CameraName
                                                </div>
                                                <div class="col-sm-12 pt-5 text-wrap border-bottom">
-                                                   <div class="checkbox" >
-                                                       <label>
-                                                           <input type="checkbox" style="background-color:gray" data-toggle="toggle">
-                                                           Camera ON/OFF
-                                                       </label>
+                                                   <div class="custom-control custom-switch">
+                                                       <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                                       <label class="custom-control-label" for="customSwitch1">Is Online</label>
                                                    </div>
                                                </div>
                                            </div>
