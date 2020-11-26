@@ -50,8 +50,9 @@ namespace MCNMedia_Dev.Controllers
                         }
                         else
                         {
-                            ViewBag.IsSuccess = 4;
-                            return View();
+                            //ViewBag.IsSuccess = 4;
+                            //return View();
+                            return RedirectToAction("UserMessage", "UserLogin");
                         }
                     }
                     else
@@ -73,6 +74,10 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        public IActionResult UserMessage()
+        {
+            return View();
+        }
         private void ShowMesage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
