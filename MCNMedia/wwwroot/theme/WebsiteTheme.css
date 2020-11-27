@@ -1,9 +1,22 @@
 ﻿.top-Menu-item {
     color: #372548 !important;
 }
+
 .slide-image {
-    height:auto !important;
-    width:100% !important;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-item-next, .carousel-item-prev, .carousel-item.active {
+    display: block;
+    width: 100%;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
 }
 
 .church-profile-image {
@@ -11,4 +24,67 @@
     background-repeat: no-repeat;
     width: 100%;
     height: auto;
+}
+
+.nav-pills-success .nav-link {
+    color: #212529;
+}
+
+.nav-pills .nav-link {
+    border-right: 1px solid #c9ccd7;
+    padding: .5rem 1rem;
+    border-radius: 0px;
+    color: #fff;
+    font-family: arialNova;
+}
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #d9356f;
+    }
+
+.nav-pills .nav-item {
+    margin-right: 1rem;
+}
+
+.nav-tabs .nav-link {
+    background: #1f4a79;
+    color: #fff;
+    border-radius: 0;
+    border: 1px solid #c9ccd7;
+    padding: .75rem 1.5rem;
+}
+
+link.active {
+    color: #c1225a;
+    background-color: #1f4a79;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #fff;
+    background-color: #d9356f;
+    border-color: #dee2e6 #dee2e6 #fff;
+    font-weight: bold;
+}
+
+.bg-website-menu {
+    background-color: #1f4a79 !important;
+    color: #fff;
+    }
+
+#website-topmenu {
+    background-color: #1f4a79 !important;
+}
+#website-top {
+    border: 1px solid #1f4a79;
+}
+#top-card {
+    border:none;
+}
+#owl-carousel-video {
+    background-color:#000!important;
+-}
+.jwplayer.jw-flag-aspect-mode {
+    height: 550px !important;
 }

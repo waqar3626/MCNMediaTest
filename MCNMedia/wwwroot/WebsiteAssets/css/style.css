@@ -324,14 +324,14 @@ input.empty, .select-search {
     margin-top: 14px;
     height: 100px;
     padding-top: 30px;
-    width: calc(100% - 290px);
+    width: calc(100% - 300px);
     margin-left: auto;
-    border-radius: 0 0 36px 0;
+    border-radius: 0 36px 0 0;
     position: relative;
 }
 
 .quick-strt {
-    background: #94B2D4;
+    background: #d9356f;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -339,7 +339,7 @@ input.empty, .select-search {
     width: 196px;
     box-shadow: 0 0rem 2rem #ff5c6333 !important;
     top: -1px;
-    border-radius: 0 0 36px 0;
+    border-radius: 0 36px 0 0;
     padding-top: 36px;
 }
 
@@ -703,8 +703,8 @@ img.main-img {
     width: 292px;
     height: 290px;
     padding: 0;
-    border-radius: 0 30px;
-    margin-top: -119px;
+    border-radius: 30px;
+    margin-top: -116px;
 }
 /**
  * Product Tiles
@@ -716,109 +716,115 @@ img.main-img {
 .mt-100 {
     margin-top: -100px !important;
 }
-
-@media(max-width:1177px) {
-    .mt-100 {
-        margin-top: 10px !important;
-    }
+@media(min-width:1177px) {
 
     .nav-top {
-        width: calc(100%);
-    }
-
-    img.main-img {
-        margin-top: 0;
-    }
-
-    .flex-end-md {
-        align-self: flex-end;
+        border-left: none;
     }
 }
 
-@media (max-width:899px) {
+    @media(max-width:1177px) {
+        .mt-100 {
+            margin-top: 10px !important;
+        }
 
-    .o-wrapper {
-        padding-left: 0px;
-        padding-right: 0px;
+        .nav-top {
+            width: calc(100%);
+        }
+
+        img.main-img {
+            margin-top: 0;
+        }
+
+        .flex-end-md {
+            align-self: flex-end;
+        }
     }
-}
 
-@media (max-width:684px) {
+    @media (max-width:899px) {
 
-    .nav-top {
-        height: auto;
-        padding-top: 16px;
+        .o-wrapper {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
     }
+
+    @media (max-width:684px) {
+
+        .nav-top {
+            height: auto;
+            padding-top: 16px;
+        }
+
+            .nav-top li {
+                width: 33%;
+                padding-bottom: 9px;
+            }
+    }
+
+    @media (max-width:524px) {
+        .nav-top ul {
+            padding-left: 0px;
+        }
 
         .nav-top li {
-            width: 33%;
-            padding-bottom: 9px;
+            width: 49%;
         }
-}
 
-@media (max-width:524px) {
-    .nav-top ul {
-        padding-left: 0px;
+        .quick-strt {
+            position: relative;
+            padding: 11px;
+            border-radius: 0;
+        }
     }
 
-    .nav-top li {
-        width: 49%;
+    @media ( max-width: 349px) {
+        .nav-top li {
+            width: 99%;
+        }
     }
 
-    .quick-strt {
-        position: relative;
-        padding: 11px;
-        border-radius: 0;
-    }
-}
-
-@media ( max-width: 349px) {
-    .nav-top li {
-        width: 99%;
-    }
-}
-
-@media (min-width: 1535px) {
-    nav.container-nav {
-        width: calc(100% + 180px) !important;
-        margin-left: auto;
-    }
-}
-
-@media (max-width:767px) {
-    .cover-banner, .cover-banner video {
-        height: 450px;
-    }
-}
-
-@media (max-width:599px) {
-    .carousel-caption .font-60 {
-        font-size: 37px;
+    @media (min-width: 1535px) {
+        nav.container-nav {
+            width: calc(100% + 180px) !important;
+            margin-left: auto;
+        }
     }
 
-    .carousel-caption .font-36 {
-        font-size: 25px;
+    @media (max-width:767px) {
+        .cover-banner, .cover-banner video {
+            height: 450px;
+        }
     }
 
-    .carousel-item .h-700 {
-        height: 517px;
+    @media (max-width:599px) {
+        .carousel-caption .font-60 {
+            font-size: 37px;
+        }
+
+        .carousel-caption .font-36 {
+            font-size: 25px;
+        }
+
+        .carousel-item .h-700 {
+            height: 517px;
+        }
+
+        .cover-banner, .cover-banner video {
+            height: 350px;
+        }
     }
 
-    .cover-banner, .cover-banner video {
-        height: 350px;
-    }
-}
+    @media (max-width:499px) {
+        input.hiring-in {
+            width: calc(100% - 76px);
+        }
 
-@media (max-width:499px) {
-    input.hiring-in {
-        width: calc(100% - 76px);
-    }
+        button.hired-btn {
+            width: 78px;
+        }
 
-    button.hired-btn {
-        width: 78px;
+        .cover-banner, .cover-banner video {
+            height: 242px;
+        }
     }
-
-    .cover-banner, .cover-banner video {
-        height: 242px;
-    }
-}

@@ -4,166 +4,211 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
 
+
+<style type="text/css">
+    .vjs-big-play-button {
+        left: 20em !important;
+        top: 4em !important;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.carousel.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/owl.carousel.min.js"></script>
+<!-- plugins:css -->
+<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
+<!-- endinject -->
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+<!-- inject:css -->
+@*<link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">*@
+<!-- endinject -->
+
 <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
 <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
 <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
 
-<!-- banner" slider start -->
-<div class="cover-banner" id="CamerasContainer" style="background-image: url('@Model.Churches.ImageURl');">
-    <i class="fal fa-play-circle text-white vide-play-in"></i>
-    <video id='CameraLiveStream' controls class='video-js vjs-default-skin' style="width:100% !important;height:100% !important;">
-        @*<source src="https://ak.picdn.net/shutterstock/videos/30099838/preview/stock-footage-orvieto-italy-july-tourists-visit-orvieto-cathedral-duomo-di-orvieto-cattedrale-di-santa.webm" />
-            <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />*@
-        <source id="LiveStreamSrc" type="application/x-mpegURL">
-        @*<img src="~/WebsiteAssets/img/banner-1.png" alt="">*@
-    </video>
-</div>
-<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="500000000000" style=" display: none;">
-    <ol class="carousel-indicators">
-        @{
-            int counter1 = 0;
-        }
-        @foreach (MediaChurch pic in Model.PictureList)
-        {
-            
-            if (counter1 == 0)
-            {
-                counter1 = counter1 + 1;
-                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-            }
-            else
-            {
-                <li data-target="#carouselExampleCaptions" data-slide-to='@counter1'></li>
-                counter1 = counter1 + 1;
-            }
-        }
-         
-    </ol>
-    <div class="carousel-inner">
-        @{
-            int counter = 0;
-        }
 
-        @foreach (MediaChurch pic in Model.PictureList)
-        {
+<style>
+    #owl-carousel-video {
+        width: 100%;
+    }
 
-            if (counter == 0)
-            {
-                counter = counter + 1;
-                <div class="carousel-item active">
-
-                    <img src="@pic.MediaURL"   class="d-block h-550 slide-image" alt="...">
-                </div>
-            }
-            else
-            {
-                <div class="carousel-item">
-
-                    <img src="@pic.MediaURL" class="d-block h-550  slide-image" alt="...">
-                </div>
-            }
-
-
-
-        }
-
-
+    .item-video {
+        height: 275px !important;
+        background-color: blue;
+        display: block;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
 
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-<!-- banner" slider start -->
-<div class="church-profile-image" id="VediosContainer" style="display:none;">
-    <i class="fal fa-play-circle text-white vide-play-in"></i>
-    <div id="my-video"></div>
-</div>
 
-<!-- banner slider end -->
-<div class="arialNova bg-white" style="z-index: 3000;">
-    <div class="row m-0 mb-3" style="background-color: #1c4776;">
-        <div class="col-1 d-xl-block d-none"></div>
-        <div class="col-xl-10">
-            <div class="nav-top mt-0 bg-white">
-                <ul class=" popin font-14 mt-0">
-
-                    @*<div class="dropdown-menu" aria-labelledby="navbarDropdown">*@
-                    @foreach (Camera cam in Model.CameraList)
+    @*<div class="row" style="width:100%;height:750px;background-color:black">
+        <div class="col-2 d-lg-block d-none"></div>*@
+    <div class="card" id="top-card">
+        <div class="">
+            <div class="tab-content" id="pills-tabContent">
+                @{
+                    int camCounter = 0;
+                }
+                @foreach (Camera cam in Model.CameraList)
+                {
+                    if (camCounter == 0)
                     {
-                        <li class="nav-item dropdown change-pan d-inline-block border-right">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <a class="dropdown-item" style="cursor:pointer;" onclick="OpenCamera('@cam.LiveStreamUrl')"> @cam.CameraName </a>
-                            </a>
-                        </li>
-
+                        <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                            <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin' style="width:100% !important;height:550px !important;">
+                                <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                            </video>
+                        </div>
                     }
-                    @*<a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>*@
-                    @*</div>*@
-
-                    <li class="nav-item dropdown change-pan d-inline-block border-right">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Videos <i class="fal fa-angle-down"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @foreach (MediaChurch vid in Model.VideoList)
-                            {
-                                <a class="dropdown-item" onclick="OpenVedio('@vid.MediaURL')" href="#"> @vid.TabName </a>
-                            }
-                            @*<a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>*@
+                    else
+                    {
+                        <div class="tab-pane fade" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                            <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin' style="width:100% !important;height:550px !important;">
+                                <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                            </video>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown change-pan d-inline-block border-right">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Slideshow <i class="fal fa-angle-down"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @foreach (MediaChurch slidshow in Model.SlideshowList)
-                            {
-                                <a class="dropdown-item" href="#"> @slidshow.TabName </a>
-                            }
-                            @*<a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>*@
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown change-pan d-inline-block">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <a class="dropdown-item" href="#" onclick="OpenPictures()"> Images </a>
-                        </a>
+                    }
+                    camCounter = camCounter + 1;
+                }
 
-                    </li>
-                </ul>
-                <div class="quick-strt text-white font-18">
-                    Quick Start <i class="fal fa-long-arrow-right pl-2"></i>
+                @*<div class="tab-pane fade" id="pills-slideshow" role="tabpanel" aria-labelledby="pills-slideshow-tab">
+                        <div id="carouselSlideShow" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+                            <div class="carousel-inner">
+
+                                @foreach (MediaChurch slidshow in Model.SlideshowList)
+                                {
+
+                                    <div class="carousel-item">
+                                        <img src="@slidshow.TabName" class="d-block h-550  slide-image" alt="...">
+                                    </div>
+                                }
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>*@
+
+                <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
+                    <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
+                    
+                        @foreach (MediaChurch vid in Model.VideoList)
+                        {
+                            string vlink = vid.MediaURL.ToString();
+                            <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL"  class="vedslide"></div>
+                          
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="pills-image" role="tabpanel" aria-labelledby="pills-image-tab">
+                    <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+                        <div class="carousel-inner">
+                            @{
+                                int counter = 0;
+                            }
+                            @foreach (MediaChurch pic in Model.PictureList)
+                            {
+                                if (counter == 0)
+                                {
+                                    counter = counter + 1;
+                                    <div class="carousel-item active">
+
+                                        <img src="@pic.MediaURL" class="d-block h-550" alt="...">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="carousel-item">
+
+                                        <img src="@pic.MediaURL" class="d-block h-550" alt="...">
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselPictures" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselPictures" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-1 d-xl-block d-none"></div>
+        @*<div class="col-2 d-lg-block d-none"></div>
+            </div>*@
+    </div>
+</div>
+
+<div class="arialNova bg-white">
+    <div class="row m-0 mb-3" id="website-topmenu">
+        <div class="col-xl-1 d-xl-block d-none"></div>
+        <div class="col-xl-10">
+            <div class="nav-top mt-0 bg-website-menu" id="website-top">
+                <ul class="nav nav-pills nav-pills-success popin font-14 pl-4 mt-0" id="pills-tab" role="tablist">
+                    @{
+                        int camTabCounter = 0;
+                    }
+                    @foreach (Camera cam in Model.CameraList)
+                    {
+
+                        if (camCounter == 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-camera-tab-@camTabCounter" data-toggle="pill" href="#pills-camera-@camTabCounter" role="tab" aria-controls="pills-camera-@camTabCounter" aria-selected="true">@cam.CameraName</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-camera-tab-@camTabCounter" data-toggle="pill" href="#pills-camera-@camTabCounter" role="tab" aria-controls="pills-camera-@camTabCounter" aria-selected="false">@cam.CameraName</a>
+                            </li>
+                        }
+                        camTabCounter = camTabCounter + 1;
+                    }
+                    @*<li class="nav-item">
+                            <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
+                        </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-video-tab" data-toggle="pill" href="#pills-video" role="tab" aria-controls="pills-video" aria-selected="false">Videos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-image-tab" data-toggle="pill" href="#pills-image" role="tab" aria-controls="pills-image" aria-selected="false">Images</a>
+                    </li>
+                </ul>
+
+
+                @*<div class="quick-strt text-white font-18">
+                    Quick Start <i class="fal fa-long-arrow-right pl-2"></i>
+                </div>*@
+            </div>
+        </div>
+        <div class="col-xl-1 d-xl-block d-none"></div>
     </div>
     <div class="row m-0  mb-5 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
         <div class="col-1 d-xl-block d-none"></div>
         <div class="col-xl-8   col-md-8  pr-md-0 col-sm-7">
             <div class="row m-0">
                 <div class="col-xl-8 col-lg-6">
-                    <img src="@Model.Churches.ImageURl" alt="" class="main-img">
+                    <img src="@Model.Churches.ImageURl" alt="" class="main-img"><br /><br />
                     <p class="font-30 text-pink">@Model.Churches.ChurchName, @Model.Churches.Town</p>
                 </div>
                 <div class="col-xl-4 col-lg-6 flex-end-md">
@@ -172,44 +217,19 @@
                     <p class="icon-top-s"><i class="fas fa-globe" style="padding-right:7px;"></i> @Model.Churches.Website</p>
                 </div>
             </div>
-            <div class="praying-slider">
+
+
+            <div>
+                <!--<div class="praying-slider">
                 <div class="c-product-tray m-0">
                     <div class="o-wrapper">
                         <div class="c-product-tray__carousel">
                             <div class="o-slider-product-tray">
                                 <ul class="o-slider-product-tray__inner pt-3 pb-3 js-slider-product-tray">
-                                    @*   @foreach (var item in Model.ScheduleList)
-                                        {
-                                            <li class="o-slider-product-tray__slide">
-                                                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                        @item.EventDay
-                                                    </h3>
-                                                    <p>
-                                                        <span class="time">@Html.DisplayFor(modelItem => item.EventDate) </span>
-                                                    </p>
-                                                    <p class="inner-have">
-                                                            <span>
-                                                                <span class=" timing-block">
-                                                                    <span class="have-dot">
-                                                                        <span class="font-14 font-weight-bold">@item.EventName</span>
-                                                                        <span class="font-12 d-block">@Html.DisplayFor(modelItem => item.EventTime)</span>
-                                                                      @if (item.Record == true)
-                                                                      {
-                                                                          <span class="block-red"></span>
-                                                                      }
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                    </p>
 
-
-                                                </div><!-- /c-product-tile -->
-
-                                            </li>
-                                        }   *@
 
                                     <li class="o-slider-product-tray__slide">
+
                                         <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
                                             <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
                                                 @System.DateTime.Now.ToString("dddd")
@@ -255,339 +275,585 @@
                                                 <span class="border-time">
                                                 </span>
                                             </p>
-                                        </div><!-- /c-product-tile -->
+                                        </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--<li class="o-slider-product-tray__slide">
 
-                                    </li><!-- /o-slider-product-tray__slide -->
-
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.AddDays(1).ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
+                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                        @System.DateTime.Now.AddDays(1).ToString("dddd")
+                    </h3>
+                    <p>
+                        <span class="time">9:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                    <p class="inner-have">
+                        @foreach (var itm in Model.ScheduleListDay1)
+                        {
+                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                            <span class="border-time">
+                                <span>
+                                    <span class=" timing-block">
+                                        <span class="have-dot">
+                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                            @if (itm.Record == true)
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay1)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
+                                                <span class="block-red"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                        </div><!-- /c-product-tile -->
+                                            }
+                                        </span>
 
-                                    </li><!-- /o-slider-product-tray__slide -->
+                                    </span>
+                                </span>
+                            </span>
+                            <br />
+                            <br />
+                        }
+                    </p>
+                    <p>
+                        <span class="time">12:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--<li class="o-slider-product-tray__slide">
 
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.AddDays(2).ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
+                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                        @System.DateTime.Now.AddDays(2).ToString("dddd")
+                    </h3>
+                    <p>
+                        <span class="time">9:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                    <p class="inner-have">
+                        @foreach (var itm in Model.ScheduleListDay2)
+                        {
+                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                            <span class="border-time">
+                                <span>
+                                    <span class=" timing-block">
+                                        <span class="have-dot">
+                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                            @if (itm.Record == true)
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay2)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
+                                                <span class="block-red"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                        </div><!-- /c-product-tile -->
+                                            }
+                                        </span>
 
-                                    </li><!-- /o-slider-product-tray__slide -->
+                                    </span>
+                                </span>
+                            </span>
+                            <br />
+                            <br />
+                        }
+                    </p>
+                    <p>
+                        <span class="time">12:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--<li class="o-slider-product-tray__slide">
 
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.AddDays(3).ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
+                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                        @System.DateTime.Now.AddDays(3).ToString("dddd")
+                    </h3>
+                    <p>
+                        <span class="time">9:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                    <p class="inner-have">
+                        @foreach (var itm in Model.ScheduleListDay3)
+                        {
+                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime) </span>
+                            <span class="border-time">
+                                <span>
+                                    <span class=" timing-block">
+                                        <span class="have-dot">
+                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                            @if (itm.Record == true)
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay3)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime) </span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
+                                                <span class="block-red"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                        </div><!-- /c-product-tile -->
+                                            }
+                                        </span>
 
-                                    </li><!-- /o-slider-product-tray__slide -->
+                                    </span>
+                                </span>
+                            </span>
+                            <br />
+                            <br />
+                        }
+                    </p>
+                    <p>
+                        <span class="time">12:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--<li class="o-slider-product-tray__slide">
 
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.AddDays(4).ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
+                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                        @System.DateTime.Now.AddDays(4).ToString("dddd")
+                    </h3>
+                    <p>
+                        <span class="time">9:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                    <p class="inner-have">
+                        @foreach (var itm in Model.ScheduleListDay4)
+                        {
+                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                            <span class="border-time">
+                                <span>
+                                    <span class=" timing-block">
+                                        <span class="have-dot">
+                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                            @if (itm.Record == true)
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay4)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
+                                                <span class="block-red"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                        </div><!-- /c-product-tile -->
+                                            }
+                                        </span>
 
-                                    </li><!-- /o-slider-product-tray__slide -->
+                                    </span>
+                                </span>
+                            </span>
+                            <br />
+                            <br />
+                        }
+                    </p>
+                    <p>
+                        <span class="time">12:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--<li class="o-slider-product-tray__slide">
 
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.AddDays(5).ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
+                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                        @System.DateTime.Now.AddDays(5).ToString("dddd")
+                    </h3>
+                    <p>
+                        <span class="time">9:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                    <p class="inner-have">
+                        @foreach (var itm in Model.ScheduleListDay5)
+                        {
+                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                            <span class="border-time">
+                                <span>
+                                    <span class=" timing-block">
+                                        <span class="have-dot">
+                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                            @if (itm.Record == true)
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay5)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
+                                                <span class="block-red"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                        </div><!-- /c-product-tile -->
+                                            }
+                                        </span>
 
-                                    </li><!-- /o-slider-product-tray__slide -->
+                                    </span>
+                                </span>
+                            </span>
+                            <br />
+                            <br />
+                        }
+                    </p>
+                    <p>
+                        <span class="time">12:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--<li class="o-slider-product-tray__slide">
 
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.AddDays(6).ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
+                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
+                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
+                        @System.DateTime.Now.AddDays(6).ToString("dddd")
+                    </h3>
+                    <p>
+                        <span class="time">9:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                    <p class="inner-have">
+                        @foreach (var itm in Model.ScheduleListDay6)
+                        {
+                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
+                            <span class="border-time">
+                                <span>
+                                    <span class=" timing-block">
+                                        <span class="have-dot">
+                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
+                                            @if (itm.Record == true)
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay6)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
+                                                <span class="block-red"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-12 d-block">
+                                                    @itm.EventTime.ToString("hh:mm")
                                                 </span>
-                                            </p>
-                                        </div><!-- /c-product-tile -->
+                                            }
+                                        </span>
 
-                                    </li><!-- /o-slider-product-tray__slide -->
+                                    </span>
+                                </span>
+                            </span>
+                            <br />
+                            <br />
+                        }
+                    </p>
+                    <p>
+                        <span class="time">12:00 am </span>
+                        <span class="border-time">
+                        </span>
+                    </p>
+                </div>-->
+                <!-- /c-product-tile -->
+                <!--</li>--><!-- /o-slider-product-tray__slide -->
+                <!--</ul>--><!-- /o-slider-product-tray__inner -->
+                <!--<div class="o-slider-product-tray__controls js-controls">
 
-                                </ul><!-- /o-slider-product-tray__inner -->
-                                <div class="o-slider-product-tray__controls js-controls">
-
-                                    <button class="o-slider-product-tray__button o-slider-product-tray__button--prev">
-                                        <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--prev"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
-                                            <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
-                                        </svg><!-- /o-slider-product-tray__arrow -->
-                                    </button><!-- /o-slider-product-tray__button -->
-
-                                    <button class="o-slider-product-tray__button o-slider-product-tray__button--next">
-                                        <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--next"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
-                                            <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
-                                        </svg><!-- /o-slider-product-tray__arrow -->
-                                    </button><!-- /o-slider-product-tray__button -->
-
-                                </div><!-- /o-slider-product-tray__controls -->
-                            </div><!-- /o-slider-product-tray -->
-                        </div><!-- /c-product-tray__carousel -->
-                    </div><!-- /o-wrapper -->
-                </div><!-- /c-product-tray -->
+                <button class="o-slider-product-tray__button o-slider-product-tray__button--prev">
+                    <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--prev"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
+                        <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
+                    </svg>-->
+                <!-- /o-slider-product-tray__arrow -->
+                <!--</button>--><!-- /o-slider-product-tray__button -->
+                <!--<button class="o-slider-product-tray__button o-slider-product-tray__button--next">
+                <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--next"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
+                    <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
+                </svg>-->
+                <!-- /o-slider-product-tray__arrow -->
+                <!--</button>--><!-- /o-slider-product-tray__button -->
+                <!--</div>--><!-- /o-slider-product-tray__controls -->
+                <!--</div>--><!-- /o-slider-product-tray -->
+                <!--</div>--><!-- /c-product-tray__carousel -->
+                <!--</div>--><!-- /o-wrapper -->
+                <!--</div>--><!-- /c-product-tray -->
+                <!--</div>-->
             </div>
+
+            <br />
+            <br />
+            <p class="font-20 bold text-pink text-center">Weekly Schedule</p>
+            <div class="card">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="width:14.3%;">
+                        <a class="nav-link active" data-toggle="pill" href="#pills-day1-tab" role="tab" aria-controls="pills-home" aria-selected="true">@System.DateTime.Now.ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" data-toggle="pill" href="#pills-day2-tab" role="tab" aria-controls="pills-profile" aria-selected="false">@System.DateTime.Now.AddDays(1).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day3-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(2).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day4-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(3).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day5-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(4).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day6-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(5).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.2%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day7-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(6).ToString("dddd")</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-day1-tab" aria-labelledby="pills-day1-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay0)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day2-tab" aria-labelledby="pills-day2-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay1)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day3-tab" role="tabpanel" aria-labelledby="pills-day3-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay2)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day4-tab" role="tabpanel" aria-labelledby="pills-day4-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay3)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day5-tab" role="tabpanel" aria-labelledby="pills-day5-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay4)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day6-tab" role="tabpanel" aria-labelledby="pills-day6-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay5)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day7-tab" role="tabpanel" aria-labelledby="pills-day7-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+
+                                    @foreach (var itm in Model.ScheduleListDay6)
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                            @if (itm.Record == true)
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="font-weight-normal font-weight-bold">
+                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="text-praaa">
                 <div class="font-32 pt-4 pb-4 bg-white font-weight-bold ProximaNova">
                     @Model.Announcement.AnnouncementTitle
@@ -599,123 +865,52 @@
         </div>
         <div class="col-xl-2  col-md-4 col-sm-5">
             <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
-                @*@foreach (Notice notice in Model.NoticeList)
-                    {
-                        <div class="news-wrap mb-3">
-                            <h4 class="news-heading font-16 font-weight-bold">Notices</h4>
-                            <p class="font-weight-light mb-2 font-12">
-                                @notice.NoticeName
-                            </p>
-                            <p class="font-14 mb-0 ">@notice.NoticeTitle</p>
-                            <p class="font-14 mb-0 ">@notice.CreatedAt.ToString("dd MMM yyyy")</p>
-                        </div>
-                    }*@
-                @*@foreach (Schedule schedule in Model.NowScheduleList)
-                {
-                    <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">What's ON nowEvents</h4>
-                        <p class="font-weight-light mb-2 font-12">
-                            @schedule.EventName
-                        </p>
-                        <p class="font-14 mb-0 ">@schedule.RecordDuration</p>
-                        <p class="font-14 mb-0 ">@schedule.EventTime</p>
-                    </div>
-                }*@
-                 <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                        <p class="font-weight-light mb-2 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                        <p class="font-14 mb-0 ">Mass</p>
-                        <p class="font-14 mb-0 ">25 Oct 2020</p>
-                    </div>
-                    <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                        <p class="font-weight-light mb-2 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                        <p class="font-14 mb-0 ">Mass</p>
-                        <p class="font-14 mb-0 ">25 Oct 2020</p>
-                    </div>
-                    <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                        <p class="font-weight-light mb-2 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                        <p class="font-14 mb-0 ">Mass</p>
-                        <p class="font-14 mb-0 ">25 Oct 2020</p>
-                    </div>
-                    <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                        <p class="font-weight-light mb-2 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                    </div>
+
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                    <p class="font-14 mb-0 ">Mass</p>
+                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                </div>
+                <div class="news-wrap mb-3">
+                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                    <p class="font-weight-light mb-2 font-12">
+                        Recoding of past events St Peter & St Paul's
+                        Church
+                    </p>
+                </div>
                 <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">
             </div>
         </div>
         <div class="col-1 d-xl-block d-none"></div>
     </div>
-    <!-- map start -->
-    <div class="row m-0 mt-5 mb-5  pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
-        @*<div class="col-1 d-xl-block d-none"></div>
-            <div class="col-xl-8  col-md-8  p-lg-0 col-sm-7">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13507.96053149314!2d74.2021541!3d32.177540799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1605436651478!5m2!1sen!2s"
-                        width="" height="" frameborder="0" class="news h-100 w-100" style="border:0;" allowfullscreen=""
-                        aria-hidden="false" tabindex="0"></iframe>
-            </div>
-            <div class="col-xl-2 col-md-4 col-sm-5">
-                <div class=" font-20 pt-4 pb-4 bg-white   text-center font-weight-bold ProximaNova">
-                    Resource Hub
-                </div>
-                <div class="border bg-white news p-4 pr-lg-5">
-                    <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">Document</h4>
-                        <p class="font-weight-light mb-3 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                        <p class="font-14 mb-0 ">Mass</p>
-                        <p class="font-14 mb-0 ">25 Oct 2020</p>
-                    </div>
-                    <div class="news-wrap mb-3">
-                        <h4 class="news-heading font-16 font-weight-bold">Document</h4>
-                        <p class="font-weight-light mb-3 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                        <p class="font-14 mb-0 ">Mass</p>
-                        <p class="font-14 mb-0 ">25 Oct 2020</p>
-                    </div>
-                </div>
-                <div class=" font-20 pt-4 pb-4 bg-white  text-center font-weight-bold ProximaNova">
-                    News Letter
-                </div>
-                <div class="border bg-white news p-4 pr-lg-5">
-                    <div class="news-wrap">
-                        <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                        <p class="font-weight-light mb-3 font-12">
-                            Recoding of past events St Peter & St Paul's
-                            Church
-                        </p>
-                        <p class="font-14 mb-0 ">Mass</p>
-                        <p class="font-14 mb-0 ">25 Oct 2020</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 d-xl-block d-none"></div>*@
-    </div>
 
-    <!-- map end -->
     <!-- recording start -->
     <div class="bg-blue">
         <div class="container">
             <div class="row m-0 ">
-                <div class="text-pink font-36 text-center pt-4 pb-4 avantgardece">
+                <div class="text-white font-30 text-center pt-4 pb-4 avantgardece">
                     Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
                 </div>
             </div>
@@ -742,55 +937,7 @@
                     </div>
                 }
 
-                @*<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>
-                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3">
-                        <h4 class="news-heading font-16 font-weight-normal">Robert Atkinson R.I.P.</h4>
-                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                            <p class="mb-0">Recoding of past events St Peter & St Paul's Church</p>
-                        </div>
-                        <i class="fal fa-play-circle font-36"></i>
-                    </div>*@
+
             </div>
 
         </div>
@@ -799,133 +946,10 @@
     <!-- recording END -->
 </div>
 <div>
-    <!-- now? start -->
-    @*<div class="bg-purple pt-5 pb-5 mt-5">
-            <div class="container pt-4 pb-4">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class='cover'>
-                            <video controls class='video' width='100%'>
-                                <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video"
-                                        type="video/mp4" />
-                                <source src="https://riverisland.scene7.com/is/content/RiverIsland/c20171205_Original_Penguin_AW17_Video_OGG" />
-                                <img src="img/video-img.png" alt="">
-                            </video>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-center self-center">
-                        <span class="text-pink font-36 text-center pt-4 pb-4 container avantgardece ">
-                            Do you want to start streaming?
-                        </span> <br>
-                        <a href="" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">
-                            Contact us
-                            today
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-    <!-- now? end -->@*
-        <!-- about customer strt -->
-        <div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
-            What our happy customers say.?
-        </div>
-        <!-- TESTIMONIALS -->
 
-        <section class="testimonials">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="customers-testimonials" class="owl-carousel">
-
-                            <!--TESTIMONIAL 1 -->
-                            <div class="item">
-                                <div class="shadow-effect rounded-0 avantgardece">
-                                    <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
-                                    <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                    </div>
-                                    <p class="font-14 mb-4">
-                                        “ A great agency who are not only flexible, efficient and
-                                        professional but a group of people who really care about delivering results for
-                                        you.
-                                        ”
-                                    </p>
-                                    <p class="font-14 text-center text-black mb-0 mt-3"> Jona Kraus</p>
-                                    <p class="font-14 text-center text-muted mb-0 text-lightdark"> berlin - Germany</p>
-                                </div>
-                            </div>
-                            <!--END OF TESTIMONIAL 1 -->
-                            <!--TESTIMONIAL 2 -->
-                            <div class="item">
-
-                                <div class="shadow-effect rounded-0 avantgardece">
-                                    <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
-                                    <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                    </div>
-                                    <p class="font-14 mb-4">
-                                        “ A great agency who are not only flexible, efficient and
-                                        professional but a group of people who really care about delivering results for
-                                        you.
-                                        ”
-                                    </p>
-
-                                    <p class="font-14 text-center text-black mb-0 mt-3"> Jona Kraus</p>
-                                    <p class="font-14 text-center text-muted mb-0 text-lightdark"> berlin - Germany</p>
-                                </div>
-                            </div>
-                            <!--END OF TESTIMONIAL 2 -->
-                            <!--TESTIMONIAL 3 -->
-                            <div class="item">
-
-                                <div class="shadow-effect rounded-0 avantgardece">
-                                    <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
-                                    <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                        <i class="fal fa-star"></i>
-                                    </div>
-                                    <p class="font-14 mb-4">
-                                        “ A great agency who are not only flexible, efficient and
-                                        professional but a group of people who really care about delivering results for
-                                        you.
-                                        ”
-                                    </p>
-                                    <p class="font-14 text-center text-black mb-0 mt-3"> Jona Kraus</p>
-                                    <p class="font-14 text-center text-muted mb-0 text-lightdark"> berlin - Germany</p>
-                                </div>
-                            </div>
-                            <!--END OF TESTIMONIAL 3 -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    *@
-    <!-- END OF TESTIMONIALS -->
-    @*<div class=" font-36 text-center bg-white avantgardece">
-            Contact US
-        </div>
-        <p class="text-center text-muted avantgardece">if you like to take our services</p>
-        <div class="container">
-            <div class="input-set row col-md-8 col-lg-6 ml-auto mr-auto mt-5 mb-5">
-                <input type="text" class="hiring-in pl-2" type="email" placeholder="enter your email">
-                <button class="hired-btn">Hire Me</button>
-            </div>
-        </div>*@
 </div>
+<script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+<script src="~/theme/js/owl-carousel.js"></script>
 <script src="~/js/jwplayer.js"></script>
 <script type="text/javascript">
     //$(document).ready(function () {
@@ -934,19 +958,9 @@
     //    player.autoplay(false);
     //});
 
-    function OpenCamera(liveUrl) {
-        var cameras = document.getElementById("CamerasContainer");
-        var images = document.getElementById("carouselExampleCaptions");
-        var vedios = document.getElementById("VediosContainer");
-
-        //if (x.style.display === "none") {
-        cameras.style.display = "block";
-        // } else {
-        images.style.display = "none";
-        vedios.style.display = "none";
-
-        $('#LiveStreamSrc').attr("src", '' + liveUrl + '');
-        var player = videojs('CameraLiveStream');
+    function OpenCamera(camId) {
+        //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
+        var player = videojs(camId);
         player.autoplay(false);
 
     }
@@ -956,7 +970,7 @@
         var cameras = document.getElementById("CamerasContainer");
         var images = document.getElementById("carouselExampleCaptions");
         var vedios = document.getElementById("VediosContainer");
-        
+
         //if (x.style.display === "none") {
         cameras.style.display = "none";
         vedios.style.display = "none";
@@ -966,23 +980,24 @@
 
     }
 
-    function OpenVedio(vedioURL) {
-        var cameras = document.getElementById("CamerasContainer");
-        var images = document.getElementById("carouselExampleCaptions");
-        var vedios = document.getElementById("VediosContainer");
+    function OpenVedio(vedId,vedioURL) {
+      //  var cameras = document.getElementById("CamerasContainer");
+      //  var images = document.getElementById("carouselExampleCaptions");
+      //  var vedios = document.getElementById("VediosContainer");
 
-        vedios.style.display = "block";
-        cameras.style.display = "none";
-        images.style.display = "none";
+       // vedios.style.display = "block";
+      //  cameras.style.display = "none";
+      //  images.style.display = "none";
 
 
         jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
 
         var fileURL = vedioURL;
-        jwplayer('my-video').setup({
+        jwplayer('' + vedId +'').setup({
             file: fileURL,
             image: "../css/jwerror.jpg",
             width: "100%",
+            height: "515px",
             aspectratio: "16:9",
             autostart: 'false',
         });
@@ -992,3 +1007,34 @@
 
     }
 </script>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $('#owl-carousel-video').owlCarousel({
+            items: 1,
+            merge: true,
+            loop: true,
+            margin: 10,
+            video: true,
+            lazyLoad: true,
+            center: true,
+            responsive: {
+                480: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                }
+            }
+        });
+
+        var vedioSlides = document.getElementsByClassName("vedslide");
+        for (var i = 0; i < vedioSlides.length; i++) {
+           // Distribute(slides.item(i));
+            var divid = vedioSlides.item(i).id;
+            var divurl = vedioSlides.item(i).getAttribute('mediaurl');
+            OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'))
+        }
+    });
+</script>
+
+
