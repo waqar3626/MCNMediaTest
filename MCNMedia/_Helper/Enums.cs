@@ -17,6 +17,7 @@ namespace MCNMedia_Dev._Helper
         Picture,
         Video,
         SlideShow,
-        UserProfileImage
+        UserProfileImage,
+        NewsLetter
     }
 }

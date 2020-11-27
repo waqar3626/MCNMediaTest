@@ -1,0 +1,173 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+<script src="~/theme/js/modal-demo.js"></script>
+<script type="text/javascript">
+
+</script>
+
+
+<div class="card">
+    <div class="card-body">
+        <button type="submit" id="AddNewsLetter1" class="btn btn-outline-behance btn-sm float-right " title="Add New" onclick="AddChNewsLetter()"> <i class="mdi mdi-plus"></i> Add NewsLetter</button>
+        <div class="">
+
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            File Name
+                        </th>
+                        <th>
+                            Created At
+                        </th>
+
+
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="newsLetterList">
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddChurchNewsLetterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add NewsLetter</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddChurchNewsLetterPreview">
+                        @Html.Partial("~/Views/ChurchNewsLetter/_AddChurchNewsLetter.cshtml", Model.ChurchNewsLetter)
+                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditChurchNewsLetterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit NewsLetter</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditChurchNewsLetterPreview">
+                        @Html.Partial("~/Views/ChurchNewsLetter/_EditChurchNewsLetter.cshtml", Model.ChurchNewsLetter)
+                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        loadNewsLetter();
+    });
+
+    function loadNewsLetter() {
+        
+        $.ajax({
+            type: "Get",
+            url: "/ChurchNewsLetter/NewsletterList",
+           
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+
+                $.each(result, function (key, item) {
+                    html += '<tr >';
+                    html += '<td class="text-wrap">' + item.newsLetterTitle + '</td>';
+                 
+                    html += '<td class="text-wrap">' + item.newsLetterName  + '</td>';
+                    html += '<td class="text-wrap">' + item.createdAt + '</td>';
+
+                    html += ' <td>';
+                    //html += '<a onclick="EditNewsLetter(' + item.churchNewsLetterId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                    html += '<a onclick="DeleteNewsLetter(' + item.churchNewsLetterId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                    html += ' </td>';
+                    html += '</tr>';
+                });
+                $('.newsLetterList').html(html);
+            },
+            error: function (errormessage) {
+               
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function AddChNewsLetter() {
+
+        $('#AddChurchNewsLetterModal').modal('show');
+
+      }
+
+    function EditNewsLetter(churchNewsLetterId) {
+        $.ajax({
+        type: "Get",
+        url: '@Url.Action("EditNewsLetter", "ChurchNewsLetter")',
+            data: { id: churchNewsLetterId },
+        success: function (data) {
+            $('#EditChurchNewsLetterPreview').html(data);
+            $('#EditChurchNewsLetterModal').modal('show');
+        }
+        })
+
+
+    }
+
+
+    function DeleteNewsLetter(churchNewsLetterId) {
+        
+    var ans = confirm("Are you sure you want to delete this NewsLetter?");
+    if (ans) {
+        $.ajax({
+            url: "/ChurchNewsLetter/DeleteNewsLetter/" + churchNewsLetterId,
+            type: "POST",
+
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadNewsLetter();
+                if (result) { alert("Record Deleted");}
+            },
+            error: function (errormessage) {
+               // alert(errormessage.responseText);
+            }
+        });
+    }
+    }
+
+
+</script>

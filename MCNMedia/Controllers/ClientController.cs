@@ -25,6 +25,8 @@ namespace MCNMedia_Dev.Controllers
         RecordingDataAccessLayer recordingDataAccess = new RecordingDataAccessLayer();
         PreviewChurchesDataAccessLayer previewChurchesDataAccess = new PreviewChurchesDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+        ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
+        MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
         GenericModel gm = new GenericModel();
 
 
@@ -99,8 +101,16 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
-
-
+        #region Media Detail
+        public IActionResult MediaDetail()
+        {
+           int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture",ChrId);
+            gm.Videos = mediaChurchDataAccess.GetByMediaType("Video", ChrId);
+            gm.SlideShow = mediaChurchDataAccess.GetByMediaType("SlideShow", ChrId);
+            return View(gm);
+        }
+        #endregion
         #region Announcement
         [HttpGet]
         public IActionResult Announcement()
@@ -173,8 +183,27 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
+        #region Newsletter
 
+        public IActionResult ChurchNewsLetter()
+        {
 
+            try
+            {
+
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+                gm.Churches = chdataAccess.GetChurchData(id);
+                HttpContext.Session.SetString("ctabId", "/Client/ChNewsLetter");
+                return View(gm);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("Church NewsLetter Errors : " + e.Message);
+                throw;
+            }
+        }
+
+        #endregion
         #region Camera
         public IActionResult CameraDetail()
 
@@ -190,6 +219,7 @@ namespace MCNMedia_Dev.Controllers
                 LoadServerDDL();
                 
                 gm.Churches = chdataAccess.GetChurchData(id);
+                gm.LCameras = camDataAccess.GetAllCameras(id).ToList();
                 HttpContext.Session.SetString("ctabId", "/Client/CameraDetail");
                 return View(gm);
             }

@@ -13,8 +13,12 @@ namespace MCNMedia_Dev.Models
 
         public User Users { get; set; }
         public MediaChurch Media { get; set; }
+        public IEnumerable<MediaChurch> Videos { get; set; }
+        public IEnumerable<MediaChurch> Pictures { get; set; }
+        public IEnumerable<MediaChurch> SlideShow { get; set; }
         public Schedule Schedules { get; set; }
-
+        public NewsLetter ChurchNewsLetter { get; set; }
+        public IEnumerable<NewsLetter> ListChurchNewsLetter { get; set; }
         public Recording Recordings { get; set; }
 
         public Announcement Announcement { get; set; }

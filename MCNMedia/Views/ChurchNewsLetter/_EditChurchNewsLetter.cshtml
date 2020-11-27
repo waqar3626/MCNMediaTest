@@ -1,0 +1,98 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+
+}
+<div class="row">
+    <div class="col-sm-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ChurchNewsLetter.ChurchNewsLetterId" class="form-control dropify" id="ChnewsId" />
+            <input type="hidden" asp-for="ChurchNewsLetter.NewsLetterUrl" class="form-control" id="newsLetterUrl" />
+
+            <div class="form-group">
+                <label asp-for="ChurchNewsLetter.NewsLetterTitle" class="control-label">Title</label>
+                <input asp-for="ChurchNewsLetter.NewsLetterTitle" class="form-control" id="chhNewsLetterTitle" />
+                <span asp-validation-for="ChurchNewsLetter.NewsLetterTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                @*<div class="col-2">
+            <label asp-for="ChurchNewsLetter.ShowOnWebsite" class="control-label">ShowOnWebsite</label>
+            <input asp-for="ChurchNewsLetter.ShowOnWebsite" class="form-control" id="chshowOnwebsite" />
+            <span asp-validation-for="ChurchNewsLetter.ShowOnWebsite" class="text-danger"></span>
+        </div>*@
+                <div class="col-2 ">
+                    <label class="form-check-label">
+                        <input class="form-check-input" id="chshowOnwebsite" asp-for="ChurchNewsLetter.ShowOnWebsite" /> @Html.DisplayNameFor(model => model.ChurchNewsLetter.ShowOnWebsite)
+                    </label>
+                </div>
+                <div class="col-10">
+                    @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
+                    <input asp-for="ChurchNewsLetter.NewsLetterUrl" class="form-control dropify" id="chnewsLetterUrl" type="file" name="MediaURl4" />
+                    <span asp-validation-for="ChurchNewsLetter.NewsLetterUrl" class="text-danger"></span>
+                    <input type="hidden" id="HdnNewsletterUrl" asp-for="ChurchNewsLetter.NewsLetterUrl" />
+                    <input type="hidden" id="HdnNewsletterName" asp-for="ChurchNewsLetter.NewsLetterName" />
+                </div>
+
+            </div>
+            
+
+
+
+            <div class="float-right text-right">
+                <a onclick="UpdateNewsLetter()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
+                @*<button type="submit" value="Add" class="btn btn-primary btn-sm "><i class="fa fa-plus"></i> Update </button>*@
+                <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var filedropper = $('#chnewsLetterUrl').dropify();
+        filedropper = filedropper.data('dropify');
+        filedropper.resetPreview();
+        filedropper.clearElement();
+
+        filedropper.settings['defaultFile'] = '../' + $('#newsLetterUrl').val();
+        filedropper.destroy();
+        filedropper.init();
+
+    });
+    function UpdateNewsLetter() {
+ 
+        var churchNewsLetterId = $('#ChnewsId').val();    
+        var editNewsLetterTitle = document.getElementById('chhNewsLetterTitle').value;     
+        var newsLetterUrl = $('#HdnNewsletterUrl').val();
+        var newsLetterName = $('#HdnNewsletterName').val();
+        var showOnWebsite = $('chshowOnwebsite').val();
+        var formData = new FormData();
+        formData.append("ChurchNewsLetterId", churchNewsLetterId);
+        formData.append("EditNewsLetterTitle", editNewsLetterTitle);
+        formData.append("NewsLetterUrl", newsLetterUrl);
+        formData.append("NewsLetterName", newsLetterName);
+        formData.append("ShowOnWebsite", showOnWebsite);
+        var input = document.getElementById('chnewsLetterUrl');
+        formData.append("mediaFile", input.files[0]);
+
+
+        $.ajax({
+            type: "POST",
+            url: "/ChurchNewsLetter/UpdateNewsLetter/",
+            data: formData,
+
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (result) {
+                loadNewsLetter();
+                $('#EditChurchNewsLetterModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>
+
+

@@ -13,7 +13,7 @@
 
         var curTabName = '@ViewBag.TabName';
         if (curTabName == '') {
-            $("#Information-tab").click();
+            $("#Camera-tab").click();
         }
         else {
             $("#"+curTabName+"-tab").click();
@@ -30,13 +30,12 @@
                 <h3>@ViewData["message"]</h3>
                 <ul class="nav nav-tabs small" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link  active" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="true"><i class="fa fa-info-circle text-info"></i> Information</a>
+                        <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="false"><i class="fa fa-info-circle text-info"></i> Information</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="false"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
-                    </li>
-                    @*}*@
                     <li class="nav-item">
                         <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info"></i>  Slideshow</a>
                     </li>
@@ -58,10 +57,14 @@
                     <li class="nav-item">
                         <a class="nav-link" id="Schedule-tab" data-toggle="tab" href="#Schedule-1" role="tab" aria-controls="Schedule-1" aria-selected="false"><i class="fa fa-calendar text-info"></i> Schedule</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="NewsLetter-tab" data-toggle="tab" href="#NewsLetter-1" role="tab" aria-controls="NewsLetter-1" aria-selected="false"><i class="fa fa-calendar text-info"></i> NewsLetter</a>
+                    </li>
 
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
+
+                    <div class="tab-pane fade " id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
                         <div class="media">
                             <div class="media-body">
                                 @Html.Partial("~/Views/Church/_ChurchInfo.cshtml")
@@ -69,13 +72,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
-                        <div class="media">
-                            <div class="media-body">
-                                @Html.Partial("~/Views/Camera/_Camera.cshtml")
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="tab-pane fade" id="Picture-1" role="tabpanel" aria-labelledby="Picture-tab">
                         <div class="media">
@@ -85,13 +82,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="Video-1" role="tabpanel" aria-labelledby="Video-tab">
-                        <div class="media">
-                            <div class="media-body">
-                                @Html.Partial("~/Views/MediaChurch/_ListVideo.cshtml")
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="tab-pane fade" id="Slideshow-1" role="tabpanel" aria-labelledby="Slideshow-tab">
                         <div class="media">
@@ -139,7 +130,21 @@
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="NewsLetter-1" role="tabpanel" aria-labelledby="NewsLetter-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/ChurchNewsLetter/_ListChurchNewsLetter.cshtml")
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="tab-pane fade show active" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/Camera/_Camera.cshtml")
+                            </div>
+                        </div>
+                    </div>
 
 
 

@@ -81,6 +81,8 @@ namespace MCNMedia_Dev._Helper
                     return Path.Combine(rootDirectory, churchId, "SlideShows");
                 case UploadingAreas.UserProfileImage:
                     return Path.Combine(rootDirectory, churchId, "UserProfileImages");
+                case UploadingAreas.NewsLetter:
+                    return Path.Combine(rootDirectory, churchId, "NewsLetter");
                 default:
                     return rootDirectory;
             }
