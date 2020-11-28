@@ -7,6 +7,8 @@ using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
+
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -70,6 +72,23 @@ namespace MCNMedia_Dev.Controllers
         private void ShowMessage(string exceptionMessage)
         {
             log.Info("Exception: " + exceptionMessage);
+        }
+
+        [HttpPost]
+        public JsonResult ChangeCameraStatus(int cameraId, bool cameraStatus)
+        {
+
+            try
+            {
+                int UserId= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                camDataAccess.UpdatecameraStatus(cameraId,cameraStatus,UserId);
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

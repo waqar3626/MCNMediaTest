@@ -30,6 +30,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", camera.ChurchId);
             _dc.AddParameter("ServerId", camera.ServerId);
             _dc.AddParameter("App", camera.App);
+           
+
             return _dc.ReturnInt("spCamera_Add");
         }
 
@@ -78,6 +80,7 @@ namespace MCNMedia_Dev.Repository
             camera.ServerId = Convert.ToInt32(dataRow["ServerId"]);
             camera.ServerName = dataRow["ServerName"].ToString();
             camera.ServerIP = dataRow["ServerIP"].ToString();
+            camera.IsCameraLive = Convert.ToBoolean(dataRow["IsCameraLive"]);
             camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
             //camera.LiveStreamUrl = "https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8";
             return camera;
@@ -119,6 +122,17 @@ namespace MCNMedia_Dev.Repository
                 Balobj.Add(server);
             }
             return Balobj;
+        }
+
+      
+        public int UpdatecameraStatus(int cameraId,bool cameraStatus,int UpdatedBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", cameraId);
+            _dc.AddParameter("cameraStatus", cameraStatus);
+            _dc.AddParameter("UpdateBy", UpdatedBy);
+
+            return _dc.Execute("spCamera_UpdateStatus");
         }
 
     }

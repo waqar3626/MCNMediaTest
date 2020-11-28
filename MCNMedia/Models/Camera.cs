@@ -26,6 +26,7 @@ namespace MCNMedia_Dev.Models
         public string UpdatedAt { get; set; }
         public int UpdatedBy { get; set; }
 
+        public bool IsCameraLive { get; set; }
         public string StreamingProtocol { get; set; }
         public string LiveStreamUrl { get; internal set; }
     }
