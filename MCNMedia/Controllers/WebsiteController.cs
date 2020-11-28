@@ -167,8 +167,8 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Search"].ToString()))
                 {
                     string searchFilter = Request.Query["Search"].ToString().ToLower();
-                    churches = churches.FindAll(x => x.CountyName.ToLower().Contains(searchFilter) ||
-                    x.Address.ToLower().Contains(searchFilter) ||
+                    churches = churches.FindAll(x => x.ChurchName.ToLower().Contains(searchFilter) ||
+                    x.Town.ToLower().Contains(searchFilter) ||
                     x.CountryName.ToLower().Contains(searchFilter) ||
                     x.CountyName.ToLower().Contains(searchFilter)).ToList<Church>();
                 }
@@ -264,7 +264,7 @@ namespace MCNMedia_Dev.Controllers
             MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
             NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
             PreviewChurchesDataAccessLayer previewChurchesDataAccessLayer = new PreviewChurchesDataAccessLayer();
-
+            ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
 
 
             Profile profileModel = new Profile();
@@ -282,6 +282,7 @@ namespace MCNMedia_Dev.Controllers
             profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", id).ToList();
             profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", id).ToList();
             profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", id).ToList();
+            profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(id);
 
             profileModel.Cameras = camDataAccess.GetCameraById(1);
           //  profileModel.Media = "";

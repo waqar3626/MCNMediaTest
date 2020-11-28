@@ -40,20 +40,15 @@ namespace MCNMedia_Dev.Controllers
 
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-
                     int res = churchNewsLetterDataAccess.AddNewsLetter(chnewsLetter);
                 }
                 return Json(1);
             }
             catch (Exception e)
             {
-               
                ShowMessage("Add Church NewsLetter Error" + e.Message);
                 throw;
-                
-               
             }
-
         }
 
         [HttpGet]
@@ -62,7 +57,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                List<NewsLetter> slideInfo = churchNewsLetterDataAccess.GetNewsLetterByChurchId(churchId).ToList();
+                List<NewsLetter> slideInfo = churchNewsLetterDataAccess.GetNewsLetterByChurch(churchId).ToList();
                 return Json(slideInfo);
             }
             catch (Exception e)
@@ -70,8 +65,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Get Specific NewsLetter Error" + e.Message);
                 throw;
             }
-
-
         }
 
         public IActionResult EditNewsLetter(int id)
@@ -87,7 +80,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit NewsLetter Show Error" + e.Message);
                 throw;
             }
-
         }
 
         public JsonResult UpdateNewsLetter(string ChurchNewsLetterId, IFormFile mediaFile, bool ShowOnWebsite, string EditNewsLetterTitle, string NewsLetterUrl, string NewsLetterName)
@@ -104,7 +96,6 @@ namespace MCNMedia_Dev.Controllers
                 {
                     chnewsLetter.NewsLetterUrl = NewsLetterUrl;
                     chnewsLetter.NewsLetterName = NewsLetterName;
-
                 }
 
                 chnewsLetter.ChurchNewsLetterId = Convert.ToInt32(ChurchNewsLetterId);
@@ -119,7 +110,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Update NewsLetter Error" + e.Message);
                 throw;
             }
-
         }
 
         public IActionResult DeleteNewsLetter(int id)
@@ -136,10 +126,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Delete Slide Show Error" + e.Message);
                 throw;
             }
-
         }
-
-
 
         private void ShowMessage(String exceptionMessage)
         {

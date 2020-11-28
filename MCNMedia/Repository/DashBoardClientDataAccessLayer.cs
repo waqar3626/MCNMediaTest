@@ -55,7 +55,7 @@ namespace MCNMedia_Dev.Repository
 
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", chrid);
-            _dc.AddParameter("CurrentDay", "1900-01-01");
+            _dc.AddParameter("CurrentDay", DateTime.Now.ToString("yyyy-MM-dd"));
             DataTable dataTable = _dc.ReturnDataTable("sp_ClientEventlist");
             foreach (DataRow dataRow in dataTable.Rows)
             {

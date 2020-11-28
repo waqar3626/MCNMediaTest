@@ -7,8 +7,8 @@
 
 <style type="text/css">
     .vjs-big-play-button {
-        left: 20em !important;
-        top: 4em !important;
+        left: 45% !important;
+        top: 45% !important;
     }
 </style>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.theme.default.css">
@@ -104,12 +104,12 @@
 
                 <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
                     <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
-                    
+
                         @foreach (MediaChurch vid in Model.VideoList)
                         {
                             string vlink = vid.MediaURL.ToString();
-                            <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL"  class="vedslide"></div>
-                          
+                            <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL" class="vedslide"></div>
+
                         }
 
                     </div>
@@ -197,8 +197,8 @@
 
 
                 @*<div class="quick-strt text-white font-18">
-                    Quick Start <i class="fal fa-long-arrow-right pl-2"></i>
-                </div>*@
+                        Quick Start <i class="fal fa-long-arrow-right pl-2"></i>
+                    </div>*@
             </div>
         </div>
         <div class="col-xl-1 d-xl-block d-none"></div>
@@ -207,407 +207,22 @@
         <div class="col-1 d-xl-block d-none"></div>
         <div class="col-xl-8   col-md-8  pr-md-0 col-sm-7">
             <div class="row m-0">
-                <div class="col-xl-8 col-lg-6">
-                    <img src="@Model.Churches.ImageURl" alt="" class="main-img"><br /><br />
+                <div class="col-xl-12">
+                    <div class="row m-0">
+                        <div class="col-xl-4">
+                            <img src="@Model.Churches.ImageURl" alt="" class="main-img"><br /><br />
+                        </div>
+                        <div class="col-xl-8 flex-end-md">
+                            <p class="icon-top-s"><i class="fas fa-home" style="padding-right:7px;"></i> @Model.Churches.Address, @Model.Churches.Town</p>
+                            <p class="icon-top-s"><i class="fas fa-envelope" style="padding-right:7px;"></i> @Model.Churches.EmailAddress</p>
+                            <p class="icon-top-s"><i class="fas fa-globe" style="padding-right:7px;"></i> @Model.Churches.Website</p>
+                        </div>
+                    </div>
                     <p class="font-30 text-pink">@Model.Churches.ChurchName, @Model.Churches.Town</p>
                 </div>
-                <div class="col-xl-4 col-lg-6 flex-end-md">
-                    <p class="icon-top-s"><i class="fas fa-home" style="padding-right:7px;"></i> @Model.Churches.Address, @Model.Churches.Town</p>
-                    <p class="icon-top-s"><i class="fas fa-envelope" style="padding-right:7px;"></i> @Model.Churches.EmailAddress</p>
-                    <p class="icon-top-s"><i class="fas fa-globe" style="padding-right:7px;"></i> @Model.Churches.Website</p>
-                </div>
             </div>
-
-
-            <div>
-                <!--<div class="praying-slider">
-                <div class="c-product-tray m-0">
-                    <div class="o-wrapper">
-                        <div class="c-product-tray__carousel">
-                            <div class="o-slider-product-tray">
-                                <ul class="o-slider-product-tray__inner pt-3 pb-3 js-slider-product-tray">
-
-
-                                    <li class="o-slider-product-tray__slide">
-
-                                        <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                                            <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                                                @System.DateTime.Now.ToString("dddd")
-                                            </h3>
-                                            <p>
-                                                <span class="time">9:00 am </span>
-                                                <span class="border-time">
-                                                </span>
-                                            </p>
-                                            <p class="inner-have">
-                                                @foreach (var itm in Model.ScheduleListDay0)
-                                                {
-                                                    <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                                                    <span class="border-time">
-                                                        <span>
-                                                            <span class=" timing-block">
-                                                                <span class="have-dot">
-                                                                    <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                                                    @if (itm.Record == true)
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                                        </span>
-                                                                        <span class="block-red"></span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="font-12 d-block">
-                                                                            @itm.EventTime.ToString("hh:mm")
-                                                                        </span>
-                                                                    }
-                                                                </span>
-
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <br />
-                                                    <br />
-                                                }
-                                            </p>
-                                            <p>
-                                                <span class="time">12:00 am </span>
-                                                <span class="border-time">
-                                                </span>
-                                            </p>
-                                        </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--<li class="o-slider-product-tray__slide">
-
-                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                        @System.DateTime.Now.AddDays(1).ToString("dddd")
-                    </h3>
-                    <p>
-                        <span class="time">9:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                    <p class="inner-have">
-                        @foreach (var itm in Model.ScheduleListDay1)
-                        {
-                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                            <span class="border-time">
-                                <span>
-                                    <span class=" timing-block">
-                                        <span class="have-dot">
-                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                            @if (itm.Record == true)
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                </span>
-                                                <span class="block-red"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm")
-                                                </span>
-                                            }
-                                        </span>
-
-                                    </span>
-                                </span>
-                            </span>
-                            <br />
-                            <br />
-                        }
-                    </p>
-                    <p>
-                        <span class="time">12:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--<li class="o-slider-product-tray__slide">
-
-                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                        @System.DateTime.Now.AddDays(2).ToString("dddd")
-                    </h3>
-                    <p>
-                        <span class="time">9:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                    <p class="inner-have">
-                        @foreach (var itm in Model.ScheduleListDay2)
-                        {
-                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                            <span class="border-time">
-                                <span>
-                                    <span class=" timing-block">
-                                        <span class="have-dot">
-                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                            @if (itm.Record == true)
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                </span>
-                                                <span class="block-red"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm")
-                                                </span>
-                                            }
-                                        </span>
-
-                                    </span>
-                                </span>
-                            </span>
-                            <br />
-                            <br />
-                        }
-                    </p>
-                    <p>
-                        <span class="time">12:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--<li class="o-slider-product-tray__slide">
-
-                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                        @System.DateTime.Now.AddDays(3).ToString("dddd")
-                    </h3>
-                    <p>
-                        <span class="time">9:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                    <p class="inner-have">
-                        @foreach (var itm in Model.ScheduleListDay3)
-                        {
-                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime) </span>
-                            <span class="border-time">
-                                <span>
-                                    <span class=" timing-block">
-                                        <span class="have-dot">
-                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                            @if (itm.Record == true)
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                </span>
-                                                <span class="block-red"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm")
-                                                </span>
-                                            }
-                                        </span>
-
-                                    </span>
-                                </span>
-                            </span>
-                            <br />
-                            <br />
-                        }
-                    </p>
-                    <p>
-                        <span class="time">12:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--<li class="o-slider-product-tray__slide">
-
-                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                        @System.DateTime.Now.AddDays(4).ToString("dddd")
-                    </h3>
-                    <p>
-                        <span class="time">9:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                    <p class="inner-have">
-                        @foreach (var itm in Model.ScheduleListDay4)
-                        {
-                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                            <span class="border-time">
-                                <span>
-                                    <span class=" timing-block">
-                                        <span class="have-dot">
-                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                            @if (itm.Record == true)
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                </span>
-                                                <span class="block-red"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm")
-                                                </span>
-                                            }
-                                        </span>
-
-                                    </span>
-                                </span>
-                            </span>
-                            <br />
-                            <br />
-                        }
-                    </p>
-                    <p>
-                        <span class="time">12:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--<li class="o-slider-product-tray__slide">
-
-                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                        @System.DateTime.Now.AddDays(5).ToString("dddd")
-                    </h3>
-                    <p>
-                        <span class="time">9:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                    <p class="inner-have">
-                        @foreach (var itm in Model.ScheduleListDay5)
-                        {
-                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                            <span class="border-time">
-                                <span>
-                                    <span class=" timing-block">
-                                        <span class="have-dot">
-                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                            @if (itm.Record == true)
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                </span>
-                                                <span class="block-red"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm")
-                                                </span>
-                                            }
-                                        </span>
-
-                                    </span>
-                                </span>
-                            </span>
-                            <br />
-                            <br />
-                        }
-                    </p>
-                    <p>
-                        <span class="time">12:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--<li class="o-slider-product-tray__slide">
-
-                <div class="c-product-tile p-3 m-md-2 border shadow-sm rounded-4">
-                    <h3 class="c-product-tile__name font-26 font-weight-bold Montserrat bg-blue p-3 text-pink text-center rounded-4">
-                        @System.DateTime.Now.AddDays(6).ToString("dddd")
-                    </h3>
-                    <p>
-                        <span class="time">9:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                    <p class="inner-have">
-                        @foreach (var itm in Model.ScheduleListDay6)
-                        {
-                            <span class="time">@string.Format("{0:h:mm tt}", itm.EventTime)</span>
-                            <span class="border-time">
-                                <span>
-                                    <span class=" timing-block">
-                                        <span class="have-dot">
-                                            <span class="font-14 font-weight-bold">@itm.EventName</span>
-                                            @if (itm.Record == true)
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm") - @itm.EventTime.AddMinutes(itm.RecordDuration).ToString("hh:mm")
-                                                </span>
-                                                <span class="block-red"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="font-12 d-block">
-                                                    @itm.EventTime.ToString("hh:mm")
-                                                </span>
-                                            }
-                                        </span>
-
-                                    </span>
-                                </span>
-                            </span>
-                            <br />
-                            <br />
-                        }
-                    </p>
-                    <p>
-                        <span class="time">12:00 am </span>
-                        <span class="border-time">
-                        </span>
-                    </p>
-                </div>-->
-                <!-- /c-product-tile -->
-                <!--</li>--><!-- /o-slider-product-tray__slide -->
-                <!--</ul>--><!-- /o-slider-product-tray__inner -->
-                <!--<div class="o-slider-product-tray__controls js-controls">
-
-                <button class="o-slider-product-tray__button o-slider-product-tray__button--prev">
-                    <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--prev"
-                         xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
-                        <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
-                    </svg>-->
-                <!-- /o-slider-product-tray__arrow -->
-                <!--</button>--><!-- /o-slider-product-tray__button -->
-                <!--<button class="o-slider-product-tray__button o-slider-product-tray__button--next">
-                <svg class="o-slider-product-tray__arrow o-slider-product-tray__arrow--next"
-                     xmlns="http://www.w3.org/2000/svg" viewBox="-44 40.7 11 21.1">
-                    <path d="M-33.5 61.8L-44 51.3l10.5-10.6.5.5-10.1 10.1 10.1 10z" />
-                </svg>-->
-                <!-- /o-slider-product-tray__arrow -->
-                <!--</button>--><!-- /o-slider-product-tray__button -->
-                <!--</div>--><!-- /o-slider-product-tray__controls -->
-                <!--</div>--><!-- /o-slider-product-tray -->
-                <!--</div>--><!-- /c-product-tray__carousel -->
-                <!--</div>--><!-- /o-wrapper -->
-                <!--</div>--><!-- /c-product-tray -->
-                <!--</div>-->
-            </div>
-
-            <br />
-            <br />
             <p class="font-20 bold text-pink text-center">Weekly Schedule</p>
             <div class="card">
-
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item" style="width:14.3%;">
                         <a class="nav-link active" data-toggle="pill" href="#pills-day1-tab" role="tab" aria-controls="pills-home" aria-selected="true">@System.DateTime.Now.ToString("dddd")</a>
@@ -637,26 +252,35 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay0.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay0)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
 
-                                    @foreach (var itm in Model.ScheduleListDay0)
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for today.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -668,27 +292,37 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay1.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay1)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
 
-                                    @foreach (var itm in Model.ScheduleListDay1)
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -700,26 +334,36 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay2.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay2)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
 
-                                    @foreach (var itm in Model.ScheduleListDay2)
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -731,26 +375,36 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay3.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay3)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
 
-                                    @foreach (var itm in Model.ScheduleListDay3)
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -762,26 +416,36 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay4.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay4)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
 
-                                    @foreach (var itm in Model.ScheduleListDay4)
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -793,26 +457,36 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay5.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay5)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
 
-                                    @foreach (var itm in Model.ScheduleListDay5)
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -824,26 +498,36 @@
                         <div class="table-now">
                             <table class="table table-striped table-responsive-lg table-borderless">
                                 <tbody>
+                                    @if (Model.ScheduleListDay6.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay6)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
 
-                                    @foreach (var itm in Model.ScheduleListDay6)
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
-
-                                            <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                            @if (itm.Record == true)
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="font-weight-normal font-weight-bold">
-                                                    <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
-                                                </td>
-                                            }
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -864,44 +548,46 @@
             </div>
         </div>
         <div class="col-xl-2  col-md-4 col-sm-5">
-            <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
+            @if (Model.newsletter.ChurchNewsLetterId != 0)
+            {
+                <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
 
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            <a href="@Model.newsletter.NewsLetterUrl">Click Here</a>
+                        </p>
+                        <p class="font-14 mb-0 "></p>
+                        <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
+                    </div>
+                    @*<div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                Recoding of past events St Peter & St Paul's
+                                Church
+                            </p>
+                            <p class="font-14 mb-0 ">Mass</p>
+                            <p class="font-14 mb-0 ">25 Oct 2020</p>
+                        </div>
+                        <div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                Recoding of past events St Peter & St Paul's
+                                Church
+                            </p>
+                            <p class="font-14 mb-0 ">Mass</p>
+                            <p class="font-14 mb-0 ">25 Oct 2020</p>
+                        </div>
+                        <div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                Recoding of past events St Peter & St Paul's
+                                Church
+                            </p>
+                        </div>
+                        <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">*@
                 </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                    <p class="font-14 mb-0 ">Mass</p>
-                    <p class="font-14 mb-0 ">25 Oct 2020</p>
-                </div>
-                <div class="news-wrap mb-3">
-                    <h4 class="news-heading font-16 font-weight-bold">News</h4>
-                    <p class="font-weight-light mb-2 font-12">
-                        Recoding of past events St Peter & St Paul's
-                        Church
-                    </p>
-                </div>
-                <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">
-            </div>
+            }
         </div>
         <div class="col-1 d-xl-block d-none"></div>
     </div>
@@ -980,20 +666,20 @@
 
     }
 
-    function OpenVedio(vedId,vedioURL) {
-      //  var cameras = document.getElementById("CamerasContainer");
-      //  var images = document.getElementById("carouselExampleCaptions");
-      //  var vedios = document.getElementById("VediosContainer");
+    function OpenVedio(vedId, vedioURL) {
+        //  var cameras = document.getElementById("CamerasContainer");
+        //  var images = document.getElementById("carouselExampleCaptions");
+        //  var vedios = document.getElementById("VediosContainer");
 
-       // vedios.style.display = "block";
-      //  cameras.style.display = "none";
-      //  images.style.display = "none";
+        // vedios.style.display = "block";
+        //  cameras.style.display = "none";
+        //  images.style.display = "none";
 
 
         jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
 
         var fileURL = vedioURL;
-        jwplayer('' + vedId +'').setup({
+        jwplayer('' + vedId + '').setup({
             file: fileURL,
             image: "../css/jwerror.jpg",
             width: "100%",
@@ -1029,11 +715,13 @@
 
         var vedioSlides = document.getElementsByClassName("vedslide");
         for (var i = 0; i < vedioSlides.length; i++) {
-           // Distribute(slides.item(i));
+            // Distribute(slides.item(i));
             var divid = vedioSlides.item(i).id;
             var divurl = vedioSlides.item(i).getAttribute('mediaurl');
             OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'))
         }
+
+        OpenCamera('CameraLiveStream-0');
     });
 </script>
 

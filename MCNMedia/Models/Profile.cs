@@ -13,7 +13,7 @@ namespace MCNMedia_Dev.Models
         //public Schedule Schedules { get; set; }
         //public Recording Recordings { get; set; }
         public Announcement Announcement { get; set; }
-
+        public NewsLetter newsletter { get; set; }
         // Lists
         public IEnumerable<Camera> CameraList { get; set; }
         public IEnumerable<MediaChurch> VideoList { get; set; }
