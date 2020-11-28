@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Subscribe";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+
+<div>
+    <form action="/Subscription/Processing" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_51HsMgeBcBMLkoLiDNUkZGh8jeqKLXtEvWkxlFJsMMkJzV770kNwossJJSWgwtTWoSCclRvmHreUsfFdmeT10qJ4Q00fkBOT3pt"
+                data-amount="@ViewBag.PaymentAmount"
+                data-name="MCN_Test"
+                data-description="enter package info here"
+                data-image="/WebsiteAssets/img/logo_100x100.png"
+                data-locale="en"
+                data-zip-code="true"
+                data-label="Pay">
+        </script>
+    </form>
+</div>
+

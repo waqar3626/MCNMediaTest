@@ -49,6 +49,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="MySql.Data" Version="8.0.21" />
     <PackageReference Include="MySqlConnector" Version="1.0.1" />
+    <PackageReference Include="Stripe.net" Version="39.28.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
