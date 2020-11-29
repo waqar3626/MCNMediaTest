@@ -12,15 +12,12 @@ namespace MCNMedia_Dev.Repository
 {
     public class ChurchDataAccessLayer
     {
-        private readonly IConfiguration _config;
         AwesomeDal.DatabaseConnect _dc;
 
         private readonly string AWS_S3_BUCKET_URI;
-        private readonly string SYSTEM_MODE;
 
         public ChurchDataAccessLayer()
         {
-            //_config = config;
             _dc = new AwesomeDal.DatabaseConnect();
 
             IConfigurationBuilder builder = new ConfigurationBuilder();
@@ -29,10 +26,6 @@ namespace MCNMedia_Dev.Repository
             var awsS3bucket = root.GetSection("S3BucketConfiguration");
             var sysConfig = root.GetSection("SystemConfiguration");
             AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
-
-            //AWS_S3_BUCKET_URI = _config.GetValue<string>("S3BucketConfiguration:aws_bucket_url");
-
-
         }
 
         //To View all Churches details 
@@ -88,39 +81,6 @@ namespace MCNMedia_Dev.Repository
                 client.ClientTypeId = Convert.ToInt32(dataRow["ClientTypeId"]);
                 client.ClientTypeTitle = dataRow["ClientTypeTitle"].ToString();
                 Balobj.Add(client);
-            }
-            return Balobj;
-        }
-
-        public IEnumerable<Counties> GetCounties(int country)
-        {
-            List<Counties> Balobj = new List<Counties>();
-            _dc.ClearParameters();
-            _dc.AddParameter("cntryId", country);
-            DataTable dataTable = _dc.ReturnDataTable("spCounties_Get");
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Counties county = new Counties();
-                county.CountyId = Convert.ToInt32(dataRow["CountyId"]);
-                county.CountyName = dataRow["CountyName"].ToString();
-                Balobj.Add(county);
-            }
-            return Balobj;
-        }
-
-        public IEnumerable<Church> GetCountries()
-        {
-            List<Church> Balobj = new List<Church>();
-            _dc.ClearParameters();
-            DataTable dataTable = _dc.ReturnDataTable("spCountries_Get");
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Church country = new Church();
-                country.CountryId = Convert.ToInt32(dataRow["CountryId"]);
-                country.CountryName = dataRow["CountryName"].ToString();
-                Balobj.Add(country);
             }
             return Balobj;
         }
@@ -236,7 +196,6 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("chId", id);
             return _dc.ReturnDataTable("spCameraddl_Get");
-
         }
 
 
@@ -244,30 +203,11 @@ namespace MCNMedia_Dev.Repository
         {
             _dc.ClearParameters();
             return _dc.ReturnDataTable("spClientTypes_Get");
-
-        }
-
-        public DataTable GetCountyList(int country)
-        {
-            _dc.ClearParameters();
-            _dc.AddParameter("cntryId", country);
-            return _dc.ReturnDataTable("spCounties_Get");
-
-
-        }
-        public DataTable GetCountriesList()
-        {
-            _dc.ClearParameters();
-            return _dc.ReturnDataTable("spCountries_Get");
-
         }
 
         public IEnumerable<Church> GetWebsiteChurch()
         {
             List<Church> churchList = new List<Church>();
-
-
-
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_GetRandom_Churches");
             foreach (DataRow dataRow in dataTable.Rows)
             {

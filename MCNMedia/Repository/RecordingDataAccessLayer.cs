@@ -15,49 +15,7 @@ namespace MCNMedia_Dev.Repository
         {
             _dc = new AwesomeDal.DatabaseConnect();
         }
-
-        //To View all Recordings details
-        public IEnumerable<Recording> GetAllRecording()
-        {
-            List<Recording> Balobj = new List<Recording>();
-            _dc.ClearParameters();
-            _dc.AddParameter("RecId", -1);
-            _dc.AddParameter("RecName", "");
-            DataTable dataTable = _dc.ReturnDataTable("spRecording_Search");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Recording recording = new Recording();
-                recording.RecordingId = Convert.ToInt32(dataRow["RecordingId"]);
-                recording.RecordingTitle = dataRow["RecordingName"].ToString();
-                recording.RecordingURl = dataRow["RecordingURL"].ToString();
-                recording.Date = Convert.ToDateTime(dataRow["RecordingDate"].ToString());
-                recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
-                recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                recording.ChurchName = dataRow["ChurchName"].ToString();
-
-
-                Balobj.Add(recording);
-            }
-            return Balobj;
-        }
-
-        public IEnumerable<Recording> GetChurches()
-        {
-            List<Recording> Balobj = new List<Recording>();
-            _dc.ClearParameters();
-            DataTable dataTable = _dc.ReturnDataTable("spchurches_Get");
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Recording recording = new Recording();
-                recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                recording.ChurchName = dataRow["ChurchName"].ToString();
-                Balobj.Add(recording);
-            }
-            return Balobj;
-        }
-
-        //To Add new Recording record
+        
         public void AddRecording(Recording recording)
         {
             _dc.ClearParameters();
@@ -69,6 +27,43 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", recording.ChurchId);
             _dc.AddParameter("SchId", recording.ScheduleId);
             _dc.Execute("spRecording_Add");
+        }
+
+        public IEnumerable<Recording> Recording_GetAll()
+        {
+            return Recording_GetFromDatabase(churchId: -1, recordId: -1, recordName: "");
+        }
+
+        public IEnumerable<Recording> Recording_GetByChurch(int churchId)
+        {
+            return Recording_GetFromDatabase(churchId: churchId, recordId: -1, recordName: "");
+        }
+
+        public Recording Recording_GetById(int recordingId)
+        {
+            Recording recording = new Recording();
+            List<Recording> recordings = Recording_GetFromDatabase(churchId: -1, recordId: recordingId, recordName: "").ToList();
+            if (recordings.Count > 0)
+            {
+                recording = recordings.First();
+            }
+            return recording;
+        }
+
+        private IEnumerable<Recording> Recording_GetFromDatabase(int churchId,int recordId,string recordName)
+        {
+            List<Recording> recordingList = new List<Recording>();
+            _dc.ClearParameters();
+            _dc.AddParameter("chrchId", churchId);
+            _dc.AddParameter("recordId", recordId); ;
+            _dc.AddParameter("recordName", recordName);
+            DataTable dataTable = _dc.ReturnDataTable("spRecording_Get");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Recording recording = BindRecording(dataRow);
+                recordingList.Add(recording);
+            }
+            return recordingList;
         }
 
         //To Update the records of a particluar Recording
@@ -85,29 +80,6 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spRecording_Update");
         }
 
-        //Get the details of a particular Recording
-        public Recording GetRecordingData(int id)
-        {
-            Recording recording = new Recording();
-
-            _dc.ClearParameters();
-            _dc.AddParameter("RecId", id);
-            DataTable dataTable = _dc.ReturnDataTable("spRecording_GetById");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                recording.RecordingId = Convert.ToInt32(dataRow["RecordingId"]);
-                recording.RecordingTitle = dataRow["RecordingName"].ToString();
-                recording.RecordingURl = dataRow["RecordingURL"].ToString();
-                recording.Date = Convert.ToDateTime(dataRow["RecordingDate"].ToString());
-                recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
-                recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-
-
-            }
-            return recording;
-        }
-
-        //To Delete the record on a particular Recording
         public void DeleteRecording(int id, int UpdateBy)
         {
             _dc.ClearParameters();
@@ -115,5 +87,19 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("UpdateBy", UpdateBy);
             _dc.Execute("spRecording_Delete");
         }
+
+        private static Recording BindRecording(DataRow dataRow)
+        {
+            Recording recording = new Recording();
+            recording.RecordingId = Convert.ToInt32(dataRow["RecordingId"]);
+            recording.RecordingTitle = dataRow["RecordingName"].ToString();
+            recording.RecordingURl = dataRow["RecordingURL"].ToString();
+            recording.Date = Convert.ToDateTime(dataRow["RecordingDate"].ToString());
+            recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
+            recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+            recording.ChurchName = dataRow["ChurchName"].ToString();
+            return recording;
+        }
+
     }
 }

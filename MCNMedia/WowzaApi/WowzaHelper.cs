@@ -149,7 +149,7 @@ namespace MCNMedia_Dev.WowzaApi
         {
             Camera cam = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
-            cam = cameraDataAccessLayer.GetCameraById(cameraId);
+            cam = cameraDataAccessLayer.GetCameraById(cameraId,camtype: "");
             if (cam.ServerIP is null)
                 cam.ServerIP = "54.217.38.80";
             return cam.ServerIP;

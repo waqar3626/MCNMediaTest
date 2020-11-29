@@ -37,28 +37,6 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurch_Newsletter_Add");
         }
 
-        public IEnumerable<NewsLetter> GetNewsLetterByChurchId(int ChrId)
-        {
-            List<NewsLetter> newsLetters = new List<NewsLetter>();
-
-            _dc.ClearParameters();
-          _dc.AddParameter("chrId", ChrId);     
-            DataTable dataTable = _dc.ReturnDataTable("spChurch_NewsLetter_GetByChurchId");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                NewsLetter chnewsLetter = new NewsLetter();
-                chnewsLetter.ChurchNewsLetterId = Convert.ToInt32(dataRow["ChurchNewsLetterId"].ToString());
-                chnewsLetter.NewsLetterTitle = dataRow["NewsLetterTitle"].ToString();
-                chnewsLetter.NewsLetterName = dataRow["NewsLetterName"].ToString();
-                chnewsLetter.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
-                chnewsLetter.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
-                chnewsLetter.CreatedBy = dataRow["FirstName"].ToString();
-                chnewsLetter.NewsLetterUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["NewsLetterUrl"]}";
-                newsLetters.Add(chnewsLetter);
-            }
-            return newsLetters;
-        }
-
         public IEnumerable<NewsLetter> GetNewsLetterByChurch(int churchId)
         {
             return GetNewsletterFromDatabase(churchId: churchId, newsletterId: -1);

@@ -42,7 +42,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 LoadChurchesDDL();
                 GenericModel gm = new GenericModel();
-                gm.LRecordings = recordDataAccess.GetAllRecording().ToList<Recording>();
+                gm.LRecordings = recordDataAccess.Recording_GetAll().ToList<Recording>();
                 return View(gm);
             }
             catch (Exception e)
@@ -57,7 +57,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                Recording recording = recordDataAccess.GetRecordingData(id);
+                Recording recording = recordDataAccess.Recording_GetById(id);
                 if (recording == null)
                 {
                     return NotFound();
@@ -71,7 +71,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit Recording Errors 'Get' : " + e.Message);
                 throw;
             }
-
         }
 
         [HttpGet()]
@@ -79,7 +78,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                recordDataAccess.GetAllRecording();
+                recordDataAccess.Recording_GetAll();
                 return View();
             }
             catch (Exception e)
@@ -188,11 +187,12 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                IEnumerable<Recording> RecordList = recordDataAccess.GetChurches();
+                ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+                System.Data.DataTable churches = churchDataAccessLayer.GetChurchDDL();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
-                foreach (var item in RecordList)
+                foreach (System.Data.DataRow item in churches.Rows)
                 {
-                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                    selectListItems.Add(new SelectListItem { Text = item["ChurchName"].ToString(), Value = item["ChurchId"].ToString() });
                 }
                 ViewBag.State = selectListItems;
             }
@@ -201,8 +201,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Load Church Error in Recording " + e.Message);
                 throw;
             }
-
-
         }
 
         private void ShowMessage(string exceptionMessage)

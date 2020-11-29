@@ -8,7 +8,7 @@ namespace MCNMedia_Dev.Models
     public class Profile
     {
         public Church Churches { get; set; }
-        public Camera Cameras { get; set; }
+        //public Camera Cameras { get; set; }
         //public MediaChurch Media { get; set; }
         //public Schedule Schedules { get; set; }
         //public Recording Recordings { get; set; }

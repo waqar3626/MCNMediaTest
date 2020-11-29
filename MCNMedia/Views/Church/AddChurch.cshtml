@@ -4,47 +4,39 @@
     ViewData["Title"] = "AddChurch";
 
 }
-    <style>
-        .invalidImage {
-            width: 100%;
-            margin-top: 0.25rem;
-            font-size: 80%;
-            color: #dc3545;
-        }
-    </style>
-<form asp-action="AddChurch" asp-controller="Church" method="post"  enctype="multipart/form-data" class="needs-validation" novalidate>
+<style>
+    .invalidImage {
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+</style>
+<form asp-action="AddChurch" asp-controller="Church" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">New Church Information</h4>
-
-               
-               
                 <div class="form-group row">
                     <div class="col-lg-6 grid-margin stretch-card">
                         <div class="card " id="cardImage">
                             <div class="card-body ">
                                 <div class="form-group">
-                                    <input asp-for="ImageURl" type="file" id="UploadImage" name="ImageURl2" class="form-control  dropify" required />
-
+                                    <input asp-for="ImageURl" type="file" id="UploadImage" name="ImageURl2" class="form-control  dropify" />
                                 </div>
                                 <div class="invalidImage" id="ImageText">
                                     Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
                                 </div>
                             </div>
-                            
                         </div>
-                        
                     </div>
-
                     <div class="col-sm-6">
                         <div class=" form-group row">
                             <div class="col-sm-12">
                                 <label asp-for="ChurchName" for="validationCustom01">Church Name</label>
                                 <input asp-for="ChurchName" class="form-control" id="validationCustom01" placeholder="Church Name" required />
-                              
                                 <div class="invalid-feedback">
-                                    Please Provide a valid Church Name 
+                                    Please Provide a valid Church Name
                                 </div>
                             </div>
                         </div>
@@ -52,7 +44,6 @@
                             <div class="col-sm-12">
                                 <label asp-for="ClientTypeId">Client Type </label>
                                 @*<input asp-for="ClientTypeId" class="form-control" />*@
-                              
                                 <select asp-for="ClientTypeId" id="select1" class="custom-select" asp-items="@(new SelectList(@ViewBag.ClientTypes,"Value","Text"))" required>
                                     <option value="0" disabled selected>--Select Client--</option>
                                 </select>
@@ -61,17 +52,13 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class=" form-group row">
                             <div class="col-sm-12">
                                 <label asp-for="Password" for="validationCustom02">Password </label>
                                 <input asp-for="Password" class="form-control" id="validationCustom02" placeholder="Password " />
-
-                               
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -99,18 +86,17 @@
                             </div>
                         </div>
                         @*</div>
-        <div class="form-group row">*@
-                    <div class="col-sm-6">
-                        <label asp-for="CountyId" class=" text-center">County</label>
-                        @*<input asp-for="CountyId" class="form-control" />*@
-                        
-                        <select asp-for="CountyId" id="select2" class="custom-select" required asp-items="@(new SelectList(@ViewBag.Counties,"Value","Text"))">
-                            <option value="0" selected disabled>--Select County--</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please Provide a valid Country
+                            <div class="form-group row">*@
+                        <div class="col-sm-6">
+                            <label asp-for="CountyId" class=" text-center">County</label>
+                            @*<input asp-for="CountyId" class="form-control" />*@
+                            <select asp-for="CountyId" id="select2" class="custom-select" required asp-items="@(new SelectList(@ViewBag.Counties,"Value","Text"))">
+                                <option value="0" selected disabled>--Select County--</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please Provide a valid Country
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -137,7 +123,7 @@
                             </div>
                         </div>
                         @*</div>
-                    <div class="form-group row">*@
+                            <div class="form-group row">*@
                         <div class="col-sm-6">
                             <label asp-for="Phone" class=" text-center" for="validationCustom07">Phone</label>
                             <input asp-for="Phone" class="form-control" id="validationCustom07" placeholder="Phone" required />
@@ -151,70 +137,45 @@
             </div>
         </div>
     </div>
-
     <div class="float-right">
-        <button type="submit"  id="ValChurchSubmit" value="Add" class="btn btn-success btn-sm" title="Add"><i class="mdi mdi-content-save "></i> Add </button>
-        <a id="back" class="btn btn-warning btn-sm text-white " href="/Admin/Churches" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
+        <button type="submit" id="ValChurchSubmit" value="Add" class="btn btn-success btn-sm" title="Add"><i class="mdi mdi-content-save "></i> Add </button>
+        <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
     </div>
-
 </form>
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-
         $('#ImageText').hide();
     });
     $('#ValChurchSubmit').click(function () {
-        
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($('#UploadImage').val().length > 0) {
+            if ($.inArray($('#UploadImage').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                $('#cardImage').attr("class", "card border-danger");
+                $('#ImageText').show();
+                return false;
+            }
+            else {
+                $('#cardImage').attr("class", "card border-success");
+                $('#ImageText').hide();
+            }
+        }
+    });
 
-
+    $('#UploadImage').change(function () {
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
         if ($.inArray($('#UploadImage').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            
-
             $('#cardImage').attr("class", "card border-danger");
             $('#ImageText').show();
             return false;
-
-
         }
         else {
             $('#cardImage').attr("class", "card border-success");
             $('#ImageText').hide();
         }
-
     });
-    $('#UploadImage').change(function () {
+</script>
 
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-        if ($.inArray($('#UploadImage').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-         
-            $('#cardImage').attr("class", "card border-danger");
-
-            $('#ImageText').show();
-            return false;
-
-
-        }
-
-       else {
-          
-            $('#cardImage').attr("class", "card border-success");
-            $('#ImageText').hide();
-
-        }
-
-    });
-    
-
-  
-    
-       
-    
-
-    </Script>
-    
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -14,7 +14,6 @@ namespace MCNMedia_Dev.Repository
         AwesomeDal.DatabaseConnect _dc;
 
         private readonly string AWS_S3_BUCKET_URI;
-        private readonly string SYSTEM_MODE;
 
         public MediaChurchDataAccessLayer()
         {

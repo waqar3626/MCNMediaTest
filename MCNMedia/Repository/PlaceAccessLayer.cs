@@ -16,7 +16,6 @@ namespace MCNMedia_Dev.Repository
     /// </remarks>
     public class PlaceAccessLayer
     {
-
         AwesomeDal.DatabaseConnect _dc;
 
         public PlaceAccessLayer()

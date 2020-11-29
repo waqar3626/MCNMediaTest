@@ -12,16 +12,16 @@ namespace MCNMedia_Dev.Models
     {
         public static List<SelectListItem> GetCountyList(int id)
         {
-            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
-            var counties = churchDataAccess.GetCountyList(id);
+            PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+            var counties = _placeAccessLayer.GetCounties(id);
             var list = new List<SelectListItem>();
            
-            foreach (DataRow dr in counties.Rows)
+            foreach (Place county in counties)
             {
                 list.Add(new SelectListItem
                 {
-                    Text = dr["CountyName"].ToString(),
-                    Value = dr["CountyId"].ToString()
+                    Text = county.PlaceName,
+                    Value = county.PlaceId.ToString()
                 });
             }
             return list;
@@ -29,16 +29,16 @@ namespace MCNMedia_Dev.Models
 
         public static List<SelectListItem> GetCountriesList()
         {
-            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
-            var counties = churchDataAccess.GetCountriesList();
+            PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+            var countries = _placeAccessLayer.GetCountries();
             var list = new List<SelectListItem>();
            
-            foreach (DataRow dr in counties.Rows)
+            foreach (Place country in countries)
             {
                 list.Add(new SelectListItem
                 {
-                    Text = dr["CountryName"].ToString(),
-                    Value = dr["CountryId"].ToString()
+                    Text = country.PlaceName,
+                    Value = country.PlaceId.ToString()
                 });
             }
             return list;

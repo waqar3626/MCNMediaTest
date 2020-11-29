@@ -23,7 +23,7 @@ namespace MCNMedia_Dev.Controllers
         AnnouncementDataAccessLayer AnnouncementDataAccessLayer = new AnnouncementDataAccessLayer();
         ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
         RecordingDataAccessLayer recordingDataAccess = new RecordingDataAccessLayer();
-        PreviewChurchesDataAccessLayer previewChurchesDataAccess = new PreviewChurchesDataAccessLayer();
+        //PreviewChurchesDataAccessLayer previewChurchesDataAccess = new PreviewChurchesDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
         ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
         MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
@@ -62,15 +62,6 @@ namespace MCNMedia_Dev.Controllers
            
         }
         
-        
-      
-
-        public IActionResult PreviewClient(int chId)
-        {
-            gm.Churches = previewChurchesDataAccess.GetPreviewChurch(chId);
-            return View(gm);
-        }
-
         [HttpPost]
         public IActionResult UpdateChurchInfo(Church church, IFormFile imageUrlMain, string ImageUrl)
         {
@@ -299,14 +290,13 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Recording()
         {
-            int id = (int)HttpContext.Session.GetInt32("ChurchId");
+            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
             GenericModel gm = new GenericModel();
-            gm.LRecordings = previewChurchesDataAccess.GetAllPreviewRecording(id);
-            gm.Churches = chdataAccess.GetChurchData(id);
+            gm.LRecordings = recordingDataAccess.Recording_GetByChurch(churchId);
+            gm.Churches = chdataAccess.GetChurchData(churchId);
             HttpContext.Session.SetString("ctabId", "/Client/Recording");
             Redirect("Recording");
             return View(gm);
-
         }
 
 
@@ -319,7 +309,7 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
 
                 gm.Churches = chdataAccess.GetChurchData(id1);
-                gm.Recordings = recordingDataAccess.GetRecordingData(id);
+                gm.Recordings = recordingDataAccess.Recording_GetById(id);
                 if (gm.Recordings == null)
                 {
                     return NotFound();
@@ -333,7 +323,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMesage("Edit Recording Client Errors : " +e.Message);
                 throw;
             }
-            
         }
 
         
@@ -412,12 +401,12 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
-                IEnumerable<Recording> RecordList = recordingDataAccess.GetChurches();
+                ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+                System.Data.DataTable churches = churchDataAccessLayer.GetChurchDDL();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
-                foreach (var item in RecordList)
+                foreach (System.Data.DataRow item in churches.Rows)
                 {
-                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                    selectListItems.Add(new SelectListItem { Text = item["ChurchName"].ToString(), Value = item["ChurchId"].ToString() });
                 }
                 ViewBag.State = selectListItems;
 

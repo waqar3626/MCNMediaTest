@@ -31,7 +31,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddChurch()
+        public IActionResult View_Load()
         {
             try
             {
@@ -49,7 +49,8 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Listchurch()
         {
-            try {
+            try
+            {
                 LoadServerDDL();
                 LoadClientDDL();
                 LoadCountyDDL();
@@ -100,7 +101,8 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            try {
+            try
+            {
                 Church church = churchDataAccess.GetChurchData(id);
                 if (church == null)
                 {
@@ -123,11 +125,16 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                string fileName = "missing-image.jpg";
+                church.ImageURl = "Uploads/ProfileImages/missing-image.jpg";
                 church.CreateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-                string fileName = Path.GetFileName(imageURl2.FileName);
-                church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
+                if (imageURl2 != null)
+                {
+                    fileName = Path.GetFileName(imageURl2.FileName);
+                    church.ImageURl = FileUploadUtility.UploadFile(imageURl2, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\",@"/");
+                }
                 church.CreateBy = (int)HttpContext.Session.GetInt32("UserId");
-                church.Slug = ((church.ChurchName + "-" + church.Town).ToLower()).Replace(" ", "-").Replace("'", "").Replace("_","-").Replace("(","-").Replace(".","");
+                church.Slug = ((church.ChurchName + "-" + church.Town).ToLower()).Replace(" ", "-").Replace("'", "").Replace("_", "-").Replace("(", "-").Replace(".", "");
                 churchDataAccess.AddChurch(church);
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 return RedirectToAction("Listchurch");
@@ -139,7 +146,7 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-       [HttpGet]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             try
@@ -207,29 +214,26 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage(" Client Type Can't load Error" + e.Message);
                 throw;
             }
-           
         }
 
         public void LoadCountyDDL()
         {
             try
             {
-                IEnumerable<Counties> countyList = churchDataAccess.GetCounties(-1);
+                PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+                IEnumerable<Place> countyList = _placeAccessLayer.GetCounties(-1);
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countyList)
                 {
-                    selectListItems.Add(new SelectListItem { Text = item.CountyName.ToString(), Value = item.CountyId.ToString() });
+                    selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
                 }
                 ViewBag.Counties = selectListItems;
-
             }
             catch (Exception e)
             {
                 ShowMessage(" County Can't Load Error" + e.Message);
                 throw;
             }
-           
-
         }
 
         [HttpPost]
@@ -255,7 +259,7 @@ namespace MCNMedia_Dev.Controllers
                         church.Churches.ImageURl = beforeFounder;
                     }
 
-                    
+
                 }
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 ChurchId = church.Churches.ChurchId;
@@ -267,17 +271,18 @@ namespace MCNMedia_Dev.Controllers
                     var queryString = new { chId = ChurchId };
                     return RedirectToAction("ChurchDetails", "Church", queryString);
                 }
-                else {
+                else
+                {
                     return View("_ChurchInfo", church);
                 }
-               
+
             }
             catch (Exception e)
             {
                 ShowMessage("Update Church  Error" + e.Message);
                 throw;
             }
-           
+
         }
 
         public IActionResult Search(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo)
@@ -287,31 +292,24 @@ namespace MCNMedia_Dev.Controllers
                 LoadClientDDL();
                 LoadCountyDDL();
 
-
                 HttpContext.Session.SetInt32("ClientType", ClientType);
                 HttpContext.Session.SetInt32("County", County);
                 Church chr = new Church();
-                
+
                 chr.ChurchName = ChurchName;
                 chr.ClientTypeId = ClientType;
                 chr.EmailAddress = EmailAddress;
                 chr.CountyId = County;
                 chr.Phone = PhoneNo;
-              
+
                 List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
                 return View("/Views/Church/Listchurch.cshtml", church);
-
             }
             catch (Exception e)
             {
                 ShowMessage("Search Church  Error" + e.Message);
                 throw;
             }
-           
-            
-
-
-
         }
 
         public void LoadServerDDL()
@@ -332,9 +330,8 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Server Can't Load  Error" + e.Message);
                 throw;
             }
-           
-
         }
+
         private void ShowMessage(string exceptionMessage)
         {
             log.Info("Exception: " + exceptionMessage);

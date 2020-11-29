@@ -36,47 +36,6 @@ namespace MCNMedia_Dev.Repository
 
         }
 
-        //To View all Users details
-        public IEnumerable<Schedule> GetAllSchedule()
-        {
-            List<Schedule> Balobj = new List<Schedule>();
-            _dc.ClearParameters();
-            _dc.AddParameter("SchId", -1);
-            _dc.AddParameter("SchName", "");
-            _dc.AddParameter("ChrId", -1);
-            //_dc.AddParameter("EmailAdd", "");
-            DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetAll");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                try
-                {
-                    Schedule schedule = new Schedule();
-                    schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                    schedule.ChurchName = dataRow["ChurchName"].ToString();
-                    schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                    schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                    schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                    schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                    schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
-                    schedule.Password = dataRow["Password"].ToString();
-                    schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                    schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
-
-                    schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-                    schedule.CameraName = dataRow["CameraName"].ToString();
-
-                    Balobj.Add(schedule);
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex.Message);
-                }
-            }
-            return Balobj;
-        }
-
-
-
         public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate, string EventDay, int isRecord)
         {
             List<Schedule> Balobj = new List<Schedule>();

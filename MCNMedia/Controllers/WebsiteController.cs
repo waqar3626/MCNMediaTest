@@ -184,13 +184,11 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        public JsonResult LoadCountyDDL(int CountryID)
+        public JsonResult LoadCountyDDL(int countryId)
         {
             try
             {
-
-                List<Counties> countyList = _churchDataAccessLayer.GetCounties(CountryID).ToList();
-
+                List<Place> countyList = _placeAccessLayer.GetCounties(countryId).ToList();
                 return Json(countyList);
             }
             catch (Exception e)
@@ -198,7 +196,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMesage("Load County DropDown : " + e.Message);
                 throw;
             }
-
         }
 
         public void LoadCountryDDL()
@@ -206,11 +203,11 @@ namespace MCNMedia_Dev.Controllers
             try
             {
 
-                IEnumerable<Church> countyList = _churchDataAccessLayer.GetCountries();
+                IEnumerable<Place> countryList = _placeAccessLayer.GetCountries();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
-                foreach (var item in countyList)
+                foreach (var item in countryList)
                 {
-                    selectListItems.Add(new SelectListItem { Text = item.CountryName.ToString(), Value = item.CountryId.ToString() });
+                    selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
                 }
                 ViewBag.Countries = selectListItems;
 
@@ -256,6 +253,7 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Profile(int id)
         {
+            
             ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
             AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
             CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
@@ -263,7 +261,7 @@ namespace MCNMedia_Dev.Controllers
             ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
             MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
             NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
-            PreviewChurchesDataAccessLayer previewChurchesDataAccessLayer = new PreviewChurchesDataAccessLayer();
+            //PreviewChurchesDataAccessLayer previewChurchesDataAccessLayer = new PreviewChurchesDataAccessLayer();
             ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
 
 
@@ -284,9 +282,9 @@ namespace MCNMedia_Dev.Controllers
             profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", id).ToList();
             profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(id);
 
-            profileModel.Cameras = camDataAccess.GetCameraById(1,"");
+            //profileModel.Cameras = camDataAccess.GetCameraById(1,"");
           //  profileModel.Media = "";
-            profileModel.RecordingList = previewChurchesDataAccessLayer.GetAllPreviewRecording(id);
+            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(id);
             profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(id, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
 
             profileModel.NowScheduleList = Schedules_WhatsOnNow();
@@ -298,7 +296,7 @@ namespace MCNMedia_Dev.Controllers
             profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
             profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
             profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-            profileModel.ChurchNewsLetterList = churchNewsLetterDataAccess.GetNewsLetterByChurchId(id).ToList();
+            
             return View(profileModel);
         }
 

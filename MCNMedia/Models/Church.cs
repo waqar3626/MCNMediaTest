@@ -81,15 +81,5 @@ namespace MCNMedia_Dev.Models
             public int ClientTypeId { get; set; }
             public string ClientTypeTitle { get; set; }
         }
-
-        
-        public class Counties
-        {
-            public int CountyId { get; set; }
-            public string CountyName { get; set; }
-        }
-
-
-
     }
 }
