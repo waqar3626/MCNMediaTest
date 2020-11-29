@@ -21,7 +21,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 GenericModel gm = new GenericModel();
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                gm.LCameras = camDataAccess.GetAllCameras(churchId);
+                gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
                 return View(gm);
             }
             catch (Exception e)
@@ -67,7 +67,7 @@ namespace MCNMedia_Dev.Controllers
                         wowzaHelper.RequestCamera(churchId, cameraId, camera.CameraUrl);
 
                         gm.ResultMessage = "Camera Added Sucessfully";
-                        gm.LCameras = camDataAccess.GetAllCameras(churchId);
+                        gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
                      
                         HttpContext.Session.SetString("TabName", "Camera");
                         var queryString = new { chId = churchId };
@@ -89,7 +89,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
-                gm.Cameras = camDataAccess.GetCameraById(id);
+                gm.Cameras = camDataAccess.GetCameraById(id,"");
                 return PartialView("_EditCamera", gm);
             }
             catch (Exception e)
@@ -115,13 +115,29 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        public JsonResult GetAllCameras()
+        public IActionResult GetAllCameras()
         {
             try
             {
-                int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                List<Camera> cameraInfo = camDataAccess.GetAllCameras(churchId).ToList();
-                return Json(cameraInfo);
+                Camera camera = new Camera();
+                if (HttpContext.Session.GetString("UserType") == "admin")
+                {
+                   
+                    int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                    List<Camera> cameraInfo = camDataAccess.GetAllCameras(churchId, "AdminCamera").ToList();
+                    gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
+                    return View("ChurchDetails",gm);
+                }
+                else if (HttpContext.Session.GetString("UserType") == "client")
+                {
+                   
+                    int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                    gm.LCameras = camDataAccess.GetAllCameras(churchId, "ClientCamera");
+
+                    return View("Views/Client/CameraDetail", gm);
+                }
+
+                return Json(1);
             }
             catch (Exception e)
             {

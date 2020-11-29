@@ -278,13 +278,13 @@ namespace MCNMedia_Dev.Controllers
 
             profileModel.NoticeList = noticeDataAccess.GetAllNotices(id).ToList();
 
-            profileModel.CameraList = camDataAccess.GetAllCameras(id);
+            profileModel.CameraList = camDataAccess.GetAllCameras(id,"");
             profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", id).ToList();
             profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", id).ToList();
             profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", id).ToList();
             profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(id);
 
-            profileModel.Cameras = camDataAccess.GetCameraById(1);
+            profileModel.Cameras = camDataAccess.GetCameraById(1,"");
           //  profileModel.Media = "";
             profileModel.RecordingList = previewChurchesDataAccessLayer.GetAllPreviewRecording(id);
             profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(id, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
@@ -298,7 +298,7 @@ namespace MCNMedia_Dev.Controllers
             profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
             profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
             profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-
+            profileModel.ChurchNewsLetterList = churchNewsLetterDataAccess.GetNewsLetterByChurchId(id).ToList();
             return View(profileModel);
         }
 

@@ -2,48 +2,93 @@
 @{
 
 }
+
+
+<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
 <script src="~/theme/js/modal-demo.js"></script>
-<script type="text/javascript">
-  
-</script>
+<style type="text/css">
+    .vjs-big-play-button {
+        left: 5em !important;
+        top: 4em !important;
+    }
+</style>
 
 
-<div class="card">
-    <div class="card-body">
-        <button type="submit" id="AddCamera1" class="btn btn-outline-behance btn-sm float-right "title=" Add New" onclick="AddCamera()"> <i class="mdi mdi-plus"></i> Add New Camera</button>
-        <div class="">
-          
-
-            <table class="table">
-                <thead>
-                    <tr>
-
-                        <th>
-                            Tab Name
-                        </th>
-                        <th>
-                            HTTP Port
-                        </th>
-                        <th>
-                            RTSP Port
-                        </th>
-                        <th>
-                            Server
-                        </th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="CamList">
-
-                </tbody>
-            </table>
-
-
-            
-        </div>
+<div class="row mb-3">
+    <div class="col-sm-12">
+        <button type="submit" id="AddCamera1" class="btn btn-outline-behance btn-sm float-right " title=" Add New" onclick="AddCamera()"> <i class="mdi mdi-plus"></i> Add New Camera</button>
 
     </div>
 </div>
+<div class="row mb-2">
+    <div class=" col-12">
+        <div class="form-group row ">
+            @{ var Counter = 1; }
+            @foreach (var items in Model.LCameras)
+            {
+
+                <div class="col-sm-6 mb-3">
+                    <div class="card " id="context-menu-hover-autohideNew2" cameraId="@items.CameraId">
+
+                        <div class="card-body mb-3 mt-2">
+                            <div class="row">
+
+
+                                <div class="col-sm-12">
+                                    <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100 h-100" controls>
+                                        <source id="LiveStreamSrc" src="@items.LiveStreamUrl" type="application/x-mpegURL">
+                                    </video>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row pt-3">
+
+                                        <div class="col-sm-4   text-wrap border-bottom border-right text-center">
+                                            <label> Camera ID     |</label>
+                                            <i style="color: #1f4a79"></i>&nbsp; @items.CameraId
+                                        </div>
+                                        <div class="col-sm-4    text-wrap border-bottom border-right text-center">
+                                            <i class="mdi mdi-camera " style="color: #1f4a79"></i>&nbsp; @items.CameraName
+                                        </div>
+                                        <input type="hidden" id="hdnCameraId22_@Counter" value="@items.CameraId" />
+
+                                        <div class="col-sm-4  text-wrap border-bottom text-center">
+                                            <div class="custom-control custom-switch lg">
+                                                <input type="checkbox" class="custom-control-input control" id="IsOnlineCamera_@Counter">
+                                                <label class="custom-control-label" for="IsOnlineCamera_@Counter">IsOnline</label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            @*<div class="col-sm-12 mt-4 display-4 text-wrap " style="margin-left:200Px">
+
+                                    <label > Camera ID  |</label>
+                                    <i  style="color: #1f4a79"></i>&nbsp; @items.CameraId
+                                </div>*@
+
+                            @*<div class="table">
+                                    <div class="col-sm-12 pt-2 text-wrap ">
+                                        <label> Camera ID  |</label>
+                                        <i style="color: #1f4a79"></i>&nbsp; @items.CameraId
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+                Counter++;
+            }
+        </div>
+    </div>
+</div>
+
+
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddCameraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -90,49 +135,21 @@
         </div>
     </div>
 </div>
+<script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
+<script src="~/theme/js/CheckCode.js"></script>
 <script type="text/javascript">
     $('#AddCameraModal').on('hidden.bs.modal', function () {
         $(this).removeData('#AddCameraModal');
     });
-    $(document).ready(function () {
-        loadCamera();
-    });
 
-    function loadCamera() {
-        $.ajax({
-            url: "/Camera/GetAllCameras",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var html = '';
 
-                $.each(result, function (key, item) {
-                    html += '<tr>';
-
-                    html += '<td>' + item.cameraName + '</td>';
-                    html += '<td>' + item.httpPort + '</td>';
-                    html += '<td>' + item.rtspPort + '</td>';
-                    html += '<td>' + item.serverName + '</td>';
-                    html += ' <td>';
-                    html += '<a onclick="Open(' + item.cameraId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
-                    html += '<a onclick="DeleteCamera(' + item.cameraId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
-                    html += ' </td>';
-                    html += '</tr>';
-                });
-                $('.CamList').html(html);
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
 
     function AddCamera() {
 
         $('#AddCameraModal').modal('show');
 
     }
+
 
     function Open(camId) {
         $.ajax({
@@ -157,20 +174,15 @@
 })
 .then((willDelete) => {
   if (willDelete) {
-   
+
           $.ajax({
             url: "/Camera/DeleteCamera/" + camId,
             type: "POST",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                loadCamera();
-                if (result) {
-                    swal("Poof! Your file has been deleted!", {
-                        icon: "success",
-
-                    });}
-            },
+                    window.location.reload();
+    },
             error: function (errormessage) {
                // alert(errormessage.responseText);
             }
@@ -179,8 +191,18 @@
          swal("Your file is safe!");
   }
 });
-   
+
+      $(document).ready(function () {
+
+        var count = '@Model.LCameras.Count()';
+        var i;
+        for ( i= 1; i <= count; i++){
+            var player = videojs('CameraLiveStream_'+i);
+        player.autoplay(false);
     }
 
+    });
+
+    }
 
 </script>

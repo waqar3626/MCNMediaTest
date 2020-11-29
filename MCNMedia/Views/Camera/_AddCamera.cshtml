@@ -114,9 +114,10 @@
                 success: function (response) {
                     if (response.success) {
                         
-                        loadCamera();
+                       
                         $('#AddCameraModal').modal('hide');
                         $('#AddCameraForm')[0].reset();
+                        window.location.reload();
 
                     } else {
                         // DoSomethingElse()

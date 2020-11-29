@@ -193,7 +193,7 @@ namespace MCNMedia_Dev.Controllers
 
                 int id = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(id);
-                HttpContext.Session.SetString("ctabId", "/Client/ChNewsLetter");
+                HttpContext.Session.SetString("ctabId", "/Client/ChurchNewsLetter");
                 return View(gm);
             }
             catch (Exception e)
@@ -219,7 +219,7 @@ namespace MCNMedia_Dev.Controllers
                 LoadServerDDL();
                 
                 gm.Churches = chdataAccess.GetChurchData(id);
-                gm.LCameras = camDataAccess.GetAllCameras(id).ToList();
+                gm.LCameras = camDataAccess.GetAllCameras(id,"ClientCamera").ToList();
                 HttpContext.Session.SetString("ctabId", "/Client/CameraDetail");
                 return View(gm);
             }

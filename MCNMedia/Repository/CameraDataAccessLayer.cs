@@ -35,10 +35,10 @@ namespace MCNMedia_Dev.Repository
             return _dc.ReturnInt("spCamera_Add");
         }
 
-        public IEnumerable<Camera> GetAllCameras(int ChurchId)
+        public IEnumerable<Camera> GetAllCameras(int ChurchId,string camType)
         {
             List<Camera> Balobj = new List<Camera>();
-            DataTable dataTable = GetCamera(churchId: ChurchId, cameraId: -1);
+            DataTable dataTable = GetCamera(churchId: ChurchId, cameraId: -1,camType:camType);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Camera camera = BindingCamera(dataRow);
@@ -47,10 +47,10 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        public Camera GetCameraById(int camId)
+        public Camera GetCameraById(int camId,string camtype)
         {
             Camera camera = new Camera();
-            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId);
+            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId,camType:camtype);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 camera = BindingCamera(dataRow);
@@ -58,11 +58,12 @@ namespace MCNMedia_Dev.Repository
             return camera;
         }
 
-        private DataTable GetCamera(int churchId, int cameraId)
+        private DataTable GetCamera(int churchId, int cameraId,string camType)
         {
             _dc.ClearParameters();
             _dc.AddParameter("chrchId", churchId);
             _dc.AddParameter("camId", cameraId);
+            _dc.AddParameter("camtype", camType);
             DataTable dataTable = _dc.ReturnDataTable("spCamera_Get");
             return dataTable;
         }
@@ -72,6 +73,7 @@ namespace MCNMedia_Dev.Repository
             Camera camera = new Camera();
             camera.CameraId = Convert.ToInt32(dataRow["CameraId"]);
             camera.CameraName = dataRow["CameraName"].ToString();
+            camera.CameraType = dataRow["CameraType"].ToString();
             camera.HttpPort = dataRow["HttpPort"].ToString();
             camera.CameraUrl = dataRow["CameraUrl"].ToString();
             camera.RtspPort = dataRow["RtspPort"].ToString();

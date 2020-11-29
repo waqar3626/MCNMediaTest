@@ -261,7 +261,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId).ToList();
+                List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId, "AdminCamera").ToList();
                 return Json(countyList);
             }
             catch (Exception e)

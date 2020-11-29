@@ -175,7 +175,7 @@ namespace MCNMedia_Dev.Controllers
                     {
                         return NotFound();
                     }
-                    gm.LCameras = camDataAccess.GetAllCameras(churchId);
+                    gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
                     SetUpDataAccessLayer setupdataaccess = new SetUpDataAccessLayer();
                     gm.ChurchSetUp = setupdataaccess.getSetUp(churchId);
                     return View(gm);

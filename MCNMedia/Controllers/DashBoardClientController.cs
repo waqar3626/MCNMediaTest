@@ -45,7 +45,7 @@ namespace MCNMedia_Dev.Controllers
 
                 gm1.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChurchId);
                 gm1.Dashboards = dashboardData.GetDashboardClientInfoCount(ChurchId);
-                gm1.LCameras = camDataAccess.GetAllCameras(ChurchId).ToList();
+                gm1.LCameras = camDataAccess.GetAllCameras(ChurchId,"AdminCamera").ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
                
