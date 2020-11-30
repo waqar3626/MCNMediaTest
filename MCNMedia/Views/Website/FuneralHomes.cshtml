@@ -32,10 +32,10 @@
             @foreach (Church church in Model.ChurchList)
             {
                 <div class="col-lg-4 col-md-6 p-2">
-                    <a href="@Url.Action("Profile", "Website",new { id = church.ChurchId })" title="Preview">
+                    <a href="@Url.Action("Profile", "Website",new { id = church.Slug })" title="Preview">
                         <div class="img-overly position-relative" style="height:179px;">
                             <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.CountyName</div>
+                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.Town</div>
                         </div>
                     </a>
                 </div>
