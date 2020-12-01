@@ -336,7 +336,7 @@
             success: function (result) {
                 var s = '<option value="-1">--Select County--</option>';
                 $.each(result, function (key, item) {
-                    s += '<option value="' + item.countyId + '">' + item.countyName + '</option>'
+                    s += '<option value="' + item.countyId + '">' + item.placeName + '</option>'
                 });
                 $("#County").html(s);
             },
