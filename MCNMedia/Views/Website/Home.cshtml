@@ -13,6 +13,12 @@
     }
     List<SelectListItem> SelectList = Lists.GetCountyList(id);
 }
+    <style type="text/css">
+
+        .bluepurple {
+            color: #1f4a79
+        }
+    </style>
 
 <!-- banner slider start -->
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="500000000000">
@@ -190,12 +196,12 @@
                     {
                         <tr>
                             <td scope="row" class="font-weight-normal">@schedule.ChurchName</td>
-                            <td class="text-red">
-                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="text-red">
+                            <td class="bluepurple">
+                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="bluepurple">
                                     <b>@schedule.EventName </b>
                                 </a>
                             </td>
-                            <td scope="row" class="text-red font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                            <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
                         </tr>
                     }
                 </tbody>
