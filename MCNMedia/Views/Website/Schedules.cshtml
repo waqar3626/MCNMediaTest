@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 
 }
+<style type="text/css">
+
+    .bluepurple {
+        color: #1f4a79
+    }
+
+</style>
 
 <div class="bg-blue" style="">
     <div class="container">
@@ -55,12 +62,12 @@
                                     {
                                         <tr>
                                             <td scope="row" class=" font-weight-normal">@schedule.ChurchName</td>
-                                            <td class="text-red">
-                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="text-red">
-                                                    <b>@schedule.EventName </b>
+                                            <td  class="bluepurple" >
+                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="bluepurple"   >
+                                                    <b >@schedule.EventName </b>
                                                 </a>
                                             </td>
-                                            <td scope="row" class="text-red font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                                            <td scope="row"  class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -77,12 +84,12 @@
                                     {
                                         <tr>
                                             <td scope="row" class=" font-weight-normal">@schedule.ChurchName</td>
-                                            <td class="text-red">
-                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="text-red">
+                                            <td class="bluepurple">
+                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="bluepurple">
                                                     <b>@schedule.EventName </b>
                                                 </a>
                                             </td>
-                                            <td scope="row" class="text-red font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -99,12 +106,12 @@
                                     {
                                         <tr>
                                             <td scope="row" class=" font-weight-normal">@schedule.ChurchName</td>
-                                            <td class="text-red">
-                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="text-red">
+                                            <td class="bluepurple">
+                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="bluepurple">
                                                     <b>@schedule.EventName </b>
                                                 </a>
                                             </td>
-                                            <td scope="row" class="text-red font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
                                         </tr>
                                     }
                                 </tbody>
