@@ -8,7 +8,7 @@
 <div class="bg-blue" style=" position: sticky; top: 0px; z-index:5">
     <div class="container">
         <div class="row m-0 ">
-            <div class="text-pink font-36 text-center pt-4 pb-4 avantgardece">
+            <div class="text-white font-36 text-center pt-4 pb-4 avantgardece">
                 CAMERAS
             </div>
         </div>
@@ -21,7 +21,7 @@
             @foreach (Place country in Model.CountryList)
             {
                 <div class="news-wrap mb-3">
-                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14 mb-2" style="width:100%"
+                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
                        href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
                         @country.PlaceName
                     </a>
@@ -34,10 +34,10 @@
             @foreach (Church church in Model.ChurchList)
             {
                 <div class="col-lg-4 col-md-6 p-2">
-                    <a href="@Url.Action("Profile", "Website",new { id = church.ChurchId })" title="Preview">
+                    <a href="@Url.Action("Profile", "Website",new { id = church.Slug })" title="Preview">
                         <div class="img-overly position-relative" style="height:179px;">
                             <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.CountyName</div>
+                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.Town</div>
                         </div>
                     </a>
                 </div>

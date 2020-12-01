@@ -195,9 +195,9 @@
                     @foreach (var schedule in Model.LSchedules)
                     {
                         <tr>
-                            <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName</td>
+                            <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town</td>
                             <td class="bluepurple">
-                                <a href="@Url.Action("Profile", "Website",new { id = schedule.ChurchId })" class="bluepurple">
+                                <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
                                     <b>@schedule.EventName </b>
                                 </a>
                             </td>

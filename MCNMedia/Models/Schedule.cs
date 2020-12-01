@@ -12,6 +12,9 @@ namespace MCNMedia_Dev.Models
         public int ScheduleId { get; set; }
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
+        public string Slug { get; set; }
+        public string Town { get; set; }
+
         [Required]
         public string EventName { get; set; }
         //[DisplayFormat(DataFormatString = "{0:yyyy/MMM/dd}")]

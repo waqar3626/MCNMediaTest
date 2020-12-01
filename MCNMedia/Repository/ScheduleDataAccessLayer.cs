@@ -51,7 +51,8 @@ namespace MCNMedia_Dev.Repository
                 Schedule schedule = new Schedule();
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
-
+                schedule.Town = dataRow["Town"].ToString();
+                schedule.Slug = dataRow["Slug"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
@@ -139,6 +140,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
                 schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.Town = dataRow["Town"].ToString();
+                schedule.Slug = dataRow["Slug"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
@@ -163,6 +166,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
                 schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.Town = dataRow["Town"].ToString();
+                schedule.Slug = dataRow["Slug"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
@@ -203,6 +208,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
                 schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.Town = dataRow["Town"].ToString();
+                schedule.Slug = dataRow["Slug"].ToString();
                 schedule.EventName = dataRow["ScheduleEventName"].ToString();
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
