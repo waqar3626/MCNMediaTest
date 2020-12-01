@@ -19,7 +19,7 @@
             @foreach (Place country in Model.CountryList)
             {
                 <div class="news-wrap mb-3">
-                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14 mb-2" style="width:100%"
+                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14 font-weight-bolder mb-2" style="width:100%"
                        href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
                         @country.PlaceName
                     </a>
