@@ -1,0 +1,59 @@
+﻿@model MCNMedia_Dev.Models.Subscriptions
+
+@{
+    ViewData["Title"] = "Subscribe";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+
+}
+
+<form asp-controller="Subscription" method="post">
+    @{ if (ViewBag.ErrorMsg == 2)
+        {
+<div class="form-group alert-danger">
+    <label type="password" class="form-control form-control-lg"> Email Address Already Exists</label>
+</div> } 
+        }
+    <div class="row m-0 mt-5 mb-5">
+        <div class="col-3 d-lg-block d-none"></div>
+        <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+            <div class="row text-center">
+                <div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
+                    Sign Up now
+                </div>
+                <input type="hidden" name="subscriptionId" value="@ViewBag.PackageId" />
+                <div class="form-group col-sm-12">
+                    @*<label asp-for="ContactName">Name</label>*@
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                    <input class="form-control selectWrapper" asp-for="Name" required placeholder="Name">
+              
+                </div>
+                <div class="form-group col-sm-12">
+                    @*<label asp-for="ContactSubject">Subject</label>*@
+                    <span class="text-danger" asp-validation-for="CountryId"></span>
+                    <select id="select2" name="countryId" asp-for="CountryId" required class="select-search selectWrapper border" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text"))">
+                        <option value="-1" disabled selected>--Select Country--</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-12">
+                    @*<label asp-for="ContactEmail">Email</label>*@
+                    <span class="text-danger" asp-validation-for="EmailAddress"></span>
+                    <input class="form-control selectWrapper" asp-for="EmailAddress" required placeholder="Email">
+                </div>
+
+                <div class="form-group col-sm-12">
+                    @*<label class="col-form-label">Message</label>*@
+                    <span class="text-danger" asp-validation-for="Password"></span>
+                    <input type="password" class="form-control selectWrapper" required asp-for="Password" placeholder="Password">
+                </div>
+                <div class="form-group col-sm-12 float-right rounded-sm ">
+                    <input type="submit" asp-action="UserRegistration" value="Sign Up" class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14" />
+                </div>
+                <div class="form-group col-sm-12 float-right rounded-sm ">
+                    <a type="submit" asp-action="SubscriptionUserLogin" class="text-pink">Already have an account. Sign in ?</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 d-lg-block d-none"></div>
+    </div>
+
+</form>

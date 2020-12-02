@@ -1,4 +1,6 @@
-﻿
+﻿@model MCNMedia_Dev.Models.Subscriptions
+@using Microsoft.Extensions.Options;
+@inject IOptions<StripeSetting> Stripe
 @{
     ViewData["Title"] = "Subscribe";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
@@ -8,15 +10,17 @@
 <div>
     <form action="/Subscription/Processing" method="POST">
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="pk_test_51HsMgeBcBMLkoLiDNUkZGh8jeqKLXtEvWkxlFJsMMkJzV770kNwossJJSWgwtTWoSCclRvmHreUsfFdmeT10qJ4Q00fkBOT3pt"
-                data-amount="@ViewBag.PaymentAmount"
+                data-key="@Stripe.Value.PublishKey"
+                data-amount="@Model.PackageCharge"
                 data-name="MCN_Test"
-                data-description="enter package info here"
+                data-description="@Model.PackageTitle"
                 data-image="/WebsiteAssets/img/logo_100x100.png"
                 data-locale="en"
                 data-zip-code="true"
-                data-label="Pay">
+                data-label="Pay @Model.PackageCharge (&#8364;)">
         </script>
+        <input type="hidden" name="PackageAmount" value="@Model.PackageCharge" />
+        <input type="hidden" name="Description" value="@Model.PackageTitle" />
     </form>
 </div>
 

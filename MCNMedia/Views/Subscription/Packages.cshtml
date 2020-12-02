@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Subscriptions>
+@{
+    ViewData["Title"] = "Subscribe";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+
+}
+<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+<!-- endinject -->
+<!-- plugin css for this page -->
+<!-- End plugin css for this page -->
+<!-- inject:css -->
+
+<!-- endinject -->
+<link rel="shortcut icon" href="~/theme/images/favicon.png" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <div class="card-body">
+                
+                    <div class="container text-center pt-5">
+
+                        <div class="row pricing-table">
+                            @foreach (var items in Model)
+                            {
+                            <div class="col-md-4 col-xl-4  pt-3">
+                                <form method="post" asp-action="SubscriptionUserRegistration" asp-controller="Subscription">
+                                    <div class="border p-4" style=" border-color: #d9356f !important
+    ">
+                                        <div class="text-center pricing-card-head">
+                                            <h3 class="text-pink">@items.PackageTitle</h3>
+                                            <p></p>
+                                            <h1 class="font-weight-normal mb-4">&#8364; @items.PackageCharge</h1>
+                                        </div>
+                                        <ul class="list-unstyled plan-features text-left pl-4">
+                                            <li>Package Duration  &nbsp; : &nbsp;<b>@items.Duration @items.DurationUnit</b></li>
+                                            <li>Currency Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;<b>@items.Currency (&#8364;)</b></li>
+
+                                        </ul>
+                                        <input type="hidden" name="subscriptionId" value="@items.PackageId" />
+                                        <div class="wrapper">
+                                            <button type="submit"  class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14">Subscribe Now</button>
+                                        </div>
+
+                                    </div>
+                                    </form>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                
+                    </div>
+            </div>
+    </div>
+</div>
+
+<script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="~/theme/js/off-canvas.js"></script>
+<script src="~/theme/js/hoverable-collapse.js"></script>
+<script src="~/theme/js/template.js"></script>
+<script src="~/theme/js/settings.js"></script>
+<script src="~/theme/js/todolist.js"></script>

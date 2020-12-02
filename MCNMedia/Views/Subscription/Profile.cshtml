@@ -1,0 +1,728 @@
+﻿@model MCNMedia_Dev.Models.Profile
+@{
+    ViewData["Title"] = "ChurchProfile";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+
+<style type="text/css">
+    .vjs-big-play-button {
+        left: 45% !important;
+        top: 45% !important;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.carousel.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/owl.carousel.min.js"></script>
+<!-- plugins:css -->
+<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
+<!-- endinject -->
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+<!-- inject:css -->
+@*<link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">*@
+<!-- endinject -->
+
+<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+
+
+<style>
+    #owl-carousel-video {
+        width: 100%;
+    }
+
+    .item-video {
+        height: 275px !important;
+        background-color: blue;
+        display: block;
+    }
+</style>
+<div class="content-wrapper">
+    <div class="row">
+
+    </div>
+
+    @*<div class="row" style="width:100%;height:750px;background-color:black">
+        <div class="col-2 d-lg-block d-none"></div>*@
+    <div class="card" id="top-card">
+        <div class="">
+            <div class="tab-content" id="pills-tabContent">
+                @{
+                    int camCounter = 0;
+                }
+                @foreach (Camera cam in Model.CameraList)
+                {
+                    if (camCounter == 0)
+                    {
+                        <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                            <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin' style="width:100% !important;height:550px !important;">
+                                <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                            </video>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane fade" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                            <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin' style="width:100% !important;height:550px !important;">
+                                <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                            </video>
+                        </div>
+                    }
+                    camCounter = camCounter + 1;
+                }
+
+                @*<div class="tab-pane fade" id="pills-slideshow" role="tabpanel" aria-labelledby="pills-slideshow-tab">
+                        <div id="carouselSlideShow" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+                            <div class="carousel-inner">
+
+                                @foreach (MediaChurch slidshow in Model.SlideshowList)
+                                {
+
+                                    <div class="carousel-item">
+                                        <img src="@slidshow.TabName" class="d-block h-550  slide-image" alt="...">
+                                    </div>
+                                }
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>*@
+
+                <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
+                    <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
+
+                        @foreach (MediaChurch vid in Model.VideoList)
+                        {
+                            string vlink = vid.MediaURL.ToString();
+                            <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL" class="vedslide"></div>
+
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="pills-image" role="tabpanel" aria-labelledby="pills-image-tab">
+                    <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+                        <div class="carousel-inner">
+                            @{
+                                int counter = 0;
+                            }
+                            @foreach (MediaChurch pic in Model.PictureList)
+                            {
+                                if (counter == 0)
+                                {
+                                    counter = counter + 1;
+                                    <div class="carousel-item active">
+
+                                        <img src="@pic.MediaURL" class="d-block h-550" alt="...">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="carousel-item">
+
+                                        <img src="@pic.MediaURL" class="d-block h-550" alt="...">
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselPictures" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselPictures" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-2 d-lg-block d-none"></div>
+            </div>*@
+    </div>
+</div>
+
+<div class="arialNova bg-white">
+    <div class="row m-0 mb-3" id="website-topmenu">
+        <div class="col-xl-1 d-xl-block d-none"></div>
+        <div class="col-xl-10">
+            <div class="nav-top mt-0 bg-website-menu" id="website-top">
+                <ul class="nav nav-pills nav-pills-success popin font-14 pl-4 mt-0" id="pills-tab" role="tablist">
+                    @{
+                        int camTabCounter = 0;
+                    }
+                    @foreach (Camera cam in Model.CameraList)
+                    {
+
+                        if (camCounter == 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-camera-tab-@camTabCounter" data-toggle="pill" href="#pills-camera-@camTabCounter" role="tab" aria-controls="pills-camera-@camTabCounter" aria-selected="true">@cam.CameraName</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-camera-tab-@camTabCounter" data-toggle="pill" href="#pills-camera-@camTabCounter" role="tab" aria-controls="pills-camera-@camTabCounter" aria-selected="false">@cam.CameraName</a>
+                            </li>
+                        }
+                        camTabCounter = camTabCounter + 1;
+                    }
+                    @*<li class="nav-item">
+                            <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
+                        </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-video-tab" data-toggle="pill" href="#pills-video" role="tab" aria-controls="pills-video" aria-selected="false">Videos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-image-tab" data-toggle="pill" href="#pills-image" role="tab" aria-controls="pills-image" aria-selected="false">Images</a>
+                    </li>
+                </ul>
+
+
+                @*<div class="quick-strt text-white font-18">
+                        Quick Start <i class="fal fa-long-arrow-right pl-2"></i>
+                    </div>*@
+            </div>
+        </div>
+        <div class="col-xl-1 d-xl-block d-none"></div>
+    </div>
+    <div class="row m-0  mb-5 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
+        <div class="col-1 d-xl-block d-none"></div>
+        <div class="col-xl-8   col-md-8  pr-md-0 col-sm-7">
+            <div class="row m-0">
+                <div class="col-xl-12">
+                    <div class="row m-0">
+                        <div class="col-xl-4">
+                            <img src="@Model.Churches.ImageURl" alt="" class="main-img"><br /><br />
+                        </div>
+                        <div class="col-xl-8 flex-end-md">
+                            <p class="icon-top-s"><i class="fas fa-home" style="padding-right:7px;"></i> @Model.Churches.Address, @Model.Churches.Town</p>
+                            <p class="icon-top-s"><i class="fas fa-envelope" style="padding-right:7px;"></i> @Model.Churches.EmailAddress</p>
+                            <p class="icon-top-s"><i class="fas fa-globe" style="padding-right:7px;"></i> @Model.Churches.Website</p>
+                        </div>
+                    </div>
+                    <p class="font-30 text-pink">@Model.Churches.ChurchName, @Model.Churches.Town</p>
+                </div>
+            </div>
+            <p class="font-20 bold text-pink text-center">Weekly Schedule</p>
+            <div class="card">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="width:14.3%;">
+                        <a class="nav-link active" data-toggle="pill" href="#pills-day1-tab" role="tab" aria-controls="pills-home" aria-selected="true">@System.DateTime.Now.ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" data-toggle="pill" href="#pills-day2-tab" role="tab" aria-controls="pills-profile" aria-selected="false">@System.DateTime.Now.AddDays(1).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day3-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(2).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day4-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(3).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day5-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(4).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.3%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day6-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(5).ToString("dddd")</a>
+                    </li>
+                    <li class="nav-item" style="width:14.2%">
+                        <a class="nav-link" id="" data-toggle="pill" href="#pills-day7-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(6).ToString("dddd")</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-day1-tab" aria-labelledby="pills-day1-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay0.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay0)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for today.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day2-tab" aria-labelledby="pills-day2-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay1.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay1)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day3-tab" role="tabpanel" aria-labelledby="pills-day3-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay2.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay2)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day4-tab" role="tabpanel" aria-labelledby="pills-day4-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay3.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay3)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day5-tab" role="tabpanel" aria-labelledby="pills-day5-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay4.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay4)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day6-tab" role="tabpanel" aria-labelledby="pills-day6-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay5.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay5)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-day7-tab" role="tabpanel" aria-labelledby="pills-day7-tab">
+                        <div class="table-now">
+                            <table class="table table-striped table-responsive-lg table-borderless">
+                                <tbody>
+                                    @if (Model.ScheduleListDay6.Count() > 0)
+                                    {
+                                        @foreach (var itm in Model.ScheduleListDay6)
+                                        {
+                                            <tr>
+                                                <td scope="row" class="font-weight-normal text-red">@itm.EventName</td>
+
+                                                <td scope="row" class="text-red font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                @if (itm.Record == true)
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box text-red lg-icon"></i>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="font-weight-normal font-weight-bold">
+                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td scope="row" class="font-weight-normal text-red">
+                                                There is currently nothing scheduled for this day.
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="text-praaa">
+                <div class="font-32 pt-4 pb-4 bg-white font-weight-bold ProximaNova">
+                    @Model.Announcement.AnnouncementTitle
+                </div>
+                <p class="font-16 mb-2">
+                    @Model.Announcement.AnnouncementText
+                </p>
+            </div>
+        </div>
+        <div class="col-xl-2  col-md-4 col-sm-5">
+            @if (Model.newsletter.ChurchNewsLetterId != 0)
+            {
+                <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
+
+                    <div class="news-wrap mb-3">
+                        <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            <a href="@Model.newsletter.NewsLetterUrl">Click Here</a>
+                        </p>
+                        <p class="font-14 mb-0 "></p>
+                        <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
+                    </div>
+                    @*<div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                Recoding of past events St Peter & St Paul's
+                                Church
+                            </p>
+                            <p class="font-14 mb-0 ">Mass</p>
+                            <p class="font-14 mb-0 ">25 Oct 2020</p>
+                        </div>
+                        <div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                Recoding of past events St Peter & St Paul's
+                                Church
+                            </p>
+                            <p class="font-14 mb-0 ">Mass</p>
+                            <p class="font-14 mb-0 ">25 Oct 2020</p>
+                        </div>
+                        <div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">News</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                Recoding of past events St Peter & St Paul's
+                                Church
+                            </p>
+                        </div>
+                        <img src="~/WebsiteAssets/img/newsimg.png" class="mt-2" alt="">*@
+                </div>
+            }
+        </div>
+        <div class="col-1 d-xl-block d-none"></div>
+    </div>
+
+    <!-- recording start -->
+    <div class="bg-blue">
+        <div class="container">
+            <div class="row m-0 ">
+                <div class="text-white font-30 text-center pt-4 pb-4 avantgardece">
+                    Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
+        <div class="col-1 d-xl-block d-none"></div>
+        <div class="col-xl-10">
+            <div class=" font-32 pt-4 pb-4 bg-white text-pink">
+
+            </div>
+            <div class="border bg-white pb-4 news pt-4 row m-0">
+                @foreach (Recording recording in Model.RecordingList)
+                {
+                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
+                        <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
+                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                            <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
+                        </div>
+                        <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="" class="ply-vid">
+                            <i class="fal fa-play-circle font-36"></i>
+                        </a>
+
+                    </div>
+                }
+
+
+            </div>
+
+        </div>
+        <div class="col-1 d-xl-block d-none"></div>
+    </div>
+    <!-- recording END -->
+</div>
+<div>
+
+</div>
+<script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+<script src="~/theme/js/owl-carousel.js"></script>
+<script src="~/js/jwplayer.js"></script>
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $('#LiveStreamSrc').attr("src", '' + $('#livestreamUrl').val() + '');
+    //    var player = videojs('CameraLiveStream');
+    //    player.autoplay(false);
+    //});
+
+    function OpenCamera(camId) {
+        //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
+        var player = videojs(camId);
+        player.autoplay(false);
+
+    }
+
+    function OpenPictures() {
+
+        var cameras = document.getElementById("CamerasContainer");
+        var images = document.getElementById("carouselExampleCaptions");
+        var vedios = document.getElementById("VediosContainer");
+
+        //if (x.style.display === "none") {
+        cameras.style.display = "none";
+        vedios.style.display = "none";
+        // } else {
+        images.style.display = "block";
+        // }
+
+    }
+
+    function OpenVedio(vedId, vedioURL) {
+        //  var cameras = document.getElementById("CamerasContainer");
+        //  var images = document.getElementById("carouselExampleCaptions");
+        //  var vedios = document.getElementById("VediosContainer");
+
+        // vedios.style.display = "block";
+        //  cameras.style.display = "none";
+        //  images.style.display = "none";
+
+
+        jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
+
+        var fileURL = vedioURL;
+        jwplayer('' + vedId + '').setup({
+            file: fileURL,
+            image: "../css/jwerror.jpg",
+            width: "100%",
+            height: "515px",
+            aspectratio: "16:9",
+            autostart: 'false',
+        });
+        jwplayer().onError(function () {
+            jwplayer().play();
+        });
+
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $('#owl-carousel-video').owlCarousel({
+            items: 1,
+            merge: true,
+            loop: true,
+            margin: 10,
+            video: true,
+            lazyLoad: true,
+            center: true,
+            responsive: {
+                480: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                }
+            }
+        });
+
+        var vedioSlides = document.getElementsByClassName("vedslide");
+        for (var i = 0; i < vedioSlides.length; i++) {
+            // Distribute(slides.item(i));
+            var divid = vedioSlides.item(i).id;
+            var divurl = vedioSlides.item(i).getAttribute('mediaurl');
+            OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'))
+        }
+
+        OpenCamera('CameraLiveStream-0');
+    });
+</script>
+
+
