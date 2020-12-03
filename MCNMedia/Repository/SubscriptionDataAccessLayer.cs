@@ -91,21 +91,33 @@ namespace MCNMedia_Dev.Repository
          
         }
 
-        public int  AddSubscriberpaymentLog(Subscriptions Sub)
+        public int  AddSubscriberpaymentLog(int PackageId,int SubscriberId,decimal OrderAmount, string OrderId,int ChurchId)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("PackageId", Sub.PackageId);
-            _dc.AddParameter("SubscriberId", Sub.SubscriberId);
-            _dc.AddParameter("OrderId", Sub.OrderId);
-            _dc.AddParameter("OrderAmount", Sub.OrderAmount);
-            _dc.AddParameter("PaidAmount", Sub.PaidAmount);
-            _dc.AddParameter("ChurchId", Sub.ChurchId);
+            _dc.AddParameter("PackageId", PackageId);
+            _dc.AddParameter("SubscriberId", SubscriberId);
+            _dc.AddParameter("OrderId", OrderId);
+            _dc.AddParameter("OrderAmount", OrderAmount);
+            _dc.AddParameter("ChurchId", ChurchId);
+
+           int PaymentLogId= _dc.ReturnInt("spSubscriberPaymentLog_Add");
+
+            return PaymentLogId;
+
+        }
+        public int UpdateSubscriberpaymentLog(int paymentLogId, bool IsSuccess, string OrderId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("PaymentLogId", paymentLogId);
+            _dc.AddParameter("OrderId", OrderId);
+            _dc.AddParameter("IsSuccess", IsSuccess);
+
+          return _dc.ReturnInt("spSubscriberPaymentLog_Update");
+
+           
 
 
 
-            return _dc.ReturnInt("spSubscriberPaymentLog_Add");
-
-            
         }
 
         public Subscriptions SubscriberLogin(string EmailAddress, string LoginPassword)

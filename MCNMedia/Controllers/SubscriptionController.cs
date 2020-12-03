@@ -32,7 +32,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult Processing(string Description,string stripeToken, string stripeEmail,decimal PackageAmount)
+        public IActionResult Processing(int PaymentLogId, string Description,string stripeToken, string stripeEmail,decimal PackageAmount)
         {
             Subscriptions subscription = new Subscriptions();
             Dictionary<string, string> Metadata = new Dictionary<string, string>();
@@ -59,13 +59,13 @@ namespace MCNMedia_Dev.Controllers
                     subscription.PackageId= (int)HttpContext.Session.GetInt32("packageId");
                     subscription.OrderAmount = (decimal)PackageAmount;
                     subscription.PaidAmount = (decimal)PackageAmount;
-                    int paymentLogId = subDataAccess.AddSubscriberpaymentLog(subscription);
+                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId,true, stripeToken);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
                     return RedirectToAction(nameof(Profile));
                     break;
                 case "failed":
-                    int paymentLogId2 = subDataAccess.AddSubscriberpaymentLog(subscription);
 
+                    int paymentLogId2 = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, false, stripeToken);
                     break;
             }
             return RedirectToAction(nameof(Subscribe));
@@ -91,11 +91,31 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult UserRegistration(Subscriptions subscriptions)
         {
             int SubscriberId = subDataAccess.AddSubscriber(subscriptions);
-            HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
-            if (SubscriberId > 0) { 
-            int PackageId = (int)HttpContext.Session.GetInt32("packageId");
+           int ChurchId= (int)HttpContext.Session.GetInt32("chrId");
+            if (SubscriberId > 0) {
+                HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
+                int PackageId = (int)HttpContext.Session.GetInt32("packageId");
             Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
-            return View("Subscribe", subscription);
+                subscription.ChurchId = ChurchId;
+                subscription.SubscriberId = SubscriberId;
+                subscription.OrderId = "-";
+                subscription.PackageId = PackageId;
+                decimal PakageAmount = subscription.PackageCharge;
+
+
+                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-",ChurchId);
+                if (paymentLogId > 0) { 
+                HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
+                subscription.PaymentId = paymentLogId;
+                return View("Subscribe", subscription);
+                }
+                else
+                {
+                    LoadCountryDDL();
+                   
+                    return View("SubscriptionUserRegistration", subscriptions);
+
+                }
             }
             else
             {

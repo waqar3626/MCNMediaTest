@@ -251,9 +251,10 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
-        public IActionResult Profile(int id)
+        public IActionResult Profile(string id)
         {
-            HttpContext.Session.SetInt32("chrId", id);
+            Church church = _churchDataAccessLayer.GetChurchDataBySlug(id);
+            HttpContext.Session.SetInt32("chrId", church.ChurchId);
             return RedirectToAction("Packages", "Subscription");
 
         }
