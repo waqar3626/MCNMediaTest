@@ -310,9 +310,9 @@ input.empty, .select-search {
     /*width: max-content;*/
 }
 
-    .overlay-text:hover {
+    /*.overlay-text:hover {
       color:  #d9356f !important;
-    }
+    }*/
 
     .news {
         border-radius: 32px !important;
