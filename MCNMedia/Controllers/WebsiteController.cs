@@ -255,7 +255,53 @@ namespace MCNMedia_Dev.Controllers
         {
             Church church = _churchDataAccessLayer.GetChurchDataBySlug(id);
             HttpContext.Session.SetInt32("chrId", church.ChurchId);
-            return RedirectToAction("Packages", "Subscription");
+
+            int id1 = church.ChurchId;
+            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
+            AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
+            CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+            RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
+            ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
+            MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
+            NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
+            //PreviewChurchesDataAccessLayer previewChurchesDataAccessLayer = new PreviewChurchesDataAccessLayer();
+            ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
+
+
+            Profile profileModel = new Profile();
+            string churchSlug = id.ToString();
+            profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32(id1));
+            List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(id1).ToList();
+            if (announcementList.Count > 0)
+                profileModel.Announcement = announcementList.First<Announcement>();
+            else
+                profileModel.Announcement = new Announcement();
+
+            profileModel.NoticeList = noticeDataAccess.GetAllNotices(id1).ToList();
+
+            profileModel.CameraList = camDataAccess.GetAllCameras(id1, "");
+            profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", id1).ToList();
+            profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", id1).ToList();
+            profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", id1).ToList();
+            profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(id1);
+
+            //profileModel.Cameras = camDataAccess.GetCameraById(1,"");
+            //  profileModel.Media = "";
+            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(id1);
+            profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(id1, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
+
+            profileModel.NowScheduleList = Schedules_WhatsOnNow();
+
+            profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
+            profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
+            profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
+            profileModel.ScheduleListDay3 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now.AddDays(3), System.DateTime.Now.AddDays(3).ToString("dddd"), -1);
+            profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
+            profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
+            profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(id1, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
+
+            return View(profileModel);
+           
 
         }
 
