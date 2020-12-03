@@ -108,7 +108,7 @@ namespace MCNMedia_Dev.Repository
         public int UpdateSubscriberpaymentLog(int paymentLogId, bool IsSuccess, string OrderId)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("PaymentLogId", paymentLogId);
+            _dc.AddParameter("PayLogId", paymentLogId);
             _dc.AddParameter("OrderId", OrderId);
             _dc.AddParameter("IsSuccess", IsSuccess);
 
@@ -146,9 +146,10 @@ namespace MCNMedia_Dev.Repository
 
             _dc.ClearParameters();
             _dc.AddParameter("chrchId", ChurchId);
-            _dc.AddParameter("SubscriberId", SubscriberId);
+            _dc.AddParameter("SubId", SubscriberId);
 
             DataTable dataTable = _dc.ReturnDataTable("spSubscription_Check");
+            if (dataTable.Rows.Count > 0) { 
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 user.PaymentId = Convert.ToInt32(dataRow["PaymentId"]);
@@ -159,6 +160,7 @@ namespace MCNMedia_Dev.Repository
                 user.OrderAmount = Convert.ToDecimal(dataRow["OrderAmount"].ToString());
                 user.PaidAmount = Convert.ToDecimal(dataRow["PaidAmount"].ToString());
                  }
+            }
             return user;
         }
     }

@@ -72,17 +72,69 @@ namespace MCNMedia_Dev.Controllers
         }
 
         public IActionResult Packages() {
-
+            HttpContext.Session.SetInt32("chrId", 44);
+            ViewBag.Error = -1;
+            ViewBag.Button = 1;
+            ViewBag.LoginButton = 1;
             List<Subscriptions> subscription = subDataAccess.GetAllSubscription().ToList();
+            ViewBag.SubscriberId = -1;
             return View(subscription);
         }
 
+        public IActionResult Packages2()
+        {
+            HttpContext.Session.SetInt32("chrId", 44);
+            int SubscriberId = Convert.ToInt32(TempData["SubscriberId"]);
+            ViewBag.Error = 3;
+            ViewBag.LoginButton = -1;
+            ViewBag.Button = 2;
+            ViewBag.SubscriberId = SubscriberId;
+            List<Subscriptions> subscription = subDataAccess.GetAllSubscription().ToList();
+            return View("Packages",subscription);
+        }
 
-        public IActionResult SubscriptionUserRegistration(int subscriptionId) 
+        public IActionResult PackageRenewal(int PackageId,int SubscriberId)
+        {
+            
+            int ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+            if (SubscriberId > 0)
+            {
+                HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
+                HttpContext.Session.SetInt32("packageId", PackageId);
+                Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
+                subscription.ChurchId = ChurchId;
+                subscription.SubscriberId = SubscriberId;
+                subscription.OrderId = "-";
+                subscription.PackageId = PackageId;
+                decimal PakageAmount = subscription.PackageCharge;
+                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId);
+                if (paymentLogId > 0)
+                {
+                    HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
+                    subscription.PaymentId = paymentLogId;
+                    return View("Subscribe", subscription);
+                }
+                else
+                {
+
+                    TempData["SubscriberId"] = SubscriberId;
+                    return RedirectToAction(nameof(Packages2));
+
+                }
+            }
+            else
+            {
+                TempData["SubscriberId"] = SubscriberId;
+                return RedirectToAction(nameof(Packages));
+
+            }
+
+        }
+        public IActionResult SubscriptionUserRegistration(int PackageId) 
         {
             LoadCountryDDL();
             ViewBag.ErrorMsg = 1;
-            HttpContext.Session.SetInt32("packageId", subscriptionId);
+            HttpContext.Session.SetInt32("packageId", PackageId);
             
             return View();
         }
@@ -90,19 +142,17 @@ namespace MCNMedia_Dev.Controllers
      [HttpPost]
         public IActionResult UserRegistration(Subscriptions subscriptions)
         {
-            int SubscriberId = subDataAccess.AddSubscriber(subscriptions);
-           int ChurchId= (int)HttpContext.Session.GetInt32("chrId");
-            if (SubscriberId > 0) {
+                int SubscriberId = subDataAccess.AddSubscriber(subscriptions);
+                int ChurchId= (int)HttpContext.Session.GetInt32("chrId");
+                if (SubscriberId > 0) {
                 HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
                 int PackageId = (int)HttpContext.Session.GetInt32("packageId");
-            Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
+                Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
                 subscription.ChurchId = ChurchId;
                 subscription.SubscriberId = SubscriberId;
                 subscription.OrderId = "-";
                 subscription.PackageId = PackageId;
                 decimal PakageAmount = subscription.PackageCharge;
-
-
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-",ChurchId);
                 if (paymentLogId > 0) { 
                 HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -149,8 +199,9 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = 3;
-                    return View("SubscriptionUserLogin");
+                    HttpContext.Session.SetInt32("SubscriberId", subscription.SubscriberId);
+                    TempData["SubscriberId"] = subscription.SubscriberId;
+                    return RedirectToAction(nameof(Packages2));
                 }
                             
             }
