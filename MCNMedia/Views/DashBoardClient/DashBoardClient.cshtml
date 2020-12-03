@@ -204,8 +204,8 @@
                                 <div class="col-sm-12 pt-5 text-wrap border-bottom">
                                   
                                           <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" checked="@items.IsCameraLive"  id="CameraIsOnlineStatus">
-                                        <label class="custom-control-label text-success" for="CameraIsOnlineStatus"><span class="text-danger">OFF</span><span>/</span> <span class="text-success">ON</span> </label>
+                                        <input type="checkbox" class="custom-control-input" checked="@items.IsCameraLive" onchange="ChangeCameraStatus(@items.CameraId)"  id="CameraIsOnlineStatus_@items.CameraId">
+                                        <label class="custom-control-label text-success" for="CameraIsOnlineStatus_@items.CameraId"><span class="text-danger">OFF</span><span>/</span> <span class="text-success">ON</span> </label>
                                     </div>
                                 </div>
                                 <input type="hidden" id="hdnCameraID" value="@items.CameraId" />
@@ -379,22 +379,18 @@
 
 
 <script type="text/javascript">
-    $('#CameraIsOnlineStatus').change(function () {
+    
+
+    function ChangeCameraStatus(camId) {
         var cameraStatus = false;
-        var cameraID = document.getElementById('hdnCameraID').value;
-        if (this.checked) {
-            cameraStatus = true;
-        }
-
-        else {
-            cameraStatus = false;
-        }
-
+        var cameraID = camId;
+        var cameraStatus = $('#CameraIsOnlineStatus_' + cameraID).prop("checked");
         
-        var formData =new FormData();
+
+        var formData = new FormData();
         formData.append("cameraId", cameraID);
         formData.append("cameraStatus", cameraStatus);
-   
+
         $.ajax({
             type: "POST",
             url: "/DashBoardClient/ChangeCameraStatus/",
@@ -418,8 +414,8 @@
                 alert(errormessage.responseText);
             }
         });
-
-    });
+    }
+   
 
    
 

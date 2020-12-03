@@ -15,6 +15,15 @@
         top: 4em !important;
     }
 </style>
+<style>
+    .toggle.ios, .toggle-on.ios, .toggle-off.ios {
+        border-radius: 20rem;
+    }
+
+        .toggle.ios .toggle-handle {
+            border-radius: 20rem;
+        }
+</style>
 
 
 <div class="row mb-3">
@@ -31,7 +40,7 @@
             {
 
                 <div class="col-sm-6 mb-3">
-                    <div class="card " id="context-menu-hover-autohideNew2" cameraId="@items.CameraId">
+                    <div class="card " >
 
                         <div class="card-body mb-3 mt-2">
                             <div class="row">
@@ -46,19 +55,19 @@
                                 <div class="col-sm-12">
                                     <div class="row pt-3">
 
-                                        <div class="col-sm-4   text-wrap border-bottom border-right text-center">
+                                        <div class="col-sm-4   text-wrap border-bottom border-right text-center"id="context-menu-hover-autohideNew2" cameraId="@items.CameraId">
                                             <label> Camera ID     |</label>
                                             <i style="color: #1f4a79"></i>&nbsp; @items.CameraId
                                         </div>
                                         <div class="col-sm-4    text-wrap border-bottom border-right text-center">
                                             <i class="mdi mdi-camera " style="color: #1f4a79"></i>&nbsp; @items.CameraName
                                         </div>
-                                        <input type="hidden" id="hdnCameraId22_@Counter" value="@items.CameraId" />
+                                        <input type="hidden" id="hdnCameraId22_@items.CameraId" value="@items.CameraId" />
 
                                         <div class="col-sm-4  text-wrap border-bottom text-center">
                                             <div class="custom-control custom-switch lg">
-                                                <input type="checkbox" class="custom-control-input control" id="IsOnlineCamera_@Counter">
-                                                <label class="custom-control-label" for="IsOnlineCamera_@Counter"><span class="text-danger">OFF</span>/<span class="text-success">ON</span></label>
+                                                <input type="checkbox" class="custom-control-input control" checked="@items.IsCameraLive" onchange="ChangeCameraStatus(@items.CameraId)"  id="IsOnlineCamera_@items.CameraId">
+                                                <label class="custom-control-label" for="IsOnlineCamera_@items.CameraId"><span class="text-danger">OFF</span><span>/</span> <span class="text-success">ON</span> </label>
 
                                             </div>
                                         </div>
@@ -153,6 +162,42 @@
 <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
 <script src="~/theme/js/CheckCode.js"></script>
 <script type="text/javascript">
+    function ChangeCameraStatus(camId) {
+        var cameraID = camId;
+        
+        var cameraStatus = $('#IsOnlineCamera_' + cameraID).prop("checked");
+
+
+        var formData = new FormData();
+        formData.append("cameraId", cameraID);
+        formData.append("cameraStatus", cameraStatus);
+
+        $.ajax({
+            type: "POST",
+            url: "/DashBoardClient/ChangeCameraStatus/",
+
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                if (response.success) {
+                    swal("Camera Status Change Successfully!", {
+                        icon: "success",
+
+                    })
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+  
+   
     $('#AddCameraModal').on('hidden.bs.modal', function () {
         $(this).removeData('#AddCameraModal');
     });
@@ -219,5 +264,8 @@
     });
 
     }
+
+
+
 
 </script>
