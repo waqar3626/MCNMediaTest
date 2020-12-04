@@ -46,26 +46,29 @@ namespace MCNMedia_Dev.Controllers
                 Description = Description,
                 Source = stripeToken,
                 ReceiptEmail = stripeEmail,
-                Metadata = Metadata
+                Metadata = Metadata,
+               
             };
             var service = new ChargeService();
             Charge charge = service.Create(options);
            switch (charge.Status)
             {
+             
                 case "succeeded":
+
                     subscription.ChurchId = (int)HttpContext.Session.GetInt32("chrId");
                     subscription.SubscriberId=(int)HttpContext.Session.GetInt32("SubscriberId");
-                    subscription.OrderId = stripeToken;
+                    subscription.OrderId = charge.Id;
                     subscription.PackageId= (int)HttpContext.Session.GetInt32("packageId");
                     subscription.OrderAmount = (decimal)PackageAmount;
                     subscription.PaidAmount = (decimal)PackageAmount;
-                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId,true, stripeToken);
+                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId,true, charge.Id);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
                     return RedirectToAction(nameof(Profile));
                     break;
                 case "failed":
 
-                    int paymentLogId2 = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, false, stripeToken);
+                    int paymentLogId2 = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, false, charge.Id);
                     break;
             }
             return RedirectToAction(nameof(Subscribe));
