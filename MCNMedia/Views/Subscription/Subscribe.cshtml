@@ -17,6 +17,12 @@
     .bgcolor{
         background-color: red !important;
     }
+    button.stripe-button-el,
+    button.stripe-button-el > span {
+        background-color: #1f4a79 !important;
+        background-image: none;
+        
+    }
 </style>
 <link rel="shortcut icon" href="~/theme/images/favicon.png" />
 <div class="row">
@@ -46,7 +52,7 @@
                                     <div class="wrapper">
                                         <div>
                                             <form action="/Subscription/Processing" method="POST">
-                                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button bgcolor"
+                                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                         data-key="@Stripe.Value.PublishKey"
                                                         data-amount="@Model.PackageCharge"
                                                         data-name="MCN_Test"
