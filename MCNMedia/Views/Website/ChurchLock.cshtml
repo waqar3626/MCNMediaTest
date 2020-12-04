@@ -1,0 +1,35 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+    ViewData["Title"] = "ChurchLock";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
+            <div class="row w-100">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-transparent text-left p-5 text-center">
+                        @*<label>@Model.Churches.ChurchName</label>*@
+                        <form class="pt-5" asp-action="ChurchLock" asp-controller="Website" method="post">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="churchLock.churchPass" />
+                                <label for="examplePassword1">Password to unlock</label>
+
+                                <input type="password" asp-for="churchLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
+                            </div>
+                            <div class="mt-5">
+                                <button type="submit" class="btn btn-block btn-pink text-white btn-lg font-weight-medium" href="@Url.Action("ChurchLock", "Website")">Unlock</button>
+                            </div>
+                            @{ if (ViewBag.IsSuccess == 3)
+                                {
+                        <div class="form-group alert-danger">
+                            <label type="password" class="form-control form-control-lg"> Email or Password Incorrect</label>
+                        </div> } }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
