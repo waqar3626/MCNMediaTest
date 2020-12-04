@@ -113,7 +113,7 @@
                                     @Html.DisplayFor(modelItem => item.Phone)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Preview", "Admin",new { chId = item.ChurchId })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                    <a href="@Url.Action("Profile", "Website",new { Id = item.Slug })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
                                     <a onclick="DeleteChurchClick(@item.ChurchId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
