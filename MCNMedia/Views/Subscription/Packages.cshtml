@@ -4,14 +4,7 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 
 }
-@if (ViewBag.Error == 3)
-{
-    <div class="form-group col-sm-12 center" style="border:1px solid red">
-        <label class="text-red">
-            Your Current Subscription is Expired. Kindly Subscribe Again
-        </label>
-    </div>
-}
+
 <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
 <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
 <style>
@@ -32,25 +25,34 @@
 <!-- inject:css -->
 <!-- endinject -->
 <link rel="shortcut icon" href="~/theme/images/favicon.png" />
+@if (ViewBag.Error == 3)
+{
+    <div class="form-group col-sm-12 form-group alert-danger text-center " style="border:1px solid red">
+        <label class="text-red">
+            Your Current Subscription is Expired. Kindly Subscribe Again
+        </label>
+    </div>
+}
 <div class="row">
     <div class="col-md-12">
         <div class="container">
             <div class="card-body">
 
                 <div class="container text-center pt-5">
-                    @if (ViewBag.LoginButton == 1) { 
-                    <div class=" row col-md-12  m-3">
-                        <div class="float-right">
-                            <a type="submit" asp-controller="Subscription" asp-action="SubscriptionUserLogin" class="btn btn-outline-blue float-right" >Already have an account. Sign in</a>
+                    @if (ViewBag.LoginButton == 1)
+                    {
+                        <div class=" row col-md-12  m-3">
+                            <div class="float-right">
+                                <a type="submit" asp-controller="Subscription" asp-action="SubscriptionUserLogin" class="btn btn-outline-blue float-right">Already have an account. Sign in</a>
 
+                            </div>
                         </div>
-                    </div>
                     }
                     <div class="row pricing-table">
                         @foreach (var items in Model)
                         {
                             <div class="col-md-4 col-xl-4  pt-3">
-                                <form method="post" >
+                                <form method="post">
                                     <input type="hidden" name="SubscriberId" value="@ViewBag.SubscriberId" />
                                     <div class="border p-4" style="border-color: #1f4a79 !important">
                                         <div class="text-center pricing-card-head">

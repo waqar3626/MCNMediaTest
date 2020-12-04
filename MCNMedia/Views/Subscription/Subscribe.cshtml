@@ -54,13 +54,15 @@
                                             <form action="/Subscription/Processing" method="POST">
                                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                         data-key="@Stripe.Value.PublishKey"
-                                                        data-amount="@Model.PackageCharge"
+                                                        data-amount="@(Model.PackageCharge*100)"
                                                         data-name="MCN_Test"
                                                         data-description="@Model.PackageTitle"
                                                         data-image="/WebsiteAssets/img/logo_100x100.png"
-                                                        data-locale="en"
+                                                        data-locale="EUR"
                                                         data-zip-code="true"
-                                                        data-label="Pay @(Model.PackageCharge ) (&#8364;)">
+                                                        data-currency="EUR"
+                                                        data-label="Pay @(Model.PackageCharge ) (&#8364;)"
+                                                        data-panel-label="Pay Now">
                                                 </script>
                                                 <input type="hidden" name="PackageAmount" value="@Model.PackageCharge" />
                                                 <input type="hidden" name="Description" value="@Model.PackageTitle" />

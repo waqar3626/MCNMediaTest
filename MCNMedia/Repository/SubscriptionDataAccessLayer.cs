@@ -83,7 +83,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("OrderAmount", Sub.OrderAmount);
             _dc.AddParameter("PaidAmount", Sub.PaidAmount);
             _dc.AddParameter("ChurchId", Sub.ChurchId);
-
+            _dc.AddParameter("tokenId", Sub.TokenId);
 
 
             return _dc.ReturnInt("spSubscriberPayment_Add");
@@ -91,7 +91,7 @@ namespace MCNMedia_Dev.Repository
          
         }
 
-        public int  AddSubscriberpaymentLog(int PackageId,int SubscriberId,decimal OrderAmount, string OrderId,int ChurchId)
+        public int  AddSubscriberpaymentLog(int PackageId,int SubscriberId,decimal OrderAmount, string OrderId,int ChurchId,string tokenId)
         {
             _dc.ClearParameters();
             _dc.AddParameter("PackageId", PackageId);
@@ -99,20 +99,23 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("OrderId", OrderId);
             _dc.AddParameter("OrderAmount", OrderAmount);
             _dc.AddParameter("ChurchId", ChurchId);
+            _dc.AddParameter("tokenId", tokenId);
 
-           int PaymentLogId= _dc.ReturnInt("spSubscriberPaymentLog_Add");
+            int PaymentLogId= _dc.ReturnInt("spSubscriberPaymentLog_Add");
 
             return PaymentLogId;
 
         }
-        public int UpdateSubscriberpaymentLog(int paymentLogId, bool IsSuccess, string OrderId)
+        public int UpdateSubscriberpaymentLog(int paymentLogId, bool IsSuccess, string OrderId, string tokenId)
         {
             _dc.ClearParameters();
             _dc.AddParameter("PayLogId", paymentLogId);
             _dc.AddParameter("OrderId", OrderId);
             _dc.AddParameter("IsSuccess", IsSuccess);
+            _dc.AddParameter("tokenId", tokenId);
 
-          return _dc.ReturnInt("spSubscriberPaymentLog_Update");
+
+            return _dc.ReturnInt("spSubscriberPaymentLog_Update");
 
            
 

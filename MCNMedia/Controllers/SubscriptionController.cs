@@ -62,13 +62,14 @@ namespace MCNMedia_Dev.Controllers
                     subscription.PackageId= (int)HttpContext.Session.GetInt32("packageId");
                     subscription.OrderAmount = (decimal)PackageAmount;
                     subscription.PaidAmount = (decimal)PackageAmount;
-                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId,true, charge.Id);
+                    subscription.TokenId = stripeToken;
+                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId,true, charge.Id, stripeToken);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
                     return RedirectToAction(nameof(Profile));
                     break;
                 case "failed":
 
-                    int paymentLogId2 = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, false, charge.Id);
+                    int paymentLogId2 = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, false, charge.Id, stripeToken);
                     break;
             }
             return RedirectToAction(nameof(Subscribe));
@@ -110,7 +111,7 @@ namespace MCNMedia_Dev.Controllers
                 subscription.OrderId = "-";
                 subscription.PackageId = PackageId;
                 decimal PakageAmount = subscription.PackageCharge;
-                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId);
+                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId,"-");
                 if (paymentLogId > 0)
                 {
                     HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -156,7 +157,7 @@ namespace MCNMedia_Dev.Controllers
                 subscription.OrderId = "-";
                 subscription.PackageId = PackageId;
                 decimal PakageAmount = subscription.PackageCharge;
-                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-",ChurchId);
+                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-",ChurchId,"-");
                 if (paymentLogId > 0) { 
                 HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
                 subscription.PaymentId = paymentLogId;

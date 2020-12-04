@@ -9,8 +9,8 @@
 <form asp-controller="Subscription" method="post">
     @{ if (ViewBag.ErrorMsg == 2)
         {
-<div class="form-group alert-danger">
-    <label type="password" class="form-control form-control-lg"> Email Address Already Exists</label>
+<div class="form-group alert-danger text-center"   style="        border: 1px solid red ">
+    <label type="password" class=" text-red text-center"> Email Address Already Exists</label>
 </div> } 
         }
     <div class="row m-0 mt-5 mb-5">

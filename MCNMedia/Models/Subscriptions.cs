@@ -27,6 +27,7 @@ namespace MCNMedia_Dev.Models
         public decimal PaidAmount { get; set; }
 
         public int ChurchId { get; set; }
+        public string TokenId { get; set; }
 
 
     }
