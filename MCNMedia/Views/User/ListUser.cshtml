@@ -85,7 +85,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach (var item in Model.LUsers)
                             {
                                 <tr>
@@ -93,12 +92,9 @@
                                             @Html.DisplayFor(modelItem => item.UserId)
                                         </td>*@
                                     <td class="text-wrap">
-
                                         @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
                                         @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap", @id = "hdnUserId" })
-
                                     </td>
-
                                     <td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
                                     </td>
@@ -109,25 +105,26 @@
 
                                             foreach (string churchName in Name)
                                             {
-
                                                 <label class="text-wrap">@churchName</label>
                                                 <br />
                                             }
-
-
                                         }
                                     </td>
-
                                     <td>
                                         @Html.DisplayFor(modelItem => item.RoleName)
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                        @if (item.RoleName == "Admin")
+                                        {
+                                            <a class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+
+                                        }
                                         <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a onclick="DeleteUserClick(@item.UserId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-
-
-
                                     </td>
                                 </tr>
                             }
