@@ -105,11 +105,13 @@ namespace MCNMedia_Dev.Controllers
             {
                 HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
                 HttpContext.Session.SetInt32("packageId", PackageId);
+                Subscriptions subscriberinfo = subDataAccess.GetSubscriberById(SubscriberId);
                 Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
                 subscription.ChurchId = ChurchId;
                 subscription.SubscriberId = SubscriberId;
                 subscription.OrderId = "-";
                 subscription.PackageId = PackageId;
+                subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId,"-");
                 if (paymentLogId > 0)
@@ -151,11 +153,13 @@ namespace MCNMedia_Dev.Controllers
                 if (SubscriberId > 0) {
                 HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
                 int PackageId = (int)HttpContext.Session.GetInt32("packageId");
+                Subscriptions subscriberinfo = subDataAccess.GetSubscriberById(SubscriberId);
                 Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
                 subscription.ChurchId = ChurchId;
                 subscription.SubscriberId = SubscriberId;
                 subscription.OrderId = "-";
                 subscription.PackageId = PackageId;
+                subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-",ChurchId,"-");
                 if (paymentLogId > 0) { 

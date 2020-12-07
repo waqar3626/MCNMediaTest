@@ -74,6 +74,22 @@ namespace MCNMedia_Dev.Repository
             return SubscriberId;
         }
 
+        public Subscriptions GetSubscriberById(int subscriberId)
+        {
+            Subscriptions subscription = new Subscriptions();
+            _dc.ClearParameters();
+            _dc.AddParameter("subscribeId", subscriberId);
+            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetById");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                
+                subscription.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"]);
+                subscription.Name = dataRow["SubscriberName"].ToString();
+                subscription.EmailAddress = dataRow["EmailAddress"].ToString();
+               
+            }
+            return subscription;
+        }
         public int AddSubscriberpayment(Subscriptions Sub)
         {
             _dc.ClearParameters();
