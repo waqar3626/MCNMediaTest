@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Churches";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+
+
+    
+    <link rel="stylesheet" href="index.css">
+    <style type="text/css">
+        h1 {
+            text-align: center
+        }
+
+        #main {
+            max-width: 900px;
+            display: table;
+            margin-left: 30vw;
+            margin-top: 10vh;
+        }
+
+            #main .sub {
+                display: block;
+                float: left;
+                min-width: 300px;
+                min-height: 300px;
+                border: 0.5px solid #bbb;
+                border-radius: 4px;
+                padding: 15px;
+            }
+
+                #main .sub h2 {
+                    font-size: 20px;
+                }
+
+            #main #time {
+                margin-right: 5vw;
+            }
+
+                #main #time div {
+                    display: block;
+                    min-height: 120px;
+                }
+    </style>
+
+    <h1>Magic App Here</h1>
+    <div id="main">
+        s
+        <div id="location" class="sub">
+            <h2>And you are in...</h2>
+            <div class="address"></div>
+        </div>
+    </div>
+    <!-- Script here -->
+
+
+
+    <script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function(event) {
+  var address = document.querySelector('.address')
+  if (!navigator.geolocation){
+    console.log("Geolocation is not supported by your browser");
+    ipLookup();
+  } else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+function success(position) {
+    var latitude  = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    reverseGeocodingWithGoogle(longitude, latitude)
+  }
+    function error() {
+        alert("hello");
+        
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        
+    console.log("Unable to retrieve your location");
+  }
+  function ipLookup() {
+    fetch('https://extreme-ip-lookup.com/json/')
+    .then( res => res.json())
+    .then(response => {
+        fallbackProcess(response)
+    })
+    .catch((data, status) => {
+        address.innerText = 'We could not find your location'
+    })
+  }
+
+function reverseGeocodingWithGoogle(latitude, longitude) {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?
+      latlng=${latitude},${longitude}&key={GOOGLE_MAP_KEY}`)
+    .then( res => res.json())
+    .then(response => {
+      processUserData(response)
+    })
+    .catch(status => {
+      ipLookup()
+    })
+  }
+
+function processUserData(response) {
+    address.innerText = response.results[0].formatted_address
+  }
+
+  function fallbackProcess(response) {
+    address.innerText = `${response.city}, ${response.country}`
+  }
+
+var localTime = jstz.determine().name();
+  var serverTime = "Asia/Novosibirsk";
+  document.querySelector('.server').innerText = new Date().toLocaleString("en-US", {timeZone: serverTime});
+  document.querySelector('.local').innerText = new Date().toLocaleString("en-US", {timeZone: localTime});
+});
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
