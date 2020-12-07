@@ -24,18 +24,34 @@
                 <input type="hidden" asp-for="Churches.ChurchId" />
 
                 <div class="form-group row ">
-                    <div class="col-lg-6 grid-margin stretch-card  " style="height:277px;">
-                        <div class="card " style="margin-top:30px;" id="cardImage">
-                            <div class="card-body">
+                    <div class="col-lg-6 " >
+                        <div class="form-group row">
+                            <div class="col-sm-12" style="height:275px;">
+                                <div class="card " style="margin-top:30px;" id="cardImage">
+                                    <div class="card-body">
 
-                                <input asp-for="Churches.ImageURl" type="file" name="imageURl2" class="dropify"  />
-                                <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
-                                <input type="hidden" asp-for="Churches.ImageURl" name="ImageUrl" id="ImageCheckUrl" />
-                            </div>
-                            <div class="invalidImage" id="ImageText">
-                                Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
+                                        <input asp-for="Churches.ImageURl" type="file" name="imageURl2" class="dropify" />
+                                        <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
+                                        <input type="hidden" asp-for="Churches.ImageURl" name="ImageUrl" id="ImageCheckUrl" />
+                                    </div>
+                                    <div class="invalidImage" id="ImageText">
+                                        Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <label asp-for="Churches.StaticIP" for="validationCustom08">DNS/StaticIP </label>
+                                    <input asp-for="Churches.StaticIP" class="form-control" required id="validationCustom08" placeholder="DNS/StaticIP " />
+                                    <div class="invalid-feedback">
+                                        Please Provide a valid DNS/StaticIP
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        
                     </div>
 
 
@@ -54,7 +70,7 @@
                             <div class="col-sm-12">
                                 <label asp-for="Churches.ClientTypeId">Client Type *</label>
                                 @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                                @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "custom-select", @required = "required",@id= "ddlClientId" })
+                                @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "custom-select", @required = "required", @id = "ddlClientId" })
                                 <div class="invalid-feedback">
                                     Please Provide a valid Client Type
                                 </div>
@@ -64,7 +80,21 @@
                             <div class="col-sm-12">
                                 <label asp-for="Churches.Password" for="validationCustom02">Password * </label>
                                 <input asp-for="Churches.Password" class="form-control" id="validationCustom02" placeholder="Password " />
-                               
+
+                            </div>
+                        </div>
+                        <div class=" form-group row">
+
+                            <div class="col-sm-12">
+
+                                <label asp-for="Churches.InstallationDate" for="InstallationDate">Installation Date </label>
+
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    <input type="text" asp-for="Churches.InstallationDate" id="InstallationDate" name="InstallationDate" class="form-control" placeholder="Installation Date" required />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

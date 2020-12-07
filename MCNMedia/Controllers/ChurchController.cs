@@ -237,7 +237,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl)
+        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl,string InstallationDate)
         {
             try
             {
@@ -263,7 +263,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 ChurchId = church.Churches.ChurchId;
-
+                church.Churches.InstallationDate = Convert.ToDateTime(InstallationDate);
                 if (ModelState.IsValid)
                 {
                     church.Churches.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");

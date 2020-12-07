@@ -74,7 +74,11 @@ namespace MCNMedia_Dev.Models
 
         public string CountyName { get; set; }
 
-        public string Password { get; set; } 
+        public string Password { get; set; }
+
+        public string StaticIP { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
+        public DateTime InstallationDate { get; set; }
 
         public class ClientType
         {

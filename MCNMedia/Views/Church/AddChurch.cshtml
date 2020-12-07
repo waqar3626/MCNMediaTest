@@ -18,14 +18,28 @@
             <div class="card-body">
                 <h4 class="card-title">New Church Information</h4>
                 <div class="form-group row">
-                    <div class="col-lg-6 grid-margin stretch-card">
-                        <div class="card " id="cardImage">
-                            <div class="card-body ">
-                                <div class="form-group">
-                                    <input asp-for="ImageURl" type="file" id="UploadImage" name="ImageURl2" class="form-control  dropify" />
+                    <div class="col-sm-6 ">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="card " id="cardImage">
+                                    <div class="card-body ">
+                                        <div class="form-group">
+                                            <input asp-for="ImageURl" type="file" id="UploadImage" name="ImageURl2" class="form-control  dropify" />
+                                        </div>
+                                        <div class="invalidImage" id="ImageText">
+                                            Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="invalidImage" id="ImageText">
-                                    Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
+
+                            </div>
+                        </div>
+                        <div class=" form-group row">
+                            <div class="col-sm-12">
+                                <label asp-for="StaticIP" for="validationCustom08">DNS/StaticIP </label>
+                                <input asp-for="StaticIP" class="form-control" required id="validationCustom08" placeholder="DNS/StaticIP " />
+                                <div class="invalid-feedback">
+                                    Please Provide a valid DNS/StaticIP
                                 </div>
                             </div>
                         </div>
@@ -56,6 +70,20 @@
                             <div class="col-sm-12">
                                 <label asp-for="Password" for="validationCustom02">Password </label>
                                 <input asp-for="Password" class="form-control" id="validationCustom02" placeholder="Password " />
+                            </div>
+                        </div>
+                        <div class=" form-group row">
+
+                            <div class="col-sm-12">
+
+                                <label asp-for="InstallationDate" for="InstallationDate">Installation Date </label>
+
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    <input type="text" asp-for="InstallationDate" id="InstallationDate" name="InstallationDate" class="form-control" placeholder="Installation Date" required />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -145,7 +173,16 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+       
         $('#ImageText').hide();
+        $(function () {
+            $("#InstallationDate").datepicker({
+                dateFormat: 'dd-MMM-yyyy',
+                defaultDate: new Date()
+            });
+            $("#InstallationDate").datepicker('setDate', new Date());
+        });
+        
     });
     $('#ValChurchSubmit').click(function () {
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
