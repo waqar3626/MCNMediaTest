@@ -54,9 +54,10 @@
                                                 @Html.DisplayFor(modelItem => item.CreatedAt)
                                             </td>
                                             <td>
-                                                <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
+                                             
+                                                <button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
                                                 @{
-                                                    var UrlDownload = item.RecordingURl;
+                                                    var UrlDownload = item.Src;
 
                                                     <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
                                                 }
