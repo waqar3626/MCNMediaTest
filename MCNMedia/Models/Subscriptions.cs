@@ -25,7 +25,10 @@ namespace MCNMedia_Dev.Models
         public string OrderId { get; set; }
         public decimal OrderAmount { get; set; }
         public decimal PaidAmount { get; set; }
-
+        public string ChurchName { get; set; }
+        public DateTime Orderdate { get; set; }
+        public DateTime Expiredate { get; set; }
+        public DateTime CreatedAt { get; set; }
         public int ChurchId { get; set; }
         public string TokenId { get; set; }
 

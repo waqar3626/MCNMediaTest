@@ -4,72 +4,84 @@
     ViewData["Title"] = "ListRecording";
 }
 <script src="~/js/jwplayer.js"></script>
+<div class="row">
+    <div class="col-md-12">
 
+        <div class="card ">
+            <div class="card-header card-header-custom">
+                <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-outline-warning btn-custom btn-sm float-right " title="Add New"> <i class="mdi mdi-plus "></i> Add Recording</a>
+                Manage Recordings
+            </div>
+            <div class="card-body">
+                
 
-<div class="card">
-    <div class="card-header card-header-custom">
-        <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-outline-warning btn-custom btn-sm float-right " title="Add New"> <i class="mdi mdi-plus "></i> Add Recording</a>
-        Manage Recordings
-    </div>
-        <div class="card-body">
-            @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
-            {
-
-            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                <table id="sortable-table-1" class="table">
-                    <thead>
-                        <tr>
-                            <th class="sortStyle">Title <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Church<i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Date <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Time <i class="ti-angle-down"></i></th>
-                            <th>Actions</th>
-                        </tr>
-
-
-                    </thead>
-                    <tbody>
-
-                        @foreach (var item in Model.LRecordings)
+                        @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
                         {
-                            <tr>
 
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.RecordingTitle)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ChurchName)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.Date)
-
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.Time)
-                                </td>
-                                <td>
-                                    <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
-                                    @{
-                                        var UrlDownload = item.RecordingURl;
-
-                                        <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
-                                    }
-                                    <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("Delete", "Recording", new { id=item.RecordingId })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                <table id="sortable-table-1" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortStyle">Title <i class="ti-angle-down"></i></th>
+                                            <th class="sortStyle">Church<i class="ti-angle-down"></i></th>
+                                            <th class="sortStyle">Date <i class="ti-angle-down"></i></th>
+                                            <th class="sortStyle">Time <i class="ti-angle-down"></i></th>
+                                            <th class="sortStyle">Last Modified At <i class="ti-angle-down"></i></th>
+                                            <th>Actions</th>
+                                        </tr>
 
 
-                                </td>
-                            </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model.LRecordings)
+                                        {
+                                        <tr>
+
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.RecordingTitle)
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.ChurchName)
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.Date)
+
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.Time)
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.CreatedAt)
+                                            </td>
+                                            <td>
+                                                <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
+                                                @{
+                                                    var UrlDownload = item.RecordingURl;
+
+                                                    <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
+                                                }
+                                                <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a onclick="DeleteRecordingClick(@item.RecordingId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
+
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+
                         }
-                    </tbody>
-                </table>
 
             </div>
 
-            }
+
         </div>
-
-
+    </div>
 </div>
+
+
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddRecordingPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,16 +158,16 @@
         });
         jwplayer().onError(function () {
             jwplayer().play();
-        }); 
+        });
     });
-    
+
     function AddRecording1() {
 
         $('#AddRecordingPopUp').modal('show');
 
     }
     function EditRecording(recordingId) {
-      
+
          $.ajax({
              type: "Get",
              url: '@Url.Action("Edit", "Recording")',
@@ -167,6 +179,34 @@
          });
 
     }
-     
+    function DeleteRecordingClick(RecordingId) {
+
+        swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your file has been deleted!", {
+        icon: "success",
+
+    });
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Delete", "Recording")',
+            data: { id: RecordingId },
+
+        });
+      window.location.reload();
+  } else {
+         swal("Your file is safe!");
+  }
+});
+
+
+    }
 
 </script>

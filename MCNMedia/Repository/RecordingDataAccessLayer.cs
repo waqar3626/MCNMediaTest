@@ -96,6 +96,7 @@ namespace MCNMedia_Dev.Repository
             recording.RecordingURl = dataRow["RecordingURL"].ToString();
             recording.Date = Convert.ToDateTime(dataRow["RecordingDate"].ToString());
             recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
+            recording.CreatedAt = Convert.ToDateTime(dataRow["CreatedAtandUpdateDate"].ToString());
             recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
             recording.ChurchName = dataRow["ChurchName"].ToString();
             return recording;

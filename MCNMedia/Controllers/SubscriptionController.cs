@@ -97,6 +97,14 @@ namespace MCNMedia_Dev.Controllers
             return View("Packages",subscription);
         }
 
+        public IActionResult ListSuscription()
+        {
+            Subscriptions subscription = new Subscriptions();
+            List<Subscriptions> subs = subDataAccess.GetAllSubscribersList().ToList<Subscriptions>();
+            return View(subs);
+
+        }
+
         public IActionResult PackageRenewal(int PackageId,int SubscriberId)
         {
             

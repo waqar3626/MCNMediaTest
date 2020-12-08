@@ -384,7 +384,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .cover {
-    background-image: url("../img/video-img.png");
+    background-image: url("../img/cover-image.png");
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;

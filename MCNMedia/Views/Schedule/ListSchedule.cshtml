@@ -110,6 +110,7 @@
                                 <th class="sortStyle">Event Date/Day<i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Event Time <i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Duration <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> Last Modified At <i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Repeated <i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Recording <i class="ti-angle-down"></i></th>
 
@@ -121,69 +122,74 @@
 
                             @foreach (var item in Model.LSchedules)
                             {
-                                <tr>
+                            <tr>
 
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.EventName)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @if (item.IsRepeated == false)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.EventDate)
-                                        }
-                                        else if (item.IsRepeated == true)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.EventDay)
-                                        }
-                                    </td>
+                                <td class="text-wrap">
+                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                </td>
+                                <td class="text-wrap">
+                                    @Html.DisplayFor(modelItem => item.EventName)
+                                </td>
+                                <td class="text-wrap">
+                                    @if (item.IsRepeated == false)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EventDate)
+                                    }
+                                    else if (item.IsRepeated == true)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.EventDay)
+                                    }
+                                </td>
 
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.EventTime)
-                                    </td>
-                                    <td class="text-wrap">
-                                        @item.RecordDuration  Minutes
-                                    </td>
-                                    <td class="text-wrap">
-                                        @if (item.IsRepeated)
-                                        {
-                                            <label class="badge-pill badge-success">
-                                                Yes
-                                            </label>
+                                <td class="text-wrap">
+                                    @Html.DisplayFor(modelItem => item.EventTime)
+                                </td>
+                                <td class="text-wrap">
+                                    @item.RecordDuration  Minutes
+                                </td>
+                                <td class="text-wrap">
+                                      
+                                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                                </td>
+                                <td class="text-wrap">
+                                    @if (item.IsRepeated)
+                                    {
+                                        <label class="badge-pill badge-success">
+                                            Yes
+                                        </label>
 
-                                        }
-                                        else
-                                        {
-                                            <label class="badge-pill badge-danger">
-                                                No
-                                            </label>
-                                        }
-                                    </td>
-                                    <td class="text-wrap">
-                                        @if (item.Record)
-                                        {
-                                            <label class="badge-pill badge-success">
-                                                Yes
-                                            </label>
+                                    }
+                                    else
+                                    {
+                                        <label class="badge-pill badge-danger">
+                                            No
+                                        </label>
+                                    }
+                                </td>
+                                <td class="text-wrap">
+                                    @if (item.Record)
+                                    {
+                                        <label class="badge-pill badge-success">
+                                            Yes
+                                        </label>
 
-                                        }
-                                        else
-                                        {
-                                            <label class="badge-pill badge-danger">
-                                                No
-                                            </label>
-                                        }
-                                    </td>
+                                    }
+                                    else
+                                    {
+                                        <label class="badge-pill badge-danger">
+                                            No
+                                        </label>
+                                    }
+                                </td>
+
+                                <td>
+                                    <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a onclick="DeleteSchedule(@item.ScheduleId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>
+
+                                </td>
 
 
-                                    <td>
-                                        <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a onclick="DeleteSchedule(@item.ScheduleId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>
-
-                                    </td>
-                                </tr>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -218,7 +224,7 @@
     $(document).ready(function () {
 
 
-
+      
 
 
         var date = '@ViewBag.SchDate';

@@ -63,8 +63,20 @@
                                         <tr>
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town </td>
                                             <td  class="bluepurple" >
-                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple"   >
-                                                    <b >@schedule.EventName </b>
+                                                <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
+
+                                                    @if (@schedule.IsRepeated == true)
+                                                    {
+                                                    <b>
+                                                        @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                    </b>
+                                                    }
+                                                    else
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName
+                                                        </b>
+                                                    }
                                                 </a>
                                             </td>
                                             <td scope="row"  class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
@@ -86,7 +98,19 @@
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, "@schedule.Town"</td>
                                             <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
-                                                    <b>@schedule.EventName </b>
+
+                                                    @if (@schedule.IsRepeated == true)
+                                                    {
+                                                    <b>
+                                                        @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                    </b>
+                                                    }
+                                                    else
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName
+                                                        </b>
+                                                    }
                                                 </a>
                                             </td>
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
@@ -108,7 +132,19 @@
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town</td>
                                             <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
-                                                    <b>@schedule.EventName </b>
+                                                   
+                                    @if (@schedule.IsRepeated == true)
+                                    {
+                                                    <b>
+                                                        @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                    </b>
+                                    }
+                                    else
+                                    {
+                                        <b>
+                                            @schedule.EventName
+                                        </b>
+                                    }
                                                 </a>
                                             </td>
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>

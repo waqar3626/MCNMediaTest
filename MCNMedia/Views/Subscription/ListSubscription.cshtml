@@ -1,0 +1,109 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Subscriptions>
+
+@{
+    ViewData["Title"] = "ListSuscription";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card">
+    <div class="card-header card-header-custom">Suscriber List</div>
+    <div class="card-body">
+        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.Name)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.EmailAddress)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.ChurchName)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.PackageTitle)
+                            <i class="ti-angle-down"></i>
+                        </th>
+
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.DurationUnit)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.PackageCharge)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.PaidAmount)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.Orderdate)
+                            <i class="ti-angle-down"></i>
+                        </th>
+
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.Expiredate)
+                            <i class="ti-angle-down"></i>
+                        </th>
+                        <th class="sortStyle">
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                            <i class="ti-angle-down"></i>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.EmailAddress)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.ChurchName)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.PackageTitle)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.DurationUnit)
+                            </td>
+
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.PackageCharge)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.PaidAmount)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.Orderdate)
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.Expiredate)
+                            </td>
+
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.CreatedAt)
+                            </td>
+
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    </div>

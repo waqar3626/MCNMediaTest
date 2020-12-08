@@ -57,7 +57,8 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAtandUpdateDate"].ToString());
+            
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
@@ -146,7 +147,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-
+                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
 
 
                 Balobj.Add(schedule);
@@ -172,6 +173,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
                 Balobj.Add(schedule);
             }
             return Balobj;
@@ -214,6 +216,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
 
 
 

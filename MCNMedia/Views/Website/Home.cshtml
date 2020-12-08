@@ -13,12 +13,12 @@
     }
     List<SelectListItem> SelectList = Lists.GetCountyList(id);
 }
-    <style type="text/css">
+<style type="text/css">
 
-        .bluepurple {
-            color: #1f4a79
-        }
-    </style>
+    .bluepurple {
+        color: #1f4a79
+    }
+</style>
 
 <!-- banner slider start -->
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="500000000000">
@@ -28,17 +28,17 @@
         <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
-        
+
         <div class="carousel-item active">
-            
+
             <img src="~/WebsiteAssets/img/banner-img-1-1-1.jpg" class="d-block  h-550 slide-image" alt="...">
             @*<div class="carousel-caption">
-            <h5 class="nexa font-60">MCN MEDIA</h5>
-            <p class="font-36 MyriadPro">
-                Europe's Leading Specialists <br>
-                in Live Streaming
-            </p>
-        </div>*@
+                    <h5 class="nexa font-60">MCN MEDIA</h5>
+                    <p class="font-36 MyriadPro">
+                        Europe's Leading Specialists <br>
+                        in Live Streaming
+                    </p>
+                </div>*@
         </div>
         <div class="carousel-item">
 
@@ -91,7 +91,7 @@
 <!-- banner slider end -->
 <!-- find curch start -->
 <div class="text-pink font-36 text-center pt-4 bg-white container avantgardece">
-    
+
 </div>
 <div class="bg-blue pt-3 pb-5">
     <div class="container">
@@ -146,7 +146,7 @@
                     <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
                         <div class="img-overly position-relative" style="height:179px;">
                             <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.Town</div>
+                            <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
                         </div>
                     </a>
                 </div>
@@ -197,10 +197,25 @@
                         <tr>
                             <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town</td>
                             <td class="bluepurple">
-                                <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
-                                    <b>@schedule.EventName </b>
+                                <a href="@Url.Action("Profile", "Website", new { id = schedule.Slug })" class="bluepurple">
+
+                                    @if (@schedule.IsRepeated == true)
+                                    {
+                                        <b>
+                                           @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                        </b>
+                                    }
+                                    else
+                                    {
+                                        <b>
+                                            @schedule.EventName
+                                        </b>
+                                    }
+
                                 </a>
                             </td>
+
+
                             <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
                         </tr>
                     }
@@ -217,6 +232,7 @@
                     <video controls class='video' width='100%'>
                         <source src="https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/mcnpromo.mp4"
                                 type="video/mp4" />
+                      
                         <img src="~/WebsiteAssets/img/video-img.png" alt="">
                     </video>
                 </div>
