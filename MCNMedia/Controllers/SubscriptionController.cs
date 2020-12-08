@@ -76,7 +76,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         public IActionResult Packages() {
-            HttpContext.Session.SetInt32("chrId", 44);
+           
             ViewBag.Error = -1;
             ViewBag.Button = 1;
             ViewBag.LoginButton = 1;
@@ -87,7 +87,7 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Packages2()
         {
-            HttpContext.Session.SetInt32("chrId", 44);
+            
             int SubscriberId = Convert.ToInt32(TempData["SubscriberId"]);
             ViewBag.Error = 3;
             ViewBag.LoginButton = -1;
