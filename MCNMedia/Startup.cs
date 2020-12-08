@@ -47,6 +47,7 @@ namespace MCNMedia_Dev
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
+            services.Configure<StripeSetting>(Configuration.GetSection("Stripe"));
             services.AddControllersWithViews();
             //services.AddDistributedMemoryCache();
             services.AddSession(options =>
