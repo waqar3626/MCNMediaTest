@@ -30,7 +30,7 @@
 </style>
 
 <form method="get">
-    <div class="card ">
+    <div class="card">
         <div class="card-body">
             <div class="form-group row">
                 @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text", ViewBag.ChurchId), new { @class = "form-control", @onchange = "javascript:onChangeChurchClient()", @id = "ddlid" })
@@ -44,32 +44,38 @@
 
 <div class="row mt-4">
     <div class="col-sm-12">
-        <div class="card ">
+        <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-4 text-center">
                         <img src="@Model.Churches.ImageURl" width="100%" />
                     </div>
-                    <div class="col-sm-8 ">
-                        <div class="form-group row border-bottom ">
-
-                            <div class="col-sm-6 border-right"><i class="mdi mdi-church fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.ChurchName</div>
-
-                            <div class="col-sm-6 "><i class="mdi mdi-home fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Town</div>
-
-                        </div>      <div class="form-group row border-bottom pt-2">
-
-                            <div class="col-sm-6 border-right"><i class="mdi mdi-email fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.EmailAddress</div>
-
-                            <div class="col-sm-6 "><i class="mdi mdi-phone fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Phone</div>
-                        </div>      <div class="form-group row border-bottom pt-2">
-
-                            <div class="col-sm-6 border-right"><i class="mdi mdi-google-maps fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Address</div>
-
-                            <div class="col-sm-6 "><i class="mdi mdi-web fa-3x " style="color: #1f4a79"></i>&nbsp; @Model.Churches.Website</div>
+                    <div class="col-sm-8">
+                        <div class="form-group row border-bottom">
+                            <div class="col-sm-6 border-right">
+                                <i class="mdi mdi-church fa-3x" style="color: #1f4a79"></i>&nbsp; @Model.Churches.ChurchName
+                            </div>
+                            <div class="col-sm-6">
+                                <i class="mdi mdi-home fa-3x" style="color: #1f4a79"></i>&nbsp; @Model.Churches.Town
+                            </div>
+                        </div>
+                        <div class="form-group row border-bottom pt-2">
+                            <div class="col-sm-6 border-right">
+                                <i class="mdi mdi-email fa-3x" style="color: #1f4a79"></i>&nbsp; @Model.Churches.EmailAddress
+                            </div>
+                            <div class="col-sm-6">
+                                <i class="mdi mdi-phone fa-3x" style="color: #1f4a79"></i>&nbsp; @Model.Churches.Phone
+                            </div>
+                        </div>
+                        <div class="form-group row border-bottom pt-2">
+                            <div class="col-sm-6 border-right">
+                                <i class="mdi mdi-google-maps fa-3x" style="color: #1f4a79"></i>&nbsp; @Model.Churches.Address
+                            </div>
+                            <div class="col-sm-6">
+                                <i class="mdi mdi-web fa-3x" style="color: #1f4a79"></i>&nbsp; @Model.Churches.Website
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -182,29 +188,29 @@
                 {
     <div class="row mb-2">
         <div class="col-sm-12">
-            <div class="card " style="height:360px">
+            <div class="card" style="height:360px">
 
-                <div class="card-body ">
+                <div class="card-body">
                     <div class="row">
 
 
                         <div class="col-sm-9">
-                            <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100 " height="320" controls>
+                            <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100" height="320" controls>
                                 <source id="LiveStreamSrc" src="@items.LiveStreamUrl" type="application/x-mpegURL">
                             </video>
                         </div>
 
                         <div class="col-sm-3">
-                            <div class="row ">
+                            <div class="row">
 
 
                                 <div class="col-sm-12 pt-5 text-wrap border-bottom">
-                                    <i class="mdi mdi-camera fa-2x " style="color: #1f4a79"></i>&nbsp; @items.CameraName
+                                    <i class="mdi mdi-camera fa-2x" style="color: #1f4a79"></i>&nbsp; @items.CameraName
                                 </div>
                                 <div class="col-sm-12 pt-5 text-wrap border-bottom">
-                                  
-                                          <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" checked="@items.IsCameraLive" onchange="ChangeCameraStatus(@items.CameraId)"  id="CameraIsOnlineStatus_@items.CameraId">
+
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" checked="@items.IsCameraLive" onchange="ChangeCameraStatus(@items.CameraId)" id="CameraIsOnlineStatus_@items.CameraId">
                                         <label class="custom-control-label text-success" for="CameraIsOnlineStatus_@items.CameraId"><span class="text-danger">OFF</span><span>/</span> <span class="text-success">ON</span> </label>
                                     </div>
                                 </div>
@@ -217,7 +223,7 @@
             </div>
         </div>
     </div>Counter++;
-                }
+}
             </div>
         </div>
         <div class="row">
@@ -236,7 +242,7 @@
             </div>
 
 
-            <div class="col-6 grid-margin stretch-card ">
+            <div class="col-6 grid-margin stretch-card">
                 <div class="card">
 
                     <div class="card-body" style="background-color: #b300b3">
@@ -271,8 +277,8 @@
                 </div>
             </div>
 
-            <div class="col-md-6 grid-margin stretch-card ">
-                <div class="card ">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
 
                     <div class="card-body" style="background-color: #00294d">
 
@@ -290,12 +296,12 @@
 
 
 
-    <div class="col-sm-6 ">
-        <div class="card stretch-card ">
+    <div class="col-sm-6">
+        <div class="card stretch-card">
             <div class="card-header" style="background-color:#1f4a79">
                 <label style="color:white">Today's Schedule</label>
             </div>
-            <div class="card-body ">
+            <div class="card-body">
                 <div class="">
                     <form method="get">
 
@@ -379,13 +385,13 @@
 
 
 <script type="text/javascript">
-    
+
 
     function ChangeCameraStatus(camId) {
         var cameraStatus = false;
         var cameraID = camId;
         var cameraStatus = $('#CameraIsOnlineStatus_' + cameraID).prop("checked");
-        
+
 
         var formData = new FormData();
         formData.append("cameraId", cameraID);
@@ -415,9 +421,9 @@
             }
         });
     }
-   
 
-   
+
+
 
       function onChangeChurchClient() {
 
