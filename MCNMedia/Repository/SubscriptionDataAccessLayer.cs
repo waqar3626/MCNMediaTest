@@ -73,11 +73,14 @@ namespace MCNMedia_Dev.Repository
 
             return SubscriberId;
         }
-        public IEnumerable<Subscriptions> GetAllSubscribersList()
+        public IEnumerable<Subscriptions> GetAllSubscribersList(DateTime FromDate, DateTime ToDate, string EmailAddress)
         {
-            _dc.ClearParameters();
-           
             List<Subscriptions> Balobj = new List<Subscriptions>();
+            _dc.ClearParameters();
+            _dc.AddParameter("EmailAdd", EmailAddress);
+            _dc.AddParameter("fromdate", FromDate);
+            _dc.AddParameter("Todate", ToDate);
+
             DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetAllSubscriberList");
             foreach (DataRow dataRow in dataTable.Rows)
             {

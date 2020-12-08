@@ -99,10 +99,28 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult ListSubscription()
         {
-            Subscriptions subscription = new Subscriptions();
-            List<Subscriptions> subs = subDataAccess.GetAllSubscribersList().ToList<Subscriptions>();
+            DateTime fromDate = DateTime.Now.AddDays(-30);
+            DateTime toDate = DateTime.Now;
+            string emailAddress = "";
+
+            List<Subscriptions> subs = subDataAccess.GetAllSubscribersList(fromDate,toDate,emailAddress).ToList<Subscriptions>();
+            ViewBag.FromDate = fromDate.ToString("dd-MMM-yyyy");
+            ViewBag.ToDate = toDate.ToString("dd-MMM-yyyy");
             return View(subs);
 
+        }
+
+        [HttpPost]
+        public IActionResult Search(string fromDate,string toDate, string EmailAddress)
+        {
+            DateTime FromDate = Convert.ToDateTime(fromDate);
+            DateTime ToDate = Convert.ToDateTime(toDate);
+       
+         List<Subscriptions> subs = subDataAccess.GetAllSubscribersList(FromDate, ToDate,EmailAddress).ToList<Subscriptions>();
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+            return View("ListSubscription", subs);
+  
         }
 
         public IActionResult PackageRenewal(int PackageId,int SubscriberId)
