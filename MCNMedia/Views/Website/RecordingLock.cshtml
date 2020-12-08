@@ -1,6 +1,6 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
-    ViewData["Title"] = "ChurchLock";
+    ViewData["Title"] = "RecordingLock";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
 
@@ -11,12 +11,12 @@
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-transparent text-left p-5 text-center">
                         @*<label>@Model.Churches.ChurchName</label>*@
-                        <form class="pt-5" asp-action="ChurchLock" asp-controller="Website" method="post">
+                        <form class="pt-5" asp-action="RecordingLock" asp-controller="Website" method="post">
                             <div class="form-group">
-                                <input type="hidden" asp-for="churchLock.churchPass" />
-                                <label for="examplePassword1">Password to unlock</label>
+                                <input type="hidden" asp-for="recordingLock.RecordingPass" />
+                                <label for="examplePassword1">Recording Password</label>
 
-                                <input type="password" asp-for="churchLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
+                                <input type="password" asp-for="recordingLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
                             </div>
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-block btn-pink text-white btn-lg font-weight-medium" href="@Url.Action("ChurchLock", "Website")">Unlock</button>
@@ -24,9 +24,9 @@
                             <br />
                             @{ if (ViewBag.IsSuccess == 3)
                                 {
-                        <div class="form-group alert-danger">
-                            <label type="password" class="form-control form-control-lg bg-blue text-white">Password Incorrect</label>
-                        </div> } }
+                                    <div class="form-group alert-danger">
+                                        <label type="password" class="form-control form-control-lg bg-blue text-white">Password Incorrect</label>
+                                    </div> } }
                         </form>
                     </div>
                 </div>

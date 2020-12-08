@@ -1,0 +1,63 @@
+﻿@model MCNMedia_Dev.Models.Recording
+@{
+    ViewData["Title"] = "Player";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+
+
+<style type="text/css">
+    .vjs-big-play-button {
+        left: 45% !important;
+        top: 45% !important;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.carousel.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/owl.carousel.min.js"></script>
+<!-- plugins:css -->
+<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
+<!-- endinject -->
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+<!-- inject:css -->
+@*<link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">*@
+<!-- endinject -->
+
+<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+
+
+<style>
+    #owl-carousel-video {
+        width: 100%;
+    }
+
+    .item-video {
+        height: 275px !important;
+        background-color: blue;
+        display: block;
+    }
+</style>
+<div class="row">
+
+    <div class="col-3">
+        </div>
+        <div class="col-6">
+            <video controls class='video' width='100%'>
+                <source src="@Model.Src"
+                        type="video/mp4" />
+            </video>
+        </div>
+</div>
+
+
+<script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+<script src="~/theme/js/owl-carousel.js"></script>
+<script src="~/js/jwplayer.js"></script>
+<script type="text/javascript"></script>
+@*</div>*@

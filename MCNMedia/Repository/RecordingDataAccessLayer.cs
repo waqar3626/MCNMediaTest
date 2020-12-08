@@ -73,6 +73,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RecId", recording.RecordingId);
             _dc.AddParameter("RecName", recording.RecordingTitle);
             _dc.AddParameter("RecURL", recording.RecordingURl);
+            _dc.AddParameter("Password", recording.Password);
             _dc.AddParameter("RecDate", recording.Date);
             _dc.AddParameter("RecTime", recording.Time);
             _dc.AddParameter("UpdateBy", recording.UpdatedBy);
@@ -98,7 +99,10 @@ namespace MCNMedia_Dev.Repository
             recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
             recording.CreatedAt = Convert.ToDateTime(dataRow["CreatedAtandUpdateDate"].ToString());
             recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+            recording.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
+            recording.Password = dataRow["Password"].ToString();
             recording.ChurchName = dataRow["ChurchName"].ToString();
+            recording.Src = "https://mcnmedia-app.s3-eu-west-1.amazonaws.com/"+dataRow["UniqueChurchId"].ToString()+"/Video/"+ dataRow["RecordingURL"].ToString()+".mp4";
             return recording;
         }
 

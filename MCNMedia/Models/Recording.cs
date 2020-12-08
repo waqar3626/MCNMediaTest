@@ -14,6 +14,7 @@ namespace MCNMedia_Dev.Models
         public String RecordingTitle { get; set; }
         [Required(ErrorMessage = "Recording URL is Required")]
         public string RecordingURl { get; set; }
+        public String Password { get; set; }
         [Required(ErrorMessage = "UpdateBy is Required")]
         public int UpdatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -21,6 +22,8 @@ namespace MCNMedia_Dev.Models
         public int CreatedBy { get; set; }
 
         public int ChurchId { get; set; }
+        public String UniqueChurchId { get; set; }
+        public String Src { get; set; }
         [Required(ErrorMessage = "Church Name is Required")]
         public string ChurchName { get; set; }
 
