@@ -54,8 +54,10 @@
                                                 @Html.DisplayFor(modelItem => item.CreatedAt)
                                             </td>
                                             <td>
-                                             
-                                                <button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
+                                                <a href="@Url.Action("AdminPlayer", "Recording",new { id = item.RecordingId })" target="_blank" class="ply-vid">
+                                                    <i class="btn btn-success btn-sm ti-control-play"></i>
+                                                </a>
+                                                @*<button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
                                                 @{
                                                     var UrlDownload = item.Src;
 

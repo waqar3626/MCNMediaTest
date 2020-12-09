@@ -67,7 +67,10 @@
 
                                             <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
                                         }
-                                        <button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>
+                                        <a href="@Url.Action("ClientPlayer", "Client",new { id = item.RecordingId })" target="_blank" class="ply-vid">
+                                            <i class="btn btn-success btn-sm ti-control-play"></i>
+                                        </a>
+                                        @*<button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
                                     </td>
                                 </tr>
                             }
