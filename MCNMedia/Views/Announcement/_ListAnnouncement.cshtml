@@ -102,9 +102,9 @@
                 }
                 $.each(result, function (key, item) {
                     html += '<tr>';
-                    html += '<td>' + item.announcementTitle  + '</td>';
-                    html += '<td>' + item.announcementText + '</td>';
-                    html += '<td>' + item.createdAt  + '</td>';
+                    html += '<td class="text-wrap" style="max-width:20ch">' + item.announcementTitle  + '</td>';
+                    html += '<td class="text-wrap" style="max-width:20ch">' + item.announcementText + '</td>';
+                    html += '<td class="text-wrap" style="max-width:20ch">' + item.createdAt  + '</td>';
                     html += ' <td>';
 
                     html += '<a onclick="EditAnnouncement(' + item.churchAnnouncementId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
