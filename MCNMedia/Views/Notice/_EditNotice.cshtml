@@ -19,7 +19,7 @@
                 <input type="hidden" asp-for="Notices.ChurchNoticeId" id="chNoticeId" />
                 <div class="form-group">
                     <label asp-for="Notices.NoticeTitle" class="control-label">Title</label>
-                    <input asp-for="Notices.NoticeTitle" class="form-control" id="editnoticeTitle" />
+                    <input asp-for="Notices.NoticeTitle" maxlength="100" class="form-control" id="editnoticeTitle" />
                     <span asp-validation-for="Notices.NoticeTitle" class="text-danger"></span>
                 </div>
                 <div class="form-group">

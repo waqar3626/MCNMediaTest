@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Announcement.AnnouncementTitle" class="control-label">Announcement Title</label>
-                <input asp-for="Announcement.AnnouncementTitle" class="form-control" id="validationCustom12" placeholder=" Announcement Title" required />
+                <input asp-for="Announcement.AnnouncementTitle" maxlength="100" class="form-control" id="validationCustom12" placeholder=" Announcement Title" required />
                 <span asp-validation-for="Announcement.AnnouncementTitle" class="text-danger"></span>
             </div>
 

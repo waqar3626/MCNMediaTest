@@ -11,7 +11,7 @@
 
             <div class="form-group">
                 <label asp-for="ChurchNewsLetter.NewsLetterTitle" class="control-label">Title</label>
-                <input asp-for="ChurchNewsLetter.NewsLetterTitle" class="form-control" id="chhNewsLetterTitle" />
+                <input asp-for="ChurchNewsLetter.NewsLetterTitle" maxlength="100" class="form-control" id="chhNewsLetterTitle" />
                 <span asp-validation-for="ChurchNewsLetter.NewsLetterTitle" class="text-danger"></span>
             </div>
             <div class="form-group ">

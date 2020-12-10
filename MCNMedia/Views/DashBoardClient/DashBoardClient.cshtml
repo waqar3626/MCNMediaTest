@@ -31,6 +31,9 @@
 
 <form method="get">
     <div class="card">
+        <div class="card-header card-header-custom">
+            <h3 id="HeaderChurchName">Select Church</h3>
+        </div>
         <div class="card-body">
             <div class="form-group row">
                 @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text", ViewBag.ChurchId), new { @class = "form-control", @onchange = "javascript:onChangeChurchClient()", @id = "ddlid" })

@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Notices.NoticeTitle" class="control-label">Notice Title</label>
-                    <input asp-for="Notices.NoticeTitle" class="form-control" id="validationCustom13" placeholder=" Notice Title" required />
+                    <input asp-for="Notices.NoticeTitle" maxlength="100" class="form-control" id="validationCustom13" placeholder=" Notice Title" required />
                     <span asp-validation-for="Notices.NoticeTitle" class="text-danger"></span>
                 </div>
 

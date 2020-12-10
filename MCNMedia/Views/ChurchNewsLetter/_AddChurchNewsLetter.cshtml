@@ -22,7 +22,7 @@
           
             <div class="form-group row">
                 <label asp-for="ChurchNewsLetter.NewsLetterTitle" class="control-label">Title</label>
-                @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterTitle, new { @class = "form-control form-control-sm", @id = "newsletterTitle", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterTitle,  new { @class = "form-control form-control-sm", @id = "newsletterTitle", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "100", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                 @Html.HiddenFor(model => model.ChurchNewsLetter.ChurchNewsLetterId, new { @id = "ChurchNewsLetterId" })
                 @Html.HiddenFor(model => model.ChurchNewsLetter.ChurchId, new { @id = "ChurchId" })
             </div>
