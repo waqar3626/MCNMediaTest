@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static MCNMedia_Dev.Models.Church;
+using System.IO;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -499,11 +500,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-
-
-
-
-        private void ShowMesage(String exceptionMessage)
+        private void ShowMesage(string exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
         }
@@ -514,7 +511,8 @@ namespace MCNMedia_Dev.Controllers
             {
                 return "Pakistan";
             }
-            using (var reader = new DatabaseReader(_hostingEnvironment.ContentRootPath + "\\GeoLite2-Country.mmdb"))
+            string rootPath = Directory.GetCurrentDirectory();
+            using (var reader = new DatabaseReader(Path.Combine(rootPath, "wwwroot/GeoLite2-Country.mmdb")))
             {
                 // Determine the IP Address of the request
                 //var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("119.159.146.215"); //
