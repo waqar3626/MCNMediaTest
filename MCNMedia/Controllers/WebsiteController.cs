@@ -360,10 +360,11 @@ namespace MCNMedia_Dev.Controllers
             ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
             Profile profileModel = new Profile();
             profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
+            HttpContext.Session.SetString("slug", id);
             if (profileModel.Churches.Password.Count() > 0)
             {
                 HttpContext.Session.SetString("ChurchPass", profileModel.Churches.Password);
-                HttpContext.Session.SetString("slug", id);
+                
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
                 {
                     int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
@@ -383,9 +384,9 @@ namespace MCNMedia_Dev.Controllers
 
             }
 
-
+            int SubscriberPaid = Convert.ToInt32(TempData["paymentId"]);
             string visitorLocation = CheckVisitorLocation();
-            if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland")
+            if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland" || SubscriberPaid > 0)
             {
                 int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
                 List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
@@ -441,7 +442,7 @@ namespace MCNMedia_Dev.Controllers
             using (var reader = new DatabaseReader(_hostingEnvironment.ContentRootPath + "\\GeoLite2-Country.mmdb"))
             {
                 // Determine the IP Address of the request
-                var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("myip"); //
+                var ipAddress = HttpContext.Connection.RemoteIpAddress;
 
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);

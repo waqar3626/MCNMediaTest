@@ -12,7 +12,6 @@ using Amazon.S3.Model.Internal.MarshallTransformations;
 using Stripe;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MCNMedia_Dev._Helper;
-
 namespace MCNMedia_Dev.Controllers
 {
 
@@ -66,9 +65,10 @@ namespace MCNMedia_Dev.Controllers
                     subscription.TokenId = stripeToken;
                     int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, true, charge.Id, stripeToken);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
+                    TempData["paymentId"] = paymentId;
                     EmailHelper emailHelper = new EmailHelper();
                     emailHelper.SendEmail("mcnmedia9@gmail.com", "toEmail", "Name", "Subject:Payment", "Body");
-                    return RedirectToAction(nameof(Profile));
+                    return RedirectToAction("Profile", "Website");
                     break;
                 case "failed":
 
@@ -240,9 +240,11 @@ namespace MCNMedia_Dev.Controllers
                 Subscriptions sub = subDataAccess.SubscriberCheck(chrId, subscriberId);
                 if (sub.PaymentId > 0)
                 {
+                    //Subscription is active
+                    TempData["paymentId"] = sub.PaymentId;
                     EmailHelper emailHelper = new EmailHelper();
                     emailHelper.SendEmail("mcnmedia9@gmail.com", Email, "", "Subject:Login", "you have been login to mcnMedia");
-                    return RedirectToAction(nameof(Profile));
+                    return RedirectToAction("Profile", "Website");
                 }
                 else
                 {
@@ -284,74 +286,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
-        public IActionResult Profile()
-        {
-            int id = (int)HttpContext.Session.GetInt32("chrId");
-            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
-            AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
-            CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
-            RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
-            ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
-            MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
-            NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
-            //PreviewChurchesDataAccessLayer previewChurchesDataAccessLayer = new PreviewChurchesDataAccessLayer();
-            ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
-
-
-            Profile profileModel = new Profile();
-            string churchSlug = id.ToString();
-            profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32(id));
-            List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(id).ToList();
-            if (announcementList.Count > 0)
-                profileModel.Announcement = announcementList.First<Announcement>();
-            else
-                profileModel.Announcement = new Announcement();
-
-            List<Notice> noticeList = noticeDataAccess.GetAllNotices(id).ToList();
-            if (noticeList.Count > 0)
-                profileModel.notice = noticeList.First<Notice>();
-            else
-                profileModel.notice = new Notice();
-
-            profileModel.CameraList = camDataAccess.GetAllCameras(id, "");
-            profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", id).ToList();
-            profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", id).ToList();
-            profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", id).ToList();
-            profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(id);
-
-            //profileModel.Cameras = camDataAccess.GetCameraById(1,"");
-            //  profileModel.Media = "";
-            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(id);
-            profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(id, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
-
-            profileModel.NowScheduleList = Schedules_WhatsOnNow();
-
-            profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
-            profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
-            profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
-            profileModel.ScheduleListDay3 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(3), System.DateTime.Now.AddDays(3).ToString("dddd"), -1);
-            profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
-            profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
-            profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(id, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-
-            return View(profileModel);
-        }
-
-        private IEnumerable<Schedule> Schedules_WhatsOnNow()
-        {
-            try
-            {
-
-                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_WhatsOnNow().ToList<Schedule>();
-                return schedules;
-            }
-            catch (Exception e)
-            {
-
-
-                throw;
-            }
-        }
+  
 
 
     }
