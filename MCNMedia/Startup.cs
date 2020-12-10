@@ -9,13 +9,13 @@ using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using MySql.Data.MySqlClient;
-
 namespace MCNMedia_Dev
 {
     public class Startup
@@ -81,19 +81,32 @@ namespace MCNMedia_Dev
         {
             if (env.IsDevelopment())
             {
+               
                 app.UseDeveloperExceptionPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor,
+
+            //    // IIS is also tagging a X-Forwarded-For header on, so we need to increase this limit, 
+            //    // otherwise the X-Forwarded-For we are passing along from the browser will be ignored
+            //    ForwardLimit = 2
+            //});
+            var forwardingOptions = new ForwardedHeadersOptions() { 
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto 
+            }; 
+            app.UseForwardedHeaders(forwardingOptions);
             app.UseStaticFiles();
             app.UseRequestLocalization();
             app.UseRouting();
             app.UseSession();
             app.UseStaticFiles();
             app.UseAuthorization();
-
+            
             // app.UseStaticFiles(new StaticFileOptions
             // {
             //     FileProvider = new PhysicalFileProvider(

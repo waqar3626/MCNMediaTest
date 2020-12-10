@@ -510,16 +510,68 @@ namespace MCNMedia_Dev.Controllers
 
         private string CheckVisitorLocation()
         {
+            if (IsLocal(HttpContext.Connection))
+            {
+                return "Pakistan";
+            }
             using (var reader = new DatabaseReader(_hostingEnvironment.ContentRootPath + "\\GeoLite2-Country.mmdb"))
             {
                 // Determine the IP Address of the request
-                var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("myip"); //
+                //var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("119.159.146.215"); //
+                //var ida = Request.HttpContext.Connection.RemoteIpAddress;
+                IPAddress ipAddress;
+                var headers = Request.Headers.ToList();
+                Common.SaveToXXX("Headers test");
+                foreach (var item in headers)
+                {
+                    Common.SaveToXXX(item.Key.ToString() + "--" + item.Value.ToString());
+                }
+                 
+                Common.SaveToXXX("IP Address" + Request.HttpContext.Connection.RemoteIpAddress.ToString());
+                if (headers.Exists((kvp) => kvp.Key == "X-Forwarded-For"))
+                {
+                    // when running behind a load balancer you can expect this header
+                    var header = headers.First((kvp) => kvp.Key == "X-Forwarded-For").Value.ToString();
+                    ipAddress = IPAddress.Parse(header);
+                }
+                else
+                if(headers.Exists((kvp) => kvp.Key == "REMOTE_ADDR"))
+                {
+                    // when running behind a load balancer you can expect this header
+                    var header = headers.First((kvp) => kvp.Key == "REMOTE_ADDR").Value.ToString();
+                    ipAddress = IPAddress.Parse(header);
+                }
+                else
+                {
+                    // this will always have a value (running locally in development won't have the header)
+                    ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
+                }
+
 
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);
                 var countryname = countryInfo.Country.ToString();
                 return countryname;
             }
+        }
+
+        private bool IsLocal(ConnectionInfo connection)
+        {
+            var remoteAddress = connection.RemoteIpAddress.ToString();
+
+            // if unknown, assume not local
+            if (String.IsNullOrEmpty(remoteAddress))
+                return false;
+
+            // check if localhost
+            if (remoteAddress == "127.0.0.1" || remoteAddress == "::1")
+                return true;
+
+            // compare with local address
+            if (remoteAddress == connection.LocalIpAddress.ToString())
+                return true;
+
+            return false;
         }
     }
 }
