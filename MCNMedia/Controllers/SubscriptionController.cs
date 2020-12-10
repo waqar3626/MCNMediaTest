@@ -11,6 +11,7 @@ using System.IO;
 using Amazon.S3.Model.Internal.MarshallTransformations;
 using Stripe;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MCNMedia_Dev._Helper;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -65,6 +66,8 @@ namespace MCNMedia_Dev.Controllers
                     subscription.TokenId = stripeToken;
                     int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, true, charge.Id, stripeToken);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
+                    EmailHelper emailHelper = new EmailHelper();
+                    emailHelper.SendEmail("mcnmedia9@gmail.com", "toEmail", "Name", "Subject:Payment", "Body");
                     return RedirectToAction(nameof(Profile));
                     break;
                 case "failed":
@@ -141,6 +144,8 @@ namespace MCNMedia_Dev.Controllers
                 subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
+                EmailHelper emailHelper = new EmailHelper();
+                emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, "", "Subject:Renewal", "you have been Renew your mcnMedia subscription");
                 if (paymentLogId > 0)
                 {
                     HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -190,6 +195,8 @@ namespace MCNMedia_Dev.Controllers
                 subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
+                EmailHelper emailHelper = new EmailHelper();
+                emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, subscription.Name, "Subject: sign Up", "Body");
                 if (paymentLogId > 0)
                 {
                     HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -233,6 +240,8 @@ namespace MCNMedia_Dev.Controllers
                 Subscriptions sub = subDataAccess.SubscriberCheck(chrId, subscriberId);
                 if (sub.PaymentId > 0)
                 {
+                    EmailHelper emailHelper = new EmailHelper();
+                    emailHelper.SendEmail("mcnmedia9@gmail.com", Email, "", "Subject:Login", "you have been login to mcnMedia");
                     return RedirectToAction(nameof(Profile));
                 }
                 else
@@ -256,7 +265,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
 
-                IEnumerable<Place> countryList = _placeAccessLayer.GetCountries();
+                IEnumerable<Place> countryList = _placeAccessLayer.GetISOCountries();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countryList)
                 {

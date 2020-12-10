@@ -41,6 +41,20 @@ namespace MCNMedia_Dev.Repository
                 countryLst.Add(country);
             }
             return countryLst;
+        } public IEnumerable<Place> GetISOCountries()
+        {
+            List<Place> countryLst = new List<Place>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spISOCountry_Get");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Place country = new Place();
+                country.PlaceId = Convert.ToInt32(dataRow["ISOCountryID"]);
+                country.PlaceName = dataRow["ISOCountry"].ToString();
+                countryLst.Add(country);
+            }
+            return countryLst;
         }
 
         /// <summary>
