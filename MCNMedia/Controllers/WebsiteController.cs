@@ -519,13 +519,13 @@ namespace MCNMedia_Dev.Controllers
                 //var ida = Request.HttpContext.Connection.RemoteIpAddress;
                 IPAddress ipAddress;
                 var headers = Request.Headers.ToList();
-                Common.SaveToXXX("Headers test");
-                foreach (var item in headers)
-                {
-                    Common.SaveToXXX(item.Key.ToString() + "--" + item.Value.ToString());
-                }
+                //Common.SaveToXXX("Headers test");
+                //foreach (var item in headers)
+                //{
+                //    Common.SaveToXXX(item.Key.ToString() + "--" + item.Value.ToString());
+                //}
                  
-                Common.SaveToXXX("IP Address" + Request.HttpContext.Connection.RemoteIpAddress.ToString());
+                //Common.SaveToXXX("IP Address" + Request.HttpContext.Connection.RemoteIpAddress.ToString());
                 if (headers.Exists((kvp) => kvp.Key == "X-Forwarded-For"))
                 {
                     // when running behind a load balancer you can expect this header
