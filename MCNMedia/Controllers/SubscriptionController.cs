@@ -76,8 +76,8 @@ namespace MCNMedia_Dev.Controllers
                     int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, true, charge.Id, stripeToken);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
                     TempData["paymentId"] = paymentId;
-                    EmailHelper emailHelper = new EmailHelper();
-                    emailHelper.SendEmail("mcnmedia9@gmail.com", "toEmail", "Name", "Subject:Payment", "Body");
+                    //EmailHelper emailHelper = new EmailHelper();
+                    //emailHelper.SendEmail("mcnmedia9@gmail.com", "toEmail", "Name", "Subject:Payment", "Body");
                     return RedirectToAction("Profile", "Website");
                     break;
                 case "failed":
@@ -214,8 +214,8 @@ namespace MCNMedia_Dev.Controllers
                 subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
-                EmailHelper emailHelper = new EmailHelper();
-                emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, "", "Subject:Renewal", "you have been Renew your mcnMedia subscription");
+                //EmailHelper emailHelper = new EmailHelper();
+                //emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, "", "Subject:Renewal", "you have been Renew your mcnMedia subscription");
                 if (paymentLogId > 0)
                 {
                     HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -282,8 +282,8 @@ namespace MCNMedia_Dev.Controllers
                 subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
                 int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
-                EmailHelper emailHelper = new EmailHelper();
-                emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, subscription.Name, "Subject: sign Up", "Body");
+                //EmailHelper emailHelper = new EmailHelper();
+                //emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, subscription.Name, "Subject: sign Up", "Body");
                 if (paymentLogId > 0)
                 {
                     HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -346,8 +346,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     //Subscription is active
                     TempData["paymentId"] = sub.PaymentId;
-                    EmailHelper emailHelper = new EmailHelper();
-                    emailHelper.SendEmail("mcnmedia9@gmail.com", Email, "", "Subject:Login", "you have been login to mcnMedia");
+                    //EmailHelper emailHelper = new EmailHelper();
+                    //emailHelper.SendEmail("mcnmedia9@gmail.com", Email, "", "Subject:Login", "you have been login to mcnMedia");
                     return RedirectToAction("Profile", "Website");
                 }
                 else
