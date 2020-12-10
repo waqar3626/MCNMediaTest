@@ -53,6 +53,11 @@ namespace MCNMedia_Dev.Repository
             return newsLetter;
         }
 
+        public IEnumerable<NewsLetter> GetAllNewsLetter()
+        {
+            return GetNewsletterFromDatabase(churchId: -1, newsletterId: -1);
+        }
+
         private IEnumerable<NewsLetter> GetNewsletterFromDatabase(int churchId, int newsletterId)
         {
             List<NewsLetter> newsLetters = new List<NewsLetter>();
@@ -107,6 +112,7 @@ namespace MCNMedia_Dev.Repository
         {
             NewsLetter newsletter = new NewsLetter();
             newsletter.ChurchNewsLetterId = Convert.ToInt32(dataRow["ChurchNewsLetterId"].ToString());
+            newsletter.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
             newsletter.NewsLetterTitle = dataRow["NewsLetterTitle"].ToString();
             newsletter.NewsLetterName = dataRow["NewsLetterName"].ToString();
             newsletter.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
