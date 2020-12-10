@@ -71,7 +71,7 @@
     </div>
     <div class="col-1 d-lg-block d-none"></div>
 </div>
-<form asp-action="AddContactForm" asp-controller="ClientController" method="post">
+<form asp-action="ContactUs" asp-controller="Website" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row m-0 mt-5 mb-5">
         <div class="col-3 d-lg-block d-none"></div>
@@ -101,8 +101,9 @@
                     <textarea class="form-control selectWrapper" asp-for="Message" maxlength="150" rows="4" placeholder="Message"></textarea>
                 </div>
                 <div class="form-group col-sm-12 float-right rounded-sm ">
-                    <input type="submit" value="Send" asp-action="AddContactForm" class="btn btn-pink my-2 font-weight-bolder my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14" />
+                    <input type="submit" value="Send" asp-action="ContactUs" class="btn btn-pink my-2 font-weight-bolder my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14" />
                 </div>
+                <h5>@ViewBag.message</h5>
             </div>
         </div>
         <div class="col-1 d-lg-block d-none"></div>

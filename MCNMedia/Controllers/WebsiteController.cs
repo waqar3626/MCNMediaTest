@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using MaxMind.GeoIP2;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
-using MCNMedia_Dev.Repository;
+using MCNMedia_Dev._Helper;
 using Microsoft.AspNetCore.Hosting;
+using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +18,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class WebsiteController : Controller
     {
+
         private readonly IHostingEnvironment _hostingEnvironment;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
@@ -27,6 +30,47 @@ namespace MCNMedia_Dev.Controllers
         public WebsiteController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
+        }
+        public IActionResult index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ContactUs(Website web)
+
+        {
+            try
+            {
+                EmailHelper em = new EmailHelper();
+                //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
+                em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
+                //string name = web.ContactName;
+                //string email = web.ContactEmail;
+                //string subject = web.ContactSubject;
+                //string massage = web.Message;
+                //MailMessage mailmassage = new MailMessage();
+                //mailmassage.To.Add("mcnmedia9@gmail.com ");
+                //mailmassage.Subject = subject;
+                //mailmassage.Body = massage;
+                //mailmassage.From = new MailAddress(email);
+                //mailmassage.IsBodyHtml = false;
+                //SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                //smtp.Port = 25;
+                //smtp.UseDefaultCredentials = true;
+                //smtp.EnableSsl = true;
+                //smtp.Credentials = new NetworkCredential("mcnmedia9@gmail.com ", "M3di@mcN");
+                //smtp.Send(mailmassage);
+                //ViewBag.message = "The Mail has been send by " + web.ContactName + " Successfully....!," + mailmassage.To + ".";
+                ModelState.Clear();
+                return View();
+            }
+        
+             catch (Exception e)
+            {
+                ShowMesage("Contactus Email Sending Failed : " + e.Message);
+                throw;
+            }
         }
         public IActionResult Home()
         {
@@ -99,6 +143,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+
+               
                 return View();
             }
             catch (Exception e)
@@ -263,13 +309,10 @@ namespace MCNMedia_Dev.Controllers
         {
             return View();
         }
-
         public IActionResult RecordingLock()
         {
             return View();
         }
-
-
         [HttpPost]
         public IActionResult RecordingLock(RecordingLock recordingLock)
         {
@@ -323,114 +366,142 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
+
         [HttpPost]
         public IActionResult ChurchLock(ChurchLock churchLock)
         {
-            String pass = HttpContext.Session.GetString("ChurchPass").ToString();
-            if (churchLock.Password == pass)
+            try
             {
-                HttpContext.Session.SetInt32("ChurchPass", 1);
-                return RedirectToAction(nameof(Profile));
+                String pass = HttpContext.Session.GetString("ChurchPass").ToString();
+                if (churchLock.Password == pass)
+                {
+                    HttpContext.Session.SetInt32("ChurchPass", 1);
+                    return RedirectToAction(nameof(Profile));
+                }
+                else
+                {
+                    ViewBag.IsSuccess = 3;
+                    //ViewData["Message"] = "Incorrect Password";
+                    return View();
+                }
             }
-            else
+           
+            catch (Exception e)
             {
-                ViewBag.IsSuccess = 3;
-                return View();
+                ShowMesage("ProcessForm Errors : " + e.Message);
+                throw;
             }
 
 
         }
+
 
         public IActionResult Profile(string id)
         {
-            int churchPass = 0;
-            if (id == null)
+            try
             {
-                id = HttpContext.Session.GetString("slug");
-                churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
-            }
-            ViewData["Title"] = id;
-            ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
-            AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
-            CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
-            RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
-            ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
-            MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
-            NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
-            ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
-            Profile profileModel = new Profile();
-            profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
-            HttpContext.Session.SetString("slug", id);
-            if (profileModel.Churches.Password.Count() > 0)
-            {
-                HttpContext.Session.SetString("ChurchPass", profileModel.Churches.Password);
-                
-                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
-                {
-                    int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
-                }
-                else
-                {
-                    if (churchPass == 1)
-                    {
 
+                int churchPass = 0;
+                if (id == null)
+                {
+                    id = HttpContext.Session.GetString("slug");
+                    churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
+                }
+                ViewData["Title"] = id;
+                ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
+                AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
+                CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+                RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
+                ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
+                MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
+                NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
+                ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
+                Profile profileModel = new Profile();
+                profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
+                HttpContext.Session.SetString("slug", id);
+                if (profileModel.Churches.Password.Count() > 0)
+                {
+                    HttpContext.Session.SetString("ChurchPass", profileModel.Churches.Password);
+                    HttpContext.Session.SetString("slug", id);
+                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
+                    {
+                        int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
                     }
                     else
                     {
+                        if (churchPass == 1)
+                        {
 
-                        return RedirectToAction(nameof(ChurchLock));
+                        }
+                        else
+                        {
+
+                            return RedirectToAction(nameof(ChurchLock));
+                        }
                     }
+
                 }
 
-            }
 
-            int SubscriberPaid = Convert.ToInt32(TempData["paymentId"]);
-            string visitorLocation = CheckVisitorLocation();
-            if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland" || SubscriberPaid > 0)
-            {
-                int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
-                List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
-                if (announcementList.Count > 0)
-                    profileModel.Announcement = announcementList.First<Announcement>();
+                int SubscriberPaid = Convert.ToInt32(TempData["paymentId"]);
+                string visitorLocation = CheckVisitorLocation();
+                if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland" || SubscriberPaid > 0)
+                {
+                    int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
+                    List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
+                    if (announcementList.Count > 0)
+                        profileModel.Announcement = announcementList.First<Announcement>();
+                    else
+                        profileModel.Announcement = new Announcement();
+
+                    List<Notice> noticeList = noticeDataAccess.GetAllNotices(churchId).ToList();
+                    if (noticeList.Count > 0)
+                        profileModel.notice = noticeList.First<Notice>();
+                    else
+                        profileModel.notice = new Notice();
+
+
+                    profileModel.CameraList = camDataAccess.GetAllCameras(churchId, "");
+                    profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
+                    profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
+                    profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
+                    profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(churchId);
+
+                    profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
+                    profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
+
+                    profileModel.NowScheduleList = Schedules_WhatsOnNow();
+
+                    profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
+                    profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
+                    profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
+                    profileModel.ScheduleListDay3 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(3), System.DateTime.Now.AddDays(3).ToString("dddd"), -1);
+                    profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
+                    profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
+                    profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
+
+                    return View(profileModel);
+                }
                 else
-                    profileModel.Announcement = new Announcement();
-
-                List<Notice> noticeList = noticeDataAccess.GetAllNotices(churchId).ToList();
-                if (noticeList.Count > 0)
-                    profileModel.notice = noticeList.First<Notice>();
-                else
-                    profileModel.notice = new Notice();
-
-
-                profileModel.CameraList = camDataAccess.GetAllCameras(churchId, "");
-                profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
-                profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
-                profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
-                profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(churchId);
-
-                profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
-                profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
-
-                profileModel.NowScheduleList = Schedules_WhatsOnNow();
-
-                profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
-                profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
-                profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
-                profileModel.ScheduleListDay3 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(3), System.DateTime.Now.AddDays(3).ToString("dddd"), -1);
-                profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
-                profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
-                profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-
-                return View(profileModel);
+                {
+                    HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
+                    ViewBag.ChurchId = profileModel.Churches.ChurchId;
+                    return RedirectToAction("Packages", "Subscription");
+                }
             }
-            else
+
+            catch (Exception e)
             {
-                HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
-                ViewBag.ChurchId = profileModel.Churches.ChurchId;
-                return RedirectToAction("Packages", "Subscription");
+                ShowMesage("Profile Errors : " + e.Message);
+                throw;
             }
+
 
         }
+
+
+
+
 
         private void ShowMesage(String exceptionMessage)
         {
@@ -442,7 +513,7 @@ namespace MCNMedia_Dev.Controllers
             using (var reader = new DatabaseReader(_hostingEnvironment.ContentRootPath + "\\GeoLite2-Country.mmdb"))
             {
                 // Determine the IP Address of the request
-                var ipAddress = HttpContext.Connection.RemoteIpAddress;
+                var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("myip"); //
 
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);
