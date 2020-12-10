@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using MaxMind.GeoIP2;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +16,7 @@ namespace MCNMedia_Dev.Controllers
 {
     public class WebsiteController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
@@ -20,7 +24,10 @@ namespace MCNMedia_Dev.Controllers
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
 
         GenericModel gm = new GenericModel();
-
+        public WebsiteController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         public IActionResult Home()
         {
             try
@@ -264,7 +271,7 @@ namespace MCNMedia_Dev.Controllers
 
 
         [HttpPost]
-        public  IActionResult RecordingLock(RecordingLock recordingLock)
+        public IActionResult RecordingLock(RecordingLock recordingLock)
         {
             String pass = HttpContext.Session.GetString("RecordingPass").ToString();
             if (recordingLock.Password == pass)
@@ -284,12 +291,12 @@ namespace MCNMedia_Dev.Controllers
         {
             int recordingPass = 0;
             RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
-            if (id==0)
+            if (id == 0)
             {
                 id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
                 recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
             }
-            Recording recording= recordingDataAccessLayer.Recording_GetById(id);
+            Recording recording = recordingDataAccessLayer.Recording_GetById(id);
             int pass = recording.Password.Count();
             if (recording.Password.Count() > 0)
             {
@@ -303,7 +310,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     if (recordingPass == 1)
                     {
-                       
+
                     }
                     else
                     {
@@ -376,14 +383,71 @@ namespace MCNMedia_Dev.Controllers
 
             }
 
-            HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
-            ViewBag.ChurchId = profileModel.Churches.ChurchId;
-            return RedirectToAction("Packages","Subscription");
+
+            string visitorLocation = CheckVisitorLocation();
+            if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland")
+            {
+                int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
+                List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
+                if (announcementList.Count > 0)
+                    profileModel.Announcement = announcementList.First<Announcement>();
+                else
+                    profileModel.Announcement = new Announcement();
+
+                List<Notice> noticeList = noticeDataAccess.GetAllNotices(churchId).ToList();
+                if (noticeList.Count > 0)
+                    profileModel.notice = noticeList.First<Notice>();
+                else
+                    profileModel.notice = new Notice();
+
+
+                profileModel.CameraList = camDataAccess.GetAllCameras(churchId, "");
+                profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
+                profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
+                profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
+                profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(churchId);
+
+                profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
+                profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
+
+                profileModel.NowScheduleList = Schedules_WhatsOnNow();
+
+                profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
+                profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
+                profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
+                profileModel.ScheduleListDay3 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(3), System.DateTime.Now.AddDays(3).ToString("dddd"), -1);
+                profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
+                profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
+                profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
+
+                return View(profileModel);
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
+                ViewBag.ChurchId = profileModel.Churches.ChurchId;
+                return RedirectToAction("Packages", "Subscription");
+            }
+
         }
 
         private void ShowMesage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
+        }
+
+        private string CheckVisitorLocation()
+        {
+            using (var reader = new DatabaseReader(_hostingEnvironment.ContentRootPath + "\\GeoLite2-Country.mmdb"))
+            {
+                // Determine the IP Address of the request
+                var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("myip"); //
+
+                // Get the city from the IP Address
+                var countryInfo = reader.Country(ipAddress);
+                var countryname = countryInfo.Country.ToString();
+                return countryname;
+            }
         }
     }
 }

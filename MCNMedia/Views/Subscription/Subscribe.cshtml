@@ -41,11 +41,11 @@
                                     <div class="text-center pricing-card-head">
                                         <h3 class="text-blue" style="color: #1f4a79">@Model.PackageTitle</h3>
                                         <p></p>
-                                        <h1 class="font-weight-normal mb-4">&#8364; @Model.PackageCharge</h1>
+                                        <h1 class="font-weight-normal mb-4">&#xa3; @Model.PackageCharge</h1>
                                     </div>
                                     <ul class="list-unstyled plan-features text-left pl-4">
                                         <li>Package Duration  &nbsp; : &nbsp;<b>@Model.Duration @Model.DurationUnit</b></li>
-                                        <li>Currency Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;<b>@Model.Currency (&#8364;)</b></li>
+                                        <li>Currency Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;<b>@Model.Currency (&#xa3;)</b></li>
 
                                     </ul>
                                     <input type="hidden" name="PackageId" value="@Model.PackageId" />
@@ -59,10 +59,11 @@
                                                         data-description="@Model.PackageTitle"
                                                         data-email="@Model.EmailAddress"
                                                         data-image="/WebsiteAssets/img/logo_100x100.png"
-                                                        data-locale="EUR"
+                                                        data-locale="GBP"
                                                         data-zip-code="true"
-                                                        data-currency="EUR"
-                                                        data-label="Pay @(Model.PackageCharge ) (&#8364;)"
+                                                        data-email="@Model.EmailAddress"
+                                                        data-currency="GBP"
+                                                        data-label="Pay @(Model.PackageCharge ) (&#xa3;)"
                                                         data-panel-label="Pay Now">
                                                 </script>
                                                 <input type="hidden" name="PackageAmount" value="@Model.PackageCharge" />

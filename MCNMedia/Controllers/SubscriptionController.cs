@@ -25,45 +25,45 @@ namespace MCNMedia_Dev.Controllers
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
 
 
-        public ViewResult Subscribe() {
+        public ViewResult Subscribe()
+        {
 
-           
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Processing(int PaymentLogId, string Description,string stripeToken, string stripeEmail,decimal PackageAmount)
+        public IActionResult Processing(int PaymentLogId, string Description, string stripeToken, string stripeEmail, decimal PackageAmount)
         {
             Subscriptions subscription = new Subscriptions();
             Dictionary<string, string> Metadata = new Dictionary<string, string>();
-            Metadata.Add("Product", "RubberDuck");
-            Metadata.Add("Quantity", "10");
+            Metadata.Add("Package Description", Description);
             StripeConfiguration.ApiKey = "sk_test_51HsMgeBcBMLkoLiDqppjmP6GfFXnDOjuwsEFPvi2SM0WJZp3yh9zlQbsVDv3lcyUv2FA8aUDuDqJP8bJ6hUwNf1L00RC9aOiHS";
             var options = new ChargeCreateOptions
             {
-                Amount = (long)PackageAmount*100,
-                Currency = "EUR",
+                Amount = (long)PackageAmount * 100,
+                Currency = "GBP",
                 Description = Description,
                 Source = stripeToken,
                 ReceiptEmail = stripeEmail,
                 Metadata = Metadata,
-               
+
             };
             var service = new ChargeService();
             Charge charge = service.Create(options);
-           switch (charge.Status)
+            switch (charge.Status)
             {
-             
+
                 case "succeeded":
 
                     subscription.ChurchId = (int)HttpContext.Session.GetInt32("chrId");
-                    subscription.SubscriberId=(int)HttpContext.Session.GetInt32("SubscriberId");
+                    subscription.SubscriberId = (int)HttpContext.Session.GetInt32("SubscriberId");
                     subscription.OrderId = charge.Id;
-                    subscription.PackageId= (int)HttpContext.Session.GetInt32("packageId");
+                    subscription.PackageId = (int)HttpContext.Session.GetInt32("packageId");
                     subscription.OrderAmount = (decimal)PackageAmount;
                     subscription.PaidAmount = (decimal)PackageAmount;
                     subscription.TokenId = stripeToken;
-                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId,true, charge.Id, stripeToken);
+                    int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, true, charge.Id, stripeToken);
                     int paymentId = subDataAccess.AddSubscriberpayment(subscription);
                     return RedirectToAction(nameof(Profile));
                     break;
@@ -75,8 +75,9 @@ namespace MCNMedia_Dev.Controllers
             return RedirectToAction(nameof(Subscribe));
         }
 
-        public IActionResult Packages() {
-           
+        public IActionResult Packages()
+        {
+
             ViewBag.Error = -1;
             ViewBag.Button = 1;
             ViewBag.LoginButton = 1;
@@ -87,14 +88,14 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Packages2()
         {
-            
+
             int SubscriberId = Convert.ToInt32(TempData["SubscriberId"]);
             ViewBag.Error = 3;
             ViewBag.LoginButton = -1;
             ViewBag.Button = 2;
             ViewBag.SubscriberId = SubscriberId;
             List<Subscriptions> subscription = subDataAccess.GetAllSubscription().ToList();
-            return View("Packages",subscription);
+            return View("Packages", subscription);
         }
 
         public IActionResult ListSubscription()
@@ -103,7 +104,7 @@ namespace MCNMedia_Dev.Controllers
             DateTime toDate = DateTime.Now;
             string emailAddress = "";
 
-            List<Subscriptions> subs = subDataAccess.GetAllSubscribersList(fromDate,toDate,emailAddress).ToList<Subscriptions>();
+            List<Subscriptions> subs = subDataAccess.GetAllSubscribersList(fromDate, toDate, emailAddress).ToList<Subscriptions>();
             ViewBag.FromDate = fromDate.ToString("dd-MMM-yyyy");
             ViewBag.ToDate = toDate.ToString("dd-MMM-yyyy");
             return View(subs);
@@ -111,21 +112,21 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(string fromDate,string toDate, string EmailAddress)
+        public IActionResult Search(string fromDate, string toDate, string EmailAddress)
         {
             DateTime FromDate = Convert.ToDateTime(fromDate);
             DateTime ToDate = Convert.ToDateTime(toDate);
-       
-         List<Subscriptions> subs = subDataAccess.GetAllSubscribersList(FromDate, ToDate,EmailAddress).ToList<Subscriptions>();
+
+            List<Subscriptions> subs = subDataAccess.GetAllSubscribersList(FromDate, ToDate, EmailAddress).ToList<Subscriptions>();
             ViewBag.FromDate = fromDate;
             ViewBag.ToDate = toDate;
             return View("ListSubscription", subs);
-  
+
         }
 
-        public IActionResult PackageRenewal(int PackageId,int SubscriberId)
+        public IActionResult PackageRenewal(int PackageId, int SubscriberId)
         {
-            
+
             int ChurchId = (int)HttpContext.Session.GetInt32("chrId");
             if (SubscriberId > 0)
             {
@@ -139,7 +140,7 @@ namespace MCNMedia_Dev.Controllers
                 subscription.PackageId = PackageId;
                 subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
-                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId,"-");
+                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
                 if (paymentLogId > 0)
                 {
                     HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
@@ -162,21 +163,22 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-        public IActionResult SubscriptionUserRegistration(int PackageId) 
+        public IActionResult SubscriptionUserRegistration(int PackageId)
         {
             LoadCountryDDL();
             ViewBag.ErrorMsg = 1;
             HttpContext.Session.SetInt32("packageId", PackageId);
-            
+
             return View();
         }
 
-     [HttpPost]
+        [HttpPost]
         public IActionResult UserRegistration(Subscriptions subscriptions)
         {
-                int SubscriberId = subDataAccess.AddSubscriber(subscriptions);
-                int ChurchId= (int)HttpContext.Session.GetInt32("chrId");
-                if (SubscriberId > 0) {
+            int SubscriberId = subDataAccess.AddSubscriber(subscriptions);
+            int ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+            if (SubscriberId > 0)
+            {
                 HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
                 int PackageId = (int)HttpContext.Session.GetInt32("packageId");
                 Subscriptions subscriberinfo = subDataAccess.GetSubscriberById(SubscriberId);
@@ -187,16 +189,17 @@ namespace MCNMedia_Dev.Controllers
                 subscription.PackageId = PackageId;
                 subscription.EmailAddress = subscriberinfo.EmailAddress;
                 decimal PakageAmount = subscription.PackageCharge;
-                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-",ChurchId,"-");
-                if (paymentLogId > 0) { 
-                HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
-                subscription.PaymentId = paymentLogId;
-                return View("Subscribe", subscription);
+                int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
+                if (paymentLogId > 0)
+                {
+                    HttpContext.Session.SetInt32("paymentLogId", paymentLogId);
+                    subscription.PaymentId = paymentLogId;
+                    return View("Subscribe", subscription);
                 }
                 else
                 {
                     LoadCountryDDL();
-                   
+
                     return View("SubscriptionUserRegistration", subscriptions);
 
                 }
@@ -205,7 +208,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 LoadCountryDDL();
                 ViewBag.ErrorMsg = 2;
-              return View("SubscriptionUserRegistration",subscriptions);
+                return View("SubscriptionUserRegistration", subscriptions);
 
             }
         }
@@ -213,19 +216,20 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult SubscriptionUserLogin(int subscriptionId)
         {
-            
+
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult UserLogin(string Email, string Password) 
+        public IActionResult UserLogin(string Email, string Password)
         {
 
             Subscriptions subscription = subDataAccess.SubscriberLogin(Email, Password);
-            if (subscription.SubscriberId>0) {
+            if (subscription.SubscriberId > 0)
+            {
                 int chrId = (int)HttpContext.Session.GetInt32("chrId");
-                int subscriberId= (int)subscription.SubscriberId;
+                int subscriberId = (int)subscription.SubscriberId;
                 Subscriptions sub = subDataAccess.SubscriberCheck(chrId, subscriberId);
                 if (sub.PaymentId > 0)
                 {
@@ -237,7 +241,7 @@ namespace MCNMedia_Dev.Controllers
                     TempData["SubscriberId"] = subscription.SubscriberId;
                     return RedirectToAction(nameof(Packages2));
                 }
-                            
+
             }
             else
             {
@@ -245,7 +249,7 @@ namespace MCNMedia_Dev.Controllers
                 return View("SubscriptionUserLogin");
             }
 
-        
+
         }
         public void LoadCountryDDL()
         {
@@ -263,12 +267,12 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-              
+
                 throw;
             }
 
 
-                    }
+        }
 
 
         public IActionResult Profile()
@@ -294,7 +298,11 @@ namespace MCNMedia_Dev.Controllers
             else
                 profileModel.Announcement = new Announcement();
 
-            profileModel.NoticeList = noticeDataAccess.GetAllNotices(id).ToList();
+            List<Notice> noticeList = noticeDataAccess.GetAllNotices(id).ToList();
+            if (noticeList.Count > 0)
+                profileModel.notice = noticeList.First<Notice>();
+            else
+                profileModel.notice = new Notice();
 
             profileModel.CameraList = camDataAccess.GetAllCameras(id, "");
             profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", id).ToList();
@@ -331,7 +339,7 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception e)
             {
 
-                
+
                 throw;
             }
         }
