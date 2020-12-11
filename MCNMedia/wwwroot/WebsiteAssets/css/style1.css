@@ -144,7 +144,7 @@
 
 .carousel-inner
 {
-    max-height:451px !important;
+    max-height:518px !important;
 }
 .carousel-inner:before {
     content: '.';
