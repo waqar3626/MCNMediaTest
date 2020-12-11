@@ -30,15 +30,15 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchId", camera.ChurchId);
             _dc.AddParameter("ServerId", camera.ServerId);
             _dc.AddParameter("App", camera.App);
-           
+
 
             return _dc.ReturnInt("spCamera_Add");
         }
 
-        public IEnumerable<Camera> GetAllCameras(int ChurchId,string camType)
+        public IEnumerable<Camera> GetAllCameras(int ChurchId, string camType)
         {
             List<Camera> Balobj = new List<Camera>();
-            DataTable dataTable = GetCamera(churchId: ChurchId, cameraId: -1,camType:camType);
+            DataTable dataTable = GetCamera(churchId: ChurchId, cameraId: -1, camType: camType);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Camera camera = BindingCamera(dataRow);
@@ -47,10 +47,10 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        public Camera GetCameraById(int camId,string camtype)
+        public Camera GetCameraById(int camId, string camtype)
         {
             Camera camera = new Camera();
-            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId,camType:camtype);
+            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId, camType: camtype);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 camera = BindingCamera(dataRow);
@@ -58,7 +58,22 @@ namespace MCNMedia_Dev.Repository
             return camera;
         }
 
-        private DataTable GetCamera(int churchId, int cameraId,string camType)
+        public IEnumerable<Camera> GetActiveCameraByChurch(int churchId)
+        {
+            List<Camera> camList = new List<Camera>();
+            DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: "");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (Convert.ToBoolean(dataRow["IsCameraLive"]))
+                {
+                    Camera camera = BindingCamera(dataRow);
+                    camList.Add(camera);
+                }
+            }
+            return camList;
+        }
+
+        private DataTable GetCamera(int churchId, int cameraId, string camType)
         {
             _dc.ClearParameters();
             _dc.AddParameter("chrchId", churchId);
@@ -126,8 +141,8 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-      
-        public int UpdatecameraStatus(int cameraId,bool cameraStatus,int UpdatedBy)
+
+        public int UpdatecameraStatus(int cameraId, bool cameraStatus, int UpdatedBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
