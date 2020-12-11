@@ -103,7 +103,6 @@
             </div>
             <div class="col-xl-7 col-md-8 p-lg-0">
                 <div class="card" id="top-card">
-
                     <div class="tab-content" id="pills-tabContent">
                         @{
                             int camCounter = 0;
@@ -131,7 +130,16 @@
                             camCounter = camCounter + 1;
                         }
 
-
+                        @if (Model.CameraList.Count() == 0)
+                        {
+                            <div class="tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:451px !important; background-color:black; text-align:center;">
+                                <p class="text-white font-30">
+                                    Our camera is switched off at the moment. 
+                                    <br />
+                                    Please come back when there is a service scheduled
+                                </p>
+                            </div>
+                        }
                         <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
                             <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
 
@@ -182,9 +190,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                     <div class="bg-blue pt-3 pb-3">
                         <ul class="nav nav-tabs weekly font-14 mt-0 p-0 mb-0" id="pills-tab" role="tablist">
                             @{
@@ -207,27 +212,34 @@
                                 }
                                 camTabCounter = camTabCounter + 1;
                             }
+
                             @*<li class="nav-item">
-                    <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
-                </li>*@
-                            <li class="nav-item">
-                                <a class="nav-link pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" id="pills-video-tab" data-toggle="pill" href="#pills-video" role="tab" aria-controls="pills-video" aria-selected="false">Videos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" id="pills-image-tab" data-toggle="pill" href="#pills-image" role="tab" aria-controls="pills-image" aria-selected="false">Images</a>
-                            </li>
+                                    <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
+                                </li>*@
+                            @if (Model.VideoList.Count() > 0)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" id="pills-video-tab" data-toggle="pill" href="#pills-video" role="tab" aria-controls="pills-video" aria-selected="false">Videos</a>
+                                </li>
+                            }
+                            @if (Model.PictureList.Count() > 0)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" id="pills-image-tab" data-toggle="pill" href="#pills-image" role="tab" aria-controls="pills-image" aria-selected="false">Images</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
-                    <div class="pl-md-0 pl-3 pr-md-0 pr-3">
-                        <div class="font-weight-bold font-16 text-pink mt-3 mb-1">
-                            @Model.notice.NoticeTitle
-                        </div>
-                        <p class="font-16">
-                            @Model.notice.NoticeName
-                        </p>
+                <div class="pl-md-0 pl-3 pr-md-0 pr-3">
+                    <div class="font-weight-bold font-16 text-pink mt-3 mb-1">
+                        @Model.notice.NoticeTitle
                     </div>
-                
+                    <p class="font-16">
+                        @Model.notice.NoticeName
+                    </p>
+                </div>
+
             </div>
             <div class="col-1 d-xl-block d-none"></div>
         </div>
@@ -241,7 +253,7 @@
                 <div class="card">
                     <ul class="nav nav-tabs weekly" role="tablist">
                         <li class="nav-item" style="width:14.3%;">
-                            <a class="nav-link active" data-toggle="pill" href="#pills-day1-tab" role="tab" aria-controls="pills-home" aria-selected="true">@System.DateTime.Now.ToString("dddd")</a>
+                            <a class="nav-link active" data-toggle="pill" href="#pills-day1-tab" role="tab" aria-controls="pills-home" aria-selected="true">Today</a>
                         </li>
                         <li class="nav-item" style="width:14.3%">
                             <a class="nav-link" data-toggle="pill" href="#pills-day2-tab" role="tab" aria-controls="pills-profile" aria-selected="false">@System.DateTime.Now.AddDays(1).ToString("dddd")</a>
@@ -582,9 +594,6 @@
             <div class="col-1 d-xl-block d-none"></div>
         </div>
 
-
-
-
         <!-- recording start -->
         <div class="bg-blue">
             <div class="container">
@@ -615,10 +624,7 @@
 
                         </div>
                     }
-
-
                 </div>
-
             </div>
             <div class="col-1 d-xl-block d-none"></div>
         </div>
