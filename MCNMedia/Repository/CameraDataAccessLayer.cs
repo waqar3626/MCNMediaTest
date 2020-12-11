@@ -152,6 +152,16 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spCamera_UpdateStatus");
         }
 
+        public int AddMobileCamera(string CameraName, int ChurchId, int UserId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("cameraName", CameraName);
+            _dc.AddParameter("churchId", ChurchId);
+            _dc.AddParameter("userId", UserId);
+
+
+            return _dc.ReturnInt("spClientMobileCamera_Add");
+        }
     }
 
 
