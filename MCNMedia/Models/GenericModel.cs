@@ -50,6 +50,7 @@ namespace MCNMedia_Dev.Models
 
         public IEnumerable<Church> ChurchList { get; set; }
         public IEnumerable<Place> CountryList { get; set; }
+        public IEnumerable<Place> CountyList { get; set; }
 
 
 

@@ -78,6 +78,37 @@ namespace MCNMedia_Dev.Repository
             }
             return countyLst;
         }
+        public IEnumerable<Place> GetCountiesByCountryName(String country)
+        {
+            List<Place> countyLst = new List<Place>();
+            _dc.ClearParameters();
+            _dc.AddParameter("cntry", country);
+            DataTable dataTable = _dc.ReturnDataTable("spCounties_GetByCountryName");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Place county = new Place();
+                county.PlaceId = Convert.ToInt32(dataRow["CountyId"]);
+                county.PlaceName = dataRow["CountyName"].ToString();
+                countyLst.Add(county);
+            }
+            return countyLst;
+        }
+        public IEnumerable<Place> GetCountiesByCountryName()
+        {
+            List<Place> countyLst = new List<Place>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spCounties_GetByCountryName");
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Place county = new Place();
+                county.PlaceId = Convert.ToInt32(dataRow["CountyId"]);
+                county.PlaceName = dataRow["CountyName"].ToString();
+                countyLst.Add(county);
+            }
+            return countyLst;
+        }
 
     }
 }
