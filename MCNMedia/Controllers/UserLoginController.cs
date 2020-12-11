@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
@@ -30,21 +31,19 @@ namespace MCNMedia_Dev.Controllers
                 if (usr.UserId > 0)
                 {
                     HttpContext.Session.SetInt32("UserId", usr.UserId);
-                    HttpContext.Session.SetString("UserName", usr.FirstName+" " + usr.LastName);
-                   
+                    HttpContext.Session.SetString("UserName", usr.FirstName + " " + usr.LastName);
                     if (usr.RoleName.ToLower() == "admin")
                     {
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
-                        return RedirectToAction("Dashboard","Dashboard");
+                        return RedirectToAction("Dashboard", "Dashboard");
                     }
                     else if (usr.RoleName.ToLower() == "client")
                     {
                         HttpContext.Session.SetString("UserType", usr.RoleName.ToLower());
-
                         HttpContext.Session.SetInt32("UserId", usr.UserId);
-              
+
                         IEnumerable<UserAssignChurches> churchList = userAssignDataAcessLayer.GetSingleUserAssignChurches(usr.UserId);
-                        if (churchList.Count()>0)
+                        if (churchList.Count() > 0)
                         {
                             return RedirectToAction("DashBoardClient", "DashBoardClient");
                         }
@@ -63,7 +62,6 @@ namespace MCNMedia_Dev.Controllers
                 else
                 {
                     ViewBag.IsSuccess = 3;
-
                     return View();
                 }
             }
@@ -84,20 +82,23 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChangeUserPassword(int UserId ,string OldPassword,string NewPassword)
+        public IActionResult ChangeUserPassword(int UserId, string OldPassword, string NewPassword)
         {
             User user = _userDataAccess.GetUserData(UserId);
-            if (user.LoginPassword == OldPassword) {
-                _userDataAccess.ChangeUserPassword(UserId, NewPassword, UserId);
-                return Json(new { success = true, responseText = "The attached file is not supported." });
+            Status sts = new Status();
+            sts = Hashing.ValidatePassword(OldPassword, user.LoginPassword);
+            if (sts.Success)
+            {
+                _userDataAccess.ChangeUserPassword(UserId, Hashing.HashPassword(NewPassword), UserId);
+                return Json(new { success = true, responseText = "Password has been updated successfully." });
             }
-            else {
-                return Json(new { success = false, responseText = "The attached file is not supported." });
-
+            else
+            {
+                return Json(new { success = false, responseText = sts.Message });
             }
         }
 
     }
 
-   
+
 }
