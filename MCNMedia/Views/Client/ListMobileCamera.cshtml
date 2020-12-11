@@ -1,0 +1,68 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+    Layout = "~/Views/Shared/_NestedLayout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="float-right">
+            <button type="submit" value="Add" id="BtnAddMobileCamera" class="btn btn-outline-behance btn-sm " title="Add New" onclick="AddMobileCamera()"><i class="fa fa-plus"></i> Add Mobile Camera</button>
+        </div>
+
+        <div class="">
+
+            @*<table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Announcement
+                            </th>
+                            <th>
+                                Created Date
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="announcementList">
+                    </tbody>
+                </table>*@
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddMobileCameraPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Mobile Camera</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddMobileCameraPreview">
+                        @Html.Partial("~/Views/Client/_AddMobileCamera.cshtml", Model.Cameras)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function AddMobileCamera() {
+
+        $('#AddMobileCameraPopUp').modal('show');
+
+    }
+</script>
+ 

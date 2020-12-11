@@ -63,24 +63,24 @@ namespace MCNMedia_Dev.Controllers
         }
         
         [HttpPost]
-        public IActionResult UpdateChurchInfo(Church church, IFormFile imageUrlMain, string ImageUrl)
+        public IActionResult UpdateChurchInfo(Church church, IFormFile ImageUrl, string hdnImageUrl)
         {
 
             string fileName = "";
-            if (imageUrlMain != null)
+            if (ImageUrl != null)
             {
-                fileName = Path.GetFileName(imageUrlMain.FileName);
-                church.ImageURl = FileUploadUtility.UploadFile(imageUrlMain, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
+                fileName = Path.GetFileName(ImageUrl.FileName);
+                church.ImageURl = FileUploadUtility.UploadFile(ImageUrl, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
             }
             else
             {
-                int pos = ImageUrl.IndexOf("Upload");
+                int pos = hdnImageUrl.IndexOf("Upload");
                 if (pos >= 0)
                 {
                     // String after founder  
                     
                     // Remove everything before url but include Upload 
-                    string beforeFounder = ImageUrl.Remove(0, pos);
+                    string beforeFounder = hdnImageUrl.Remove(0, pos);
                     church.ImageURl = beforeFounder;
                 }
               
@@ -145,6 +145,28 @@ namespace MCNMedia_Dev.Controllers
 
 
 
+        }
+
+        public IActionResult ListMobileCamera()
+        {
+            GenericModel gm = new GenericModel();
+            int id = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.Churches = chdataAccess.GetChurchData(id);
+            return View(gm);
+        }
+
+        [HttpPost]
+        public JsonResult AddMobileCamera(string cameraName) 
+        {
+            int id = (int)HttpContext.Session.GetInt32("ChurchId");
+            int userId = (int)HttpContext.Session.GetInt32("UserId");
+            if(userId !=0 && id != 0)
+            {
+                int CameraId = camDataAccess.AddMobileCamera(cameraName, id, userId);
+                return Json(1);
+            }
+            return Json(2);
+        
         }
 
 
@@ -265,28 +287,9 @@ namespace MCNMedia_Dev.Controllers
 
 
 
-        #region Schedule
+        #region Recording
 
-        //[HttpGet]
-        //public IActionResult Schedule()
-        //{
-        //    try
-        //    {
-
-        //        int id = (int)HttpContext.Session.GetInt32("ChurchId");
-        //        GenericModel gm = new GenericModel();
-        //        gm.LSchedules = previewChurchesDataAccess.GetAllPreviewSchedule(id);
-        //        gm.Churches = chdataAccess.GetChurchData(id);
-        //        Redirect("Schedule");
-        //        return View(gm);
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ShowMesage("Schedule Errors : " + e.Message);
-        //        throw;
-        //    }
-       // }
+    
         [HttpGet]
         public IActionResult Recording()
         {
