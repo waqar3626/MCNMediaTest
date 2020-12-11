@@ -1,19 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace MCNMedia_Dev.Repository
 {
     public class RecordingDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-
+        private  string AWS_S3_BUCKET_URI;
         public RecordingDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
+            var root = builder.Build();
+            var awsS3bucket = root.GetSection("S3BucketConfiguration");
+            var sysConfig = root.GetSection("SystemConfiguration");
+            AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}";
         }
         
         public void AddRecording(Recording recording)
@@ -89,7 +97,7 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spRecording_Delete");
         }
 
-        private static Recording BindRecording(DataRow dataRow)
+        private  Recording BindRecording(DataRow dataRow)
         {
             Recording recording = new Recording();
             recording.RecordingId = Convert.ToInt32(dataRow["RecordingId"]);
@@ -102,7 +110,7 @@ namespace MCNMedia_Dev.Repository
             recording.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
             recording.Password = dataRow["Password"].ToString();
             recording.ChurchName = dataRow["ChurchName"].ToString();
-            recording.Src = "https://mcnmedia-app.s3-eu-west-1.amazonaws.com/"+dataRow["UniqueChurchId"].ToString()+"/Video/"+ dataRow["RecordingURL"].ToString()+".mp4";
+            recording.Src = $"{AWS_S3_BUCKET_URI}/{dataRow["UniqueIdentifier"]}/videos/{dataRow["RecordingURL"]}.mp4"; //AWS_S3_BUCKET_URI + dataRow["UniqueIdentifier"].ToString()+"/Video/"+ dataRow["RecordingURL"].ToString()+".mp4";
             return recording;
         }
 
