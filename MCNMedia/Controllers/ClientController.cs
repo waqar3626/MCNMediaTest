@@ -151,12 +151,16 @@ namespace MCNMedia_Dev.Controllers
         {
             GenericModel gm = new GenericModel();
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.Churches = chdataAccess.GetChurchData(id);
+
+           
+            gm.LCameras = camDataAccess.GetAllCameras(id, "ClientCamera");
+
+             gm.Churches = chdataAccess.GetChurchData(id);
             return View(gm);
         }
 
         [HttpPost]
-        public JsonResult AddMobileCamera(string cameraName) 
+        public IActionResult AddMobileCamera(string cameraName) 
         {
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
             int userId = (int)HttpContext.Session.GetInt32("UserId");
@@ -169,7 +173,21 @@ namespace MCNMedia_Dev.Controllers
         
         }
 
+        public IActionResult DeleteCamera(int id)
+        {
+            try
+            {
+                GenericModel gm = new GenericModel();
+                bool res = camDataAccess.DeleteCamera(id);
+                return Json(res);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Delete Camera Error" + e.Message);
+                throw;
+            }
 
+        }
         [HttpPost]
         public JsonResult UpdateAnnouncement(int churchAnnounceId, string editAnnounceTitle, string editAnnounceText)
         {
@@ -463,6 +481,9 @@ namespace MCNMedia_Dev.Controllers
             log.Error("Exception : " + exceptionMessage);
         }
 
-
+        private void ShowMessage(string exceptionMessage)
+        {
+            log.Info("Exception: " + exceptionMessage);
+        }
     }
 }
