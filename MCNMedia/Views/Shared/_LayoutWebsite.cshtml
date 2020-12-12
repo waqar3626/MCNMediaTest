@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +47,7 @@
 
     <!-- header start -->
     <header class="header container p-sm-0">
-        
+
         <nav class="navbar navbar-expand-lg navbar-light container-nav  avantgardece text-uppercase pl-0 pr-0">
             <a class="navbar-brand " href="/"><img src="~/WebsiteAssets/img/mcn-chrismas-logo.png" alt="" style="width: 115px;"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -75,8 +75,52 @@
                         <a class="nav-link font-14 top-Menu-item pr-3" style="border-right: 1px solid #c2c2c247;" href="/Schedules">Schedule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-14 top-Menu-item pr-3" href="/Website/ContactUs">Contact us</a>
+                        <a class="nav-link font-14 top-Menu-item pr-3" style="border-right: 1px solid #c2c2c247; href="/Website/ContactUs">Contact us</a>
                     </li>
+                    @if (Context.Request.Cookies["SubscriberId"] != null)
+                    {
+
+                    <div class="col">
+                        <div class="top-Menu-item font-14 d-flex align-items-center justify-content-end">
+                            <ul class="navbar-nav navbar-nav-right">
+                                <li class="nav-item nav-profile dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                        My Account
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                        <span class="dropdown-item border-bottom font-20">
+                                            <i class="ti-user text-primary"></i>
+                                            <span class="font-18 text-primary">
+
+                                                @Context.Request.Cookies["SubscriberName"].ToString()
+                                            </span>
+                                        </span>
+                                        <a class="dropdown-item" onclick="ChangePassword()" data-toggle="tooltip" data-placement="bottom" title="Change">
+                                            <i class="ti-lock text-primary"></i>
+                                            Change Password
+                                        </a>
+                                        <a class="dropdown-item" asp-action="SubscriberLogout" asp-controller="Website">
+                                            <i class="ti-power-off text-primary " ></i>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+                                <span class="ti-menu"></span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    }
+                    else
+                    {
+                    <li class="nav-item">
+                        <a class="nav-link font-14 top-Menu-item pr-3" href="/Subscription/SubscriptionUserLogin/Home">Subscriber</a>
+                    </li>
+                    }
+
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <div class="search">
@@ -102,20 +146,20 @@
                     <button class="btn btn-outline-pink mt-4 pt-2 pb-2 pl-4 pr-4 font-14 MyriadPro text-white">BECOME a service provider</button>
                 </div>
                 @*<div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
-            <p class="mb-2 font-14 text-white">Customer</p>
-            <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">JOBS</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">CAREER</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">ABOUT US</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
-        </div>*@
+                        <p class="mb-2 font-14 text-white">Customer</p>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">JOBS</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">CAREER</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">ABOUT US</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
+                    </div>*@
                 <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-left">
                     @*<p class="mb-2 font-14 text-white">MCN On View</p>
-            <a href=""><p class="mb-2 font-12 text-lightdark">LIVE LEADS</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">PRESS</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">SUBSCRIBE US</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">TALK TO US</p></a>
-            <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>*@
+                        <a href=""><p class="mb-2 font-12 text-lightdark">LIVE LEADS</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">PRESS</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">SUBSCRIBE US</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">TALK TO US</p></a>
+                        <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>*@
                 </div>
                 <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
                     <p class="mb-2 font-14 text-white">Quick Links</p>
@@ -126,11 +170,11 @@
                     <a href="/ContactUs"><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
                 </div>
                 <div class="col-md-3 col-sm-6 pb-2 MyriadPro">
-            <p class="mb-5 font-14 text-white">Follow Us</p>
-            <a href="#"><i class="fab font-36 text-white pr-2 ml-2 fa-facebook-square"></i></a>
-            @*<a href="https://twitter.com"><i class="fab font-36 text-white pr-2 fa-twitter-square"></i></a>*@
+                    <p class="mb-5 font-14 text-white">Follow Us</p>
+                    <a href="#"><i class="fab font-36 text-white pr-2 ml-2 fa-facebook-square"></i></a>
+                    @*<a href="https://twitter.com"><i class="fab font-36 text-white pr-2 fa-twitter-square"></i></a>*@
 
-        </div>
+                </div>
             </div>
         </div>
         <div class="bottom-footer border-top border-light pt-3 pb-3" style="background-color: #1f4a79;">
