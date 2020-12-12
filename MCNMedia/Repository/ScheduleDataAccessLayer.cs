@@ -148,6 +148,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
+                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
 
 
                 Balobj.Add(schedule);
@@ -174,6 +175,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
+                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
                 Balobj.Add(schedule);
             }
             return Balobj;
@@ -217,6 +219,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
+                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
 
 
 

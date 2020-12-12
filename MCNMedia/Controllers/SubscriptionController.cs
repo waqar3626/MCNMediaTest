@@ -193,7 +193,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
+       
         public IActionResult PackageRenewal(int PackageId, int SubscriberId)
         {
             try
@@ -472,6 +472,24 @@ namespace MCNMedia_Dev.Controllers
         private void ShowMessage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
+        }
+
+        public IActionResult SubscriperProfile()
+        {
+            try
+            {
+                string SubscriberId = DecodeDataFrom64(HttpContext.Request.Cookies["SubscriberId"]);
+                int SubId = Convert.ToInt32(SubscriberId);
+
+                List < Subscriptions > subs = subDataAccess.GetSingleSubscribersList(SubId).ToList<Subscriptions>();
+
+                return View(subs);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Processing Errors : " + e.Message);
+                throw;
+            }
         }
     }
 }

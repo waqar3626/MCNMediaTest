@@ -24,5 +24,6 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("CntMessage", website.Message);
             _dc.Execute("spContactUs_Add");
         }
-    }
+
+      }
 }

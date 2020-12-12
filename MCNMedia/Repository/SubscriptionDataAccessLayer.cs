@@ -99,7 +99,30 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+        public IEnumerable<Subscriptions> GetSingleSubscribersList(int subscriberId)
+        {
+            List<Subscriptions> Balobj = new List<Subscriptions>();
+            _dc.ClearParameters();
+            _dc.AddParameter("subscriberId", subscriberId);
 
+            DataTable dataTable = _dc.ReturnDataTable("spSubscriberOrder_Get");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Subscriptions subscription = new Subscriptions();
+                subscription.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"]);
+                subscription.Name = dataRow["SubscriberName"].ToString();
+                subscription.EmailAddress = dataRow["EmailAddress"].ToString();
+                subscription.PackageTitle = dataRow["PackageTitle"].ToString();
+                subscription.DurationUnit = Convert.ToInt32(dataRow["Duration"].ToString()) + dataRow["DurationUnit"].ToString();
+                subscription.PackageCharge = Convert.ToDecimal(dataRow["PackageCharge"].ToString());
+                subscription.PaidAmount = Convert.ToDecimal(dataRow["PaidAmount"].ToString());
+                subscription.Orderdate = Convert.ToDateTime(dataRow["OrderDate"].ToString());
+                subscription.Expiredate = Convert.ToDateTime(dataRow["ExpiryDate"].ToString());
+                subscription.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                Balobj.Add(subscription);
+            }
+            return Balobj;
+        }
         public Subscriptions GetSubscriberById(int subscriberId)
         {
             Subscriptions subscription = new Subscriptions();

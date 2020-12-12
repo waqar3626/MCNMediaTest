@@ -26,6 +26,7 @@ namespace MCNMedia_Dev.Controllers
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
+        SubscriptionDataAccessLayer subDataAccess = new SubscriptionDataAccessLayer();
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
 
         GenericModel gm = new GenericModel();
@@ -628,5 +629,6 @@ namespace MCNMedia_Dev.Controllers
             }
             return RedirectToAction(nameof(Home));
         }
+       
     }
 }
