@@ -600,5 +600,33 @@ namespace MCNMedia_Dev.Controllers
 
             return false;
         }
+
+        public IActionResult PasswordChange()
+        {
+            return View();
+        }
+
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        public IActionResult SubscriperProfile()
+        {
+            return View();
+        }
+
+        public IActionResult SubscriberLogout()
+        {
+            foreach (var cookieKey in Request.Cookies.Keys)
+            {
+                if(cookieKey== "SubscriberId" || cookieKey == "SubscriberName")
+                {
+                    Response.Cookies.Delete(cookieKey);
+                }
+                
+            }
+            return RedirectToAction(nameof(Home));
+        }
     }
 }
