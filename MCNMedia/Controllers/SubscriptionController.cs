@@ -262,14 +262,21 @@ namespace MCNMedia_Dev.Controllers
             try 
             { 
             int SubscriberId = subDataAccess.AddSubscriber(subscriptions);
-            int ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+                int ChurchId = 0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("chrId").ToString()))
+                {
+                    ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+                }
+            
             if (SubscriberId > 0)
             {
+                    Subscriptions subscriberName = subDataAccess.GetSubscriberById(SubscriberId);
                 string subscriberId = EncodeDataToBase64(SubscriberId.ToString());
                 CookieOptions cookieOptions = new CookieOptions();
                 cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
                 HttpContext.Response.Cookies.Append("SubscriberId", subscriberId, cookieOptions);
                 HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
+                     HttpContext.Response.Cookies.Append("SubscriberName", subscriberName.Name, cookieOptions);
                 int PackageId = (int)HttpContext.Session.GetInt32("packageId");
                 Subscriptions subscriberinfo = subDataAccess.GetSubscriberById(SubscriberId);
                 Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
@@ -362,6 +369,7 @@ namespace MCNMedia_Dev.Controllers
             else
             {
                 ViewBag.Error = 2;
+                    ViewBag.LoginLocation = "Packages";
                 return View("SubscriptionUserLogin");
             }
             }
@@ -399,6 +407,7 @@ namespace MCNMedia_Dev.Controllers
                 else
                 {
                     ViewBag.Error = 2;
+                    ViewBag.LoginLocation = "Home";
                     return View("SubscriptionUserLogin");
                 }
             }
@@ -472,6 +481,16 @@ namespace MCNMedia_Dev.Controllers
         private void ShowMessage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
+        }
+
+        public IActionResult PasswordChange()
+        {
+            return View();
+        }
+
+        public IActionResult ForgetPassword()
+        {
+            return View();
         }
 
         public IActionResult SubscriperProfile()

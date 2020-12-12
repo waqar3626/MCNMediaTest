@@ -449,6 +449,7 @@ namespace MCNMedia_Dev.Controllers
                 Profile profileModel = new Profile();
                 profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
                 HttpContext.Session.SetString("slug", id);
+                HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                 if (profileModel.Churches.Password.Count() > 0)
                 {
                     HttpContext.Session.SetString("ChurchPassword", profileModel.Churches.Password);
@@ -600,21 +601,6 @@ namespace MCNMedia_Dev.Controllers
                 return true;
 
             return false;
-        }
-
-        public IActionResult PasswordChange()
-        {
-            return View();
-        }
-
-        public IActionResult ForgetPassword()
-        {
-            return View();
-        }
-
-        public IActionResult SubscriperProfile()
-        {
-            return View();
         }
 
         public IActionResult SubscriberLogout()
