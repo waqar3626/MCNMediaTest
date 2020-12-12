@@ -115,8 +115,8 @@ namespace MCNMedia_Dev.Controllers
 
                     CookieOptions cookieOptions = new CookieOptions();
                     cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
-
-                    HttpContext.Response.Cookies.Append("SubscriberId", SubscriberId, cookieOptions);
+                        string encodeCookieId = EncodeDataToBase64(SubscriberId.ToString());
+                    HttpContext.Response.Cookies.Append("SubscriberId", encodeCookieId, cookieOptions);
                     HttpContext.Session.SetInt32("SubscriberId", subscriberId);
                     TempData["SubscriberId"] = subscriberId;
                     return RedirectToAction(nameof(Packages2));
