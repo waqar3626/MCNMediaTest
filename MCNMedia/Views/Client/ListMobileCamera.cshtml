@@ -3,7 +3,58 @@
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
 }
 
+@if (ViewBag.NewCamera == 2) {
+    var data = Model.Cameras.CameraUrl;
+    var data2 = data.Split('_');
+    var Application = "live/_" + data2[0] + "_";
+    var StreamKey = Model.Cameras.CameraUrl + ".stream";
+<div class="row m-3" >
 
+    <div class="col-md-12">
+        <div class="card">
+            <div class=" card-body">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <h4>
+                            Your Mobile Streaming Details
+                        </h4>
+                    </div>
+                    <div class="col-md-12  border-bottom p-3" style="border-color:lightgray">
+                        <span class="font-weight-bolder  float-right font-12">
+                            This information can be optained again by visiting your camera section.
+                        </span>
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+
+                        Please download this <a href="#" class="text-info">PDF Tutorial </a>on how to set up your phone.
+
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+
+                        <strong>Host:</strong> Stream.mcnmedia.tv
+
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+
+                        <strong>Port:</strong> 1935
+
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+
+                        <strong>Application:</strong>@Application
+
+                    </div>
+                    <div class="col-md-12  p-4" >
+
+                        <strong>Stream Key:</strong>@StreamKey
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
 <div class="card">
     <div class="card-body">
         <div class="form-group row">
@@ -14,33 +65,48 @@
             </div>
         </div>
        
-
-        <div class="form-group row col-lg-12 m-3" >
-
-           
-                        @foreach(var item in Model.LCameras) {
+        <form method="get">
+            <div class=" col-lg-12 ">
+                <table  class="table">
+                    <thead>
+                        <tr>
+                            <th >Camera Name</th>
+                            <th >Application</th>
+                            <th >Stream Key</th>
+                             <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LCameras)
+                        {
                             var data = item.CameraUrl;
                             var data2 = data.Split('_');
-                            var Application = ":live/_" + data2[1]+ "_";
-                            var StreamKey = ":"+ item.CameraUrl + ".stream";
-                    
-                             
-                                       <div class="form-group row  w-100 " style="background-color:lavender">
-                                           <div class="col-lg-12 border-bottom p-4 font-weight-bolder " style="border-color:lightgray">
-                                               @item.CameraName <span class="float-right pr-5"><a onclick="DeleteCamera(@item.CameraId)" class="btn btn-icon btn-danger btn-rounded"><i class="mdi mdi-window-close mdi-36px text-white"></i></a></span>
-                                           </div>
-                                           <div class="col-lg-12 p-3">
-                                               <b>Application</b>@Application <b>Stream Key</b>@StreamKey
-                                           </div>
-                                       </div>
-                                 
-                              
-                            
+                            var Application = "live/_" + data2[0] + "_";
+                            var StreamKey =  item.CameraUrl + ".stream";
+
+                            <tr>
+
+                                <td class="text-wrap">
+                                   @item.CameraName
+                                </td>
+                                <td class="text-wrap">
+                                   @Application
+                                </td>
+                                <td class="text-wrap">
+                                   @StreamKey
+                                </td>
+                                <td>
+                                    <a onclick="DeleteCamera(@item.CameraId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                </td>
+                               
+                            </tr>
                         }
-                  
+                    </tbody>
+                </table>
+            </div>
 
-        </div>
-
+           
+        </form>
     </div>
 </div>
 
@@ -99,5 +165,7 @@
                 }
             });
     }
+
+   
 </script>
  

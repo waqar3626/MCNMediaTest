@@ -150,24 +150,49 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult ListMobileCamera()
         {
             GenericModel gm = new GenericModel();
+            int CameraId = Convert.ToInt32(TempData["CameraId"]);
+            if (CameraId > 0)
+            {
+                ViewBag.NewCamera = 2;
+                Camera camera = camDataAccess.GetCameraById(CameraId, "");
+                gm.Cameras = camera;
+            }
+            else
+            {
+                ViewBag.NewCamera = 1;
+            }
+           
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
 
            
             gm.LCameras = camDataAccess.GetAllCameras(id, "ClientCamera");
 
              gm.Churches = chdataAccess.GetChurchData(id);
+
+            HttpContext.Session.SetString("ctabId", "/Client/ListMobileCamera");
+        
+
             return View(gm);
         }
 
         [HttpPost]
-        public IActionResult AddMobileCamera(string cameraName) 
+        public IActionResult AddMobileCamera(string CameraName) 
         {
+            GenericModel gm = new GenericModel();
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
             int userId = (int)HttpContext.Session.GetInt32("UserId");
             if(userId !=0 && id != 0)
             {
-                int CameraId = camDataAccess.AddMobileCamera(cameraName, id, userId);
-                return Json(1);
+                int CameraId = camDataAccess.AddMobileCamera(CameraName, id, userId);
+                if (CameraId > 0)
+                {                  
+                    TempData["CameraId"] = CameraId;
+                    return RedirectToAction(nameof(ListMobileCamera));
+                }
+                else {
+                    return RedirectToAction(nameof(ListMobileCamera));
+                }
+                
             }
             return Json(2);
         
