@@ -5,6 +5,7 @@ using MaxMind.GeoIP2;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev._Helper;
 using Microsoft.AspNetCore.Hosting;
@@ -65,11 +66,12 @@ namespace MCNMedia_Dev.Controllers
                 //smtp.Credentials = new NetworkCredential("mcnmedia9@gmail.com ", "M3di@mcN");
                 //smtp.Send(mailmassage);
                 //ViewBag.message = "The Mail has been send by " + web.ContactName + " Successfully....!," + mailmassage.To + ".";
+                _websiteDataAccessLayer.AddContactForm(web);
                 ModelState.Clear();
                 return View();
             }
-        
-             catch (Exception e)
+
+            catch (Exception e)
             {
                 ShowMesage("Contactus Email Sending Failed : " + e.Message);
                 throw;
@@ -80,6 +82,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 LoadCountryDDL();
+                HttpContext.Session.SetString("Password", "");
                 HttpContext.Session.SetString("UserType", "website");
                 gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
                 gm.LSchedules = UpComingSchedules();
@@ -142,12 +145,13 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+       
         public IActionResult ContactUs()
         {
             try
             {
+                
 
-               
                 return View();
             }
             catch (Exception e)
@@ -426,6 +430,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
+
         public IActionResult Profile(string id)
         {
             try
@@ -472,6 +477,7 @@ namespace MCNMedia_Dev.Controllers
                     }
 
                 }
+
 
 
                 int SubscriberPaid = Convert.ToInt32(TempData["paymentId"]);

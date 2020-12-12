@@ -1,7 +1,7 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
-    ViewData["Title"] = "ChurchLock";
-    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+    ViewData["Title"] = "CustomerChurchLock";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
 
 <div class="container-scroller">
@@ -11,7 +11,7 @@
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-transparent text-left p-5 text-center">
                         @*<label>@Model.Churches.ChurchName</label>*@
-                        <form class="pt-5" asp-action="ChurchLock" asp-controller="Website" method="post">
+                        <form class="pt-5" asp-action="CustomerChurchLock" asp-controller="Customers" method="post">
                             <div class="form-group">
                                 <input type="hidden" asp-for="churchLock.churchPass" />
                                 <label for="examplePassword1">Password to unlock</label>
@@ -19,14 +19,14 @@
                                 <input type="password" asp-for="churchLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="btn btn-block bg-blue text-white btn-lg font-weight-medium" href="@Url.Action("ChurchLock", "Website")">Unlock</button>
+                                <button type="submit" class="btn btn-block  text-white btn-lg bg-blue font-weight-medium" href="@Url.Action("CustomerChurchLock", "Customers")">Unlock</button>
                             </div>
                             <br />
                             @{ if (ViewBag.IsSuccess == 3)
                                 {
-                        <div class="alert alert-danger text-danger">
-                            Password Incorrect
-                        </div> } }
+                                    <div class="alert alert-danger text-danger">
+                                        Password Incorrect
+                                    </div> } }
                         </form>
                     </div>
                 </div>
