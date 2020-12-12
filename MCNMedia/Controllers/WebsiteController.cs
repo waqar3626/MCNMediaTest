@@ -401,7 +401,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                String pass = HttpContext.Session.GetString("ChurchPass").ToString();
+                String pass = HttpContext.Session.GetString("ChurchPassword").ToString();
                 if (churchLock.Password == pass)
                 {
                     HttpContext.Session.SetInt32("ChurchPass", 1);
@@ -450,7 +450,7 @@ namespace MCNMedia_Dev.Controllers
                 HttpContext.Session.SetString("slug", id);
                 if (profileModel.Churches.Password.Count() > 0)
                 {
-                    HttpContext.Session.SetString("ChurchPass", profileModel.Churches.Password);
+                    HttpContext.Session.SetString("ChurchPassword", profileModel.Churches.Password);
                     HttpContext.Session.SetString("slug", id);
                     if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
                     {
@@ -515,6 +515,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     ViewBag.ChurchId = profileModel.Churches.ChurchId;
+                    churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
                     return RedirectToAction("Packages", "Subscription");
                 }
             }
