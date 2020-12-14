@@ -20,6 +20,7 @@ namespace MCNMedia_Dev.Models
         public string EmailAddress { get; set; }
         public int CountryId { get; set; }
         public string Password { get; set; }
+        public String  NewPassword { get; set; }
 
         public int PaymentId { get; set; }
         public string OrderId { get; set; }

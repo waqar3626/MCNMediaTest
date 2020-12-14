@@ -320,6 +320,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try 
             {
+                if (Id==null)
+                {
+                    Id = "Home";
+                }
                 ViewBag.LoginLocation = Id;
             return View();
             }
@@ -485,7 +489,43 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult PasswordChange()
         {
+            ViewBag.Error = 1;
+            //string SubscriberId = DecodeDataFrom64(HttpContext.Request.Cookies["SubscriberId"]);
+            //int SubId = Convert.ToInt32(SubscriberId);
+            //Subscriptions subscribe = subDataAccess.GetSubscriberById(SubId);
+            //HttpContext.Session.SetString("oldPass", subscribe.Password);
+
             return View();
+        }
+        [HttpPost]
+        public IActionResult PasswordUpdate(String oldPassword,string newPassword)
+        {
+            string SubscriberId = DecodeDataFrom64(HttpContext.Request.Cookies["SubscriberId"]);
+            int SubId = Convert.ToInt32(SubscriberId);
+            Subscriptions subscribe = subDataAccess.GetSubscriberById(SubId);
+            
+            if (subscribe.Password == oldPassword)
+            {
+               
+                subDataAccess.UpdateSubscriberPassword(SubId, newPassword);
+                foreach (var cookieKey in Request.Cookies.Keys)
+                {
+                    if (cookieKey == "SubscriberId" || cookieKey == "SubscriberName")
+                    {
+                        Response.Cookies.Delete(cookieKey);
+                    }
+
+                }
+                return RedirectToAction("SubscriptionUserLogin");
+
+            }
+            else
+            {
+                TempData["Message"] = "2";
+                ViewBag.Error = 2;
+                return View("PasswordChange");
+            }
+
         }
 
         public IActionResult ForgetPassword()

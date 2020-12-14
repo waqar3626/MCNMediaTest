@@ -135,10 +135,21 @@ namespace MCNMedia_Dev.Repository
                 subscription.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"]);
                 subscription.Name = dataRow["SubscriberName"].ToString();
                 subscription.EmailAddress = dataRow["EmailAddress"].ToString();
+                subscription.Password = dataRow["SubscriberPassword"].ToString();
                
             }
             return subscription;
         }
+        public void UpdateSubscriberPassword(int Subscriber_Id,string newPassword)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("Subscriber_Id", Subscriber_Id);
+            _dc.AddParameter("Subscriber_Password", newPassword);
+            _dc.Execute("spSubscriber_PassChange");
+           
+        }
+
+
         public int AddSubscriberpayment(Subscriptions Sub)
         {
             _dc.ClearParameters();
