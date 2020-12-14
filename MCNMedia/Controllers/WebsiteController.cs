@@ -223,6 +223,7 @@ namespace MCNMedia_Dev.Controllers
                         string countyName = Request.Query["County"].ToString().Replace("-", " ");
                         churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
                         ViewBag.CountyList = 0;
+                        ViewBag.countyName = Request.Query["County"].ToString();
                     }
 
                     else
@@ -246,6 +247,7 @@ namespace MCNMedia_Dev.Controllers
                     string searchFilter = Request.Query["County"].ToString().ToLower();
                     churches = churches.FindAll(x => x.CountyName.ToLower().Contains(searchFilter)).ToList<Church>();
                     ViewBag.CountyList = 0;
+                    ViewBag.countyName = Request.Query["County"].ToString();
                     gm.CountryList = _placeAccessLayer.GetCountries();
                     gm.ChurchList = churches;
                     return View(gm);
