@@ -337,7 +337,7 @@ namespace MCNMedia_Dev.WowzaApi
         public int currentSize = 0;
         public string segmentSchedule = "";
         public bool startOnKeyFrame = true;
-        public string outputPath = "/usr/local/WowzaStreamingEngine/content/recording";
+        public string outputPath = "/usr/local/WowzaStreamingEngine/content/recordings";
         public string currentFile = "";
         public string[] saveFieldList = new string[] { };
         public bool recordData = false;
