@@ -98,7 +98,14 @@ namespace MCNMedia_Dev.Repository
             camera.ServerName = dataRow["ServerName"].ToString();
             camera.ServerIP = dataRow["ServerIP"].ToString();
             camera.IsCameraLive = Convert.ToBoolean(dataRow["IsCameraLive"]);
-            camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
+            if (camera.CameraType == "AdminCamera")
+            {
+                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
+            }
+            else if (camera.CameraType == "ClientCamera")
+            {
+                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
+            }
             //camera.LiveStreamUrl = "https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8";
             return camera;
         }

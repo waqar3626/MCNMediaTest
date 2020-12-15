@@ -236,7 +236,7 @@
                         @Model.notice.NoticeTitle
                     </div>
                     <p class="font-16">
-                        @Model.notice.NoticeName
+                        @Html.Raw(Model.notice.NoticeName)
                     </p>
                 </div>
 
@@ -569,7 +569,7 @@
                         @Model.Announcement.AnnouncementTitle
                     </div>
                     <p class="font-16 mb-2">
-                        @Model.Announcement.AnnouncementText
+                        @Html.Raw(Model.Announcement.AnnouncementText)
                     </p>
                 </div>
             </div>
