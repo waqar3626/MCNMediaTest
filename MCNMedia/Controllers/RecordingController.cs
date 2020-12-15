@@ -23,12 +23,14 @@ namespace MCNMedia_Dev.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
+        ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
+
         [HttpGet]
         public IActionResult AddRecording()
         {
             try
             {
-                LoadChurchesDDL();
+                LoadChurchDDL();
                 return View();
             }
             catch (Exception e)
@@ -44,9 +46,15 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                LoadChurchesDDL();
+                DateTime FromDate = DateTime.Now.AddDays(-5);
+                DateTime ToDate = DateTime.Now;
                 GenericModel gm = new GenericModel();
-                gm.LRecordings = recordDataAccess.Recording_GetAll().ToList<Recording>();
+                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate,-1,"").ToList<Recording>();
+                ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
+                ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
+                ViewBag.ChurchId = -1;
+                ViewBag.EventName = "";
+                LoadChurchDDL();
                 return View(gm);
             }
             catch (Exception e)
@@ -56,7 +64,31 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-   
+        [HttpPost]
+        public IActionResult Search(string fromDate, string toDate, int ChurchId,string EventName)
+        {
+            try
+            {
+                GenericModel gm = new GenericModel();
+                DateTime FromDate = Convert.ToDateTime(fromDate);
+                DateTime ToDate = Convert.ToDateTime(toDate);
+
+               gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, ChurchId, EventName).ToList<Recording>();
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+                ViewBag.ChurchId = ChurchId;
+                ViewBag.EventName = EventName;
+                LoadChurchDDL();
+                return View("ListRecording", gm);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Search Errors : " + e.Message);
+                throw;
+            }
+        }
+
+
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
@@ -72,7 +104,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return NotFound();
                 }
-                LoadChurchesDDL();
+                LoadChurchDDL();
 
                 return PartialView("Edit", recording);
             }
@@ -193,25 +225,7 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        public void LoadChurchesDDL()
-        {
-            try
-            {
-                ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
-                System.Data.DataTable churches = churchDataAccessLayer.GetChurchDDL();
-                List<SelectListItem> selectListItems = new List<SelectListItem>();
-                foreach (System.Data.DataRow item in churches.Rows)
-                {
-                    selectListItems.Add(new SelectListItem { Text = item["ChurchName"].ToString(), Value = item["ChurchId"].ToString() });
-                }
-                ViewBag.State = selectListItems;
-            }
-            catch (Exception e)
-            {
-                ShowMessage("Load Church Error in Recording " + e.Message);
-                throw;
-            }
-        }
+      
 
         public IActionResult AdminPlayer(int id)
         {
@@ -257,5 +271,33 @@ namespace MCNMedia_Dev.Controllers
         {
             log.Info("Exception: " + exceptionMessage);
         }
+        public void LoadChurchDDL()
+        {
+            try
+            {
+                Church chr = new Church();
+                chr.ChurchId = -1;
+                chr.CountyId = -1;
+                chr.ClientTypeId = -1;
+                chr.ChurchName = "";
+                chr.EmailAddress = "";
+                chr.Phone = "";
+
+                IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr);
+
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in ChurchList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                }
+                ViewBag.Church = selectListItems;
+            }
+            catch (Exception e)
+            {
+                ShowMessage("LoadChurch DropDown Errors : " + e.Message);
+                throw;
+            }
+        }
+
     }
 }

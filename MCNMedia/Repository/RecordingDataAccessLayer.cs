@@ -58,6 +58,33 @@ namespace MCNMedia_Dev.Repository
             return recording;
         }
 
+        public IEnumerable<Recording> RecordingSearch(DateTime FromDate, DateTime ToDate, int ChurchId, string RecodingName)
+        {
+            List<Recording> recordingList = new List<Recording>();
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", ChurchId);
+            _dc.AddParameter("fromdate", FromDate);
+            _dc.AddParameter("Todate", ToDate);
+            _dc.AddParameter("recordName", RecodingName);
+
+            DataTable dataTable = _dc.ReturnDataTable("spRecording_Search");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Recording recording = new Recording();
+                recording.RecordingId = Convert.ToInt32(dataRow["RecordingId"]);
+                recording.RecordingTitle = dataRow["RecordingName"].ToString();
+                recording.RecordingURl = dataRow["RecordingURL"].ToString();
+                recording.Date = Convert.ToDateTime(dataRow["RecordingDate"].ToString());
+                recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
+                recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                recording.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
+                recording.Password = dataRow["Password"].ToString();
+                recording.ChurchName = dataRow["ChurchName"].ToString();
+                recordingList.Add(recording);
+            }
+            return recordingList;
+        }
+
         private IEnumerable<Recording> Recording_GetFromDatabase(int churchId,int recordId,string recordName)
         {
             List<Recording> recordingList = new List<Recording>();
@@ -85,6 +112,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RecDate", recording.Date);
             _dc.AddParameter("RecTime", recording.Time);
             _dc.AddParameter("UpdateBy", recording.UpdatedBy);
+            _dc.AddParameter("Pwd", recording.Password);
             _dc.AddParameter("ChrhId", recording.ChurchId);
             _dc.Execute("spRecording_Update");
         }
