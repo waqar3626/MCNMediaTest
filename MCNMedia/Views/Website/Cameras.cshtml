@@ -17,6 +17,7 @@
 <div class="row m-0 mt-5 mb-5">
     <div class="col-1 d-lg-block d-none"></div>
     <div class="col-lg-3 col-md-4 col-sm-6">
+       
         <div class="border bg-white p-4" style="position: sticky; top: 103px;">
             @foreach (Place country in Model.CountryList)
             {
@@ -32,23 +33,33 @@
 
     @if (ViewBag.CountyList == 1)
     {
-        <div class="col-lg-7">
-            <div class="row">
-                @*<div class="card-header card-header-custom">
-                        <h3 id="HeaderChurchName">@Model.Cameras.CountyName </h3>
-                    </div>*@
+<div class="col-lg-7">
+    <div class="row">
+        @if (ViewBag.countryName == null)
+        {
 
-                @foreach (Place country in Model.CountyList)
-                {
-                    <div class="m-2" style="width:30%">
-                        <a class="btn bg-blue my-2 my-sm-0 p-3 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
-                           href="@Url.Action("Cameras", "Website",new {County = country.PlaceName.Replace(' ','-')})">
-                            @country.PlaceName
-                        </a>
-                    </div>
-                }
+        }
+        else
+        {
+            <div class="card-header card-header-custom text-white font-18 font-weight-bolder" style="width: 100%; background-color:#d9356f">
+                <h3>@ViewBag.countryName </h3>
             </div>
-        </div>
+        }
+    </div>
+    <div class="row">
+
+
+        @foreach (Place country in Model.CountyList)
+        {
+            <div class="m-2" style="width:30%">
+                <a class="btn bg-blue my-2 my-sm-0 p-3 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
+                   href="@Url.Action("Cameras", "Website",new {County = country.PlaceName.Replace(' ','-')})">
+                    @country.PlaceName
+                </a>
+            </div>
+        }
+    </div>
+</div>
     }
 
     @if (ViewBag.CountyList == 0)
@@ -61,9 +72,9 @@
             }
             else
             {
-                <div class="card-header card-header-custom text-white" style="width: 100%; background-color:#1f4a79">
-                    <h3>@ViewBag.countyName </h3>
-                </div>
+            <div class="card-header card-header-custom text-white font-18 font-weight-bolder" style="width: 100%;  background-color:#1f4a79" >
+                <h3>@ViewBag.countyName </h3>
+            </div>
             }
         </div>
         <div class="row">
