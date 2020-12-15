@@ -95,7 +95,7 @@
                                             <th>Date </th>
                                             <th>Time </th>
                                             <th>Last Modified At </th>
-                                            <th>Password </th>
+                                      
                                             <th>Actions</th>
                                         </tr>
 
@@ -122,9 +122,7 @@
                                             <td class="text-wrap">
                                                 @Html.DisplayFor(modelItem => item.CreatedAt)
                                             </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Password)
-                                            </td>
+                                           
                                             <td>
                                                 <a href="@Url.Action("AdminPlayer", "Recording",new { id = item.RecordingId })" target="_blank" class="ply-vid">
                                                     <i class="btn btn-success btn-sm ti-control-play"></i>
