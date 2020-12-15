@@ -65,15 +65,31 @@
                                             <td  class="bluepurple" >
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
 
-                                                    @if (@schedule.IsRepeated == true)
+                                                    @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {
-                                                    <b>
-                                                        @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                    </b>
+                                                        <b>
+                                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i>
+                                                        </b>
+                                                    }
+                                                    else if (schedule.IsRepeated == true && schedule.Record == false)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+
+                                                        </b>
+                                                    }
+                                                    else if (schedule.IsRepeated == false && schedule.Record == true)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+
+
+                                                        </b>
                                                     }
                                                     else
                                                     {
                                                         <b>
+
                                                             @schedule.EventName
                                                         </b>
                                                     }
@@ -99,15 +115,31 @@
                                             <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
 
-                                                    @if (@schedule.IsRepeated == true)
+                                                    @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {
-                                                    <b>
-                                                        @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                    </b>
+                                                        <b>
+                                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i>
+                                                        </b>
+                                                    }
+                                                    else if (schedule.IsRepeated == true && schedule.Record == false)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+
+                                                        </b>
+                                                    }
+                                                    else if (schedule.IsRepeated == false && schedule.Record == true)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+
+
+                                                        </b>
                                                     }
                                                     else
                                                     {
                                                         <b>
+
                                                             @schedule.EventName
                                                         </b>
                                                     }
@@ -132,19 +164,35 @@
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town</td>
                                             <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
-                                                   
-                                    @if (@schedule.IsRepeated == true)
-                                    {
-                                                    <b>
-                                                        @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                    </b>
-                                    }
-                                    else
-                                    {
-                                        <b>
-                                            @schedule.EventName
-                                        </b>
-                                    }
+
+                                                    @if (schedule.IsRepeated == true && schedule.Record == true)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i>
+                                                        </b>
+                                                    }
+                                                    else if (schedule.IsRepeated == true && schedule.Record == false)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+
+                                                        </b>
+                                                    }
+                                                    else if (schedule.IsRepeated == false && schedule.Record == true)
+                                                    {
+                                                        <b>
+                                                            @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+
+
+                                                        </b>
+                                                    }
+                                                    else
+                                                    {
+                                                        <b>
+
+                                                            @schedule.EventName
+                                                        </b>
+                                                    }
                                                 </a>
                                             </td>
                                             <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
