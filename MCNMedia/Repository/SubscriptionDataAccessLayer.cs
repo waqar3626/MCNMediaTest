@@ -148,6 +148,14 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spSubscriber_PassChange");
            
         }
+        public void ResetSubscriberPassword(string SubscriberEmail, string newPassword)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("Subscriber_EmailAdd", SubscriberEmail);
+            _dc.AddParameter("Subscriber_Password", newPassword);
+            _dc.Execute("spSubscriber_ResetPassword");
+
+        }
 
 
         public int AddSubscriberpayment(Subscriptions Sub)
@@ -239,6 +247,27 @@ namespace MCNMedia_Dev.Repository
                 user.OrderAmount = Convert.ToDecimal(dataRow["OrderAmount"].ToString());
                 user.PaidAmount = Convert.ToDecimal(dataRow["PaidAmount"].ToString());
                  }
+            }
+            return user;
+        }
+
+        public Subscriptions SubscriberEmailCheck(string EmailAddress)
+        {
+            Subscriptions user = new Subscriptions();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("EmailAdd", EmailAddress);
+           
+
+            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_EmailCheck");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                user.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"]);
+                user.Name = dataRow["SubscriberName"].ToString();
+                user.EmailAddress = dataRow["EmailAddress"].ToString();
+                user.CountryId = Convert.ToInt32(dataRow["CountryId"]);
+                user.Password = dataRow["SubscriberPassword"].ToString();
+
             }
             return user;
         }

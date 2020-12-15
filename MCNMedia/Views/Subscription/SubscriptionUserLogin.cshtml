@@ -19,10 +19,10 @@
 </style>
 @if (ViewBag.Error == 2)
 {
-    <div class="form-group col-sm-12 center " style="border:1px solid red">
-        <label class="text-red">
+    <div class="form-group col-sm-12 center  " >
+        <div class="alert alert-danger text-center">
             You do not Subscribe Yet. Kindly Subscribe
-        </label>
+        </div>
     </div>
 }
 else if (ViewBag.Error == 3)
@@ -59,20 +59,25 @@ else if (ViewBag.Error == 3)
                     <input class="form-control selectWrapper text-center" type="Password" required name="Password" placeholder="Password">
                 </div>
                 <div class="form-group col-sm-12 float-right rounded-sm ">
-                    @if (ViewBag.LoginLocation=="Packages")
+                    @if (ViewBag.LoginLocation == "Packages")
                     {
                         <button type="submit" class="btn bg-blue my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14">Sign In</button>
 
                     }
-                    else if(ViewBag.LoginLocation == "Home")
+                    else if (ViewBag.LoginLocation == "Home")
                     {
                         <button type="submit" asp-action="HomeSubscriberLogin" class="btn bg-blue my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14">Sign In</button>
 
                     }
                 </div>
+                <div class="form-group col-sm-12 float-right rounded-sm">
+                    <a asp-controller="Subscription" asp-action="ForgetPassword" style="color: #d9356f"> Forget Password ?</a>
+
+                </div>
                 <div class="form-group col-sm-12 float-right rounded-sm ">
                     <a asp-action="Packages" class="text-blue" style="color: #1f4a79">Not have an account. Subscribe a new Package now ?</a>
                 </div>
+
             </div>
         </div>
         <div class="col-1 d-lg-block d-none"></div>
