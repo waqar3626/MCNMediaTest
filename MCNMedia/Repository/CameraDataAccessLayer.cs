@@ -25,7 +25,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("RtspPort", camera.RtspPort);
             _dc.AddParameter("HttpPort", camera.HttpPort);
             _dc.AddParameter("CameraSlug", camera.CameraSlug);
-            _dc.AddParameter("CameraType", camera.CameraType);
+            _dc.AddParameter("CameraType", camera.CameraType.ToString());
             _dc.AddParameter("StreamingProtocol", camera.StreamingProtocol);
             _dc.AddParameter("ChurchId", camera.ChurchId);
             _dc.AddParameter("ServerId", camera.ServerId);
@@ -88,7 +88,7 @@ namespace MCNMedia_Dev.Repository
             Camera camera = new Camera();
             camera.CameraId = Convert.ToInt32(dataRow["CameraId"]);
             camera.CameraName = dataRow["CameraName"].ToString();
-            camera.CameraType = dataRow["CameraType"].ToString();
+            camera.CameraType = (_Helper.CameraType)Enum.Parse(typeof(_Helper.CameraType), dataRow["CameraType"].ToString());
             camera.HttpPort = dataRow["HttpPort"].ToString();
             camera.CameraUrl = dataRow["CameraUrl"].ToString();
             camera.RtspPort = dataRow["RtspPort"].ToString();
@@ -98,11 +98,11 @@ namespace MCNMedia_Dev.Repository
             camera.ServerName = dataRow["ServerName"].ToString();
             camera.ServerIP = dataRow["ServerIP"].ToString();
             camera.IsCameraLive = Convert.ToBoolean(dataRow["IsCameraLive"]);
-            if (camera.CameraType == "AdminCamera")
+            if (camera.CameraType ==  _Helper.CameraType.AdminCamera)
             {
                 camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
             }
-            else if (camera.CameraType == "ClientCamera")
+            else if (camera.CameraType ==  _Helper.CameraType.ClientCamera)
             {
                 camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
             }

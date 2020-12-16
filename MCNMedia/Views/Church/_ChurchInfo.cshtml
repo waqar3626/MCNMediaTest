@@ -20,9 +20,7 @@
             <div class="card-body">
                 <h4 class="card-title"> Church Information</h4>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                 <input type="hidden" asp-for="Churches.ChurchId" />
-
                 <div class="form-group row ">
                     <div class="col-lg-6 ">
                         <div class="form-group row">
@@ -53,9 +51,6 @@
                         </div>
 
                     </div>
-
-
-
                     <div class="col-sm-6">
                         <div class=" form-group row">
                             <div class="col-sm-12">
@@ -176,89 +171,61 @@
             </div>
         </div>
     </div>
-    <div class="form-group row "><div class="col-lg-12">
-    <div class="card">
-
-        <div class="card-body">
-            <h3 class="card-title">Embeded Code</h3>
-            @{
-                string SrcAddress = "http://mcnmedia.us-east-1.elasticbeanstalk.com/iframe/" + Model.Churches.UniqueIdentifier;
-
-
-                <pre class="font-16 font-weight-bolder" style="background-color:transparent"><code>&lt;iframe src="@SrcAddress" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
-            }
+    <div class="form-group row ">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Embeded Code</h3>
+                    @{
+                        string SrcAddress = "http://mcnmedia.us-east-1.elasticbeanstalk.com/iframe/" + Model.Churches.UniqueIdentifier;
+                        <pre class="font-16 font-weight-bolder" style="background-color:transparent"><code>&lt;iframe src="@SrcAddress" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
+                    }
+                </div>
+            </div>
         </div>
     </div>
-</div>
-      
-        </div>
 
-                <div class="float-right">
-                    <button type="submit" id="ValChurchSubmit" value="Update" class="btn btn-success btn-sm  text-white" title="Update"><i class="mdi mdi-update text-white"></i> Update</button>
-                    <a id="back" class="btn btn-warning btn-sm text-white " href="../Church/Listchurch" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
-                </div>
+    <div class="float-right">
+        <button type="submit" id="ValChurchSubmit" value="Update" class="btn btn-success btn-sm  text-white" title="Update"><i class="mdi mdi-update text-white"></i> Update</button>
+        <a id="back" class="btn btn-warning btn-sm text-white " href="../Church/Listchurch" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
+    </div>
 </form>
 <script type="text/javascript">
     var ImageData = $('#Churches_ImageURl').val();
-
-
     $('#ValChurchSubmit').click(function () {
-
-
-        
-
-   
-
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
         if ($.inArray($('#ImageData').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-
             if ($('#ImageCheckUrl').val() == "") {
-                
             $('#cardImage').attr("class", "card border-danger");
             $('#ImageText').show();
                 return false;
             }
-
-
         }
         else {
             $('#cardImage').attr("class", "card border-success");
             $('#ImageText').hide();
         }
-
     });
+
     $('#Churches_ImageURl').change(function () {
-       
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
         if ($.inArray($('#Churches_ImageURl').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-
-      
             $('#cardImage').attr("class", "card border-danger");
-
             $('#ImageText').show();
             return false;
-
-
         }
-
         else {
-
             $('#cardImage').attr("class", "card border-success");
             $('#ImageText').hide();
-
         }
-
     });
 
-
     $(document).ready(function () {
-
         $('#ImageText').hide();
         $('#ddlClientId').append("<option value='0' disabled>--Select Church--</option>");
         $('#ddlCountryId').append("<option value='0' disabled>--Select Church--</option>");
         //$("#Churches_ImageURl").attr("data-default-file", "http://lofrev.net/wp-content/photos/2017/05/Online_logo_2.png");
         //$('.dropify').dropify();
-
         var filedropper = $('#Churches_ImageURl').dropify();
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();

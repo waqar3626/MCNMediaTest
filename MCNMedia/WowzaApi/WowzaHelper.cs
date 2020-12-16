@@ -84,11 +84,12 @@ namespace MCNMedia_Dev.WowzaApi
             try
             {
                 log.InfoFormat("StartRecording Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
-                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                string uniqueIdentifier = "";
+                uniqueIdentifier = GetUniqueIdentifier(churchId, cameraId);
                 log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
                 RecordingData recordingData = new RecordingData();
 
-                recordingData.recorderName = $"{uniqueIdentifier}_{ cameraId}.stream";
+                recordingData.recorderName = $"{uniqueIdentifier}_{cameraId}.stream";
 
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
@@ -113,7 +114,7 @@ namespace MCNMedia_Dev.WowzaApi
             try
             {
                 log.InfoFormat("Recording Stopped for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
-                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                string uniqueIdentifier = GetUniqueIdentifier(churchId, cameraId);
                 log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
@@ -137,6 +138,24 @@ namespace MCNMedia_Dev.WowzaApi
 
         #region Helper Data Methods
 
+        private string GetUniqueIdentifier(int churchId, int cameraId)
+        {
+            string uniqueIdentifier;
+            Camera cam = new Camera();
+            CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+            cam = cameraDataAccessLayer.GetCameraById(cameraId, camtype: "");
+            if (cam.CameraType == _Helper.CameraType.AdminCamera)
+            {
+                uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+            }
+            else
+            {
+                uniqueIdentifier = cam.CameraUrl.Split("_")[0].ToString();
+            }
+
+            return uniqueIdentifier;
+        }
+
         private string RetrieveChurchUniqueIdentifier(int churchId)
         {
             Church church = new Church();
@@ -149,7 +168,7 @@ namespace MCNMedia_Dev.WowzaApi
         {
             Camera cam = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
-            cam = cameraDataAccessLayer.GetCameraById(cameraId,camtype: "");
+            cam = cameraDataAccessLayer.GetCameraById(cameraId, camtype: "");
             if (cam.ServerIP is null)
                 cam.ServerIP = "54.217.38.80";
             return cam.ServerIP;

@@ -13,7 +13,7 @@ namespace MCNMedia_Dev.Models
         public string RtspPort { get; set; }
         public string HttpPort { get; set; }
         public string CameraSlug { get; set; }
-        public string CameraType { get; set; }
+        public _Helper.CameraType CameraType { get; set; }
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
         public int ServerId { get; set; }

@@ -105,25 +105,24 @@
                     <table id="sortable-table-1" class="table">
                         <thead>
                             <tr>
+                                <th>Actions</th>
                                 <th class="sortStyle">Church Name<i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Event Name<i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Event Date/Day<i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Event Time <i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Duration <i class="ti-angle-down"></i></th>
                                 <th class="sortStyle">Modified Date<i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Repeated <i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Recording <i class="ti-angle-down"></i></th>
-
-                                <th>Actions</th>
+                                <th class="sortStyle">Repeat <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Rec <i class="ti-angle-down"></i></th>
                             </tr>
-
                         </thead>
                         <tbody class="SchList">
-
                             @foreach (var item in Model.LSchedules)
                             {
                             <tr>
-
+                                <td>
+                                    <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a onclick="DeleteSchedule(@item.ScheduleId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>
+                                </td>
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.ChurchName)
                                 </td>
@@ -140,15 +139,10 @@
                                         @Html.DisplayFor(modelItem => item.EventDay)
                                     }
                                 </td>
-
                                 <td class="text-wrap">
                                     @Html.DisplayFor(modelItem => item.EventTime)
                                 </td>
                                 <td class="text-wrap">
-                                    @item.RecordDuration  Minutes
-                                </td>
-                                <td class="text-wrap">
-                                      
                                     @Html.DisplayFor(modelItem => item.CreatedAt)
                                 </td>
                                 <td class="text-wrap">
@@ -157,7 +151,6 @@
                                         <label class="badge-pill badge-success">
                                             Yes
                                         </label>
-
                                     }
                                     else
                                     {
@@ -172,7 +165,6 @@
                                         <label class="badge-pill badge-success">
                                             Yes
                                         </label>
-
                                     }
                                     else
                                     {
@@ -181,14 +173,6 @@
                                         </label>
                                     }
                                 </td>
-
-                                <td>
-                                    <a onclick="EditSchedule(@item.ScheduleId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                    <a onclick="DeleteSchedule(@item.ScheduleId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>
-
-                                </td>
-
-
                             </tr>
                             }
                         </tbody>

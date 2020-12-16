@@ -20,4 +20,10 @@ namespace MCNMedia_Dev._Helper
         UserProfileImage,
         NewsLetter
     }
+
+    public enum CameraType
+    {
+        AdminCamera,
+        ClientCamera
+    }
 }

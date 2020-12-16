@@ -54,11 +54,11 @@ namespace MCNMedia_Dev.Controllers
                     camera.ServerId = ServerID;
                     camera.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     if (HttpContext.Session.GetString("UserType")=="admin") {
-                        camera.CameraType = "AdminCamera";
+                        camera.CameraType = _Helper.CameraType.AdminCamera;
                     }
                     else if (HttpContext.Session.GetString("UserType")== "client")
                     {
-                        camera.CameraType = "ClientCamera";
+                        camera.CameraType = _Helper.CameraType.ClientCamera;
                     }
                     int cameraId = camDataAccess.AddCamera(camera);
                     if (cameraId > 0)
