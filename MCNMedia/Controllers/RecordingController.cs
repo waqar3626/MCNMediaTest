@@ -46,7 +46,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                DateTime FromDate = DateTime.Now.AddDays(-5);
+                DateTime FromDate = DateTime.Now.AddDays(-1);
                 DateTime ToDate = DateTime.Now;
                 GenericModel gm = new GenericModel();
                 gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate,-1,"").ToList<Recording>();
