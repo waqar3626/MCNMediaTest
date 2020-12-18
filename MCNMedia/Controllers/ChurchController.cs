@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using MCNMedia_Dev.Repository;
 using System.IO;
 using MCNMedia_Dev._Helper;
-
+using cloudscribe.Pagination.Models;
 namespace MCNMedia_Dev.Controllers
 {
 
@@ -47,10 +47,11 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listchurch()
+        public IActionResult Listchurch(int pageNumber = 1, int pageSize = 5)
         {
             try
             {
+                int ExcludeRecord = (pageSize * pageNumber) - pageSize;
                 LoadServerDDL();
                 LoadClientDDL();
                 LoadCountyDDL();
@@ -65,8 +66,16 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
-                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
-                return View(church);
+                var church = churchDataAccess.GetAllChurch(chr).Skip(ExcludeRecord).Take(pageSize);
+                var result = new PagedResult<Church>
+                {
+                    Data = church.ToList(),
+                    TotalItems = churchDataAccess.GetAllChurch(chr).Count(),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+
+                };
+                return View(result);
             }
 
             catch (Exception e)
@@ -76,6 +85,9 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+
+        [HttpGet]
+     
         [HttpGet()]
         public IActionResult GetAllChurch()
         {
@@ -284,8 +296,8 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-
-        public IActionResult Search(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo)
+        [HttpGet]
+        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo, int pageNumber=1 , int pageSize=5)
         {
             try
             {
@@ -301,9 +313,18 @@ namespace MCNMedia_Dev.Controllers
                 chr.EmailAddress = EmailAddress;
                 chr.CountyId = County;
                 chr.Phone = PhoneNo;
+                int ExcludeRecord = (pageSize * pageNumber) - pageSize;
+                var church = churchDataAccess.GetAllChurch(chr).Skip(ExcludeRecord).Take(pageSize);
+                var result = new PagedResult<Church>
+                {
+                    Data = church.ToList(),
+                    TotalItems = churchDataAccess.GetAllChurch(chr).Count(),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
 
-                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
-                return View("/Views/Church/Listchurch.cshtml", church);
+                };
+                
+                return View(result);
             }
             catch (Exception e)
             {

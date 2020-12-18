@@ -1,16 +1,18 @@
 ﻿@model cloudscribe.Pagination.Models.PagedResult<Church>
 @using Microsoft.AspNetCore.Http;
 @{
-    ViewData["Title"] = "Listchurch";
+    ViewData["Title"] = "Searchchurch";
 }
 
-<div class="card mb-3">
-    <div class="card-header card-header-custom">
-        Search Church
-    </div>
-    <div class="card-body">
-        <div class="">
-            <form method="get" asp-action="SearchChurch" asp-controller="church">
+<form method="get" asp-action="SearchChurch" asp-controller="church">
+    <div class="card mb-3">
+        <div class="card-header card-header-custom">
+            Search Church
+        </div>
+
+        <div class="card-body">
+            <div class="">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -68,83 +70,84 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header card-header-custom">
-        <a id="AddNew" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddChurchPopup()" title="Add New"> <i class="fa fa-plus"></i> Add Church</a>
-        Manage Churches
-    </div>
-    <div class="card-body">
 
-        <div class="">
-            <div class="table-sorter-wrapper table-responsive">
-                <table id="sortable-table-1" class="table">
-                    <thead>
-                        <tr>
-                            <th class="sortStyle">Details <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Church Name <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle"> County <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle"> Town <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle">Email Address <i class="ti-angle-down"></i></th>
-                            <th class="sortStyle"> Phone <i class="ti-angle-down"></i></th>
-                            <th>Preview</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Data)
-                        {
-                            <tr>
-                                <td>
-                                    <a href="@Url.Action("Church", "Admin",new { ch = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.CountyName)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.Town)
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Phone)
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Profile", "Website",new { Id = item.Slug })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
-                                    <a onclick="DeleteChurchClick(@item.ChurchId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="float-right">
-                    <cs-pager cs-paging-pagenumber=(int)Model.PageNumber
-                              cs-paging-totalitems=(int)Model.TotalItems
-                              cs-paging-pagesize=(int)Model.PageSize
-                              cs-pagenumber-param="pagenumber"
-                              asp-controller="church"
-                              cs-pager-li-current-class="page-item active"
-                              cs-pager-li-other-class="page-item"
-                              cs-pager-li-non-active-class="page-item disabled"
-                              cs-pager-link-current-class="page-link"
-                              cs-pager-link-other-class="page-link"
-                              asp-action="Listchurch"></cs-pager>
+    </div>
+    <div class="card">
+        <div class="card-header card-header-custom">
+            <a id="AddNew" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddChurchPopup()" title="Add New"> <i class="fa fa-plus"></i> Add Church</a>
+            Manage Churches
+        </div>
+        <div class="card-body">
+
+            <div class="">
+                <div class="table-sorter-wrapper table-responsive">
+                    <table id="sortable-table-1" class="table">
+                        <thead>
+                            <tr>
+                                <th class="sortStyle">Details <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Church Name <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> County <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> Town <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Email Address <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> Phone <i class="ti-angle-down"></i></th>
+                                <th>Preview</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Data)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Church", "Admin",new { ch = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.CountyName)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.Town)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Phone)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Profile", "Website",new { Id = item.Slug })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                        <a onclick="DeleteChurchClick(@item.ChurchId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="float-right">
+                        <cs-pager cs-paging-pagenumber=(int)Model.PageNumber
+                                  cs-paging-totalitems=(int)Model.TotalItems
+                                  cs-paging-pagesize=(int)Model.PageSize
+                                  cs-pagenumber-param="pagenumber"
+                                  asp-controller="church"
+                                  cs-pager-li-current-class="page-item active"
+                                  cs-pager-li-other-class="page-item"
+                                  cs-pager-li-non-active-class="page-item disabled"
+                                  cs-pager-link-current-class="page-link"
+                                  cs-pager-link-other-class="page-link"
+                                  asp-action="SearchChurch"></cs-pager>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddChurchPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -203,4 +206,3 @@
 
     }
 </script>
- 
