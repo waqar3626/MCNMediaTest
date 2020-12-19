@@ -52,22 +52,22 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Event Name</label>
                             <div class="col-sm-8">
-                                @Html.TextBox("EventName", "", new { @id= "SetEventName",@class = "form-control", @name = "EventName", @placeholder = "Event Name" })
-                         
+                                @Html.TextBox("EventName", "", new { @id = "SetEventName", @class = "form-control", @name = "EventName", @placeholder = "Event Name" })
+
                             </div>
                         </div>
                     </div>
                 </div>
-                    <div class="col-md-6">
-                        <div class="form-group  row">
-                            <label class="col-sm-4 col-form-label"></label>
-                            <div class="col-sm-8">
-                                <button type="submit" class="btn btn-primary btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
-                                <a asp-controller="Recording" asp-action="ListRecording" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
-                            </div>
+                <div class="col-md-6">
+                    <div class="form-group  row">
+                        <label class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-primary btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
+                            <a asp-controller="Recording" asp-action="ListRecording" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
                         </div>
                     </div>
-             
+                </div>
+
             </form>
         </div>
     </div>
@@ -81,13 +81,15 @@
                 Manage Recordings
             </div>
             <div class="card-body">
-                
 
-                        @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
-                        {
 
-                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                <table id="sortable-table-1" class="table">
+                @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
+                {
+
+                    <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-12">
+                                <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
                                     <thead>
                                         <tr>
                                             <th class="sortStyle">Title<i class="ti-angle-down"></i></th>
@@ -95,7 +97,7 @@
                                             <th class="sortStyle">Date<i class="ti-angle-down"></i></th>
                                             <th class="sortStyle">Time <i class="ti-angle-down"></i></th>
                                             <th class="sortStyle">Modified Date <i class="ti-angle-down"></i></th>
-                                            
+
 
                                             <th>Actions</th>
                                         </tr>
@@ -106,47 +108,48 @@
 
                                         @foreach (var item in Model.LRecordings)
                                         {
-                                        <tr>
+                                            <tr>
 
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.RecordingTitle)
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.ChurchName)
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Date)
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.RecordingTitle)
+                                                </td>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.ChurchName)
+                                                </td>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.Date)
 
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Time)
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.CreatedAt)
-                                            </td>
-                                           
-                                            <td>
-                                                <a href="@Url.Action("AdminPlayer", "Recording",new { id = item.RecordingId })" target="_blank" class="ply-vid">
-                                                    <i class="btn btn-success btn-sm ti-control-play"></i>
-                                                </a>
-                                                @*<button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.Time)
+                                                </td>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                                                </td>
 
-
-
-                                                <a href="@item.Src" download="Video.mp4" class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
-
-                                                <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a onclick="DeleteRecordingClick(@item.RecordingId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                                <td>
+                                                    <a href="@Url.Action("AdminPlayer", "Recording",new { id = item.RecordingId })" target="_blank" class="ply-vid">
+                                                        <i class="btn btn-success btn-sm ti-control-play"></i>
+                                                    </a>
+                                                    @*<button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
 
 
-                                            </td>
-                                        </tr>
+
+                                                    <a href="@item.Src" download="Video.mp4" class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
+
+                                                    <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <a onclick="DeleteRecordingClick(@item.RecordingId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
+
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
-
                             </div>
+                        </div>
+                    </div>
 
-                        }
+                }
 
             </div>
 
@@ -196,7 +199,7 @@
 </div>
 <div class="row">
     <div class="col-12 grid-margin">
-        <div class="modal fade" id="PlayRecordingModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="PlayRecordingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  mt-4" role="document" style="max-width:750px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -206,7 +209,7 @@
                         </button>
                     </div>
                     <div class="modal-body" id="PlayRecordingPreview">
-                    <div  id="videoUrl"></div>
+                        <div id="videoUrl"></div>
                     </div>
                 </div>
             </div>
@@ -296,5 +299,14 @@
 
 
     }
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#order-listing').removeAttr('hidden');
+    });
+
 
 </script>

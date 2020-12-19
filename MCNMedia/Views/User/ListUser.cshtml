@@ -73,63 +73,69 @@
     <div class="card-body">
         <div class="">
             <form method="get">
-                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                    <table id="sortable-table-1" class="table">
-                        <thead>
-                            <tr>
-                                <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.LUsers)
-                            {
-                                <tr>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.UserId)
-                                        </td>*@
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
-                                        @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap", @id = "hdnUserId" })
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
-                                    </td>
-                                    <td class="text-wrap">
-                                        @{
-                                            var Church = item.ChurchName.ToString();
-                                            var Name = Church.Split("|");
 
-                                            foreach (string churchName in Name)
-                                            {
-                                                <label class="text-wrap">@churchName</label>
-                                                <br />
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RoleName)
-                                    </td>
-                                    <td>
-                                        @if (item.RoleName == "Admin")
-                                        {
-                                            <a class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
 
-                                        }
-                                        <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a onclick="DeleteUserClick(@item.UserId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                                <thead>
+                                    <tr>
+                                        <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Email Address<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Assigned Churches<i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Role<i class="ti-angle-down"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LUsers)
+                                    {
+                                        <tr>
+                                            @*<td>
+                                                    @Html.DisplayFor(modelItem => item.UserId)
+                                                </td>*@
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-wrap" })
+                                                @Html.HiddenFor(modelItem => item.UserId, new { @class = "text-wrap", @id = "hdnUserId" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap" })
+                                            </td>
+                                            <td class="text-wrap">
+                                                @{
+                                                    var Church = item.ChurchName.ToString();
+                                                    var Name = Church.Split("|");
+
+                                                    foreach (string churchName in Name)
+                                                    {
+                                                        <label class="text-wrap">@churchName</label>
+                                                        <br />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RoleName)
+                                            </td>
+                                            <td>
+                                                @if (item.RoleName == "Admin")
+                                                {
+                                                    <a class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("EditAssignChurchesUser", "UserAssignChurches", new { id=item.UserId})" class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Assign Churches To User"><i class="mdi mdi-church"></i></a>
+
+                                                }
+                                                <a onclick="EditUserClick(@item.UserId)" id="editbutton" class="btn btn-primary btn-sm text-white" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <a onclick="DeleteUserClick(@item.UserId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -211,7 +217,7 @@
             type: "Get",
             url: '@Url.Action("Delete", "User")',
             data: { id: UserId },
-          
+
         });
       window.location.reload();
   } else {
@@ -253,4 +259,13 @@
             return false;
         });
     });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#order-listing').removeAttr('hidden');
+    });
+
+
 </script>

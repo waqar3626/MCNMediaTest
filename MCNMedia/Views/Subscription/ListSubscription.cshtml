@@ -6,125 +6,127 @@
 }
 
 
-    <div class="card mb-3">
-        <div class="card-header card-header-custom">
-            Search Subscriber
-        </div>
-        <div class="card-body">
-            <div class="">
-                <form method="post" asp-action="Search" asp-controller="Subscription">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">From Date</label>
-                                <div class="col-sm-8">
-                                    <div id="datepicker-popup" class="input-group date datepicker">
-                                        <input type="text" id="SetFromDate" name="fromDate" class="form-control" placeholder="From Date" />
-                                        <span class="input-group-addon input-group-append border-left">
-                                            <span class="ti-calendar input-group-text"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">To Date</label>
-                                <div class="col-sm-8">
-                                    <div id="datepicker-popup2" class="input-group date datepicker">
-                                        <input type="text" id="SetToDate" name="toDate" class="form-control" placeholder="To Date" />
-                                        <span class="input-group-addon input-group-append border-left">
-                                            <span class="ti-calendar input-group-text"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Email Address</label>
-                                <div class="col-sm-8">
-                                    @Html.TextBox("EmailAddress", "", new { @class = "form-control",@name="EmailAddress", @placeholder = "Enter Email Address" })
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <div class="form-group  row">
-                                <label class="col-sm-4 col-form-label"></label>
-                                <div class="col-sm-8">
-                                    <button type="submit" class="btn btn-primary btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
-                                    <a asp-controller="Subscription" asp-action="ListSubscription" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+<div class="card mb-3">
+    <div class="card-header card-header-custom">
+        Search Subscriber
+    </div>
+    <div class="card-body">
+        <div class="">
+            <form method="post" asp-action="Search" asp-controller="Subscription">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">From Date</label>
+                            <div class="col-sm-8">
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    <input type="text" id="SetFromDate" name="fromDate" class="form-control" placeholder="From Date" />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">To Date</label>
+                            <div class="col-sm-8">
+                                <div id="datepicker-popup2" class="input-group date datepicker">
+                                    <input type="text" id="SetToDate" name="toDate" class="form-control" placeholder="To Date" />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Email Address</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("EmailAddress", "", new { @class = "form-control", @name = "EmailAddress", @placeholder = "Enter Email Address" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group  row">
+                            <label class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
+                                <a asp-controller="Subscription" asp-action="ListSubscription" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 <div class="card">
     <div class="card-header card-header-custom">Subcribers</div>
     <div class="card-body">
-        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-            <table id="sortable-table-1" class="table">
-                <thead>
-                    <tr>
+        <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
+            <div class="row">
+                <div class="col-12">
+                    <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                        <thead>
+                            <tr>
+                                <th class="sortStyle"> Name<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> EmailAddress<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> ChurchName<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> Package<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> Orderdate<i class="ti-angle-down"></i></th>
+                                <th class="sortStyle"> Expiredate<i class="ti-angle-down"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ChurchName)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.PackageTitle)
+                                    </td>
 
-                        <th class="sortStyle"> Name<i class="ti-angle-down"></i></th>
-                        <th class="sortStyle"> EmailAddress<i class="ti-angle-down"></i></th>
-                        <th class="sortStyle"> ChurchName<i class="ti-angle-down"></i></th>
-                        <th class="sortStyle"> Package<i class="ti-angle-down"></i></th>
-                        <th class="sortStyle"> Orderdate<i class="ti-angle-down"></i></th>
-                        <th class="sortStyle"> Expiredate<i class="ti-angle-down"></i></th>
-                     
-                       
-
-        
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.EmailAddress)
-                            </td>
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.ChurchName)
-                            </td>
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.PackageTitle)
-                            </td>
-                           
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.Orderdate)
-                            </td>
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.Expiredate)
-                            </td>
-
-                           
-
-
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.Orderdate)
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.Expiredate)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
+</div>
 <script>
     $(document).ready(
         function () {
             $('#SetFromDate').val('@ViewBag.FromDate');
             $('#SetToDate').val('@ViewBag.ToDate');
         });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#order-listing').removeAttr('hidden');
+    });
+
+
 </script>
