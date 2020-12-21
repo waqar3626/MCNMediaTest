@@ -20,12 +20,12 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
-        public IActionResult ListDonation()
+        public JsonResult ListDonation()
         {
             ChurchDonation donation = new ChurchDonation();
             donation.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
             List<ChurchDonation> churchDonations = DonationDataAccessLayer.GetDonationById(donation).ToList();
-            return View(churchDonations);
+            return Json(churchDonations);
         }
 
 

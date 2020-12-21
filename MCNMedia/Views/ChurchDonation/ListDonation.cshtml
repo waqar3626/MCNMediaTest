@@ -9,41 +9,28 @@
 <div class="card">
     <div class="card-header">
         Church Donation
-        <a id="AddNew" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddDonationPopUp()" title="Add New"> <i class="fa fa-plus"></i> Add Donation</a>
+        <a id="btnAddDonation" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddDonationPopUp()" title="Add New"> <i class="fa fa-plus"></i> Add Donation</a>
     </div>
     <div class="card-body">
         <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
             <div class="row">
                 <div class="col-12">
-                    <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
-                        <thead>
-                            <tr>
-                                <th class="sortStyle">Church <i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">Image Url <i class="ti-angle-down"></i></th>
-                                <th class="sortStyle">WebSite Url <i class="ti-angle-down"></i></th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model) {
-                                    <tr>
-                                        
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ChurchId)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ImageUrl)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.WebSiteUrl)
-                                        </td>
-                                        
-                                    </tr>
-                            }
-                                </tbody>
-                    </table>
+                    <div class="">
+                        <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                            <thead>
+                                <tr>
+                                    <th class="sortStyle">Church <i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Image Url <i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">WebSite Url <i class="ti-angle-down"></i></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="churchDonationList">
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
@@ -83,6 +70,91 @@
     $(document).ready(function () {
         $('#order-listing').removeAttr('hidden');
     });
+
+
+</script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        loadAnnouncement();
+    });
+
+    function loadAnnouncement() {
+        $.ajax({
+            url: "/ChurchDonation/ListDonation",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+                if (result.length > 0) {
+                    $('#btnAddDonation').hide();
+                }
+                else {
+                    $('#btnAddDonation').show();
+                }
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td class="text-wrap" style="max-width:20ch">' + item.churchId  + '</td>';
+                    html += '<td class="text-wrap" style="max-width:20ch">' + item.imageUrl + '</td>';
+                    html += '<td class="text-wrap" style="max-width:20ch">' + item.webSiteUrl  + '</td>';
+                    html += ' <td>';
+
+                    html += '<a onclick="EditChurchDonation(' + item.doonationId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                    html += '<a onclick="DeleteChurchDonation(' + item.doonationId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                    html += ' </td>';
+                    html += '</tr>';
+                });
+                $('.churchDonationList').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function AddAnnouncement() {
+
+        $('#AddAnnouncementPopUp').modal('show');
+
+    }
+
+    function EditAnnouncement(doonationId) {
+         $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditAnnouncement", "Announcement")',
+             data: { id: churchAnnouncementId },
+            success: function (data) {
+                $('#EditAnnouncementPreview').html(data);
+                $('#EditAnnouncementModal').modal('show');
+
+            }
+        })
+    }
+
+    function DeleteChurchDonation(doonationId) {
+
+    var ans = confirm("Are you sure you want to delete this Announcement?");
+    if (ans) {
+        $.ajax({
+            url: "/ChurchDonation/DeleteDonation/" + doonationId,
+            type: "POST",
+
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadAnnouncement();
+                if (result) { alert("Record Deleted");}
+            },
+            error: function (errormessage) {
+               // alert(errormessage.responseText);
+            }
+        });
+    }
+    }
 
 
 </script>
