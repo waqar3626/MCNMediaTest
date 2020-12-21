@@ -15,16 +15,27 @@ namespace MCNMedia_Dev.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ChurchDonationDataAccessLayer DonationDataAccessLayer = new ChurchDonationDataAccessLayer();
-        public IActionResult Index()
+        ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
+        public IActionResult ListDonation()
         {
-            return View();
+            int id = 0;
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+            {
+                id = (int)HttpContext.Session.GetInt32("ChurchId");
+            }
+
+            GenericModel gm = new GenericModel();
+          
+            gm.Churches = chdataAccess.GetChurchData(id);
+            ChurchDonation churchDonation = new ChurchDonation();
+            return View(gm);
         }
 
-        public JsonResult ListDonation()
+
+        public JsonResult ListDonationJson()
         {
-            ChurchDonation donation = new ChurchDonation();
-            donation.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
-            List<ChurchDonation> churchDonations = DonationDataAccessLayer.GetDonationById(donation).ToList();
+            int ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            List<ChurchDonation> churchDonations = DonationDataAccessLayer.GetDonationById(ChurchId).ToList();
             return Json(churchDonations);
         }
 

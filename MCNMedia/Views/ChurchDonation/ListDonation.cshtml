@@ -1,8 +1,8 @@
-﻿@model IEnumerable<MCNMedia_Dev.Models.ChurchDonation>
+﻿@model MCNMedia_Dev.Models.GenericModel
 
 @{
     ViewData["Title"] = "ListDonation";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Layout = "~/Views/Shared/_NestedLayout.cshtml";
 }
 
 
@@ -65,26 +65,16 @@
 
     }
 
-</script>
-<script>
+
+    
     $(document).ready(function () {
         $('#order-listing').removeAttr('hidden');
+        loadDonation();
     });
 
-
-</script>
-
-
-
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        loadAnnouncement();
-    });
-
-    function loadAnnouncement() {
+    function loadDonation() {
         $.ajax({
-            url: "/ChurchDonation/ListDonation",
+            url: "/ChurchDonation/ListDonationJson",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -98,9 +88,9 @@
                 }
                 $.each(result, function (key, item) {
                     html += '<tr>';
-                    html += '<td class="text-wrap" style="max-width:20ch">' + item.churchId  + '</td>';
-                    html += '<td class="text-wrap" style="max-width:20ch">' + item.imageUrl + '</td>';
-                    html += '<td class="text-wrap" style="max-width:20ch">' + item.webSiteUrl  + '</td>';
+                    html += '<td class="text-wrap">' + item.churchName  + '</td>';
+                    html += '<td  >  <div id="lightgallery" class="row lightGallery"><img src=' + item.imageUrl + ' class="w-100 h-100"  /></div></td>';
+                    html += '<td class="text-wrap">' + item.webSiteUrl  + '</td>';
                     html += ' <td>';
 
                     html += '<a onclick="EditChurchDonation(' + item.doonationId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
@@ -116,11 +106,7 @@
         });
     }
 
-    function AddAnnouncement() {
-
-        $('#AddAnnouncementPopUp').modal('show');
-
-    }
+   
 
     function EditAnnouncement(doonationId) {
          $.ajax({

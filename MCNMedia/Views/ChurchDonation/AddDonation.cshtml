@@ -88,8 +88,9 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
-                loadPicture();
-                $('#AddModal').modal('hide');
+                loadDonation();
+                $('#AddDonationPopUp').modal('hide');
+              
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);

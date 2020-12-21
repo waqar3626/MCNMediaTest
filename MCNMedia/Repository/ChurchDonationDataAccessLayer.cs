@@ -36,19 +36,21 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurchDonation_Insert");
         }
 
-        public IEnumerable<ChurchDonation> GetDonationById(ChurchDonation chrdonation)
+        public IEnumerable<ChurchDonation> GetDonationById(int ChurchId)
         {
             List<ChurchDonation> donation = new List<ChurchDonation>();
 
             _dc.ClearParameters();
-            _dc.AddParameter("Church_Id", chrdonation.ChurchId);
+            _dc.AddParameter("Church_Id", ChurchId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchDonation_GetByChurchId");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 ChurchDonation churchDonation = new ChurchDonation();
                 churchDonation.DoonationId = Convert.ToInt32(dataRow["DonationId"]);
+                churchDonation.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 churchDonation.ImageUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageUrl"]}";
                 churchDonation.WebSiteUrl = dataRow["WebsiteUrl"].ToString();
+                churchDonation.ChurchName = dataRow["ChurchName"].ToString();
                 donation.Add(churchDonation);
             }
             return donation;
