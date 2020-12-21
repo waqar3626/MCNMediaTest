@@ -1,0 +1,133 @@
+﻿@model MCNMedia_Dev.Models.ChurchDonation
+<div class="form-group row p-3" id="alertDiv131">
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert" id="alertLabel131">
+
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-sm-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DoonationId" class="form-control" id="DoonationId" />
+            <input type="hidden" asp-for="ImageUrl" class="form-control" id="medUrl" />
+
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <input asp-for="ImageUrl" class="form-control dropify" type="file" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    <input type="hidden" id="HdnMediaUrl2" asp-for="ImageUrl" />
+                    <input type="hidden" id="HdnMediaName2" asp-for="ImageUrl" />
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="WebSiteUrl" class="control-label">Tab Name</label>
+                <input asp-for="WebSiteUrl" class="form-control" />
+                <span asp-validation-for="WebSiteUrl" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group float-right">
+                <a onclick="UpdateDonation()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
+                <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#alertDiv131').hide();
+        var filedropper = $('#Media_MediaURL').dropify();
+        filedropper = filedropper.data('dropify');
+        filedropper.resetPreview();
+        filedropper.clearElement();
+
+        filedropper.settings['defaultFile'] = $('#medUrl').val();
+        filedropper.destroy();
+        filedropper.init();
+
+
+    });
+
+
+
+    function UpdateDonation() {
+
+        var ss = "";
+        var ChurchMediaId = $('#ChurchMedId').val();
+        var EditPictureTabName = document.getElementById('Media_TabName').value;
+        var input = document.getElementById('Media_MediaURL');
+        var mediaUrl = $('#HdnMediaUrl2').val();
+        var mediaName = $('#HdnMediaName2').val();
+        var formData = new FormData();
+
+        formData.append("ChurchMediaId", ChurchMediaId);
+        formData.append("mediaType", "Picture");
+        formData.append("EditPictureTabName", EditPictureTabName);
+        formData.append("MediaUrl", mediaUrl);
+        formData.append("MediaName", mediaName);
+
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+
+
+        if (input.files[0] != null) {
+            if ($.inArray($('#Media_MediaURL').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+
+                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+
+                $('#alertLabel131').html(ss);
+                $('#alertDiv131').show();
+                return;
+                $('#EditPicModal').modal('show');
+
+
+            }
+        }
+        else if ($.inArray($('#HdnMediaUrl2').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
+
+            $('#alertLabel131').html(ss);
+            $('#alertDiv131').show();
+
+            return;
+            $('#EditPicModal').modal('show');
+
+        }
+
+
+        if (EditPictureTabName == '') {
+            ss += '<label >Please provide a valid Tab Name </label>';
+
+
+            $('#alertLabel131').html(ss);
+            $('#alertDiv131').show();
+            return;
+            $('#EditPicModal').modal('show');
+        }
+
+        formData.append("mediaFile", input.files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/MediaChurch/UpdateMedia/",
+            data: formData,
+
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (result) {
+                loadPicture();
+                $('#EditPicModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+
+    }
+</script>
