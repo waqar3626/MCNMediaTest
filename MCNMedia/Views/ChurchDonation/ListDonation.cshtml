@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.ChurchDonation>
+
+@{
+    ViewData["Title"] = "ListDonation";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        Church Donation
+        <a id="AddNew" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddDonationPopUp()" title="Add New"> <i class="fa fa-plus"></i> Add Donation</a>
+    </div>
+    <div class="card-body">
+        <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
+            <div class="row">
+                <div class="col-12">
+                    <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                        <thead>
+                            <tr>
+                                <th class="sortStyle">Church <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">Image Url <i class="ti-angle-down"></i></th>
+                                <th class="sortStyle">WebSite Url <i class="ti-angle-down"></i></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model) {
+                                    <tr>
+                                        
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ChurchId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ImageUrl)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.WebSiteUrl)
+                                        </td>
+                                        
+                                    </tr>
+                            }
+                                </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddDonationPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Donation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddChurchPreview">
+                        @Html.Partial("~/Views/ChurchDonation/AddDonation.cshtml", new ChurchDonation())
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function AddDonationPopUp() {
+
+
+        $('#AddDonationPopUp').modal('show');
+
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('#order-listing').removeAttr('hidden');
+    });
+
+
+</script>
