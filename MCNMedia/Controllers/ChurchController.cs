@@ -47,17 +47,24 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listchurch(int pageNumber = 1, int pageSize = 5)
+        //public IActionResult Listchurch(int pageSize,int pageIndex)
+        public IActionResult Listchurch()
         {
             try
             {
-                int ExcludeRecord = (pageSize * pageNumber) - pageSize;
                 LoadServerDDL();
                 LoadClientDDL();
                 LoadCountyDDL();
 
                 Church chr = new Church();
-
+                //if (pageIndex==0)
+                //{
+                //    pageIndex = 1;
+                //}
+                //if (pageSize==0)
+                //{
+                //    pageSize = 10;
+                //}
                 HttpContext.Session.SetInt32("ClientType", 0);
                 HttpContext.Session.SetInt32("County", 0);
                 chr.ChurchId = 1;
@@ -66,16 +73,10 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
-                var church = churchDataAccess.GetAllChurch(chr).Skip(ExcludeRecord).Take(pageSize);
-                var result = new PagedResult<Church>
-                {
-                    Data = church.ToList(),
-                    TotalItems = churchDataAccess.GetAllChurch(chr).Count(),
-                    PageNumber = pageNumber,
-                    PageSize = pageSize,
-
-                };
-                return View(result);
+                //chr.PageIndex = pageIndex;
+                //chr.PageSize = pageSize;
+                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                return View(church);
             }
 
             catch (Exception e)
@@ -87,7 +88,7 @@ namespace MCNMedia_Dev.Controllers
 
 
         [HttpGet]
-     
+
         [HttpGet()]
         public IActionResult GetAllChurch()
         {
@@ -249,7 +250,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl,string InstallationDate)
+        public IActionResult UpdateChurch(int ChurchId, [Bind] GenericModel church, IFormFile imageURl2, string ImageUrl, string InstallationDate)
         {
             try
             {
@@ -297,7 +298,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
         [HttpGet]
-        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo, int pageNumber=1 , int pageSize=5)
+        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo, int pageNumber = 1, int pageSize = 5)
         {
             try
             {
@@ -323,7 +324,7 @@ namespace MCNMedia_Dev.Controllers
                     PageSize = pageSize,
 
                 };
-                
+
                 return View(result);
             }
             catch (Exception e)
