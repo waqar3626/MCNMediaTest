@@ -50,8 +50,27 @@ namespace MCNMedia_Dev.Repository
                 churchDonation.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 churchDonation.ImageUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageUrl"]}";
                 churchDonation.WebSiteUrl = dataRow["WebsiteUrl"].ToString();
-                churchDonation.ChurchName = dataRow["ChurchName"].ToString();
+                //churchDonation.ChurchName = dataRow["ChurchName"].ToString();
                 donation.Add(churchDonation);
+            }
+            return donation;
+        }
+        public ChurchDonation GetDonationByDonationId(int donationId)
+        {
+            ChurchDonation donation = new ChurchDonation();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("Donation_Id", donationId);
+            DataTable dataTable = _dc.ReturnDataTable("spChurchDonationByDonationId");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+
+                donation.DoonationId = Convert.ToInt32(dataRow["DonationId"]);
+                donation.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                donation.ImageUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageUrl"]}";
+                donation.WebSiteUrl = dataRow["WebsiteUrl"].ToString();
+                //churchDonation.ChurchName = dataRow["ChurchName"].ToString();
+                
             }
             return donation;
         }
@@ -72,9 +91,9 @@ namespace MCNMedia_Dev.Repository
         public bool DeleteDonation(int DonationId, int UpdateBy)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("DonationId", DonationId);
+            _dc.AddParameter("Donation_Id", DonationId);
             _dc.AddParameter("UserId", UpdateBy);
-            return _dc.ReturnBool("spChurchMedia_Delete");
+            return _dc.ReturnBool("spChurchDonation_Delete");
         }
 
     }
