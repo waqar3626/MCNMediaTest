@@ -51,7 +51,15 @@ namespace MCNMedia_Dev.Controllers
                     churchDonation.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
                     churchDonation.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     churchDonation.WebSiteUrl = WebsiteUrl;
-                    churchDonation.ImageUrl = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, churchDonation.ChurchId);
+                    if (mediaFile!=null)
+                    {
+                        churchDonation.ImageUrl = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, churchDonation.ChurchId);
+
+                    }
+                    else
+                    {
+                        churchDonation.ImageUrl = "Uploads/47/Pictures/221a27b6-52ca-4756-b515-3f4c7bc27513.jpg";
+                    }
 
                     int res = DonationDataAccessLayer.AddDonation(churchDonation);
                 }
