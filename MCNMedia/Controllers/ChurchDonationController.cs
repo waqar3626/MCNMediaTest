@@ -64,18 +64,54 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-        public IActionResult EditDonation(int id)
+        public IActionResult _EditDonation(int id)
         {
             try
             {
                 ChurchDonation donation = new ChurchDonation();
-                donation.ChurchId=(int)HttpContext.Session.GetInt32("ChurchId");
-                //donation = DonationDataAccessLayer.GetDonationById(donation.ChurchId);
-                return PartialView("EditPicture", donation);
+                donation = DonationDataAccessLayer.GetDonationByDonationId(id);
+                return PartialView("_EditDonation", donation);
+
             }
             catch (Exception e)
             {
                 ShowMessage("Edit Donation Error" + e.Message);
+                throw;
+            }
+
+
+        }
+
+        public JsonResult UpdateDonation(String ChurchDoonationId, IFormFile mediaFile,  String EditWebsiteUrl, string ImageUrlChurch)
+        {
+            try
+            {
+                ChurchDonation churchDonation = new ChurchDonation();
+
+
+                if (mediaFile != null)
+                {
+                    churchDonation.ImageUrl = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
+                  
+                }
+                else
+                {
+                    churchDonation.ImageUrl = ImageUrlChurch;
+           
+
+                }
+                churchDonation.DoonationId = Convert.ToInt32(ChurchDoonationId);
+                churchDonation.WebSiteUrl = EditWebsiteUrl;
+
+                churchDonation.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                int res = DonationDataAccessLayer.UpdateDonation(churchDonation);
+
+
+                return Json(res);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Update Donation Error" + e.Message);
                 throw;
             }
 

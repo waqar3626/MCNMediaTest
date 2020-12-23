@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "ListDonation";
-    Layout = "~/Views/Shared/_NestedLayout.cshtml";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
 
@@ -12,16 +12,16 @@
         <a id="btnAddDonation" class="btn btn-outline-warning btn-custom btn-sm float-right" onclick="AddDonationPopUp()" title="Add New"> <i class="fa fa-plus"></i> Add Donation</a>
     </div>
     <div class="card-body">
-        <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
+        <div class="dt-bootstrap4">
             <div class="row">
                 <div class="col-12">
                     <div class="">
-                        <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                        <table class="table no-footer" role="grid">
                             <thead>
                                 <tr>
-                                    <th class="sortStyle">Church <i class="ti-angle-down"></i></th>
-                                    <th class="sortStyle">Image Url <i class="ti-angle-down"></i></th>
-                                    <th class="sortStyle">WebSite Url <i class="ti-angle-down"></i></th>
+                                    @*<th class="sortStyle">Church <i class="ti-angle-down"></i></th>*@
+                                    <th class="sortStyle">Image</th>
+                                    <th class="sortStyle">WebSite Url </th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -29,8 +29,8 @@
                             </tbody>
                         </table>
                     </div>
-                    </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
@@ -48,13 +48,37 @@
                         </button>
                     </div>
                     <div class="modal-body" id="AddChurchPreview">
-                        @Html.Partial("~/Views/ChurchDonation/AddDonation.cshtml", new ChurchDonation())
+                        @Html.Partial("~/Views/ChurchDonation/AddDonation.cshtml", Model.ChurchDonations)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditChurchDonationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Donation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditChurchDonationPreview">
+                        @Html.Partial("~/Views/ChurchDonation/_EditDonation.cshtml", Model.ChurchDonations)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <script>
 
@@ -66,9 +90,8 @@
     }
 
 
-    
+
     $(document).ready(function () {
-        $('#order-listing').removeAttr('hidden');
         loadDonation();
     });
 
@@ -88,8 +111,8 @@
                 }
                 $.each(result, function (key, item) {
                     html += '<tr>';
-                    html += '<td class="text-wrap">' + item.churchName  + '</td>';
-                    html += '<td  >  <div id="lightgallery" class="row lightGallery"><img src=' + item.imageUrl + ' class="w-100 h-100"  /></div></td>';
+                    //html += '<td class="text-wrap">' + item.churchName  + '</td>';
+                    html += '<td  >  <div id="lightgallery" class="row lightGallery"><img src=' + item.imageUrl + ' class="w-75 h-75"  /></div></td>';
                     html += '<td class="text-wrap">' + item.webSiteUrl  + '</td>';
                     html += ' <td>';
 
@@ -106,16 +129,17 @@
         });
     }
 
-   
 
-    function EditAnnouncement(doonationId) {
+
+    function EditChurchDonation(doonationId) {
+       
          $.ajax({
             type: "Get",
-            url: '@Url.Action("EditAnnouncement", "Announcement")',
-             data: { id: churchAnnouncementId },
+            url: '@Url.Action("_EditDonation", "ChurchDonation")',
+             data: { id: doonationId },
             success: function (data) {
-                $('#EditAnnouncementPreview').html(data);
-                $('#EditAnnouncementModal').modal('show');
+                $('#EditChurchDonationPreview').html(data);
+                $('#EditChurchDonationModal').modal('show');
 
             }
         })
@@ -123,7 +147,7 @@
 
     function DeleteChurchDonation(doonationId) {
 
-    var ans = confirm("Are you sure you want to delete this Announcement?");
+    var ans = confirm("Are you sure you want to delete this Donation?");
     if (ans) {
         $.ajax({
             url: "/ChurchDonation/DeleteDonation/" + doonationId,
@@ -132,7 +156,7 @@
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                loadAnnouncement();
+                loadDonation();
                 if (result) { alert("Record Deleted");}
             },
             error: function (errormessage) {

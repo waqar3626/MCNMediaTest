@@ -24,6 +24,7 @@ namespace MCNMedia_Dev.Models
         public Recording Recordings { get; set; }
 
         public Announcement Announcement { get; set; }
+        public ChurchDonation ChurchDonations { get; set; }
         public IEnumerable<Announcement> LAnnouncement { get; set; }
         public DashBoardClient DashBoardClients { get; set; }
         public IEnumerable<DashBoardClient> LDashBoardClients { get; set; }

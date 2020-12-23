@@ -31,7 +31,7 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("UserId", donation.UpdatedBy);
             _dc.AddParameter("WebsiteUrl", donation.WebSiteUrl);
-            _dc.AddParameter("ImageUrl", donation.ImageUrl);
+            _dc.AddParameter("ImageUrl",  donation.ImageUrl);
             _dc.AddParameter("ChurchId", donation.ChurchId);
             return _dc.Execute("spChurchDonation_Insert");
         }
@@ -75,16 +75,15 @@ namespace MCNMedia_Dev.Repository
             return donation;
         }
 
-        public int UpdateDonation(MediaChurch med)
+        public int UpdateDonation(ChurchDonation churchDonation)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("MediaId", med.ChurchMediaId);
-            _dc.AddParameter("MedTabName", med.TabName);
-            _dc.AddParameter("MedURL", med.MediaURL);
-            _dc.AddParameter("MedName", med.MediaName);
-            _dc.AddParameter("UserId", med.UpdatedBy);
+            _dc.AddParameter("DoonationId", churchDonation.DoonationId);
+            _dc.AddParameter("Website_Url", churchDonation.WebSiteUrl);
+            _dc.AddParameter("Image_Url", churchDonation.ImageUrl);
+            _dc.AddParameter("UsrId", churchDonation.UpdatedBy);
 
-            return _dc.Execute("spChurchMedia_Update");
+            return _dc.Execute("spChurchDonation_Update");
         }
 
 

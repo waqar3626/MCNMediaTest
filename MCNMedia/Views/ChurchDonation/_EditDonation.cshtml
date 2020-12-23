@@ -1,4 +1,8 @@
 ﻿@model MCNMedia_Dev.Models.ChurchDonation
+@{
+    ViewData["Title"] = "_EditDonation";
+    //Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
 <div class="form-group row p-3" id="alertDiv131">
     <div class="col-md-12">
         <div class="alert alert-danger" role="alert" id="alertLabel131">
@@ -20,13 +24,13 @@
                     <input asp-for="ImageUrl" class="form-control dropify" type="file" />
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
                     <input type="hidden" id="HdnMediaUrl2" asp-for="ImageUrl" />
-                    <input type="hidden" id="HdnMediaName2" asp-for="ImageUrl" />
+                    
                 </div>
                 <div class="col-2"></div>
             </div>
             <div class="form-group">
                 <label asp-for="WebSiteUrl" class="control-label">Tab Name</label>
-                <input asp-for="WebSiteUrl" class="form-control" />
+                <input asp-for="WebSiteUrl" class="form-control" id="editWebisteUrl" />
                 <span asp-validation-for="WebSiteUrl" class="text-danger"></span>
             </div>
 
@@ -43,7 +47,7 @@
     $(document).ready(function () {
 
         $('#alertDiv131').hide();
-        var filedropper = $('#Media_MediaURL').dropify();
+        var filedropper = $('#ImageUrl').dropify();
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();
         filedropper.clearElement();
@@ -60,31 +64,27 @@
     function UpdateDonation() {
 
         var ss = "";
-        var ChurchMediaId = $('#ChurchMedId').val();
-        var EditPictureTabName = document.getElementById('Media_TabName').value;
-        var input = document.getElementById('Media_MediaURL');
-        var mediaUrl = $('#HdnMediaUrl2').val();
-        var mediaName = $('#HdnMediaName2').val();
+        var churchDoonationId = $('#DoonationId').val();   
+        var editWebsiteUrl = document.getElementById('editWebisteUrl').value;
+        var input = document.getElementById('ImageUrl');
+        var imageUrl = $('#HdnMediaUrl2').val();
         var formData = new FormData();
-
-        formData.append("ChurchMediaId", ChurchMediaId);
-        formData.append("mediaType", "Picture");
-        formData.append("EditPictureTabName", EditPictureTabName);
-        formData.append("MediaUrl", mediaUrl);
-        formData.append("MediaName", mediaName);
+        formData.append("ChurchDoonationId", churchDoonationId);
+        formData.append("EditWebsiteUrl", editWebsiteUrl);
+        formData.append("ImageUrlChurch", imageUrl);
 
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
 
-
+       
         if (input.files[0] != null) {
-            if ($.inArray($('#Media_MediaURL').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            if ($.inArray($('#ImageUrl').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
 
                 ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
 
                 $('#alertLabel131').html(ss);
                 $('#alertDiv131').show();
                 return;
-                $('#EditPicModal').modal('show');
+                $('#EditChurchDonationModal').modal('show');
 
 
             }
@@ -96,33 +96,33 @@
             $('#alertDiv131').show();
 
             return;
-            $('#EditPicModal').modal('show');
+            $('#EditChurchDonationModal').modal('show');
 
         }
 
 
-        if (EditPictureTabName == '') {
+        if (editWebsiteUrl == '') {
             ss += '<label >Please provide a valid Tab Name </label>';
 
 
             $('#alertLabel131').html(ss);
             $('#alertDiv131').show();
             return;
-            $('#EditPicModal').modal('show');
+            $('#EditChurchDonationModal').modal('show');
         }
-
+       
         formData.append("mediaFile", input.files[0]);
-
+       
         $.ajax({
             type: "POST",
-            url: "/MediaChurch/UpdateMedia/",
+            url: "/ChurchDonation/UpdateDonation/",
             data: formData,
 
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
-                loadPicture();
-                $('#EditPicModal').modal('hide');
+                loadDonation();
+                $('#EditChurchDonationModal').modal('hide');
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
