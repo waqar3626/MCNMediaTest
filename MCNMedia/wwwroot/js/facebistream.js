@@ -30,6 +30,7 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
         //$('#btnConnectfb').css('display', 'none');
         $('#btnStatusfb').html('Online');
         $('.fb-login-button').hide();
+        sessionStorage.setItem('uid', response.authResponse.userID);
         sessionStorage.setItem('uac', response.authResponse.accessToken);
         saveUserInfo(response.authResponse.accessToken, response.authResponse.userID, response.authResponse.expiresIn);
         //add user login details with user access token
@@ -105,6 +106,7 @@ function GetLongLiveAccessToken() {
 
 //Get Page Access Token
 function GetPageAccessToken() {
+    let uac = sessionStorage.getItem('uac');
     FB.api(
         '/106402264674235',  //page_id
         'GET',
@@ -119,9 +121,10 @@ function GetPageAccessToken() {
 //#region Get User Pages
 function getPagesList() {
     let uac = sessionStorage.getItem('uac');
+    let uid = sessionStorage.getItem('uid');
     //  alert(uac);
     FB.api(
-        '/me/accounts',
+        '/' + uid + '/accounts',
         'GET',
         { "fields": "name,access_token", "access_token": "" + uac + "" },
         function (response) {
@@ -139,14 +142,30 @@ function getPagesList() {
 
 //#region Streaming
 function Request_LiveVedioObj() {
+    var id = '';
+    let uid = sessionStorage.getItem('uid');
+    let uac = sessionStorage.getItem('uac');
+    var accToken = '';
+    if ($('#facebook_page').val() == "me") {
+        id = uid;
+        accToken = uac;
+    }
+    else {
+        id = $('#facebook_page').val();
+        accToken = $('#facebook_page option:selected').attr('data-acctok');
+    }
+
+
 
     FB.api(
-        '/106402264674235/live_videos',
+        '/' + id + '/live_videos',
         'POST',
         {
-            "status": "LIVE_NOW", "access_token": "" + $('#facebook_page option:selected').attr('data-acctok') + ""
+            "status": "LIVE_NOW", "access_token": "" + accToken + ""
         },
         function (response) {
+            var jsons = JSON.stringify(response);
+            alert(jsons);
 
             var streamkey = response.stream_url.substring(response.stream_url.indexOf("rtmp/") + 5);
             var cameraInfo = {
@@ -226,7 +245,7 @@ function StopLiveStream() {
 function changeOptions() {
     //getPagesList();
     getUserInfo();
-    $("#streamsettings").toggle(); 
+    $("#streamsettings").toggle();
 
     if ($("#changeSettings").html() == "Change") {
         $("#changeSettings").html("Close");
