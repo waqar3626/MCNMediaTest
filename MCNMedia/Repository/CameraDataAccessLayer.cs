@@ -98,14 +98,16 @@ namespace MCNMedia_Dev.Repository
             camera.ServerName = dataRow["ServerName"].ToString();
             camera.ServerIP = dataRow["ServerIP"].ToString();
             camera.IsCameraLive = Convert.ToBoolean(dataRow["IsCameraLive"]);
-            if (camera.CameraType ==  _Helper.CameraType.AdminCamera)
+            if (camera.CameraType == _Helper.CameraType.AdminCamera)
             {
                 camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
             }
-            else if (camera.CameraType ==  _Helper.CameraType.ClientCamera)
+            else if (camera.CameraType == _Helper.CameraType.ClientCamera)
             {
                 camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
             }
+            camera.StreamingProtocol = dataRow["StreamingProtocol"].ToString().Trim();
+            camera.churchUniqueIdentifier = dataRow["UniqueIdentifier"].ToString().Trim();
             //camera.LiveStreamUrl = "https://1502594353.rsc.cdn77.org/live/_23b079cbd1f93615a4e57355415b9a67c1c5e9c8_/23b079cbd1f93615a4e57355415b9a67c1c5e9c8_4.stream/playlist.m3u8";
             return camera;
         }
@@ -169,6 +171,59 @@ namespace MCNMedia_Dev.Repository
 
             return _dc.ReturnInt("spClientMobileCamera_Add");
         }
+
+        #region "Facebook Section"
+        public int SaveUserInfo(int churchId, string UserAccessToken, string TokenExpiry, string LiveStatus)
+        {
+            //Save churchId as UserId in FB details
+            _dc.ClearParameters();
+            _dc.AddParameter("UsrId", churchId);
+            _dc.AddParameter("Access_Token", UserAccessToken);
+            _dc.AddParameter("Token_Expiry", TokenExpiry);
+            _dc.AddParameter("Live_Status", LiveStatus);
+
+            return _dc.ReturnInt("spFbLogin_Insert");
+        }
+
+        public int SaveSettings(int UserId, string PageAccessToken, string PageId, string PageName, string Message, string CamId)
+        {
+            // churchId as UserId in FB details
+            _dc.ClearParameters();
+            _dc.AddParameter("Usr_Id", UserId);
+            _dc.AddParameter("Page_Access_Token", PageAccessToken);
+            _dc.AddParameter("Page_Id", PageId);
+            _dc.AddParameter("Page_Name", PageName);
+            _dc.AddParameter("Message", Message);
+            _dc.AddParameter("Camera_Id", CamId);
+
+            return _dc.ReturnInt("spFblogin_Update");
+        }
+
+        public FBLoginDetails GetFbDetailsByUser(int UserId)
+        {
+            // churchId as UserId in FB details
+
+            _dc.ClearParameters();
+            _dc.AddParameter("User_Id", UserId);
+            DataRow dataInfo = _dc.ReturnDataRow("sp_fblogin_GetByUser");
+
+            FBLoginDetails fbInfo = new FBLoginDetails();
+            fbInfo.FbLoginId = dataInfo["FbLoginId"].ToString();
+            fbInfo.UserId = dataInfo["UserId"].ToString();
+            fbInfo.Page_Access_Token = dataInfo["Page_Access_Token"].ToString();
+            fbInfo.Token_Expiry = dataInfo["Token_Expiry"].ToString();
+            fbInfo.Page_Id = dataInfo["Page_Id"].ToString();
+            fbInfo.Page_Name = dataInfo["Page_Name"].ToString();
+
+            fbInfo.Message = dataInfo["Message"].ToString();
+            fbInfo.Live_Status = dataInfo["Live_Status"].ToString();
+            fbInfo.Camera_Id = dataInfo["Camera_Id"].ToString();
+            fbInfo.Access_Token = dataInfo["Access_Token"].ToString();
+
+            return fbInfo;
+
+        }
+        #endregion
     }
 
 

@@ -129,43 +129,46 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        @Html.Partial("~/Views/Client/_StreamtoFacebook.cshtml")
+    </div>
+    </div>
+        <script>
+            function AddMobileCamera() {
 
-<script>
-    function AddMobileCamera() {
+                $('#AddMobileCameraPopUp').modal('show');
 
-        $('#AddMobileCameraPopUp').modal('show');
+            }
 
-    }
+            function DeleteCamera(camId) {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
 
-    function DeleteCamera(camId) {
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-
-                    $.ajax({
-                        url: "/Client/DeleteCamera/" + camId,
-                        type: "POST",
-                        contentType: "application/json;charset=UTF-8",
-                        dataType: "json",
-                        success: function (result) {
-                            window.location.reload();
-                        },
-                        error: function (errormessage) {
-                            // alert(errormessage.responseText);
+                            $.ajax({
+                                url: "/Client/DeleteCamera/" + camId,
+                                type: "POST",
+                                contentType: "application/json;charset=UTF-8",
+                                dataType: "json",
+                                success: function (result) {
+                                    window.location.reload();
+                                },
+                                error: function (errormessage) {
+                                    // alert(errormessage.responseText);
+                                }
+                            });
+                        } else {
+                            swal("Your file is safe!");
                         }
                     });
-                } else {
-                    swal("Your file is safe!");
-                }
-            });
-    }
+            }
 
-   
-</script>
- 
+
+        </script>

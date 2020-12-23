@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model MCNMedia_Dev.Models.GenericModel
+@{
+    ViewData["Title"] = "_StreamToFaceBook";
+    Layout = "";
+
+    int churchId = (int)Context.Session.GetInt32("ChurchId");
+    List<SelectListItem> SelectList = Lists.GetCameraDDL(churchId);
+    //Context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+}
+
+<!-- Plugin css for this page -->
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+
+<!-- End plugin css for this page -->
+@*<div class="card">
+        <div class="card-body bg-facebook">
+            <div class="display-3 text-white font-weight-bolder" ><i class="ti-facebook pr-3"  ></i>Facebook Live Stream</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="owl-carousel owl-theme video-carousel">
+                    <div class="item-video" style="width:950px;height:700px"><a class="owl-video" href="https://www.youtube.com/watch?v=9JBNmGlEdLY"></a></div>
+
+                </div>
+            </div>
+        </div>
+    </div>*@
+<div class="card mt-3">
+    <div class="card-body">
+        @*<div class="form-group row p-3 pb-0">
+
+            @Html.DropDownList("CameraId", SelectList, new { @class = "form-control", @id = "ddlid" }) 
+            <span class="text-danger"></span>
+        </div>*@
+        <div class="card bg-facebook d-flex">
+            <div class="card-body">
+                <div class="d-flex flex-row align-items-center ">
+                    <i class="ti-facebook text-white icon-md"></i>
+                    <div class="ml-3">
+                        <h3 class="text-white bold weigh">
+                            Stream to FaceBook
+                            <button type="button" id="btnStatusfb" class="btn btn-sm">online</button>
+                            <button type="button" id="btnRevokefb" class="btn btn-outline-behance text-white"><i class="ti-facebook text-white icon-md"></i>Revoke Face Book Access</button>
+                            @*<button type="button" id="btnConnectfb" onclick="Authenticate_User();" class="btn btn-outline-behance text-white"><i class="ti-facebook text-white icon-md"></i>Facebook Connect</button>*@
+                            <fb:login-button scope="public_profile,email" itemid="fblogindef" class="fb-login-button" onlogin="checkLoginState();">
+                            </fb:login-button>
+
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row" id="streamsettings">
+            <div class="col-sm-8">
+                <br />
+                <label class="form-label">Area</label><br />
+                <select class="form-control-sm" name="facebook_page" id="facebook_page" required>
+                    <option value="me" data-acctok="Your Timeline" >
+                        My Timeline
+                    </option>
+                </select><br /><br />
+                <label class="form-label">Camera</label><br />
+                <select class="form-control-sm" name="camera_list" id="camera_list" required>
+                    <option id="me" data-camtype="--Select--" data-clientname="--Select--" value="0">
+                        --Select--
+                    </option>
+                </select><br /><br />
+                <label class="form-label">Description</label><br />
+                <input type="text" class="form-control" id="streamDescription" />
+                <br /><br />
+                <button type="button" id="btnSave" onclick="savesettings();" class="btn btn-sm btn-dark">Save</button>
+            </div>
+            <div class="col-sm-4">
+                </div>
+            </div>
+            <p class="text-muted pt-2">your live stream will be broad cast on 'Church Name'</p>
+            <button type="button" id="startStreaming" onclick="Request_LiveVedioObj();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Start Streaming</button>
+            <button type="button" id="changeSettings" onclick="changeOptions();" class="btn btn-dark">Change</button>
+            <button type="button" id="stopStreaming" onclick="StopLiveStream();" class="btn btn-danger">Stop Streaming</button>
+            <input id="fbUserId" name="fbUserId" type="hidden" value="" />
+            <input id="fbUserToken" name="fbUserToken" type="hidden" value="" />
+            <input id="fbUserLoginStatus" name="fbUserLoginStatus" type="hidden" value="" />
+
+
+        </div>
+</div>
+
+<script>
+    function saveUserInfo11() {
+        var userid = 1;
+        var accesstoken = "hello";
+        //var Model =
+        //{
+        //    userId: userId,
+        //    accessToken: accessToken
+        //};
+        $.ajax({
+            type: 'POST',
+            url: '/Client/SaveUserInfo/',
+            data: { accesstoken: accesstoken, userid: userid },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                console.log(data.length);
+            },
+
+            failure: function (data) {
+                console.log("failure");
+            },
+            error: function (data) {
+                console.log("error");
+            }
+
+        });
+    }
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="2k6IFbG5"></script>
+<script src="~/js/facebistream.js"></script>
+<!-- plugin js for this page -->
+<script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<!-- endinject -->
+<!-- Custom js for this page-->
+
+<script src="~/theme/js/owl-carousel.js"></script>
+<!-- End custom js for this page-->

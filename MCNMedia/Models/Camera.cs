@@ -29,6 +29,8 @@ namespace MCNMedia_Dev.Models
         public bool IsCameraLive { get; set; }
         public string StreamingProtocol { get; set; }
         public string LiveStreamUrl { get; internal set; }
+
+        public string churchUniqueIdentifier { get; internal set; }
     }
 
 
