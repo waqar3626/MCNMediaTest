@@ -22,7 +22,7 @@ ViewData["Title"] = "AddDonation";
             <div class="form-group row">
                 <div class="col-2"></div>
                 <div class="col-8">
-                    @Html.TextBoxFor(model => model.ImageUrl, new { @class = "form-control form-control-sm dropify", @id = "Picture_Url", @name = "MediaURl3", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    @Html.TextBoxFor(model => model.ImageUrl, new { @class = "form-control form-control-sm dropify", @id = "Picture_Url", @name = "MediaURl3", @type = "file", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
 
 
 
@@ -59,13 +59,7 @@ ViewData["Title"] = "AddDonation";
         var input = document.getElementById('Picture_Url');
 
         formData.append("WebSiteUrl", WebsiteUrl);
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-        if ($.inArray($('#Picture_Url').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-
-            input = "";
-
-
-        }
+       
         if (input == '') {
             s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
 
