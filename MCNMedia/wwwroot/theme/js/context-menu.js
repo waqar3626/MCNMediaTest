@@ -209,7 +209,8 @@
     },
     items: {
       "edit": {
-        name: "Edit",
+            name: "Edit",
+            
         icon: "edit"
       },
       "cut": {
@@ -237,4 +238,27 @@
       }
     }
   });
+    $.contextMenu({
+        selector: '#context-menu-hover-autohideNew',
+        trigger: 'hover',
+        delay: 500,
+        autoHide: true,
+        callback: function (key, options) {
+            var m = "clicked: " + key;
+            window.console && console.log(m) || alert(m);
+        },
+        items: {
+            "edit": {
+                name: "Edit",
+                id: "CameraID2",
+                icon: "edit"
+            },
+          
+            "delete": {
+                name: "Delete",
+                icon: "delete"
+            }
+        }
+    });
+
 })(jQuery);

@@ -1,0 +1,107 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{
+    ViewData["Title"] = "MediaDetail";
+    Layout = "~/Views/Shared/_NestedLayout.cshtml";
+
+}
+
+   
+<style type="text/css">
+    .for-generic {
+        
+        height: 30px;
+        background-color: #1f4a79;
+        margin-bottom: 0px;
+        text-align:center;
+        padding-top:5px;
+    }
+
+   
+    
+  
+</style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>JustDo Premium Bootstrap Admin Dashboard Template</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+ 
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/theme/vendors/lightgallery/css/lightgallery.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/theme/images/favicon.png" />
+</head>
+
+<body>
+  
+        
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card ">
+                            @Html.Partial("/Views/Client/_ListPictureClient.cshtml")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="card ">
+                            @Html.Partial("/Views/Client/_ListVideoClient.cshtml")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="card ">
+                            @Html.Partial("/Views/Client/_ListSlideShowClient.cshtml")
+                        </div>
+                    </div>
+                </div>
+               
+
+             
+            
+
+
+          
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <!-- partial -->
+     
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/theme/vendors/lightgallery/js/lightgallery-all.min.js"></script>
+    <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
+
+    @*<script src="~/theme/js/context-menu.js"></script>*@
+    <script src="~/theme/js/CheckCode.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/theme/js/off-canvas.js"></script>
+    <script src="~/theme/js/hoverable-collapse.js"></script>
+    <script src="~/theme/js/template.js"></script>
+    <script src="~/theme/js/settings.js"></script>
+    <script src="~/theme/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/theme/js/light-gallery.js"></script>
+
+    <!-- End custom js for this page-->
+</body>
+
+</html>
+

@@ -3,13 +3,13 @@
 
 }
 
-<div class="form-group row p-3" id="alertDiv131">
+@*<div class="form-group row p-3" id="alertDiv131">
     <div class="col-md-12">
         <div class="alert alert-danger" role="alert" id="alertLabel131">
 
         </div>
     </div>
-</div>
+</div>*@
 <div class="row">
 
     <div class="col-sm-12">
@@ -23,18 +23,10 @@
                     <span asp-validation-for="Pictures.MediaName" class="text-danger"></span>
                 </div>*@
 
+           
             <div class="form-group row">
-                <div class="col-2"></div>
-                <div class="col-8">
-                    @*<label asp-for="Media.MediaURL" class="control-label">Picture URL</label>*@
-                    <input asp-for="Media.MediaURL"  class="form-control dropify" type="file" name="MediaURl3" />
-                    <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
-                    <input type="hidden" id="HdnMediaUrl2" asp-for="Media.MediaURL" />
-                    <input type="hidden" id="HdnMediaName2" asp-for="Media.MediaName" />
-                </div>
-                <div class="col-2"></div>
-            </div>
-            <div class="form-group">
+                <input type="hidden" id="HdnMediaUrl2" asp-for="Media.MediaURL" />
+                <input type="hidden" id="HdnMediaName2" asp-for="Media.MediaName" />
                 <label asp-for="Media.TabName" class="control-label">Tab Name</label>
                 <input asp-for="Media.TabName" class="form-control" />
                 <span asp-validation-for="Media.TabName" class="text-danger"></span>
@@ -50,20 +42,20 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
-        $('#alertDiv131').hide();
-        var filedropper = $('#Media_MediaURL').dropify();
-        filedropper = filedropper.data('dropify');
-        filedropper.resetPreview();
-        filedropper.clearElement();
+    //    $('#alertDiv131').hide();
+    //    var filedropper = $('#Media_MediaURL').dropify();
+    //    filedropper = filedropper.data('dropify');
+    //    filedropper.resetPreview();
+    //    filedropper.clearElement();
 
-        filedropper.settings['defaultFile'] =  $('#medUrl').val();
-        filedropper.destroy();
-        filedropper.init();
+    //    filedropper.settings['defaultFile'] =  $('#medUrl').val();
+    //    filedropper.destroy();
+    //    filedropper.init();
 
 
-    });
+    //});
 
 
 
@@ -72,7 +64,8 @@
         var ss = "";
         var ChurchMediaId = $('#ChurchMedId').val();
         var EditPictureTabName = document.getElementById('Media_TabName').value;
-        var input = document.getElementById('Media_MediaURL');
+       
+        //var input = document.getElementById('Media_MediaURL');
         var mediaUrl = $('#HdnMediaUrl2').val();
         var mediaName = $('#HdnMediaName2').val();
         var formData = new FormData();
@@ -83,34 +76,8 @@
         formData.append("MediaUrl", mediaUrl);
         formData.append("MediaName", mediaName);
 
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-  
-
-        if (input.files[0] != null) {
-            if ($.inArray($('#Media_MediaURL').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-       
-                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
-                
-                $('#alertLabel131').html(ss);
-                $('#alertDiv131').show();
-                return;
-                $('#EditPicModal').modal('show');
-
-
-            }
-        }
-        else if ($.inArray($('#HdnMediaUrl2').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label></br>';
-
-            $('#alertLabel131').html(ss);
-            $('#alertDiv131').show();
-          
-            return;
-            $('#EditPicModal').modal('show');
-
-        }
-
-
+    
+     
         if (EditPictureTabName == '') {
             ss += '<label >Please provide a valid Tab Name </label>';
 
@@ -121,8 +88,8 @@
             $('#EditPicModal').modal('show');
         }
 
-        formData.append("mediaFile", input.files[0]);
-
+       
+       
         $.ajax({
             type: "POST",
             url: "/MediaChurch/UpdateMedia/",

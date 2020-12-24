@@ -94,16 +94,8 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
-        #region Media Detail
-        public IActionResult MediaDetail()
-        {
-            int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
-            gm.Videos = mediaChurchDataAccess.GetByMediaType("Video", ChrId);
-            gm.SlideShow = mediaChurchDataAccess.GetByMediaType("SlideShow", ChrId);
-            return View(gm);
-        }
-        #endregion
+        
+       
         #region Announcement
         [HttpGet]
         public IActionResult Announcement()
@@ -281,6 +273,8 @@ namespace MCNMedia_Dev.Controllers
         }
         #endregion
 
+
+
         #region Newsletter
 
         public IActionResult ChurchNewsLetter()
@@ -302,6 +296,8 @@ namespace MCNMedia_Dev.Controllers
         }
 
         #endregion
+
+
         #region Camera
         public IActionResult CameraDetail()
 
@@ -377,16 +373,48 @@ namespace MCNMedia_Dev.Controllers
 
         [HttpGet]
         public IActionResult Recording()
+
         {
-            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            DateTime FromDate = DateTime.Now.AddDays(-7);
+            DateTime ToDate = DateTime.Now;
             GenericModel gm = new GenericModel();
-            gm.LRecordings = recordingDataAccess.Recording_GetByChurch(churchId);
+
+            LoadChurchDDL();
+            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+
             gm.Churches = chdataAccess.GetChurchData(churchId);
             HttpContext.Session.SetString("ctabId", "/Client/Recording");
-            Redirect("Recording");
+            gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate, churchId, "").ToList<Recording>();
+            ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
+            ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
+            ViewBag.EventName = "";
+
             return View(gm);
         }
 
+        [HttpPost]
+        public IActionResult SearchRecording(string fromDate, string toDate, string EventName)
+        {
+            try
+            {
+                GenericModel gm = new GenericModel();
+                DateTime FromDate = Convert.ToDateTime(fromDate);
+                DateTime ToDate = Convert.ToDateTime(toDate);
+                int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                gm.Churches = chdataAccess.GetChurchData(churchId);
+                gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate, churchId, EventName).ToList<Recording>();
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+                ViewBag.EventName = EventName;
+                LoadChurchDDL();
+                return View("Recording", gm);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Client Search Recording  Errors : " + e.Message);
+                throw;
+            }
+        }
 
         [HttpGet]
         public IActionResult EditRecordingClient(int id)
@@ -402,7 +430,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return NotFound();
                 }
-                LoadChurchesDDL();
+                LoadChurchDDL();
 
                 return View(gm);
             }
@@ -425,20 +453,7 @@ namespace MCNMedia_Dev.Controllers
 
 
 
-        //[HttpGet]
-        //public IActionResult EditScheduleClient(int id)
-        //{
-        //    int id2 = (int)HttpContext.Session.GetInt32("ChurchId");
-        //    GenericModel gm = new GenericModel();
-        //    gm.Churches = chdataAccess.GetChurchData(id2);
-        //    gm.Schedules= scheduleDataAccess.GetScheduleDataBtId(id);
-        //    if (gm.Schedules == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    LoadChurchesDDL();
-        //    return View(gm);
-        //}
+
         #endregion
 
 
@@ -485,26 +500,26 @@ namespace MCNMedia_Dev.Controllers
         //        throw;
         //    }
         //}
-        public void LoadChurchesDDL()
-        {
-            try
-            {
-                ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
-                System.Data.DataTable churches = churchDataAccessLayer.GetChurchDDL();
-                List<SelectListItem> selectListItems = new List<SelectListItem>();
-                foreach (System.Data.DataRow item in churches.Rows)
-                {
-                    selectListItems.Add(new SelectListItem { Text = item["ChurchName"].ToString(), Value = item["ChurchId"].ToString() });
-                }
-                ViewBag.State = selectListItems;
+        //public void LoadChurchesDDL()
+        //{
+        //    try
+        //    {
+        //        ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+        //        System.Data.DataTable churches = churchDataAccessLayer.GetChurchDDL();
+        //        List<SelectListItem> selectListItems = new List<SelectListItem>();
+        //        foreach (System.Data.DataRow item in churches.Rows)
+        //        {
+        //            selectListItems.Add(new SelectListItem { Text = item["ChurchName"].ToString(), Value = item["ChurchId"].ToString() });
+        //        }
+        //        ViewBag.State = selectListItems;
 
-            }
-            catch (Exception e)
-            {
-                ShowMesage("Load churches DropDown Errors : " + e.Message);
-                throw;
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ShowMesage("Load churches DropDown Errors : " + e.Message);
+        //        throw;
+        //    }
+        //}
 
         public IActionResult ClientPlayer(int id)
         {
@@ -542,7 +557,77 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
+        #region Media Detail
+        public JsonResult ListPictureClient()
+        {
+            GenericModel gm = new GenericModel();
+            int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
+            return Json(gm.Pictures);
+        }
+        public JsonResult _ListVideoClient()
+        {
+            GenericModel gm = new GenericModel();
+            int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.Videos = mediaChurchDataAccess.GetByMediaType("Video", ChrId);
+            return Json(gm.Videos);
 
+        }
+
+        public JsonResult _ListSlideShowClient()
+        {
+            GenericModel gm = new GenericModel();
+            int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.SlideShow = mediaChurchDataAccess.GetByMediaType("SlideShow", ChrId);
+            return Json(gm.SlideShow);
+
+        }
+
+       
+
+        public IActionResult MediaDetail()
+        {
+
+            LoadChurchDDL();
+            int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
+
+            gm.Videos = mediaChurchDataAccess.GetByMediaType("Video", ChrId);
+            gm.SlideShow = mediaChurchDataAccess.GetByMediaType("SlideShow", ChrId);
+            gm.Churches = chdataAccess.GetChurchData(ChrId);
+            HttpContext.Session.SetString("ctabId", "/Client/MediaDetail");
+            Redirect("MediaDetail");
+            return View(gm);
+        }
+        #endregion
+
+        public void LoadChurchDDL()
+        {
+            try
+            {
+                Church chr = new Church();
+                chr.ChurchId = -1;
+                chr.CountyId = -1;
+                chr.ClientTypeId = -1;
+                chr.ChurchName = "";
+                chr.EmailAddress = "";
+                chr.Phone = "";
+
+                IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr);
+
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in ChurchList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                }
+                ViewBag.Church = selectListItems;
+            }
+            catch (Exception e)
+            {
+                ShowMessage("LoadChurch DropDown Errors : " + e.Message);
+                throw;
+            }
+        }
         private void ShowMesage(String exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);

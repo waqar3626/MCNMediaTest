@@ -24,6 +24,7 @@ namespace MCNMedia_Dev.Controllers
 
         RecordingDataAccessLayer recordDataAccess = new RecordingDataAccessLayer();
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
+        GenericModel gm = new GenericModel();
 
         [HttpGet]
         public IActionResult AddRecording()
@@ -153,10 +154,19 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-                recordDataAccess.UpdateRecording(recording);
-                return RedirectToAction("ListRecording");
-
+                if (HttpContext.Session.GetString("UserType") == "admin")
+                {
+                    recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                    recordDataAccess.UpdateRecording(recording);
+                    return RedirectToAction("ListRecording");
+                }
+                else if (HttpContext.Session.GetString("UserType") == "client")
+                {
+                    recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                    recordDataAccess.UpdateRecording(recording);
+                    return RedirectToAction("Recording","Client");
+                }
+                return Json(1);
             }
             catch (Exception e)
             {

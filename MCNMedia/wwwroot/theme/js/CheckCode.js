@@ -269,5 +269,140 @@
             }
         }
     });
+    $.contextMenu({
+        selector: '#context-menu-hover-autohidePictures',
+        trigger: 'hover',
+        delay: 500,
+        autoHide: true,
+        callback: function (key, options) {
+            var m = "clicked: " + key;
+            var mediachurchid = options.$trigger[0].getAttribute('mediachurchid');
+          
+            if (key == "edit") {
+                EditPicture(mediachurchid);
+            }
+            else if (key == "delete") {
+                DeletePicture(mediachurchid);
+            }
+
+
+
+        },
+        items: {
+            "edit": {
+                name: "Edit",
+                id: "CameraID2",
+                icon: "edit"
+            },
+
+            "delete": {
+                name: "Delete",
+                icon: "delete"
+            }
+        }
+    });
+    $.contextMenu({
+        selector: '#context-menu-hover-autohideVideos',
+        trigger: 'hover',
+        delay: 500,
+        autoHide: true,
+        callback: function (key, options) {
+            var m = "clicked: " + key;
+            var mediachurchid = options.$trigger[0].getAttribute('mediachurchid');
+            if (key == "edit") {
+                EditVideo(mediachurchid);
+            }
+            else if (key == "delete") {
+                DeleteRecording(mediachurchid);
+            }
+
+
+
+        },
+        items: {
+            "edit": {
+                name: "Edit",
+                id: "CameraID2",
+                icon: "edit"
+            },
+
+            "delete": {
+                name: "Delete",
+                icon: "delete"
+            }
+        }
+    });
+    $.contextMenu({
+        selector: '#context-menu-hover-autohideSlideShow',
+        trigger: 'hover',
+        delay: 500,
+        autoHide: true,
+        callback: function (key, options) {
+            var m = "clicked: " + key;
+            var mediachurchid = options.$trigger[0].getAttribute('mediachurchid');
+            if (key == "edit") {
+                EditSlideShow(mediachurchid);
+            }
+            else if (key == "delete") {
+                DeleteSlideShow(mediachurchid);
+            }
+
+
+
+        },
+        items: {
+            "edit": {
+                name: "Edit",
+                id: "CameraID2",
+                icon: "edit"
+            },
+
+            "delete": {
+                name: "Delete",
+                icon: "delete"
+            
+            }
+        }
+    });
+    $.contextMenu({
+        selector: '#context-menu-hover-autohideRecording',
+        trigger: 'hover',
+        delay: 500,
+        autoHide: true,
+        callback: function (key, options) {
+            var m = "clicked: " + key;
+            var recordingId = options.$trigger[0].getAttribute('recordingId');
+            if (key == "edit") {
+                EditRecording(recordingId);
+            }
+            else if (key == "delete") {
+                DeleteRecordingClick(recordingId);
+            }
+
+
+
+        },
+        items: {
+            "edit": {
+                name: "Edit",
+                id: "CameraID2",
+                icon: "edit"
+            },
+
+            "delete": {
+                name: "Delete",
+                icon: "delete"
+            },
+
+            "play": {
+                name: "Play",
+                icon: "play"
+            },
+            "download": {
+                name: "Download",
+                icon: "download"
+            }
+        }
+    });
 
 })(jQuery);

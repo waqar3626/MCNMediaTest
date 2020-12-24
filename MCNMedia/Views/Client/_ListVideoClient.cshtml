@@ -1,0 +1,125 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+
+
+<h4 class="card-header-custom">Videos Gallery <button type="submit" value="Add" class="btn btn-behance float-right  btn-sm " title="Add New" onclick="AddVideo()"><i class="fa fa-plus"></i> Add New Video</button></h4>
+<div class="card-body">
+
+    <div id="video-gallery" class="row lightGallery videosTab ">
+      
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddddModal" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Video</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddPreview">
+                        @Html.Partial("~/Views/MediaChurch/_AddVideo.cshtml", Model.Media)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditVidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Video</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditPreview">
+                        @Html.Partial("~/Views/MediaChurch/_EditVideo.cshtml", Model.Media)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        loadVideo();
+    });
+    function AddVideo() {
+
+        $('#AddddModal').modal('show');
+
+    }
+
+    function loadVideo() {
+       
+        $.ajax({
+            url: "/Client/_ListVideoClient",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+
+                $.each(result, function (key, item) {
+                   
+                    html += '<div class="col-sm-3  p-2 ml-5 mb-3"><div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><video controls="controls" class="w-100"><source src=" ' + item.mediaURL + '" type="video/mp4" /></video></div>';
+
+                });
+                $('.videosTab').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+   
+    function EditVideo(churchMediaId) {
+         $.ajax({
+            type: "Get",
+            url: '@Url.Action("EditVideo", "MediaChurch")',
+             data: { id: churchMediaId },
+            success: function (data) {
+                $('#EditPreview').html(data);
+                $('#EditVidModal').modal('show');
+
+            }
+        })
+
+
+            }
+
+    function DeleteRecording(churchMediaId) {
+    var ans = confirm("Are you sure you want to delete this Video?");
+    if (ans) {
+        $.ajax({
+            url: "/MediaChurch/DeleteVideo/" + churchMediaId,
+            type: "POST",
+
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                loadVideo();
+                if (result) { alert("Record Deleted");}
+            },
+            error: function (errormessage) {
+               // alert(errormessage.responseText);
+            }
+        });
+    }
+    }
+
+
+</script>

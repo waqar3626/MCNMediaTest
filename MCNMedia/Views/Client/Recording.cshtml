@@ -5,81 +5,144 @@
 
 }
 
+<link rel="stylesheet" href="~/theme/vendors/lightgallery/css/lightgallery.css">
+<style type="text/css">
+    .for-generic {
+        height: 30px;
+        background-color: #1f4a79;
+        margin-bottom: 0px;
+        text-align: center;
+        padding-top: 5px;
+    }
+</style>
 <script src="~/js/jwplayer.js"></script>
-<div class="card">
+
+<div class="card mb-3">
     <div class="card-header card-header-custom">
-        Manage Recordings
+        Search Recording
     </div>
-       
-    
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                @using (Html.BeginForm("ListRecording", "Recording", FormMethod.Post))
-                {
+        <div class="">
+            <form method="post" asp-action="SearchRecording" asp-controller="Client">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">From Date</label>
+                            <div class="col-sm-8">
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    <input type="text" id="SetFromDate" name="fromDate" class="form-control" placeholder="From Date" />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">To Date</label>
+                            <div class="col-sm-8">
+                                <div id="datepicker-popup2" class="input-group date datepicker">
+                                    <input type="text" id="SetToDate" name="toDate" class="form-control" placeholder="To Date" />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                @*<th>
-                                        @Html.DisplayNameFor(model => model.RecordingId)
-                                    </th>*@
-                                <th>
-                                    Title
-                                </th>
-                                <th>
-                                    URL
-                                </th>
-                                <th>
-                                    Date
-                                </th>
-                                <th>
-                                    Time
-                                </th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.LRecordings)
-                            {
-                                <tr>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.UserId)
-                                        </td>*@
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.RecordingTitle, new { @class = "text-wrap" })
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.RecordingURl, new { @class = "text-wrap" })
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.Date, new { @class = "text-wrap" })
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.Time, new { @class = "text-wrap" })
-                                    </td>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Event Name</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("EventName", "", new { @id = "SetEventName", @class = "form-control", @name = "EventName", @placeholder = "Event Name" })
 
-                                    <td>
-                                        <a href="@Url.Action("EditRecordingClient", "Client", new { id=item.RecordingId })" class="btn btn-primary btn-sm " data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
+                            </div>
 
-                                        @{
-                                            var UrlDownload = item.RecordingURl;
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-form-label"></div>
 
-                                            <a href="@UrlDownload" download class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
-                                        }
-                                        <a href="@Url.Action("ClientPlayer", "Client",new { id = item.RecordingId })" target="_blank" class="ply-vid">
-                                            <i class="btn btn-success btn-sm ti-control-play"></i>
-                                        </a>
-                                        @*<button type="button" data-id="@item.RecordingURl" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
+                                <a asp-controller="Client" asp-action="Recording" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-lg-12">
+        <div class="card ">
+            <h4 class="card-header-custom">Manage Reordings <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-behance btn-custom btn-sm float-right " title="Add New"> <i class="mdi mdi-plus "></i> Add Recording</a></h4>
+
+            <div class="card-body">
+
+                <div id="video-gallery" class="row lightGallery">
+                    @foreach (var item in Model.LRecordings)
+                    {
+                        <div class="col-sm-3  p-2 ml-5 mb-3">
+                            <div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideRecording" recordingId="@item.RecordingId">@item.RecordingTitle</div><video controls="controls" class="w-100"><source src=" @item.Src" type="video/mp4" /></video>
+                        </div>
+
+                    }
+
+
+
+
+
+                </div>
             </div>
         </div>
+    </div>
+</div>
 
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddRecordingPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Recording</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="AddRecordPreview">
+                        @Html.Partial("~/Views/Recording/AddRecording.cshtml", Model.Recordings)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditRecordingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Recording</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="EditRecordingPreview">
+                        @Html.Partial("~/Views/Recording/Edit.cshtml", Model.Recordings)
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -102,25 +165,95 @@
     </div>
 </div>
 <script>
-    jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
-    $(document).on("click", ".ti-control-play", function () {
-        var url = $(this).data('id');
 
-        jwplayer('videoUrl').setup({
-            file: url,
-            image: "../Images/jwerror.jpg",
-            width: "100%",
-            aspectratio: "16:9",
-            //autostart: 'true',
-            "autostart": "viewable",
-            "advertising": {
-                "client": "vast",
-                "tag": ""
+  jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
+            $(document).on("click", ".ti-control-play", function () {
+                var url = $(this).data('id');
+
+                jwplayer('videoUrl').setup({
+                    file: url,
+                    image: "../Images/jwerror.jpg",
+                    width: "100%",
+                    aspectratio: "16:9",
+                    //autostart: 'true',
+                    "autostart": "viewable",
+                    "advertising": {
+                        "client": "vast",
+                        "tag": ""
+                    }
+                });
+                jwplayer().onError(function () {
+                    jwplayer().play();
+                });
+            });
+
+
+    $(document).ready(
+        function () {
+            $('#SetFromDate').val('@ViewBag.FromDate');
+                $('#SetToDate').val('@ViewBag.ToDate');
+                $('#SetEventName').val('@ViewBag.EventName');
+
+        });
+     function Download(url) {
+                $('<iframe>', { id: 'idown', src: url }).hide().appendTo('body').click();
             }
+
+
+     function AddRecording1() {
+
+                $('#AddRecordingPopUp').modal('show');
+
+            }
+      function EditRecording(recordingId) {
+
+                 $.ajax({
+                     type: "Get",
+                     url: '@Url.Action("Edit", "Recording")',
+                     data: { id: recordingId },
+                     success: function (data) {
+                         $('#EditRecordingPreview').html(data);
+                         $('#EditRecordingModal').modal('show');
+                     }
+                 });
+
+    }
+
+
+
+    function DeleteRecordingClick(RecordingId) {
+
+                swal({
+          title: "Are you sure?",
+          text: "Once deleted, you will not be able to recover this imaginary file!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("Poof! Your file has been deleted!", {
+                icon: "success",
+
+            });
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("Delete", "Recording")',
+                    data: { id: RecordingId },
+
+                });
+              window.location.reload();
+          } else {
+                 swal("Your file is safe!");
+          }
         });
-        jwplayer().onError(function () {
-            jwplayer().play();
-        });
-    });
+
+
+            }
 
 </script>
+
+<script src="~/theme/vendors/lightgallery/js/lightgallery-all.min.js"></script>
+<script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
+
+<script src="~/theme/js/CheckCode.js"></script>

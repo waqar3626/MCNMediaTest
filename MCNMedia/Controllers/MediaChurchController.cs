@@ -38,7 +38,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Index Media Church  Error" + e.Message);
                 throw;
             }
-           
+
         }
 
         #region "Picture"
@@ -66,7 +66,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Add Picture Error" + e.Message);
                 throw;
             }
-           
+
         }
 
         public JsonResult GetMediaByTypeId(string medType)
@@ -82,7 +82,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Get Specific Picture Error" + e.Message);
                 throw;
             }
-           
+
 
         }
 
@@ -99,27 +99,20 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit Picture Error" + e.Message);
                 throw;
             }
-            
-       
-    }
-    public JsonResult UpdateMedia(String ChurchMediaId, IFormFile mediaFile, string mediaType, String EditPictureTabName, string MediaUrl, string MediaName)
+
+
+        }
+        public JsonResult UpdateMedia(String ChurchMediaId, string mediaType, String EditPictureTabName, string MediaUrl, string MediaName)
         {
             try
             {
                 MediaChurch mediaupdate = new MediaChurch();
 
 
-                if (mediaFile != null)
-                {
-                    mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
-                    mediaupdate.MediaName = mediaFile.FileName.ToString();
-                }
-                else
-                {
-                    mediaupdate.MediaURL = MediaUrl;
-                    mediaupdate.MediaName = MediaName;
+                mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaName = MediaName;
 
-                }
+
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditPictureTabName;
                 mediaupdate.MediaType = mediaType;
@@ -134,7 +127,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Update Picture Error" + e.Message);
                 throw;
             }
-           
+
         }
 
         public IActionResult DeleteMedia(int id)
@@ -143,7 +136,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-                bool res = mediaChurchDataAccess.DeleteMedia(id,UpdateBy);
+                bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
                 return Json(res);
             }
             catch (Exception e)
@@ -152,7 +145,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
 
-           
+
         }
 
         #endregion
@@ -163,20 +156,20 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
         {
             try
+            {
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
-                    {
-                        MediaChurch media = new MediaChurch();
-                        media.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                        media.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                        media.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, media.ChurchId);
-                        media.MediaType = mediaType;
-                        media.MediaName = mediaFile.FileName.ToString();
-                        media.TabName = AddVidTabName;
-                        int res = mediaChurchDataAccess.AddMedia(media);
-                        return Json(res);
-                    }
-                    return RedirectToAction("Listchurch", "Church");
+                    MediaChurch media = new MediaChurch();
+                    media.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                    media.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                    media.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, media.ChurchId);
+                    media.MediaType = mediaType;
+                    media.MediaName = mediaFile.FileName.ToString();
+                    media.TabName = AddVidTabName;
+                    int res = mediaChurchDataAccess.AddMedia(media);
+                    return Json(res);
+                }
+                return RedirectToAction("Listchurch", "Church");
             }
 
             catch (Exception e)
@@ -184,7 +177,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Add Video Error" + e.Message);
                 throw;
             }
-           
+
         }
 
         public JsonResult ListVideo(string medType)
@@ -203,7 +196,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
 
-            
+
         }
 
         public IActionResult EditVideo(int id)
@@ -220,28 +213,18 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
 
-            
+
         }
 
-        public JsonResult UpdateVideo(int ChurchMediaId, IFormFile mediaFile, string mediaType, String EditVidTabName, string MediaUrl, string MediaName)
+        public JsonResult UpdateVideo(int ChurchMediaId,  string mediaType, String EditVidTabName, string MediaUrl, string MediaName)
         {
             try
             {
                 MediaChurch mediaupdate = new MediaChurch();
 
-                if (mediaFile != null)
-                {
-                    mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"))); // Church Id would be needed
-
-                    mediaupdate.MediaName = mediaFile.FileName.ToString();
-                }
-                else
-                {
-                    mediaupdate.MediaURL = MediaUrl;
-                    mediaupdate.MediaName = MediaName;
-
-                }
-
+                 mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaName = MediaName;
+            
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditVidTabName;
                 mediaupdate.MediaType = mediaType;
@@ -255,7 +238,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
 
-            
+
         }
 
         public IActionResult DeleteVideo(int id)
@@ -272,7 +255,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Delete Video Error" + e.Message);
                 throw;
             }
-           
+
         }
 
         #endregion
@@ -304,7 +287,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Add Slide Show Error" + e.Message);
                 throw;
             }
-          
+
         }
 
         public JsonResult GetSlideShowByTypeId(string medType)
@@ -320,7 +303,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Get Specific Slide Show Error" + e.Message);
                 throw;
             }
-            
+
 
         }
 
@@ -337,25 +320,18 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Edit Slide Show Error" + e.Message);
                 throw;
             }
-           
+
         }
 
-        public JsonResult UpdateSlide(string ChurchMediaId, IFormFile mediaFile, string mediaType, String EditSlideShowTabName, string MediaUrl, string MediaName)
+        public JsonResult UpdateSlide(string ChurchMediaId,  string mediaType, String EditSlideShowTabName, string MediaUrl, string MediaName)
         {
             try
             {
                 MediaChurch mediaupdate = new MediaChurch();
-                if (mediaFile != null)
-                {
-                    mediaupdate.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShow, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
-                    mediaupdate.MediaName = mediaFile.FileName.ToString();
-                }
-                else
-                {
-                    mediaupdate.MediaURL = MediaUrl;
-                    mediaupdate.MediaName = MediaName;
-
-                }
+               
+                   
+                 mediaupdate.MediaURL = MediaUrl;
+                  mediaupdate.MediaName = MediaName;
 
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditSlideShowTabName;
@@ -368,7 +344,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Update Slide Show Error" + e.Message);
                 throw;
             }
-            
+
         }
 
         public IActionResult DeleteSlide(int id)
@@ -377,7 +353,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-                bool res = mediaChurchDataAccess.DeleteMedia(id,UpdateBy);
+                bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
                 return Json(res);
             }
             catch (Exception e)
@@ -385,7 +361,7 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Delete Slide Show Error" + e.Message);
                 throw;
             }
-            
+
         }
 
 
