@@ -256,10 +256,14 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Search"].ToString()))
                 {
                     string searchFilter = Request.Query["Search"].ToString().ToLower();
-                    churches = churches.FindAll(x => x.ChurchName.ToLower().Contains(searchFilter) ||
-                    x.Town.ToLower().Contains(searchFilter) ||
-                    x.CountryName.ToLower().Contains(searchFilter) ||
-                    x.CountyName.ToLower().Contains(searchFilter)).ToList<Church>();
+                    //string searchFilter = Request.Query["Search"].ToString().ToLower();
+                    string input = new String(searchFilter.Where(c => c != '-' && (c < '0' || c > '9')).ToArray());
+                    input.ToLower();
+                    string last = input.Split(' ').Last();
+                    churches = churches.FindAll(x => x.ChurchName.ToLower().Contains(input) ||
+                    x.Town.ToLower().Contains(last) ||
+                    x.CountryName.ToLower().Contains(last) ||
+                    x.CountyName.ToLower().Contains(last)).ToList<Church>();
                     ViewBag.CountyList = 0;
                 }
 
@@ -519,7 +523,6 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
                     profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
                     profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-
                     return View(profileModel);
                 }
                 else
