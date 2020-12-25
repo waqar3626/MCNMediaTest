@@ -72,7 +72,7 @@
     <!-- banner slider start -->
     <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
         <div class="container">
-            @Model.Churches.ChurchName
+            @Model.Churches.ChurchName , @Model.Churches.Town
         </div>
     </div>
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
@@ -97,6 +97,36 @@
                         <i class="fas fa-globe font-25 mr-3"></i>
                         @Model.Churches.Website
                     </p>
+                </div>
+                <br />
+                <div class="heding-week pt-2 pb-2 col-md-8 text-white font-20 text-center"
+                     style="background-color: #1f4a79;">
+                    Next Schedule
+                </div>
+
+                <div class="heding-week pt-4 pb-2 col-md-8 font-20">
+                    @if (Model.ScheduleListDay0.Count() > 0)
+                    {
+                        @foreach (var itm in Model.ScheduleListDay0)
+                        {
+                           
+                            @itm.EventName
+                            @itm.EventTime.ToString("h:mm tt")
+                            @if (itm.Record == true)
+                            {
+                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+
+                            }
+                            else
+                            {
+                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                            }
+                        }
+                    }
+                    else
+                    {
+                <p>No events scheduled</p>
+                    }
                 </div>
                 <!-- </div> -->
                 <div class="clearfix"></div>
@@ -134,7 +164,7 @@
                         {
                             <div class="tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
                                 <p class="text-white font-30">
-                                    Our camera is switched off at the moment. 
+                                    Our camera is switched off at the moment.
                                     <br />
                                     Please come back when there is a service scheduled
                                 </p>
@@ -167,7 +197,7 @@
                                             counter = counter + 1;
                                             <div class="carousel-item active">
 
-                                                <img src="@pic.MediaURL" class="d-block"  style="height:518px;width:100%;justify-content:center;" alt="...">
+                                                <img src="@pic.MediaURL" class="d-block" style="height:518px;width:100%;justify-content:center;" alt="...">
                                             </div>
                                         }
                                         else
