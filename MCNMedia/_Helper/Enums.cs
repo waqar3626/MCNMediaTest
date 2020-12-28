@@ -18,12 +18,38 @@ namespace MCNMedia_Dev._Helper
         Video,
         SlideShow,
         UserProfileImage,
-        NewsLetter
+        NewsLetter,
+        Donation
     }
 
     public enum CameraType
     {
         AdminCamera,
         ClientCamera
+    }
+
+    public enum Operation
+    {
+        Add,
+        Update,
+        Delete,
+        Recording_Published_Request,
+        Recording_Published,
+        Recording_Started,
+        Recording_Stopped
+    }
+
+    public enum Categories
+    {
+        Announcement,
+        Camera,
+        Church,
+        Donate_Link,
+        NewsLetter,
+        Notice,
+        Media,
+        Recording,
+        Schedule,
+        User
     }
 }

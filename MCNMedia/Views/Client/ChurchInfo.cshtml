@@ -1,9 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@model MCNMedia_Dev.Models.Church
+@*@model MCNMedia_Dev.Models.Church*@
+@model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "ChurchInfo";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
-
+    Layout = "~/Views/Shared/_LayoutClientNew.cshtml";
 }
 
 <script src="~/theme/js/FormValidation.js"></script>
@@ -19,24 +19,19 @@
 <form asp-action="UpdateChurchInfo" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="card">
         <div class="card-header card-header-custom">
-            <h3 id="HeaderChurchName">@Model.ChurchName , @Model.Town</h3>
+            <label id="HeaderChurchName">@Model.Churches.ChurchName, @Model.Churches.Town</label>
         </div>
         <div class="card-body">
             <input type="hidden" />
-
             <div class="form-group row ">
                 <div class="col-sm-4 pt-4">
                     <div class="form-group row">
                         <div class="col-sm-12" style="height:275px;">
-                            <div class="card" style="margin-top:30px"  id="cardImage">
+                            <div class="card" id="cardImage">
                                 <div class="card-body ">
-
-                                    <input asp-for="ImageURl" type="file" name="ImageUrl" class="dropify" id="Churches_ImageURl" />
-                                    <span asp-validation-for="ImageURl" class="text-danger"></span>
-                                    <input type="hidden" asp-for="ImageURl" name="hdnImageUrl" id="ImageCheckUrl" />
-
-
-
+                                    <input asp-for="Churches.ImageURl" type="file" name="ImageUrl" class="dropify" id="Churches_ImageURl" />
+                                    <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
+                                    <input type="hidden" asp-for="Churches.ImageURl" name="hdnImageUrl" id="ImageCheckUrl" />
                                 </div>
                                 <div class="invalid-feedback" id="ImageText1">
                                     Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
@@ -45,135 +40,209 @@
                         </div>
                     </div>
                 </div>
-                        <div class="col-sm-8">
-                            <div class=" form-group row">
-                                <div class="col-sm-12">
-                                    @*id="validationCustom01"*@
-                                    <input type="hidden" asp-for="CountyId" value="@Model.CountyId" id="CountyId123" />
-                                    <input type="hidden" asp-for="ClientTypeId" value="@Model.ClientTypeId" id="ClientTypeId123" />
-
-                                    <label class="form-label">Name</label>
-
-                                    @Html.TextBoxFor(Model => Model.ChurchName, new { @class = "form-control", required = "required" })
-                                    <input type="hidden" asp-for="ChurchId" value="@Model.ChurchId" id="ChurchId123" />
-                                    @*<input type="text" class="form-control" asp-for="ChurchName"  />*@
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid Church Name
-                                    </div>
-                                </div>
-                            </div>
-                            <div class=" form-group row">
-                                <div class="col-sm-4">
-                                    <label class="form-label">Email</label>
-                                    <input type="text" class="form-control" value="@Model.EmailAddress" required placeholder="Email" asp-for="EmailAddress" />
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid Email
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control" placeholder="Phone" asp-for="Phone" required />
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid Phone
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="form-label">Address</label>
-                                    <input type="text" class="form-control" placeholder="Address" asp-for="Address" required />
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid Address
-                                    </div>
-                                </div>
-                            </div>
-                            <div class=" form-group row">
-                                <div class="col-sm-4">
-                                    <label class="form-label">Town</label>
-                                    <input type="text" class="form-control" placeholder="Town" asp-for="Town" required />
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid Town
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="form-label">WebSite</label>
-                                    <input type="text" class="form-control" placeholder="Address" asp-for="Website" required />
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid Website
-                                    </div>
-                                </div>
-
-
-                                <div class="col-sm-4">
-                                    <label class="form-label">Password</label>
-                                    <input type="text" id="Password" class="form-control" placeholder="Password" asp-for="Password" />
-
-                                </div>
-                            </div>
-                            <div class="form-group float-right">
-
-                                <button type="submit" id="ValClientChurchSubmit" value="Update" class="btn btn-success btn-sm " title="Update"><i class="mdi mdi-update"></i> Update</button>
+                <div class="col-sm-8">
+                    <div class=" form-group row">
+                        <div class="col-sm-12">
+                            @*id="validationCustom01"*@
+                            <input type="hidden" asp-for="Churches.CountyId" value="@Model.Churches.CountyId" id="CountyId123" />
+                            <input type="hidden" asp-for="Churches.ClientTypeId" value="@Model.Churches.ClientTypeId" id="ClientTypeId123" />
+                            <label class="form-label">Name</label>
+                            @Html.TextBoxFor(Model => Model.Churches.ChurchName, new { @class = "form-control", required = "required" })
+                            <input type="hidden" asp-for="Churches.ChurchId" value="@Model.Churches.ChurchId" id="ChurchId123" />
+                            @*<input type="text" class="form-control" asp-for="ChurchName"  />*@
+                            <div class="invalid-feedback">
+                                Please Provide a valid Church Name
                             </div>
                         </div>
                     </div>
-
+                    <div class=" form-group row">
+                        <div class="col-sm-4">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" value="@Model.Churches.EmailAddress" required placeholder="Email" asp-for="Churches.EmailAddress" />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Email
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" placeholder="Phone" asp-for="Churches.Phone" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Phone
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" placeholder="Address" asp-for="Churches.Address" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Address
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" form-group row">
+                        <div class="col-sm-4">
+                            <label class="form-label">Town</label>
+                            <input type="text" class="form-control" placeholder="Town" asp-for="Churches.Town" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Town
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label">WebSite</label>
+                            <input type="text" class="form-control" placeholder="Address" asp-for="Churches.Website" required />
+                            <div class="invalid-feedback">
+                                Please Provide a valid Website
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label">Password</label>
+                            <input type="text" id="Password" class="form-control" placeholder="Churches.Password" asp-for="Churches.Password" />
+                        </div>
+                    </div>
+                    <div class="form-group float-right">
+                        <button type="submit" id="ValClientChurchSubmit" value="Update" class="btn btn-success btn-sm " title="Update"><i class="mdi mdi-update"></i> Update</button>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card mt-4">
+        <div class="card-header card-header-custom">
+            Donation
+        </div>
+        <div class="card-body">
+            <input type="hidden" asp-for="ChurchDonations.DonationId" class="form-control" id="DonationId" />
+            <input type="hidden" asp-for="ChurchDonations.ImageUrl" class="form-control" id="medUrl" />
+            <div class="form-group row ">
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <div class="col-sm-12" style="height:275px;">
+                            <div class="card" id="cardImage_Donation">
+                                <div class="card-body ">
+                                    <input asp-for="ChurchDonations.ImageUrl" class="dropify" type="file" name="Donation_ImageUrl2" id="Donation_ImageURl" />
+                                    <span asp-validation-for="ChurchDonations.ImageUrl" class="text-danger"></span>
+                                    <input type="hidden" id="HdnMediaUrl2" asp-for="ChurchDonations.ImageUrl" />
+                                </div>
+                                <div class="invalid-feedback" id="ImageText_donation">
+                                    "Jpeg, jpg, png, gif, bmp" are supported only.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class=" form-group row">
+                        <div class="col-sm-12">
+                            <label asp-for="ChurchDonations.WebSiteUrl" class="control-label">Website</label>
+                            <input type="text" class="form-control" placeholder="Website" asp-for="ChurchDonations.WebSiteUrl" id="editWebisteUrl" required />
+                            <span asp-validation-for="ChurchDonations.WebSiteUrl" class="text-danger"></span>
+                            <div class="invalid-feedback" id="editWebisteUrl_invalid">
+                                Please provide a valid url
+                            </div>
+                        </div>
+                        <div class="col-sm-12 pt-3">
+                            <div class="form-group form-check col-sm-12">
+                                <label class="form-check-label">
+                                    <input id="showOnWeb" class="form-check-input" asp-for="ChurchDonations.ShowOnWebsite" /> Show on website
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group float-right">
+                        <a onclick="UpdateDonation()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 <script>
+    var ImageData_Donation = $('#Donation_ImageURl').val();
+
+    $('#Donation_ImageURl').change(function () {
+        ValidateDonations();
+    });
+
+    function ValidateDonations() {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        var input = document.getElementById('Donation_ImageURl');
+        if (input.files[0] != null) {
+            var fileName = input.files[0].name;
+            if ($.inArray(fileName.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                return ImageInvalid();
+            }
+            else {
+                return ImageValid();
+            }
+        }
+        else if ($.inArray($('#HdnMediaUrl2').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            return ImageInvalid();
+        }
+        else {
+            return ImageValid();
+        }
+    }
+
+    function ImageInvalid() {
+        $('#cardImage_Donation').attr("class", "card border-danger");
+        $('#ImageText_donation').show();
+        return false;
+    }
+
+    function ImageValid() {
+        $('#cardImage_Donation').attr("class", "card border-success");
+        $('#ImageText_donation').hide();
+        return true;
+    }
+
+    function UpdateDonation() {
+        var imageValidation = ValidateDonations();
+        if (imageValidation) {
+
+        }
+        else {
+            return;
+        }
+        var editWebsiteUrl = document.getElementById('editWebisteUrl').value;
+        if (editWebsiteUrl == '') {
+            $('#editWebisteUrl').attr("class", "form-control border-danger");
+            $('#editWebisteUrl_invalid').show();
+            return;
+        }
+        var ss = "";
+        var churchDonationId = $('#DonationId').val();
+
+        var input = document.getElementById('Donation_ImageURl');
+        var imageUrl = $('#HdnMediaUrl2').val();
+        var formData = new FormData();
+        formData.append("ChurchDonationId", churchDonationId);
+        formData.append("EditWebsiteUrl", editWebsiteUrl);
+        formData.append("ImageUrlChurch", imageUrl);
+        formData.append("ShowOnWebsite", document.getElementById("showOnWeb").checked);
+        formData.append("mediaFile", input.files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/ChurchDonation/UpdateDonation/",
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (result) {
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>
+
+<script>
     var ImageData = $('#Churches_ImageURl').val();
 
-
-    $('#ValClientChurchSubmit').click(function () {
-
-
-
-
-
-
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-        if ($.inArray($('#ImageData').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-
-            if ($('#ImageCheckUrl').val() == "") {
-
-                $('#cardImage').attr("class", "card border-danger");
-                $('#ImageText1').show();
-                return false;
-            }
-
-
-        }
-        else {
-            $('#cardImage').attr("class", "card border-success");
-            $('#ImageText1').hide();
-        }
-
-    });
-    $('#Churches_ImageURl').change(function () {
-
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-        if ($.inArray($('#Churches_ImageURl').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-
-
-            $('#cardImage').attr("class", "card border-danger");
-
-            $('#ImageText1').show();
-            return false;
-
-
-        }
-
-        else {
-
-            $('#cardImage').attr("class", "card border-success");
-            $('#ImageText1').hide();
-
-        }
-
-    });
     $(document).ready(function () {
-
         var filedropper = $('#Churches_ImageURl').dropify();
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();
@@ -181,6 +250,45 @@
         filedropper.settings['defaultFile'] = $('#ImageCheckUrl').val();
         filedropper.destroy();
         filedropper.init();
+
+
+        $('#alertDiv131').hide();
+        var filedropper1 = $('#Donation_ImageURl').dropify();
+        filedropper1 = filedropper1.data('dropify');
+        filedropper1.resetPreview();
+        filedropper1.clearElement();
+
+        filedropper1.settings['defaultFile'] = $('#medUrl').val();
+        filedropper1.destroy();
+        filedropper1.init();
+    });
+
+    $('#ValClientChurchSubmit').click(function () {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray($('#ImageData').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            if ($('#ImageCheckUrl').val() == "") {
+                $('#cardImage').attr("class", "card border-danger");
+                $('#ImageText1').show();
+                return false;
+            }
+        }
+        else {
+            $('#cardImage').attr("class", "card border-success");
+            $('#ImageText1').hide();
+        }
+    });
+
+    $('#Churches_ImageURl').change(function () {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray($('#Churches_ImageURl').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            $('#cardImage').attr("class", "card border-danger");
+            $('#ImageText1').show();
+            return false;
+        }
+        else {
+            $('#cardImage').attr("class", "card border-success");
+            $('#ImageText1').hide();
+        }
     });
 </script>
 

@@ -12,9 +12,8 @@ namespace MCNMedia_Dev.Repository
     public class ChurchDonationDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
-
         private readonly string AWS_S3_BUCKET_URI;
-
+        
         public ChurchDonationDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
@@ -25,74 +24,61 @@ namespace MCNMedia_Dev.Repository
             var sysConfig = root.GetSection("SystemConfiguration");
             AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
         }
-
-        public int AddDonation(ChurchDonation donation)
-        {
-            _dc.ClearParameters();
-            _dc.AddParameter("UserId", donation.UpdatedBy);
-            _dc.AddParameter("WebsiteUrl", donation.WebSiteUrl);
-            _dc.AddParameter("ImageUrl",  donation.ImageUrl);
-            _dc.AddParameter("ChurchId", donation.ChurchId);
-            return _dc.Execute("spChurchDonation_Insert");
-        }
-
-        public IEnumerable<ChurchDonation> GetDonationById(int ChurchId)
-        {
-            List<ChurchDonation> donation = new List<ChurchDonation>();
-
-            _dc.ClearParameters();
-            _dc.AddParameter("Church_Id", ChurchId);
-            DataTable dataTable = _dc.ReturnDataTable("spChurchDonation_GetByChurchId");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                ChurchDonation churchDonation = new ChurchDonation();
-                churchDonation.DoonationId = Convert.ToInt32(dataRow["DonationId"]);
-                churchDonation.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                churchDonation.ImageUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageUrl"]}";
-                churchDonation.WebSiteUrl = dataRow["WebsiteUrl"].ToString();
-                //churchDonation.ChurchName = dataRow["ChurchName"].ToString();
-                donation.Add(churchDonation);
-            }
-            return donation;
-        }
-        public ChurchDonation GetDonationByDonationId(int donationId)
+        
+        public ChurchDonation GetDonationByChurch(int churchId)
         {
             ChurchDonation donation = new ChurchDonation();
-
-            _dc.ClearParameters();
-            _dc.AddParameter("Donation_Id", donationId);
-            DataTable dataTable = _dc.ReturnDataTable("spChurchDonationByDonationId");
-            foreach (DataRow dataRow in dataTable.Rows)
+            List<ChurchDonation> donationList = GetDonationFromDatabase(churchId, donationId: -1);
+            if (donationList.Count > 0)
             {
-
-                donation.DoonationId = Convert.ToInt32(dataRow["DonationId"]);
-                donation.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                donation.ImageUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageUrl"]}";
-                donation.WebSiteUrl = dataRow["WebsiteUrl"].ToString();
-                //churchDonation.ChurchName = dataRow["ChurchName"].ToString();
-                
+                donation =  donationList.First();
             }
             return donation;
         }
 
-        public int UpdateDonation(ChurchDonation churchDonation)
+        private List<ChurchDonation> GetDonationFromDatabase(int churchId,int donationId)
         {
+            List<ChurchDonation> donations = new List<ChurchDonation>();
             _dc.ClearParameters();
-            _dc.AddParameter("DoonationId", churchDonation.DoonationId);
-            _dc.AddParameter("Website_Url", churchDonation.WebSiteUrl);
-            _dc.AddParameter("Image_Url", churchDonation.ImageUrl);
-            _dc.AddParameter("UsrId", churchDonation.UpdatedBy);
-
-            return _dc.Execute("spChurchDonation_Update");
+            _dc.AddParameter("Church_Id", churchId);
+            _dc.AddParameter("Donation_Id", donationId);
+            DataTable dataTable = _dc.ReturnDataTable("spDonation_Get");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                donations.Add(BindDonation(dataRow));
+            }
+            return donations;
         }
 
+        private ChurchDonation BindDonation(DataRow dataRow)
+        {
+            ChurchDonation churchDonation = new ChurchDonation();
+            churchDonation.DonationId = Convert.ToInt32(dataRow["DonationId"]);
+            churchDonation.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+            churchDonation.ImageUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageUrl"]}";
+            churchDonation.WebSiteUrl = dataRow["WebsiteUrl"].ToString();
+            churchDonation.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
+            return churchDonation;
+        }
+
+        public int UpdateDonation(ChurchDonation donation)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("Church_Id", donation.ChurchId);
+            _dc.AddParameter("Image_Url", donation.ImageUrl);
+            _dc.AddParameter("Website_Url", donation.WebSiteUrl);
+            _dc.AddParameter("ShowOnWebsite", donation.ShowOnWebsite);
+            _dc.AddParameter("UsrId", donation.UpdatedBy);
+
+            return _dc.Execute("spDonation_Update");
+        }
 
         public bool DeleteDonation(int DonationId, int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("Donation_Id", DonationId);
             _dc.AddParameter("UserId", UpdateBy);
-            return _dc.ReturnBool("spChurchDonation_Delete");
+            return _dc.ReturnBool("spDonation_Delete");
         }
 
     }

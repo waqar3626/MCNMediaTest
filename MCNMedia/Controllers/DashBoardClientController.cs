@@ -48,9 +48,9 @@ namespace MCNMedia_Dev.Controllers
                 gm1.LCameras = camDataAccess.GetAllCameras(ChurchId,"AdminCamera").ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
-               
 
-               
+
+                HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
                 ViewBag.ChurchId = ChurchId.ToString();
                 return View(gm1);

@@ -30,6 +30,7 @@ namespace MCNMedia_Dev.Controllers
         ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
         MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
         GenericModel gm = new GenericModel();
+        ChurchDonationDataAccessLayer DonationDataAccessLayer = new ChurchDonationDataAccessLayer();
 
 
         #region church info
@@ -47,21 +48,25 @@ namespace MCNMedia_Dev.Controllers
                     churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 }
 
-
                 Church church = chdataAccess.GetChurchData(churchId);
                 if (church == null)
                 {
                     return NotFound();
                 }
                 HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
-                return View(church);
+
+                GenericModel gm = new GenericModel();
+                ChurchDonation churchDonation  = DonationDataAccessLayer.GetDonationByChurch(churchId);
+                gm.Churches = church;
+                gm.ChurchDonations = churchDonation;
+
+                return View(gm);
             }
             catch (Exception e)
             {
                 ShowMesage("Church Info Errors : " + e.Message);
                 throw;
             }
-
         }
 
         [HttpPost]

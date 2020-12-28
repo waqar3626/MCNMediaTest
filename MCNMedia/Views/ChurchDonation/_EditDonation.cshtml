@@ -15,7 +15,7 @@
     <div class="col-sm-12">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DoonationId" class="form-control" id="DoonationId" />
+            <input type="hidden" asp-for="DonationId" class="form-control" id="DonationId" />
             <input type="hidden" asp-for="ImageUrl" class="form-control" id="medUrl" />
 
             <div class="form-group row">
@@ -64,12 +64,12 @@
     function UpdateDonation() {
 
         var ss = "";
-        var churchDoonationId = $('#DoonationId').val();   
+        var churchDonationId = $('#DonationId').val();   
         var editWebsiteUrl = document.getElementById('editWebisteUrl').value;
         var input = document.getElementById('ImageUrl');
         var imageUrl = $('#HdnMediaUrl2').val();
         var formData = new FormData();
-        formData.append("ChurchDoonationId", churchDoonationId);
+        formData.append("ChurchDonationId", churchDonationId);
         formData.append("EditWebsiteUrl", editWebsiteUrl);
         formData.append("ImageUrlChurch", imageUrl);
 

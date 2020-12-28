@@ -83,34 +83,11 @@ namespace MCNMedia_Dev._Helper
                     return Path.Combine(rootDirectory, churchId, "UserProfileImages");
                 case UploadingAreas.NewsLetter:
                     return Path.Combine(rootDirectory, churchId, "NewsLetter");
+                case UploadingAreas.Donation:
+                    return Path.Combine(rootDirectory, churchId, "Donation");
                 default:
                     return rootDirectory;
             }
         }
-
-        private static void UploadFileToS3Bucket(string contentDirectory, string fileName, Stream stream)
-        {
-            IConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
-            var root = builder.Build();
-            var awsS3bucket = root.GetSection("S3BucketConfiguration");
-            var sysConfig = root.GetSection("SystemConfiguration");
-
-            RegionEndpoint bucketRegion = RegionEndpoint.EUWest1;
-            string awsAccessKey = awsS3bucket["aws_access_key"];
-            string awsSecretKey = awsS3bucket["aws_secret_key"];
-            IAmazonS3 client = new AmazonS3Client(awsAccessKey, awsSecretKey, bucketRegion);
-
-            string key = $"{sysConfig["system_mode"]}/{contentDirectory.Replace("\\", "/")}/{fileName}";
-
-            TransferUtility utility = new TransferUtility(client);
-            TransferUtilityUploadRequest request = new TransferUtilityUploadRequest();
-
-            request.BucketName = awsS3bucket["aws_bucket_name"];
-            request.Key = key; //file name up in S3  
-            request.InputStream = stream;
-            utility.Upload(request); //commensing the transfer  
-        }
     }
-
 }

@@ -1,7 +1,7 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 
 
-<h4 class="card-header-custom">Videos Gallery <button type="submit" value="Add" class="btn btn-behance float-right  btn-sm " title="Add New" onclick="AddVideo()"><i class="fa fa-plus"></i> Add New Video</button></h4>
+<h4 class="card-header-custom">Videos Gallery <button type="submit" value="Add" class="btn btn-outline-white float-right  btn-sm " title="Add New" onclick="AddVideo()"><i class="fa fa-plus"></i> Add New Video</button></h4>
 <div class="card-body">
 
     <div id="video-gallery" class="row lightGallery videosTab ">
@@ -74,7 +74,7 @@
 
                 $.each(result, function (key, item) {
                    
-                    html += '<div class="col-sm-3  p-2 ml-5 mb-3"><div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><video controls="controls" class="w-100"><source src=" ' + item.mediaURL + '" type="video/mp4" /></video></div>';
+                    html += '<div class="col-sm-3 p-2 ml-5 mb-3"><div class="for-generic text-white font-16 font-weight-bolder w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><video controls="controls" class="w-100"><source src=" ' + item.mediaURL + '" type="video/mp4" /></video></div>';
 
                 });
                 $('.videosTab').html(html);

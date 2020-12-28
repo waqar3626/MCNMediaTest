@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>JustDo Premium Bootstrap Admin Dashboard Template</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/theme/vendors/dropify/dropify.min.css">
+    <link rel="stylesheet" href="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/theme/css/horizontal-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/theme/images/favicon.png" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link href="~/theme/Loader.css" rel="stylesheet" />
+    <link href="~/theme/ClientTheme.css" rel="stylesheet" />
+    <link href="~/theme/CustomToggle.css" rel="stylesheet" />
+    @inject IHttpContextAccessor HttpContextAccessor
+</head>
+<body>
+    @using Microsoft.AspNetCore.Http
+    @if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
+    {
+        Context.Response.Redirect("../UserLogin");
+    }
+    else if (Context.Session.GetString("UserType").ToString() != "client")
+    {
+        Context.Session.Clear();
+        Context.Response.Redirect("../UserLogin");
+    }
+
+    @{ int usrId = -1;
+        if (Context.Session.GetInt32("UserId") != null)
+            usrId = (int)Context.Session.GetInt32("UserId");
+        List<SelectListItem> ddlChurches = Lists.GetUserAssignChurchListForDDL(usrId); }
+    <div class="container-scroller">
+        <!-- partial:partials/_horizontal-navbar.html -->
+        <div class="horizontal-menu">
+            <nav class="navbar top-navbar col-lg-12 col-12 p-0">
+                <div class="container">
+                    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                        <a class="navbar-brand brand-logo" href="/DashBoardClient/DashBoardClient"><img src="~/theme/images/MCNLogo.svg" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo-mini" href="/DashBoardClient/DashBoardClient"><img src="~/theme/images/MCNLogo.svg" alt="logo" /></a>
+                    </div>
+                    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                        <ul class="navbar-nav mr-lg-2">
+                            <li class="nav-item nav-search d-none d-lg-block">
+                                <div class="input-group">
+                                    @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text", ViewBag.ChurchId), new { @class = "custom-select bg-white", @onchange = "javascript:onChangeChurchClient1()", @id = "churchId" })
+                                    <span class="text-danger"></span>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav navbar-nav-right">
+                            <li class="nav-item nav-profile dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                    <i class="ti-user"></i>
+                                    @Context.Session.GetString("UserName")
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                    <a class="dropdown-item" onclick="ChangePassword()" data-toggle="tooltip" data-placement="bottom" title="Change">
+                                        <i class="ti-lock text-primary"></i>
+                                        Change Password
+                                    </a>
+                                    <a class="dropdown-item" asp-action="UserLogin" asp-controller="UserLogin">
+                                        <i class="ti-power-off text-primary"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item nav-profile">
+                                <a href="/" class="btn btn-sm font-14 font-weight-bolder " target="_blank" style="background-color:white; color:#1f4a79; width:100px">Website<i class="fa fa-globe ml-1" style="background-color:white; color:#1f4a79"></i></a>
+                            </li>
+                        </ul>
+                        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+                            <span class="ti-menu"></span>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <nav class="bottom-navbar">
+                <div class="container">
+                    <ul class="nav page-navigation">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/DashBoardClient/DashBoardClient">
+                                <i class="ti-home menu-icon"></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Client/ChurchInfo">
+                                <i class="mdi mdi-christianity-outline menu-icon"></i>
+                                <span class="menu-title">Church Info</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ListMobileCamera" asp-controller="Client">
+                                <i class="mdi mdi-calendar-clock menu-icon"></i>
+                                <span class="menu-title">Cameras</span>
+                            </a>
+                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="/Client/CameraDetail">
+                                    <i class=" mdi mdi-file-video menu-icon "></i>
+                                    <span class="menu-title">Media</span>
+                                </a>
+                            </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Client/MediaDetail">
+                                <i class=" mdi mdi-file-video menu-icon "></i>
+                                <span class="menu-title">Media Detail</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Client/Schedule">
+                                <i class="mdi mdi-calendar-clock menu-icon"></i>
+                                <span class="menu-title">Schedule</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Client/Recording">
+                                <i class=" mdi mdi-camcorder menu-icon"></i>
+                                <span class="menu-title">Published Files</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Client/Announcement">
+                                <i class="mdi mdi-bullhorn menu-icon"></i>
+                                <span class="menu-title">Announcement</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Client/ChurchNewsLetter">
+                                <i class="mdi mdi-calendar-clock menu-icon"></i>
+                                <span class="menu-title">NewsLetter</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
+                    @RenderBody()
+                    <div class="row">
+                        <div class="col-12 grid-margin">
+                            <div class="modal fade" id="ChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog mt-4" role="document" style="max-width:40%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body " id="Preview">
+                                            @Html.Partial("~/Views/UserLogin/ChangeUserPassword.cshtml")
+                                        </div>
+                                        @*<div class="modal-footer">
+                                                <button type="button" class="btn btn-success">Submit</button>
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="w-100 clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 <a href="https://www.mcnmedia.tv/" target="_blank">MCN Media</a>. All rights reserved.</span>
+                        @*<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>*@
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/theme/vendors/dropify/dropify.min.js"></script>
+    <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
+
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/theme/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src=".~/theme/js/off-canvas.js"></script>
+    <script src="~/theme/js/hoverable-collapse.js"></script>
+    <script src="~/theme/js/template.js"></script>
+    <script src="~/theme/js/settings.js"></script>
+    <script src="~/theme/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/theme/js/dashboard.js"></script>
+    <script src="~/theme/js/todolist.js"></script>
+    <!-- End custom js for this page-->
+    <script>
+        function displayBusyIndicator() {
+            $('.loading').show();
+        }
+        function displayBusyIndicator2() {
+            $('.loading').hide();
+        }
+        $(window).on('beforeunload', function () {
+            displayBusyIndicator();
+        });
+        $(window).unload(function () {
+            displayBusyIndicator();
+        });
+        s
+        $(document).on('submit', 'form', function () {
+            displayBusyIndicator();
+        });
+    </script>
+    <script>
+    function onChangeChurchClient1() {
+        var churchId = document.getElementById('churchId').value;
+        $.ajax({
+        type: "GET",
+        url: '@Url.Action("ReloadPage", "DashBoardClient")',
+        data: { chrid: churchId },
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            window.location.reload();
+            },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+            }
+        });
+    }
+
+        function ChangePassword() {
+            $('#ChangeModal').modal('show');
+        }
+    </script>
+</body>
+</html>

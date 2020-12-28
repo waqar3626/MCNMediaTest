@@ -19,7 +19,7 @@
 
 <div class="card mb-3">
     <div class="card-header card-header-custom">
-        Search Recording
+        Search Published Files
     </div>
     <div class="card-body">
         <div class="">
@@ -83,30 +83,26 @@
 <div class="row mt-4">
     <div class="col-lg-12">
         <div class="card ">
-            <h4 class="card-header-custom">Manage Reordings <a id="ADDEmployee" onclick="AddRecording1()" class="btn btn-behance btn-custom btn-sm float-right " title="Add New"> <i class="mdi mdi-plus "></i> Add Recording</a></h4>
-
+            <div class="card-header card-header-custom">
+                Published Files
+                @*<button type="submit" id="ADDEmployee" class="btn btn-outline-whites btn-sm float-right " title="Add New" onclick="AddRecording1()" >
+            <i class="fa fa-plus"></i>
+            Add Recording
+        </button>*@
+            </div>
             <div class="card-body">
-
                 <div id="video-gallery" class="row lightGallery">
                     @foreach (var item in Model.LRecordings)
                     {
                         <div class="col-sm-3  p-2 ml-5 mb-3">
                             <div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideRecording" recordingId="@item.RecordingId">@item.RecordingTitle</div><video controls="controls" class="w-100"><source src=" @item.Src" type="video/mp4" /></video>
                         </div>
-
                     }
-
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddRecordingPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCNMedia_Dev._Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,12 +19,12 @@ namespace MCNMedia_Dev.Repository
         /// <param name="message">Message to be logged</param>
         /// <param name="churchId">Church ID</param>
         /// <param name="userId">User ID</param>
-        public static void AddActivityLog(string operation, string category, string message, int churchId, int userId)
+        public static void AddActivityLog(Operation operation, Categories category, string message, int churchId, int userId)
         {
             _dc = new AwesomeDal.DatabaseConnect();
             _dc.ClearParameters();
-            _dc.AddParameter("Operation", operation);
-            _dc.AddParameter("Category", category);
+            _dc.AddParameter("Operation", operation.ToString());
+            _dc.AddParameter("Category", category.ToString());
             _dc.AddParameter("Message", message);
             _dc.AddParameter("ChurchId", churchId);
             _dc.AddParameter("UserId", userId);

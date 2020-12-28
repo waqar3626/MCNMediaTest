@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
@@ -50,7 +51,7 @@ namespace MCNMedia_Dev.Controllers
                 DateTime FromDate = DateTime.Now.AddDays(-1);
                 DateTime ToDate = DateTime.Now;
                 GenericModel gm = new GenericModel();
-                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate,-1,"").ToList<Recording>();
+                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, -1, "").ToList<Recording>();
                 ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
                 ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
                 ViewBag.ChurchId = -1;
@@ -66,7 +67,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(string fromDate, string toDate, int ChurchId,string EventName)
+        public IActionResult Search(string fromDate, string toDate, int ChurchId, string EventName)
         {
             try
             {
@@ -74,7 +75,7 @@ namespace MCNMedia_Dev.Controllers
                 DateTime FromDate = Convert.ToDateTime(fromDate);
                 DateTime ToDate = Convert.ToDateTime(toDate);
 
-               gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, ChurchId, EventName).ToList<Recording>();
+                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, ChurchId, EventName).ToList<Recording>();
                 ViewBag.FromDate = fromDate;
                 ViewBag.ToDate = toDate;
                 ViewBag.ChurchId = ChurchId;
@@ -93,7 +94,7 @@ namespace MCNMedia_Dev.Controllers
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
-            
+
         }
         [HttpGet]
         public IActionResult Edit(int id)
@@ -164,7 +165,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     recordDataAccess.UpdateRecording(recording);
-                    return RedirectToAction("Recording","Client");
+                    return RedirectToAction("Recording", "Client");
                 }
                 return Json(1);
             }
@@ -202,7 +203,7 @@ namespace MCNMedia_Dev.Controllers
                 ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
 
                 var responseReader = reader.ReadToEndAsync();
-                ActivityLogDataAccessLayer.AddActivityLog("Recording Published Request", category: "Schedule", message: responseReader.Result, churchId: -1, userId: -1);
+                ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Published_Request, Categories.Schedule, message: responseReader.Result, churchId: -1, userId: -1);
                 log.Debug(responseReader.Result);
                 var publishRecording = JsonConvert.DeserializeObject<PublishRecording>(responseReader.Result);
 
@@ -227,54 +228,47 @@ namespace MCNMedia_Dev.Controllers
                         scheduleStatus = 0;
                     scheduleDataAccess.UpdateScheduleStatus(record.ScheduleId, scheduleStatus);
                     string logMessage = $"Recording published for camera (CameraID: {publishRecording.camera_id}) on {DateTime.Now}";
-                    ActivityLogDataAccessLayer.AddActivityLog("Recording Published", category: "Schedule", message: logMessage, churchId: record.ChurchId, userId: -1);
-                    
-                    scheduleDataAccess.UpdateScheduleLog(record.ScheduleId, 3);
+                    ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Published, Categories.Schedule, message: logMessage, churchId: record.ChurchId, userId: -1);
 
+                    scheduleDataAccess.UpdateScheduleLog(record.ScheduleId, 3);
                 }
             }
         }
 
-      
+
 
         public IActionResult AdminPlayer(int id)
         {
-           
-                int recordingPass = 0;
-                RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
-                if (id == 0)
+            int recordingPass = 0;
+            RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
+            if (id == 0)
+            {
+                id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
+                recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
+            }
+            Recording recording = recordingDataAccessLayer.Recording_GetById(id);
+            int pass = recording.Password.Count();
+            if (recording.Password.Count() > 0)
+            {
+                HttpContext.Session.SetString("RecordingPass", recording.Password);
+                HttpContext.Session.SetInt32("RecordingId", id);
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
                 {
-                    id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
-                    recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
+                    int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
                 }
-                Recording recording = recordingDataAccessLayer.Recording_GetById(id);
-                int pass = recording.Password.Count();
-                if (recording.Password.Count() > 0)
+                else
                 {
-                    HttpContext.Session.SetString("RecordingPass", recording.Password);
-                    HttpContext.Session.SetInt32("RecordingId", id);
-                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
+                    if (recordingPass == 1)
                     {
-                        int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
+
                     }
                     else
                     {
-                        if (recordingPass == 1)
-                        {
-
-                        }
-                        else
-                        {
-
-                            return RedirectToAction(nameof(RecordingLock));
-                        }
+                        return RedirectToAction(nameof(RecordingLock));
                     }
                 }
-                return View(recording);
-
-            
-
-
+            }
+            return View(recording);
         }
 
         private void ShowMessage(string exceptionMessage)
@@ -292,7 +286,6 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
-
                 IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();

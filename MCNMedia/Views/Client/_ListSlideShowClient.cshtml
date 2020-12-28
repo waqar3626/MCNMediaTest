@@ -1,15 +1,15 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 
-
-
-<h4 class="card-header-custom">Slide Show  <button type="submit" id="AddSlideShow1" class="btn btn-behance btn-sm float-right " title="Add New" onclick="AddSlideShow()"> <i class="mdi mdi-plus"></i> Add New SlideShow</button></h4>
+<h4 class="card-header-custom">
+    Slide Show
+    <button type="submit" id="AddSlideShow1" class="btn btn-outline-white btn-sm float-right " title="Add New" onclick="AddSlideShow()">
+        <i class="fa fa-plus"></i> Add New SlideShow
+    </button>
+</h4>
 <div class="card-body">
-
     <div id="video-gallery" class="row lightGallery slideShowTab">
-      
     </div>
 </div>
-
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,10 +24,6 @@
                     <div class="modal-body" id="AddSlideShowPreview">
                         @Html.Partial("~/Views/MediaChurch/_AddSlideShow.cshtml", Model.Media)
                     </div>
-                    @*<div class="modal-footer">
-                            <button type="button" class="btn btn-success">Submit</button>
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                        </div>*@
                 </div>
             </div>
         </div>
@@ -47,10 +43,6 @@
                     <div class="modal-body" id="EditSlideShowPreview">
                         @Html.Partial("~/Views/MediaChurch/_EditSlideShow.cshtml", Model.Media)
                     </div>
-                    @*<div class="modal-footer">
-                            <button type="button" class="btn btn-success">Submit</button>
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                        </div>*@
                 </div>
             </div>
         </div>
@@ -62,25 +54,19 @@
     });
 
     function AddSlideShow() {
-
         $('#AddSlideShowModal').modal('show');
-
     }
 
     function loadSlideShow() {
-
         $.ajax({
             url: "/Client/_ListSlideShowClient",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-
                 var html = '';
-
                 $.each(result, function (key, item) {
                     html += '<a href=" ' + item.mediaURL + ' " target="_blank" class="image-tile "><div class="for-generic  text-white font-16 font-weight-bolder w-100  " id="context-menu-hover-autohideSlideShow"  mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><div class="border border-dark"><div class="row"> <div class="col-12 text-center mt-3"><img src="../theme/images/ppt.svg" style="width:100px; " /></div></div> <div class="row mt-2"><div class="col-12 text-center m-2 font-20">' + item.mediaName + ' </div></div></div></a>';
-
                 });
                 $('.slideShowTab').html(html);
             },
@@ -100,32 +86,25 @@
             $('#EditSlideShowModal').modal('show');
         }
         })
-
-
     }
-
 
     function DeleteSlideShow(churchMediaId) {
     var ans = confirm("Are you sure you want to delete this SlideShow?");
-    if (ans) {
-        $.ajax({
-            url: "/MediaChurch/DeleteSlide/" + churchMediaId,
-            type: "POST",
-
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                loadSlideShow();
-                if (result) { alert("Record Deleted");}
-            },
-            error: function (errormessage) {
-               // alert(errormessage.responseText);
-            }
-        });
+        if (ans)
+        {
+            $.ajax({
+                url: "/MediaChurch/DeleteSlide/" + churchMediaId,
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    loadSlideShow();
+                    if (result) { alert("Record Deleted"); }
+                },
+                error: function (errormessage) {
+                // alert(errormessage.responseText);
+                }
+            });
+        }
     }
-    }
-
-
-
-
 </script>

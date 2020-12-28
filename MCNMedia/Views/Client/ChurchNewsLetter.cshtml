@@ -2,40 +2,18 @@
 @{
     ViewData["Title"] = "ChurchNewsLetter";
     Layout = "~/Views/Shared/_NestedLayout.cshtml";
-
 }
-
-<style>
-    .nav-link {
-        display: block;
-        padding: 0.5rem 1rem !important;
-    }
-</style>
-
-
-
 
 <div class="row">
     <div class="col-sm-12 grid-margin stretch-card d-none d-md-flex w-100">
-
-
         <div class="card">
             <div class="card-body">
-
                 <div class="row">
-
                     <div class="col-sm-12">
                         @Html.Partial("~/Views/ChurchNewsLetter/_ListChurchNewsLetter.cshtml")
                     </div>
-
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </div>
-
-
-

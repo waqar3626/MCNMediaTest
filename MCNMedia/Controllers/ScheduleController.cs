@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
@@ -319,10 +320,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     scheduleDataAccess.UpdateScheduleStatus(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 1);
                     string logMessage = $"Recording started for camera (CameraID: {cameraId}) on {DateTime.Now}";
-                    ActivityLogDataAccessLayer.AddActivityLog("Recording Started", category: "Schedule", message: logMessage, churchId: churchId, userId: -1);
-
+                    ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Started, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
                     scheduleDataAccess.insertScheduleLog(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 1);
-
                 }
             }
         }
@@ -340,7 +339,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     scheduleDataAccess.UpdateScheduleStatus(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 2);
                     string logMessage = $"Recording stopped for camera (CameraID: {cameraId}) on {DateTime.Now}";
-                    ActivityLogDataAccessLayer.AddActivityLog("Recording Stopped", category: "Schedule", message: logMessage, churchId: churchId, userId: -1);
+                    ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Stopped, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
 
                     scheduleDataAccess.UpdateScheduleLog(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 2);
 
