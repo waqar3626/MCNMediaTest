@@ -128,13 +128,13 @@
             <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Recording</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Recording Client</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
                     </div>
                     <div class="modal-body" id="EditRecordingPreview">
-                        @Html.Partial("~/Views/Recording/Edit.cshtml", Model.Recordings)
+                        @Html.Partial("~/Views/Client/_EditRecordingClient.cshtml", Model.Recordings)
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
 
                  $.ajax({
                      type: "Get",
-                     url: '@Url.Action("Edit", "Recording")',
+                     url: '@Url.Action("EditClientRecording", "Client")',
                      data: { id: recordingId },
                      success: function (data) {
                          $('#EditRecordingPreview').html(data);

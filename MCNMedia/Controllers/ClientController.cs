@@ -638,6 +638,28 @@ namespace MCNMedia_Dev.Controllers
             log.Error("Exception : " + exceptionMessage);
         }
 
+        [HttpGet]
+        public IActionResult EditClientRecording(int id)
+        {
+            try
+            {
+                Recording recording = recordingDataAccess.Recording_GetById(id);
+                if (recording == null)
+                {
+                    return NotFound();
+                }
+                LoadChurchDDL();
+
+                return PartialView("_EditRecordingClient", recording);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Edit Recording Errors 'Get' : " + e.Message);
+                throw;
+            }
+        }
+
+
         private void ShowMessage(string exceptionMessage)
         {
             log.Info("Exception: " + exceptionMessage);
