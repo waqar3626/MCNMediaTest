@@ -16,6 +16,8 @@ namespace MCNMedia_Dev.Models
         public NewsLetter newsletter { get; set; }
         public Notice notice { get; set; }
 
+        public  ChurchDonation churchDonation { get; set; }
+
         // Lists
         public IEnumerable<Camera> CameraList { get; set; }
         public IEnumerable<MediaChurch> VideoList { get; set; }

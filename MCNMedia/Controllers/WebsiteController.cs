@@ -30,7 +30,7 @@ namespace MCNMedia_Dev.Controllers
         SubscriptionDataAccessLayer subDataAccess = new SubscriptionDataAccessLayer();
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
         TestinomialDataAccessLayer testinomialDataAccess = new TestinomialDataAccessLayer();
-
+        ChurchDonationDataAccessLayer churchDonationDataAccessLayes = new ChurchDonationDataAccessLayer();
         GenericModel gm = new GenericModel();
         public WebsiteController(IHostingEnvironment hostingEnvironment)
         {
@@ -535,7 +535,7 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
 
                     profileModel.NowScheduleList = Schedules_WhatsOnNow();
-
+                    profileModel.churchDonation = churchDonationDataAccessLayes.GetDonationByChurch(churchId);
                     profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
                     profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
                     profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
