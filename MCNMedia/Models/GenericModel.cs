@@ -12,6 +12,7 @@ namespace MCNMedia_Dev.Models
         public Camera Cameras { get; set; }
         public ChurchLock churchLock { get; set; }
         public RecordingLock recordingLock { get; set; }
+        public Testinomial testinomial { get; set; }
 
         public User Users { get; set; }
         public MediaChurch Media { get; set; }

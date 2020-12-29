@@ -37,5 +37,6 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<Schedule> ScheduleListDay4 { get; set; }
         public IEnumerable<Schedule> ScheduleListDay5 { get; set; }
         public IEnumerable<Schedule> ScheduleListDay6 { get; set; }
+        public IEnumerable<Schedule> UpcomingSchedule { get; set; }
     }
 }
