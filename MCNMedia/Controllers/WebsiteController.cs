@@ -29,6 +29,7 @@ namespace MCNMedia_Dev.Controllers
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
         SubscriptionDataAccessLayer subDataAccess = new SubscriptionDataAccessLayer();
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+        TestinomialDataAccessLayer testinomialDataAccess = new TestinomialDataAccessLayer();
 
         GenericModel gm = new GenericModel();
         public WebsiteController(IHostingEnvironment hostingEnvironment)
@@ -87,6 +88,7 @@ namespace MCNMedia_Dev.Controllers
                 gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
                 gm.LSchedules = UpComingSchedules();
                 gm.CountryList = _placeAccessLayer.GetCountries();
+                //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
                 return View(gm);
             }
             catch (Exception e)
@@ -129,7 +131,23 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        private IEnumerable<Schedule> UpComingSchedules()
+        private IEnumerable<Schedule> UpComingSchedulesForChurch(int churchId)
+        {
+            try
+            {
+
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetChurchSchedule_UpComingSchedules(churchId).ToList<Schedule>();
+                return schedules;
+            }
+            catch (Exception e)
+            {
+
+                ShowMesage("Schedules Error : " + e.Message);
+                throw;
+            }
+        }
+
+       private IEnumerable<Schedule> UpComingSchedules()
         {
             try
             {
@@ -510,6 +528,8 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
                     profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
                     profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(churchId);
+
+                    profileModel.UpcomingSchedule = UpComingSchedulesForChurch(churchId);
 
                     profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
                     profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
