@@ -32,7 +32,7 @@
                         <input class="form-check-input"  id="showOnWebsite" asp-for="ChurchNewsLetter.ShowOnWebsite" /> @Html.DisplayNameFor(model => model.ChurchNewsLetter.ShowOnWebsite )
                         </label>
                         </div>
-                <div class="col-10">
+                <div class="col-12">
                     @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterUrl, new { @class = "form-control form-control-sm dropify", @id = "newsletter_Url", @name = "MediaURl4", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                 </div>
                

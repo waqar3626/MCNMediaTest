@@ -17,18 +17,19 @@
             <form asp-action="Add">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @*<input type="hidden" asp-for="Cameras.CameraId" id="CamId" />*@
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-8">
-                        <input asp-for="Media.MediaURL" class="form-control dropify" id="VidFile" type="file" name="MediaURl3" />
-                        <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
-                    </div>
-                    <div class="col-2"></div>
-                </div>
+
+
                 <div class="form-group">
                     <label asp-for="Media.TabName" class="control-label">Tab Name</label>
                     <input asp-for="Media.TabName" class="form-control" id="AddMedVidTabName" />
                     <span asp-validation-for="Media.TabName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input asp-for="Media.MediaURL" class="form-control dropify" id="VidFile" type="file" name="MediaURl3" />
+                        <span asp-validation-for="Media.MediaURL" class="text-danger"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
