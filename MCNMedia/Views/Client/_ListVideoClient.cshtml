@@ -74,7 +74,7 @@
 
                 $.each(result, function (key, item) {
                    
-                    html += '<div class="col-sm-3 p-2 ml-5 mb-3"><div class="for-generic text-white font-16 font-weight-bolder w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><video controls="controls" class="w-100"><source src=" ' + item.mediaURL + '" type="video/mp4" /></video></div>';
+                    html += '<div class="col-sm-3 border border-danger p-2 ml-5 mb-3"><div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><video controls="controls" class="w-100"><source src=" ' + item.mediaURL + '" type="video/mp4" /></video></div>';
 
                 });
                 $('.videosTab').html(html);
