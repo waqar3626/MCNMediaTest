@@ -99,34 +99,62 @@
                     </p>
                 </div>
                 <br />
-                <div class="heding-week pt-2 pb-2 col-md-8 text-white font-20 text-center"
-                     style="background-color: #1f4a79;">
-                    Next Schedule
-                </div>
-
-                <div class="heding-week pt-4 pb-2 col-md-8 font-20">
-                    @if (Model.ScheduleListDay0.Count() > 0)
-                    {
-                        @foreach (var itm in Model.ScheduleListDay0)
-                        {
-                           
-                            @itm.EventName
-                            @itm.EventTime.ToString("h:mm tt")
-                            @if (itm.Record == true)
+                <div class=" border border-dark col-sm-10 pr-0 pl-0">
+                    <div class="card-header-custom text-white font-20 text-center w-100"
+                         style="background-color: #1f4a79;">
+                        Next Schedule
+                    </div>
+                    <div class="card-body">
+                        <div class=" font-20 text-left">
+                            @if (Model.UpcomingSchedule.Count() > 0)
                             {
-                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                @foreach (var schedule in Model.UpcomingSchedule.Take(1))
+                                {
 
+
+                                    <label>  @schedule.ChurchName, @schedule.Town</label><br />
+
+
+                                    @if (schedule.IsRepeated == true && schedule.Record == true)
+                                    {
+                                        <b>
+                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
+                                        </b>
+                                    }
+                                    else if (schedule.IsRepeated == true && schedule.Record == false)
+                                    {
+                                        <b>
+                                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+
+                                        </b>
+                                    }
+                                    else if (schedule.IsRepeated == false && schedule.Record == true)
+                                    {
+                                        <b>
+                                            @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+
+
+                                        </b>
+                                    }
+                                    else
+                                    {
+                                        <b>
+
+                                            @schedule.EventName
+                                        </b>
+                                    }
+
+                                    @schedule.EventTime.ToString("h:mm tt")
+
+                                }
                             }
                             else
                             {
-                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                <br />
+                                <p>No events scheduled</p>
                             }
-                        }
-                    }
-                    else
-                    {
-                <p>No events scheduled</p>
-                    }
+                        </div>
+                    </div>
                 </div>
                 <!-- </div> -->
                 <div class="clearfix"></div>
@@ -753,5 +781,56 @@
         OpenCamera('CameraLiveStream-0');
     });
 </script>
+
+
+
+<script>
+    function currentTime() {
+        var systemdate = new Date(); /* creating object of Date class */
+        var ukTime = systemdate.toLocaleString("en-US", { timeZone: 'Europe/London' })
+        var date = new Date(ukTime);
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        var midday = "AM";
+        midday = (hour >= 12) ? "PM" : "AM"; /* assigning AM/PM */
+        hour = (hour == 0) ? 12 : ((hour > 12) ? (hour - 12) : hour); /* assigning hour in 12-hour format */
+        hour = updateTime(hour);
+        min = updateTime(min);
+        sec = updateTime(sec);
+        var time = document.getElementById("clock").innerText = hour + " : " + min + " : " + sec + " " + midday; /* adding time to the div */
+        var eventtime = document.getElementById("eventtime");
+
+        var t = setTimeout(currentTime, 1000); /* setting timer */
+        nextEvent();
+    }
+
+    function nextEvent() {
+        var eventtime = document.getElementById("eventtime");
+        var currenttime = document.getElementById("clock");
+        if (eventtime > currenttime) {
+            alert("true");
+            return true;
+
+        }
+        else {
+            alert("false");
+            return false;
+        }
+    }
+
+    function updateTime(k) { /* appending 0 before time elements if less than 10 */
+        if (k < 10) {
+            return "0" + k;
+        }
+        else {
+            return k;
+        }
+    }
+
+    currentTime();
+
+</script>
+
 
 
