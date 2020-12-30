@@ -688,7 +688,8 @@
                     <div class="col-12 pt-4 pb-1 pr-4">
                         <div class="row ">
                             <div class="col-12">
-                                <button type="button" class="btn btn-info float-right bg-blue " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
+                              
+                                <button id="btnRecordingSearch" type="button" class="btn btn-info float-right bg-blue " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
                             </div>
 
                             <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
@@ -778,47 +779,6 @@
 <script src="~/js/jwplayer.js"></script>
 <script type="text/javascript">
 
-    $("#btnSearchRecording").click(
-        function () {
-            LoadRecordingList();
-        });
-    function LoadRecordingList() {
-        var EventName = document.getElementById('TxtSearchEventName').value;
-        var FromDate = document.getElementById('TxtSearchFromDate').value;
-        var ToDate = document.getElementById('TxtSearchToDate').value;
-
-        $.ajax({
-            url: "/Website/SearchRecording",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate },
-            dataType: "json",
-            success: function (result) {
-
-                var html = '';
-
-                $.each(result, function (key, item) {
-
-                    html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
-                    html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
-                    var now = new Date(item.date);
-                    var Datestring = moment(now).format('DD MMM YYYY');
-
-
-
-                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring+'</p></div>';
-                    var dataurl='@Url.Action("Player", "Website")';
-                    html += '<a href="../Website/Player/' + item.recordingId+'" target="_blank" class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
-                    html += ' </div>';
-
-                });
-                $('.RecList').html(html);
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
     function OpenCamera(camId) {
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
@@ -890,13 +850,7 @@
         }
 
         OpenCamera('CameraLiveStream-0');
-        var DateSet = new Date();
-        var FromDateSet = new Date();
-        FromDateSet.setDate(FromDateSet.getDate() - 1);
-        var FromDatestring = moment(FromDateSet).format('DD-MMM-YYYY');
-        var ToDatestring = moment(DateSet).format('DD-MMM-YYYY');
-        $("#TxtSearchFromDate").val(FromDatestring);
-        $("#TxtSearchToDate").val(ToDatestring);
+       
         LoadRecordingList();
     });
 
@@ -933,7 +887,56 @@
             return false;
         }
     }
+      $("#btnRecordingSearch").click(
+        function () {
+            if ($("#collapseExample").is(":visible")) {
+                $("#collapseExample").hide();
+            }
+            else {
+                $("#collapseExample").show();
+            }
+        });
+    $("#btnSearchRecording").click(
+        function () {
+            LoadRecordingList();
+        });
+    function LoadRecordingList() {
+        var EventName = document.getElementById('TxtSearchEventName').value;
+        var FromDate = document.getElementById('TxtSearchFromDate').value;
+        var ToDate = document.getElementById('TxtSearchToDate').value;
 
+        $.ajax({
+            url: "/Website/SearchRecording",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate },
+            dataType: "json",
+            success: function (result) {
+
+                var html = '';
+
+                $.each(result, function (key, item) {
+
+                    html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
+                    html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
+                    var now = new Date(item.date);
+                    var Datestring = moment(now).format('DD MMM YYYY');
+
+
+
+                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring+'</p></div>';
+                    
+                    html += '<a href="../Website/Player/' + item.recordingId+'" target="_blank" class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
+                    html += ' </div>';
+
+                });
+                $('.RecList').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
     function updateTime(k) { /* appending 0 before time elements if less than 10 */
         if (k < 10) {
             return "0" + k;
@@ -942,7 +945,17 @@
             return k;
         }
     }
+    window.onload = function () {
+        var DateSet = new Date();
+        var FromDateSet = new Date();
+        FromDateSet.setDate(FromDateSet.getDate() - 1);
+        var FromDatestring = moment(FromDateSet).format('DD-MMM-YYYY');
+        var ToDatestring = moment(DateSet).format('DD-MMM-YYYY');
+        document.getElementById("TxtSearchFromDate").value = FromDatestring;
 
+        $("#TxtSearchToDate").val(ToDatestring);
+        LoadRecordingList();
+    }
     currentTime();
 
 </script>
