@@ -42,10 +42,12 @@
 <!-- plugins:css -->
 <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
 <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
 <!-- endinject -->
 <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
 <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
+
 <!-- inject:css -->
 @*<link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">*@
 <!-- endinject -->
@@ -157,19 +159,7 @@
                     </div>
                 </div>
                 <br />
-                @if (Model.churchDonation.ShowOnWebsite) { 
-                <div class="col-sm-10 pr-0 pl-0">
-                    <div class="form-group row">
-                        <div class="col-sm-12" >
-                            <div class="max-width-100 max-height-100 ">
-                                <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100 " alt="Alternate Text" />
-                                <a href="@Model.churchDonation.WebSiteUrl"  class="btn btn-info btn-lg w-100">Donate Now</a>
-                            </div>
-                         
-                        </div>
-                    </div> 
-                </div>
-                }
+
                 <!-- </div> -->
                 <div class="clearfix"></div>
             </div>
@@ -662,6 +652,21 @@
                     </div>
                 }
 
+                @if (Model.churchDonation.ShowOnWebsite)
+                {
+                    <div class="col-sm-12  news pr-0 pl-0 mt-2" style="position: sticky; top:1px;">
+                        <div class="form-group row news">
+                            <div class="col-sm-12">
+                                <div class="max-width-100 max-height-100 ">
+                                    <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100 main-img-donate" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
+                                    <a href="@Model.churchDonation.WebSiteUrl" class="btn btn-info btn-lg w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
             </div>
             <div class="col-1 d-xl-block d-none"></div>
         </div>
@@ -679,23 +684,84 @@
         <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
             <div class="col-1 d-xl-block d-none"></div>
             <div class="col-xl-10">
-                <div class=" font-32 pt-4 pb-4 bg-white text-pink">
-
-                </div>
-                <div class="border bg-white pb-4 news pt-4 row m-0">
-                    @foreach (Recording recording in Model.RecordingList)
-                    {
-                        <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
-                            <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
-                            <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                                <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
+                <div class="row ">
+                    <div class="col-12 pt-4 pb-1 pr-4">
+                        <div class="row ">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-info float-right bg-blue " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
                             </div>
-                            <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="_blank" class="ply-vid">
-                                <i class="fal fa-play-circle font-36"></i>
-                            </a>
+
+                            <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
+                                <div class="col-12">
+                                    <div class="card card-body border bg-white  news row m-0">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="news-wrap col-lg-4 col-md-6 col-sm-12 ">
+
+                                                        <label> Event Name</label>
+                                                        <input type="text" class="form-control" id="TxtSearchEventName" />
+                                                    </div>
+
+
+
+                                                    <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
+                                                        <label>  Search By Date From</label>
+                                                        <div id="datepicker-popup2" class="input-group date datepicker">
+                                                            <input type="text" id="TxtSearchFromDate" name="fromDate" class="form-control" placeholder="From Date" />
+                                                            <span class="input-group-addon input-group-append border-left">
+                                                                <span class="ti-calendar input-group-text"></span>
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
+                                                        <label>To Date</label>
+                                                        <div id="datepicker-popup3" class="input-group date datepicker">
+                                                            <input type="text" id="TxtSearchToDate" name="ToDate" class="form-control" placeholder="To Date" />
+                                                            <span class="input-group-addon input-group-append border-left">
+                                                                <span class="ti-calendar input-group-text"></span>
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="news-wrap col-lg-2 col-md-6 col-sm-12  center">
+                                                        <label></label>
+                                                        <button id="btnSearchRecording" class="btn btn-info bg-blue float-center form-control mt-1">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-12">
+                        <div class=" font-32  pb-4 bg-white text-pink">
 
                         </div>
-                    }
+                        <div class="border bg-white pb-4 news pt-4 row m-0 RecList">
+                            @*@foreach (Recording recording in Model.RecordingList)
+                                {
+                                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
+                                        <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
+                                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                                            <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
+                                        </div>
+                                        <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="_blank" class="ply-vid">
+                                            <i class="fal fa-play-circle font-36"></i>
+                                        </a>
+
+                                    </div>
+                                }*@
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-1 d-xl-block d-none"></div>
@@ -704,17 +770,55 @@
     </div>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+
 <script src="~/theme/js/owl-carousel.js"></script>
 <script src="~/js/jwplayer.js"></script>
 <script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#LiveStreamSrc').attr("src", '' + $('#livestreamUrl').val() + '');
-    //    var player = videojs('CameraLiveStream');
-    //    player.autoplay(false);
-    //});
 
+    $("#btnSearchRecording").click(
+        function () {
+            LoadRecordingList();
+        });
+    function LoadRecordingList() {
+        var EventName = document.getElementById('TxtSearchEventName').value;
+        var FromDate = document.getElementById('TxtSearchFromDate').value;
+        var ToDate = document.getElementById('TxtSearchToDate').value;
+
+        $.ajax({
+            url: "/Website/SearchRecording",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate },
+            dataType: "json",
+            success: function (result) {
+
+                var html = '';
+
+                $.each(result, function (key, item) {
+
+                    html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
+                    html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
+                    var now = new Date(item.date);
+                    var Datestring = moment(now).format('DD MMM YYYY');
+
+
+
+                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring+'</p></div>';
+                    var dataurl='@Url.Action("Player", "Website")';
+                    html += '<a href="../Website/Player/' + item.recordingId+'" target="_blank" class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
+                    html += ' </div>';
+
+                });
+                $('.RecList').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
     function OpenCamera(camId) {
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
@@ -738,13 +842,7 @@
     }
 
     function OpenVedio(vedId, vedioURL) {
-        //  var cameras = document.getElementById("CamerasContainer");
-        //  var images = document.getElementById("carouselExampleCaptions");
-        //  var vedios = document.getElementById("VediosContainer");
 
-        // vedios.style.display = "block";
-        //  cameras.style.display = "none";
-        //  images.style.display = "none";
 
 
         jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
@@ -763,8 +861,7 @@
         });
 
     }
-</script>
-<script type="text/javascript">
+
     $(document).ready(function ($) {
         $('#owl-carousel-video').owlCarousel({
             items: 1,
@@ -793,12 +890,16 @@
         }
 
         OpenCamera('CameraLiveStream-0');
+        var DateSet = new Date();
+        var FromDateSet = new Date();
+        FromDateSet.setDate(FromDateSet.getDate() - 1);
+        var FromDatestring = moment(FromDateSet).format('DD-MMM-YYYY');
+        var ToDatestring = moment(DateSet).format('DD-MMM-YYYY');
+        $("#TxtSearchFromDate").val(FromDatestring);
+        $("#TxtSearchToDate").val(ToDatestring);
+        LoadRecordingList();
     });
-</script>
 
-
-
-<script>
     function currentTime() {
         var systemdate = new Date(); /* creating object of Date class */
         var ukTime = systemdate.toLocaleString("en-US", { timeZone: 'Europe/London' })

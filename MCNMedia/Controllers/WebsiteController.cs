@@ -26,6 +26,7 @@ namespace MCNMedia_Dev.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
+        RecordingDataAccessLayer _recordDataAccess = new RecordingDataAccessLayer();
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
         SubscriptionDataAccessLayer subDataAccess = new SubscriptionDataAccessLayer();
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
@@ -96,6 +97,14 @@ namespace MCNMedia_Dev.Controllers
                 ShowMesage("Home : " + e.Message);
                 throw;
             }
+        }
+
+
+        public JsonResult RecordingList()
+        {
+            int churchId =(int) HttpContext.Session.GetInt32("chrId");
+          List<Recording>  RecordingList = _recordDataAccess.Recording_GetByChurch(churchId).ToList();
+            return Json(RecordingList);
         }
 
         public IActionResult Schedules()
@@ -509,6 +518,7 @@ namespace MCNMedia_Dev.Controllers
                 string visitorLocation = CheckVisitorLocation();
                 if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland" || SubscriberPaid > 0)
                 {
+                    HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
                     List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
                     if (announcementList.Count > 0)
@@ -633,6 +643,25 @@ namespace MCNMedia_Dev.Controllers
                 return true;
 
             return false;
+        }
+        [HttpGet]
+        public JsonResult SearchRecording(string EventName,string FromDate,string ToDate)
+        {
+            try
+            {
+                DateTime fromDate = Convert.ToDateTime(FromDate);
+                DateTime toDate = Convert.ToDateTime(ToDate);
+                int churchId = (int)HttpContext.Session.GetInt32("chrId");
+                List<Recording> listRecording = _recordDataAccess.RecordingSearch(fromDate, toDate, churchId, EventName).ToList();
+             
+                
+                return Json(listRecording);
+            }
+            catch (Exception e)
+            {
+                ShowMesage("List Recording Error" + e.Message);
+                throw;
+            }
         }
 
         public IActionResult SubscriberLogout()
