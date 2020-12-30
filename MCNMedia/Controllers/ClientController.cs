@@ -42,6 +42,11 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
+
                 int churchId = 0;
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
@@ -72,6 +77,10 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult UpdateChurchInfo(Church church, IFormFile ImageUrl, string hdnImageUrl)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
 
             string fileName = "";
             if (ImageUrl != null)
@@ -107,6 +116,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 int id = 0;
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
@@ -130,6 +143,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 GenericModel gm = new GenericModel();
                 gm.Announcement = AnnouncementDataAccessLayer.GetAnnouncementById(id);
                 return PartialView("_EditAnnouncement", gm);
@@ -148,6 +165,10 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult ListMobileCamera()
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
             GenericModel gm = new GenericModel();
             int CameraId = Convert.ToInt32(TempData["CameraId"]);
             if (CameraId > 0)
@@ -177,6 +198,10 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult AddMobileCamera(string CameraName)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
             GenericModel gm = new GenericModel();
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
             int userId = (int)HttpContext.Session.GetInt32("UserId");
@@ -202,6 +227,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 GenericModel gm = new GenericModel();
                 bool res = camDataAccess.DeleteCamera(id);
                 return Json(res);
@@ -287,6 +316,10 @@ namespace MCNMedia_Dev.Controllers
 
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
 
                 int id = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(id);
@@ -307,6 +340,10 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult CameraDetail()
 
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
             try
             {
                 int id = 0;
@@ -334,6 +371,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 LoadServerDDL();
                 int id = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(id);
@@ -359,6 +400,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 int id = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(id);
                 return View(gm);
@@ -380,6 +425,10 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Recording()
 
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
             DateTime FromDate = DateTime.Now.AddDays(-7);
             DateTime ToDate = DateTime.Now;
             GenericModel gm = new GenericModel();
@@ -402,6 +451,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 GenericModel gm = new GenericModel();
                 DateTime FromDate = Convert.ToDateTime(fromDate);
                 DateTime ToDate = Convert.ToDateTime(toDate);
@@ -426,6 +479,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 int id1 = (int)HttpContext.Session.GetInt32("ChurchId");
                 GenericModel gm = new GenericModel();
 
@@ -450,6 +507,10 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult EditRecordingClient(GenericModel gm)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
             gm.Recordings.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
             recordingDataAccess.UpdateRecording(gm.Recordings);
             return RedirectToAction("Recording");
@@ -528,6 +589,10 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult ClientPlayer(int id)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
             int recordingPass = 0;
             RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
             if (id == 0)
@@ -565,6 +630,7 @@ namespace MCNMedia_Dev.Controllers
         #region Media Detail
         public JsonResult ListPictureClient()
         {
+           
             GenericModel gm = new GenericModel();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
@@ -572,6 +638,7 @@ namespace MCNMedia_Dev.Controllers
         }
         public JsonResult _ListVideoClient()
         {
+           
             GenericModel gm = new GenericModel();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.Videos = mediaChurchDataAccess.GetByMediaType("Video", ChrId);
@@ -581,6 +648,7 @@ namespace MCNMedia_Dev.Controllers
 
         public JsonResult _ListSlideShowClient()
         {
+            
             GenericModel gm = new GenericModel();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.SlideShow = mediaChurchDataAccess.GetByMediaType("SlideShow", ChrId);
@@ -592,8 +660,11 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult MediaDetail()
         {
-
-            LoadChurchDDL();
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("UserLogin", "UserLogin");
+            }
+                LoadChurchDDL();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
 
@@ -643,6 +714,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 Recording recording = recordingDataAccess.Recording_GetById(id);
                 if (recording == null)
                 {

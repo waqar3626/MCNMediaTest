@@ -26,6 +26,11 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
+
                 int ChurchId = 0;
                 GenericModel gm1 = new GenericModel();
              
