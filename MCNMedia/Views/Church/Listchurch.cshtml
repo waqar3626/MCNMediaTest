@@ -146,7 +146,7 @@
                                                 <a href="@Url.Action("Church", "Admin",new { ch = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
                                             </td>
                                             <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                                                @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" }) , @Html.DisplayFor(modelItem => item.Town, new { @class = "text-wrap" })
                                             </td>
                                             <td class="text-wrap">
                                                 @Html.DisplayFor(modelItem => item.CountyName)

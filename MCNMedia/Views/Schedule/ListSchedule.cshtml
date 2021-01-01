@@ -127,7 +127,7 @@
                                                 <a onclick="DeleteSchedule(@item.ScheduleId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>
                                             </td>
                                             <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.ChurchName)
+                                                @Html.DisplayFor(modelItem => item.ChurchName),  @Html.DisplayFor(modelItem => item.Town)
                                             </td>
                                             <td class="text-wrap">
                                                 @Html.DisplayFor(modelItem => item.EventName)
