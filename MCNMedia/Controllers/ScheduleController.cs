@@ -246,7 +246,8 @@ namespace MCNMedia_Dev.Controllers
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in ChurchList)
                 {
-                    selectListItems.Add(new SelectListItem { Text = item.ChurchName.ToString(), Value = item.ChurchId.ToString() });
+                    string ChurchNameTown = item.ChurchName + " , " + item.Town;
+                    selectListItems.Add(new SelectListItem { Text = ChurchNameTown, Value = item.ChurchId.ToString() });
                 }
                 ViewBag.Church = selectListItems;
             }

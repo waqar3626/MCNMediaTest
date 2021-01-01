@@ -21,6 +21,8 @@ namespace MCNMedia_Dev.Models
         public DateTime CreatedAt { get; set; }
         public int CreatedBy { get; set; }
 
+        public string Town { get; set; }
+
         public int ChurchId { get; set; }
         public String UniqueChurchId { get; set; }
         public String Src { get; set; }
