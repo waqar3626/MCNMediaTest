@@ -40,7 +40,6 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
                     ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                    
                 }
                 else
                 {
@@ -50,10 +49,9 @@ namespace MCNMedia_Dev.Controllers
 
                 gm1.LDashBoardClients = dashboardData.GetDashboardClientInfo(ChurchId);
                 gm1.Dashboards = dashboardData.GetDashboardClientInfoCount(ChurchId);
-                gm1.LCameras = camDataAccess.GetAllCameras(ChurchId,"AdminCamera").ToList();
+                gm1.LCameras = camDataAccess.GetAdminCameraByChurch(ChurchId).ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
-
 
                 HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
@@ -65,7 +63,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Dashboard Error" + e.Message);
                 throw;
             }
-
         }
 
         public JsonResult ReloadPage(int chrid)

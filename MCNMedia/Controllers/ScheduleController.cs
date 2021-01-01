@@ -258,12 +258,11 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-
         public JsonResult LoadCameraDDL(int ChurchId)
         {
             try
             {
-                List<Camera> countyList = camDataAccess.GetAllCameras(ChurchId, "").ToList();
+                List<Camera> countyList = camDataAccess.GetAllCamerasByChurch(ChurchId).ToList();
                 return Json(countyList);
             }
             catch (Exception e)

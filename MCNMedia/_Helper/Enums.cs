@@ -24,8 +24,9 @@ namespace MCNMedia_Dev._Helper
 
     public enum CameraType
     {
+        All,
         AdminCamera,
-        ClientCamera
+        ClientCamera,
     }
 
     public enum Operation

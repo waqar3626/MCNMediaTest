@@ -21,7 +21,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 GenericModel gm = new GenericModel();
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
+                gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
                 return View(gm);
             }
             catch (Exception e)
@@ -29,22 +29,17 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Index Camera Error" + e.Message);
                 throw;
             }
-
-
         }
 
         [HttpPost]
-        public IActionResult AddCamera( string CameraName, string CameraUrl, string HttpPort, string RtspPort,int ServerID)
-
+        public IActionResult AddCamera(string CameraName, string CameraUrl, string HttpPort, string RtspPort, int ServerID)
         {
             try
             {
                 Camera camera = new Camera();
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-
                     int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-
                     camera.ChurchId = churchId;
                     camera.CameraName = CameraName;
                     camera.CameraUrl = CameraUrl;
@@ -53,10 +48,11 @@ namespace MCNMedia_Dev.Controllers
                     camera.CameraUrl = CameraUrl;
                     camera.ServerId = ServerID;
                     camera.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                    if (HttpContext.Session.GetString("UserType")=="admin") {
+                    if (HttpContext.Session.GetString("UserType") == "admin")
+                    {
                         camera.CameraType = _Helper.CameraType.AdminCamera;
                     }
-                    else if (HttpContext.Session.GetString("UserType")== "client")
+                    else if (HttpContext.Session.GetString("UserType") == "client")
                     {
                         camera.CameraType = _Helper.CameraType.ClientCamera;
                     }
@@ -67,8 +63,8 @@ namespace MCNMedia_Dev.Controllers
                         wowzaHelper.RequestCamera(churchId, cameraId, camera.CameraUrl);
 
                         gm.ResultMessage = "Camera Added Sucessfully";
-                        gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
-                     
+                        gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
+
                         HttpContext.Session.SetString("TabName", "Camera");
                         var queryString = new { chId = churchId };
                         return Json(new { success = true, responseText = "The attached file is not supported." });
@@ -81,7 +77,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Add Camera Error" + e.Message);
                 throw;
             }
-
         }
 
         public IActionResult EditCamera(int id)
@@ -89,7 +84,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericModel gm = new GenericModel();
-                gm.Cameras = camDataAccess.GetCameraById(id,"");
+                gm.Cameras = camDataAccess.GetCameraById(id);
                 return PartialView("_EditCamera", gm);
             }
             catch (Exception e)
@@ -122,17 +117,17 @@ namespace MCNMedia_Dev.Controllers
                 Camera camera = new Camera();
                 if (HttpContext.Session.GetString("UserType") == "admin")
                 {
-                   
+
                     int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                    List<Camera> cameraInfo = camDataAccess.GetAllCameras(churchId, "AdminCamera").ToList();
-                    gm.LCameras = camDataAccess.GetAllCameras(churchId, "AdminCamera");
-                    return View("ChurchDetails",gm);
+                    //List<Camera> cameraInfo = camDataAccess.GetAllCameras(churchId, "AdminCamera").ToList();
+                    gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
+                    return View("ChurchDetails", gm);
                 }
                 else if (HttpContext.Session.GetString("UserType") == "client")
                 {
-                   
+
                     int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                    gm.LCameras = camDataAccess.GetAllCameras(churchId, "ClientCamera");
+                    gm.LCameras = camDataAccess.GetMobileCameraByChurch(churchId);
 
                     return View("Views/Client/CameraDetail", gm);
                 }
@@ -169,6 +164,24 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
+
+        public void SyncCameraWithWowza()
+        {
+            CameraStream cameraStream = new CameraStream();
+            List<Camera> cameraList = camDataAccess.GetAllAdminCameras();
+            foreach (Camera cam in cameraList)
+            {
+                WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+                int churchId =cam.ChurchId;
+                int cameraId = cam.CameraId;
+                cameraStream = wowzaHelper.RequestCameraStatus(churchId, cameraId);
+                if(cameraStream.isConnected) // Camera Status
+                {
+
+                }
+            }
+        }
+
         private void ShowMessage(string exceptionMessage)
         {
             log.Info("Exception: " + exceptionMessage);

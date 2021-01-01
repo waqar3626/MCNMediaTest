@@ -99,7 +99,7 @@ namespace MCNMedia_Dev.Controllers
 
                 int churchId = church.ChurchId;
                 HttpContext.Session.SetInt32("churchId", churchId);
-                profileModel.CameraList = camDataAccess.GetAllCameras(churchId, "");
+                profileModel.CameraList = camDataAccess.GetAllCamerasByChurch(churchId);
             profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
             profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
             return View(profileModel);

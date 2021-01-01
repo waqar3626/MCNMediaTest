@@ -35,8 +35,6 @@ namespace MCNMedia_Dev.Controllers
 
         #region church info
 
-
-
         [HttpGet]
         public IActionResult ChurchInfo()
         {
@@ -61,7 +59,7 @@ namespace MCNMedia_Dev.Controllers
                 HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
 
                 GenericModel gm = new GenericModel();
-                ChurchDonation churchDonation  = DonationDataAccessLayer.GetDonationByChurch(churchId);
+                ChurchDonation churchDonation = DonationDataAccessLayer.GetDonationByChurch(churchId);
                 gm.Churches = church;
                 gm.ChurchDonations = churchDonation;
 
@@ -69,7 +67,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Church Info Errors : " + e.Message);
+                ShowMessage("Church Info Errors : " + e.Message);
                 throw;
             }
         }
@@ -104,13 +102,12 @@ namespace MCNMedia_Dev.Controllers
             church.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
             chdataAccess.UpdateChurch(church);
             return RedirectToAction("ChurchInfo");
-
         }
+
         #endregion
 
-        
-       
         #region Announcement
+
         [HttpGet]
         public IActionResult Announcement()
         {
@@ -134,10 +131,11 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Announcement Errors :" + e.Message);
+                ShowMessage("Announcement Errors :" + e.Message);
                 throw;
             }
         }
+
         [HttpGet]
         public IActionResult EditAnnouncement(int id)
         {
@@ -154,13 +152,9 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Edit Announcement Error" + e.Message);
+                ShowMessage("Edit Announcement Error" + e.Message);
                 throw;
             }
-
-
-
-
         }
 
         public IActionResult ListMobileCamera()
@@ -174,24 +168,17 @@ namespace MCNMedia_Dev.Controllers
             if (CameraId > 0)
             {
                 ViewBag.NewCamera = 2;
-                Camera camera = camDataAccess.GetCameraById(CameraId, "");
+                Camera camera = camDataAccess.GetCameraById(CameraId);
                 gm.Cameras = camera;
             }
             else
             {
                 ViewBag.NewCamera = 1;
             }
-
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
-
-
-            gm.LCameras = camDataAccess.GetAllCameras(id, "ClientCamera");
-
+            gm.LCameras = camDataAccess.GetMobileCameraByChurch(id);
             gm.Churches = chdataAccess.GetChurchData(id);
-
             HttpContext.Session.SetString("ctabId", "/Client/ListMobileCamera");
-
-
             return View(gm);
         }
 
@@ -217,10 +204,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return RedirectToAction(nameof(ListMobileCamera));
                 }
-
             }
             return Json(2);
-
         }
 
         public IActionResult DeleteCamera(int id)
@@ -240,7 +225,6 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Delete Camera Error" + e.Message);
                 throw;
             }
-
         }
 
         #region "Facebook Section"
@@ -249,7 +233,7 @@ namespace MCNMedia_Dev.Controllers
         {
             int id = (int)HttpContext.Session.GetInt32("ChurchId");
             GenericModel gm = new GenericModel();
-            gm.LCameras = camDataAccess.GetAllCameras(id, "");
+            gm.LCameras = camDataAccess.GetAllCamerasByChurch(id);
             return Json(gm.LCameras);
         }
 
@@ -273,14 +257,13 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public JsonResult GetFbDetailsByUser()
         {
-
             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-            FBLoginDetails fBDetails  = camDataAccess.GetFbDetailsByUser(churchId);
-
+            FBLoginDetails fBDetails = camDataAccess.GetFbDetailsByUser(churchId);
             return Json(fBDetails);
-           
         }
+
         #endregion
+
         [HttpPost]
         public JsonResult UpdateAnnouncement(int churchAnnounceId, string editAnnounceTitle, string editAnnounceText)
         {
@@ -292,28 +275,21 @@ namespace MCNMedia_Dev.Controllers
                 announcement.AnnouncementText = editAnnounceText;
                 announcement.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
-
-
                 return Json(res);
             }
             catch (Exception e)
             {
-
-
-                ShowMesage("Update Announcement Error" + e.Message);
+                ShowMessage("Update Announcement Error" + e.Message);
                 throw;
             }
-
         }
+
         #endregion
-
-
 
         #region Newsletter
 
         public IActionResult ChurchNewsLetter()
         {
-
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -328,17 +304,15 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Church NewsLetter Errors : " + e.Message);
+                ShowMessage("Church NewsLetter Errors : " + e.Message);
                 throw;
             }
         }
 
         #endregion
 
-
         #region Camera
         public IActionResult CameraDetail()
-
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
             {
@@ -353,21 +327,19 @@ namespace MCNMedia_Dev.Controllers
 
                 }
                 LoadServerDDL();
-
                 gm.Churches = chdataAccess.GetChurchData(id);
-                gm.LCameras = camDataAccess.GetAllCameras(id, "ClientCamera").ToList();
+                gm.LCameras = camDataAccess.GetMobileCameraByChurch(id).ToList();
                 HttpContext.Session.SetString("ctabId", "/Client/CameraDetail");
                 return View(gm);
             }
             catch (Exception e)
             {
-                ShowMesage("Camera Detail Errors : " + e.Message);
+                ShowMessage("Camera Detail Errors : " + e.Message);
                 throw;
             }
         }
 
         public IActionResult Schedule()
-
         {
             try
             {
@@ -383,19 +355,15 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Schedule Detail Errors : " + e.Message);
+                ShowMessage("Schedule Detail Errors : " + e.Message);
                 throw;
             }
         }
 
-
-
-
         #endregion
 
-
-
         #region StreamToFaceBook
+
         public IActionResult StreamToFaceBook()
         {
             try
@@ -410,20 +378,17 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Stream To FaceBook : " + e.Message);
+                ShowMessage("Stream To FaceBook : " + e.Message);
                 throw;
             }
         }
+
         #endregion
-
-
 
         #region Recording
 
-
         [HttpGet]
         public IActionResult Recording()
-
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
             {
@@ -442,7 +407,6 @@ namespace MCNMedia_Dev.Controllers
             ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
             ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
             ViewBag.EventName = "";
-
             return View(gm);
         }
 
@@ -498,7 +462,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Edit Recording Client Errors : " + e.Message);
+                ShowMessage("Edit Recording Client Errors : " + e.Message);
                 throw;
             }
         }
@@ -514,15 +478,9 @@ namespace MCNMedia_Dev.Controllers
             gm.Recordings.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
             recordingDataAccess.UpdateRecording(gm.Recordings);
             return RedirectToAction("Recording");
-
         }
 
-
-
-
         #endregion
-
-
 
         public void LoadServerDDL()
         {
@@ -538,10 +496,9 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Load Server Dropdown Errors : " + e.Message);
+                ShowMessage("Load Server Dropdown Errors : " + e.Message);
                 throw;
             }
-
         }
 
         //[HttpPost]
@@ -618,27 +575,27 @@ namespace MCNMedia_Dev.Controllers
                     }
                     else
                     {
-
                         return RedirectToAction(nameof(RecordingLock));
                     }
                 }
             }
             return View(recording);
-
         }
 
         #region Media Detail
+
         public JsonResult ListPictureClient()
         {
-           
+
             GenericModel gm = new GenericModel();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
             return Json(gm.Pictures);
         }
+
         public JsonResult _ListVideoClient()
         {
-           
+
             GenericModel gm = new GenericModel();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.Videos = mediaChurchDataAccess.GetByMediaType("Video", ChrId);
@@ -648,7 +605,7 @@ namespace MCNMedia_Dev.Controllers
 
         public JsonResult _ListSlideShowClient()
         {
-            
+
             GenericModel gm = new GenericModel();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.SlideShow = mediaChurchDataAccess.GetByMediaType("SlideShow", ChrId);
@@ -656,15 +613,13 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-       
-
         public IActionResult MediaDetail()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
             {
                 return RedirectToAction("UserLogin", "UserLogin");
             }
-                LoadChurchDDL();
+            LoadChurchDDL();
             int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
             gm.Pictures = mediaChurchDataAccess.GetByMediaType("Picture", ChrId);
 
@@ -675,6 +630,7 @@ namespace MCNMedia_Dev.Controllers
             Redirect("MediaDetail");
             return View(gm);
         }
+
         #endregion
 
         public void LoadChurchDDL()
@@ -704,10 +660,6 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-        private void ShowMesage(String exceptionMessage)
-        {
-            log.Error("Exception : " + exceptionMessage);
-        }
 
         [HttpGet]
         public IActionResult EditClientRecording(int id)
@@ -733,7 +685,6 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
 
         private void ShowMessage(string exceptionMessage)
         {

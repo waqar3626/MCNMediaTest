@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using MySql.Data.MySqlClient;
 namespace MCNMedia_Dev
 {
@@ -48,7 +49,8 @@ namespace MCNMedia_Dev
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
             services.Configure<StripeSetting>(Configuration.GetSection("Stripe"));
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddXmlDataContractSerializerFormatters();
             //services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -66,9 +68,8 @@ namespace MCNMedia_Dev
               {
                   c.TimeZoneInfo = TimeZoneInfo.Local;
                   c.CronExpression = @"* * * * *";
-              });
-
-            services.AddCronJob<CronJobEveryFiveMinute>(c =>
+              })
+                .AddCronJob<CronJobEveryFiveMinute>(c =>
             {
                 c.TimeZoneInfo = TimeZoneInfo.Local;
                 c.CronExpression = @"*/5 * * * *";
@@ -81,7 +82,6 @@ namespace MCNMedia_Dev
         {
             if (env.IsDevelopment())
             {
-               
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -96,9 +96,10 @@ namespace MCNMedia_Dev
             //    // otherwise the X-Forwarded-For we are passing along from the browser will be ignored
             //    ForwardLimit = 2
             //});
-            var forwardingOptions = new ForwardedHeadersOptions() { 
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto 
-            }; 
+            var forwardingOptions = new ForwardedHeadersOptions()
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            };
             app.UseForwardedHeaders(forwardingOptions);
             app.UseStaticFiles();
             app.UseRequestLocalization();
@@ -106,7 +107,7 @@ namespace MCNMedia_Dev
             app.UseSession();
             app.UseStaticFiles();
             app.UseAuthorization();
-            
+
             // app.UseStaticFiles(new StaticFileOptions
             // {
             //     FileProvider = new PhysicalFileProvider(
@@ -190,11 +191,32 @@ namespace MCNMedia_Dev
                     name: "AdminSchedules",
                     pattern: "Admin/Schedule",
                     defaults: new { controller = "Schedule", Action = "ListSchedule" });
-
                 endpoints.MapControllerRoute(
                     name: "AdminRecordings",
                     pattern: "Admin/Recordings",
                     defaults: new { controller = "Recording", Action = "ListRecording" });
+                //Client
+                endpoints.MapControllerRoute(
+                    name: "ClientDashBoard",
+                    pattern: "Client/DashBoard",
+                    defaults: new { controller = "DashBoard", Action = "DashBoard" });
+                //Roku 
+                endpoints.MapControllerRoute(
+                    name: "1roku.rss",
+                    pattern: "1roku.rss",
+                    defaults: new { controller = "Roku", Action = "GetRoku" });
+                endpoints.MapControllerRoute(
+                    name: "1categories.xml",
+                    pattern: "1categories.xml",
+                    defaults: new { controller = "Roku", Action = "GetCategories" });
+                endpoints.MapControllerRoute(
+                    name: "1xml/county.xml",
+                    pattern: "1xml/{id?}",
+                    defaults: new { controller = "Roku", Action = "GetCamByCategory" });
+                endpoints.MapControllerRoute(
+                    name: "RokuCamera",
+                    pattern: "roku/{id?}",
+                    defaults: new { controller = "Roku", Action = "GetCamByCategory" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Website}/{action=Home}/{id?}",

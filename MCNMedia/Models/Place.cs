@@ -19,5 +19,8 @@ namespace MCNMedia_Dev.Models
 
         /// <summary>The PlaceName property represents the place name.</summary>
         public string PlaceName { get; set; }
+
+        /// <summary>The PlaceSlug property represents the place slug.</summary>
+        public string PlaceSlug { get; set; }
     }
 }

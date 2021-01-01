@@ -134,6 +134,50 @@ namespace MCNMedia_Dev.WowzaApi
             }
         }
 
+        /// <summary>
+        /// Get current status of camera i.e Online or Offline. Also checking the recording status i.e Recording is ON or OFF
+        /// </summary>
+        /// <param name="churchId">The id of <see cref="Church" />.</param>
+        /// <param name="cameraId">The id of <see cref="Camera"/></param>
+        /// <returns>Return A <see cref="Tuple{T1, T2}"/>
+        ///   T1: Indicates the status of camera i.e Online or Offline.
+        ///   T2: Indicates the status of recording i.e On or Off.
+        /// </returns>
+        public CameraStream RequestCameraStatus(int churchId, int cameraId)
+        {
+            log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+            string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+            string streamName = $"{uniqueIdentifier}_{cameraId}";
+            log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
+            HttpClient client = CreateHttpClientRequest($"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
+
+            // List data response.
+            HttpResponseMessage response = client.GetAsync("").Result;
+
+            CameraStream cameraStream = new CameraStream();
+            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
+            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
+            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
+            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
+            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = response.Content.ReadAsStringAsync().Result;
+                log.DebugFormat("Wowza - Raw Response Body: {0}", responseBody);
+                try
+                {
+                    cameraStream = JsonConvert.DeserializeObject<CameraStream>(responseBody);
+                }
+                catch (JsonReaderException ex)
+                {
+                    log.Info("Wowza - Response - Exception: {0}",ex);
+                }
+            }
+            log.Info("Wowza API - RequestCameraStatus - End");
+            return cameraStream;
+        }
+
         #endregion
 
         #region Helper Data Methods
@@ -143,7 +187,7 @@ namespace MCNMedia_Dev.WowzaApi
             string uniqueIdentifier;
             Camera cam = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
-            cam = cameraDataAccessLayer.GetCameraById(cameraId, camtype: "");
+            cam = cameraDataAccessLayer.GetCameraById(cameraId);
             if (cam.CameraType == _Helper.CameraType.AdminCamera)
             {
                 uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
@@ -168,7 +212,7 @@ namespace MCNMedia_Dev.WowzaApi
         {
             Camera cam = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
-            cam = cameraDataAccessLayer.GetCameraById(cameraId, camtype: "");
+            cam = cameraDataAccessLayer.GetCameraById(cameraId);
             if (cam.ServerIP is null)
                 cam.ServerIP = "54.217.38.80";
             return cam.ServerIP;

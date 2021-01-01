@@ -24,7 +24,7 @@ namespace MCNMedia_Dev.Repository
         }
 
         /// <summary>
-        /// Get the list of countries
+        /// Get the list of countries where MCN providing services
         /// </summary>
         /// <returns>The list of countries</returns>
         public IEnumerable<Place> GetCountries()
@@ -41,7 +41,13 @@ namespace MCNMedia_Dev.Repository
                 countryLst.Add(country);
             }
             return countryLst;
-        } public IEnumerable<Place> GetISOCountries()
+        }
+
+        /// <summary>
+        /// Get the list of all countries regardless of MCN services
+        /// </summary>
+        /// <returns>The list of countries</returns>
+        public IEnumerable<Place> GetISOCountries()
         {
             List<Place> countryLst = new List<Place>();
             _dc.ClearParameters();
@@ -74,11 +80,18 @@ namespace MCNMedia_Dev.Repository
                 Place county = new Place();
                 county.PlaceId = Convert.ToInt32(dataRow["CountyId"]);
                 county.PlaceName = dataRow["CountyName"].ToString();
+                county.PlaceSlug = dataRow["Slug"].ToString();
                 countyLst.Add(county);
             }
             return countyLst;
         }
-        public IEnumerable<Place> GetCountiesByCountryName(String country)
+
+        /// <summary>
+        /// Get the list of counties in a country 
+        /// </summary>
+        /// <param name="country">String: the country name</param>
+        /// <returns>The list of counties</returns>
+        public IEnumerable<Place> GetCountiesByCountryName(string country)
         {
             List<Place> countyLst = new List<Place>();
             _dc.ClearParameters();
@@ -94,21 +107,22 @@ namespace MCNMedia_Dev.Repository
             }
             return countyLst;
         }
-        public IEnumerable<Place> GetCountiesByCountryName()
-        {
-            List<Place> countyLst = new List<Place>();
-            _dc.ClearParameters();
-            DataTable dataTable = _dc.ReturnDataTable("spCounties_GetByCountryName");
 
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Place county = new Place();
-                county.PlaceId = Convert.ToInt32(dataRow["CountyId"]);
-                county.PlaceName = dataRow["CountyName"].ToString();
-                countyLst.Add(county);
-            }
-            return countyLst;
-        }
+        //public IEnumerable<Place> GetCountiesByCountryName()
+        //{
+        //    List<Place> countyLst = new List<Place>();
+        //    _dc.ClearParameters();
+        //    DataTable dataTable = _dc.ReturnDataTable("spCounties_GetByCountryName");
+
+        //    foreach (DataRow dataRow in dataTable.Rows)
+        //    {
+        //        Place county = new Place();
+        //        county.PlaceId = Convert.ToInt32(dataRow["CountyId"]);
+        //        county.PlaceName = dataRow["CountyName"].ToString();
+        //        countyLst.Add(county);
+        //    }
+        //    return countyLst;
+        //}
 
     }
 }

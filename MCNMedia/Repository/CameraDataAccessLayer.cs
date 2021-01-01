@@ -35,10 +35,22 @@ namespace MCNMedia_Dev.Repository
             return _dc.ReturnInt("spCamera_Add");
         }
 
-        public IEnumerable<Camera> GetAllCameras(int ChurchId, string camType)
+        public IEnumerable<Camera> GetAllCameras()
         {
             List<Camera> Balobj = new List<Camera>();
-            DataTable dataTable = GetCamera(churchId: ChurchId, cameraId: -1, camType: camType);
+            DataTable dataTable = GetCamera(churchId: -1, cameraId: -1, camType: _Helper.CameraType.All);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Camera camera = BindingCamera(dataRow);
+                Balobj.Add(camera);
+            }
+            return Balobj;
+        }
+        
+        public IEnumerable<Camera> GetAllCamerasByChurch(int churchId)
+        {
+            List<Camera> Balobj = new List<Camera>();
+            DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: _Helper.CameraType.All);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Camera camera = BindingCamera(dataRow);
@@ -47,10 +59,46 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        public Camera GetCameraById(int camId, string camtype)
+        public List<Camera> GetAllAdminCameras()
+        {
+            List<Camera> Balobj = new List<Camera>();
+            DataTable dataTable = GetCamera(churchId: -1, cameraId: -1, camType: _Helper.CameraType.AdminCamera);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Camera camera = BindingCamera(dataRow);
+                Balobj.Add(camera);
+            }
+            return Balobj;
+        }
+
+        public IEnumerable<Camera> GetAdminCameraByChurch(int churchId)
+        {
+            List<Camera> Balobj = new List<Camera>();
+            DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: _Helper.CameraType.AdminCamera);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Camera camera = BindingCamera(dataRow);
+                Balobj.Add(camera);
+            }
+            return Balobj;
+        }
+
+        public IEnumerable<Camera> GetMobileCameraByChurch(int churchId)
+        {
+            List<Camera> Balobj = new List<Camera>();
+            DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: _Helper.CameraType.ClientCamera);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Camera camera = BindingCamera(dataRow);
+                Balobj.Add(camera);
+            }
+            return Balobj;
+        }
+
+        public Camera GetCameraById(int camId)
         {
             Camera camera = new Camera();
-            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId, camType: camtype);
+            DataTable dataTable = GetCamera(churchId: -1, cameraId: camId, camType: _Helper.CameraType.All);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 camera = BindingCamera(dataRow);
@@ -61,7 +109,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Camera> GetActiveCameraByChurch(int churchId)
         {
             List<Camera> camList = new List<Camera>();
-            DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: "");
+            DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: _Helper.CameraType.All);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 if (Convert.ToBoolean(dataRow["IsCameraLive"]))
@@ -73,12 +121,30 @@ namespace MCNMedia_Dev.Repository
             return camList;
         }
 
-        private DataTable GetCamera(int churchId, int cameraId, string camType)
+        public  List<Camera> GetCameraByCounty( string countySlug)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CountySlug", countySlug);
+            DataTable dataTable = _dc.ReturnDataTable("spCamera_GetByCounty");
+           
+            List<Camera> camList = new List<Camera>();
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (Convert.ToBoolean(dataRow["IsCameraLive"]))
+                {
+                    Camera camera = BindingCamera(dataRow);
+                    camList.Add(camera);
+                }
+            }
+            return camList;
+        }
+
+        private DataTable GetCamera(int churchId, int cameraId, _Helper.CameraType camType)
         {
             _dc.ClearParameters();
             _dc.AddParameter("chrchId", churchId);
             _dc.AddParameter("camId", cameraId);
-            _dc.AddParameter("camtype", camType);
+            _dc.AddParameter("camtype", camType.ToString());
             DataTable dataTable = _dc.ReturnDataTable("spCamera_Get");
             return dataTable;
         }
@@ -150,7 +216,6 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-
         public int UpdatecameraStatus(int cameraId, bool cameraStatus, int UpdatedBy)
         {
             _dc.ClearParameters();
@@ -167,8 +232,6 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("cameraName", CameraName);
             _dc.AddParameter("churchId", ChurchId);
             _dc.AddParameter("userId", UserId);
-
-
             return _dc.ReturnInt("spClientMobileCamera_Add");
         }
 
