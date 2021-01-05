@@ -54,8 +54,10 @@ namespace MCNMedia_Dev.Controllers
                     sch.CameraId = 0;
                     sch.RecordDuration = 0;
                 }
-               
-                scheduleDataAccess.AddSchedule(sch);
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    scheduleDataAccess.AddSchedule(sch);
+                }
                 return RedirectToAction("ListSchedule");
             
             }
@@ -100,6 +102,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
 
                 if (schedule.IsRepeated == false)
                 {
@@ -190,10 +196,15 @@ namespace MCNMedia_Dev.Controllers
                 {
                     sch.Password = password;
                 }
-                sch.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-               
-                   
+
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    sch.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+
+
                     int res = scheduleDataAccess.UpdateSchedule(sch);
+                }
+                
 
                 return Json(new { success = true, responseText = "The attached file is not supported." });
 
@@ -218,6 +229,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 scheduleDataAccess.DeleteSchedule(id, UpdatedBy);
                 return RedirectToAction("ListSchedule");

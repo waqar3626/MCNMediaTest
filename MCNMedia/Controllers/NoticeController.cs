@@ -34,7 +34,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 Notice notice = new Notice();
                 notice.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 notice.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
@@ -59,6 +62,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 Notice notice = new Notice();
 
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
@@ -92,6 +99,11 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    //return RedirectToAction("UserLogin", "UserLogin");
+                    return Json(-1);
+                }
 
                 GenericModel gm = new GenericModel();
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
@@ -108,12 +120,17 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
 
                 Notice notice = new Notice();
                 notice.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 notice.ChurchNoticeId = Convert.ToInt32(ChurchNoticeId);
                 notice.NoticeTitle = NoticeTitle;
                 notice.NoticeName = NoticeName;
+
                 int res = noticeDataAccess.UpdateNotice(notice);
                 return Json(res);
             }

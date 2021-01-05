@@ -22,6 +22,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 Announcement announcement = new Announcement();
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
 
@@ -54,7 +58,7 @@ namespace MCNMedia_Dev.Controllers
 
                     return Json(res);
                 }
-                return RedirectToAction("Listchurch", "Church");
+                return RedirectToAction("UserLogin", "UserLogin");
             }
             catch (Exception e)
             {
@@ -90,6 +94,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = AnnouncementDataAccessLayer.DeleteAnnouncement(id,UpdateBy);
@@ -108,6 +116,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 Announcement announcement = new Announcement();
                 announcement.ChurchAnnouncementId = Convert.ToInt32(churchAnnounceId);
                 announcement.AnnouncementTitle = editAnnounceTitle;

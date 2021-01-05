@@ -55,6 +55,10 @@ namespace MCNMedia_Dev.Controllers
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                    {
+                        return RedirectToAction("UserLogin", "UserLogin");
+                    }
                     UserAssignChurches userAssignChurches = new UserAssignChurches();
 
                     foreach (SelectListItem item in Data)
@@ -92,6 +96,10 @@ namespace MCNMedia_Dev.Controllers
 
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 IEnumerable<UserAssignChurches> userAssignChurchesList = userAssignDataAcessLayer.GetUserAssignChurchesList();
                 return View(userAssignChurchesList);
             }
@@ -109,6 +117,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 ViewBag.Churches = userAssignDataAcessLayer.GetSingleUserAssignChurches(id);
                 UserAssignChurches uAChurches = new UserAssignChurches();
                 List<SelectListItem> items = new List<SelectListItem>();
@@ -135,6 +147,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 UserAssignChurches userAssignChurches = new UserAssignChurches();
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 userAssignDataAcessLayer.DeleteUserChurches(UserId,UpdatedBy);

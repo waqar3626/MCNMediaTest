@@ -166,6 +166,10 @@ namespace MCNMedia_Dev.Controllers
                     recordDataAccess.UpdateRecording(recording);
                     return RedirectToAction("Recording", "Client");
                 }
+                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 return Json(1);
             }
             catch (Exception e)
@@ -181,6 +185,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 recordDataAccess.DeleteRecording(id, UpdateBy);
                 return RedirectToAction("ListRecording");

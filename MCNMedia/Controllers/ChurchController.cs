@@ -19,7 +19,7 @@ namespace MCNMedia_Dev.Controllers
     public class ChurchController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
@@ -164,6 +164,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("Listchurch", "Church");
+                }
                 int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 churchDataAccess.DeleteChurch(id, UpdateBy);
                 return RedirectToAction("Listchurch");
@@ -254,6 +258,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("Listchurch", "Church");
+                }
                 string fileName = "";
                 if (imageURl2 != null)
                 {

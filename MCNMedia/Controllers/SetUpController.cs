@@ -24,6 +24,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
                     ChurchSetUp.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");

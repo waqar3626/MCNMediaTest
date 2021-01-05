@@ -48,6 +48,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 MediaChurch mediaChurch = new MediaChurch();
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
@@ -73,6 +77,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 List<MediaChurch> medInfo = mediaChurchDataAccess.GetByMediaType(medType, churchId).ToList();
                 return Json(medInfo);
@@ -106,6 +114,14 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
+                //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                //{
+                //    return Json(new { Url = "UserLogin" });
+                //}
                 MediaChurch mediaupdate = new MediaChurch();
 
 
@@ -116,8 +132,14 @@ namespace MCNMedia_Dev.Controllers
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditPictureTabName;
                 mediaupdate.MediaType = mediaType;
-                mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
+                
+                int res = 0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                    res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
+                }
+               
 
 
                 return Json(res);
@@ -134,6 +156,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
@@ -157,6 +183,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("Listchurch", "Church");
+                }
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
                     MediaChurch media = new MediaChurch();
@@ -184,6 +214,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 MediaChurch mdChurch = new MediaChurch();
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
 
@@ -220,6 +254,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 MediaChurch mediaupdate = new MediaChurch();
 
                  mediaupdate.MediaURL = MediaUrl;
@@ -245,6 +283,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
@@ -267,6 +309,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 MediaChurch mediaChurch = new MediaChurch();
                 mediaChurch.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 mediaChurch.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
@@ -327,6 +373,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
                 MediaChurch mediaupdate = new MediaChurch();
                
                    
@@ -351,6 +401,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("Listchurch", "Church");
+                }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);

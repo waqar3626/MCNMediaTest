@@ -19,6 +19,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 List<Schedule> ChurchSchedule = SchDataAccess.GetAllChurchSchedule(churchId).ToList();
                 return Json(ChurchSchedule);
@@ -122,6 +126,7 @@ namespace MCNMedia_Dev.Controllers
 
             try
             {
+                
 
 
                 Schedule sch = new Schedule();
@@ -160,16 +165,19 @@ namespace MCNMedia_Dev.Controllers
                     sch.Password = password;
                 }
                 sch.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
-                    sch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                  int res=  SchDataAccess.UpdateSchedule(sch);
-                    return Json(new { success = true, responseText = "The attached file is not supported." });
 
+                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                    {
+                        sch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                        int res = SchDataAccess.UpdateSchedule(sch);
+                        return Json(new { success = true, responseText = "The attached file is not supported." });
+
+                    }
                 }
 
-
-                return RedirectToAction("Listchurch", "Church");
+                return RedirectToAction("UserLogin", "UserLogin");
 
 
 
@@ -190,6 +198,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
 
                 schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 SchDataAccess.UpdateSchedule(schedule);
@@ -208,7 +220,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 GenericModel gm = new GenericModel();
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = SchDataAccess.DeleteSchedule(id, UpdatedBy);

@@ -89,7 +89,11 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult AddUser(User usr)
         {
             try {
-                if(ModelState.IsValid)
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
+                if (ModelState.IsValid)
                 {
                     usr.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     userDataAccess.AddUser(usr);
@@ -141,6 +145,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 if (ModelState.IsValid) {
                     user.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     userDataAccess.UpdateUser(user);
@@ -167,6 +175,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
 
                 userDataAccess.DeleteUser(id, UpdateBy);

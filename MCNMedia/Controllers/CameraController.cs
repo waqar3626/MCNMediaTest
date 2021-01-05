@@ -18,7 +18,7 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Index()
         {
             try
-            {
+            {               
                 GenericModel gm = new GenericModel();
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
@@ -36,6 +36,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
                 Camera camera = new Camera();
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
@@ -98,6 +102,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url = "UserLogin" });
+                }
                 GenericModel gm = new GenericModel();
                 bool res = camDataAccess.DeleteCamera(id);
                 return Json(res);
@@ -113,7 +121,7 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult GetAllCameras()
         {
             try
-            {
+            {    
                 Camera camera = new Camera();
                 if (HttpContext.Session.GetString("UserType") == "admin")
                 {
@@ -146,6 +154,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(new { Url="UserLogin"});
+                }
                 Camera CamUpdate = new Camera();
                 CamUpdate.CameraId = Convert.ToInt32(CameraId);
                 CamUpdate.CameraName = CameraName;
