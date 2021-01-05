@@ -27,7 +27,9 @@ namespace MCNMedia_Dev.Models
         public decimal OrderAmount { get; set; }
         public decimal PaidAmount { get; set; }
         public string ChurchName { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy} {0:hh:mm tt}")]
         public DateTime Orderdate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy} {0:hh:mm tt}")]
         public DateTime Expiredate { get; set; }
         public DateTime CreatedAt { get; set; }
         public int ChurchId { get; set; }

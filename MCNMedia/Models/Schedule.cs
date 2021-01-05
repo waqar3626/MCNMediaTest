@@ -39,6 +39,8 @@ namespace MCNMedia_Dev.Models
         public Boolean Record  {get; set;}
         public Boolean IsRepeated { get; set; }
         public int UpdatedBy { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}/{0:hh:mm tt}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int CreatedBy { get; set; }

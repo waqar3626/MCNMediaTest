@@ -18,6 +18,7 @@ namespace MCNMedia_Dev.Models
         [Required(ErrorMessage = "UpdateBy is Required")]
         public int UpdatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime CreatedAt { get; set; }
         public int CreatedBy { get; set; }
 
