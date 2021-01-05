@@ -95,6 +95,10 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
+                if (result === -1) {
+                    
+                    location.reload(); 
+                }
                 loadPicture();
                 $('#AddModal').modal('hide');
             },

@@ -94,6 +94,10 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+                    
+                    location.reload();
+                }
                 var html = '';
 
                 $.each(result, function (key, item) {
@@ -147,6 +151,10 @@
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 loadSlideShow();
                 if (result) { alert("Record Deleted");}
             },

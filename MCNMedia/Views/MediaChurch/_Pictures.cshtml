@@ -20,7 +20,7 @@
         <div class="float-right">
             <button type="submit" id="AddPicture" class="btn btn-outline-behance btn-sm " title="Add New" onclick="AddPicture()"> <i class="fa fa-plus "></i> Add New Picture</button>
         </div>
-            <div class="">
+        <div class="">
             @*@using (Html.BeginForm("Edit", "Camera", FormMethod.Post))
                 {*@
 
@@ -35,7 +35,7 @@
                             File Name
                         </th>
                         <th>
-                           Created By
+                            Created By
                         </th>
                         <th>
                             Created At
@@ -45,7 +45,6 @@
                     </tr>
                 </thead>
                 <tbody class="PicList">
-
                 </tbody>
             </table>
 
@@ -58,7 +57,7 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable mt-4"  role="document" style="max-width:40%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Picture</h5>
@@ -81,7 +80,7 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="EditPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable mt-4"  role="document" style="max-width:40%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Edit Picture</h5>
@@ -114,26 +113,34 @@
             data: { medType: "Picture" },
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+                   
+                    location.reload();
+                }
+                
+
+                
                 var html = '';
 
-                $.each(result, function (key, item) {
-                    html += '<tr>';
-                    html += '<td>' + item.tabName + '</td>';
-                    html += '<td>' + item.mediaName + '</td>';
-                    html += '<td>' + item.createdBy + '</td>';
-                    html += '<td>' + item.createdAt + '</td>';
-                    //html += '<td>' + item.rtspPort + '</td>';
-                    html += ' <td>';
-                    html += '<a onclick="EditPicture(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
-                    html += '<a onclick="DeletePicture(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
-                    html += ' </td>';
-                    html += '</tr>';
-                });
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.tabName + '</td>';
+                        html += '<td>' + item.mediaName + '</td>';
+                        html += '<td>' + item.createdBy + '</td>';
+                        html += '<td>' + item.createdAt + '</td>';
+                        //html += '<td>' + item.rtspPort + '</td>';
+                        html += ' <td>';
+                        html += '<a onclick="EditPicture(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
+                        html += '<a onclick="DeletePicture(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
+                        html += ' </td>';
+                        html += '</tr>';
+                    
+                        });
                 $('.PicList').html(html);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
-            }
+            } 
         });
     }
 
@@ -167,10 +174,14 @@
         $.ajax({
             url: "/MediaChurch/DeleteMedia/" + churchMediaId,
             type: "POST",
-          
+
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 loadPicture();
                 if (result) { alert("Record Deleted");}
             },

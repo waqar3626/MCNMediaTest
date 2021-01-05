@@ -115,8 +115,13 @@
 
 
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 
                 $('#AddAnnouncementPopUp').modal('hide');
+               
                 loadAnnouncement();
                
               

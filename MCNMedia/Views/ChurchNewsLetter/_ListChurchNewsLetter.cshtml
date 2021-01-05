@@ -2,6 +2,13 @@
 @{
 
 }
+
+@*@using Microsoft.AspNetCore.Http
+
+@if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
+{
+    Context.Response.Redirect("../UserLogin");
+}*@
 <script src="~/theme/js/modal-demo.js"></script>
 <script type="text/javascript">
 
@@ -90,25 +97,29 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        
+
         loadNewsLetter();
     });
 
     function loadNewsLetter() {
-        
+
         $.ajax({
             type: "Get",
             url: "/ChurchNewsLetter/NewsletterList",
-           
+
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 var html = '';
 
                 $.each(result, function (key, item) {
                     html += '<tr >';
                     html += '<td class="text-wrap" style="max-width:20ch">' + item.newsLetterTitle + '</td>';
-                 
+
                     html += '<td class="text-wrap" style="max-width:20ch">' + item.newsLetterName  + '</td>';
                     html += '<td class="text-wrap" style="max-width:20ch">' + item.createdAt + '</td>';
 
@@ -121,7 +132,7 @@
                 $('.newsLetterList').html(html);
             },
             error: function (errormessage) {
-               
+
                 alert(errormessage.responseText);
             }
         });
@@ -149,7 +160,7 @@
 
 
     function DeleteNewsLetter(churchNewsLetterId) {
-        
+
     var ans = confirm("Are you sure you want to delete this NewsLetter?");
     if (ans) {
         $.ajax({
@@ -159,8 +170,15 @@
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                loadNewsLetter();
-                if (result) { alert("Record Deleted");}
+                if (result === -1) {
+                    location.reload();
+                }
+                else {
+
+
+                    loadNewsLetter();
+                    if (result) { alert("Record Deleted"); }
+                }
             },
             error: function (errormessage) {
                // alert(errormessage.responseText);

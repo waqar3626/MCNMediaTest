@@ -93,6 +93,10 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 var html = '';
                 if (result.length > 0) {
                     $('#BtnAddAnnouncement').hide();
@@ -150,6 +154,10 @@
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 loadAnnouncement();
                 if (result) { alert("Record Deleted");}
             },

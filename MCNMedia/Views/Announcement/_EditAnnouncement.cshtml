@@ -67,6 +67,10 @@
 
 
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 loadAnnouncement();
                 $('#EditAnnouncementModal').modal('hide');
             },
