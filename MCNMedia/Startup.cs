@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MCNMedia_Dev.CronJobs;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,10 +55,17 @@ namespace MCNMedia_Dev
             //services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time 
+                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time
                 //options.Cookie.HttpOnly = true;
                 //options.Cookie.IsEssential = true;
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options => {
+        options.LoginPath = "~/UserLogin";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
+
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.DefaultRequestCulture = new RequestCulture("en-PK");
