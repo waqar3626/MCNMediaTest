@@ -73,14 +73,30 @@
                                         </div>
                                         <div class="col-sm-4   text-wrap border-bottom border-right text-center">
                                             <label> HTTP     |</label>
-                                            <i style="color: #1f4a79"></i>&nbsp;@items.HttpPort
+
+                                            <i style="color: #1f4a79"></i>&nbsp; @items.HttpPort
+
                                         </div>
                                         <div class="col-sm-4   text-wrap border-bottom text-center">
                                             <label> Server     |</label>
                                             <i style="color: #1f4a79"></i>&nbsp;@items.ServerId
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="row pt-3">
+                                        <div class="col-sm-12   text-wrap border-bottom  text-center">
+                                            <label> Status     |</label>
+                                            @if (items.IsCameraStreaming)
+                                            {
+                                                <i style="color: #1f4a79"></i><span class="text-success"><strong>Active</strong></span>
+                                            }
+                                            else
+                                            {
+                                                <i style="color: #1f4a79"></i><span class="text-warning"><strong>Waiting</strong></span>
+                                            }
+                                        </div>
+
+                                        </div>
+                                    </div>
                             </div>
                             @*<div class="col-sm-12 mt-4 display-4 text-wrap " style="margin-left:200Px">
 

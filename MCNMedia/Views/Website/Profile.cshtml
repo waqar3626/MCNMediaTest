@@ -173,21 +173,48 @@
                         {
                             if (camCounter == 0)
                             {
-                                <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                    <i class="fal fa-play-circle text-white vide-play-in"></i>
-                                    <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin vjs-16-9' style="width:100%;">
-                                        <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
-                                    </video>
-                                </div>
+                                if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
+                                {
+                        <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                            
+                            <img src="~/Images/offline-notice.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />
+
+                        </div>
+
+
+                                }
+                                else
+                                {
+                                    <div class="tab-pane fade show active " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                        <i class="fal fa-play-circle text-white vide-play-in"></i>
+                                        <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin vjs-16-9' style="width:100%;">
+                                            <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                                        </video>
+                                    </div>
+
+                                }
                             }
                             else
                             {
-                                <div class="tab-pane fade" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                    <i class="fal fa-play-circle text-white vide-play-in"></i>
-                                    <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin  vjs-16-9' style="width:100%;">
-                                        <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
-                                    </video>
-                                </div>
+                                if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
+                                {
+                                    <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                        <img src="~/Images/offline-notice.jpg" id="LiveStreamSrc-@camCounter"  style="width:100%"  />
+                                    </div>
+
+
+                                }
+                                else
+                                {
+                                    <div class="tab-pane fade" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                        <i class="fal fa-play-circle text-white vide-play-in"></i>
+                                        <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin  vjs-16-9' style="width:100%;">
+                                            <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                                        </video>
+                                    </div>
+
+                                }
+
                             }
                             camCounter = camCounter + 1;
                         }
@@ -688,7 +715,7 @@
                     <div class="col-12 pt-4 pb-1 pr-4">
                         <div class="row ">
                             <div class="col-12">
-                              
+
                                 <button id="btnRecordingSearch" type="button" class="btn btn-info float-right bg-blue " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
                             </div>
 
@@ -850,7 +877,7 @@
         }
 
         OpenCamera('CameraLiveStream-0');
-       
+
         LoadRecordingList();
     });
 
@@ -887,7 +914,7 @@
             return false;
         }
     }
-      $("#btnRecordingSearch").click(
+    $("#btnRecordingSearch").click(
         function () {
             if ($("#collapseExample").is(":visible")) {
                 $("#collapseExample").hide();
@@ -924,9 +951,9 @@
 
 
 
-                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring+'</p></div>';
-                    
-                    html += '<a href="../Website/Player/' + item.recordingId+'" target="_blank" class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
+                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring + '</p></div>';
+
+                    html += '<a href="../Website/Player/' + item.recordingId + '" target="_blank" class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
                     html += ' </div>';
 
                 });
