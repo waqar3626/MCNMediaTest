@@ -33,6 +33,7 @@ namespace MCNMedia_Dev.Controllers
         TestinomialDataAccessLayer testinomialDataAccess = new TestinomialDataAccessLayer();
         ChurchDonationDataAccessLayer churchDonationDataAccessLayes = new ChurchDonationDataAccessLayer();
         GenericModel gm = new GenericModel();
+        Website website1 = new Website();
         public WebsiteController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -520,6 +521,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
+                    String ip = website1.IP;
+                    _websiteDataAccessLayer.Analytics(churchId,ip, visitorLocation);
                     List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
                     if (announcementList.Count > 0)
                         profileModel.Announcement = announcementList.First<Announcement>();
@@ -622,6 +625,8 @@ namespace MCNMedia_Dev.Controllers
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);
                 var countryname = countryInfo.Country.ToString();
+                //int churId = HttpContext.Session.Get("");
+                //_websiteDataAccessLayer.Analytics(ipAddress);
                 return countryname;
             }
         }
@@ -636,10 +641,12 @@ namespace MCNMedia_Dev.Controllers
 
             // check if localhost
             if (remoteAddress == "127.0.0.1" || remoteAddress == "::1")
-                return true;
+                website1.IP = remoteAddress;
+            return true;
 
             // compare with local address
             if (remoteAddress == connection.LocalIpAddress.ToString())
+                website1.IP = remoteAddress;
                 return true;
 
             return false;

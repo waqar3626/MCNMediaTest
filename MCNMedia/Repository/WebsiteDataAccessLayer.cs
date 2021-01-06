@@ -25,5 +25,14 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spContactUs_Add");
         }
 
+        public void Analytics(int ChurchId,String IP,String visitorLocation)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("Church_Id", ChurchId);
+            _dc.AddParameter("ip", IP);
+            _dc.AddParameter("CountryName", visitorLocation);
+            _dc.Execute("spAnalytics_Add");
+        }
+
       }
 }

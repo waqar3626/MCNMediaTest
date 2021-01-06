@@ -11,5 +11,7 @@ namespace MCNMedia_Dev.Models
         public string ContactEmail { get; set; }
         public string ContactSubject { get; set; }
         public string Message { get; set; }
+        public int ChurchId { get; set; }
+        public String IP { get; set; }
     }
 }
