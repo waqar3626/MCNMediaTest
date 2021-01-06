@@ -139,28 +139,19 @@ namespace MCNMedia_Dev.WowzaApi
         /// </summary>
         /// <param name="churchId">The id of <see cref="Church" />.</param>
         /// <param name="cameraId">The id of <see cref="Camera"/></param>
-        /// <returns>Return A <see cref="Tuple{T1, T2}"/>
-        ///   T1: Indicates the status of camera i.e Online or Offline.
-        ///   T2: Indicates the status of recording i.e On or Off.
-        /// </returns>
+        /// <returns>Return A <see cref="CameraStream"/></returns>
         public CameraStream RequestCameraStatus(int churchId, int cameraId)
         {
+            CameraStream cameraStream = new CameraStream();
+
             log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
             string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
             string streamName = $"{uniqueIdentifier}_{cameraId}";
             log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
             HttpClient client = CreateHttpClientRequest($"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
-
             // List data response.
             HttpResponseMessage response = client.GetAsync("").Result;
-
-            CameraStream cameraStream = new CameraStream();
-            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
-            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
-            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
-            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
-            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
-
+            AddLogsToLog4Net(response);
             if (response.IsSuccessStatusCode)
             {
                 var responseBody = response.Content.ReadAsStringAsync().Result;
@@ -308,11 +299,7 @@ namespace MCNMedia_Dev.WowzaApi
 
             // List data response.
             HttpResponseMessage response = client.PostAsync(requestUri, encodeData).Result;
-            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
-            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
-            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
-            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
-            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+            AddLogsToLog4Net(response);
             log.Info("Wowza API - Post Event - End");
             return response.IsSuccessStatusCode;
         }
@@ -326,11 +313,7 @@ namespace MCNMedia_Dev.WowzaApi
             log.DebugFormat("Wowza Sending Data: {0}", data);
             // List data response.
             HttpResponseMessage response = client.GetAsync(data).Result;
-            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
-            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
-            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
-            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
-            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+            AddLogsToLog4Net(response);
             log.Info("Wowza API - Get Event - End");
             return response.IsSuccessStatusCode;
         }
@@ -347,11 +330,7 @@ namespace MCNMedia_Dev.WowzaApi
 
             // List data response.
             HttpResponseMessage response = client.PutAsync(requestUri, encodedData).Result;
-            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
-            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
-            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
-            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
-            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+            AddLogsToLog4Net(response);
             log.Info("Wowza API - Update Event - End");
             return response.IsSuccessStatusCode;
         }
@@ -373,6 +352,14 @@ namespace MCNMedia_Dev.WowzaApi
 
         #endregion
 
+        private static void AddLogsToLog4Net(HttpResponseMessage response)
+        {
+            log.DebugFormat("Wowza - Raw Response: {0}", JsonConvert.SerializeObject(response));
+            log.DebugFormat("Wowza - Response - Status: {0}", response.StatusCode);
+            log.DebugFormat("Wowza - Response - Message: {0}", response.ReasonPhrase);
+            log.DebugFormat("Wowza - Response - Request Message: {0}", response.RequestMessage);
+            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response.IsSuccessStatusCode);
+        }
     }
 
     class StreamFile

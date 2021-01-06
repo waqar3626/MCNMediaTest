@@ -346,7 +346,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                IEnumerable<Server> serverList = camDataAccess.GetServer();
+                ServerDAL serverDAL = new ServerDAL();
+                List<Server> serverList = serverDAL.GetServer();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in serverList)
                 {

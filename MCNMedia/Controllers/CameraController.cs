@@ -165,7 +165,7 @@ namespace MCNMedia_Dev.Controllers
                 CamUpdate.HttpPort = HttpPort;
                 CamUpdate.RtspPort = RtspPort;
                 CamUpdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                int res = camDataAccess.Updatecamera(CamUpdate);
+                int res = camDataAccess.UpdateCamera(CamUpdate);
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 return Json(res);
             }
@@ -177,20 +177,30 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        public void SyncCameraWithWowza()
+        /// <summary>
+        /// Synchronizing camera status with wowza streaming engine of all installed cameras.
+        /// 1. Fetch all admin cameras
+        /// 2. Fetch status of camera stream from wowza
+        /// 3. Update camera status in database
+        /// </summary>
+        public void SyncAllCamerasWithWowza()
         {
             CameraStream cameraStream = new CameraStream();
             List<Camera> cameraList = camDataAccess.GetAllAdminCameras();
             foreach (Camera cam in cameraList)
             {
-                WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
-                int churchId =cam.ChurchId;
-                int cameraId = cam.CameraId;
-                cameraStream = wowzaHelper.RequestCameraStatus(churchId, cameraId);
-                if(cameraStream.isConnected) // Camera Status
-                {
+                SyncCameraWithWowza(cam);
+            }
+        }
 
-                }
+        private void SyncCameraWithWowza(Camera camera)
+        {
+            CameraStream cameraStream;
+            WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+            cameraStream = wowzaHelper.RequestCameraStatus(camera.ChurchId, camera.CameraId);
+            if (camera.IsCameraStreaming != cameraStream.isConnected)
+            {
+                camDataAccess.UpdateCameraStreamingStatus(camera.CameraId, cameraStream.isConnected);
             }
         }
 

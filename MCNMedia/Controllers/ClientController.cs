@@ -486,7 +486,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                IEnumerable<Server> serverList = camDataAccess.GetServer();
+                ServerDAL serverDAL = new ServerDAL();
+                List<Server> serverList = serverDAL.GetServer();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in serverList)
                 {
@@ -500,49 +501,6 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
-        //[HttpPost]
-        //public IActionResult EditScheduleClient(GenericModel gm)
-        //{
-        //    try
-        //    {
-
-        //        if (gm.Schedules.EventDay == null)
-        //        {
-        //            gm.Schedules.EventDay = gm.Schedules.EventDate.ToString("dddd");
-
-        //        }
-        //        gm.Schedules.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-        //        scheduleDataAccess.UpdateSchedule(gm.Schedules);
-        //        return RedirectToAction("Schedule");
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ShowMesage("Edit Schedule Client Errors : " + e.Message);
-        //        throw;
-        //    }
-        //}
-        //public void LoadChurchesDDL()
-        //{
-        //    try
-        //    {
-        //        ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
-        //        System.Data.DataTable churches = churchDataAccessLayer.GetChurchDDL();
-        //        List<SelectListItem> selectListItems = new List<SelectListItem>();
-        //        foreach (System.Data.DataRow item in churches.Rows)
-        //        {
-        //            selectListItems.Add(new SelectListItem { Text = item["ChurchName"].ToString(), Value = item["ChurchId"].ToString() });
-        //        }
-        //        ViewBag.State = selectListItems;
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ShowMesage("Load churches DropDown Errors : " + e.Message);
-        //        throw;
-        //    }
-        //}
 
         public IActionResult ClientPlayer(int id)
         {

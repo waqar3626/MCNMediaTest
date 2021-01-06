@@ -83,7 +83,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 int UserId= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-                camDataAccess.UpdatecameraStatus(cameraId,cameraStatus,UserId);
+                camDataAccess.UpdateCameraStatus(cameraId,cameraStatus,UserId);
                 return Json(new { success = true, responseText = "The attached file is not supported." });
             }
             catch (Exception)

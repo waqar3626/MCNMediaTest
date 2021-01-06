@@ -29,6 +29,8 @@ namespace MCNMedia_Dev.CronJobs
             ScheduleController schedule = new ScheduleController();
             schedule.StartRecording();
             schedule.StopRecording();
+            CameraController camera = new CameraController();
+            camera.SyncAllCamerasWithWowza();
             return Task.CompletedTask;
         }
 

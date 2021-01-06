@@ -14,11 +14,10 @@ namespace MCNMedia_Dev.Models
         public string HttpPort { get; set; }
         public string CameraSlug { get; set; }
         public _Helper.CameraType CameraType { get; set; }
-        public int ChurchId { get; set; }
-        public string ChurchName { get; set; }
-        public int ServerId { get; set; }
-        public string ServerName { get; set; }
-        public string ServerIP { get; set; }
+        public bool IsCameraLive { get; set; }
+        public bool IsCameraStreaming { get; internal set; }
+        public string StreamingProtocol { get; set; }
+        public string LiveStreamUrl { get; internal set; }
 
         public string App { get; set; }
         public string CreatedAt { get; set; }
@@ -26,21 +25,12 @@ namespace MCNMedia_Dev.Models
         public string UpdatedAt { get; set; }
         public int UpdatedBy { get; set; }
 
-        public bool IsCameraLive { get; set; }
-        public string StreamingProtocol { get; set; }
-        public string LiveStreamUrl { get; internal set; }
-
-        public string churchUniqueIdentifier { get; internal set; }
-    }
-
-
-    public class Server {
+        public int ChurchId { get; set; }
+        public string ChurchName { get; set; }
+        public string ChurchUniqueIdentifier { get; internal set; }
 
         public int ServerId { get; set; }
         public string ServerName { get; set; }
         public string ServerIP { get; set; }
-
-
-
     }
 } 

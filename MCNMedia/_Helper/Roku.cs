@@ -36,7 +36,7 @@ namespace MCNMedia_Dev._Helper
                 sb.Append("<link>" + cam.LiveStreamUrl + "</link>");
                 sb.Append("<description>With the Twitch channel, you can watch the most popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters.</description>");
                 sb.Append("<pubDate>Thu, 11 Jun 2015 16:51:07 GMT</pubDate>");
-                sb.Append("<guid isPermaLink=\"false\">" + cam.churchUniqueIdentifier + "</guid>");
+                sb.Append("<guid isPermaLink=\"false\">" + cam.ChurchUniqueIdentifier + "</guid>");
                 sb.Append("<media:content  bitrate=\"1328.0\"  fileSize=\"8731706\" framerate=\"23.976\" height=\"720\" type=\"video/mp4\" width=\"1280\" duration=\"74.74\" isDefault=\"true\" url=\"" + cam.LiveStreamUrl + "\">");
                 sb.Append("<media:description>With the Twitch channel, you can watch the most popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters.</media:description>");
                 sb.Append("<media:keywords>episode 21, roku recommends, twitch</media:keywords>");
