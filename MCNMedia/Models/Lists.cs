@@ -111,8 +111,10 @@ namespace MCNMedia_Dev.Models
             {
                 list.Add(new SelectListItem
                 {
-                    Text = dr["ChurchName"].ToString(),
-                    Value = dr["ChurchId"].ToString()
+
+                Text = dr["ChurchName"].ToString()+", "+ dr["Town"].ToString(),
+                 Value = dr["ChurchId"].ToString()
+
                 });
             }
             return list;
