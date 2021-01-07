@@ -76,6 +76,8 @@ namespace MCNMedia_Dev.Models
 
         public string Password { get; set; }
 
+        public int ChurchCount { get; set; }
+
         public string StaticIP { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime InstallationDate { get; set; }

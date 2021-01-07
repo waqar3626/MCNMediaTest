@@ -24,6 +24,7 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<NewsLetter> ListChurchNewsLetter { get; set; }
         public Recording Recordings { get; set; }
 
+        public AnalyticsModel Analytics { get; set; }
         public Announcement Announcement { get; set; }
         public ChurchDonation ChurchDonations { get; set; }
         public IEnumerable<Announcement> LAnnouncement { get; set; }
@@ -35,6 +36,7 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<MediaChurch> ListMedia { get; set; }
         public IEnumerable<Camera> LCameras { get; set; }
 
+        public IEnumerable<AnalyticsModel> AnalyticsList { get; set; }
         public IEnumerable<User> LUsers { get; set; }
 
         public IEnumerable<Schedule> LSchedules { get; set; }
@@ -53,6 +55,8 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<Church> ChurchList { get; set; }
         public IEnumerable<Place> CountryList { get; set; }
         public IEnumerable<Place> CountyList { get; set; }
+
+        public IEnumerable<RssFeedModel> RssFeedsList { get; set; }
 
 
 
