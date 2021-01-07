@@ -184,6 +184,47 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6 grid-margin">
+        <div class="card">
+            <div class="card-header card-header-custom">
+                COUNTRIES ANALYTICS DETAIL
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="pl-0 border-bottom">COUNTRY</th>
+                                <th class="border-bottom">TOTAL VIEWS</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var dassh in Model.AnalyticsList)
+                            {
+                <tr>
+                    <td class=" pl-0">
+                        @Html.DisplayFor(modelItem => dassh.Country)
+                    </td>
+                    <td>
+                        <p class="mb-0">
+                            <span class="">
+                                @Html.DisplayFor(modelItem => dassh.CountryCount)
+                            </span>
+                        </p>
+                    </td>
+
+                </tr>
+}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="float-right">
         <button type="submit" id="ValChurchSubmit" value="Update" class="btn btn-success btn-sm  text-white" title="Update"><i class="mdi mdi-update text-white"></i> Update</button>

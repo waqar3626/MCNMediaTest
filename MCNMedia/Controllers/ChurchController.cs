@@ -193,7 +193,8 @@ namespace MCNMedia_Dev.Controllers
                     HttpContext.Session.SetInt32("ChurchId", churchId);
 
                     Church church = churchDataAccess.GetChurchData(churchId);
-
+                
+                    gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, DateTime.Now.AddDays(-7), DateTime.Now).ToList();
                     gm.Churches = church;
                     if (church == null)
                     {
@@ -362,6 +363,14 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
+
+        //public IActionResult ChurchAnalytics()
+        //{
+        //    GenericModel gm = new GenericModel();
+        //    int ChrId = (int)HttpContext.Session.GetInt32("ChurchId");
+        //    gm.AnalyticsList = churchDataAccess.GetbyChurch(ChrId, DateTime.Now.AddDays(-7), DateTime.Now).ToList();
+        //    return View(gm);
+        //}
 
         private void ShowMessage(string exceptionMessage)
         {

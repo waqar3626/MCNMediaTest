@@ -14,6 +14,7 @@ namespace MCNMedia_Dev.Controllers
 
         DashboardDataAccessLayer dashboardData = new DashboardDataAccessLayer();
         DashBoardClientDataAccessLayer clientdashboardData = new DashBoardClientDataAccessLayer();
+        ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
         public IActionResult Dashboard(int chrid)
         {
             try
@@ -23,6 +24,9 @@ namespace MCNMedia_Dev.Controllers
                 gm.Dashboards = dashboardData.GetDashboardInfo();
                 gm.ListDashboards2 = dashboardData.GetDashboardCountry_Churches();
                 gm.LDashBoardClients = clientdashboardData.GetDashboardClientInfo(-1);
+               gm.AnalyticsList = churchDataAccess.GetAllChurchForAnalytics(DateTime.Now.AddDays(-7),DateTime.Now);
+             
+                
                 return View(gm);
             }
             catch (Exception e)
