@@ -60,6 +60,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="NewsLetter-tab" data-toggle="tab" href="#NewsLetter-1" role="tab" aria-controls="NewsLetter-1" aria-selected="false"><i class=" fa fa-envelope-open  text-info"></i> NewsLetter</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="ChurchAnalytics-tab" data-toggle="tab" href="#ChurchAnalytics-1" role="tab" aria-controls="ChurchAnalytics-1" aria-selected="false"><i class=" fa fa-envelope-open  text-info"></i> Church Analytics</a>
+                    </li>
 
                 </ul>
                 <div class="tab-content">
@@ -134,6 +137,15 @@
                         <div class="media">
                             <div class="media-body">
                                 @Html.Partial("~/Views/ChurchNewsLetter/_ListChurchNewsLetter.cshtml")
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="ChurchAnalytics-1" role="tabpanel" aria-labelledby="ChurchAnalytics-tab">
+                        <div class="media">
+                            <div class="media-body">
+
+                                @Html.Partial("~/Views/Church/ChurchAnalytics.cshtml",Model.AnalyticsList)
                             </div>
                         </div>
                     </div>
