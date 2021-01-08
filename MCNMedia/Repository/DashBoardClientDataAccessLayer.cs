@@ -53,26 +53,31 @@ namespace MCNMedia_Dev.Repository
         {
             List<DashBoardClient> dashBoardClients = new List<DashBoardClient>();
 
-            _dc.ClearParameters();
-            _dc.AddParameter("ChrId", chrid);
-            _dc.AddParameter("CurrentDay", DateTime.Now.ToString("yyyy-MM-dd"));
-            DataTable dataTable = _dc.ReturnDataTable("sp_ClientEventlist");
+
+            DataTable dataTable = GetRecordReport(chrid: chrid,dateTime: DateTime.Now);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DashBoardClient dashBoardClient = new DashBoardClient();
-                dashBoardClient.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                dashBoardClient.ChurchName = dataRow["ChurchName"].ToString();
-                dashBoardClient.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-                dashBoardClient.ScheduleEventName = dataRow["ScheduleEventName"].ToString();
-                dashBoardClient.ScheduleEventTime = dataRow["ScheduleEventTime"].ToString();
-                dashBoardClient.ScheduleEventDate =Convert.ToDateTime( dataRow["ScheduleEventDate"]);
-                dashBoardClient.ScheduleStatus = dataRow["StatusTitle"].ToString();
-                dashBoardClient.IsRepeated = Convert.ToInt32(dataRow["IsRepeated"]);
-                dashBoardClient.RecordingDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
-                dashBoardClients.Add(dashBoardClient);
+                DashBoardClient dashBoard = BindRecordedEvents(dataRow);
+                dashBoardClients.Add(dashBoard);
             }
             return dashBoardClients;
-        }
+        } 
+       
+        public IEnumerable<DashBoardClient> GetRecordingReport(int chrid,DateTime date)
+        {
+            List<DashBoardClient> dashBoardClients = new List<DashBoardClient>();
+
+
+            DataTable dataTable = GetRecordReport(chrid: chrid,dateTime: date);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                DashBoardClient dashBoard = BindRecordedEvents(dataRow);
+                dashBoardClients.Add(dashBoard);
+            }
+            return dashBoardClients;
+        } 
+       
+        
         public DashBoardClient GetCountClientDashBoard(int chrid)
         {
             _dc.ClearParameters();
@@ -105,6 +110,29 @@ namespace MCNMedia_Dev.Repository
             return ChurchId;
         }
 
-      
+        private DataTable GetRecordReport(int chrid,DateTime dateTime)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", chrid);
+            _dc.AddParameter("CurrentDay", dateTime);
+            DataTable dataTable = _dc.ReturnDataTable("sp_ClientEventlist");
+            return dataTable;
+        }
+
+        private DashBoardClient BindRecordedEvents(DataRow dataRow)
+        {
+            DashBoardClient dashBoardClient = new DashBoardClient();
+            dashBoardClient.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+            dashBoardClient.ChurchName = dataRow["ChurchName"].ToString();
+            dashBoardClient.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+            dashBoardClient.ScheduleEventName = dataRow["ScheduleEventName"].ToString();
+            dashBoardClient.ScheduleEventTime = dataRow["ScheduleEventTime"].ToString();
+            dashBoardClient.ScheduleEventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"]);
+            dashBoardClient.ScheduleStatus = dataRow["StatusTitle"].ToString();
+            dashBoardClient.IsRepeated = Convert.ToInt32(dataRow["IsRepeated"]);
+            dashBoardClient.RecordingDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
+            return dashBoardClient;
+        }
+
     }
 }
