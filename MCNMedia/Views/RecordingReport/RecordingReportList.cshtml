@@ -1,0 +1,112 @@
+﻿@model MCNMedia_Dev.Models.GenericModel
+@{ ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- partial:partials/_horizontal-navbar.html -->
+<!-- partial -->
+
+
+<div class="row ">
+    <div class="col-12">
+
+        <!--Today Schedules Start-->
+        @*<div class="col-md-6 grid-margin">*@
+        <div class="card">
+            <div class="card-header card-header-custom">
+                Recording Report
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="Search" asp-controller="RecordingReport">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Date</label>
+                        <div class="col-sm-4">
+                            <div id="datepicker-popup2" class="input-group date datepicker">
+                                <input type="text" id="SetSearchDate" name="eventDate" class="form-control" placeholder="Event Date" />
+                                <span class="input-group-addon input-group-append border-left">
+                                    <span class="ti-calendar input-group-text"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary btn-sm text-white pull-right" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
+                        </div>
+                    </div>
+                </form>
+
+
+
+
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="text-wrap">Church</th>
+                                <th class="text-wrap">Event Name</th>
+                                <th class="text-wrap">Event Status</th>
+                                <th class="text-wrap">Event Time</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.LDashBoardClients)
+                            {
+                <tr>
+                    <td class="text-wrap">
+                        @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                    </td>
+                    <td class="text-wrap">
+                        @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+
+                    </td>
+
+                    @if (item.ScheduleStatus == "Pending")
+                    {
+
+    <td class="font-weight-medium text-danger">
+        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+    </td> }
+                    else if (item.ScheduleStatus == "In Progress")
+                    {
+    <td class="font-weight-medium text-warning">
+        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+    </td> }
+                    else if (item.ScheduleStatus == "Completed")
+                    {
+    <td class="font-weight-medium text-info">
+        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+    </td> }
+                    else if (item.ScheduleStatus == "Published")
+                    {
+    <td class="font-weight-medium text-success">
+        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+    </td>}
+                    <td class="text-wrap">
+                        @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
+                    </td>
+
+                </tr>}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Today Schedules End-->
+
+</div>
+
+@*</div>*@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var date = '@ViewBag.SchDate';
+        $('#SetSearchDate').val(date);
+    })
+</script>
+
