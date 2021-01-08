@@ -326,5 +326,72 @@ namespace MCNMedia_Dev.Repository
             return churchList;
         }
 
+        #region "Analytics Section"
+
+
+        public IEnumerable<AnalyticsModel> GetAllChurchForAnalytics( DateTime FromDate, DateTime ToDate)
+        {
+
+           List<AnalyticsModel> GetData = GetChurch(churchId: -1, FromDate: FromDate, ToDate: ToDate).ToList();
+          
+            return GetData;
+        }
+
+        public IEnumerable<AnalyticsModel> GetbyChurch(int churchid, DateTime FromDate, DateTime ToDate)
+        {
+            List<AnalyticsModel> GetData = GetChurch(churchId: churchid, FromDate: FromDate, ToDate: ToDate).ToList();
+           
+            return GetData;
+        }
+        private IEnumerable<AnalyticsModel> GetChurch(int churchId, DateTime FromDate, DateTime ToDate)
+        {
+            List<AnalyticsModel> analyticsList = new List<AnalyticsModel>();
+            _dc.ClearParameters();
+            _dc.AddParameter("chrid", churchId);
+            _dc.AddParameter("fromdate", FromDate);
+            _dc.AddParameter("Todate", ToDate);
+        
+            DataTable dataTable = _dc.ReturnDataTable("spAnalytics_Get");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                AnalyticsModel analytics = new AnalyticsModel();
+                //analytics.AnalyticsID = Convert.ToInt32(dataRow["AnalyticsID"]);
+                analytics.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                analytics.Country = dataRow["Country"].ToString();
+                analytics.CountryCount = Convert.ToInt32(dataRow["CountryCount"]);
+                
+                analyticsList.Add(analytics);
+            }
+            return analyticsList;
+            
+        }
+
+        private Church BindingChurch(DataRow dataRow)
+        {
+            Church church = new Church();
+            church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+            church.ChurchName = dataRow["ChurchName"].ToString();
+            church.ClientTypeTitle = dataRow["ClientTypeTitle"].ToString();
+            church.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
+            church.Address = dataRow["Address"].ToString();
+            church.Town = dataRow["Town"].ToString();
+            church.CountyName = dataRow["CountyName"].ToString();
+            church.Website = dataRow["Website"].ToString();
+            church.EmailAddress = dataRow["EmailAddress"].ToString();
+            church.Phone = dataRow["Phone"].ToString();
+            church.ImageURl = $"{AWS_S3_BUCKET_URI}/{dataRow["ImageURL"]}";
+            church.Slug = dataRow["Slug"].ToString();
+            church.Featured = Convert.ToInt32(dataRow["Featured"]);
+            church.UniqueIdentifier = dataRow["UniqueIdentifier"].ToString();
+            church.Switch = Convert.ToInt32(dataRow["Switch"]);
+            church.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
+            church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
+            church.Password = dataRow["Password"].ToString();
+            
+            return church;
+        }
+
+        #endregion
+
     }
 }
