@@ -31,6 +31,12 @@
         </div>
     </div>
 
+    @if (ViewBag.Search==-1)
+    {  
+        <h1>No record Found</h1>
+
+    }
+
     @if (ViewBag.CountyList == 1)
     {
 <div class="col-lg-7">
