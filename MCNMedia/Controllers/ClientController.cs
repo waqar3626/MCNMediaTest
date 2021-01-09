@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using MCNMedia_Dev._Helper;
@@ -227,7 +228,52 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        #region "Facebook Section"
+        #region "Facebook Section
+
+        public void StreamtoFacebook()
+        {
+            string returnData = String.Empty;
+            string url = "http://54.217.38.80:8087/v2/servers/_defaultServer_/vhosts/_defaultVHost_/applications/live/pushpublish/mapentries/facebook_timeline_target";
+
+            var webRequest = WebRequest.Create(url) as HttpWebRequest;
+            if (webRequest != null)
+            {
+                webRequest.Accept = "*/*";
+                webRequest.UserAgent = ".NET";
+                webRequest.Method = WebRequestMethods.Http.Post;
+                webRequest.ContentType = "application/json";
+                webRequest.Host = "";
+
+                var whc = new WebHeaderCollection
+                {
+                    "application: " + "live",
+                    "enabled: " + true,
+                    "entryName: " + "facebook_timeline_target",
+                    "facebook.accessToken: " + "EAAVj2VeRPDoBAAJt2dgSyOHLfl37QH8zAVscaQoDPi6yILvQ5OzIUCMC2QDqZAWiw2gIfqmJORP9bl1yQkjbbgAZCqWwPQ28bZAPdGyUIaBXyZAAvftx4ZCmXAx1A4HiiNHiCQ6sZAD5tLh2CHTMSQPrZA5ZBViDhR9OZCbiyTYL4kgZDZD",
+                    "facebook.description: " + "This is a stream from Wowza Streaming Engine.",
+                    "facebook.destId: " + "3695099897240804",
+                    "facebook.destName: " + "My Timeline",
+                    "facebook.destType: " + "timeline",
+                    "facebook.privacy: " + "onlyMe",
+                    "facebook.title: " + "Live Test",
+                    "facebook.useAppSecret: " + "false",
+                    "profile: " + "rtmp-facebook",
+                    "sourceStreamName: " + "mob6aa78cb_934.stream"
+                };
+                webRequest.Headers = whc;
+
+                using (WebResponse response = webRequest.GetResponse())
+                {
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(stream);
+                        returnData = reader.ReadToEnd();
+                    }
+                }
+            }
+
+
+        }
         [HttpPost]
         public JsonResult GetCamerasInfo()
         {
@@ -251,6 +297,14 @@ namespace MCNMedia_Dev.Controllers
         {
             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
             camDataAccess.SaveSettings(churchId, pageAccessToken, pageId, pageName, description, cameraId);
+            return Json("");
+        }
+
+        [HttpPost]
+        public JsonResult GetStreamParams(string cameraId, string pageId, string pageName, string pageAccessToken, string description, string userId, string userAccessToken)
+        {
+            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+           // camDataAccess.SaveSettings(churchId, pageAccessToken, pageId, pageName, description, cameraId);
             return Json("");
         }
 

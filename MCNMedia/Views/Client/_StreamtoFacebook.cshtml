@@ -32,7 +32,7 @@
     <div class="card-body">
         @*<div class="form-group row p-3 pb-0">
 
-            @Html.DropDownList("CameraId", SelectList, new { @class = "form-control", @id = "ddlid" }) 
+            @Html.DropDownList("CameraId", SelectList, new { @class = "form-control", @id = "ddlid" })
             <span class="text-danger"></span>
         </div>*@
         <div class="card bg-facebook d-flex">
@@ -58,7 +58,7 @@
                 <br />
                 <label class="form-label">Area</label><br />
                 <select class="form-control-sm" name="facebook_page" id="facebook_page" required>
-                    <option value="me" data-acctok="Your Timeline" >
+                    <option value="me" data-acctok="Your Timeline">
                         My Timeline
                     </option>
                 </select><br /><br />
@@ -74,18 +74,19 @@
                 <button type="button" id="btnSave" onclick="savesettings();" class="btn btn-sm btn-dark">Save</button>
             </div>
             <div class="col-sm-4">
-                </div>
             </div>
-            <p class="text-muted pt-2">your live stream will be broad cast on 'Church Name'</p>
-            <button type="button" id="startStreaming" onclick="Request_LiveVedioObj();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Start Streaming</button>
-            <button type="button" id="changeSettings" onclick="changeOptions();" class="btn btn-dark">Change</button>
-            <button type="button" id="stopStreaming" onclick="StopLiveStream();" class="btn btn-danger">Stop Streaming</button>
-            <input id="fbUserId" name="fbUserId" type="hidden" value="" />
-            <input id="fbUserToken" name="fbUserToken" type="hidden" value="" />
-            <input id="fbUserLoginStatus" name="fbUserLoginStatus" type="hidden" value="" />
-
-
         </div>
+        <p class="text-muted pt-2">your live stream will be broad cast on 'Church Name'</p>
+        <button type="button" id="startStreaming" onclick="getstreamparams();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Pass Stream Info</button>
+        <button type="button" id="startStreaming" onclick="Request_LiveVedioObj();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Start Streaming</button>
+        <button type="button" id="changeSettings" onclick="changeOptions();" class="btn btn-dark">Change</button>
+        <button type="button" id="stopStreaming" onclick="StopLiveStream();" class="btn btn-danger">Stop Streaming</button>
+        <input id="fbUserId" name="fbUserId" type="hidden" value="" />
+        <input id="fbUserToken" name="fbUserToken" type="hidden" value="" />
+        <input id="fbUserLoginStatus" name="fbUserLoginStatus" type="hidden" value="" />
+
+
+    </div>
 </div>
 
 <script>
