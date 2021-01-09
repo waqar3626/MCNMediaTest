@@ -281,32 +281,38 @@ function savesettings() {
 function getstreamparams() {
     let uid = sessionStorage.getItem('uid');
     let uac = sessionStorage.getItem('uac');
-    var formData = new FormData();
-    formData.append("cameraId", $('#camera_list').val());
-    formData.append("pageId", $('#facebook_page').val());
-    formData.append("pageName", $('#facebook_page  option:selected').text());
-    formData.append("pageAccessToken", $('#facebook_page option:selected').attr('data-acctok'));
-    formData.append("description", $('#streamDescription').val());
-    formData.append("userId", uid);
-    formData.append("userAccessToken", uac);
-    
-    $.ajax({
-        type: "POST",
-        url: "/Client/GetStreamParams/",
+    If(!uid && !uac)
+    {
+        var formData = new FormData();
+        formData.append("cameraId", $('#camera_list').val());
+        formData.append("pageId", $('#facebook_page').val());
+        formData.append("pageName", $('#facebook_page  option:selected').text());
+        formData.append("pageAccessToken", $('#facebook_page option:selected').attr('data-acctok'));
+        formData.append("description", $('#streamDescription').val());
+        formData.append("userId", uid);
+        formData.append("userAccessToken", uac);
 
-        data: formData,
-        processData: false,  // tell jQuery not to process the data
-        contentType: false,  // tell jQuery not to set contentType
+        $.ajax({
+            type: "POST",
+            url: "/Client/GetStreamParams/",
+
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
 
 
-        success: function (result) {
-            //alert("Settings have been updated");
+            success: function (result) {
+                //alert("Settings have been updated");
 
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    else {
+        alert("Please login to facebook");
+    }
 }
 function saveUserInfo(accessToken, userId, expiresIn) {
 
