@@ -301,7 +301,7 @@ namespace MCNMedia_Dev.Controllers
                     x.CountyName.ToLower().Contains(last)).ToList<Church>();
                     ViewBag.CountyList = 0;
                 }
-
+                ViewBag.SearchFilter = Request.Query["Search"].ToString();
                 gm.ChurchList = churches;
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 return View(gm);

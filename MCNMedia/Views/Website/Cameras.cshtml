@@ -15,91 +15,110 @@
     </div>
 </div>
 <div class="row m-0 mt-5 mb-5">
-    <div class="col-1 d-lg-block d-none"></div>
-    <div class="col-lg-3 col-md-4 col-sm-6">
-       
-        <div class="border bg-white p-4" style="position: sticky; top: 103px;">
-            @foreach (Place country in Model.CountryList)
-            {
-                <div class="news-wrap mb-3">
-                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
-                       href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
-                        @country.PlaceName
-                    </a>
-                </div>
-            }
-        </div>
-    </div>
-
-    @if (ViewBag.Search==-1)
-    {  
-        <h1>No record Found</h1>
-
-    }
-
-    @if (ViewBag.CountyList == 1)
+    @if (Model.ChurchList.Count() > 0)
     {
-<div class="col-lg-7">
-    <div class="row">
-        @if (ViewBag.countryName == null)
-        {
-
-        }
-        else
-        {
-            <div class="card-header card-header-custom text-white font-18 font-weight-bolder" style="width: 100%; background-color:#d9356f">
-                <h3>@ViewBag.countryName </h3>
-            </div>
-        }
-    </div>
-    <div class="row">
-
-
-        @foreach (Place country in Model.CountyList)
-        {
-            <div class="m-2" style="width:30%">
-                <a class="btn bg-blue my-2 my-sm-0 p-3 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
-                   href="@Url.Action("Cameras", "Website",new {County = country.PlaceName.Replace(' ','-')})">
-                    @country.PlaceName
-                </a>
-            </div>
-        }
-    </div>
-</div>
-    }
-
-    @if (ViewBag.CountyList == 0)
-    {
-    <div class="col-lg-7">
-        <div class="row">
-            @if (ViewBag.countyName == null)
-            {
-
-            }
-            else
-            {
-            <div class="card-header card-header-custom text-white font-18 font-weight-bolder" style="width: 100%;  background-color:#1f4a79" >
-                <h3>@ViewBag.countyName </h3>
-            </div>
-            }
-        </div>
-        <div class="row">
-            @foreach (Church church in Model.ChurchList)
-            {
-                <div class="col-lg-4 col-md-6 p-2">
-                    <a href="@Url.Action("Profile", "Website", new { id = church.Slug })" title="Preview">
-                        <div class="img-overly position-relative" style="height:179px;">
-                            <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                            <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
-                        </div>
-                    </a>
-                </div>
-
-            }
-        </div>
-    </div>
-    }
         <div class="col-1 d-lg-block d-none"></div>
-    </div>
+
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+
+            <div class="border bg-white p-4" style="position: sticky; top: 103px;">
+
+                @foreach (Place country in Model.CountryList)
+                {
+                    <div class="news-wrap mb-3">
+                        <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
+                           href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
+                            @country.PlaceName
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+        @if (ViewBag.CountyList == 1)
+        {
+            <div class="col-lg-7">
+                <div class="row">
+                    @if (ViewBag.countryName == null)
+                    {
+
+                    }
+                    else
+                    {
+                        <div class="card-header card-header-custom text-white font-18 font-weight-bolder" style="width: 100%; background-color:#d9356f">
+                            <h3>@ViewBag.countryName </h3>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+
+
+                    @foreach (Place country in Model.CountyList)
+                    {
+                        <div class="m-2" style="width:30%">
+                            <a class="btn bg-blue my-2 my-sm-0 p-3 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
+                               href="@Url.Action("Cameras", "Website",new {County = country.PlaceName.Replace(' ','-')})">
+                                @country.PlaceName
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.CountyList == 0)
+        {
+            <div class="col-lg-7">
+                <div class="row">
+                    @if (ViewBag.countyName == null)
+                    {
+
+                    }
+                    else
+                    {
+                        <div class="card-header card-header-custom text-white font-18 font-weight-bolder" style="width: 100%;  background-color:#1f4a79">
+                            <h3>@ViewBag.countyName </h3>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+
+                    @foreach (Church church in Model.ChurchList)
+                    {
+                        <div class="col-lg-4 col-md-6 p-2">
+                            <a href="@Url.Action("Profile", "Website", new { id = church.Slug })" title="Preview">
+                                <div class="img-overly position-relative" style="height:179px;">
+                                    <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
+                                    <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
+                                </div>
+                            </a>
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+        }
+    }
+    else
+    {
+        <div class="container bg-blue">
+            <div class="row m-0 ">
+                <div class="col-sm-12 text-white font-26 text-center pt-2 pb-2 avantgardece">
+                    Search Result for: @ViewBag.SearchFilter
+                </div>
+                <div class="col-sm-12 text-white font-26 text-center pt-2  pb-4 avantgardece">
+                    Sorry, there doesn't seem to be matching this search
+                </div>
+            </div>
+        </div>
+      
+
+    }
+    <div class="col-1 d-lg-block d-none"></div>
+</div>
 
 

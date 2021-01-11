@@ -61,7 +61,7 @@
                         <ul class="navbar-nav mr-lg-2">
                             <li class="nav-item nav-search d-none d-lg-block">
                                 <div class="input-group">
-                                    @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text", ViewBag.ChurchId), new { @class = "custom-select bg-white", @onchange = "javascript:onChangeChurchClient1()", @id = "churchId" })
+                                    @Html.DropDownList("ChurchId", new SelectList(ddlChurches, "Value", "Text", Context.Session.GetInt32("ChurchId")), new { @class = "custom-select bg-white", @onchange = "javascript:onChangeChurchClient1()", @id = "churchId" })
                                     <span class="text-danger"></span>
                                 </div>
                             </li>
