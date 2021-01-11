@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Error";
+Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+
+}
+<h3>
+    An Error Occcured While Processing your Request
+    The Support Team is Notified and we are working on the fix.
+</h3>
+<h5>Please Contact us On<a href="/View/Webite/ContactUs">mcnmedia9@gmail.com</a> </h5>
+
+
+@*@if (ViewBag.ErrorTitle == null)
+{
+
+<h3>
+    An Error Occcured While Processing your Request
+    The Support Team is Notified and we are working on the fix.
+</h3>
+<h5>Please Contact us On mcnmedia@gmail.com</h5>
+}
+
+else
+{
+<h1 class="text-danger">@ViewBag.ErrorTitle</h1>
+<h6 class="text-danger">@ViewBag.ErrorMassage</h6>
+}*@
