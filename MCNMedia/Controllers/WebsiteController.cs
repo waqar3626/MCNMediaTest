@@ -17,6 +17,7 @@ using static MCNMedia_Dev.Models.Church;
 using System.IO;
 using MaxMind.GeoIP2.Model;
 
+
 namespace MCNMedia_Dev.Controllers
 {
     public class WebsiteController : Controller
@@ -76,8 +77,7 @@ namespace MCNMedia_Dev.Controllers
 
             catch (Exception e)
             {
-                ShowMesage("Contactus Email Sending Failed : " + e.Message);
-                throw;
+                return View("Error");
             }
         }
         public IActionResult Home()
@@ -93,19 +93,28 @@ namespace MCNMedia_Dev.Controllers
                 //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
                 return View(gm);
             }
+
             catch (Exception e)
             {
-                ShowMesage("Home : " + e.Message);
-                throw;
+                return View("Error");
             }
         }
 
 
         public JsonResult RecordingList()
         {
-            int churchId =(int) HttpContext.Session.GetInt32("chrId");
-          List<Recording>  RecordingList = _recordDataAccess.Recording_GetByChurch(churchId).ToList();
-            return Json(RecordingList);
+            try
+            {
+                    int churchId =(int) HttpContext.Session.GetInt32("chrId");
+                     List<Recording>  RecordingList = _recordDataAccess.Recording_GetByChurch(churchId).ToList();
+                    
+                return Json(RecordingList);
+
+        }
+            catch (Exception e)
+            {
+                return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            }
         }
 
         public IActionResult Schedules()
@@ -120,8 +129,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Schedules Error : " + e.Message);
-                throw;
+                return View("Error");
             }
         }
 
@@ -135,8 +143,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-
-                ShowMesage("Schedules Error : " + e.Message);
+                ShowMesage("Schedule Whats On Now Errors : " + e.Message);
                 throw;
             }
         }
@@ -152,7 +159,7 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception e)
             {
 
-                ShowMesage("Schedules Error : " + e.Message);
+                ShowMesage("UpComing Schedules for Church Error : " + e.Message);
                 throw;
             }
         }
@@ -168,7 +175,7 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception e)
             {
 
-                ShowMesage("Schedules Error : " + e.Message);
+                ShowMesage("UpComing Schedules Error : " + e.Message);
                 throw;
             }
         }
@@ -184,8 +191,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Contact Us : " + e.Message);
-                throw;
+
+                return View("Error");
             }
         }
 
@@ -199,8 +206,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Churches : " + e.Message);
-                throw;
+
+                return View("Error");
             }
         }
 
@@ -214,8 +221,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Cathedrals" + e.Message);
-                throw;
+
+                return View("Error");
             }
         }
 
@@ -230,8 +237,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("FuneralHomes : " + e.Message);
-                throw;
+
+                return View("Error");
             }
         }
 
@@ -302,8 +309,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Camera : " + e.Message);
-                throw;
+
+                return View("Error");
             }
         }
 
@@ -316,8 +323,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("Load County DropDown : " + e.Message);
-                throw;
+                return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -352,16 +358,23 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("ProcessForm Errors : " + e.Message);
-                throw;
+
+                return View("Error");
             }
         }
 
         [HttpPost]
         public IActionResult AddContactForm(Website website)
         {
+            try { 
             _websiteDataAccessLayer.AddContactForm(website);
             return RedirectToAction("Home");
+                 }
+              catch (Exception e)
+            {
+
+                return View("Error");
+            }
         }
 
         public ViewResult Terms()
@@ -385,22 +398,29 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult RecordingLock(RecordingLock recordingLock)
         {
-            String pass = HttpContext.Session.GetString("RecordingPass").ToString();
-            if (recordingLock.Password == pass)
-            {
-                HttpContext.Session.SetInt32("RecordingPass", 1);
-                return RedirectToAction(nameof(Player));
+            try {
+                String pass = HttpContext.Session.GetString("RecordingPass").ToString();
+                if (recordingLock.Password == pass)
+                {
+                    HttpContext.Session.SetInt32("RecordingPass", 1);
+                    return RedirectToAction(nameof(Player));
+                }
+                else
+                {
+                    ViewBag.IsSuccess = 3;
+                    return View();
+                }
             }
-            else
+            catch (Exception e)
             {
-                ViewBag.IsSuccess = 3;
-                return View();
+                return View("Error");
             }
 
         }
 
         public IActionResult Player(int id)
         {
+            try { 
             int recordingPass = 0;
             RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
             if (id == 0)
@@ -432,7 +452,13 @@ namespace MCNMedia_Dev.Controllers
                 }
             }
             return View(recording);
+          }
 
+            catch (Exception e)
+            {
+
+                return View("Error");
+            }
         }
 
 
@@ -454,11 +480,11 @@ namespace MCNMedia_Dev.Controllers
                     return View();
                 }
             }
-           
+
             catch (Exception e)
             {
-                ShowMesage("ProcessForm Errors : " + e.Message);
-                throw;
+
+                return View("Error");
             }
 
 
@@ -470,7 +496,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+              
                 int churchPass = 0;
                 if (id == null)
                 {
@@ -569,17 +595,14 @@ namespace MCNMedia_Dev.Controllers
 
             catch (Exception e)
             {
-                ShowMesage("Profile Errors : " + e.Message);
-                throw;
+
+                return View("Error");
             }
 
 
         }
 
-        private void ShowMesage(string exceptionMessage)
-        {
-            log.Error("Exception : " + exceptionMessage);
-        }
+        
 
         private string CheckVisitorLocation()
         {
@@ -666,23 +689,51 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMesage("List Recording Error" + e.Message);
-                throw;
+
+                return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
         }
 
         public IActionResult SubscriberLogout()
         {
-            foreach (var cookieKey in Request.Cookies.Keys)
+            try
             {
-                if(cookieKey== "SubscriberId" || cookieKey == "SubscriberName")
+                foreach (var cookieKey in Request.Cookies.Keys)
                 {
-                    Response.Cookies.Delete(cookieKey);
+                    if (cookieKey == "SubscriberId" || cookieKey == "SubscriberName")
+                    {
+                        Response.Cookies.Delete(cookieKey);
+                    }
+
                 }
-                
+                return RedirectToAction(nameof(Home));
+
             }
-            return RedirectToAction(nameof(Home));
+            catch (Exception e)
+            {
+
+                return View("Error");
+            }
+
         }
+           
+            
        
+
+
+        public IActionResult RssFeed()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        private void ShowMesage(string exceptionMessage)
+        {
+            log.Error("Exception : " + exceptionMessage);
+        }
     }
 }
