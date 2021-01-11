@@ -322,6 +322,10 @@
             else if (key == "delete") {
                 DeleteRecording(mediachurchid);
             }
+            else if (key == "play") {
+
+                window.location.href = "../Client/ClientVideoPlayer/" + mediachurchid;
+            }
         },
         items: {
             "edit": {
@@ -372,6 +376,7 @@
                 icon: "delete"
             
             }
+
         }
     });
 

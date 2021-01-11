@@ -601,12 +601,12 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        public IActionResult ClientVideoPlayer()
+        public IActionResult ClientVideoPlayer(int id)
         {
             
             GenericModel gm = new GenericModel();
             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.Media = (MediaChurch)mediaChurchDataAccess.GetByMediaType("Video", churchId);
+            gm.Media = mediaChurchDataAccess.GetMediaById(id);
             gm.Churches = chdataAccess.GetChurchData(churchId);
             return View(gm);
         }
