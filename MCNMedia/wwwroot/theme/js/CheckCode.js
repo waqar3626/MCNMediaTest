@@ -33,6 +33,7 @@
             }
         }
     });
+
     $.contextMenu({
         selector: '#context-menu-access',
         callback: function (key, options) {
@@ -98,6 +99,7 @@
             }
         }
     });
+
     $.contextMenu({
         selector: '#context-menu-multi',
         callback: function (key, options) {
@@ -160,6 +162,7 @@
             }
         }
     });
+
     $.contextMenu({
         selector: '#context-menu-hover',
         trigger: 'hover',
@@ -198,6 +201,7 @@
             }
         }
     });
+
     $.contextMenu({
         selector: '#context-menu-hover-autohide',
         trigger: 'hover',
@@ -238,6 +242,7 @@
             }
         }
     });
+
     $.contextMenu({
         selector: '#context-menu-hover-autohideNew2',
         trigger: 'hover',
@@ -269,6 +274,7 @@
             }
         }
     });
+
     $.contextMenu({
         selector: '#context-menu-hover-autohidePictures',
         trigger: 'hover',
@@ -285,8 +291,6 @@
                 DeletePicture(mediachurchid);
             }
 
-
-
         },
         items: {
             "edit": {
@@ -301,6 +305,9 @@
             }
         }
     });
+
+
+
     $.contextMenu({
         selector: '#context-menu-hover-autohideVideos',
         trigger: 'hover',
@@ -315,9 +322,6 @@
             else if (key == "delete") {
                 DeleteRecording(mediachurchid);
             }
-
-
-
         },
         items: {
             "edit": {
@@ -329,9 +333,16 @@
             "delete": {
                 name: "Delete",
                 icon: "delete"
+            },
+
+            "play": {
+                name: "Play",
+                icon: "play"
             }
         }
     });
+
+
     $.contextMenu({
         selector: '#context-menu-hover-autohideSlideShow',
         trigger: 'hover',
@@ -346,7 +357,6 @@
             else if (key == "delete") {
                 DeleteSlideShow(mediachurchid);
             }
-
 
 
         },
@@ -364,6 +374,8 @@
             }
         }
     });
+
+
     $.contextMenu({
         selector: '#context-menu-hover-autohideRecording',
         trigger: 'hover',
@@ -372,13 +384,28 @@
         callback: function (key, options) {
             var m = "clicked: " + key;
             var recordingId = options.$trigger[0].getAttribute('recordingId');
+            var recordingSrc = options.$trigger[0].getAttribute('recordingSrc');
             if (key == "edit") {
+                
                 EditRecording(recordingId);
             }
             else if (key == "delete") {
                 DeleteRecordingClick(recordingId);
             }
-
+            else if (key == "play") {
+              
+                window.location.href = "../Recording/ClientPlayer/" + recordingId;
+            }
+            else if (key == "download") {
+     
+                $('<a/>', {
+                    "href": recordingSrc,
+                    "download": "video.mp4",
+                    id: "videoDownloadLink"
+                }).appendTo(document.body);
+                $('#videoDownloadLink').get(0).click().remove();
+       
+            }
 
 
         },

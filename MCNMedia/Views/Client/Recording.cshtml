@@ -94,13 +94,26 @@
                 <div id="video-gallery" class="row lightGallery">
                     @foreach (var item in Model.LRecordings)
                     {
-                        <div class="col-sm-3  p-2 ml-5 mb-3">
-                            <div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideRecording" recordingId="@item.RecordingId">@item.RecordingTitle</div><video controls="controls" class="w-100"><source src=" @item.Src" type="video/mp4" /></video>
-                        </div>
+                        @*<div class="col-sm-3  p-2 ml-5 mb-3">
+                <div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideRecording" recordingId="@item.RecordingId">@item.RecordingTitle</div><video controls="controls" class="w-100"><source src=" @item.Src" type="video/mp4" /></video>
+            </div>*@
+                      
+                            <div class="col-sm-3  p-2 ml-5 mb-3 ">
+                                <div class="w-100" id="context-menu-hover-autohideRecording" recordingSrc="@item.Src" recordingId="@item.RecordingId">
+
+                                    <a class="image-tile col-xl-3 col-lg-3 col-md-3 col-md-4 col-6 " src=" @item.Src">
+                                        <img src="../theme/images/lightbox/thumb-v-v-1.jpg" alt="image" />
+                                        <div class="demo-gallery-poster ">
+                                            <img src="../theme/images/lightbox/play-button.png" alt="image">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        
                     }
                 </div>
-            </div>
-        </div>
+                        </div>
+                    </div>
     </div>
 </div>
 <div class="row">
@@ -201,8 +214,8 @@
                 $('#AddRecordingPopUp').modal('show');
 
             }
-      function EditRecording(recordingId) {
-
+    function EditRecording(recordingId) {
+      
                  $.ajax({
                      type: "Get",
                      url: '@Url.Action("EditClientRecording", "Client")',
@@ -228,7 +241,7 @@
         })
         .then((willDelete) => {
           if (willDelete) {
-            swal("Poof! Your file has been deleted!", {
+            swal(" Your file has been deleted!", {
                 icon: "success",
 
             });

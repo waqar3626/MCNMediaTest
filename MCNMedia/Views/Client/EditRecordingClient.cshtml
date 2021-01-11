@@ -1,80 +1,121 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "EditRecordingClient";
-    Layout = "~/Views/Shared/_NestedLayout.cshtml";
+ 
 }
 
 
-<form asp-action="EditRecordingClient" method="post" asp-controller="Client">
+<form asp-action="EditRecordingClient" asp-controller="Client" id="CertForm" method="post" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="card">
-        <div class="card-header card-header-custom">
-            Edit Recording
-        </div>
-            <div class="card-body">
-               
-                <input type="hidden" asp-for="Recordings.RecordingId" />
+        <div class="card-body">
 
-                <div class="form-group row">
-                    <label asp-for="Recordings.RecordingTitle" class="col-sm-3 col-form-label"> Recording Title</label>
-                    <div class="col-sm-9">
-                        <span asp-validation-for="Recordings.RecordingTitle" class="text-danger"></span>
-                        <input asp-for="Recordings.RecordingTitle" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Recordings.RecordingURl" class="col-sm-3 col-form-label">Recording URl </label>
-                    <div class="col-sm-9">
-                        <span asp-validation-for="Recordings.RecordingURl" class="text-danger"></span>
-                        <input asp-for="Recordings.RecordingURl" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Recordings.ChurchId" class="col-sm-3 col-form-label">Church</label>
-                    <div class="col-sm-9">
-                        <span asp-validation-for="Recordings.ChurchId" class="text-danger"></span>
-                        <select asp-for="Recordings.ChurchId" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.State,"Value","Text"))">
-                            <option>--Select Church--</option>
-                        </select>
+
+            <input type="hidden" asp-for="Recordings.RecordingId" />
+
+            <div class="form-group row">
+                <label asp-for="Recordings.RecordingTitle" for="validationCustom07" class="col-sm-3 col-form-label"> Recording Title</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Recordings.RecordingTitle" class="text-danger"></span>
+                    <input asp-for="Recordings.RecordingTitle" class="form-control" id="validationCustom07" placeholder="Recording Title" required />
+                    <div class="invalid-feedback">
+                        Please Provide a Valid Record Title
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label asp-for="Recordings.Date" class="col-sm-3 col-form-label">Date</label>
-                    <div class="col-sm-3">
-                        <span asp-validation-for="Recordings.Date" class="text-danger"></span>
-                        <div id="datepicker-popup" class="input-group date datepicker">
-                            <input asp-for="Recordings.Date" type="text" class="form-control">
-                            <span class="input-group-addon input-group-append border-left">
-                                <span class="ti-calendar input-group-text"></span>
-                            </span>
+
+            </div>
+            <div class="form-group row">
+                <label asp-for="Recordings.RecordingURl" for="validationCustom08" class="col-sm-3 col-form-label">Recording URl </label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Recordings.RecordingURl" class="text-danger"></span>
+                    <input asp-for="Recordings.RecordingURl" class="form-control" id="validationCustom08" placeholder="Recording URL" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Recording URl
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Recordings.ChurchId" class="col-sm-3 col-form-label">Church</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="Recordings.ChurchId" class="text-danger"></span>
+                    <select asp-for="Recordings.ChurchId" id="select1" class="custom-select" asp-items="@(new SelectList(@ViewBag.Church ,"Value","Text"))">
+                        <option value="0" selected disabled>--Select Church--</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please Provide a valid Church
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Recordings.Date" class="col-sm-3 col-form-label">Date</label>
+                <div class="col-sm-3">
+                    <span asp-validation-for="Recordings.Date" class="text-danger"></span>
+                    <div id="datepicker-popup" class="input-group date datepicker">
+                        <input asp-for="Recordings.Date" type="text" class="form-control" placeholder="Recording Date" required>
+                        <span class="input-group-addon input-group-append border-left">
+                            <span class="ti-calendar input-group-text"></span>
+                        </span>
+                    </div>
+                    <div class="invalid-feedback">
+                        Please Provide a valid Date
+                    </div>
+                </div>
+
+                <label asp-for="Recordings.Time" for="default-picker" class="col-sm-3 col-form-label text-center">Time</label>
+                <div class="col-sm-3">
+                    <span asp-validation-for="Recordings.Time" class="text-danger"></span>
+                    <div class="input-group date" id="timepicker-example" data-target-input="nearest">
+                        <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
+                            <input asp-for="Recordings.Time" type="text" class="form-control datetimepicker-input" data-target="#timepicker-example" placeholder="Recording Time" required />
+                            <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
                         </div>
                     </div>
-                    @*</div>
-                    <div class="form-group row">*@
-                    <label asp-for="Recordings.Time" for="default-picker" class="col-sm-3 col-form-label text-center">Time</label>
-                    <div class="col-sm-3">
-                        <span asp-validation-for="Recordings.Time" class="text-danger"></span>
-                        <div class="input-group date" id="timepicker-example" data-target-input="nearest">
-                            <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
-                                <input asp-for="Recordings.Time" type="text" class="form-control datetimepicker-input" data-target="#timepicker-example" />
-                                <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
-                            </div>
-                        </div>
+                </div>
+                <div class="invalid-feedback">
+                    Please Provide a valid Time
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Recordings.Password" class="col-sm-3 col-form-label">Password</label>
+                <div class="col-sm-4 ">
+                    <span asp-validation-for="Recordings.Password" class="text-danger"></span>
+                    <input type="text" asp-for="Recordings.Password" class="form-control" placeholder="Password" />
+
+                </div>
+                <div class="col-sm-5">
+                    <div class="float-right">
+                        <button type="submit" id="valUpdateButton2" value="Update" class="btn btn-success  btn-sm text-white" title="Update"><i class="mdi mdi-update text-white"></i> Update</button>
+                        <button type="button" class="btn btn-warning  btn-sm text-white" data-dismiss="modal" aria-label="Close" title="Back"><i class="fa fa-chevron-left"></i> Back</button>
                     </div>
                 </div>
-                <div class="float-right">
-                    <button type="submit" value="Update" class="btn btn-success btn-sm text-white "><i class="mdi mdi-update" title="Update"></i> Update</button>
-                    <a id="back" class="btn btn-warning btn-sm text-white " href="../Recording/ListRecording" title="Back"><i class="fa fa-chevron-left"></i> Back</a>
-                </div>
-
 
             </div>
         </div>
 </form>
 
-@*<div>
-        <a asp-action="Index">Back to List</a>
-    </div>*@
+<script type="text/javascript">
+
+    $(function () {
+        $("#valUpdateButton2").on("click", function (e) {
+            var form = $("#CertForm")[0];
+            var isValid = form.checkValidity();
+            if (!isValid) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else {
+
+                return true;
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
+        });
+    });
+
+
+
+</script>
 
 
