@@ -76,7 +76,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateChurchInfo(Church church, IFormFile ImageUrl, string hdnImageUrl)
+        public IActionResult UpdateChurchInfo([Bind] GenericModel church, IFormFile ImageUrl, string hdnImageUrl)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
             {
@@ -87,7 +87,7 @@ namespace MCNMedia_Dev.Controllers
             if (ImageUrl != null)
             {
                 fileName = Path.GetFileName(ImageUrl.FileName);
-                church.ImageURl = FileUploadUtility.UploadFile(ImageUrl, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
+                church.Churches.ImageURl = FileUploadUtility.UploadFile(ImageUrl, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
             }
             else
             {
@@ -98,12 +98,12 @@ namespace MCNMedia_Dev.Controllers
 
                     // Remove everything before url but include Upload 
                     string beforeFounder = hdnImageUrl.Remove(0, pos);
-                    church.ImageURl = beforeFounder;
+                    church.Churches.ImageURl = beforeFounder;
                 }
 
             }
-            church.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-            chdataAccess.UpdateChurch(church);
+            church.Churches.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+            chdataAccess.UpdateChurch(church.Churches);
             return RedirectToAction("ChurchInfo");
 
         }
