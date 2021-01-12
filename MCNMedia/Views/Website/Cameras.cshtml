@@ -15,8 +15,7 @@
     </div>
 </div>
 <div class="row m-0 mt-5 mb-5">
-    @if (Model.CountryList.Count() > 0)
-    {
+   
         <div class="col-1 d-lg-block d-none"></div>
 
 
@@ -84,40 +83,39 @@
                     }
                 </div>
                 <div class="row">
-
-                    @foreach (Church church in Model.ChurchList)
+                    @if (Model.ChurchList.Count() > 0 )
                     {
-                        <div class="col-lg-4 col-md-6 p-2">
-                            <a href="@Url.Action("Profile", "Website", new { id = church.Slug })" title="Preview">
-                                <div class="img-overly position-relative" style="height:179px;">
-                                    <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                                    <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
-                                </div>
-                            </a>
-                        </div>
+                        foreach (Church church in Model.ChurchList)
+                        {
+                            <div class="col-lg-4 col-md-6 p-2">
+                                <a href="@Url.Action("Profile", "Website", new { id = church.Slug })" title="Preview">
+                                    <div class="img-overly position-relative" style="height:179px;">
+                                        <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
+                                        <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
+                                    </div>
+                                </a>
+                            </div>
 
+                        }
                     }
-
+                    else if (ViewBag.SearchFilter != null)
+                    {
+                        <div class="container bg-blue">
+                            <div class="row m-0 ">
+                                <div class="col-sm-12 text-white font-26 text-center pt-2 pb-2 avantgardece">
+                                    Search Result for: @ViewBag.SearchFilter
+                                </div>
+                                <div class="col-sm-12 text-white font-26 text-center pt-2  pb-4 avantgardece">
+                                    Sorry, there doesn't seem to be matching this search
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
 
             </div>
         }
-    }
-    else
-    {
-        <div class="container bg-blue">
-            <div class="row m-0 ">
-                <div class="col-sm-12 text-white font-26 text-center pt-2 pb-2 avantgardece">
-                    Search Result for: @ViewBag.SearchFilter
-                </div>
-                <div class="col-sm-12 text-white font-26 text-center pt-2  pb-4 avantgardece">
-                    Sorry, there doesn't seem to be matching this search
-                </div>
-            </div>
-        </div>
-      
-
-    }
+    
     <div class="col-1 d-lg-block d-none"></div>
 </div>
 
