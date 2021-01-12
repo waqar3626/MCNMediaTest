@@ -128,12 +128,13 @@
                             <table id="order-listing" class="table dataTable no-footer" role="grid" hidden >
                                 <thead>
                                     <tr>
-                                        <th class="sortStyle">Details <i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Church Name <i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle"> County <i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle"> Town <i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle">Email Address <i class="ti-angle-down"></i></th>
-                                        <th class="sortStyle"> Phone <i class="ti-angle-down"></i></th>
+                                        <th class="sortStyle">Details </th>
+                                        <th class="sortStyle">Church Name </th>
+                                        <th class="sortStyle"> County </th>
+                                        <th class="sortStyle"> Town </th>
+                                        <th class="sortStyle">Email Address </th>
+                                        <th class="sortStyle"> Phone </th>
+                                       
                                         <th>Preview</th>
                                     </tr>
 
@@ -141,30 +142,31 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                <a href="@Url.Action("Church", "Admin",new { ch = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" }) , @Html.DisplayFor(modelItem => item.Town, new { @class = "text-wrap" })
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.CountyName)
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Town)
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap", @style = "max-width:10ch" })
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Phone)
-                                            </td>
-                                            <td>
-                                                <a href="@Url.Action("Profile", "Website",new { Id = item.Slug })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
-                                                <a onclick="DeleteChurchClick(@item.ChurchId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("Church", "Admin",new { ch = item.ChurchId })" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Details"><i class="fa fa-bars"></i></a>
+                                        </td>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" }) , @Html.DisplayFor(modelItem => item.Town, new { @class = "text-wrap" })
+                                        </td>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.CountyName)
+                                        </td>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.Town)
+                                        </td>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.EmailAddress, new { @class = "text-wrap", @style = "max-width:10ch" })
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Phone)
+                                        </td>
+                                        
+                                        <td>
+                                            <a href="@Url.Action("Profile", "Website",new { Id = item.Slug })" target="_blank" add this to list church class="btn btn-warning btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="mdi mdi-window-open"></i></a>
+                                            <a onclick="DeleteChurchClick(@item.ChurchId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
