@@ -31,7 +31,8 @@ namespace MCNMedia_Dev.Models
         public string ChurchName { get; set; }
 
         [Required(ErrorMessage = "Recording Date is Required")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM/dd/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Recording Time is Required")]
@@ -40,5 +41,5 @@ namespace MCNMedia_Dev.Models
 
         public int ScheduleId { get; set; }
     }
-  
+
 }
