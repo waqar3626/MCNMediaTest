@@ -102,7 +102,7 @@
                 </div>
                 <br />
 
-                @if (Model.Churches.ScheduleShowOnWebSite == true)
+                @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
                     <div class=" border border-dark col-sm-10 pr-0 pl-0">
                         <div class="card-header-custom text-white font-20 text-center w-100"
@@ -337,7 +337,7 @@
             <div class="col-1 d-xl-block d-none"></div>
         </div>
 
-        @if (Model.Churches.ScheduleShowOnWebSite == true)
+        @if (Model.Churches.ScheduleShowOnWebSite == false)
         {
             <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
                 <div class="col-1 d-xl-block d-none"></div>
@@ -710,7 +710,7 @@
 
         <!-- recording start -->
 
-        @if (Model.Churches.RecordingShowOnWebSite == true)
+        @if (Model.Churches.RecordingShowOnWebSite == false)
         {
             <div class="bg-blue">
                 <div class="container">
