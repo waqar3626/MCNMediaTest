@@ -61,37 +61,37 @@
                                     @foreach (Schedule schedule in Model.TodaySchedule)
                                     {
                                         <tr>
-                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town </td>
+                                            <td scope="row" class="bluepurple font-weight-normal"><b>@schedule.ChurchName, @schedule.Town</b> </td>
                                             <td  class="bluepurple" >
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
 
                                                     @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i>
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else if (schedule.IsRepeated == true && schedule.Record == false)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
 
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else if (schedule.IsRepeated == false && schedule.Record == true)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
 
 
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else
                                                     {
-                                                        <b>
+                                                        <p>
 
                                                             @schedule.EventName
-                                                        </b>
+                                                        </p>
                                                     }
                                                 </a>
                                             </td>
@@ -111,37 +111,37 @@
                                     @foreach (var schedule in Model.CurrentSchedule)
                                     {
                                         <tr>
-                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, "@schedule.Town"</td>
+                                            <td scope="row" class="bluepurple font-weight-normal"><b>@schedule.ChurchName, "@schedule.Town</b>"</td>
                                             <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
 
                                                     @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i>
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else if (schedule.IsRepeated == true && schedule.Record == false)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
 
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else if (schedule.IsRepeated == false && schedule.Record == true)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
 
 
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else
                                                     {
-                                                        <b>
+                                                        <p>
 
                                                             @schedule.EventName
-                                                        </b>
+                                                        </p>
                                                     }
                                                 </a>
                                             </td>
@@ -161,37 +161,37 @@
                                     @foreach (var schedule in Model.UpcomingSchedule)
                                     {
                                         <tr>
-                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.ChurchName, @schedule.Town</td>
+                                            <td scope="row" class="bluepurple font-weight-normal"><b>@schedule.ChurchName, @schedule.Town</b></td>
                                             <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
 
                                                     @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i>
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else if (schedule.IsRepeated == true && schedule.Record == false)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
 
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else if (schedule.IsRepeated == false && schedule.Record == true)
                                                     {
-                                                        <b>
+                                                        <p>
                                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
 
 
-                                                        </b>
+                                                        </p>
                                                     }
                                                     else
                                                     {
-                                                        <b>
+                                                        <p>
 
                                                             @schedule.EventName
-                                                        </b>
+                                                        </p>
                                                     }
                                                 </a>
                                             </td>
