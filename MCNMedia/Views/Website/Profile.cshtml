@@ -993,9 +993,9 @@
     window.onload = function () {
         var DateSet = new Date();
         var FromDateSet = new Date();
-        FromDateSet.setDate(FromDateSet.getDate() - 1);
-        var FromDatestring = moment(FromDateSet).format('DD-MMM-YYYY');
-        var ToDatestring = moment(DateSet).format('DD-MMM-YYYY');
+        FromDateSet.setDate(FromDateSet.getDate() - 7);
+        var FromDatestring = moment(FromDateSet).format('YYYY-MMM-DD');
+        var ToDatestring = moment(DateSet).format('YYYY-MMM-DD');
         document.getElementById("TxtSearchFromDate").value = FromDatestring;
 
         $("#TxtSearchToDate").val(ToDatestring);
