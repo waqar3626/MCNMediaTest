@@ -1,11 +1,10 @@
-﻿@using Microsoft.AspNetCore.Http;
-@*@model MCNMedia_Dev.Models.Church*@
+﻿
 @model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "ChurchInfo";
     Layout = "~/Views/Shared/_LayoutClientNew.cshtml";
 }
-
+@using Microsoft.AspNetCore.Http;
 <script src="~/theme/js/FormValidation.js"></script>
 <style>
     .invalidImage {
@@ -96,6 +95,26 @@
                         <div class="col-sm-4">
                             <label class="form-label">Password</label>
                             <input type="text" id="Password" class="form-control" placeholder="Churches.Password" asp-for="Churches.Password" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Churches.RecordingShowOnWebSite" /> @Html.DisplayNameFor(model => model.Churches.RecordingShowOnWebSite)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Churches.AllowDownload" /> @Html.DisplayNameFor(model => model.Churches.AllowDownload)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Churches.ScheduleShowOnWebSite" /> @Html.DisplayNameFor(model => model.Churches.RecordingShowOnWebSite)
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group float-right">
@@ -291,5 +310,4 @@
         }
     });
 </script>
-
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,6 +68,13 @@ namespace MCNMedia_Dev.Models
         public int Switch { get; set; }
      
         public Boolean ShowOnWebsite { get; set; }
+        [DisplayName("Hide All Recording")]
+        public Boolean RecordingShowOnWebSite { get; set; }
+        [DisplayName("Hide Schedule")]
+        public Boolean ScheduleShowOnWebSite { get; set; }
+        [DisplayName("Allow Users to Download recordings")]
+        public Boolean AllowDownload { get; set; }
+
      
         public int DisplayOrder { get; set; }
 

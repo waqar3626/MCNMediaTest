@@ -132,6 +132,9 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("ChurchPassword", church.Password);
             _dc.AddParameter("installationDate", church.InstallationDate);
             _dc.AddParameter("staticIP", church.StaticIP);
+            _dc.AddParameter("RecordingShowOnWebSite", church.RecordingShowOnWebSite);
+            _dc.AddParameter("ScheduleShowOnWebSite", church.ScheduleShowOnWebSite);
+            _dc.AddParameter("AllowDownload", church.AllowDownload);
             _dc.Execute("spChurch_Update");
         }
 
@@ -174,6 +177,9 @@ namespace MCNMedia_Dev.Repository
                 church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
                 church.InstallationDate = Convert.ToDateTime(dataRow["InstallationDate"].ToString());
                 church.StaticIP= dataRow["StaticIP"].ToString();
+                church.AllowDownload = Convert.ToBoolean(dataRow["AllowDownload"]);
+                church.RecordingShowOnWebSite = Convert.ToBoolean(dataRow["RecordingShowOnWebSite"]);
+                church.ScheduleShowOnWebSite = Convert.ToBoolean(dataRow["ScheduleShowOnWebSite"]);
             }
             return church;
         }
@@ -205,6 +211,8 @@ namespace MCNMedia_Dev.Repository
                 church.Switch = Convert.ToInt32(dataRow["Switch"]);
                 church.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
                 church.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"]);
+                church.ScheduleShowOnWebSite = Convert.ToBoolean(dataRow["ScheduleShowOnWebSite"]);
+                church.RecordingShowOnWebSite = Convert.ToBoolean(dataRow["RecordingShowOnWebSite"]);
             }
             return church;
         }
