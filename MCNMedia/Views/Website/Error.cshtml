@@ -1,27 +1,50 @@
 ﻿@{
     ViewData["Title"] = "Error";
-Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 
 }
-<h3>
-    An Error Occcured While Processing your Request
-    The Support Team is Notified and we are working on the fix.
-</h3>
-<h5>Please Contact us On<a href="/View/Webite/ContactUs">mcnmedia9@gmail.com</a> </h5>
+    <style>
+        .btn-outline-blue {
+            color: #1f4a79;
+            border-color: #1f4a79;
+        }
+
+            .btn-outline-blue:hover {
+                color: #fff;
+                background-color: #1f4a79;
+                border-color: #343a40;
+            }
+    </style>
+
+    <div class="container text-center pt-5">
+        <div class=" row col-md-12  m-3">
+            <div class="float-right">
+                <div class="btn btn-outline-blue float-right">
+                    <h3>
+                        An Error Occcured While Processing your Request
+                        The Support Team is Notified and we are working on the fix.
+                    </h3>
+                    <h3 class="mt-3">Please Contact us On<a style="color:black" Class="ml-2" href="/ContactUs"><b>mcnmedia9@gmail.com</b></a> </h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+           
 
 
-@*@if (ViewBag.ErrorTitle == null)
-{
+            @*@if (ViewBag.ErrorTitle == null)
+                {
 
-<h3>
-    An Error Occcured While Processing your Request
-    The Support Team is Notified and we are working on the fix.
-</h3>
-<h5>Please Contact us On mcnmedia@gmail.com</h5>
-}
+                <h3>
+                    An Error Occcured While Processing your Request
+                    The Support Team is Notified and we are working on the fix.
+                </h3>
+                <h5>Please Contact us On mcnmedia@gmail.com</h5>
+                }
 
-else
-{
-<h1 class="text-danger">@ViewBag.ErrorTitle</h1>
-<h6 class="text-danger">@ViewBag.ErrorMassage</h6>
-}*@
+                else
+                {
+                <h1 class="text-danger">@ViewBag.ErrorTitle</h1>
+                <h6 class="text-danger">@ViewBag.ErrorMassage</h6>
+                }*@
