@@ -76,7 +76,7 @@
                             <tr>
                                 <th class="sortStyle"> Name</th>
                                 <th class="sortStyle"> EmailAddress</th>
-                                <th class="sortStyle"> ChurchName</th>
+                                @*<th class="sortStyle"> ChurchName</th>*@
                                 <th class="sortStyle"> Package</th>
                                 <th class="sortStyle"> Orderdate</th>
                                 <th class="sortStyle"> Expiredate</th>
@@ -92,9 +92,9 @@
                                     <td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.EmailAddress)
                                     </td>
-                                    <td class="text-wrap">
+                                    @*<td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>
+                                    </td>*@
                                     <td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.PackageTitle)
                                     </td>
