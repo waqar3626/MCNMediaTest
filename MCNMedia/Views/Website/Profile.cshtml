@@ -337,11 +337,14 @@
             <div class="col-1 d-xl-block d-none"></div>
         </div>
 
-        @if (Model.Churches.ScheduleShowOnWebSite == false)
-        {
-            <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
-                <div class="col-1 d-xl-block d-none"></div>
-                <div class="col-xl-8 col-lg-9  col-md-8 pl-lg-0 pr-sm-0 col-sm-7">
+        
+        <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
+            <div class="col-1 d-xl-block d-none"></div>
+            <div class="col-xl-8 col-lg-9  col-md-8 pl-lg-0 pr-sm-0 col-sm-7">
+                @if (Model.Churches.ScheduleShowOnWebSite == false)
+                {
+
+
                     <div class="heding-week pt-2 pb-2 col-md-4 text-white font-20 text-center"
                          style="background-color: #1f4a79;">
                         Weekly Schedule
@@ -660,6 +663,7 @@
                             </div>
                         </div>
                     </div>
+                }
                     <div class="text-praaa">
                         <div class="font-32 pt-4 pb-4 bg-white font-weight-bold ProximaNova">
                             @Model.Announcement.AnnouncementTitle
@@ -668,7 +672,9 @@
                             @Html.Raw(Model.Announcement.AnnouncementText)
                         </p>
                     </div>
+                
                 </div>
+            
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 pr-xl-3 pr-lg-0">
                     @if (Model.newsletter.ChurchNewsLetterId != 0)
                     {
@@ -704,10 +710,6 @@
                 </div>
                 <div class="col-1 d-xl-block d-none"></div>
             </div>
-
-        }
-
-
         <!-- recording start -->
 
         @if (Model.Churches.RecordingShowOnWebSite == false)
