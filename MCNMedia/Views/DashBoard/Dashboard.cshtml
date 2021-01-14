@@ -238,14 +238,14 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table id="sortable-table-1" class="table">
                                 <thead>
                                     <tr>
-                                        <th class="pl-0 border-bottom">COUNTRIES</th>
-                                        <th class="border-bottom">CHURCHES</th>
-                                        <th class="border-bottom">CATHEDRALS</th>
-                                        <th class="border-bottom text-wrap">FUNERAL HOMES</th>
+                                        <th class="pl-0 border-bottom sortStyle">COUNTRIES</th>
+                                        <th class="border-bottom sortStyle">CHURCHES</th>
+                                        <th class="border-bottom sortStyle">CATHEDRALS</th>
+                                        <th class="border-bottom text-wrap sortStyle">FUNERAL HOMES</th>
                                     </tr>
                                 </thead>
 
@@ -271,8 +271,7 @@
                                 @Html.DisplayFor(modelItem => dassh.FuneralsHomeCount)
 
                             </td>
-                        </tr>
-}
+                        </tr>}
                                 </tbody>
                             </table>
                         </div>
