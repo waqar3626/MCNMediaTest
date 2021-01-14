@@ -39,21 +39,29 @@
             <div class="card-body">
 
                 <div class="container text-center pt-5">
+                    <div class=" row col-md-12  m-3">
+                        <div class="float-right">
+                            <div class="btn btn-outline-blue float-right"><b>Note: </b> Subcription is for all Churches</div>
+
+                        </div>
+                    </div>
                     @if (ViewBag.LoginButton == 1)
                     {
                         <div class=" row col-md-12  m-3">
                             <div class="float-right">
-                                <a type="submit" asp-action="SubscriptionUserLogin" asp-controller="Subscription"  asp-route-id="Packages" class="btn btn-outline-blue float-right">Already have an account. Sign in</a>
+                                <a type="submit" asp-action="SubscriptionUserLogin" asp-controller="Subscription" asp-route-id="Packages" class="btn btn-outline-blue float-right">Already have an account. Sign in</a>
 
                             </div>
                         </div>
                     }
+
+
                     <div class="row pricing-table">
                         @foreach (var items in Model)
                         {
                             <div class="col-md-4 col-xl-4  pt-3">
                                 <form method="post">
-                                    
+
                                     <input type="hidden" name="SubscriberId" value="@ViewBag.SubscriberId" />
                                     <div class="border p-4" style="border-color: #1f4a79 !important">
                                         <div class="text-center pricing-card-head">
