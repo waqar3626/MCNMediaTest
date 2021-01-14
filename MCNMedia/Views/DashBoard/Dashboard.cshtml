@@ -288,14 +288,14 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="table-responsive">
-                            <table class="table table-striped table-borderless">
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table id="sortable-table-1" class="table">
                                 <thead>
                                     <tr>
-                                        <th class="text-wrap">Church</th>
-                                        <th class="text-wrap">Event Name</th>
-                                        <th class="text-wrap">Event Status</th>
-                                        <th class="text-wrap">Event Time</th>
+                                        <th class="text-wrap sortStyle">Church</th>
+                                        <th class="text-wrap sortStyle">Event Name</th>
+                                        <th class="text-wrap sortStyle">Event Status</th>
+                                        <th class="text-wrap sortStyle">Event Time</th>
 
                                     </tr>
                                 </thead>
@@ -315,34 +315,29 @@
                             @if (item.ScheduleStatus == "Pending")
                             {
 
-            <td class="font-weight-medium text-danger">
-                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-            </td>
- }
-        else if (item.ScheduleStatus == "In Progress")
-        {
-        <td class="font-weight-medium text-warning">
-            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-        </td>
- }
-    else if (item.ScheduleStatus == "Completed")
-    {
-        <td class="font-weight-medium text-info">
-            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-        </td>
- }
-    else if (item.ScheduleStatus == "Published")
-    {
-        <td class="font-weight-medium text-success">
-            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-        </td>
-}
+                        <td class="font-weight-medium text-danger">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "In Progress")
+                                        {
+                        <td class="font-weight-medium text-warning">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "Completed")
+                                        {
+                        <td class="font-weight-medium text-info">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "Published")
+                                        {
+                        <td class="font-weight-medium text-success">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td>}
                             <td class="text-wrap">
                                 @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
                             </td>
 
-                        </tr>
-}
+                        </tr>}
                                 </tbody>
                             </table>
                         </div>
@@ -365,14 +360,13 @@
                     COUNTRIES ANALYTICS DETAIL
                 </div>
                 <div class="card-body">
-
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
+                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                        <table id="sortable-table-1" class="table">
                             <thead>
                                 <tr>
-                                    <th class="pl-0 border-bottom">COUNTRY</th>
-                                    <th class="border-bottom">TOTAL VIEWS</th>
-                                  
+                                    <th class="pl-0 border-bottom sortStyle">COUNTRY</th>
+                                    <th class="border-bottom sortStyle">TOTAL VIEWS</th>
+
                                 </tr>
                             </thead>
 
@@ -390,8 +384,9 @@
                                 </span>
                             </p>
                         </td>
-                       
-                    </tr>}
+
+                    </tr>
+}
                             </tbody>
                         </table>
                     </div>
