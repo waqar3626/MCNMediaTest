@@ -115,11 +115,7 @@
                                 {
                                     @foreach (var schedule in Model.UpcomingSchedule.Take(1))
                                     {
-
-
                                         <label>  @schedule.ChurchName, @schedule.Town</label><br />
-
-
                                         @if (schedule.IsRepeated == true && schedule.Record == true)
                                         {
                                             <b>
@@ -130,27 +126,21 @@
                                         {
                                             <b>
                                                 @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-
                                             </b>
                                         }
                                         else if (schedule.IsRepeated == false && schedule.Record == true)
                                         {
                                             <b>
                                                 @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-
-
                                             </b>
                                         }
                                         else
                                         {
                                             <b>
-
                                                 @schedule.EventName
                                             </b>
                                         }
-
                                         @schedule.EventTime.ToString("h:mm tt")
-
                                     }
                                 }
                                 else
@@ -162,11 +152,10 @@
                         </div>
                     </div>
                 }
-                    <br />
-
-                    <!-- </div> -->
-                    <div class="clearfix"></div>
-                </div>
+                <br />
+                <!-- </div> -->
+                <div class="clearfix"></div>
+            </div>
             <div class="col-xl-7 col-md-8 p-lg-0">
                 <div class="card" id="top-card">
                     <div class="tab-content" id="pills-tabContent">
@@ -180,12 +169,8 @@
                                 if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
                                 {
                                     <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-
                                         <img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />
-
                                     </div>
-
-
                                 }
                                 else
                                 {
@@ -195,7 +180,6 @@
                                             <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
                                         </video>
                                     </div>
-
                                 }
                             }
                             else
@@ -203,10 +187,8 @@
                                 if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
                                 {
                                     <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                        <img src="~/Images/offline-notice.jpg" id="LiveStreamSrc-@camCounter" style="width:100%" />
+                                        <img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />
                                     </div>
-
-
                                 }
                                 else
                                 {
@@ -216,9 +198,7 @@
                                             <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
                                         </video>
                                     </div>
-
                                 }
-
                             }
                             camCounter = camCounter + 1;
                         }
@@ -235,18 +215,13 @@
                         }
                         <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
                             <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
-
                                 @foreach (MediaChurch vid in Model.VideoList)
                                 {
                                     string vlink = vid.MediaURL.ToString();
                                     <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL" class="vedslide"></div>
-
                                 }
-
                             </div>
-
                         </div>
-
                         <div class="tab-pane fade" id="pills-image" role="tabpanel" aria-labelledby="pills-image-tab">
                             <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
                                 <div class="carousel-inner">
@@ -259,14 +234,12 @@
                                         {
                                             counter = counter + 1;
                                             <div class="carousel-item active">
-
                                                 <img src="@pic.MediaURL" class="d-block" style="height:518px;width:100%;justify-content:center;" alt="...">
                                             </div>
                                         }
                                         else
                                         {
                                             <div class="carousel-item">
-
                                                 <img src="@pic.MediaURL" class="d-block" style="height:518px;width:100%;justify-content:center;" alt="...">
                                             </div>
                                         }
@@ -290,7 +263,6 @@
                             }
                             @foreach (Camera cam in Model.CameraList)
                             {
-
                                 if (camCounter == 0)
                                 {
                                     <li class="nav-item">
@@ -307,8 +279,8 @@
                             }
 
                             @*<li class="nav-item">
-                                <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
-                            </li>*@
+                                    <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
+                                </li>*@
                             @if (Model.VideoList.Count() > 0)
                             {
                                 <li class="nav-item">
@@ -332,19 +304,14 @@
                         @Html.Raw(Model.notice.NoticeName)
                     </p>
                 </div>
-
             </div>
             <div class="col-1 d-xl-block d-none"></div>
         </div>
-
-        
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
             <div class="col-1 d-xl-block d-none"></div>
             <div class="col-xl-8 col-lg-9  col-md-8 pl-lg-0 pr-sm-0 col-sm-7">
                 @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
-
-
                     <div class="heding-week pt-2 pb-2 col-md-4 text-white font-20 text-center"
                          style="background-color: #1f4a79;">
                         Weekly Schedule
@@ -373,7 +340,6 @@
                                 <a class="nav-link" id="" data-toggle="pill" href="#pills-day7-tab" role="tab" aria-controls="pills-contact" aria-selected="false">@System.DateTime.Now.AddDays(6).ToString("dddd")</a>
                             </li>
                         </ul>
-
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-day1-tab" aria-labelledby="pills-day1-tab">
                                 <div class="table-now">
@@ -414,7 +380,6 @@
                                     </table>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="pills-day2-tab" aria-labelledby="pills-day2-tab">
                                 <div class="table-now">
                                     <table class="table table-striped table-responsive-lg table-borderless">
@@ -425,9 +390,7 @@
                                                 {
                                                     <tr>
                                                         <td scope="row" class="font-weight-normal text-purple">@itm.EventName</td>
-
                                                         <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-
                                                         @if (itm.Record == true)
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
@@ -438,7 +401,6 @@
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
                                                                 <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
                                                             </td>
                                                         }
                                                     </tr>
@@ -456,7 +418,6 @@
                                     </table>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="pills-day3-tab" role="tabpanel" aria-labelledby="pills-day3-tab">
                                 <div class="table-now">
                                     <table class="table table-striped table-responsive-lg table-borderless">
@@ -467,7 +428,6 @@
                                                 {
                                                     <tr>
                                                         <td scope="row" class="font-weight-normal text-purple">@itm.EventName</td>
-
                                                         <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
                                                         @if (itm.Record == true)
                                                         {
@@ -479,7 +439,6 @@
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
                                                                 <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
                                                             </td>
                                                         }
                                                     </tr>
@@ -508,7 +467,6 @@
                                                 {
                                                     <tr>
                                                         <td scope="row" class="font-weight-normal text-purple">@itm.EventName</td>
-
                                                         <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
                                                         @if (itm.Record == true)
                                                         {
@@ -520,7 +478,6 @@
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
                                                                 <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
                                                             </td>
                                                         }
                                                     </tr>
@@ -538,7 +495,6 @@
                                     </table>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="pills-day5-tab" role="tabpanel" aria-labelledby="pills-day5-tab">
                                 <div class="table-now">
                                     <table class="table table-striped table-responsive-lg table-borderless">
@@ -549,7 +505,6 @@
                                                 {
                                                     <tr>
                                                         <td scope="row" class="font-weight-normal text-purple">@itm.EventName</td>
-
                                                         <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
                                                         @if (itm.Record == true)
                                                         {
@@ -561,7 +516,6 @@
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
                                                                 <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
                                                             </td>
                                                         }
                                                     </tr>
@@ -590,7 +544,6 @@
                                                 {
                                                     <tr>
                                                         <td scope="row" class="font-weight-normal text-purple">@itm.EventName</td>
-
                                                         <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
                                                         @if (itm.Record == true)
                                                         {
@@ -602,7 +555,6 @@
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
                                                                 <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
                                                             </td>
                                                         }
                                                     </tr>
@@ -620,7 +572,6 @@
                                     </table>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="pills-day7-tab" role="tabpanel" aria-labelledby="pills-day7-tab">
                                 <div class="table-now">
                                     <table class="table table-striped table-responsive-lg table-borderless">
@@ -631,7 +582,6 @@
                                                 {
                                                     <tr>
                                                         <td scope="row" class="font-weight-normal text-purple">@itm.EventName</td>
-
                                                         <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
                                                         @if (itm.Record == true)
                                                         {
@@ -643,7 +593,6 @@
                                                         {
                                                             <td class="font-weight-normal font-weight-bold">
                                                                 <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-
                                                             </td>
                                                         }
                                                     </tr>
@@ -664,54 +613,48 @@
                         </div>
                     </div>
                 }
-                    <div class="text-praaa">
-                        <div class="font-32 pt-4 pb-4 bg-white font-weight-bold ProximaNova">
-                            @Model.Announcement.AnnouncementTitle
-                        </div>
-                        <p class="font-16 mb-2">
-                            @Html.Raw(Model.Announcement.AnnouncementText)
-                        </p>
+                <div class="text-praaa">
+                    <div class="font-32 pt-4 pb-4 bg-white font-weight-bold ProximaNova">
+                        @Model.Announcement.AnnouncementTitle
                     </div>
-                
+                    <p class="font-16 mb-2">
+                        @Html.Raw(Model.Announcement.AnnouncementText)
+                    </p>
                 </div>
-            
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 pr-xl-3 pr-lg-0">
-                    @if (Model.newsletter.ChurchNewsLetterId != 0)
-                    {
-                        <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
-
-                            <div class="news-wrap mb-3">
-                                <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
-                                <p class="font-weight-light mb-2 font-12">
-                                    <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
-                                </p>
-                                <p class="font-14 mb-0 "></p>
-                                <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
-                            </div>
-
-                        </div>
-                    }
-
-                    @if (Model.churchDonation.ShowOnWebsite)
-                    {
-                        <div class="col-sm-12  news pr-0 pl-0 mt-2" style="position: sticky; top:1px;">
-                            <div class="form-group row news">
-                                <div class="col-sm-12">
-                                    <div class="max-width-100 max-height-100 ">
-                                        <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100 main-img-donate" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
-                                        <a href="@Model.churchDonation.WebSiteUrl" class="btn btn-info btn-lg w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-                <div class="col-1 d-xl-block d-none"></div>
             </div>
-        <!-- recording start -->
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 pr-xl-3 pr-lg-0">
+                @if (Model.newsletter.ChurchNewsLetterId != 0)
+                {
+                    <div class="border bg-white news p-4 pr-lg-5" style="position: sticky; top:1px;">
+                        <div class="news-wrap mb-3">
+                            <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
+                            </p>
+                            <p class="font-14 mb-0 "></p>
+                            <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
+                        </div>
+                    </div>
+                }
 
+                @if (Model.churchDonation.ShowOnWebsite)
+                {
+                    <div class="col-sm-12  news pr-0 pl-0 mt-2" style="position: sticky; top:1px;">
+                        <div class="form-group row news">
+                            <div class="col-sm-12">
+                                <div class="max-width-100 max-height-100 ">
+                                    <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100 main-img-donate" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
+                                    <a href="@Model.churchDonation.WebSiteUrl" class="btn btn-info btn-lg w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-1 d-xl-block d-none"></div>
+        </div>
+        <!-- recording start -->
         @if (Model.Churches.RecordingShowOnWebSite == false)
         {
             <div class="bg-blue">
@@ -723,7 +666,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
                 <div class="col-1 d-xl-block d-none"></div>
                 <div class="col-xl-10">
@@ -731,10 +673,8 @@
                         <div class="col-12 pt-4 pb-1 pr-4">
                             <div class="row ">
                                 <div class="col-12">
-
                                     <button id="btnRecordingSearch" type="button" class="btn btn-info float-right bg-blue " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
                                 </div>
-
                                 <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
                                     <div class="col-12">
                                         <div class="card card-body border bg-white  news row m-0">
@@ -742,13 +682,9 @@
                                                 <div class="col-12">
                                                     <div class="row">
                                                         <div class="news-wrap col-lg-4 col-md-6 col-sm-12 mt-1">
-
                                                             <label> Event Name</label>
                                                             <input type="text" class="form-control" id="TxtSearchEventName" />
                                                         </div>
-
-
-
                                                         <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
                                                             <label>  Search By Date From</label>
                                                             <div id="datepicker-popup2" class="input-group date datepicker">
@@ -757,7 +693,6 @@
                                                                     <span class="ti-calendar input-group-text"></span>
                                                                 </span>
                                                             </div>
-
                                                         </div>
                                                         <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
                                                             <label>To Date</label>
@@ -767,7 +702,6 @@
                                                                     <span class="ti-calendar input-group-text"></span>
                                                                 </span>
                                                             </div>
-
                                                         </div>
                                                         <div class="news-wrap col-lg-2 col-md-6 col-sm-12  center">
                                                             <label></label>
@@ -776,11 +710,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -788,22 +717,21 @@
                         </div>
                         <div class=" col-12">
                             <div class=" font-32  pb-4 bg-white text-pink">
-
                             </div>
                             <div class="border bg-white pb-4 news pt-4 row m-0 RecList">
                                 @*@foreach (Recording recording in Model.RecordingList)
-                                {
-                                    <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
-                                        <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
-                                        <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                                            <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
-                                        </div>
-                                        <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="_blank" class="ply-vid">
-                                            <i class="fal fa-play-circle font-36"></i>
-                                        </a>
+                                    {
+                                        <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
+                                            <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
+                                            <div class="font-weight-light in-icon-arrow d-inline-block font-12">
+                                                <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
+                                            </div>
+                                            <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="_blank" class="ply-vid">
+                                                <i class="fal fa-play-circle font-36"></i>
+                                            </a>
 
-                                    </div>
-                                }*@
+                                        </div>
+                                    }*@
                             </div>
                         </div>
                     </div>
@@ -811,9 +739,6 @@
                 <div class="col-1 d-xl-block d-none"></div>
             </div>
         }
-
-
-
         <!-- recording END -->
     </div>
 
@@ -830,11 +755,9 @@
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
         player.autoplay(false);
-
     }
 
     function OpenPictures() {
-
         var cameras = document.getElementById("CamerasContainer");
         var images = document.getElementById("carouselExampleCaptions");
         var vedios = document.getElementById("VediosContainer");
@@ -845,19 +768,14 @@
         // } else {
         images.style.display = "block";
         // }
-
     }
 
     function OpenVedio(vedId, vedioURL) {
-
-
-
         jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
-
         var fileURL = vedioURL;
         jwplayer('' + vedId + '').setup({
             file: fileURL,
-            image: "../css/jwerror.jpg",
+            image: "../Images/jwerror.jpg",
             width: "100%",
             height: "518px",
             aspectratio: "16:9",
@@ -866,7 +784,6 @@
         jwplayer().onError(function () {
             jwplayer().play();
         });
-
     }
 
     $(document).ready(function ($) {
@@ -895,9 +812,7 @@
             var divurl = vedioSlides.item(i).getAttribute('mediaurl');
             OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'))
         }
-
         OpenCamera('CameraLiveStream-0');
-
         LoadRecordingList();
     });
 
