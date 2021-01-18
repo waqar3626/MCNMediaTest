@@ -612,6 +612,7 @@ namespace MCNMedia_Dev.Controllers
         {
             if (IsLocal(HttpContext.Connection))
             {
+                Common.SaveToXXX("visited just now -Pak2 " + DateTime.Now.ToString());
                 return "Pakistan";
             }
             string rootPath = Directory.GetCurrentDirectory();
@@ -648,7 +649,7 @@ namespace MCNMedia_Dev.Controllers
                     ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
                 }
 
-
+                Common.SaveToXXX("visited just now2 " + ipAddress.ToString());
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);
                 var countryname = countryInfo.Country.ToString();
@@ -661,7 +662,7 @@ namespace MCNMedia_Dev.Controllers
         private bool IsLocal(ConnectionInfo connection)
         {
             var remoteAddress = connection.RemoteIpAddress.ToString();
-
+            Common.SaveToXXX("Remote Address1: " + remoteAddress.ToString());
             // if unknown, assume not local
             if (String.IsNullOrEmpty(remoteAddress))
                 return false;
