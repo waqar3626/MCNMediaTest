@@ -271,5 +271,22 @@ namespace MCNMedia_Dev.Repository
             }
             return user;
         }
+
+        public int ChurchRegionCheck(int ChurchId, string RegionName)
+        {
+            
+           // List<Church> Balobj = new List<Church>();
+            _dc.ClearParameters();
+            _dc.AddParameter("ChId", ChurchId);
+            _dc.AddParameter("RegName", RegionName);
+
+            int result = 0;
+            DataTable dataTable = _dc.ReturnDataTable("spChurch_ForRegionCheck");
+            if (dataTable.Rows.Count > 0)
+            {
+                result = Convert.ToInt32(dataTable.Rows[0][0].ToString());
+            }
+            return result;
+        }
     }
 }

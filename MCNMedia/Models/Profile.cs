@@ -19,11 +19,12 @@ namespace MCNMedia_Dev.Models
         public  ChurchDonation churchDonation { get; set; }
 
         // Lists
+        public IEnumerable<Church> ChurchList { get; set; }
         public IEnumerable<Camera> CameraList { get; set; }
         public IEnumerable<MediaChurch> VideoList { get; set; }
         public IEnumerable<MediaChurch> SlideshowList { get; set; }
         public IEnumerable<MediaChurch> PictureList { get; set; }
-
+        public IEnumerable<NewsLetter> ChurchNewsLetterList { get; set; }
         public IEnumerable<Schedule> ScheduleList { get; set; }
         public IEnumerable<Recording> RecordingList { get; set; }
 

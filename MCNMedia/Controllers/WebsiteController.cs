@@ -547,7 +547,8 @@ namespace MCNMedia_Dev.Controllers
 
                 int SubscriberPaid = Convert.ToInt32(TempData["paymentId"]);
                 string visitorLocation = CheckVisitorLocation();
-                if (visitorLocation == "United Kingdom" || visitorLocation == "Ireland" || SubscriberPaid > 0)
+                int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitorLocation);
+                if (allowToProfile == 1 || SubscriberPaid > 0)
                 {
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));

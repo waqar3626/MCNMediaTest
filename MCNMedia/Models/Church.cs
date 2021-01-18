@@ -90,6 +90,10 @@ namespace MCNMedia_Dev.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime InstallationDate { get; set; }
 
+        public int RegionId { get; set; }
+
+        public string RegionName { get; set; }
+
         public class ClientType
         {
             public int ClientTypeId { get; set; }
