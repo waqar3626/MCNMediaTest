@@ -288,5 +288,27 @@ namespace MCNMedia_Dev.Repository
             }
             return result;
         }
+
+        public IEnumerable<Subscriptions> GetRevenueInfo(DateTime FromDate, DateTime ToDate)
+        {
+            List<Subscriptions> Balobj = new List<Subscriptions>();
+            _dc.ClearParameters();
+            _dc.AddParameter("fromdate", FromDate);
+            _dc.AddParameter("Todate", ToDate);
+
+            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetRevenueInfo");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Subscriptions subscription = new Subscriptions();
+
+                subscription.PackageTitle = dataRow["PackageTitle"].ToString();
+                subscription.PaidAmount = Convert.ToDecimal(dataRow["PaidAmount"].ToString());
+
+                subscription.NoOfPackages = Convert.ToInt32(dataRow["NoOfPackages"].ToString());
+
+                Balobj.Add(subscription);
+            }
+            return Balobj;
+        }
     }
 }

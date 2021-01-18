@@ -35,6 +35,10 @@ namespace MCNMedia_Dev.Models
         public int ChurchId { get; set; }
         public string TokenId { get; set; }
 
+        public decimal FullAmount { get; set; }
+
+        public int NoOfPackages { get; set; }
+
 
     }
 }

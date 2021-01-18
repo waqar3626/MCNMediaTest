@@ -652,6 +652,26 @@ namespace MCNMedia_Dev.Controllers
             }
             return NewPassword;
         }
-      
+
+        public IActionResult Revenue()
+        {
+            try
+            {
+                DateTime fromDate = DateTime.Now.AddDays(-30);
+                DateTime toDate = DateTime.Now;
+                string emailAddress = "";
+
+                List<Subscriptions> subs = subDataAccess.GetRevenueInfo(fromDate, toDate).ToList<Subscriptions>();
+                ViewBag.FromDate = fromDate.ToString("dd-MMM-yyyy");
+                ViewBag.ToDate = toDate.ToString("dd-MMM-yyyy");
+                ViewBag.FullAmount = subs.Sum(item => item.PaidAmount);
+                return View(subs);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Processing Errors : " + e.Message);
+                throw;
+            }
+        }
     }
 }
