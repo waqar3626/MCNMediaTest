@@ -35,5 +35,13 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("IsSuccess", spayment.IsSuccess);
             return _dc.ReturnInt("spLogOnline_Update");
         }
+
+
+
+        public DataTable GetPackagesDDL()
+        {
+            _dc.ClearParameters();
+            return _dc.ReturnDataTable("spPackagesddl_Get");
+        }
     }
 }

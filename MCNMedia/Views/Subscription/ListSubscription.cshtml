@@ -80,6 +80,7 @@
                                 <th class="sortStyle"> Package</th>
                                 <th class="sortStyle"> Orderdate</th>
                                 <th class="sortStyle"> Expiredate</th>
+                                <th class="sortStyle"> Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,6 +105,9 @@
                                     </td>
                                     <td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.Expiredate)
+                                    </td>
+                                    <td class="text-wrap">
+                                        <a href="@Url.Action("SubscriberProfileForAdmin", "Subscription", new { subId = item.SubscriberId })" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Detail"><i class="fa fa-bars"></i></a>
                                     </td>
                                 </tr>
                             }

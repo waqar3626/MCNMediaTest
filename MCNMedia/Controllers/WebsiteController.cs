@@ -113,7 +113,8 @@ namespace MCNMedia_Dev.Controllers
         }
             catch (Exception e)
             {
-                return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+                return Json(-1);
+                //return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -327,7 +328,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+                return Json(-1);
+                //return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -696,7 +698,8 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception e)
             {
 
-                return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+                return Json(-1);
+                //return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
         }
 

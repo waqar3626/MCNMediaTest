@@ -31,8 +31,11 @@ namespace MCNMedia_Dev.Models
         public DateTime Orderdate { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy} {0:hh:mm tt}")]
         public DateTime Expiredate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime CreatedAt { get; set; }
+        public int UpdatedBy { get; set; }
         public int ChurchId { get; set; }
+        public Boolean IsAddedByAdmin { get; set; }
         public string TokenId { get; set; }
 
         public decimal FullAmount { get; set; }

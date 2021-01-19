@@ -143,5 +143,28 @@ namespace MCNMedia_Dev.Models
             }
             return list;
         }
+        public static List<SelectListItem> GetPackagesDDL()
+        {
+
+            PaymentDataAccessLayer payment= new PaymentDataAccessLayer();
+            var PackageDDL = payment.GetPackagesDDL();
+            var list = new List<SelectListItem>();
+
+            list.Add(new SelectListItem
+            {
+                Text = "--Select--",
+                Value = "0"
+            });
+            foreach (DataRow dr in PackageDDL.Rows)
+            {
+
+                list.Add(new SelectListItem
+                {
+                    Text = dr["PackageTitle"].ToString(),
+                    Value = dr["PackageId"].ToString()
+                });
+            }
+            return list;
+        }
     }
 }

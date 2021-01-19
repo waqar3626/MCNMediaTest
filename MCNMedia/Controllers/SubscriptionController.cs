@@ -47,6 +47,61 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        public IActionResult SubscriberProfileForAdmin()
+        {
+            try
+            {
+                GenericSubscriber gm = new GenericSubscriber();
+                int SubId=0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("subId").ToString()))
+                {
+                    SubId = Convert.ToInt32(HttpContext.Session.GetInt32("subId").ToString());
+                }
+                if (!string.IsNullOrEmpty(HttpContext.Request.Query["subId"].ToString()))
+                {
+                     SubId = Convert.ToInt32(HttpContext.Request.Query["subId"].ToString());
+                    HttpContext.Session.SetInt32("subId", SubId);
+                }
+                
+                    HttpContext.Session.SetInt32("SubId", SubId);
+                    //List<Subscriptions> subs = subDataAccess.GetSingleSubscribersList(SubId).ToList<Subscriptions>();
+                    gm.Lsubscriptions = subDataAccess.GetSingleSubscribersList(SubId).ToList<Subscriptions>();
+                    gm.subscriptions = subDataAccess.GetSubscriberById(SubId);
+                    HttpContext.Session.SetInt32("chrId", gm.subscriptions.ChurchId);
+                    return View(gm);                
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Processing Errors : " + e.Message);
+                throw;
+            }
+        }
+        [HttpPost]
+        public IActionResult UpdateSubscriberByAdmin(int SubscriberId, string Name,string EmailAddress)
+        {
+            Subscriptions subscriptions = new Subscriptions();
+            var CountryId = Request.Form["subscriptions.CountryId"].ToString();
+            subscriptions.CountryId= Convert.ToInt32(CountryId);
+            subscriptions.SubscriberId = SubscriberId;
+            subscriptions.Name = Name;
+            subscriptions.EmailAddress = EmailAddress;
+            subscriptions.UpdatedBy= (int)HttpContext.Session.GetInt32("UserId");
+            subDataAccess.UpdateSubscriptionByAdmin(subscriptions);
+            return RedirectToAction("SubscriberProfileForAdmin");
+        }
+        [HttpPost]
+        public IActionResult SubscriptionAddByAdmin([Bind] GenericSubscriber subscription, int SubscriberId,int ChurchId)
+        {
+            subscription.subscriptions.SubscriberId = SubscriberId;
+            var PackageId = Request.Form["subscriptions.PackageId"].ToString();
+            subscription.subscriptions.ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+            subscription.subscriptions.PackageId = Convert.ToInt32(PackageId);
+            subscription.subscriptions.IsAddedByAdmin = true;
+            //subscription.subscriptions.Expiredate = DateTime.Now;
+            int paymentId = subDataAccess.AddSubscriberpayment(subscription.subscriptions);
+            return RedirectToAction("SubscriberProfileForAdmin");
+        }
+
         [HttpPost]
         public IActionResult Processing(int PaymentLogId, string Description, string stripeToken, string stripeEmail, decimal PackageAmount)
         {
@@ -77,11 +132,13 @@ namespace MCNMedia_Dev.Controllers
                         subscription.OrderAmount = (decimal)PackageAmount;
                         subscription.PaidAmount = (decimal)PackageAmount;
                         subscription.TokenId = stripeToken;
+                        subscription.IsAddedByAdmin = false;
                         int paymentLogId = subDataAccess.UpdateSubscriberpaymentLog(PaymentLogId, true, charge.Id, stripeToken);
                         int paymentId = subDataAccess.AddSubscriberpayment(subscription);
                         TempData["paymentId"] = paymentId;
                         //EmailHelper emailHelper = new EmailHelper();
                         //emailHelper.SendEmail("mcnmedia9@gmail.com", "toEmail", "Name", "Subject:Payment", "Body");
+                        //return RedirectToAction("Home", "Website");
                         return RedirectToAction("Profile", "Website");
                         break;
                     case "failed":
@@ -180,6 +237,12 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+
+        public IActionResult SubscriberDetail()
+        {
+            return View();
+        }
+       
         [HttpPost]
         public IActionResult Search(string fromDate, string toDate, string EmailAddress)
         {
@@ -208,7 +271,6 @@ namespace MCNMedia_Dev.Controllers
                 if (SubscriberId > 0)
                 {
                     HttpContext.Session.SetInt32("packageId", PackageId);
-
                     HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
                     Subscriptions subscriberinfo = subDataAccess.GetSubscriberById(SubscriberId);
                     Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);
@@ -218,7 +280,7 @@ namespace MCNMedia_Dev.Controllers
                     subscription.PackageId = PackageId;
                     subscription.EmailAddress = subscriberinfo.EmailAddress;
                     decimal PakageAmount = subscription.PackageCharge;
-                    int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-");
+                    int paymentLogId = subDataAccess.AddSubscriberpaymentLog(PackageId, SubscriberId, PakageAmount, "-", ChurchId, "-"); 
                     //EmailHelper emailHelper = new EmailHelper();
                     //emailHelper.SendEmail("mcnmedia9@gmail.com", subscription.EmailAddress, "", "Subject:Renewal", "you have been Renew your mcnMedia subscription");
                     if (paymentLogId > 0)
@@ -282,7 +344,7 @@ namespace MCNMedia_Dev.Controllers
                     cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
                     HttpContext.Response.Cookies.Append("SubscriberId", subscriberId, cookieOptions);
                     HttpContext.Session.SetInt32("SubscriberId", SubscriberId);
-                    HttpContext.Response.Cookies.Append("SubscriberName", subscriberName.Name, cookieOptions);
+                    HttpContext.Response.Cookies.Append("SubscriberName", subscriptions.Name, cookieOptions);
                     int PackageId = (int)HttpContext.Session.GetInt32("packageId");
                     Subscriptions subscriberinfo = subDataAccess.GetSubscriberById(SubscriberId);
                     Subscriptions subscription = subDataAccess.GetpackagesById(PackageId);

@@ -49,7 +49,7 @@ namespace MCNMedia_Dev.Repository
                
         }
 
-            private Subscriptions BindSubscriptionPackages(DataRow dataRow)
+        private Subscriptions BindSubscriptionPackages(DataRow dataRow)
             {
 
                 Subscriptions subscription = new Subscriptions();
@@ -73,6 +73,18 @@ namespace MCNMedia_Dev.Repository
 
             return SubscriberId;
         }
+
+        public void UpdateSubscriptionByAdmin(Subscriptions sub)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("Subscriber_Id", sub.SubscriberId);
+            _dc.AddParameter("Subscriber_Name", sub.Name);
+            _dc.AddParameter("Email_Address", sub.EmailAddress);
+            _dc.AddParameter("Country_Id", sub.CountryId);
+            _dc.AddParameter("Subscriber_Password", sub.Password);
+            _dc.AddParameter("Updaed_By", sub.UpdatedBy);
+            _dc.Execute("spSubscriber_Update");
+        }
         public IEnumerable<Subscriptions> GetAllSubscribersList(DateTime FromDate, DateTime ToDate, string EmailAddress)
         {
             List<Subscriptions> Balobj = new List<Subscriptions>();
@@ -81,10 +93,11 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("fromdate", FromDate);
             _dc.AddParameter("Todate", ToDate);
 
-            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetAllSubscriberList");
+            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetAllSubscriberListK");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Subscriptions subscription = new Subscriptions();
+                subscription.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"].ToString());
                 subscription.Name = dataRow["SubscriberName"].ToString();
                 subscription.EmailAddress = dataRow["EmailAddress"].ToString();
                 subscription.ChurchName = dataRow["ChurchName"].ToString();
@@ -100,7 +113,7 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
         public IEnumerable<Subscriptions> GetSingleSubscribersList(int subscriberId)
-        {
+         {
             List<Subscriptions> Balobj = new List<Subscriptions>();
             _dc.ClearParameters();
             _dc.AddParameter("subscriberId", subscriberId);
@@ -127,7 +140,7 @@ namespace MCNMedia_Dev.Repository
         {
             Subscriptions subscription = new Subscriptions();
             _dc.ClearParameters();
-            _dc.AddParameter("subscribeId", subscriberId);
+            _dc.AddParameter("subscribe_Id", subscriberId);
             DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetById");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -135,7 +148,10 @@ namespace MCNMedia_Dev.Repository
                 subscription.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"]);
                 subscription.Name = dataRow["SubscriberName"].ToString();
                 subscription.EmailAddress = dataRow["EmailAddress"].ToString();
-                subscription.Password = dataRow["SubscriberPassword"].ToString();
+                subscription.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                subscription.Expiredate = Convert.ToDateTime(dataRow["ExpiryDate"].ToString());
+                subscription.CountryId = Convert.ToInt32(dataRow["CountryId"].ToString());
+                subscription.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
                
             }
             return subscription;
@@ -168,9 +184,10 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("PaidAmount", Sub.PaidAmount);
             _dc.AddParameter("ChurchId", Sub.ChurchId);
             _dc.AddParameter("tokenId", Sub.TokenId);
+            _dc.AddParameter("IsAddedByAdmin", Sub.IsAddedByAdmin);
 
 
-            return _dc.ReturnInt("spSubscriberPayment_Add");
+            return _dc.ReturnInt("spSubscriberPayment_AddKk");
 
          
         }
