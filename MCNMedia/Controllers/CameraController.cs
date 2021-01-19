@@ -186,7 +186,7 @@ namespace MCNMedia_Dev.Controllers
         public void SyncAllCamerasWithWowza()
         {
             CameraStream cameraStream = new CameraStream();
-            List<Camera> cameraList = camDataAccess.GetAllAdminCameras();
+            List<Camera> cameraList = camDataAccess.GetAllCameras();
             foreach (Camera cam in cameraList)
             {
                 SyncCameraWithWowza(cam);
