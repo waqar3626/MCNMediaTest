@@ -8,11 +8,11 @@
 
 <div class="card mb-3">
     <div class="card-header card-header-custom">
-        Search
+        Revenue Summary
     </div>
     <div class="card-body">
         <div class="">
-            <form method="post" asp-action="Search" asp-controller="Subscription">
+            <form method="post" asp-action="SearchRevenue" asp-controller="Subscription">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -50,7 +50,7 @@
                             <label class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-8">
                                 <button type="submit" class="btn btn-primary btn-sm text-white" title="Search"><i class="mdi mdi-table-search text-white"></i>Search</button>
-                                <a asp-controller="Subscription" asp-action="ListSubscription" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
+                                <a asp-controller="Subscription" asp-action="Revenue" class="btn btn-warning btn-sm text-white" title="Cancel"><i class="mdi mdi-cancel text-white"></i>Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -61,12 +61,12 @@
 </div>
 
 <div class="card">
-    <div class="card-header card-header-custom">Revenue @ViewBag.FullAmount</div>
+    <div class="card-header card-header-custom">Total Revenue <label class="float-right" >&#xa3;@ViewBag.FullAmount</label> </div>
     <div class="card-body">
-        <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
+        <div>
             <div class="row">
                 <div class="col-12">
-                    <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th class="sortStyle"> Package</th>
@@ -87,7 +87,7 @@
                                         @Html.DisplayFor(modelItem => item.NoOfPackages)
                                     </td>
                                     <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.PaidAmount)
+                                        &#xa3;@Html.DisplayFor(modelItem => item.PaidAmount)
                                     </td>
                                 </tr>
                             }

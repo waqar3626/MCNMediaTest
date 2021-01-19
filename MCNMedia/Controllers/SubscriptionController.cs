@@ -659,13 +659,33 @@ namespace MCNMedia_Dev.Controllers
             {
                 DateTime fromDate = DateTime.Now.AddDays(-30);
                 DateTime toDate = DateTime.Now;
-                string emailAddress = "";
 
                 List<Subscriptions> subs = subDataAccess.GetRevenueInfo(fromDate, toDate).ToList<Subscriptions>();
                 ViewBag.FromDate = fromDate.ToString("dd-MMM-yyyy");
                 ViewBag.ToDate = toDate.ToString("dd-MMM-yyyy");
                 ViewBag.FullAmount = subs.Sum(item => item.PaidAmount);
                 return View(subs);
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Processing Errors : " + e.Message);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SearchRevenue(string fromDate, string toDate)
+        {
+            try
+            {
+                DateTime FromDate = Convert.ToDateTime(fromDate);
+                DateTime ToDate = Convert.ToDateTime(toDate);
+
+                List<Subscriptions> subs = subDataAccess.GetRevenueInfo (FromDate, ToDate).ToList<Subscriptions>();
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+                ViewBag.FullAmount = subs.Sum(item => item.PaidAmount);
+                return View("Revenue", subs);
             }
             catch (Exception e)
             {
