@@ -28,6 +28,8 @@ namespace MCNMedia_Dev.Models
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
         public string ChurchUniqueIdentifier { get; internal set; }
+    
+       
 
         public int ServerId { get; set; }
         public string ServerName { get; set; }

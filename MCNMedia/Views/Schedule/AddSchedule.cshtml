@@ -9,7 +9,7 @@
     List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
 }
 
-<form asp-action="AddSchedule" asp-controller="Schedule" method="post" class="needs-validation" novalidate>
+<form  id="AddScheduleForm"  method="post" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
  
 
@@ -194,7 +194,7 @@
                     </div>
                     <div class="col-sm-6" id="btnSchdule">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal24" value="Create" class="btn btn-success btn-sm " title="Add"><i class="fa fa-plus"></i> Add Event</button>
+                            <button  id="addScheduleVal24" value="Create" class="btn btn-success btn-sm " title="Add"><i class="fa fa-plus"></i> Add Event</button>
                             <a id="back" class="btn btn-warning btn-sm   text-white " data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                         </div>
@@ -204,7 +204,7 @@
 
                     <div class="col-sm-12" id="btnSchdulecol12">
                         <div class="float-right">
-                            <button type="submit" id="addScheduleVal" value="Create" class="btn btn-success btn-sm " title="Add"><i class="fa fa-plus "></i>  Add Event </button>
+                            <button  id="addScheduleVal" value="Create" class="btn btn-success btn-sm " title="Add"><i class="fa fa-plus "></i>  Add Event </button>
                             <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
                         </div>
                     </div>
@@ -227,7 +227,8 @@
         $('#EventLabel1').show();
         $('#EventInput1').show();
         $('#IsRepeated').val("false");
-        $('#ToggleRecord').val('false');
+        $('#ToggleRecord').val('false'); 
+        $('#customSwitch1').val('false'); 
         $('#validationCustom05').attr('required', 'required');
       
         HidePasswordAdd();
@@ -235,17 +236,113 @@
         
         DoPostBackAdd();
     });
-
-    $('#addScheduleVal').click(
-        function () {
-
-            CheckAddScheduleValidate();
+    $(function () {
+        $("#addScheduleVal").on("click", function (e) {
+            var form = $("#AddScheduleForm")[0];
+            var isValid = form.checkValidity();
+            var isValid2 = CheckAddScheduleValidate();
+            if (!(isValid && isValid2) ) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else {
+                AddScheduleNew();
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
         });
-    $('#addScheduleVal24').click(
-        function () {
-
-            CheckAddScheduleValidate();
+    });
+    $(function () {
+        $("#addScheduleVal24").on("click", function (e) {
+            var form = $("#AddScheduleForm")[0];
+            var isValid = form.checkValidity();
+            var isValid2 = CheckAddScheduleValidate();
+            if (!(isValid && isValid2)) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else {
+                
+                AddScheduleNew();
+            }
+            form.classList.add('was-validated');
+            return false; // For testing only to stay on this page
         });
+    });
+
+    function AddScheduleNew() {
+      
+        var churchId = $('#ddlChurchId').val();
+        var eventName = $('#validationCustom03').val();
+        var isRepeated = $('#IsRepeated').val();
+        var eventDate = $('#validationCustom05').val();
+        var eventDay = $('#validationCustom06').val();
+        var eventTime = $('#validationCustom02').val();
+        var isRecording = $('#ToggleRecord').val();
+        var cameraId = $('#CameraId').val();
+        var recordDuration = $('#Lenght').val();
+        var isPassword = $('#customSwitch1').val();
+        var password = $('#TxBxPassword').val();
+        var formData = new FormData();
+        formData.append("churchId",churchId)
+        formData.append("eventName", eventName);
+        formData.append("isRepeated", isRepeated);
+        formData.append("eventDay", eventDay);
+        formData.append("eventDate", eventDate);
+        formData.append("eventTime", eventTime);
+        formData.append("isRecording", isRecording);
+        formData.append("recordDuration", recordDuration);
+        formData.append("cameraId", cameraId);
+        formData.append("password", password);
+        formData.append("isPassword", isPassword);
+     
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AddScheduleNew", "Schedule")',
+
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+
+            //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
+
+
+            success: function (response) {
+                if (response.success) {
+                    
+                    $('#AddScheduleModal').modal('hide');
+                    window.location.reload();
+                }
+                else {
+                 
+                    showDangerToasts(response.responseText);
+
+
+                }
+
+
+            },
+            error: function (errormessage) {
+
+                //alert(errormessage.responseText);
+            }
+
+        });
+        
+        }
+            function showDangerToasts(text) {
+
+                'use strict';
+                resetToastPosition();
+                $.toast({
+                    heading: 'Danger',
+                    text: text,
+                    showHideTransition: 'slide',
+                    icon: 'error',
+                    loaderBg: '#f2a654',
+                    position: 'bottom-right'
+                })
+            };
 
     function CheckAddScheduleValidate() {
         if ($('#IsRepeated').val().toLowerCase() == 'false' && $('#validationCustom05').val() == '') {
@@ -266,6 +363,7 @@
 
     }
 
+   
 
     $('#IsRepeated').change(function () {
       
@@ -305,10 +403,13 @@
     $('#customSwitch1').change(function () {
         if (this.checked) {
             ShowPasswordAdd();
+            $('#customSwitch1').val('true');
             $('#TxBxPassword').attr('required', 'required');
+         
         }
 
         else {
+            $('#customSwitch1').val('false');
             HidePasswordAdd();
             $('#TxBxPassword').removeAttr('required', 'required');
         }
@@ -393,8 +494,33 @@
             }
         });
     }
+    showDangerToast = function () {
+        'use strict';
+        resetToastPosition();
+        $.toast({
+            heading: 'Danger',
+            text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+            showHideTransition: 'slide',
+            icon: 'error',
+            loaderBg: '#f2a654',
+            position: 'top-right'
+        })
+    };
+    $("AddScheduleForm").submit(function (event) {
+        event.preventDefault();
 
-
+        var options = {
+            title: $("#title").val(),
+            options: {
+                body: $("#message").val(),
+                icon: myImg,
+                lang: 'en-US',
+                onClick: myFunction
+            }
+        };
+        console.log(options);
+        $("#easyNotify").easyNotify(options);
+    });
 </script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

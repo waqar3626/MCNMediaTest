@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
+
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -33,43 +34,73 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
         [HttpPost]
-        public IActionResult AddSchedule(bool ToggleRecord, Schedule sch)
+        public IActionResult AddScheduleNew(int churchId,string eventName, bool isRepeated, DateTime eventDate, string eventDay, string eventTime, bool isRecording, int cameraId, int recordDuration, bool isPassword, string password)
         {
+
             try
             {
+
+
+                Schedule sch = new Schedule();
+                sch.IsRepeated = isRepeated;
+                sch.EventTime = Convert.ToDateTime(eventTime);
+                sch.ChurchId = churchId;
                 if (sch.IsRepeated == false)
                 {
+                    sch.EventDate = eventDate;
                     sch.EventDay = sch.EventDate.ToString("dddd");
                 }
                 else
                 {
+                    sch.EventDay = eventDay;
                     sch.EventDate = Convert.ToDateTime("1900-01-01 00:00:00");
                 }
+                sch.EventName = eventName;
+                sch.Record = isRecording;
 
-                sch.Record = ToggleRecord;
                 if (sch.Record == false)
                 {
                     sch.CameraId = 0;
                     sch.RecordDuration = 0;
                 }
+                else
+                {
+                    sch.CameraId = cameraId;
+                    sch.RecordDuration = recordDuration;
+                }
+                if (isPassword == false)
+                {
+                    sch.Password = string.Empty;
+                }
+                else
+                {
+                    sch.Password = password;
+                }
+                sch.CreatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
-                    scheduleDataAccess.AddSchedule(sch);
+                    
+                    int res = scheduleDataAccess.AddSchedule(sch);
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
+
                 }
-                return RedirectToAction("ListSchedule");
-            
+
+
+                return RedirectToAction("Listchurch", "Church");
+
+
+
+
             }
             catch (Exception e)
             {
-                ShowMessage("Add Schedule Errors : " + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
         }
 
-     
 
+       
         [HttpGet]
         public ViewResult ListSchedule()
         {
@@ -203,14 +234,10 @@ namespace MCNMedia_Dev.Controllers
 
 
                     int res = scheduleDataAccess.UpdateSchedule(sch);
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
                 }
-                
 
-                return Json(new { success = true, responseText = "The attached file is not supported." });
-
-
-
-
+                return RedirectToAction("Listchurch", "Church");
 
 
 
@@ -218,8 +245,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Add Schedule Errors : " + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
         }
 

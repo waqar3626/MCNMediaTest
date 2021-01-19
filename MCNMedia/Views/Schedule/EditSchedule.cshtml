@@ -292,13 +292,13 @@
 
             success: function (response) {
                 if (response.success) {
-
-                    window.location.reload();
                     $('#EditScheduleModal').modal('hide');
+                    window.location.reload();
+              
 
                 } else {
-                    // DoSomethingElse()
-                    alert(response.responseText);
+                  
+                    showEditDangerToasts(response.responseText);
                 }
 
             },
@@ -308,6 +308,19 @@
         });
 
     }
+    function showEditDangerToasts(text) {
+
+        'use strict';
+        resetToastPosition();
+        $.toast({
+            heading: 'Danger',
+            text: text,
+            showHideTransition: 'slide',
+            icon: 'error',
+            loaderBg: '#f2a654',
+            position: 'bottom-right'
+        })
+    };
     function CheckScheduleData() {
 
         $('#EditddlChurchId').append("<option value='0' disabled>--Select Church--</option>");
