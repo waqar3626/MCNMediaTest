@@ -148,7 +148,7 @@
 }
 .carousel-inner:before {
     content: '.';
-    background: #000000ab;
+    /*background: #000000ab;*/
     color: #000000ab;
     position: absolute;
     top: 0;
