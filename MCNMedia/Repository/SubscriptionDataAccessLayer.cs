@@ -100,7 +100,7 @@ namespace MCNMedia_Dev.Repository
                 subscription.SubscriberId = Convert.ToInt32(dataRow["SubscriberId"].ToString());
                 subscription.Name = dataRow["SubscriberName"].ToString();
                 subscription.EmailAddress = dataRow["EmailAddress"].ToString();
-                subscription.ChurchName = dataRow["ChurchName"].ToString();
+                //subscription.ChurchName = dataRow["ChurchName"].ToString();
                 subscription.PackageTitle = dataRow["PackageTitle"].ToString();
                 subscription.DurationUnit =Convert.ToInt32(dataRow["Duration"].ToString())+ dataRow["DurationUnit"].ToString();
                 subscription.PackageCharge = Convert.ToDecimal(dataRow["PackageCharge"].ToString());
