@@ -168,9 +168,17 @@
                             {
                                 if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
                                 {
-                        <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                            <img src=" https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/OffLineImage.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />
-                        </div>
+                                    <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                        @*<img src=" https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/OffLineImage.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />*@
+
+                                              <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                                                     <p class="text-white font-30">
+                                                        Our camera is switched off at the moment.
+                                                        <br />
+                                                        Please come back when there is a service scheduled
+                                                    </p>
+                                            </div>
+                                    </div>
 
                                 }
                                 else
@@ -187,9 +195,17 @@
                             {
                                 if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
                                 {
+
                                     <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                        <img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />
-                                    </div>
+                                        @*<img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />*@
+                                                <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter"  role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                                                        <p class="text-white font-30">
+                                                            Our camera is switched off at the moment.
+                                                            <br />
+                                                            Please come back when there is a service scheduled
+                                                        </p>
+                                                 </div>
+                                      </div>
                                 }
                                 else
                                 {
