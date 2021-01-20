@@ -16,183 +16,188 @@
 </style>
 
 <form asp-action="UpdateChurch" asp-controller="Church" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
-    <div class="col-sm-12 pr-4 pb-4">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title"> Church Information</h4>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Churches.ChurchId" />
-                <div class="form-group row ">
-                    <div class="col-lg-6 ">
-                        <div class="form-group row">
-                            <div class="col-sm-12" style="height:275px;">
-                                <div class="card " style="margin-top:30px;" id="cardImage">
-                                    <div class="card-body">
+    <div calss="form-group ">
+        <div class="col-sm-10  pr-4 pb-4">
+ 
+                <div class="card ">
+                    <div class="card-body">
+                        <h4 class="card-title"> Church Information</h4>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Churches.ChurchId" />
+                        <div class="form-group row ">
+                            <div class="col-lg-6 ">
+                                <div class="form-group row">
+                                    <div class="col-sm-12" style="height:275px;">
+                                        <div class="card " style="margin-top:30px;" id="cardImage">
+                                            <div class="card-body">
 
-                                        <input asp-for="Churches.ImageURl" type="file" name="imageURl2" class="dropify" />
-                                        <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
-                                        <input type="hidden" asp-for="Churches.ImageURl" name="ImageUrl" id="ImageCheckUrl" />
-                                    </div>
-                                    <div class="invalidImage" id="ImageText">
-                                        Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <div class="col-sm-12">
-                                    <label asp-for="Churches.StaticIP" for="validationCustom08">DNS/StaticIP </label>
-                                    <input asp-for="Churches.StaticIP" class="form-control" required id="validationCustom08" placeholder="DNS/StaticIP " />
-                                    <div class="invalid-feedback">
-                                        Please Provide a valid DNS/StaticIP
+                                                <input asp-for="Churches.ImageURl" type="file" name="imageURl2" class="dropify" />
+                                                <span asp-validation-for="Churches.ImageURl" class="text-danger"></span>
+                                                <input type="hidden" asp-for="Churches.ImageURl" name="ImageUrl" id="ImageCheckUrl" />
+                                            </div>
+                                            <div class="invalidImage" id="ImageText">
+                                                Please Select a valid Image Image Supported Only jpeg, jpg, png, gif, bmp
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-sm-6">
-                        <div class=" form-group row">
-                            <div class="col-sm-12">
-                                <label asp-for="Churches.ChurchName" for="validationCustom01">Church Name *</label>
-                                <input asp-for="Churches.ChurchName" class="form-control" id="validationCustom01" placeholder="Church Name" required />
-                                <div class="invalid-feedback">
-                                    Please Provide a valid Church Name
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12">
+                                            <label asp-for="Churches.StaticIP" for="validationCustom08">DNS/StaticIP </label>
+                                            <input asp-for="Churches.StaticIP" class="form-control" required id="validationCustom08" placeholder="DNS/StaticIP " />
+                                            <div class="invalid-feedback">
+                                                Please Provide a valid DNS/StaticIP
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
-                        </div>
-                        <div class=" form-group row">
-                            <div class="col-sm-12">
-                                <label asp-for="Churches.ClientTypeId">Client Type *</label>
-                                @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
-                                @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "custom-select", @required = "required", @id = "ddlClientId" })
-                                <div class="invalid-feedback">
-                                    Please Provide a valid Client Type
+                            <div class="col-sm-6">
+                                <div class=" form-group row">
+                                    <div class="col-sm-12">
+                                        <label asp-for="Churches.ChurchName" for="validationCustom01">Church Name *</label>
+                                        <input asp-for="Churches.ChurchName" class="form-control" id="validationCustom01" placeholder="Church Name" required />
+                                        <div class="invalid-feedback">
+                                            Please Provide a valid Church Name
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class=" form-group row">
-                            <div class="col-sm-12">
-                                <label asp-for="Churches.Password" for="validationCustom02">Password * </label>
-                                <input asp-for="Churches.Password" class="form-control" id="validationCustom02" placeholder="Password " />
+                                <div class=" form-group row">
+                                    <div class="col-sm-12">
+                                        <label asp-for="Churches.ClientTypeId">Client Type *</label>
+                                        @*<input asp-for="Churches.ClientTypeId" class="form-control" />*@
+                                        @Html.DropDownList("Churches.ClientTypeId", ClientTypes, new { @class = "custom-select", @required = "required", @id = "ddlClientId" })
+                                        <div class="invalid-feedback">
+                                            Please Provide a valid Client Type
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" form-group row">
+                                    <div class="col-sm-12">
+                                        <label asp-for="Churches.Password" for="validationCustom02">Password * </label>
+                                        <input asp-for="Churches.Password" class="form-control" id="validationCustom02" placeholder="Password " />
 
-                            </div>
-                        </div>
-                        <div class=" form-group row">
+                                    </div>
+                                </div>
+                                <div class=" form-group row">
 
-                            <div class="col-sm-12">
+                                    <div class="col-sm-12">
 
-                                <label asp-for="Churches.InstallationDate" for="InstallationDate">Installation Date </label>
+                                        <label asp-for="Churches.InstallationDate" for="InstallationDate">Installation Date </label>
 
-                                <div id="datepicker-popup" class="input-group date datepicker">
-                                    <input type="text" asp-for="Churches.InstallationDate" id="InstallationDate" name="InstallationDate" class="form-control" placeholder="Installation Date" required />
-                                    <span class="input-group-addon input-group-append border-left">
-                                        <span class="ti-calendar input-group-text"></span>
-                                    </span>
+                                        <div id="datepicker-popup" class="input-group date datepicker">
+                                            <input type="text" asp-for="Churches.InstallationDate" id="InstallationDate" name="InstallationDate" class="form-control" placeholder="Installation Date" required />
+                                            <span class="input-group-addon input-group-append border-left">
+                                                <span class="ti-calendar input-group-text"></span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+
         </div>
-    </div>
 
-    <div class="form-group row">
-        <div class="col-6 pr-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Location Details</h4>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <label asp-for="Churches.Address" for="validationCustom03">Address *</label>
-                            <input asp-for="Churches.Address" class="form-control" id="validationCustom03" placeholder="Address " required />
-                            <div class="invalid-feedback">
-                                Please Provide a Address
+        <div class="form-group row">
+            <div class="col-sm-5 ml-3 pr-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Location Details</h4>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label asp-for="Churches.Address" for="validationCustom03">Address *</label>
+                                <input asp-for="Churches.Address" class="form-control" id="validationCustom03" placeholder="Address " required />
+                                <div class="invalid-feedback">
+                                    Please Provide a Address
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
+                        <div class="form-group row">
 
-                        <div class="col-sm-6">
-                            <label asp-for="Churches.Town" for="validationCustom04">Town *</label>
-                            <input asp-for="Churches.Town" class="form-control" id="validationCustom04" placeholder="Town " required />
-                            <div class="invalid-feedback">
-                                Please Provide a valid Town
+                            <div class="col-sm-6">
+                                <label asp-for="Churches.Town" for="validationCustom04">Town *</label>
+                                <input asp-for="Churches.Town" class="form-control" id="validationCustom04" placeholder="Town " required />
+                                <div class="invalid-feedback">
+                                    Please Provide a valid Town
+                                </div>
                             </div>
-                        </div>
-                        @*</div>
+                            @*</div>
                             <div class="form-group row">*@
 
-                        <div class="col-sm-6">
-                            <label asp-for="Churches.CountyId" class=" text-center">County *</label>
-                            @*<input asp-for="Churches.CountyId" class="form-control" />*@
-                            @Html.DropDownList("Churches.CountyId", CountyList, new { @class = "custom-select", @id = "ddlCountryId" })
-                            <div class="invalid-feedback">
-                                Please Provide a valid Country
+                            <div class="col-sm-6">
+                                <label asp-for="Churches.CountyId" class=" text-center">County *</label>
+                                @*<input asp-for="Churches.CountyId" class="form-control" />*@
+                                @Html.DropDownList("Churches.CountyId", CountyList, new { @class = "custom-select", @id = "ddlCountryId" })
+                                <div class="invalid-feedback">
+                                    Please Provide a valid Country
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-6 pr-5">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Contact Details</h4>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <label asp-for="Churches.Website" for="validationCustom05">Website *</label>
-                            <input asp-for="Churches.Website" class="form-control" id="validationCustom05" placeholder="Website " required />
-                            <div class="invalid-feedback">
-                                Please Provide a valid Website
+            <div class="col-sm-5 pr-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Contact Details</h4>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label asp-for="Churches.Website" for="validationCustom05">Website *</label>
+                                <input asp-for="Churches.Website" class="form-control" id="validationCustom05" placeholder="Website " required />
+                                <div class="invalid-feedback">
+                                    Please Provide a valid Website
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <label asp-for="Churches.EmailAddress" for="validationCustom06">Email Address *</label>
-                            <input asp-for="Churches.EmailAddress" class="form-control" id="validationCustom06" placeholder="Email Address " required />
-                            <div class="invalid-feedback">
-                                Please Provide a valid Email Address
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label asp-for="Churches.EmailAddress" for="validationCustom06">Email Address *</label>
+                                <input asp-for="Churches.EmailAddress" class="form-control" id="validationCustom06" placeholder="Email Address " required />
+                                <div class="invalid-feedback">
+                                    Please Provide a valid Email Address
+                                </div>
                             </div>
-                        </div>
-                        @*</div>
+                            @*</div>
                             <div class="form-group row">*@
-                        <div class="col-sm-6">
-                            <label asp-for="Churches.Phone" class=" text-center" for="validationCustom07">Phone *</label>
-                            <input asp-for="Churches.Phone" class="form-control" id="validationCustom07" placeholder="Password " required />
-                            <div class="invalid-feedback">
-                                Please Provide a valid Phone
+                            <div class="col-sm-6">
+                                <label asp-for="Churches.Phone" class=" text-center" for="validationCustom07">Phone *</label>
+                                <input asp-for="Churches.Phone" class="form-control" id="validationCustom07" placeholder="Password " required />
+                                <div class="invalid-feedback">
+                                    Please Provide a valid Phone
+                                </div>
                             </div>
                         </div>
+
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row ">
-        <div class="col-sm-12 pl-0">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Embeded Code</h3>
-                    @{
-                        string SrcAddress = "http://mcnmedia.us-east-1.elasticbeanstalk.com/iframe/" + Model.Churches.UniqueIdentifier;
-                        <pre class="font-16 font-weight-bolder" style="background-color:transparent"><code>&lt;iframe src="@SrcAddress" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
-                    }
+        <div class="form-group row ">
+            <div class="col-sm-10 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Embeded Code</h3>
+                        @{
+                            string SrcAddress = "http://mcnmedia.us-east-1.elasticbeanstalk.com/iframe/" + Model.Churches.UniqueIdentifier;
+                            <pre class="font-16 font-weight-bolder" style="background-color:transparent"><code>&lt;iframe src="@SrcAddress" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
 
 
-    <div class="float-right pr-4">
-        <button type="submit" id="ValChurchSubmit" value="Update" class="btn btn-success btn-sm  text-white" title="Update"><i class="mdi mdi-update text-white"></i> Update</button>
-        <a id="back" class="btn btn-warning btn-sm text-white " href="../Church/Listchurch" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
-    </div>
+
+        <div class="float-right " style="margin-right:150px">
+            <button type="submit" id="ValChurchSubmit" value="Update" class="btn btn-success btn-sm  text-white" title="Update"><i class="mdi mdi-update text-white"></i> Update</button>
+            <a id="back" class="btn btn-warning btn-sm text-white " href="../Church/Listchurch" title="Back"><i class="fa fa-chevron-left text-white"></i> Back</a>
+        </div>
 </form>
 <script type="text/javascript">
     var ImageData = $('#Churches_ImageURl').val();

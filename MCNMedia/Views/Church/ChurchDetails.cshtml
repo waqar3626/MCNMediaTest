@@ -66,6 +66,13 @@
 
                 </ul>
                 <div class="tab-content">
+                    <div class="tab-pane fade show active" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/Camera/_Camera.cshtml")
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="tab-pane fade " id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
                         <div class="media">
@@ -145,18 +152,12 @@
                         <div class="media">
                             <div class="media-body">
 
-                                @Html.Partial("~/Views/Church/ChurchAnalytics.cshtml",Model.AnalyticsList)
+                                @Html.Partial("~/Views/Church/ChurchAnalytics.cshtml", Model.AnalyticsList)
                             </div>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade show active" id="Camera-1" role="tabpanel" aria-labelledby="Camera-tab">
-                        <div class="media">
-                            <div class="media-body">
-                                @Html.Partial("~/Views/Camera/_Camera.cshtml")
-                            </div>
-                        </div>
-                    </div>
+
 
 
 
