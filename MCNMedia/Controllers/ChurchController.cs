@@ -306,7 +306,7 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-        [HttpGet]
+        [HttpPost]
         public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo, int pageNumber = 1, int pageSize = 5)
         {
             try
