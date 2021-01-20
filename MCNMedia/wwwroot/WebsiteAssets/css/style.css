@@ -785,7 +785,7 @@ img.main-img {
 
     @media (min-width: 1535px) {
         nav.container-nav {
-            width: calc(100% + 150px) !important;
+            width: calc(100%) !important;
             margin-left: auto;
         }
     }
