@@ -81,7 +81,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("Subscriber_Name", sub.Name);
             _dc.AddParameter("Email_Address", sub.EmailAddress);
             _dc.AddParameter("Country_Id", sub.CountryId);
-            _dc.AddParameter("Subscriber_Password", sub.Password);
+            _dc.AddParameter("Subscriber_Password", sub.NewPassword);
             _dc.AddParameter("Updaed_By", sub.UpdatedBy);
             _dc.Execute("spSubscriber_Update");
         }

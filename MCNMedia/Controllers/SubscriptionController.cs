@@ -62,8 +62,11 @@ namespace MCNMedia_Dev.Controllers
                      SubId = Convert.ToInt32(HttpContext.Request.Query["subId"].ToString());
                     HttpContext.Session.SetInt32("subId", SubId);
                 }
-                
-                    HttpContext.Session.SetInt32("SubId", SubId);
+                if (TempData.ContainsKey("message"))
+                {
+                    ViewBag.Message = TempData["message"];
+                }
+                HttpContext.Session.SetInt32("SubId", SubId);
                     //List<Subscriptions> subs = subDataAccess.GetSingleSubscribersList(SubId).ToList<Subscriptions>();
                     gm.Lsubscriptions = subDataAccess.GetSingleSubscribersList(SubId).ToList<Subscriptions>();
                     gm.subscriptions = subDataAccess.GetSubscriberById(SubId);
@@ -77,7 +80,7 @@ namespace MCNMedia_Dev.Controllers
             }
         }
         [HttpPost]
-        public IActionResult UpdateSubscriberByAdmin(int SubscriberId, string Name,string EmailAddress)
+        public IActionResult UpdateSubscriberByAdmin(int SubscriberId, string Name,string EmailAddress,string NewPassword)
         {
             Subscriptions subscriptions = new Subscriptions();
             var CountryId = Request.Form["subscriptions.CountryId"].ToString();
@@ -85,6 +88,7 @@ namespace MCNMedia_Dev.Controllers
             subscriptions.SubscriberId = SubscriberId;
             subscriptions.Name = Name;
             subscriptions.EmailAddress = EmailAddress;
+            subscriptions.NewPassword = NewPassword;
             subscriptions.UpdatedBy= (int)HttpContext.Session.GetInt32("UserId");
             subDataAccess.UpdateSubscriptionByAdmin(subscriptions);
             return RedirectToAction("SubscriberProfileForAdmin");
@@ -99,6 +103,7 @@ namespace MCNMedia_Dev.Controllers
             subscription.subscriptions.IsAddedByAdmin = true;
             //subscription.subscriptions.Expiredate = DateTime.Now;
             int paymentId = subDataAccess.AddSubscriberpayment(subscription.subscriptions);
+            TempData["message"] = 1; 
             return RedirectToAction("SubscriberProfileForAdmin");
         }
 
