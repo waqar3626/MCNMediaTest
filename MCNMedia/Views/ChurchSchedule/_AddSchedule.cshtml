@@ -278,6 +278,7 @@
                 if (response.success) {
                     loadChurchSch();
                     $('#AddChurchScheduleModel').modal('hide');
+                    $('#AddScheduleChurch')[0].reset();
                 } else {
                     showDangerToasts(response.responseText);
 
