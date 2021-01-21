@@ -215,29 +215,22 @@
                                     {
                                         <p>
                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-
                                         </p>
                                     }
                                     else if (schedule.IsRepeated == false && schedule.Record == true)
                                     {
-                                        <b>
+                                        <p>
                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-
-
-                                        </b>
+                                        </p>
                                     }
                                     else
                                     {
                                         <p>
-
                                             @schedule.EventName
                                         </p>
                                     }
-
                                 </a>
                             </td>
-
-
                             <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
                         </tr>
                     }
