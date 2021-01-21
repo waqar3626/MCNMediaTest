@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using _Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
@@ -141,7 +142,7 @@ namespace MCNMedia_Dev.Controllers
 
         [HttpPost]
         
-        public IActionResult UpdateUser([Bind] User user)
+        public IActionResult UpdateUser([Bind] User user, string NewPass)
         {
             try
             {
@@ -151,6 +152,15 @@ namespace MCNMedia_Dev.Controllers
                 }
                 if (ModelState.IsValid) {
                     user.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                    if (!string.IsNullOrEmpty(NewPass))
+                    {
+                        user.NewPassword = Hashing.HashPassword(NewPass);
+                    }
+                    else
+                    {
+                        user.NewPassword = user.LoginPassword;
+                    }
+                    
                     userDataAccess.UpdateUser(user);
                 return RedirectToAction("ListUser");
                 }

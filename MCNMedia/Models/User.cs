@@ -18,6 +18,7 @@ namespace MCNMedia_Dev.Models
         public string EmailAddress { get; set; }
         [Required(ErrorMessage = "Please Provide a Valid Password")]
         public string LoginPassword { get; set; }
+        public string NewPassword { get; set; }
         public int UpdatedBy { get; set; }
         public int RoleId { get; set; }
 

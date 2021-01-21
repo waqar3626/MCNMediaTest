@@ -43,8 +43,15 @@
                         Please Provide a valid Email Address
                     </div>
                 </div>
-
             </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">New Password</label>
+                <div class="col-sm-9">
+                    <input class="form-control" placeholder="Password" name="NewPass"/>
+                </div>
+            </div>
+
             <div class="form-group row " hidden>
                 <label asp-for="LoginPassword" for="validationCustom13" class="col-sm-3 col-form-label">Login Password *</label>
                 <div class="col-sm-9">
@@ -97,7 +104,6 @@
             return false; // For testing only to stay on this page
         });
     });
-
-  
- 
 </script>
+
+
