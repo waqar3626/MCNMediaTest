@@ -64,7 +64,6 @@
                                             <td scope="row" class="bluepurple font-weight-normal"><b>@schedule.ChurchName, @schedule.Town</b> </td>
                                             <td  class="bluepurple" >
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
-
                                                     @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {
                                                         <p>
@@ -82,20 +81,17 @@
                                                     {
                                                         <p>
                                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-
-
                                                         </p>
                                                     }
                                                     else
                                                     {
                                                         <p>
-
                                                             @schedule.EventName
                                                         </p>
                                                     }
                                                 </a>
                                             </td>
-                                            <td scope="row"  class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                                            <td scope="row" class="bluepurple font-weight-normal" style="width:90px">@schedule.EventTime.ToString("h:mm tt")</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -125,27 +121,23 @@
                                                     {
                                                         <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-
                                                         </p>
                                                     }
                                                     else if (schedule.IsRepeated == false && schedule.Record == true)
                                                     {
                                                         <p>
                                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-
-
                                                         </p>
                                                     }
                                                     else
                                                     {
                                                         <p>
-
                                                             @schedule.EventName
                                                         </p>
                                                     }
                                                 </a>
                                             </td>
-                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                                            <td scope="row" class="bluepurple font-weight-normal" style="width:90px">@schedule.EventTime.ToString("h:mm tt")</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -175,27 +167,23 @@
                                                     {
                                                         <p>
                                                             @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-
                                                         </p>
                                                     }
                                                     else if (schedule.IsRepeated == false && schedule.Record == true)
                                                     {
                                                         <p>
                                                             @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-
-
                                                         </p>
                                                     }
                                                     else
                                                     {
                                                         <p>
-
                                                             @schedule.EventName
                                                         </p>
                                                     }
                                                 </a>
                                             </td>
-                                            <td scope="row" class="bluepurple font-weight-normal">@schedule.EventTime.ToString("h:mm tt")</td>
+                                            <td scope="row" class="bluepurple font-weight-normal" style="width:90px">@schedule.EventTime.ToString("h:mm tt")</td>
                                         </tr>
                                     }
                                 </tbody>
