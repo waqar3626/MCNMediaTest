@@ -83,39 +83,26 @@
         </div>
         <div class="row">
 
-            @*<div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
-                        <a href="@Url.Action("ListUser", "User")">
+
+            
+            <div class="col-md-4 grid-margin stretch-card ">
+                <div class="card" style="background-color:#004d4d ">
+                    <form asp-action="Search" asp-controller="User" method="post">
+                        <button style="width:100%;background-color:#004d4d " type="submit">
                             <div class="card-body">
-                                <p class="card-title text-md-center text-xl-left">Total Users</p>
+                                <input type="hidden" name="Role" value="-1" />
+                                <p class="card-title text-md-center text-xl-left text-white">Total Users</p>
                                 <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-muted">@Model.Dashboards.UserCount</h3>
-                                    <i class="mdi mdi-account-multiple icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
+                                    <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>*@
 
-            <div class="col-md-4 grid-margin stretch-card">
-                <div class="card " style="background-color:#004d4d ">
-
-                    <a href="@Url.Action("ListUser", "User")">
-
-                        <div class="card-body">
-
-                            <p class="card-title text-md-center text-xl-left text-white">Total Users</p>
-                            <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
-                                <i class="mdi mdi-account-multiple  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
                             </div>
 
-                        </div>
-                    </a>
+                        </button>
+                    </form>
                 </div>
-
             </div>
-
 
             <div class="col-md-4 grid-margin stretch-card ">
                 <div class="card" style="background-color:#008080 ">
