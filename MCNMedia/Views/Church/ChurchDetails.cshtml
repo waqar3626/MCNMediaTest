@@ -26,42 +26,49 @@
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Church Details</h4>
+                @*<h4 class="card-title">Church Details</h4>*@
+                <div class="col-12 col-xl-7 mb-4 mb-xl-0">
+                    <h4 class="font-weight-bold">@Model.Churches.ChurchName </h4>
+                    <h4 class="font-weight-normal mb-0">@Model.Churches.Town</h4>
+                </div>
                 <h3>@ViewData["message"]</h3>
                 <ul class="nav nav-tabs small" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success"></i>  Camera</a>
+                        <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true"><i class="fa fa-camera-retro text-success pr-1"></i><b>Camera</b>  </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="false"><i class="fa fa-info-circle text-info"></i> Information</a>
+                        <a class="nav-link" id="Schedule-tab" data-toggle="tab" href="#Schedule-1" role="tab" aria-controls="Schedule-1" aria-selected="false"><i class="fa fa-calendar text-info pr-1"></i><b>Schedule</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="false"><i class="fa fa-info-circle text-info pr-1"></i><b>Information</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Schedule-tab" data-toggle="tab" href="#Schedule-1" role="tab" aria-controls="Schedule-1" aria-selected="false"><i class="fa fa-calendar text-info pr-1"></i><b>Schedule</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info pr-1"></i><b>Slideshow</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Video-tab" data-toggle="tab" href="#Video-1" role="tab" aria-controls="Video-1" aria-selected="false"><i class="fa fa-file-video-o text-danger pr-1"></i><b>Video</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false"><i class="fa fa-picture-o text-success pr-1"></i><b>Picture</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-sticky-note-o text-info pr-1"></i><b>Notice</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Setup-tab" data-toggle="tab" href="#Setup-1" role="tab" aria-controls="Setup-1" aria-selected="false"><i class="fa fa-cogs text-info pr-1"></i><b>Set Up</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Announcement-tab" data-toggle="tab" href="#Announcement-1" role="tab" aria-controls="Announcement-1" aria-selected="false"><i class="fa fa-envelope-o text-info pr-1"></i><b>Announcement</b> </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info"></i>  Slideshow</a>
+                        <a class="nav-link" id="NewsLetter-tab" data-toggle="tab" href="#NewsLetter-1" role="tab" aria-controls="NewsLetter-1" aria-selected="false"><i class=" fa fa-envelope-open  text-info pr-1"></i><b>NewsLetter</b>  </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="Video-tab" data-toggle="tab" href="#Video-1" role="tab" aria-controls="Video-1" aria-selected="false"><i class="fa fa-file-video-o text-danger"></i>  Video</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false"><i class="fa fa-picture-o text-success"></i>  Picture</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="Notice-tab" data-toggle="tab" href="#Notice-1" role="tab" aria-controls="Notice-1" aria-selected="false"><i class="fa fa-sticky-note-o text-info"></i>  Notice</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="Setup-tab" data-toggle="tab" href="#Setup-1" role="tab" aria-controls="Setup-1" aria-selected="false"><i class="fa fa-cogs text-info"></i> Set Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="Announcement-tab" data-toggle="tab" href="#Announcement-1" role="tab" aria-controls="Announcement-1" aria-selected="false"><i class="fa fa-envelope-o text-info"></i> Announcement</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="Schedule-tab" data-toggle="tab" href="#Schedule-1" role="tab" aria-controls="Schedule-1" aria-selected="false"><i class="fa fa-calendar text-info"></i> Schedule</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="NewsLetter-tab" data-toggle="tab" href="#NewsLetter-1" role="tab" aria-controls="NewsLetter-1" aria-selected="false"><i class=" fa fa-envelope-open  text-info"></i> NewsLetter</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="ChurchAnalytics-tab" data-toggle="tab" href="#ChurchAnalytics-1" role="tab" aria-controls="ChurchAnalytics-1" aria-selected="false"><i class=" ti-bar-chart-alt menu-icon  text-info"></i> Church Analytics</a>
+                        <a class="nav-link" id="ChurchAnalytics-tab" data-toggle="tab" href="#ChurchAnalytics-1" role="tab" aria-controls="ChurchAnalytics-1" aria-selected="false"><i class=" ti-bar-chart-alt menu-icon  text-info pr-1"></i><b> Church Analytics</b> </a>
                     </li>
 
                 </ul>
@@ -73,7 +80,13 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="tab-pane fade" id="Schedule-1" role="tabpanel" aria-labelledby="Schedule-tab">
+                        <div class="media">
+                            <div class="media-body">
+                                @Html.Partial("~/Views/ChurchSchedule/_ListSchedule.cshtml")
+                            </div>
+                        </div>
+                    </div>
                     <div class="tab-pane fade " id="Information-1" role="tabpanel" aria-labelledby="Information-tab">
                         <div class="media">
                             <div class="media-body">
