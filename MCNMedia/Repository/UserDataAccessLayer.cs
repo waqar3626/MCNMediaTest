@@ -88,7 +88,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("Login_Password", user.NewPassword);
             _dc.AddParameter("UpdateBy", user.UpdatedBy);
             _dc.AddParameter("RoleId", user.RoleId);
-            _dc.Execute("spUser_Updatekk");
+            _dc.Execute("spUser_Update");
         }
 
         //Get the details of a particular User

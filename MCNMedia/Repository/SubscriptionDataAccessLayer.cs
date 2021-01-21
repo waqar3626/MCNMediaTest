@@ -93,7 +93,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("fromdate", FromDate);
             _dc.AddParameter("Todate", ToDate);
 
-            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetAllSubscriberListK");
+            DataTable dataTable = _dc.ReturnDataTable("spSubscriber_GetAllSubscriberList");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Subscriptions subscription = new Subscriptions();
@@ -187,7 +187,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("IsAddedByAdmin", Sub.IsAddedByAdmin);
 
 
-            return _dc.ReturnInt("spSubscriberPayment_AddKk");
+            return _dc.ReturnInt("spSubscriberPayment_Add");
 
          
         }
