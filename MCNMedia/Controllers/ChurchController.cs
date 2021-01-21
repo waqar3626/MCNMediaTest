@@ -307,7 +307,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
         [HttpPost]
-        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo, int pageNumber = 1, int pageSize = 5)
+        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo)
         {
             try
             {
@@ -323,18 +323,8 @@ namespace MCNMedia_Dev.Controllers
                 chr.EmailAddress = EmailAddress;
                 chr.CountyId = County;
                 chr.Phone = PhoneNo;
-                int ExcludeRecord = (pageSize * pageNumber) - pageSize;
-                var church = churchDataAccess.GetAllChurch(chr).Skip(ExcludeRecord).Take(pageSize);
-                var result = new PagedResult<Church>
-                {
-                    Data = church.ToList(),
-                    TotalItems = churchDataAccess.GetAllChurch(chr).Count(),
-                    PageNumber = pageNumber,
-                    PageSize = pageSize,
-
-                };
-
-                return View(result);
+                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                return View("/Views/Church/Listchurch.cshtml", church);
             }
             catch (Exception e)
             {
