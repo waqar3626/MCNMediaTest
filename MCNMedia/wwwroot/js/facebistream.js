@@ -26,7 +26,7 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
     if (response.status === 'connected') {   // Logged into your webpage and Facebook.
         $('#btnStatusfb').removeClass('btn-dark');
         $('#btnStatusfb').addClass('btn-success');
-        $('#btnRevokefb').show();
+        // $('#btnRevokefb').show();
         //$('#btnConnectfb').css('display', 'none');
         $('#btnStatusfb').html('Online');
         $('.fb-login-button').hide();
@@ -38,10 +38,11 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
     } else {                                 // Not logged into your webpage or we are unable to tell.
         $('#btnStatusfb').addClass('btn-dark');
         $('#btnStatusfb').removeClass('btn-success');
-        $('#btnRevokefb').hide();
+        // $('#btnRevokefb').hide();
         //  $('#btnConnectfb').css('display', 'normal');
         $('.fb-login-button').show();
         $('#btnStatusfb').html('Offline');
+        // $('#startStreaming').css('disabled', 'disabled');
     }
 
     getPagesList();
@@ -68,7 +69,7 @@ function Authenticate_User() {
         { "client_id": "220664392765773", "redirect_uri": "https://localhost:56182/Home/Index", "scope": "manage_pages" },
         function (response) {
             var myJSON = JSON.stringify(response);
-            alert(myJSON);
+            // alert(myJSON);
         }
     );
 }
@@ -84,7 +85,7 @@ function GetAccessToken() {
         },
         function (response) {
             var myJSON = JSON.stringify(response);
-            alert("Access_Token" + myJSON);
+            // alert("Access_Token" + myJSON);
         }
     );
 }
@@ -97,7 +98,7 @@ function GetLongLiveAccessToken() {
         { "grant_type": "fb_exchange_token", "client_id": "220664392765773", "client_secret": "803b56c89a1b47ab33e588b09e196a05", "fb_exchange_token": "" + uac + "" },
         function (response) {
             var myJSON = JSON.stringify(response);
-            alert(myJSON);
+            // alert(myJSON);
             // Insert your code here
         }
     );
@@ -146,40 +147,47 @@ function Request_LiveVedioObj() {
     let uid = sessionStorage.getItem('uid');
     let uac = sessionStorage.getItem('uac');
     var accToken = '';
-    if ($('#facebook_page').val() == "me") {
-        id = uid;
-        accToken = uac;
-    }
-    else {
-        id = $('#facebook_page').val();
-        accToken = $('#facebook_page option:selected').attr('data-acctok');
-    }
-
-
-
-    FB.api(
-        '/' + id + '/live_videos',
-        'POST',
-        {
-            "status": "LIVE_NOW", "access_token": "" + accToken + ""
-        },
-        function (response) {
-            var jsons = JSON.stringify(response);
-            alert(jsons);
-
-            var streamkey = response.stream_url.substring(response.stream_url.indexOf("rtmp/") + 5);
-            var cameraInfo = {
-                camera_id: $('#camera_list').val(),
-                client_name: $('#camera_list option:selected').attr('data-clientname'),
-                type: $('#camera_list option:selected').attr('data-camtype'),
-                stream_url: "rtmp://live-api-s.facebook.com:80/rtmp/",
-                secure_stream_url: "rtmps://live-api-s.facebook.com:443/rtmp/",
-                stream_key: streamkey, //"108000807847714?s_bl=1&s_psm=1&s_sc=108000824514379&s_sw=0&s_vt=api-s&a=Abx34FLUBqF0nyj8"
-            }
-            PosttoLiveStream(cameraInfo);
-
+    if (uid != null && uac != null)
+    {
+        if ($('#facebook_page').val() == "me") {
+            id = uid;
+            accToken = uac;
         }
-    );
+        else {
+            id = $('#facebook_page').val();
+            accToken = $('#facebook_page option:selected').attr('data-acctok');
+        }
+
+
+
+        FB.api(
+            '/' + id + '/live_videos',
+            'POST',
+            {
+                "status": "LIVE_NOW", "access_token": "" + accToken + ""
+            },
+            function (response) {
+                var jsons = JSON.stringify(response);
+                // alert(jsons);
+
+                var streamkey = response.stream_url.substring(response.stream_url.indexOf("rtmp/") + 5);
+                var cameraInfo = {
+                    camera_id: $('#camera_list').val(),
+                    client_name: $('#camera_list option:selected').attr('data-clientname'),
+                    type: $('#camera_list option:selected').attr('data-camtype'),
+                    stream_url: "rtmp://live-api-s.facebook.com:80/rtmp/",
+                    secure_stream_url: "rtmps://live-api-s.facebook.com:443/rtmp/",
+                    stream_key: streamkey, //"108000807847714?s_bl=1&s_psm=1&s_sc=108000824514379&s_sw=0&s_vt=api-s&a=Abx34FLUBqF0nyj8"
+                }
+                PosttoLiveStream(cameraInfo);
+
+            }
+        );
+    }
+    else
+    {
+        alert("Please login to facebook");
+    }
 }
 
 function PosttoLiveStream(cameraInfo) {
@@ -278,42 +286,42 @@ function savesettings() {
         }
     });
 }
-function getstreamparams() {
-    let uid = sessionStorage.getItem('uid');
-    let uac = sessionStorage.getItem('uac');
-    If(!uid && !uac)
-    {
-        var formData = new FormData();
-        formData.append("cameraId", $('#camera_list').val());
-        formData.append("pageId", $('#facebook_page').val());
-        formData.append("pageName", $('#facebook_page  option:selected').text());
-        formData.append("pageAccessToken", $('#facebook_page option:selected').attr('data-acctok'));
-        formData.append("description", $('#streamDescription').val());
-        formData.append("userId", uid);
-        formData.append("userAccessToken", uac);
+//function getstreamparams() {
+//    let uid = sessionStorage.getItem('uid');
+//    let uac = sessionStorage.getItem('uac');
+//    //if(uid != null && uac != null)
+//    //{
+//        var formData = new FormData();
+//        formData.append("cameraId", $('#camera_list').val());
+//        formData.append("pageId", $('#facebook_page').val());
+//        formData.append("pageName", $('#facebook_page  option:selected').text());
+//        formData.append("pageAccessToken", $('#facebook_page option:selected').attr('data-acctok'));
+//        formData.append("description", $('#streamDescription').val());
+//        formData.append("userId", uid);
+//        formData.append("userAccessToken", uac);
 
-        $.ajax({
-            type: "POST",
-            url: "/Client/GetStreamParams/",
+//        $.ajax({
+//            type: "POST",
+//            url: "/Client/GetStreamParams/",
 
-            data: formData,
-            processData: false,  // tell jQuery not to process the data
-            contentType: false,  // tell jQuery not to set contentType
+//            data: formData,
+//            processData: false,  // tell jQuery not to process the data
+//            contentType: false,  // tell jQuery not to set contentType
 
 
-            success: function (result) {
-                //alert("Settings have been updated");
+//            success: function (result) {
+//                //alert("Settings have been updated");
 
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-    else {
-        alert("Please login to facebook");
-    }
-}
+//            },
+//            error: function (errormessage) {
+//                alert(errormessage.responseText);
+//            }
+//        });
+//    //}
+//    //else {
+//    //    alert("Please login to facebook");
+//    //}
+//}
 function saveUserInfo(accessToken, userId, expiresIn) {
 
     var formData = new FormData();

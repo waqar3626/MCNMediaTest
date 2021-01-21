@@ -43,7 +43,7 @@
                         <h3 class="text-white bold weigh">
                             Stream to FaceBook
                             <button type="button" id="btnStatusfb" class="btn btn-sm">online</button>
-                            <button type="button" id="btnRevokefb" class="btn btn-outline-behance text-white"><i class="ti-facebook text-white icon-md"></i>Revoke Face Book Access</button>
+                            @*<button type="button" id="btnRevokefb" class="btn btn-outline-behance text-white"><i class="ti-facebook text-white icon-md"></i>Revoke Face Book Access</button>*@
                             @*<button type="button" id="btnConnectfb" onclick="Authenticate_User();" class="btn btn-outline-behance text-white"><i class="ti-facebook text-white icon-md"></i>Facebook Connect</button>*@
                             <fb:login-button scope="public_profile,email" itemid="fblogindef" class="fb-login-button" onlogin="checkLoginState();">
                             </fb:login-button>
@@ -77,7 +77,7 @@
             </div>
         </div>
         <p class="text-muted pt-2">your live stream will be broad cast on 'Church Name'</p>
-        <button type="button" id="startStreaming" onclick="getstreamparams();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Pass Stream Info</button>
+        @*<button type="button" id="passParams" onclick="getstreamparams();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Pass Stream Info</button>*@
         <button type="button" id="startStreaming" onclick="Request_LiveVedioObj();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Start Streaming</button>
         <button type="button" id="changeSettings" onclick="changeOptions();" class="btn btn-dark">Change</button>
         <button type="button" id="stopStreaming" onclick="StopLiveStream();" class="btn btn-danger">Stop Streaming</button>
