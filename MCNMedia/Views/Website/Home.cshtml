@@ -21,9 +21,17 @@
     }
 
     .carousel-inner {
-        max-height:none !important;
+        max-height: none !important;
     }
-   
+
+
+    .for-generic {
+        height: 30px;
+        background-color: #1f4a79;
+        margin-bottom: 0px;
+        text-align: center;
+        padding-top: 5px;
+    }
 </style>
 
 <!-- banner slider start -->
@@ -99,14 +107,17 @@
 <div class="text-pink font-36 text-center pt-4 bg-white container avantgardece">
 
 </div>
-<div class="bg-blue pt-3 pb-5">
+<div class="bg-blue pt-3 pb-3">
     <div class="container">
+        @*<div class="row m-0">
+                <div class="col-sm-12 text-center text-white font-36 mb-4">
+                    Find your Church
+                </div>
+            </div>*@
         <div class="row m-0">
-            <div class="col-sm-12 text-center text-white font-36 mb-4">
-                Find your Church
+            <div class="col-lg-4 col-md-5  text-white font-36 ">
+                Search your Church
             </div>
-        </div>
-        <div class="row m-0">
             <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 ml-auto">
                 <div class="input-serch-d position-relative">
                     @*<input list='text_editors' class="empty" placeholder="&#xF002;  Select Country">
@@ -148,13 +159,24 @@
         <div class="row" style="position: sticky; top: 1px; margin-top: -0.5rem">
             @foreach (Church church in Model.ChurchList)
             {
-                <div class="col-lg-4 col-md-6 p-2">
-                    <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
-                        <div class="position-relative darker" style="height:179px;">
-                            <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                            <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
-                        </div>
-                    </a>
+                @*<div class="col-lg-4 col-md-6 p-2">
+                        <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
+                            <div class="position-relative darker" style="height:179px;">
+                                <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
+                                <div class="overlay-text  text-white avantgardece">@church.ChurchName <br> @church.Town</div>
+                            </div>
+                        </a>
+                    </div>*@
+
+                <div class="col-lg-4 col-md-6 p-1 ">
+                    <div class=" rounded-lg bg-light-gray p-1">
+                        <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
+                            <div class="position-relative darker" style="height:179px; overflow:hidden;">
+                                <img src="@church.ImageURl" class="w-100 rounded-lg " alt="@church.ChurchName">
+                            </div>
+                            <div class="avantgardece text-center text-blue font-16 mt-2">@church.ChurchName, @church.Town</div>
+                        </a>
+                    </div>
                 </div>
             }
         </div>
@@ -243,27 +265,27 @@
     <div class="container pt-4 pb-4">
         <div class="row">
             <div class="col-md-6">
-                 <div class='cover'>
-            <video controls class='video' width='100%'>
-                <source src="https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/promo.mp4"
-                        type="video/mp4" />
+                <div class='cover'>
+                    <video controls class='video' width='100%'>
+                        <source src="https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/promo.mp4"
+                                type="video/mp4" />
 
-                <img src="~/WebsiteAssets/img/video-img.png" alt="">
-            </video>
+                        <img src="~/WebsiteAssets/img/video-img.png" alt="">
+                    </video>
 
-        </div>
+                </div>
 
-              
+
 
             </div>
-        <div class="col-md-6 text-center self-center">
-            <span class="text-white font-36 text-center pt-4 pb-4 container avantgardece ">
-                Do you want to start streaming?
-            </span> <br>
-            <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">Contact us today</a>
+            <div class="col-md-6 text-center self-center">
+                <span class="text-white font-36 text-center pt-4 pb-4 container avantgardece ">
+                    Do you want to start streaming?
+                </span> <br>
+                <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">Contact us today</a>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <!-- now? end -->
 @*

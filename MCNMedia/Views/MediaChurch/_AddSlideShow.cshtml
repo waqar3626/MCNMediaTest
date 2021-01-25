@@ -3,10 +3,10 @@
 
 }
 
-@using (Html.BeginForm("AddSlideShow", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddSlideShow", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @id= "AddSlideShowForm" }))
 
 {
-    
+
 
     <div class="form-group row p-3" id="alertDiv33">
         <div class="col-md-12">
@@ -114,6 +114,7 @@
                 }
                 loadSlideShow();
                 $('#AddSlideShowModal').modal('hide');
+                $('#AddSlideShowForm')[0].reset();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

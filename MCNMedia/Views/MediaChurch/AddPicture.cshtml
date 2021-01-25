@@ -4,7 +4,7 @@
 
 }
 
-@using (Html.BeginForm("AddPicture", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation" }))
+@using (Html.BeginForm("AddPicture", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", @id="AddPictureForm" }))
 
 {
     <div class="form-group row p-3" id="alertDiv">
@@ -101,6 +101,7 @@
                 }
                 loadPicture();
                 $('#AddModal').modal('hide');
+                $('#AddPictureForm')[0].reset();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

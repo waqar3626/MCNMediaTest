@@ -31,13 +31,24 @@
         <div class="row" style="position: sticky; top: 103px;">
             @foreach (Church church in Model.ChurchList)
             {
-                <div class="col-lg-4 col-md-6 p-2">
-                    <a href="@Url.Action("Profile", "Website",new { id = church.Slug })" title="Preview">
-                        <div class="position-relative" style="height:179px;">
-                            <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
-                            <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.Town</div>
-                        </div>
-                    </a>
+                @*<div class="col-lg-4 col-md-6 p-2">
+                <a href="@Url.Action("Profile", "Website",new { id = church.Slug })" title="Preview">
+                    <div class="position-relative" style="height:179px;">
+                        <img src="@church.ImageURl" class="w-100 h-100 rounded-4" alt="@church.ChurchName">
+                        <div class="overlay-text text-white avantgardece">@church.ChurchName <br> @church.Town</div>
+                    </div>
+                </a>
+            </div>*@
+
+                <div class="col-lg-4 col-md-6 p-1 ">
+                    <div class=" rounded-lg bg-light-gray p-1">
+                        <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
+                            <div class="position-relative darker" style="height:179px; overflow:hidden;">
+                                <img src="@church.ImageURl" class="w-100 rounded-lg " alt="@church.ChurchName">
+                            </div>
+                            <div class="avantgardece text-center text-blue font-16 mt-2">@church.ChurchName, @church.Town</div>
+                        </a>
+                    </div>
                 </div>
             }
         </div>

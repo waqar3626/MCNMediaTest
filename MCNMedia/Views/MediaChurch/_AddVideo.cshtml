@@ -3,7 +3,7 @@
 
 }
 
-@using (Html.BeginForm("AddVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @id= "AddVideoForm" }))
 {
     <div class="form-group row p-3" id="alertDiv11">
         <div class="col-md-12">
@@ -118,6 +118,7 @@
                 success: function (result) {
                     loadVideo();
                     $('#AddddModal').modal('hide');
+                    $('#AddVideoForm')[0].reset();
                 },
                 error: function (errormessage) {
                     //alert(errormessage.responseText);

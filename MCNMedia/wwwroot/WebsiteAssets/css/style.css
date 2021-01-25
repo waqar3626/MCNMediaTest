@@ -151,6 +151,10 @@
 .text-black {
     color: #000000 !important;
 }
+
+.text-blue {
+    color: #1f4a79 !important;
+}
 /* .text-warning{
     color:#f7921e !important; 
 } */

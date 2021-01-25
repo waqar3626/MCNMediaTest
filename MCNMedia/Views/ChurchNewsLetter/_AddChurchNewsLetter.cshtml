@@ -4,7 +4,7 @@
 
 }
 
-@using (Html.BeginForm("AddChurchNewsLetter", "ChurchNewsLetter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddChurchNewsLetter", "ChurchNewsLetter", FormMethod.Post, new { enctype = "multipart/form-data", @id="AddChurchNewsletter"}))
 
 {
 
@@ -120,6 +120,7 @@
                 }
                 loadNewsLetter();
                 $('#AddChurchNewsLetterModal').modal('hide');
+                $('#AddChurchNewsletter')[0].reset();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
