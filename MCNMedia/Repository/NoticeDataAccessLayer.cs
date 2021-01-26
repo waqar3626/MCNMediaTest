@@ -30,6 +30,7 @@ namespace MCNMedia_Dev.Repository
                 notice.NoticeTitle = dataRow["NoticeTitle"].ToString();
                 notice.NoticeName = dataRow["Notice"].ToString();
                 notice.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                notice.SysTime = Convert.ToDateTime(dataRow["CreatedAt"]).ToString("dd-MMM-yyyy");
                 notice.CreatedBy = dataRow["FirstName"].ToString();
                 listnotice.Add(notice);
             }

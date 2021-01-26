@@ -16,11 +16,13 @@ namespace MCNMedia_Dev.Models
         public string MediaURL { get; set; }
         public string MediaName { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM/dd/yyyy}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int UpdatedBy { get; set; }
+        public string SysTime { get; set; }
 
     }
 

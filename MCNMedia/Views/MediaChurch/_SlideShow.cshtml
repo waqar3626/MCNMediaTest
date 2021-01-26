@@ -25,6 +25,9 @@
                         <th>
                             Created By
                         </th>
+                        <th>
+                            Created Date
+                        </th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -105,6 +108,7 @@
                     html += '<td class="text-wrap">' + item.tabName + '</td>';
                     html += '<td class="text-wrap">' + item.mediaName + '</td>';
                     html += '<td class="text-wrap">' + item.createdBy + '</td>';
+                    html += '<td class="text-wrap">' + item.sysTime + '</td>';
               
                     html += ' <td>';
                     html += '<a onclick="EditSlideShow(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';

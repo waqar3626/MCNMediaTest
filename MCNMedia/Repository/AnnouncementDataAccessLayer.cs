@@ -45,6 +45,7 @@ namespace MCNMedia_Dev.Repository
                 announcement.AnnouncementTitle = dataRow["AnnouncementTitle"].ToString();
                 announcement.AnnouncementText = dataRow["Announcement"].ToString();
                 announcement.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+                announcement.SysTime = Convert.ToDateTime(dataRow["CreatedAt"]).ToString("dd-MMM-yyyy");
                 Balobj.Add(announcement);
             }
             return Balobj;

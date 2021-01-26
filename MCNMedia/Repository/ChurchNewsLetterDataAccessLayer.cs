@@ -117,6 +117,7 @@ namespace MCNMedia_Dev.Repository
             newsletter.NewsLetterName = dataRow["NewsLetterName"].ToString();
             newsletter.ShowOnWebsite = Convert.ToBoolean(dataRow["ShowOnWebsite"]);
             newsletter.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
+            newsletter.SysTime = Convert.ToDateTime(dataRow["CreatedAt"]).ToString("dd-MMM-yyyy");
             newsletter.CreatedBy = $"{dataRow["FirstName"]} {dataRow["LastName"]}";
             newsletter.NewsLetterUrl = $"{AWS_S3_BUCKET_URI}/{dataRow["NewsLetterUrl"]}";
             return newsletter;

@@ -56,6 +56,7 @@ namespace MCNMedia_Dev.Repository
                 mdChurch.TabName= dataRow["TabName"].ToString();
                 mdChurch.MediaName= dataRow["MediaName"].ToString();
                 mdChurch.CreatedAt = Convert.ToDateTime( dataRow["CreatedAt"].ToString());
+                mdChurch.SysTime = Convert.ToDateTime(dataRow["CreatedAt"]).ToString("dd-MMM-yyyy");
                 mdChurch.CreatedBy = dataRow["FirstName"].ToString();
                 mdChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}";
                 Balobj.Add(mdChurch);
