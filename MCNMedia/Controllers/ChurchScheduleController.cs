@@ -31,21 +31,16 @@ namespace MCNMedia_Dev.Controllers
             {
                 ShowMessage("Add Church Schedule Errors : " + e.Message);
                 throw;
-               
             }
-
         }
 
         [HttpPost]
-        public IActionResult AddChurchSchedule(string eventName, bool isRepeat,DateTime eventDate,string eventDay,string eventTime,bool recordtoggle,int cameraId,int recordDuration,bool passwordtoggle,string password)
+        public IActionResult AddChurchSchedule(string eventName, bool isRepeat, DateTime eventDate, string eventDay, string eventTime, bool recordtoggle, int cameraId, int recordDuration, bool passwordtoggle, string password)
         {
-          
             try
             {
-               
-
                 Schedule sch = new Schedule();
-                 sch.IsRepeated = isRepeat;
+                sch.IsRepeated = isRepeat;
                 sch.EventTime = Convert.ToDateTime(eventTime);
                 if (sch.IsRepeated == false)
                 {
@@ -59,13 +54,14 @@ namespace MCNMedia_Dev.Controllers
                 }
                 sch.EventName = eventName;
                 sch.Record = recordtoggle;
-            
+
                 if (sch.Record == false)
                 {
                     sch.CameraId = 0;
                     sch.RecordDuration = 0;
                 }
-                else {
+                else
+                {
                     sch.CameraId = cameraId;
                     sch.RecordDuration = recordDuration;
                 }
@@ -73,32 +69,24 @@ namespace MCNMedia_Dev.Controllers
                 {
                     sch.Password = string.Empty;
                 }
-                else {
+                else
+                {
                     sch.Password = password;
                 }
-                sch.CreatedBy= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                sch.CreatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
                     sch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                 int   res = SchDataAccess.AddSchedule(sch);
+                    int res = SchDataAccess.AddSchedule(sch);
                     return Json(new { success = true, responseText = "The attached file is not supported." });
-                    
                 }
-                
-
-                    return RedirectToAction("Listchurch", "Church");
-
-                
-               
-                
+                return RedirectToAction("Listchurch", "Church");
             }
             catch (Exception e)
             {
                 return Json(new { success = false, responseText = e.Message });
             }
         }
-
-     
 
         [HttpGet]
         public IActionResult EditSchedule(int id)
@@ -110,8 +98,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return NotFound();
                 }
-
-                return PartialView("_EditSchedule",Schedules);
+                return PartialView("_EditSchedule", Schedules);
             }
             catch (Exception e)
             {
@@ -120,16 +107,11 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-
         [HttpPost]
-        public IActionResult UpdateChurchSchedule(string eventName, bool isRepeat, DateTime eventDate, string eventDay, string eventTime, bool recordtoggle, int cameraId, int recordDuration, bool passwordtoggle, string password,int scheduleId)
+        public IActionResult UpdateChurchSchedule(string eventName, bool isRepeat, DateTime eventDate, string eventDay, string eventTime, bool recordtoggle, int cameraId, int recordDuration, bool passwordtoggle, string password, int scheduleId)
         {
-
             try
             {
-                
-
-
                 Schedule sch = new Schedule();
                 sch.IsRepeated = isRepeat;
                 sch.ScheduleId = scheduleId;
@@ -168,30 +150,20 @@ namespace MCNMedia_Dev.Controllers
                 sch.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
-
                     if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                     {
                         sch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                         int res = SchDataAccess.UpdateSchedule(sch);
                         return Json(new { success = true, responseText = "The attached file is not supported." });
-
                     }
                 }
-
                 return RedirectToAction("UserLogin", "UserLogin");
-
-
-
-
             }
             catch (Exception e)
             {
                 return Json(new { success = false, responseText = e.Message });
             }
         }
-
-
-
 
         [HttpPost]
         public IActionResult UpdateSchedule(int id, [Bind] Schedule schedule)
@@ -202,11 +174,9 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return Json(new { Url = "UserLogin" });
                 }
-
                 schedule.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 SchDataAccess.UpdateSchedule(schedule);
                 return RedirectToAction("ListUser");
-
             }
             catch (Exception e)
             {
@@ -215,7 +185,6 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-       
         public IActionResult DeleteSchedule(int id)
         {
             try
@@ -235,7 +204,6 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
 
         private void ShowMessage(String exceptionMessage)
         {
