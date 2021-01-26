@@ -105,12 +105,10 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                    int churchId =(int) HttpContext.Session.GetInt32("chrId");
-                     List<Recording>  RecordingList = _recordDataAccess.Recording_GetByChurch(churchId).ToList();
-                    
+                int churchId = (int)HttpContext.Session.GetInt32("chrId");
+                List<Recording> RecordingList = _recordDataAccess.Recording_GetByChurch(churchId).ToList();
                 return Json(RecordingList);
-
-        }
+            }
             catch (Exception e)
             {
                 return Json(-1);
@@ -138,7 +136,6 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_WhatsOnNow().ToList<Schedule>();
                 return schedules;
             }
@@ -153,46 +150,38 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 List<Schedule> schedules = _scheduleDataAccessLayer.GetChurchSchedule_UpComingSchedules(churchId).ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)
             {
-
                 ShowMesage("UpComing Schedules for Church Error : " + e.Message);
                 throw;
             }
         }
 
-       private IEnumerable<Schedule> UpComingSchedules()
+        private IEnumerable<Schedule> UpComingSchedules()
         {
             try
             {
-
                 List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_UpComingSchedules().ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)
             {
-
                 ShowMesage("UpComing Schedules Error : " + e.Message);
                 throw;
             }
         }
 
-       
         public IActionResult ContactUs()
         {
             try
             {
-                
-
                 return View();
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
@@ -207,7 +196,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
@@ -222,7 +210,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
@@ -238,7 +225,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
@@ -248,7 +234,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(clientTypeId: -1).ToList<Church>();
-
+                ViewBag.NoChurch = 0;
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Country"].ToString()))
                 {
                     string countryName = Request.Query["Country"].ToString().Replace("-", " ");
@@ -261,12 +247,10 @@ namespace MCNMedia_Dev.Controllers
                         string countyName = Request.Query["County"].ToString().Replace("-", " ");
                         churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
                         ViewBag.CountyList = 0;
-                        
-                        
-                       
-
+                        ViewBag.SearchFilter = $"County = {countyName}";
+                        if (churches.Count() == 0)
+                            ViewBag.NoChurch = 1;
                     }
-
                     else
                     {
                         ViewBag.CountyList = 1;
@@ -276,21 +260,22 @@ namespace MCNMedia_Dev.Controllers
 
                         gm.CountyList = _placeAccessLayer.GetCountiesByCountryName(countryName);
                         gm.CountryList = _placeAccessLayer.GetCountries();
+                        if (gm.CountyList.Count() == 0)
+                            ViewBag.NoChurch = 2;
+                        ViewBag.SearchFilter = $"Country = {countryName1}";
                         return View(gm);
-                        
                     }
-                   
                 }
 
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["County"].ToString()))
                 {
-
                     string searchFilter = Request.Query["County"].ToString().ToLower();
                     churches = churches.FindAll(x => x.CountyName.ToLower().Contains(searchFilter)).ToList<Church>();
                     ViewBag.CountyList = 0;
                     ViewBag.countyName = HttpContext.Session.GetString("Country") + "  / " + Request.Query["County"].ToString(); //Request.Query["Country"].ToString();
                     gm.CountryList = _placeAccessLayer.GetCountries();
                     gm.ChurchList = churches;
+                    ViewBag.SearchFilter = $"County = {searchFilter}";
                     return View(gm);
                 }
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Search"].ToString()))
@@ -305,16 +290,16 @@ namespace MCNMedia_Dev.Controllers
                     x.CountryName.ToLower().Contains(last) ||
                     x.CountyName.ToLower().Contains(last)).ToList<Church>();
                     ViewBag.CountyList = 0;
+                    ViewBag.SearchFilter = Request.Query["Search"].ToString();
                 }
-                ViewBag.SearchFilter = Request.Query["Search"].ToString();
                 gm.ChurchList = churches;
+                if (gm.ChurchList.Count() == 0)
+                    ViewBag.NoChurch = 1;
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 return View(gm);
-
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
@@ -345,7 +330,6 @@ namespace MCNMedia_Dev.Controllers
                     selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
                 }
                 ViewBag.Countries = selectListItems;
-
             }
             catch (Exception e)
             {
@@ -358,13 +342,11 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 LoadCountryDDL();
                 return View("Home");
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
@@ -372,13 +354,13 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult AddContactForm(Website website)
         {
-            try { 
-            _websiteDataAccessLayer.AddContactForm(website);
-            return RedirectToAction("Home");
-                 }
-              catch (Exception e)
+            try
             {
-
+                _websiteDataAccessLayer.AddContactForm(website);
+                return RedirectToAction("Home");
+            }
+            catch (Exception e)
+            {
                 return View("Error");
             }
         }
@@ -404,7 +386,8 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult RecordingLock(RecordingLock recordingLock)
         {
-            try {
+            try
+            {
                 String pass = HttpContext.Session.GetString("RecordingPass").ToString();
                 if (recordingLock.Password == pass)
                 {
@@ -421,52 +404,48 @@ namespace MCNMedia_Dev.Controllers
             {
                 return View("Error");
             }
-
         }
 
         public IActionResult Player(int id)
         {
-            try { 
-            int recordingPass = 0;
-            RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
-            if (id == 0)
+            try
             {
-                id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
-                recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
-            }
-            Recording recording = recordingDataAccessLayer.Recording_GetById(id);
-            int pass = recording.Password.Count();
-            if (recording.Password.Count() > 0)
-            {
-                HttpContext.Session.SetString("RecordingPass", recording.Password);
-                HttpContext.Session.SetInt32("RecordingId", id);
-                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
+                int recordingPass = 0;
+                RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
+                if (id == 0)
                 {
-                    int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
+                    id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
+                    recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
                 }
-                else
+                Recording recording = recordingDataAccessLayer.Recording_GetById(id);
+                int pass = recording.Password.Count();
+                if (recording.Password.Count() > 0)
                 {
-                    if (recordingPass == 1)
+                    HttpContext.Session.SetString("RecordingPass", recording.Password);
+                    HttpContext.Session.SetInt32("RecordingId", id);
+                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
                     {
-
+                        int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
                     }
                     else
                     {
+                        if (recordingPass == 1)
+                        {
 
-                        return RedirectToAction(nameof(RecordingLock));
+                        }
+                        else
+                        {
+                            return RedirectToAction(nameof(RecordingLock));
+                        }
                     }
                 }
+                return View(recording);
             }
-            return View(recording);
-          }
-
             catch (Exception e)
             {
-
                 return View("Error");
             }
         }
-
 
         [HttpPost]
         public IActionResult ChurchLock(ChurchLock churchLock)
@@ -486,23 +465,16 @@ namespace MCNMedia_Dev.Controllers
                     return View();
                 }
             }
-
             catch (Exception e)
             {
-
                 return View("Error");
             }
-
-
         }
-
-
 
         public IActionResult Profile(string id)
         {
             try
             {
-              
                 int churchPass = 0;
                 if (id == null)
                 {
@@ -538,36 +510,31 @@ namespace MCNMedia_Dev.Controllers
                         }
                         else
                         {
-
                             return RedirectToAction(nameof(ChurchLock));
                         }
                     }
-
                 }
 
-
-
-                int SubscriberPaid = Convert.ToInt32(TempData["paymentId"]);
-                string visitorLocation = CheckVisitorLocation();
-                int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitorLocation);
-                if (allowToProfile == 1 || SubscriberPaid > 0)
+                int subscriberPaid = Convert.ToInt32(TempData["paymentId"]);
+                Visitor visitor = new Visitor(Request, HttpContext);
+                //string visitorLocation = CheckVisitorLocation();
+                int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitor.CountryName);
+                if (allowToProfile == 1 || subscriberPaid > 0)
                 {
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
                     String ip = website1.IP;
-                    _websiteDataAccessLayer.Analytics(churchId,ip, visitorLocation);
+                    _websiteDataAccessLayer.Analytics(churchId, visitor.IpAddress, visitor.CountryName);
                     List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
                     if (announcementList.Count > 0)
                         profileModel.Announcement = announcementList.First<Announcement>();
                     else
                         profileModel.Announcement = new Announcement();
-
                     List<Notice> noticeList = noticeDataAccess.GetAllNotices(churchId).ToList();
                     if (noticeList.Count > 0)
                         profileModel.notice = noticeList.First<Notice>();
                     else
                         profileModel.notice = new Notice();
-
 
                     profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
                     profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
@@ -599,17 +566,11 @@ namespace MCNMedia_Dev.Controllers
                     return RedirectToAction("Packages", "Subscription");
                 }
             }
-
             catch (Exception e)
             {
-
                 return View("Error");
             }
-
-
         }
-
-        
 
         private string CheckVisitorLocation()
         {
@@ -622,17 +583,8 @@ namespace MCNMedia_Dev.Controllers
             using (var reader = new DatabaseReader(Path.Combine(rootPath, "wwwroot/GeoLite2-Country.mmdb")))
             {
                 // Determine the IP Address of the request
-                //var ipAddress = HttpContext.Connection.RemoteIpAddress; // IPAddress.Parse("119.159.146.215"); //
-                //var ida = Request.HttpContext.Connection.RemoteIpAddress;
                 IPAddress ipAddress;
                 var headers = Request.Headers.ToList();
-                //Common.SaveToXXX("Headers test");
-                //foreach (var item in headers)
-                //{
-                //    Common.SaveToXXX(item.Key.ToString() + "--" + item.Value.ToString());
-                //}
-                 
-                //Common.SaveToXXX("IP Address" + Request.HttpContext.Connection.RemoteIpAddress.ToString());
                 if (headers.Exists((kvp) => kvp.Key == "X-Forwarded-For"))
                 {
                     // when running behind a load balancer you can expect this header
@@ -640,7 +592,7 @@ namespace MCNMedia_Dev.Controllers
                     ipAddress = IPAddress.Parse(header);
                 }
                 else
-                if(headers.Exists((kvp) => kvp.Key == "REMOTE_ADDR"))
+                if (headers.Exists((kvp) => kvp.Key == "REMOTE_ADDR"))
                 {
                     // when running behind a load balancer you can expect this header
                     var header = headers.First((kvp) => kvp.Key == "REMOTE_ADDR").Value.ToString();
@@ -651,13 +603,11 @@ namespace MCNMedia_Dev.Controllers
                     // this will always have a value (running locally in development won't have the header)
                     ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
                 }
-
+                website1.IP = ipAddress.ToString();
                 Common.SaveToXXX("visited just now2 " + ipAddress.ToString());
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);
                 var countryname = countryInfo.Country.ToString();
-                //int churId = HttpContext.Session.Get("");
-                //_websiteDataAccessLayer.Analytics(ipAddress);
                 return countryname;
             }
         }
@@ -672,18 +622,21 @@ namespace MCNMedia_Dev.Controllers
 
             // check if localhost
             if (remoteAddress == "127.0.0.1" || remoteAddress == "::1")
-                website1.IP = remoteAddress;
-            return true;
-
-            // compare with local address
-            if (remoteAddress == connection.LocalIpAddress.ToString())
+            {
                 website1.IP = remoteAddress;
                 return true;
-
+            }
+            // compare with local address
+            if (remoteAddress == connection.LocalIpAddress.ToString())
+            {
+                website1.IP = remoteAddress;
+                return true;
+            }
             return false;
         }
+
         [HttpGet]
-        public JsonResult SearchRecording(string EventName,string FromDate,string ToDate)
+        public JsonResult SearchRecording(string EventName, string FromDate, string ToDate)
         {
             try
             {
@@ -691,13 +644,10 @@ namespace MCNMedia_Dev.Controllers
                 DateTime toDate = Convert.ToDateTime(ToDate);
                 int churchId = (int)HttpContext.Session.GetInt32("chrId");
                 List<Recording> listRecording = _recordDataAccess.RecordingSearch(fromDate, toDate, churchId, EventName).ToList();
-             
-                
                 return Json(listRecording);
             }
             catch (Exception e)
             {
-
                 return Json(-1);
                 //return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
@@ -713,22 +663,14 @@ namespace MCNMedia_Dev.Controllers
                     {
                         Response.Cookies.Delete(cookieKey);
                     }
-
                 }
                 return RedirectToAction(nameof(Home));
-
             }
             catch (Exception e)
             {
-
                 return View("Error");
             }
-
         }
-           
-            
-       
-
 
         public IActionResult RssFeed()
         {

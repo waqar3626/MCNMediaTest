@@ -115,7 +115,6 @@
                                 {
                                     @foreach (var schedule in Model.UpcomingSchedule.Take(1))
                                     {
-                                        <label>  @schedule.ChurchName, @schedule.Town</label><br />
                                         @if (schedule.IsRepeated == true && schedule.Record == true)
                                         {
                                             <b>

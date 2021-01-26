@@ -66,13 +66,13 @@ namespace MCNMedia_Dev.Repository
         /// <summary>
         /// Get the list of counties in a country
         /// </summary>
-        /// <param name="country">Integer: the country id.</param>
+        /// <param name="countryId">Integer: the country id.</param>
         /// <returns>The list of counties</returns>
-        public IEnumerable<Place> GetCounties(int country)
+        public IEnumerable<Place> GetCounties(int countryId)
         {
             List<Place> countyLst = new List<Place>();
             _dc.ClearParameters();
-            _dc.AddParameter("cntryId", country);
+            _dc.AddParameter("cntryId", countryId);
             DataTable dataTable = _dc.ReturnDataTable("spCounties_Get");
 
             foreach (DataRow dataRow in dataTable.Rows)

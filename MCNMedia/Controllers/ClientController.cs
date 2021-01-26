@@ -320,8 +320,10 @@ namespace MCNMedia_Dev.Controllers
         public JsonResult GetStreamParams(string cameraId, string pageId, string pageName, string pageAccessToken, string description, string userId, string userAccessToken)
         {
             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            WowzaApi.WowzaHelper wowza = new WowzaApi.WowzaHelper();
+            bool resu = wowza.RequestFacebookStreaming(churchId, Convert.ToInt32(cameraId), userAccessToken);
            // camDataAccess.SaveSettings(churchId, pageAccessToken, pageId, pageName, description, cameraId);
-            return Json("");
+            return Json(resu.ToString());
         }
 
         [HttpPost]

@@ -31,9 +31,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchPassword", schedules.Password);
             _dc.AddParameter("SchCameraId", schedules.CameraId);
             _dc.AddParameter("CreatedBy", schedules.CreatedBy);
-
             return _dc.Execute("spschedule_Add");
-
         }
 
         public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate, string EventDay, int isRecord)
@@ -65,10 +63,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.Record = Convert.ToBoolean(dataRow["Record"]);
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
                 schedule.CameraName = dataRow["CameraName"].ToString();
-                //user.UpdatedBy = Convert.ToInt32(rdr["UpdatedBy"]);
-                //schedule.RoleName = dataRow["RoleName"].ToString();
-
-
                 Balobj.Add(schedule);
             }
             return Balobj;
@@ -95,7 +89,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-
             }
             return schedule;
         }
@@ -133,7 +126,6 @@ namespace MCNMedia_Dev.Repository
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
 
-
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNow");
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -149,8 +141,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
                 schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-
-
                 Balobj.Add(schedule);
             }
             return Balobj;
@@ -159,7 +149,6 @@ namespace MCNMedia_Dev.Repository
         {
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
-
 
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -180,6 +169,7 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+
         public IEnumerable<Schedule> GetAllChurchSchedule(int ChurchId)
         {
             List<Schedule> Balobj = new List<Schedule>();
@@ -192,9 +182,6 @@ namespace MCNMedia_Dev.Repository
                 Schedule sch = new Schedule();
                 sch.EventDay = dataRow["ScheduleEventDay"].ToString();
                 sch.EventName = dataRow["Events"].ToString();
-
-
-
                 Balobj.Add(sch);
             }
             return Balobj;
@@ -221,9 +208,6 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
                 schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-
-
-
                 Balobj.Add(schedule);
             }
             return Balobj;
@@ -234,7 +218,6 @@ namespace MCNMedia_Dev.Repository
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", -1);
-
 
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_UpComingEvents");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -251,14 +234,10 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
                 schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-
-
-
                 Balobj.Add(schedule);
             }
             return Balobj;
         }
-
 
         public DataTable GetScheduleReadyToStart()
         {
@@ -304,7 +283,5 @@ namespace MCNMedia_Dev.Repository
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_NotPublished_GetByCamera");
             return dataTable;
         }
-
-
     }
 }
