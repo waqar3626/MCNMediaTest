@@ -45,7 +45,8 @@ namespace MCNMedia_Dev.Controllers
         public string GetAllCameras()
         {
             Roku roku = new Roku();
-            //HttpContext.Response.Headers.Add("Content-Type", "text/json");
+            //HttpContext.Response.Headers.Add("Content-Type", "application/json");
+            //return Json(roku.GetCamera());
             return roku.GetCamera();
         }
     }

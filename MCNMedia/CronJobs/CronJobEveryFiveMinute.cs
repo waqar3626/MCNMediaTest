@@ -27,10 +27,35 @@ namespace MCNMedia_Dev.CronJobs
         {
             log.Info($"{DateTime.Now:hh:mm:ss} CronJob Every Minute is working.");
             ScheduleController schedule = new ScheduleController();
-            schedule.StartRecording();
-            schedule.StopRecording();
-            CameraController camera = new CameraController();
-            camera.SyncAllCamerasWithWowza();
+            try
+            {
+                schedule.StartRecording();
+            }
+            catch(Exception ex)
+            {
+                log.Info("CronJob Every 5 Minute - Start Recording - Error - " + ex.Message.ToString());
+                _Helper.Common.SaveToXXX("CronJob Every 5 Minute - Start Recording - Error - " + ex.Message.ToString());
+            }
+            try
+            {
+                schedule.StopRecording();
+            }
+            catch (Exception ex)
+            {
+                log.Info("CronJob Every 5 Minute - Stop Recording - Error - " + ex.Message.ToString());
+                _Helper.Common.SaveToXXX("CronJob Every 5 Minute - Stop Recording - Error - " + ex.Message.ToString());
+            }
+            
+            try
+            {
+                CameraController camera = new CameraController();
+                camera.SyncAllCamerasWithWowza();
+            }
+            catch (Exception ex)
+            {
+                log.Info("CronJob Every 5 Minute - Sync All Cam - Error - " + ex.Message.ToString());
+                _Helper.Common.SaveToXXX("CronJob Every 5 Minute - Sync All Cam - Error - " + ex.Message.ToString());
+            }
             return Task.CompletedTask;
         }
 

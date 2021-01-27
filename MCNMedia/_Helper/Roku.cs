@@ -133,7 +133,7 @@ namespace MCNMedia_Dev._Helper
                         id = $"Cam_{cam.CameraId}",
                         title = cam.ChurchName.Replace("&", "&#38;"),
                         shortDescription = "Faith based Community.",
-                        thumbnail = "https://d6hm6c1vbpfva.cloudfront.net/shortform-a893e770b636f6459dcf027fe361cd49d7ac44c2_2/images/enablingDeveloperMode.jpg",
+                        thumbnail = "http://mcnuat.us-east-1.elasticbeanstalk.com/Images/missing-image2.jpg",
                         genres = new List<string>() { "faith" }.ToArray(),
                         tags = new List<string>() { "uk" }.ToArray(),
                         releaseDate = "2021-01-15",
@@ -166,7 +166,7 @@ namespace MCNMedia_Dev._Helper
             {
                 cameraList = new List<Camera>();
                 cameraList = camDataAccess.GetCameraByCounty(county.PlaceSlug);
-                playlists = new List<Object>();
+                camIds = new List<string>();
                 foreach (var cam in cameraList)
                 {
                     if (cam.IsCameraLive && cam.IsCameraStreaming)
@@ -215,10 +215,6 @@ namespace MCNMedia_Dev._Helper
 
             //Tranform it to Json object
             string json_data = JsonConvert.SerializeObject(my_jsondata);
-
-            //Parse the json object
-            JObject json_object = JObject.Parse(json_data);
-
             return json_data;
 
         }
