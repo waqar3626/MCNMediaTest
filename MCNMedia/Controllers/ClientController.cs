@@ -322,7 +322,7 @@ namespace MCNMedia_Dev.Controllers
             int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
             WowzaApi.WowzaHelper wowza = new WowzaApi.WowzaHelper();
             bool resu = wowza.RequestFacebookStreaming(churchId, Convert.ToInt32(cameraId), userAccessToken);
-           // camDataAccess.SaveSettings(churchId, pageAccessToken, pageId, pageName, description, cameraId);
+            // camDataAccess.SaveSettings(churchId, pageAccessToken, pageId, pageName, description, cameraId);
             return Json(resu.ToString());
         }
 

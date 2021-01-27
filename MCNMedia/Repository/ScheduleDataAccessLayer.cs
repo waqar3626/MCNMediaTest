@@ -238,6 +238,31 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
+         public IEnumerable<Schedule> GetWebsiteSchedule_UpComingSchedulesInCommingHour()
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+            _dc.AddParameter("Church_Id", -1);
+
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNowInHour");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Schedule schedule = new Schedule();
+                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                schedule.ChurchName = dataRow["ChurchName"].ToString();
+                schedule.Town = dataRow["Town"].ToString();
+                schedule.Slug = dataRow["Slug"].ToString();
+                schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
+                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
+                Balobj.Add(schedule);
+            }
+            return Balobj;
+        }
 
         public DataTable GetScheduleReadyToStart()
         {

@@ -130,7 +130,14 @@ namespace MCNMedia_Dev.Controllers
                 switch (charge.Status)
                 {
                     case "succeeded":
-                        subscription.ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+                        if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("chrId").ToString()))
+                        {
+                            subscription.ChurchId = (int)HttpContext.Session.GetInt32("chrId");
+                        }
+                        else
+                        {
+                            subscription.ChurchId = -1;
+                        }
                         subscription.SubscriberId = (int)HttpContext.Session.GetInt32("SubscriberId");
                         subscription.OrderId = charge.Id;
                         subscription.PackageId = (int)HttpContext.Session.GetInt32("packageId");

@@ -40,6 +40,7 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<User> LUsers { get; set; }
 
         public IEnumerable<Schedule> LSchedules { get; set; }
+        public IEnumerable<Schedule> LSchedulesInHour { get; set; }
 
         public IEnumerable<Recording> LRecordings { get; set; }
         public PreviewChurch PreviewChurches { get; set; }

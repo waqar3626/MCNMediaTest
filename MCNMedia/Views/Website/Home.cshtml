@@ -211,7 +211,7 @@
 </div>
 <!-- find curch end -->
 <!-- now? start -->
-@if (Model.LSchedules.Count() > 0)
+@if (Model.LSchedulesInHour.Count() > 0)
 {
     <div class="text-pink font-36 text-center pt-4 pb-4 bg-white container avantgardece">
         What's on now
@@ -220,10 +220,9 @@
         <div class="table-now">
             <table class="table table-striped table-sm table-borderless">
                 <tbody>
-                    @foreach (var schedule in Model.LSchedules)
+                    @foreach (var schedule in Model.LSchedulesInHour)
                     {
-                        @if (schedule.EventTime > DateTime.Now && schedule.EventTime < DateTime.Now.AddHours(1))
-                        {
+                       
                             <tr>
                                 <td scope="row" class="bluepurple font-weight-normal"><b>@schedule.ChurchName, @schedule.Town</b></td>
                                 <td class="bluepurple">
@@ -258,7 +257,6 @@
                                 <td scope="row" class="bluepurple font-weight-normal" style="width:90px;">@schedule.EventTime.ToString("h:mm tt")</td>
                             </tr>
                         }
-                    }
                     </tbody>
             </table>
         </div>

@@ -88,7 +88,7 @@ namespace MCNMedia_Dev.Controllers
                 HttpContext.Session.SetString("Password", "");
                 HttpContext.Session.SetString("UserType", "website");
                 gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
-                gm.LSchedules = UpComingSchedules();
+                gm.LSchedulesInHour = UpComingSchedulesInCommingHour();
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
                 return View(gm);
@@ -165,6 +165,19 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_UpComingSchedules().ToList<Schedule>();
+                return schedules;
+            }
+            catch (Exception e)
+            {
+                ShowMesage("UpComing Schedules Error : " + e.Message);
+                throw;
+            }
+        }
+        private IEnumerable<Schedule> UpComingSchedulesInCommingHour()
+        {
+            try
+            {
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_UpComingSchedulesInCommingHour().ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)
