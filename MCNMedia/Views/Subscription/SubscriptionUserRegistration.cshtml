@@ -48,10 +48,10 @@
 <form asp-controller="Subscription" id="AddUserForm" asp-action="UserRegistration" method="post">
     @{ if (ViewBag.ErrorMsg == 2)
         {
-<div class="form-group alert-danger text-center"   style="        border: 1px solid red ">
-    <label type="password" class=" text-red text-center"> Email Address Already Exists</label>
-</div> } 
-        }
+            <div class="form-group alert-danger text-center" style="        border: 1px solid red ">
+                <label type="password" class=" text-red text-center"> Email Address Already Exists</label>
+            </div> }
+    }
     <div class="row m-0 mt-5 mb-5">
         <div class="col-3 d-lg-block d-none"></div>
         <div class="col-lg-6 col-md-6 col-sm-12 text-center">
@@ -82,16 +82,16 @@
                     @*<label asp-for="ContactEmail">Email</label>*@
                     <span class="text-danger" asp-validation-for="EmailAddress"></span>
                     <input type="email" class="form-control selectWrapper" asp-for="EmailAddress" required placeholder="Email">
-                <div class="invalid-feedback text-left">
-                    Please provide a valid Email Address
-                </div>
+                    <div class="invalid-feedback text-left">
+                        Please provide a valid Email Address
+                    </div>
                 </div>
 
                 <div class="form-group col-sm-12">
                     @*<label class="col-form-label">Message</label>*@
                     <span class="text-danger" asp-validation-for="Password"></span>
                     <input type="password" class="form-control selectWrapper" id="validationCustom04" required asp-for="Password" placeholder="Password">
-                    <div class="invalid-feedback" id="PasswordAlertLabel" >
+                    <div class="invalid-feedback" id="PasswordAlertLabel">
                         <ul>
                             <li class="text-left">Password field required</li>
                             <li class="text-left">password must be atleast 8 character long</li>
@@ -102,6 +102,12 @@
                             <li class="text-left">password must not contain Sequence of Character of digits number </li>
                             <li class="text-left">password must not contain Your First Name & Last Name </li>
                         </ul>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12">
+                    <input type="password" class="form-control" placeholder="Confirm Password" id="ConfirmPassword" required />
+                    <div class="invalid-feedback" id="ConfirmPasswordAlertLabel">
+                        Kindly Provide a valid Password confirm password must match with password
                     </div>
                 </div>
                 <div class="form-group col-sm-12 float-right rounded-sm ">
@@ -121,7 +127,7 @@
 <script>
 
     $('#validationCustom04').keyup(function () {
-      
+
         var Check = CheckValidation();
         if (check) {
 
@@ -132,7 +138,7 @@
 
     function CheckValidation() {
         var check = true;
-       
+
 
         var Passwordcheck = document.getElementById('validationCustom04').value;
 
@@ -160,7 +166,7 @@
 
             check = false;
         }
-       
+
 
         if (check == false) {
 
@@ -179,31 +185,59 @@
 
     }
 
-   
+    function CheckConfirmPassword() {
 
-        $("#BtnAddUser").on("click", function (e) {
-            
-            var form = $("#AddUserForm")[0];
-            var isValid = form.checkValidity();
-            var passwordCheck = CheckValidation();
-           
+        var Password = document.getElementById('validationCustom04').value;
+        var ConfirmPassword = document.getElementById('ConfirmPassword').value;
 
-            if (!isValid) {
+        if (!(Password === ConfirmPassword)) {
 
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            else if (!passwordCheck) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            
-            else {
+            $('#ConfirmPasswordAlertLabel').attr('class', 'invalid-feedback2');
+            $('#ConfirmPassword').attr('class', 'textboxstyle');
 
-                return true;
-            }
-            form.classList.add('was-validated');
-            return false; // For testing only to stay on this page
-        });
+            return false;
+            $('#AddUserPopUp').modal('show');
+
+        }
+        else {
+
+            $('#ConfirmPasswordAlertLabel').attr('class', 'invalid-feedback');
+            $('#ConfirmPassword').attr('class', 'form-control');
+            return true;
+        }
+    }
+    $('#ConfirmPassword').keyup(function () {
+        var Check = CheckConfirmPassword();
+        if (check) {
+
+            $('#ConfirmPasswordAlertLabel').attr('class', 'invalid-feedback');
+            $('#ConfirmPassword').attr('class', 'form-control');
+        }
+    });
+
+    $("#BtnAddUser").on("click", function (e) {
+
+        var form = $("#AddUserForm")[0];
+        var isValid = form.checkValidity();
+        var passwordCheck = CheckValidation();
+
+
+        if (!isValid) {
+
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else if (!passwordCheck) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        else {
+
+            return true;
+        }
+        form.classList.add('was-validated');
+        return false; // For testing only to stay on this page
+    });
 
 </script>
