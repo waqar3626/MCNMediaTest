@@ -202,6 +202,10 @@ namespace MCNMedia_Dev.Controllers
             {
                 camDataAccess.UpdateCameraStreamingStatus(camera.CameraId, cameraStream.isConnected);
             }
+            if (cameraStream.isConnected)
+            {
+                cameraStream.isRecordingSet = true;
+            }
         }
 
         private void ShowMessage(string exceptionMessage)

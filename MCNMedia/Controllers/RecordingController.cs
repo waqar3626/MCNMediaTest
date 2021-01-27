@@ -214,7 +214,7 @@ namespace MCNMedia_Dev.Controllers
                 log.Debug(responseReader.Result);
                 var publishRecording = JsonConvert.DeserializeObject<PublishRecording>(responseReader.Result);
 
-                DataTable dt = scheduleDataAccess.spSchedule_NotPublished_GetByCamera(Convert.ToInt32(publishRecording.camera_id));
+                DataTable dt = scheduleDataAccess.Schedule_NotPublished_GetByCamera(Convert.ToInt32(publishRecording.camera_id));
                 if (dt.Rows.Count > 0)
                 {
                     record.ChurchId = Convert.ToInt32(dt.Rows[0]["ChurchId"]);

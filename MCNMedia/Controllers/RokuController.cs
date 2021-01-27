@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using MCNMedia_Dev._Helper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -38,6 +39,14 @@ namespace MCNMedia_Dev.Controllers
             Roku roku = new Roku();
             HttpContext.Response.Headers.Add("Content-Type", "text/xml");
             return XElement.Parse(roku.GetCameraByCounty(slug));
+        }
+
+        [HttpGet]
+        public string GetAllCameras()
+        {
+            Roku roku = new Roku();
+            //HttpContext.Response.Headers.Add("Content-Type", "text/json");
+            return roku.GetCamera();
         }
     }
 }

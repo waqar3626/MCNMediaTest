@@ -260,7 +260,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchStatus", scheduleStatus);
             _dc.Execute("spSchedule_UpdateStatus");
         }
-        public void insertScheduleLog(int scheduleId, int scheduleStatus)
+        public void InsertScheduleLog(int scheduleId, int scheduleStatus)
         {
             _dc.ClearParameters();
             _dc.AddParameter("SchId", scheduleId);
@@ -275,7 +275,7 @@ namespace MCNMedia_Dev.Repository
             _dc.Execute("spUpdateScheduleLog");
         }
 
-        public DataTable spSchedule_NotPublished_GetByCamera(int cameraId)
+        public DataTable Schedule_NotPublished_GetByCamera(int cameraId)
         {
             List<Recording> Balobj = new List<Recording>();
             _dc.ClearParameters();

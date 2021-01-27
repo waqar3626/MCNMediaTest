@@ -143,30 +143,79 @@ namespace MCNMedia_Dev.WowzaApi
         public CameraStream RequestCameraStatus(int churchId, int cameraId)
         {
             CameraStream cameraStream = new CameraStream();
+            try
+            {
+                log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                string streamName = $"{uniqueIdentifier}_{cameraId}";
+                log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
+                HttpClient client = CreateHttpClientRequest($"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
+                // List data response.
+                HttpResponseMessage response = client.GetAsync("").Result;
+                AddLogsToLog4Net(response);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseBody = response.Content.ReadAsStringAsync().Result;
+                    log.DebugFormat("Wowza - Raw Response Body: {0}", responseBody);
+                    try
+                    {
+                        cameraStream = JsonConvert.DeserializeObject<CameraStream>(responseBody);
+                    }
+                    catch (JsonReaderException ex)
+                    {
+                        log.Info("Wowza - Response - Exception: {0}", ex);
+                    }
+                }
+                log.Info("Wowza API - RequestCameraStatus - End");
+                return cameraStream;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Error Occured - RequestCameraStatus. ", ex.Message);
+                return cameraStream;
+            }
+        }
 
+        public bool RequestFacebookStreaming(int churchId, int cameraId, string accessToken)
+        {
             log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
             string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
             string streamName = $"{uniqueIdentifier}_{cameraId}";
-            log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
-            HttpClient client = CreateHttpClientRequest($"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
-            // List data response.
-            HttpResponseMessage response = client.GetAsync("").Result;
-            AddLogsToLog4Net(response);
-            if (response.IsSuccessStatusCode)
+            log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/pushpublish/mapentries/facebook_{streamName}");
+
+            FacebookStreamingData streamFile = new FacebookStreamingData();
+            streamFile.entryName = $"facebook_{streamName}";
+            streamFile.sourceStreamName = $"{streamName}.stream";
+            streamFile.facebook.accessToken = accessToken;
+
+            bool createStreamFile = PostAsync($"{GetApplicationUrl(cameraId)}/pushpublish/mapentries/facebook_{streamName}", streamFile);
+            if (createStreamFile)
             {
-                var responseBody = response.Content.ReadAsStringAsync().Result;
-                log.DebugFormat("Wowza - Raw Response Body: {0}", responseBody);
-                try
-                {
-                    cameraStream = JsonConvert.DeserializeObject<CameraStream>(responseBody);
-                }
-                catch (JsonReaderException ex)
-                {
-                    log.Info("Wowza - Response - Exception: {0}",ex);
-                }
+                createStreamFile = RequestFacebookStreaming_Start(churchId, cameraId);
             }
-            log.Info("Wowza API - RequestCameraStatus - End");
-            return cameraStream;
+            return createStreamFile;
+        }
+
+        public bool RequestFacebookStreaming_Start(int churchId, int cameraId)
+        {
+            log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+            string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+            string streamName = $"{uniqueIdentifier}_{cameraId}";
+            log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/pushpublish/mapentries/facebook_{streamName}");
+
+            bool createStreamFile = PutAsync($"{GetApplicationUrl(cameraId)}/pushpublish/mapentries/facebook_{streamName}/actions/enable", "");
+            return createStreamFile;
+        }
+
+        public bool RequestFacebookStreaming_Stop(int churchId, int cameraId)
+        {
+            log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
+            string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+            string streamName = $"{uniqueIdentifier}_{cameraId}";
+            log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/pushpublish/mapentries/facebook_{streamName}");
+
+            bool createStreamFile = PutAsync($"{GetApplicationUrl(cameraId)}/pushpublish/mapentries/facebook_{streamName}/actions/disable", "");
+            return createStreamFile;
         }
 
         #endregion
@@ -408,5 +457,27 @@ namespace MCNMedia_Dev.WowzaApi
         public string fileFormat = "";
         public string recorderState = "";
         public string option = "";
+    }
+
+    class FacebookStreamingData
+    {
+        public string application = "live";
+        public bool enabled = true;
+        public string entryName = "";
+        public facebook facebook = new facebook();
+        public string profile = "rtmp-facebook";
+        public string sourceStreamName = "mob6aa78cb_934.stream";
+    }
+
+    public class facebook
+    {
+        public string accessToken = "EAAVj2VeRPDoBAAJt2dgSyOHLfl37QH8zAVscaQoDPi6yILvQ5OzIUCMC2QDqZAWiw2gIfqmJORP9bl1yQkjbbgAZCqWwPQ28bZAPdGyUIaBXyZAAvftx4ZCmXAx1A4HiiNHiCQ6sZAD5tLh2CHTMSQPrZA5ZBViDhR9OZCbiyTYL4kgZDZD";
+        public string description = "This is a stream from Wowza Streaming Engine.";
+        public string destId = "3695099897240804";
+        public string destName = "My Timeline";
+        public string destType = "timeline";
+        public string privacy = "onlyMe";
+        public string title = "Live Test";
+        public string useAppSecret = "false";
     }
 }
