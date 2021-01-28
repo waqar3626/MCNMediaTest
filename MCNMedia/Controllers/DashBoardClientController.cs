@@ -22,8 +22,18 @@ namespace MCNMedia_Dev.Controllers
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
         [HttpGet]
-        public IActionResult DashBoardClient()
+        public IActionResult DashBoardClient(DateTime eventDate)
         {
+            if (eventDate==Convert.ToDateTime("1/1/0001 12:00:00 AM"))
+            {
+                ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                eventDate = DateTime.Now;
+            }
+            else
+            {
+                ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
+            }
+            
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -52,7 +62,7 @@ namespace MCNMedia_Dev.Controllers
                 gm1.LCameras = camDataAccess.GetAdminCameraByChurch(ChurchId).ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
-                gm1.AnalyticsList = churchDataAccessLayer.GetbyChurch(ChurchId,DateTime.Now.AddDays(-7), DateTime.Now);
+                gm1.AnalyticsList = churchDataAccessLayer.GetbyChurch(ChurchId, eventDate, eventDate);
 
                 HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");

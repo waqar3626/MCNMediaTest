@@ -84,7 +84,7 @@
         <div class="row">
 
 
-            
+
             <div class="col-md-4 grid-margin stretch-card ">
                 <div class="card" style="background-color:#004d4d ">
                     <form asp-action="Search" asp-controller="User" method="post">
@@ -258,7 +258,8 @@
                                 @Html.DisplayFor(modelItem => dassh.FuneralsHomeCount)
 
                             </td>
-                        </tr>}
+                        </tr>
+}
                                 </tbody>
                             </table>
                         </div>
@@ -288,47 +289,54 @@
                                 <tbody>
                                     @foreach (var item in Model.LDashBoardClients)
                                     {
-                                    <tr>
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
-                                        </td>
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
-                                        </td>
-                                        @if (item.ScheduleStatus == "Pending")
-                                        {
-                                    <td class="font-weight-medium text-danger">
-                                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                    </td> }
-                                                    else if (item.ScheduleStatus == "In Progress")
-                                                    {
-                                    <td class="font-weight-medium text-warning">
-                                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                    </td> }
-                                                    else if (item.ScheduleStatus == "Completed")
-                                                    {
-                                    <td class="font-weight-medium text-info">
-                                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                    </td> }
-                                                    else if (item.ScheduleStatus == "Published")
-                                                    {
-                                    <td class="font-weight-medium text-success">
-                                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                    </td> }
-                                                    else if (item.ScheduleStatus == "Waiting")
-                                                    {
-                                    <td class="font-weight-medium text-black">
-                                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                    </td> }
-                                                    else
-                                                    {
-                                    <td class="font-weight-medium text-behance">
-                                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                    </td>}
-                                        <td class="text-wrap">
-                                            @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
-                                        </td>
-                                    </tr>}
+                        <tr>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                            </td>
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+                            </td>
+                            @if (item.ScheduleStatus == "Pending")
+                            {
+            <td class="font-weight-medium text-danger">
+                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+            </td>
+ }
+        else if (item.ScheduleStatus == "In Progress")
+        {
+<td class="font-weight-medium text-warning">
+    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+</td>
+ }
+else if (item.ScheduleStatus == "Completed")
+{
+<td class="font-weight-medium text-info">
+    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+</td>
+ }
+else if (item.ScheduleStatus == "Published")
+{
+<td class="font-weight-medium text-success">
+    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+</td>
+ }
+else if (item.ScheduleStatus == "Waiting")
+{
+<td class="font-weight-medium text-black">
+    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+</td>
+ }
+else
+{
+<td class="font-weight-medium text-behance">
+    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+</td>
+}
+                            <td class="text-wrap">
+                                @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
+                            </td>
+                        </tr>
+}
                                 </tbody>
                             </table>
                         </div>
@@ -337,58 +345,78 @@
             </div>
 
             @*<div class="col-lg-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Bar chart</h4>
-                        <canvas id="barChart"></canvas>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Bar chart</h4>
+                            <canvas id="barChart"></canvas>
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
             <!--Today Schedules End-->
-        <div class="col-md-6 grid-margin">
-            <div class="card">
-                <div class="card-header card-header-custom">
-                    COUNTRIES ANALYTICS DETAIL
-                </div>
-                <div class="card-body">
-                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                        <table id="sortable-table-1" class="table">
-                            <thead>
-                                <tr>
-                                    <th class="pl-0 border-bottom sortStyle">COUNTRY</th>
-                                    <th class="border-bottom sortStyle">TOTAL VIEWS</th>
+            <div class="col-md-6 grid-margin">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <form>
 
-                                </tr>
-                            </thead>
+                            ANALYTICS
 
-                            <tbody>
-                                @foreach (var dassh in Model.AnalyticsList)
-                                {
-                    <tr>
-                        <td class=" pl-0">
-                            @Html.DisplayFor(modelItem => dassh.Country)
-                        </td>
-                        <td>
-                            <p class="mb-0">
-                                <span class="">
-                                    @Html.DisplayFor(modelItem => dassh.CountryCount)
-                                </span>
-                            </p>
-                        </td>
+                            <div class="col-sm-2 pull-right">
+                                <button type="submit" asp-action="Dashboard" asp-controller="Dashboard" class="btn btn-primary btn text-white" title="Search">Go</button>
+                            </div>
 
-                    </tr>
-}
-                            </tbody>
-                        </table>
+                            <div class="col-sm-6 pull-right">
+                                <div id="datepicker-popup2" class="input-group date datepicker">
+                                    <input type="text" id="SetEventDate" name="eventDate" class="form-control" placeholder="Event Date" />
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="ti-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table id="sortable-table-1" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="pl-0 border-bottom sortStyle">COUNTRY</th>
+                                        <th class="border-bottom sortStyle">TOTAL VIEWS</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var dassh in Model.AnalyticsList)
+                                    {
+                        <tr>
+                            <td class=" pl-0">
+                                @Html.DisplayFor(modelItem => dassh.Country)
+                            </td>
+                            <td>
+                                <p class="mb-0">
+                                    <span class="">
+                                        @Html.DisplayFor(modelItem => dassh.CountryCount)
+                                    </span>
+                                </p>
+                            </td>
+
+                        </tr>}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </div>
 <script src="~/theme/vendors/chart.js/Chart.min.js"></script>
 <script>
+     $(document).ready(function () {
+        var date = '@ViewBag.SchDate';
+        $('#SetEventDate').val(date);
+    });
+
     $('#UserAdminBtn').click(
         function () {
             alert('hello');
@@ -414,7 +442,7 @@
             {
                 @:LabelArray.push("@data.Country");
                    @:DataArray.push("@data.CountryCount");
-             
+
             }
 
         }
@@ -476,6 +504,3 @@
 
 
 </script>
-
-
-
