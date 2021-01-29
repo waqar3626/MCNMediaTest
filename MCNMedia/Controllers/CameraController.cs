@@ -198,6 +198,7 @@ namespace MCNMedia_Dev.Controllers
             CameraStream cameraStream;
             WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
             cameraStream = wowzaHelper.RequestCameraStatus(camera.ChurchId, camera.CameraId);
+            _Helper.Common.SaveToXXX($"Sync Camera: {camera.CameraId} - Database Status: {camera.IsCameraStreaming} - Wowza Status: {cameraStream.isConnected}");
             if (camera.IsCameraStreaming != cameraStream.isConnected)
             {
                 camDataAccess.UpdateCameraStreamingStatus(camera.CameraId, cameraStream.isConnected);

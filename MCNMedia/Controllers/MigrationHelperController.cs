@@ -108,7 +108,30 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-
+        public void CopyFiles()
+        {
+            ChurchDataAccessLayer churchData = new ChurchDataAccessLayer();
+            List<Church> churches = churchData.GetByClientTypeChurch(-1).ToList();
+            foreach (Church chrch in churches)
+            {
+                if (chrch.ImageURl.Contains("/"))
+                {
+                    string imageName = chrch.ImageURl.Split("/").Last();
+                    string sourcePath = @"D:\aws\" + imageName;
+                    string destinationPath = @"D:\aws\abc\" + imageName;
+                    if (System.IO.File.Exists(sourcePath))
+                    {
+                        if (System.IO.File.Exists(destinationPath))
+                        { }
+                        else
+                        {
+                            System.IO.File.Copy(sourcePath, destinationPath);
+                        }
+                    }
+                }
+            }
+                       
+        }
 
     }
 }

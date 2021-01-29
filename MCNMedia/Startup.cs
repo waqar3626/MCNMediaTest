@@ -61,7 +61,8 @@ namespace MCNMedia_Dev
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => {
+    .AddCookie(options =>
+    {
         options.LoginPath = "~/UserLogin";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
@@ -72,17 +73,17 @@ namespace MCNMedia_Dev
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddCronJob<CronJobEveryMinute>(c =>
-              {
-                  c.TimeZoneInfo = TimeZoneInfo.Local;
-                  c.CronExpression = @"* * * * *";
-              })
+            services
                 .AddCronJob<CronJobEveryFiveMinute>(c =>
-            {
-                c.TimeZoneInfo = TimeZoneInfo.Local;
-                c.CronExpression = @"*/5 * * * *";
-            });
-
+                {
+                    c.TimeZoneInfo = TimeZoneInfo.Local;
+                    c.CronExpression = @"*/5 * * * *";
+                })
+                .AddCronJob<CronJobEveryFiveMinuteSyncCameras>(c =>
+                {
+                    c.TimeZoneInfo = TimeZoneInfo.Local;
+                    c.CronExpression = @"*/5 * * * *";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

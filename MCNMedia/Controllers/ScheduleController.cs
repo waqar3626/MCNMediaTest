@@ -353,6 +353,7 @@ namespace MCNMedia_Dev.Controllers
             DataTable dt = scheduleDataAccess.GetScheduleReadyToStart();
             foreach (DataRow dr in dt.Rows)
             {
+                _Helper.Common.SaveToXXX($"Start Recording Camera: {dr["CameraId"]} - ScheduleId: {dr["ScheduleId"]} - Cam Status: {dr["IsCameraLive"]} - Stream Status: {dr["IsCameraStreaming"]}");
                 if (dr["CameraDeleted"].ToString() == "1")
                 {
                     scheduleDataAccess.InsertScheduleLog(scheduleId: Convert.ToInt32(dr["ScheduleId"]), scheduleStatus: 6);
@@ -387,6 +388,7 @@ namespace MCNMedia_Dev.Controllers
             DataTable dt = scheduleDataAccess.GetScheduleReadyToStop();
             foreach (DataRow dr in dt.Rows)
             {
+                _Helper.Common.SaveToXXX($"Stop Recording Camera: {dr["CameraId"]}");
                 WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
                 int churchId = Convert.ToInt32(dr["ChurchId"]);
                 int cameraId = Convert.ToInt32(dr["CameraId"]);
