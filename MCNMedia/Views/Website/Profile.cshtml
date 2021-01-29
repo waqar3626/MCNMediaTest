@@ -113,43 +113,43 @@
 
 
                             @*<div class=" font-20 text-left">
-            @if (Model.UpcomingSchedule.Count() > 0)
-            {
-                @foreach (var schedule in Model.UpcomingSchedule.Take(1))
-                {
-                    @if (schedule.IsRepeated == true && schedule.Record == true)
-                    {
-                        <b>
-                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
-                        </b>
-                    }
-                    else if (schedule.IsRepeated == true && schedule.Record == false)
-                    {
-                        <b>
-                            @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                        </b>
-                    }
-                    else if (schedule.IsRepeated == false && schedule.Record == true)
-                    {
-                        <b>
-                            @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-                        </b>
-                    }
-                    else
-                    {
-                        <b>
-                            @schedule.EventName
-                        </b>
-                    }
-                    @schedule.EventTime.ToString("h:mm tt")
-                }
-            }
-            else
-            {
-                <br />
-                <p>No Events Scheduled</p>
-            }
-        </div>*@
+                                    @if (Model.UpcomingSchedule.Count() > 0)
+                                    {
+                                        @foreach (var schedule in Model.UpcomingSchedule.Take(1))
+                                        {
+                                            @if (schedule.IsRepeated == true && schedule.Record == true)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
+                                                </b>
+                                            }
+                                            else if (schedule.IsRepeated == true && schedule.Record == false)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                </b>
+                                            }
+                                            else if (schedule.IsRepeated == false && schedule.Record == true)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+                                                </b>
+                                            }
+                                            else
+                                            {
+                                                <b>
+                                                    @schedule.EventName
+                                                </b>
+                                            }
+                                            @schedule.EventTime.ToString("h:mm tt")
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <br />
+                                        <p>No Events Scheduled</p>
+                                    }
+                                </div>*@
 
                             <div class=" font-20 text-center">
                                 @if (Model.ScheduleListDay0.Count() > 0)
@@ -465,13 +465,13 @@
                                     <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
                                         @*<img src=" https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/OffLineImage.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />*@
 
-                                              <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
-                                                     <p class="text-white font-30">
-                                                        Our camera is switched off at the moment.
-                                                        <br />
-                                                        Please come back when there is a service scheduled
-                                                    </p>
-                                            </div>
+                                        <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                                            <p class="text-white font-30">
+                                                Our camera is switched off at the moment.
+                                                <br />
+                                                Please come back when there is a service scheduled
+                                            </p>
+                                        </div>
                                     </div>
 
                                 }
@@ -492,14 +492,14 @@
 
                                     <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
                                         @*<img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />*@
-                                                <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter"  role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
-                                                        <p class="text-white font-30">
-                                                            Our camera is switched off at the moment.
-                                                            <br />
-                                                            Please come back when there is a service scheduled
-                                                        </p>
-                                                 </div>
-                                      </div>
+                                        <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                                            <p class="text-white font-30">
+                                                Our camera is switched off at the moment.
+                                                <br />
+                                                Please come back when there is a service scheduled
+                                            </p>
+                                        </div>
+                                    </div>
                                 }
                                 else
                                 {
@@ -660,56 +660,56 @@
                                             {
                                                 @foreach (var itm in Model.ScheduleListDay0)
                                                 {
-                                            <tr>
-                                                <td scope="row" class="font-weight-normal text-purple">
-                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
-                                                        </b>
-                                                        <br />
+                                                    <tr>
+                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                </td>
-                                                <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                @if (itm.Record == true)
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                                            }
+                                                        </td>
+                                                        <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                        @if (itm.Record == true)
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
 
-                                                    </td>
-                                                }
-                                            </tr>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
                                             else
@@ -753,7 +753,7 @@
                                                             else if (itm.IsRepeated == false && itm.Record == true)
                                                             {
                                                                 <b>
-                                                                    @itm.EventName 
+                                                                    @itm.EventName
                                                                 </b>
                                                                 <br />
 
@@ -803,55 +803,55 @@
                                             {
                                                 @foreach (var itm in Model.ScheduleListDay2)
                                                 {
-                                            <tr>
-                                                <td scope="row" class="font-weight-normal text-purple">
-                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
-                                                        </b>
-                                                        <br />
+                                                    <tr>
+                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                </td>
-                                                <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                @if (itm.Record == true)
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-                                                    </td>
-                                                }
-                                            </tr>
+                                                            }
+                                                        </td>
+                                                        <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                        @if (itm.Record == true)
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
                                             else
@@ -875,55 +875,55 @@
                                             {
                                                 @foreach (var itm in Model.ScheduleListDay3)
                                                 {
-                                            <tr>
-                                                <td scope="row" class="font-weight-normal text-purple">
-                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
-                                                        </b>
-                                                        <br />
+                                                    <tr>
+                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                </td>
-                                                <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                @if (itm.Record == true)
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-                                                    </td>
-                                                }
-                                            </tr>
+                                                            }
+                                                        </td>
+                                                        <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                        @if (itm.Record == true)
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
                                             else
@@ -946,55 +946,55 @@
                                             {
                                                 @foreach (var itm in Model.ScheduleListDay4)
                                                 {
-                                            <tr>
-                                                <td scope="row" class="font-weight-normal text-purple">
-                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
-                                                        </b>
-                                                        <br />
+                                                    <tr>
+                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                </td>
-                                                <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                @if (itm.Record == true)
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-                                                    </td>
-                                                }
-                                            </tr>
+                                                            }
+                                                        </td>
+                                                        <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                        @if (itm.Record == true)
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
                                             else
@@ -1018,55 +1018,55 @@
                                             {
                                                 @foreach (var itm in Model.ScheduleListDay5)
                                                 {
-                                            <tr>
-                                                <td scope="row" class="font-weight-normal text-purple">
-                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
-                                                        </b>
-                                                        <br />
+                                                    <tr>
+                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                </td>
-                                                <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                @if (itm.Record == true)
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-                                                    </td>
-                                                }
-                                            </tr>
+                                                            }
+                                                        </td>
+                                                        <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                        @if (itm.Record == true)
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
                                             else
@@ -1089,55 +1089,55 @@
                                             {
                                                 @foreach (var itm in Model.ScheduleListDay6)
                                                 {
-                                            <tr>
-                                                <td scope="row" class="font-weight-normal text-purple">
-                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
-                                                        </b>
-                                                        <br />
+                                                    <tr>
+                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <br />
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <b>
-                                                            @itm.EventName
-                                                        </b>
-                                                        <br />
+                                                            }
+                                                            else
+                                                            {
+                                                                <b>
+                                                                    @itm.EventName
+                                                                </b>
+                                                                <br />
 
-                                                    }
-                                                </td>
-                                                <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                @if (itm.Record == true)
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="font-weight-normal font-weight-bold">
-                                                        <i class="mdi mdi-camcorder-box-off lg-icon"></i>
-                                                    </td>
-                                                }
-                                            </tr>
+                                                            }
+                                                        </td>
+                                                        <td scope="row" class="text-purple font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                        @if (itm.Record == true)
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box text-purple lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="font-weight-normal font-weight-bold">
+                                                                <i class="mdi mdi-camcorder-box-off lg-icon"></i>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
                                             else
@@ -1317,7 +1317,7 @@
         var fileURL = vedioURL;
         jwplayer('' + vedId + '').setup({
             file: fileURL,
-            image: "../Images/jwerror.jpg",
+            image: "../WebsiteAssets/img/cover-image.png",
             width: "100%",
             height: "518px",
             aspectratio: "16:9",
