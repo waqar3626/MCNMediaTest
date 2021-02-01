@@ -35,12 +35,15 @@ namespace MCNMedia_Dev._Helper
         {
             _smtpClient = new SmtpClient();
             {
+                _Helper.Common.SaveToXXX("Email - Smtp - Begin1");
                 var withBlock = _smtpClient;
                 withBlock.Credentials = new NetworkCredential(userName, password);
+                _Helper.Common.SaveToXXX("Email - Smtp - Begin2");
                 withBlock.DeliveryMethod = SmtpDeliveryMethod.Network;
                 withBlock.EnableSsl = true;
                 withBlock.Host = smtpServer;
                 withBlock.Port = port;
+                _Helper.Common.SaveToXXX("Email - Smtp - End");
             }
         }
 
@@ -60,8 +63,11 @@ namespace MCNMedia_Dev._Helper
         {
             foreach (MailMessage msg in mailMessages)
             {
+                _Helper.Common.SaveToXXX("Email - Smtp-Send - Begin1");
                 msg.IsBodyHtml = true;
                 _smtpClient.Send(msg);
+                _Helper.Common.SaveToXXX("Email - Smtp-Send - End");
+
             }
         }
 
@@ -79,18 +85,27 @@ namespace MCNMedia_Dev._Helper
 
             foreach (EmailMessage msg in emailMessages)
             {
+                _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin1");
                 MailMessage message = new MailMessage();
                 {
                     var withBlock = message;
+                    _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin2");
                     withBlock.To.Add(new MailAddress(msg.To.Email, msg.To.Name));
                     withBlock.Subject = msg.Subject;
                     withBlock.Body = msg.Body;
                     withBlock.From = new MailAddress(msg.From.Email, msg.From.Name);
+                    _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin2");
                 }
-
+                _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin3");
                 messages.Add(message);
+                _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin4");
+
             }
+            _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin5");
+
             Send(messages.ToArray());
+            _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin5");
+
         }
 
         /// <summary>
