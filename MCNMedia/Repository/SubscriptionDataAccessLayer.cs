@@ -274,7 +274,8 @@ namespace MCNMedia_Dev.Repository
 
             _dc.ClearParameters();
             _dc.AddParameter("EmailAdd", EmailAddress);
-           
+                _Helper.Common.SaveToXXX("SubscriberDataAccessLayer - SubscriberEmailCheck - Begin1");
+
 
             DataTable dataTable = _dc.ReturnDataTable("spSubscriber_EmailCheck");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -286,6 +287,7 @@ namespace MCNMedia_Dev.Repository
                 user.Password = dataRow["SubscriberPassword"].ToString();
 
             }
+            _Helper.Common.SaveToXXX("SubscriberDataAccessLayer - SubscriberEmailCheck - End");
             return user;
         }
 
