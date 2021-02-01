@@ -2,7 +2,7 @@
 //#region Initialize API
 window.fbAsyncInit = function () {
     FB.init({
-        appId: '220664392765773',
+        appId: '1517160011742266',
         autoLogAppEvents: true,
         status: true,
         cookie: true,                     // Enable cookies to allow the server to access the session.
@@ -66,7 +66,7 @@ function Authenticate_User() {
     FB.api(
         '/oauth/authorize',
         'POST',
-        { "client_id": "220664392765773", "redirect_uri": "https://localhost:56182/Home/Index", "scope": "manage_pages" },
+        { "client_id": "1517160011742266", "redirect_uri": "https://localhost:56182/Home/Index", "scope": "manage_pages" },
         function (response) {
             var myJSON = JSON.stringify(response);
             // alert(myJSON);
@@ -81,7 +81,7 @@ function GetAccessToken() {
         '/oauth/access_token',
         'GET',
         {
-            "": null, "redirect_uri": "https://localhost:56182/Home/Index", "client_secret": "803b56c89a1b47ab33e588b09e196a05", "client_id": "220664392765773", "code": ""
+            "": null, "redirect_uri": "https://localhost:56182/Home/Index", "client_secret": "3b5c89a1b47ab33e588b09e196a", "client_id": "1517160011742266", "code": ""
         },
         function (response) {
             var myJSON = JSON.stringify(response);
@@ -95,7 +95,7 @@ function GetLongLiveAccessToken() {
     FB.api(
         '/oauth/access_token',
         'GET',
-        { "grant_type": "fb_exchange_token", "client_id": "220664392765773", "client_secret": "803b56c89a1b47ab33e588b09e196a05", "fb_exchange_token": "" + uac + "" },
+        { "grant_type": "fb_exchange_token", "client_id": "1517160011742266", "client_secret": "3b56b47ab33e588b09e196a", "fb_exchange_token": "" + uac + "" },
         function (response) {
             var myJSON = JSON.stringify(response);
             // alert(myJSON);
@@ -109,7 +109,7 @@ function GetLongLiveAccessToken() {
 function GetPageAccessToken() {
     let uac = sessionStorage.getItem('uac');
     FB.api(
-        '/106402264674235',  //page_id
+        '/10640226465',  //page_id
         'GET',
         { "fields": "access_token", "access_token": "" + uac + "" },
         function (response) {
