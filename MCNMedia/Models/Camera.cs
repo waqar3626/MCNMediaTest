@@ -18,7 +18,7 @@ namespace MCNMedia_Dev.Models
         public bool IsCameraStreaming { get; internal set; }
         public string StreamingProtocol { get; set; }
         public string LiveStreamUrl { get; internal set; }
-
+        public Boolean CameraScheduleIsRepeated { get; set; }
         public string App { get; set; }
         public string CreatedAt { get; set; }
         public int CreatedBy { get; set; }

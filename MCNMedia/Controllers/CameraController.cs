@@ -193,6 +193,17 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult RevokeCamera(int churchId, int cameraId)
+        {
+            Camera camera = new Camera();
+            CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+            camera = cameraDataAccessLayer.GetCameraById(cameraId);
+            SyncCameraWithWowza(camera);
+
+            return Json(1);
+        }
+
         private void SyncCameraWithWowza(Camera camera)
         {
             CameraStream cameraStream;
