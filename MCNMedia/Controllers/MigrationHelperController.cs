@@ -31,6 +31,10 @@ namespace MCNMedia_Dev.Controllers
             int counter = 0;
             foreach (Camera cam in cameraList)
             {
+                if(cam.IsCameraStreaming == false)
+                {
+                    wowzaHelper.RequestCameraStatus(cam.ChurchId, cam.CameraId);
+                }
                 counter++;
                 if (counter <= 1000)
                 {

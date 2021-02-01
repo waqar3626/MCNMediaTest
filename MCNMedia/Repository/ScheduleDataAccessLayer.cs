@@ -56,7 +56,7 @@ namespace MCNMedia_Dev.Repository
                 schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
                 schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
                 schedule.CreatedAt = Convert.ToDateTime(dataRow["CreatedAtandUpdateDate"].ToString());
-            
+
                 schedule.Password = dataRow["Password"].ToString();
                 schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
                 schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
@@ -69,7 +69,7 @@ namespace MCNMedia_Dev.Repository
         }
 
         //Get the details of a particular Schedule
-        public Schedule GetScheduleDataBtId(int id)
+        public Schedule GetScheduleById(int id)
         {
             Schedule schedule = new Schedule();
 
@@ -121,56 +121,7 @@ namespace MCNMedia_Dev.Repository
             return _dc.ReturnBool("spSchedule_Delete");
         }
 
-        public IEnumerable<Schedule> GetWebsiteSchedule_WhatsOnNow()
-        {
-            List<Schedule> Balobj = new List<Schedule>();
-            _dc.ClearParameters();
-
-            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNow");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Schedule schedule = new Schedule();
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                schedule.ChurchName = dataRow["ChurchName"].ToString();
-                schedule.Town = dataRow["Town"].ToString();
-                schedule.Slug = dataRow["Slug"].ToString();
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
-                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-                Balobj.Add(schedule);
-            }
-            return Balobj;
-        }
-        public IEnumerable<Schedule> GetWebsiteSchedule_TodaySchedules()
-        {
-            List<Schedule> Balobj = new List<Schedule>();
-            _dc.ClearParameters();
-
-            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Schedule schedule = new Schedule();
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                schedule.ChurchName = dataRow["ChurchName"].ToString();
-                schedule.Town = dataRow["Town"].ToString();
-                schedule.Slug = dataRow["Slug"].ToString();
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
-                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-                Balobj.Add(schedule);
-            }
-            return Balobj;
-        }
-
-        public IEnumerable<Schedule> GetAllChurchSchedule(int ChurchId)
+        public IEnumerable<Schedule> GetScheduleByChurch(int ChurchId)
         {
             List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
@@ -187,81 +138,78 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
-        public IEnumerable<Schedule> GetChurchSchedule_UpComingSchedules(int churchId)
+        public IEnumerable<Schedule> GetSchedule_Today()
         {
             List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today");
+            return ConvertScheduleTableToList(dataTable);
+        }
+
+        public IEnumerable<Schedule> GetSchedule_WhatsOnNow()
+        {
+            List<Schedule> Balobj = new List<Schedule>();
+            _dc.ClearParameters();
+            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNow");
+            return ConvertScheduleTableToList(dataTable);
+        }
+
+        public IEnumerable<Schedule> GetSchedule_UpComing_All()
+        {
+            return GetSchedule_UpComing(churchId:-1);
+        }
+
+        public IEnumerable<Schedule> GetSchedule_UpComingByChurch(int churchId)
+        {
+            return GetSchedule_UpComing(churchId);
+        }
+
+        private IEnumerable<Schedule> GetSchedule_UpComing(int churchId)
+        {
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", churchId);
-
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_UpComingEvents");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Schedule schedule = new Schedule();
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                schedule.ChurchName = dataRow["ChurchName"].ToString();
-                schedule.Town = dataRow["Town"].ToString();
-                schedule.Slug = dataRow["Slug"].ToString();
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
-                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-                Balobj.Add(schedule);
-            }
-            return Balobj;
+
+            return ConvertScheduleTableToList(dataTable);
         }
 
-        public IEnumerable<Schedule> GetWebsiteSchedule_UpComingSchedules()
+        public IEnumerable<Schedule> GetSchedule_UpComingHour()
         {
-            List<Schedule> Balobj = new List<Schedule>();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", -1);
-
-            DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_UpComingEvents");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Schedule schedule = new Schedule();
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                schedule.ChurchName = dataRow["ChurchName"].ToString();
-                schedule.Town = dataRow["Town"].ToString();
-                schedule.Slug = dataRow["Slug"].ToString();
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
-                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-                Balobj.Add(schedule);
-            }
-            return Balobj;
-        }
-         public IEnumerable<Schedule> GetWebsiteSchedule_UpComingSchedulesInCommingHour()
-        {
-            List<Schedule> Balobj = new List<Schedule>();
-            _dc.ClearParameters();
-            _dc.AddParameter("Church_Id", -1);
-
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNowInHour");
+           
+            return ConvertScheduleTableToList(dataTable);
+        }
+
+        private IEnumerable<Schedule> ConvertScheduleTableToList(DataTable dataTable)
+        {
+            Schedule schedule ;
+            List<Schedule> schedules = new List<Schedule>();
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                Schedule schedule = new Schedule();
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                schedule.ChurchName = dataRow["ChurchName"].ToString();
-                schedule.Town = dataRow["Town"].ToString();
-                schedule.Slug = dataRow["Slug"].ToString();
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
-                schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
-                Balobj.Add(schedule);
+                schedule = BindSchedule(dataRow);
+                schedules.Add(schedule);
             }
-            return Balobj;
+            return schedules;
+        }
+        
+        private Schedule BindSchedule(DataRow dataRow)
+        {
+            Schedule schedule = new Schedule();
+            schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+            schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+            schedule.ChurchName = dataRow["ChurchName"].ToString();
+            schedule.Town = dataRow["Town"].ToString();
+            schedule.Slug = dataRow["Slug"].ToString();
+            schedule.EventName = dataRow["ScheduleEventName"].ToString();
+            schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+            schedule.EventDay = dataRow["ScheduleEventDay"].ToString();
+            schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+            schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"].ToString());
+            schedule.Record = Convert.ToBoolean(dataRow["Record"].ToString());
+            return schedule;
         }
 
         public DataTable GetScheduleReadyToStart()
@@ -285,6 +233,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchStatus", scheduleStatus);
             _dc.Execute("spSchedule_UpdateStatus");
         }
+       
         public void InsertScheduleLog(int scheduleId, int scheduleStatus)
         {
             _dc.ClearParameters();
@@ -292,6 +241,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchStatus", scheduleStatus);
             _dc.Execute("spScheduleActivityLog");
         }
+      
         public void UpdateScheduleLog(int scheduleId, int scheduleStatus)
         {
             _dc.ClearParameters();
@@ -302,11 +252,34 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable Schedule_NotPublished_GetByCamera(int cameraId)
         {
-            List<Recording> Balobj = new List<Recording>();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_NotPublished_GetByCamera");
             return dataTable;
+        }
+
+        public Schedule GetInprogressScheduleByCamera(int cameraId)
+        {
+            Schedule schedule = new Schedule();
+
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", cameraId);
+            DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetInprogressByCamera");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
+                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                schedule.EventName = dataRow["ScheduleEventName"].ToString();
+                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
+                schedule.EventDay = (dataRow["ScheduleEventDay"].ToString());
+                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
+                schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
+                schedule.Record = Convert.ToBoolean(dataRow["Record"]);
+                schedule.Password = dataRow["Password"].ToString();
+                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
+                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
+            }
+            return schedule;
         }
     }
 }

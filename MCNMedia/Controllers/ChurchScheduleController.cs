@@ -24,7 +24,7 @@ namespace MCNMedia_Dev.Controllers
                     return Json(new { Url = "UserLogin" });
                 }
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                List<Schedule> ChurchSchedule = SchDataAccess.GetAllChurchSchedule(churchId).ToList();
+                List<Schedule> ChurchSchedule = SchDataAccess.GetScheduleByChurch(churchId).ToList();
                 return Json(ChurchSchedule);
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                Schedule Schedules = SchDataAccess.GetScheduleDataBtId(id);
+                Schedule Schedules = SchDataAccess.GetScheduleById(id);
                 if (Schedules == null)
                 {
                     return NotFound();

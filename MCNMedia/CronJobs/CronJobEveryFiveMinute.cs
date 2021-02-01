@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Controllers;
 using Microsoft.Extensions.Logging;
 
@@ -26,11 +27,11 @@ namespace MCNMedia_Dev.CronJobs
         public override Task DoWork(CancellationToken cancellationToken)
         {
             log.Info($"{DateTime.Now:hh:mm:ss} CronJob Every 5 is working.");
-            ScheduleController schedule = new ScheduleController();
+            Wowza schedule = new Wowza();
             try
             {
                 _Helper.Common.SaveToXXX("JOB - StopRecording - Begin");
-                schedule.StopRecording();
+                schedule.StopRecording_ReadyToStop();
                 _Helper.Common.SaveToXXX("JOB - StopRecording - End");
             }
             catch (Exception ex)
@@ -41,7 +42,7 @@ namespace MCNMedia_Dev.CronJobs
             try
             {
                 _Helper.Common.SaveToXXX("JOB - StartRecording - Begin");
-                schedule.StartRecording();
+                schedule.StartRecording_ReadyToStart();
                 _Helper.Common.SaveToXXX("JOB - StartRecording - End");
             }
             catch(Exception ex)

@@ -73,11 +73,18 @@ namespace MCNMedia_Dev.Repository
 
         public List<Camera> GetAdminCameraByChurch(int churchId)
         {
+            ScheduleDataAccessLayer scheduleDataAccessLayer = new ScheduleDataAccessLayer();
             List<Camera> Balobj = new List<Camera>();
             DataTable dataTable = GetCamera(churchId: churchId, cameraId: -1, camType: _Helper.CameraType.AdminCamera);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Camera camera = BindingCamera(dataRow);
+               Schedule schedule = scheduleDataAccessLayer.GetInprogressScheduleByCamera(camera.CameraId);
+                camera.ScheduleId = schedule.ScheduleId;
+                if (camera.ScheduleId > 0)
+                {
+                    camera.RecordingInProgress = true;
+                }
                 Balobj.Add(camera);
             }
             return Balobj;

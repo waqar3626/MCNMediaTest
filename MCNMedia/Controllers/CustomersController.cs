@@ -39,7 +39,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 int churchId = (int)HttpContext.Session.GetInt32("churchId");
-                List<Schedule> ChurchSchedule = scheduleDataAccess.GetAllChurchSchedule(churchId).ToList();
+                List<Schedule> ChurchSchedule = scheduleDataAccess.GetScheduleByChurch(churchId).ToList();
                 return Json(ChurchSchedule);
             }
             catch (Exception e)

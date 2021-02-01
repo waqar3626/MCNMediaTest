@@ -121,7 +121,7 @@ namespace MCNMedia_Dev.Controllers
             try
             {
                 GenericSchedule gmSch = new GenericSchedule();
-                gmSch.TodaySchedule = _scheduleDataAccessLayer.GetWebsiteSchedule_TodaySchedules().ToList<Schedule>();
+                gmSch.TodaySchedule = _scheduleDataAccessLayer.GetSchedule_Today().ToList<Schedule>();
                 gmSch.UpcomingSchedule = UpComingSchedules();
                 gmSch.CurrentSchedule = Schedules_WhatsOnNow();
                 return View(gmSch);
@@ -136,7 +136,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_WhatsOnNow().ToList<Schedule>();
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetSchedule_WhatsOnNow().ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                List<Schedule> schedules = _scheduleDataAccessLayer.GetChurchSchedule_UpComingSchedules(churchId).ToList<Schedule>();
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetSchedule_UpComingByChurch(churchId).ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_UpComingSchedules().ToList<Schedule>();
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetSchedule_UpComing_All().ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)
@@ -177,7 +177,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                List<Schedule> schedules = _scheduleDataAccessLayer.GetWebsiteSchedule_UpComingSchedulesInCommingHour().ToList<Schedule>();
+                List<Schedule> schedules = _scheduleDataAccessLayer.GetSchedule_UpComingHour().ToList<Schedule>();
                 return schedules;
             }
             catch (Exception e)

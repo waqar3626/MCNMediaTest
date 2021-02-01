@@ -29,10 +29,10 @@ namespace MCNMedia_Dev.Models
         public string ChurchName { get; set; }
         public string ChurchUniqueIdentifier { get; internal set; }
     
-       
-
         public int ServerId { get; set; }
         public string ServerName { get; set; }
         public string ServerIP { get; set; }
+        public bool RecordingInProgress { get; set; } = false;
+        public int ScheduleId { get; set; } = 0;
     }
 } 
