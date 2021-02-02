@@ -569,6 +569,88 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
                     profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
                     profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
+
+                    List<Schedule> nextEventSchedule = new List<Schedule>();
+                    foreach(Schedule schedule in profileModel.ScheduleListDay0)
+                    {
+                        if(Convert.ToDateTime(schedule.EventTime) > DateTime.Now)
+                        {
+                            schedule.EventDay = "Today";
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
+                        }
+                    }
+
+                    if(nextEventSchedule.Count == 0)
+                    {
+                        foreach (Schedule schedule in profileModel.ScheduleListDay1)
+                        {
+                            
+                                
+                                nextEventSchedule.Add(schedule);
+                                profileModel.NextScheduleList = nextEventSchedule;
+                            
+                        }
+                    }
+
+                   else if (nextEventSchedule.Count == 0)
+                    {
+                        foreach (Schedule schedule in profileModel.ScheduleListDay2)
+                        {
+                            
+                                nextEventSchedule.Add(schedule);
+                                profileModel.NextScheduleList = nextEventSchedule;
+                          
+                        }
+                    }
+
+                    else if (nextEventSchedule.Count == 0)
+                    {
+                        foreach (Schedule schedule in profileModel.ScheduleListDay3)
+                        {
+                            
+                                nextEventSchedule.Add(schedule);
+                                profileModel.NextScheduleList = nextEventSchedule;
+                            
+                        }
+                    }
+                    else if (nextEventSchedule.Count == 0)
+                    {
+                        foreach (Schedule schedule in profileModel.ScheduleListDay4)
+                        {
+                              nextEventSchedule.Add(schedule);
+                                profileModel.NextScheduleList = nextEventSchedule;
+                            
+                        }
+                    }
+                    else if (nextEventSchedule.Count == 0)
+                    {
+                        foreach (Schedule schedule in profileModel.ScheduleListDay5)
+                        {
+                           
+                                nextEventSchedule.Add(schedule);
+                                profileModel.NextScheduleList = nextEventSchedule;
+                            
+                        }
+                    }
+                    else if (nextEventSchedule.Count == 0)
+                    {
+                        foreach (Schedule schedule in profileModel.ScheduleListDay6)
+                        {
+                            
+                                nextEventSchedule.Add(schedule);
+                                profileModel.NextScheduleList = nextEventSchedule;
+                           
+                        }
+                    }
+                    else
+                    {
+                       
+                    }
+
+               
+
+
                     return View(profileModel);
                 }
                 else

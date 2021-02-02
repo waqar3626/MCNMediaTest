@@ -32,7 +32,7 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<Schedule> NowScheduleList { get; set; }
 
 
-
+        public IEnumerable<Schedule> NextScheduleList { get; set; }
         public IEnumerable<Schedule> ScheduleListDay0 { get; set; }
         public IEnumerable<Schedule> ScheduleListDay1 { get; set; }
         public IEnumerable<Schedule> ScheduleListDay2 { get; set; }
