@@ -571,86 +571,67 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
 
                     List<Schedule> nextEventSchedule = new List<Schedule>();
-                    foreach(Schedule schedule in profileModel.ScheduleListDay0)
+                    foreach (Schedule schedule in profileModel.ScheduleListDay0)
                     {
-                        if(Convert.ToDateTime(schedule.EventTime) > DateTime.Now)
+                        if (Convert.ToDateTime(schedule.EventTime) > DateTime.Now)
                         {
                             schedule.EventDay = "Today";
                             nextEventSchedule.Add(schedule);
                             profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
-
-                    if(nextEventSchedule.Count == 0)
+                    if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay1.Count() > 0)
                     {
                         foreach (Schedule schedule in profileModel.ScheduleListDay1)
                         {
-                            
-                                
-                                nextEventSchedule.Add(schedule);
-                                profileModel.NextScheduleList = nextEventSchedule;
-                            
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
-
-                   else if (nextEventSchedule.Count == 0)
+                    else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay2.Count() > 0)
                     {
                         foreach (Schedule schedule in profileModel.ScheduleListDay2)
                         {
-                            
-                                nextEventSchedule.Add(schedule);
-                                profileModel.NextScheduleList = nextEventSchedule;
-                          
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
-
-                    else if (nextEventSchedule.Count == 0)
+                    else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay3.Count()>0)
                     {
                         foreach (Schedule schedule in profileModel.ScheduleListDay3)
                         {
-                            
-                                nextEventSchedule.Add(schedule);
-                                profileModel.NextScheduleList = nextEventSchedule;
-                            
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
-                    else if (nextEventSchedule.Count == 0)
+                    else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay4.Count() > 0)
                     {
                         foreach (Schedule schedule in profileModel.ScheduleListDay4)
                         {
-                              nextEventSchedule.Add(schedule);
-                                profileModel.NextScheduleList = nextEventSchedule;
-                            
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
-                    else if (nextEventSchedule.Count == 0)
+                    else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay5.Count() > 0)
                     {
                         foreach (Schedule schedule in profileModel.ScheduleListDay5)
                         {
-                           
-                                nextEventSchedule.Add(schedule);
-                                profileModel.NextScheduleList = nextEventSchedule;
-                            
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
-                    else if (nextEventSchedule.Count == 0)
+                    else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay6.Count() > 0)
                     {
                         foreach (Schedule schedule in profileModel.ScheduleListDay6)
                         {
-                            
-                                nextEventSchedule.Add(schedule);
-                                profileModel.NextScheduleList = nextEventSchedule;
-                           
+                            nextEventSchedule.Add(schedule);
+                            profileModel.NextScheduleList = nextEventSchedule;
                         }
                     }
                     else
                     {
-                       
+                        profileModel.NextScheduleList = nextEventSchedule;
                     }
-
-               
-
-
                     return View(profileModel);
                 }
                 else
@@ -671,7 +652,6 @@ namespace MCNMedia_Dev.Controllers
         {
             if (IsLocal(HttpContext.Connection))
             {
-                Common.SaveToXXX("visited just now -Pak2 " + DateTime.Now.ToString());
                 return "Pakistan";
             }
             string rootPath = Directory.GetCurrentDirectory();
@@ -699,7 +679,6 @@ namespace MCNMedia_Dev.Controllers
                     ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
                 }
                 website1.IP = ipAddress.ToString();
-                Common.SaveToXXX("visited just now2 " + ipAddress.ToString());
                 // Get the city from the IP Address
                 var countryInfo = reader.Country(ipAddress);
                 var countryname = countryInfo.Country.ToString();
@@ -710,7 +689,6 @@ namespace MCNMedia_Dev.Controllers
         private bool IsLocal(ConnectionInfo connection)
         {
             var remoteAddress = connection.RemoteIpAddress.ToString();
-            Common.SaveToXXX("Remote Address1: " + remoteAddress.ToString());
             // if unknown, assume not local
             if (String.IsNullOrEmpty(remoteAddress))
                 return false;

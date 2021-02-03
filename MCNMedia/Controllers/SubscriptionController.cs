@@ -16,6 +16,7 @@ using MCNMedia_Dev._Helper;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using OtpNet;
+using _Helper;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -615,7 +616,7 @@ namespace MCNMedia_Dev.Controllers
                 string Message = emailTemplate.Subject;
                 Message = Message.Replace("#First Name#",user.Name);
                 Message = Message.Replace("#Code#", result);
-                emailHelper.SendEmail(emailTemplate.FromEmail, Email, user.Name, "Password Reset Code", Message);
+                Status sts = emailHelper.SendEmail(emailTemplate.FromEmail, Email, user.Name, "Password Reset Code", Message);
 
                 TempData["Email"] = Email;
                 TempData["OTPCode"] = result;

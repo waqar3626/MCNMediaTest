@@ -230,7 +230,7 @@ namespace MCNMedia_Dev.WowzaApi
             cam = cameraDataAccessLayer.GetCameraById(cameraId);
             if (cam.CameraType == _Helper.CameraType.AdminCamera)
             {
-                uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                uniqueIdentifier = cam.ChurchUniqueIdentifier;
             }
             else
             {

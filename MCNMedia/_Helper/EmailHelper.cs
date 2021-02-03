@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,25 +9,17 @@ namespace MCNMedia_Dev._Helper
 {
     public class EmailHelper
     {
-        public bool SendEmail(string fromEmail, string toEmail, string toName, string subject, string body)
+        public Status SendEmail(string fromEmail, string toEmail, string toName, string subject, string body)
         {
-            _Helper.Common.SaveToXXX("EmailHelper - SendEmail(first) - Begin");
-
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            EmailMessage email = new EmailMessage();
-            email = ReturnAsEmailMessage(fromEmail, toEmail, toName, subject, body);
-            SendEmail(email);
-            _Helper.Common.SaveToXXX("EmailHelper - SendEmail(first) - End");
-            return true;
-            
+            EmailMessage email =  ReturnAsEmailMessage(fromEmail, toEmail, toName, subject, body);
+            return Send(email);
         }
 
-        private void SendEmail(EmailMessage email)
+        private Status Send(EmailMessage email)
         {
-            _Helper.Common.SaveToXXX("EmailHelper - SendEmail(second) - Begin");
             Smtp smtpDb = new Smtp();
-            smtpDb.Send(email);
-            _Helper.Common.SaveToXXX("EmailHelper - SendEmail(second) - Begin");
+            return smtpDb.Send(email);
         }
 
         private EmailMessage ReturnAsEmailMessage(string fromEmail, string toEmail, string toName, string subject, string body)

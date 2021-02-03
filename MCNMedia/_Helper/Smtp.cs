@@ -6,6 +6,7 @@ using System.Net.Mail;
 
 using System.Collections;
 using System.Data;
+using _Helper;
 
 namespace MCNMedia_Dev._Helper
 {
@@ -59,16 +60,27 @@ namespace MCNMedia_Dev._Helper
         /// <param name="mailMessages">
         /// The mail messages (see <see Cref="MailMessage" />.
         /// </param>
-        public void Send(params MailMessage[] mailMessages)
+        private Status SendMessage(params MailMessage[] mailMessages)
         {
+            Status sts = new Status()
+            {
+                Success = true,
+                Message = ""
+            };
             foreach (MailMessage msg in mailMessages)
             {
-                _Helper.Common.SaveToXXX("Email - Smtp-Send - Begin1");
-                msg.IsBodyHtml = true;
-                _smtpClient.Send(msg);
-                _Helper.Common.SaveToXXX("Email - Smtp-Send - End");
-
+                try
+                {
+                    msg.IsBodyHtml = true;
+                    _smtpClient.Send(msg);
+                }
+                catch (Exception ex)
+                {
+                    sts.Message = ex.Message;
+                    sts.Success = false;
+                }
             }
+            return sts;
         }
 
         /// <summary>
@@ -79,33 +91,25 @@ namespace MCNMedia_Dev._Helper
         /// <param name="emailMessages">
         /// The email messages (see <see cref="EmailMessage" />).
         /// </param>
-        public void Send(params EmailMessage[] emailMessages)
+        public Status Send(params EmailMessage[] emailMessages)
         {
             List<MailMessage> messages = new List<MailMessage>();
 
             foreach (EmailMessage msg in emailMessages)
             {
-                _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin1");
                 MailMessage message = new MailMessage();
                 {
                     var withBlock = message;
-                    _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin2");
                     withBlock.To.Add(new MailAddress(msg.To.Email, msg.To.Name));
                     withBlock.Subject = msg.Subject;
                     withBlock.Body = msg.Body;
                     withBlock.From = new MailAddress(msg.From.Email, msg.From.Name);
-                    _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin2");
                 }
-                _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin3");
                 messages.Add(message);
-                _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin4");
-
             }
-            _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin5");
 
-            Send(messages.ToArray());
-            _Helper.Common.SaveToXXX("Email - Smtp-Send-WithBody - Begin5");
-
+            Status sts = SendMessage(messages.ToArray());
+            return sts;
         }
 
         /// <summary>
