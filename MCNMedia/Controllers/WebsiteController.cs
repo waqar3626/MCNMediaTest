@@ -260,6 +260,7 @@ namespace MCNMedia_Dev.Controllers
                         string countyName = Request.Query["County"].ToString().Replace("-", " ");
                         churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
                         ViewBag.CountyList = 0;
+                        countyName=countyName.Replace("-", " ");
                         ViewBag.SearchFilter = $"County = {countyName}";
                         if (churches.Count() == 0)
                             ViewBag.NoChurch = 1;
@@ -283,11 +284,13 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["County"].ToString()))
                 {
                     string searchFilter = Request.Query["County"].ToString().ToLower();
-                    churches = churches.FindAll(x => x.CountyName.ToLower().Contains(searchFilter)).ToList<Church>();
+                    searchFilter = searchFilter.Replace("-", " ");
+                    churches = churches.FindAll(x => x.CountyName.ToLower().StartsWith(searchFilter)).ToList<Church>();
                     ViewBag.CountyList = 0;
-                    ViewBag.countyName = HttpContext.Session.GetString("Country") + "  / " + Request.Query["County"].ToString(); //Request.Query["Country"].ToString();
+                    ViewBag.countyName = HttpContext.Session.GetString("Country") + "  / " + Request.Query["County"].ToString().Replace("-"," "); //Request.Query["Country"].ToString();
                     gm.CountryList = _placeAccessLayer.GetCountries();
                     gm.ChurchList = churches;
+                    searchFilter = searchFilter.Replace("-", " ");
                     ViewBag.SearchFilter = $"County = {searchFilter}";
                     return View(gm);
                 }
