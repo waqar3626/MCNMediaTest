@@ -7,409 +7,410 @@
 <!-- partial -->
 
 
-<div class="row ">
-    <div class="col-12">
-        <div class="row">
-            <div class="col-md-12 grid-margin">
-                <div class="card  border-0 position-relative" style="background-color: #660033">
-                    <div class="card-body">
-                        @*<h3 class=" text-white">Recordings Details</h3>*@
-                        <div id="performanceOverview" class="carousel slide performance-overview-carousel position-static pt-2" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="col-md-4 ">
-                                            <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0">
-                                                <div class="icon icon-a text-white mr-3">
-                                                    <i class=" mdi mdi-calendar  icon-lg ml-3"></i>
-                                                </div>
-                                                <div class="content text-white">
-                                                    <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
-                                                        <h3 class="font-weight-light mr-2 mb-1">Today’s Schedules</h3>
+    <div class="row ">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div class="card  border-0 position-relative" style="background-color: #660033">
+                        <div class="card-body">
+                            @*<h3 class=" text-white">Recordings Details</h3>*@
+                            <div id="performanceOverview" class="carousel slide performance-overview-carousel position-static pt-2" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-md-4 ">
+                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0">
+                                                    <div class="icon icon-a text-white mr-3">
+                                                        <i class=" mdi mdi-calendar  icon-lg ml-3"></i>
+                                                    </div>
+                                                    <div class="content text-white">
+                                                        <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
+                                                            <h3 class="font-weight-light mr-2 mb-1">Today’s Schedules</h3>
 
-                                                    </div>
-                                                    <div class="col-8 col-md-7 d-flex border-info align-items-center justify-content-between px-0 pb-2 mb-3">
-                                                        <h3 class="mb-0">@Model.Dashboards.TodayScheduleCount</h3>
+                                                        </div>
+                                                        <div class="col-8 col-md-7 d-flex border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                            <h3 class="mb-0">@Model.Dashboards.TodayScheduleCount</h3>
 
+                                                        </div>
+                                                        <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Schedules of an Events of Churches </p>
                                                     </div>
-                                                    <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Schedules of an Events of Churches </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
-                                                <div class="icon icon-b text-white mr-3">
-                                                    <i class=" mdi mdi-camcorder-box  icon-lg ml-3"></i>
-                                                </div>
-                                                <div class="content text-white">
-                                                    <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
-                                                        <h3 class="font-weight-light mr-2 mb-1">Today's Recordings</h3>
-                                                    </div>
-                                                    <div class="col-8 col-md-7 d-flex  border-info align-items-center justify-content-between px-0 pb-2 mb-3">
-                                                        <h3 class="mb-0">@Model.Dashboards.TodayRecording</h3>
-
-                                                    </div>
-                                                    <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Recordings for Current day of an Events of Churches</p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4 item">
-                                            <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
-                                                <div class="icon icon-c text-white mr-3">
-                                                    <i class="mdi mdi-camera  icon-lg ml-3"></i>
+                                            <div class="col-md-4">
+                                                <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
+                                                    <div class="icon icon-b text-white mr-3">
+                                                        <i class=" mdi mdi-camcorder-box  icon-lg ml-3"></i>
+                                                    </div>
+                                                    <div class="content text-white">
+                                                        <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
+                                                            <h3 class="font-weight-light mr-2 mb-1">Today's Recordings</h3>
+                                                        </div>
+                                                        <div class="col-8 col-md-7 d-flex  border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                            <h3 class="mb-0">@Model.Dashboards.TodayRecording</h3>
+
+                                                        </div>
+                                                        <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Recordings for Current day of an Events of Churches</p>
+                                                    </div>
                                                 </div>
-                                                <div class="content text-white">
-                                                    <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
-                                                        <h3 class="font-weight-light mr-2 mb-1">Total Cameras</h3>
-
+                                            </div>
+                                            <div class="col-md-4 item">
+                                                <div class="d-flex flex-column flex-xl-row mt-5 mt-md-0">
+                                                    <div class="icon icon-c text-white mr-3">
+                                                        <i class="mdi mdi-camera  icon-lg ml-3"></i>
                                                     </div>
-                                                    <div class="col-8 col-md-7 d-flex border-info align-items-center justify-content-between px-0 pb-2 mb-3">
-                                                        <h3 class="mb-0">@Model.Dashboards.CameraCount</h3>
+                                                    <div class="content text-white">
+                                                        <div class="d-flex flex-wrap align-items-center mb-2 mt-3 mt-xl-1">
+                                                            <h3 class="font-weight-light mr-2 mb-1">Total Cameras</h3>
 
+                                                        </div>
+                                                        <div class="col-8 col-md-7 d-flex border-info align-items-center justify-content-between px-0 pb-2 mb-3">
+                                                            <h3 class="mb-0">@Model.Dashboards.CameraCount</h3>
+
+                                                        </div>
+                                                        <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Cameras of Churches</p>
                                                     </div>
-                                                    <p class="text-white font-weight-light pr-lg-2 pr-xl-5">The total number of Cameras of Churches</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+            <div class="row">
 
 
 
-            <div class="col-md-4 grid-margin stretch-card ">
-                <div class="card" style="background-color:#004d4d ">
-                    <form asp-action="Search" asp-controller="User" method="post">
-                        <button style="width:100%;background-color:#004d4d " type="submit">
-                            <div class="card-body">
-                                <input type="hidden" name="Role" value="-1" />
-                                <p class="card-title text-md-center text-xl-left text-white">Total Users</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
-                                    <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                <div class="col-md-4 grid-margin stretch-card ">
+                    <div class="card" style="background-color:#004d4d ">
+                        <form asp-action="Search" asp-controller="User" method="post">
+                            <button style="width:100%;background-color:#004d4d " type="submit">
+                                <div class="card-body">
+                                    <input type="hidden" name="Role" value="-1" />
+                                    <p class="card-title text-md-center text-xl-left text-white">Total Users</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.UserCount</h3>
+                                        <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+
                                 </div>
 
-                            </div>
-
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-4 grid-margin stretch-card ">
-                <div class="card" style="background-color:#008080 ">
-                    <form asp-action="Search" asp-controller="User" method="post">
-                        <button style="width:100%;background-color:#008080 " type="submit">
-                            <div class="card-body">
-                                <input type="hidden" name="Role" value="1" />
-                                <p class="card-title text-md-center text-xl-left text-white">Admins</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.AdminCount</h3>
-                                    <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                                </div>
-
-                            </div>
-
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-
-
-            <div class="col-md-4 grid-margin stretch-card">
-                <div class="card " style="background-color: #00cccc">
-                    <form asp-action="Search" asp-controller="User" method="post">
-                        <button style="width:100%;background-color:#00cccc " type="submit">
-                            <div class="card-body">
-                                <input type="hidden" name="Role" value="2" />
-                                <p class="card-title text-md-center text-xl-left text-white">Clients</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ClientCount</h3>
-                                    <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                                </div>
-                            </div>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-
-
-
-
-
-
-
-
-            <div class="col-md-4 grid-margin stretch-card">
-
-                <div class="card " style="background-color: #b30000 ">
-                    <form asp-action="SearchChurch" asp-controller="Church" method="post">
-                        <button style="width:100%;background-color:#b30000 " type="submit">
-                            <div class="card-body">
-                                <input type="hidden" name="ClientType" value="1" />
-                                <input type="hidden" name="County" value="-1" />
-                                <p class="card-title text-md-center text-xl-left text-white">Total Churches</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ChurchCount</h3>
-                                    <i class="mdi mdi-church  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
-                                </div>
-
-                            </div>
-
-                        </button>
-                    </form>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-4 grid-margin stretch-card">
-
-                <div class="card" style="background-color:darkred">
-                    <form asp-action="SearchChurch" asp-controller="Church" method="post">
-                        <button style="width:100%;background-color:darkred " type="submit">
-                            <div class="card-body">
-                                <input type="hidden" name="ClientType" value="2" />
-                                <input type="hidden" name="County" value="-1" />
-                                <p class="card-title text-md-center text-xl-left text-white">Total Cathedrals</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.CathedralsCount</h3>
-                                    <i class="mdi mdi-church icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                                </div>
-
-                            </div>
-
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-4 grid-margin stretch-card">
-                <div class="card " style="background-color: #4d0000">
-                    <form asp-action="SearchChurch" asp-controller="Church" method="post">
-                        <button style="width:100%; background-color:#4d0000 " type="submit">
-                            <div class="card-body">
-                                <input type="hidden" name="ClientType" value="3" />
-                                <input type="hidden" name="County" value="-1" />
-                                <p class="card-title text-md-center text-xl-left text-white">Total Funeral Homes</p>
-                                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.FuneralsHomeCount</h3>
-                                    <i class="mdi mdi-church icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
-                                </div>
-                            </div>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!--Country and Churches Count Start-->
-            <div class="col-md-6 grid-margin">
-                <div class="card">
-                    <div class="card-header card-header-custom">
-                        COUNTRY & CHURCHES DETAIL
-                    </div>
-                    <div class="card-body">
-
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                            <table id="sortable-table-1" class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="pl-0 border-bottom sortStyle">COUNTRIES</th>
-                                        <th class="border-bottom sortStyle">CHURCHES</th>
-                                        <th class="border-bottom sortStyle">CATHEDRALS</th>
-                                        <th class="border-bottom text-wrap sortStyle">FUNERAL HOMES</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach (var dassh in Model.ListDashboards2)
-                                    {
-                        <tr>
-                            <td class=" pl-0">
-                                @Html.DisplayFor(modelItem => dassh.CountryName)
-                            </td>
-                            <td>
-                                <p class="mb-0">
-                                    <span class="">
-                                        @Html.DisplayFor(modelItem => dassh.ChurchCount)
-                                    </span>
-                                </p>
-                            </td>
-                            <td class=" mr-2">
-                                @Html.DisplayFor(modelItem => dassh.CathedralsCount)
-
-                            </td>
-                            <td class="">
-                                @Html.DisplayFor(modelItem => dassh.FuneralsHomeCount)
-
-                            </td>
-                        </tr>
-}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Country and Churches Count End-->
-            <!--Today Schedules Start-->
-            <div class="col-md-6 grid-margin">
-                <div class="card">
-                    <div class="card-header card-header-custom">
-                        Today's Schedule
-                    </div>
-                    <div class="card-body">
-
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                            <table id="sortable-table-1" class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-wrap sortStyle">Church</th>
-                                        <th class="text-wrap sortStyle">Event Name</th>
-                                        <th class="text-wrap sortStyle">Event Status</th>
-                                        <th class="text-wrap sortStyle">Event Time</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.LDashBoardClients)
-                                    {
-                        <tr>
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
-                            </td>
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
-                            </td>
-                            @if (item.ScheduleStatus == "Pending")
-                            {
-            <td class="font-weight-medium text-danger">
-                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-            </td>
- }
-        else if (item.ScheduleStatus == "In Progress")
-        {
-<td class="font-weight-medium text-warning">
-    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-</td>
- }
-else if (item.ScheduleStatus == "Completed")
-{
-<td class="font-weight-medium text-info">
-    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-</td>
- }
-else if (item.ScheduleStatus == "Published")
-{
-<td class="font-weight-medium text-success">
-    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-</td>
- }
-else if (item.ScheduleStatus == "Waiting")
-{
-<td class="font-weight-medium text-black">
-    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-</td>
- }
-else
-{
-<td class="font-weight-medium text-behance">
-    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-</td>
-}
-                            <td class="text-wrap">
-                                @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
-                            </td>
-                        </tr>
-}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @*<div class="col-lg-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Bar chart</h4>
-                            <canvas id="barChart"></canvas>
-                        </div>
-                    </div>
-                </div>*@
-            <!--Today Schedules End-->
-            <div class="col-md-6 grid-margin">
-                <div class="card">
-                    <div class="card-header card-header-custom">
-                        <form>
-
-                            ANALYTICS
-
-                            <div class="col-sm-2 pull-right">
-                                <button type="submit" asp-action="Dashboard" asp-controller="Dashboard" class="btn btn-primary btn text-white" title="Search">Go</button>
-                            </div>
-
-                            <div class="col-sm-6 pull-right">
-                                <div id="datepicker-popup2" class="input-group date datepicker">
-                                    <input type="text" id="SetEventDate" name="eventDate" class="form-control" placeholder="Event Date" />
-                                    <span class="input-group-addon input-group-append border-left">
-                                        <span class="ti-calendar input-group-text"></span>
-                                    </span>
-                                </div>
-                            </div>
+                            </button>
                         </form>
                     </div>
-                    <div class="card-body">
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                            <table id="sortable-table-1" class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="pl-0 border-bottom sortStyle">COUNTRY</th>
-                                        <th class="border-bottom sortStyle">TOTAL VIEWS</th>
+                </div>
 
-                                    </tr>
-                                </thead>
+                <div class="col-md-4 grid-margin stretch-card ">
+                    <div class="card" style="background-color:#008080 ">
+                        <form asp-action="Search" asp-controller="User" method="post">
+                            <button style="width:100%;background-color:#008080 " type="submit">
+                                <div class="card-body">
+                                    <input type="hidden" name="Role" value="1" />
+                                    <p class="card-title text-md-center text-xl-left text-white">Admins</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.AdminCount</h3>
+                                        <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
 
-                                <tbody>
-                                    @foreach (var dassh in Model.AnalyticsList)
-                                    {
-                        <tr>
-                            <td class=" pl-0">
-                                @Html.DisplayFor(modelItem => dassh.Country)
-                            </td>
-                            <td>
-                                <p class="mb-0">
-                                    <span class="">
-                                        @Html.DisplayFor(modelItem => dassh.CountryCount)
-                                    </span>
-                                </p>
-                            </td>
+                                </div>
 
-                        </tr>}
-                                </tbody>
-                            </table>
-                        </div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card " style="background-color: #00cccc">
+                        <form asp-action="Search" asp-controller="User" method="post">
+                            <button style="width:100%;background-color:#00cccc " type="submit">
+                                <div class="card-body">
+                                    <input type="hidden" name="Role" value="2" />
+                                    <p class="card-title text-md-center text-xl-left text-white">Clients</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ClientCount</h3>
+                                        <i class=" mdi mdi-account  icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+
+
+
+
+
+
+                <div class="col-md-4 grid-margin stretch-card">
+
+                    <div class="card " style="background-color: #b30000 ">
+                        <form asp-action="SearchChurch" asp-controller="Church" method="post">
+                            <button style="width:100%;background-color:#b30000 " type="submit">
+                                <div class="card-body">
+                                    <input type="hidden" name="ClientType" value="1" />
+                                    <input type="hidden" name="County" value="-1" />
+                                    <p class="card-title text-md-center text-xl-left text-white">Total Churches</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.ChurchCount</h3>
+                                        <i class="mdi mdi-church  icon-md text-white mb-0 mb-md-3 mb-xl-0 "></i>
+                                    </div>
+
+                                </div>
+
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 grid-margin stretch-card">
+
+                    <div class="card" style="background-color:darkred">
+                        <form asp-action="SearchChurch" asp-controller="Church" method="post">
+                            <button style="width:100%;background-color:darkred " type="submit">
+                                <div class="card-body">
+                                    <input type="hidden" name="ClientType" value="2" />
+                                    <input type="hidden" name="County" value="-1" />
+                                    <p class="card-title text-md-center text-xl-left text-white">Total Cathedrals</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.CathedralsCount</h3>
+                                        <i class="mdi mdi-church icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+
+                                </div>
+
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card " style="background-color: #4d0000">
+                        <form asp-action="SearchChurch" asp-controller="Church" method="post">
+                            <button style="width:100%; background-color:#4d0000 " type="submit">
+                                <div class="card-body">
+                                    <input type="hidden" name="ClientType" value="3" />
+                                    <input type="hidden" name="County" value="-1" />
+                                    <p class="card-title text-md-center text-xl-left text-white">Total Funeral Homes</p>
+                                    <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 text-white">@Model.Dashboards.FuneralsHomeCount</h3>
+                                        <i class="mdi mdi-church icon-md text-white mb-0 mb-md-3 mb-xl-0"></i>
+                                    </div>
+                                </div>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="form-group row ">
+
+                <div class="col-lg-6 ">
+                    <!--Country and Churches Count Start-->
+                    <div class="form-group row">
+                        <div class="col-sm-12 ">
+                            <div class="card">
+                                <div class="card-header card-header-custom">
+                                    COUNTRY & CHURCHES DETAIL
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                        <table id="sortable-table-1" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="pl-0 border-bottom sortStyle">COUNTRIES</th>
+                                                    <th class="border-bottom sortStyle">CHURCHES</th>
+                                                    <th class="border-bottom sortStyle">CATHEDRALS</th>
+                                                    <th class="border-bottom text-wrap sortStyle">FUNERAL HOMES</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                @foreach (var dassh in Model.ListDashboards2)
+                                                {
+                                    <tr>
+                                        <td class=" pl-0">
+                                            @Html.DisplayFor(modelItem => dassh.CountryName)
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">
+                                                <span class="">
+                                                    @Html.DisplayFor(modelItem => dassh.ChurchCount)
+                                                </span>
+                                            </p>
+                                        </td>
+                                        <td class=" mr-2">
+                                            @Html.DisplayFor(modelItem => dassh.CathedralsCount)
+
+                                        </td>
+                                        <td class="">
+                                            @Html.DisplayFor(modelItem => dassh.FuneralsHomeCount)
+
+                                        </td>
+                                    </tr>}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Country and Churches Count End-->
+                    <!--Analytics Start-->
+                    <div class="form-group row">
+                        <div class="col-sm-12 ">
+                            <div class="card">
+                                <div class="card-header card-header-custom">
+                                    <form>
+
+                                        ANALYTICS
+
+                                        <div class="col-sm-2 pull-right">
+                                            <button type="submit" asp-action="Dashboard" asp-controller="Dashboard" class="btn btn-primary btn text-white" title="Search">Go</button>
+                                        </div>
+
+                                        <div class="col-sm-6 pull-right">
+                                            <div id="datepicker-popup2" class="input-group date datepicker">
+                                                <input type="text" id="SetEventDate" name="eventDate" class="form-control" placeholder="Event Date" />
+                                                <span class="input-group-addon input-group-append border-left">
+                                                    <span class="ti-calendar input-group-text"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                        <table id="sortable-table-1" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="pl-0 border-bottom sortStyle">COUNTRY</th>
+                                                    <th class="border-bottom sortStyle">TOTAL VIEWS</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                @foreach (var dassh in Model.AnalyticsList)
+                                                {
+                                    <tr>
+                                        <td class=" pl-0">
+                                            @Html.DisplayFor(modelItem => dassh.Country)
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">
+                                                <span class="">
+                                                    @Html.DisplayFor(modelItem => dassh.CountryCount)
+                                                </span>
+                                            </p>
+                                        </td>
+
+                                    </tr>}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Analytics End-->
+                </div>
+
+             
+                <!--Today Schedules Start-->
+                <div class="col-sm-6">
+                    <div class=" form-group row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header card-header-custom">
+                                    Today's Schedule
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                        <table id="sortable-table-1" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-wrap sortStyle">Church</th>
+                                                    <th class="text-wrap sortStyle">Event Name</th>
+                                                    <th class="text-wrap sortStyle">Event Status</th>
+                                                    <th class="text-wrap sortStyle">Event Time</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LDashBoardClients)
+                                                {
+                                    <tr>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                                        </td>
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+                                        </td>
+                                        @if (item.ScheduleStatus == "Pending")
+                                        {
+                        <td class="font-weight-medium text-danger">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "In Progress")
+                                        {
+                        <td class="font-weight-medium text-warning">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "Completed")
+                                        {
+                        <td class="font-weight-medium text-info">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "Published")
+                                        {
+                        <td class="font-weight-medium text-success">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else if (item.ScheduleStatus == "Waiting")
+                                        {
+                        <td class="font-weight-medium text-black">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td> }
+                                        else
+                                        {
+                        <td class="font-weight-medium text-behance">
+                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                        </td>}
+                                        <td class="text-wrap">
+                                            @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
+                                        </td>
+                                    </tr>}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Today Schedules End-->
+            </div>
+
+
+                </div>
     </div>
-</div>
+
 <script src="~/theme/vendors/chart.js/Chart.min.js"></script>
 <script>
      $(document).ready(function () {
