@@ -126,23 +126,38 @@ namespace MCNMedia_Dev._Helper
 
             foreach (var cam in cameraList)
             {
-                if (cam.IsCameraLive && cam.IsCameraStreaming)
+                //if (cam.IsCameraLive && cam.IsCameraStreaming)
+                //{
+                ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+                //list<Church> church = new Church(); 
+                Church church = churchDataAccessLayer.GetChurchData(cam.ChurchId);
+                string url;
+                if (string.IsNullOrEmpty(church.ImageURl))
                 {
-                    var ob = new
+                    url = "https://mcnmedia.s3-eu-west-1.amazonaws.com/live/Roku/Uploads/ProfileImages/missing-image.jpg"; 
+                }
+                else
+                {
+                    url = church.ImageURl.Replace("live", "live/Roku");
+                }
+                
+                var ob = new
+                {
+
+                    id = $"Cam_{cam.CameraId}",
+                    title = cam.ChurchName.Replace("&", "&#38;"),
+                    shortDescription = "Faith based Community.",
+                    //thumbnail = "http://mcnuat.us-east-1.elasticbeanstalk.com/Images/missing-image2.jpg",
+                    thumbnail = url,
+                    genres = new List<string>() { "faith" }.ToArray(),
+                    tags = new List<string>() { "uk" }.ToArray(),
+                    releaseDate = "2021-01-15",
+                    content = new
                     {
-                        id = $"Cam_{cam.CameraId}",
-                        title = cam.ChurchName.Replace("&", "&#38;"),
-                        shortDescription = "Faith based Community.",
-                        thumbnail = "http://mcnuat.us-east-1.elasticbeanstalk.com/Images/missing-image2.jpg",
-                        genres = new List<string>() { "faith" }.ToArray(),
-                        tags = new List<string>() { "uk" }.ToArray(),
-                        releaseDate = "2021-01-15",
-                        content = new
-                        {
-                            dateAdded = "2021-01-15T04:14:54.431Z",
-                            captions = new List<string>() { "" }.ToArray(),
-                            duration = 150000,
-                            videos = new List<Object>()
+                        dateAdded = "2021-01-15T04:14:54.431Z",
+                        captions = new List<string>() { "" }.ToArray(),
+                        duration = 150000,
+                        videos = new List<Object>()
                             {
                                 new
                                 {
@@ -151,10 +166,10 @@ namespace MCNMedia_Dev._Helper
                                     videoType="hls"
                                 }
                             }
-                        }
-                    };
-                    shortFormVids.Add(ob);
-                }
+                    }
+                };
+                shortFormVids.Add(ob);
+                //}
             }
 
 
@@ -178,7 +193,7 @@ namespace MCNMedia_Dev._Helper
                 {
                     var playlist = new
                     {
-                        name = county.PlaceSlug,
+                        name = county.PlaceName,
                         itemIds = camIds.ToArray()
                     };
                     playlists.Add(playlist);
@@ -188,7 +203,7 @@ namespace MCNMedia_Dev._Helper
             List<Object> list = playlists;
 
             var categories = new List<Object>();
-            foreach(var playlist in playlists)
+            foreach (var playlist in playlists)
             {
                 var cat = new
                 {
@@ -205,7 +220,7 @@ namespace MCNMedia_Dev._Helper
 
             var my_jsondata = new
             {
-                providerName = "MCN_test",
+                providerName = "MCNMedia.tv",
                 language = "en-US",
                 lastUpdated = "2016-10-06T18:12:32.125Z",
                 shortFormVideos = shortFormVids.ToArray(),
