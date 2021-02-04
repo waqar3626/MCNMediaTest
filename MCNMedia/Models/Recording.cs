@@ -17,6 +17,7 @@ namespace MCNMedia_Dev.Models
         public String Password { get; set; }
         [Required(ErrorMessage = "UpdateBy is Required")]
         public int UpdatedBy { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime UpdatedAt { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime CreatedAt { get; set; }
