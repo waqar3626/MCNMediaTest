@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace MCNMedia_Dev.Models
         public string ChurchName { get; set; }
         public int CameraId { get; set; }
         public String ScheduleEventName { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public String ScheduleEventTime { get; set; }
         public DateTime ScheduleEventDate { get; set; }
         public string ScheduleStatus { get; set; }
