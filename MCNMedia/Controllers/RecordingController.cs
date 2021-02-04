@@ -221,6 +221,15 @@ namespace MCNMedia_Dev.Controllers
                     record.RecordingTitle = dt.Rows[0]["ScheduleEventName"].ToString();
                     record.ScheduleId = Convert.ToInt32(dt.Rows[0]["ScheduleId"].ToString());
                 }
+                if(record.ChurchId == 0)
+                {
+                    ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
+                    Church church = churchDataAccessLayer.GetChurchByUniqueIdentifier(publishRecording.churches_id);
+                    if(church.ChurchId > 0)
+                    {
+                        record.ChurchId = church.ChurchId;
+                    }
+                }
                 record.RecordingURl = publishRecording.recording_url;
                 record.Date = DateTime.Now;
                 record.Time = DateTime.Now;
