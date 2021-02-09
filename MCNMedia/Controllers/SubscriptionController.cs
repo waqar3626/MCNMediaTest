@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using OtpNet;
 using _Helper;
+using Microsoft.Extensions.Configuration;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -113,10 +114,18 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                IConfigurationBuilder builder = new ConfigurationBuilder();
+                builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
+                var root = builder.Build();
+                var wowzaConfig = root.GetSection("Stripe");
+                string pubKey = wowzaConfig["PublishKey"];
+                string secKey = wowzaConfig["SecretKey"];
+
+
                 Subscriptions subscription = new Subscriptions();
                 Dictionary<string, string> Metadata = new Dictionary<string, string>();
                 Metadata.Add("Package Description", Description);
-                StripeConfiguration.ApiKey = "sk_test_51HsMgeBcBMLkoLiDqppjmP6GfFXnDOjuwsEFPvi2SM0WJZp3yh9zlQbsVDv3lcyUv2FA8aUDuDqJP8bJ6hUwNf1L00RC9aOiHS";
+                StripeConfiguration.ApiKey = secKey;
                 var options = new ChargeCreateOptions
                 {
                     Amount = (long)PackageAmount * 100,
