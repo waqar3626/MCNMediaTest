@@ -674,7 +674,8 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
-
+                chr.Town = "";
+                chr.CountryId = -1;
                 IEnumerable<Church> ChurchList = chdataAccess.GetAllChurch(chr);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
