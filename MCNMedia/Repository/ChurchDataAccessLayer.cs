@@ -39,6 +39,8 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("Country", chr.CountyId);
             _dc.AddParameter("EmailAdd", chr.EmailAddress);
             _dc.AddParameter("PhoneNo", chr.Phone);
+            _dc.AddParameter("TownName", chr.Town);
+            _dc.AddParameter("Country_Id", chr.CountryId);
 
 
             DataTable dataTable = _dc.ReturnDataTable("spChurch_Search");

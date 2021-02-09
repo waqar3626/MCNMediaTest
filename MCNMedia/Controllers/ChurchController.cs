@@ -22,6 +22,8 @@ namespace MCNMedia_Dev.Controllers
         
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+        PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+        GenericModel gm = new GenericModel();
 
         private IWebHostEnvironment environment;
 
@@ -47,7 +49,6 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpGet]
-        //public IActionResult Listchurch(int pageSize,int pageIndex)
         public IActionResult Listchurch()
         {
             try
@@ -55,16 +56,9 @@ namespace MCNMedia_Dev.Controllers
                 LoadServerDDL();
                 LoadClientDDL();
                 LoadCountyDDL();
+                LoadCountryDDL();
 
                 Church chr = new Church();
-                //if (pageIndex==0)
-                //{
-                //    pageIndex = 1;
-                //}
-                //if (pageSize==0)
-                //{
-                //    pageSize = 10;
-                //}
                 HttpContext.Session.SetInt32("ClientType", 0);
                 HttpContext.Session.SetInt32("County", 0);
                 chr.ChurchId = 1;
@@ -73,8 +67,8 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
-                //chr.PageIndex = pageIndex;
-                //chr.PageSize = pageSize;
+                chr.Town = "";
+                chr.CountryId = -1;
                 List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
                 return View(church);
             }
@@ -101,6 +95,8 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
+                chr.Town = "";
+                chr.CountryId = -1;
                 churchDataAccess.GetAllChurch(chr);
                 return View();
             }
@@ -180,11 +176,36 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChurchDetails()
+        public JsonResult Analytics(int churchId, DateTime eventDate1)
+        {
+            if (eventDate1 == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
+            {
+                //ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                eventDate1 = DateTime.Now;
+            }
+            else
+            {
+                ViewBag.SchDate = eventDate1.ToString("dd-MMM-yyyy");
+            }
+            churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate1, eventDate1).ToList();
+            return Json(gm);
+        }
+
+        [HttpGet]
+        public IActionResult ChurchDetails(DateTime eventDate)
         {
             try
             {
-                GenericModel gm = new GenericModel();
+                if (eventDate == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
+                {
+                    ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                    eventDate = DateTime.Now;
+                }
+                else
+                {
+                    ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
+                }
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["ch"].ToString()))
                 {
                     LoadServerDDL();
@@ -194,7 +215,7 @@ namespace MCNMedia_Dev.Controllers
 
                     Church church = churchDataAccess.GetChurchData(churchId);
                 
-                    gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, DateTime.Now.AddDays(-7), DateTime.Now).ToList();
+                    //gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate, eventDate).ToList();
                     gm.Churches = church;
                     if (church == null)
                     {
@@ -234,11 +255,31 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        public void LoadCountryDDL()
+        {
+            try
+            {
+
+                IEnumerable<Place> countryList = _placeAccessLayer.GetCountries();
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                foreach (var item in countryList)
+                {
+                    selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
+                }
+                ViewBag.Countries = selectListItems;
+            }
+            catch (Exception e)
+            {
+                ShowMessage("Load Country DropDown : " + e.Message);
+                throw;
+            }
+        }
+
+
         public void LoadCountyDDL()
         {
             try
             {
-                PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
                 IEnumerable<Place> countyList = _placeAccessLayer.GetCounties(-1);
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countyList)
@@ -307,21 +348,24 @@ namespace MCNMedia_Dev.Controllers
 
         }
         [HttpPost]
-        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, string PhoneNo)
+        public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, int Country, string town, string PhoneNo)
         {
             try
             {
                 LoadClientDDL();
                 LoadCountyDDL();
-
+                LoadCountryDDL();
                 HttpContext.Session.SetInt32("ClientType", ClientType);
                 HttpContext.Session.SetInt32("County", County);
+                HttpContext.Session.SetInt32("countryId", Country);
                 Church chr = new Church();
 
                 chr.ChurchName = ChurchName;
                 chr.ClientTypeId = ClientType;
                 chr.EmailAddress = EmailAddress;
                 chr.CountyId = County;
+                chr.Town = town;
+                chr.CountryId = Country;
                 chr.Phone = PhoneNo;
                 List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
                 return View("/Views/Church/Listchurch.cshtml", church);
