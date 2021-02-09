@@ -32,7 +32,5 @@ namespace MCNMedia_Dev.Models
         public int ServerId { get; set; }
         public string ServerName { get; set; }
         public string ServerIP { get; set; }
-        public bool RecordingInProgress { get; set; } = false;
-        public int ScheduleId { get; set; } = 0;
     }
 } 
