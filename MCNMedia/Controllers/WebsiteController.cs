@@ -468,9 +468,12 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                Profile profileModel = new Profile();
+                HttpContext.Session.GetString("chrName").ToString();
                 String pass = HttpContext.Session.GetString("ChurchPassword").ToString();
                 if (churchLock.Password == pass)
                 {
+                   
                     HttpContext.Session.SetInt32("ChurchPass", 1);
                     return RedirectToAction(nameof(Profile));
                 }
@@ -510,9 +513,11 @@ namespace MCNMedia_Dev.Controllers
                 profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
                 HttpContext.Session.SetString("slug", id);
                 HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
+                HttpContext.Session.SetString("chrName", profileModel.Churches.ChurchName);
                 if (profileModel.Churches.Password.Count() > 0)
                 {
                     HttpContext.Session.SetString("ChurchPassword", profileModel.Churches.Password);
+                   
                     HttpContext.Session.SetString("slug", id);
                     if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
                     {

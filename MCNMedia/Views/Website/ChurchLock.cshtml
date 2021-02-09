@@ -1,4 +1,5 @@
-﻿@model MCNMedia_Dev.Models.GenericModel
+﻿@using Microsoft.AspNetCore.Http;
+@model MCNMedia_Dev.Models.GenericModel
 @{
     ViewData["Title"] = "ChurchLock";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
@@ -9,12 +10,12 @@
         <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
             <div class="row w-100">
                 <div class="col-lg-4 mx-auto">
-                    <div class="auth-form-transparent text-left p-5 text-center">
+                    <div class="auth-form-transparent text-left p-0 text-center">
                         @*<label>@Model.Churches.ChurchName</label>*@
                         <form class="pt-5" asp-action="ChurchLock" asp-controller="Website" method="post">
                             <div class="form-group">
                                 <input type="hidden" asp-for="churchLock.churchPass" />
-                                <label for="examplePassword1">Password to unlock</label>
+                                <label class="mb-3" for="examplePassword1">This Camera has been Password Protected.<br /><br /> Please contact <b>@Context.Session.GetString("chrName") </b> for the password for this Camera.</label>
 
                                 <input type="password" asp-for="churchLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
                             </div>
@@ -24,9 +25,9 @@
                             <br />
                             @{ if (ViewBag.IsSuccess == 3)
                                 {
-                        <div class="alert alert-danger text-danger">
-                            Password Incorrect
-                        </div> } }
+                                    <div class="alert alert-danger text-danger">
+                                        Password Incorrect
+                                    </div> } }
                         </form>
                     </div>
                 </div>

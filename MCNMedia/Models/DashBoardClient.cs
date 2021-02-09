@@ -11,6 +11,7 @@ namespace MCNMedia_Dev.Models
         public int ChurchId { get; set; }
         public string ChurchName { get; set; }
         public int CameraId { get; set; }
+        public int ScheduleId { get; set; }
         public String ScheduleEventName { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public String ScheduleEventTime { get; set; }

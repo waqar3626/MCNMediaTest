@@ -7,7 +7,11 @@ namespace MCNMedia_Dev.Models
 {
     public class ChurchLock
     {
-        public String Password { get; set; }
+        public string Password { get; set; }
         public int churchPass { get; set; }
+
+        public int ChurchId { get; set; }
+
+        public string ChurchName { get; set; }
     }
 }

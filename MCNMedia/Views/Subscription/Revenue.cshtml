@@ -61,7 +61,7 @@
 </div>
 
 <div class="card">
-    <div class="card-header card-header-custom">Total Revenue <label class="float-right" >&#xa3;@ViewBag.FullAmount</label> </div>
+    <div class="card-header card-header-custom">Total Revenue <label class="float-right" >@*&#xa3;@ViewBag.FullAmount*@</label> </div>
     <div class="card-body">
         <div>
             <div class="row">
@@ -78,7 +78,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                   
+
                                     <td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.PackageTitle)
                                     </td>
@@ -93,6 +93,11 @@
                             }
                         </tbody>
                     </table>
+                    <div class="container-fluid mt-5 w-100">
+
+                        <h4 class="text-right mb-5">Grand Total : &#xa3;@ViewBag.FullAmount </h4>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>

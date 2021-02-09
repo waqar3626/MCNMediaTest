@@ -87,7 +87,9 @@ namespace MCNMedia_Dev._Helper
 
         public void StartRecordingBySchedule(int scheduleId)
         {
-
+            Schedule schedule;
+            schedule = scheduleDataAccess.GetScheduleById(scheduleId);
+             StartRecording(schedule.CameraId, schedule.ChurchId, schedule.ScheduleId);
         }
 
         private void StartRecording(int cameraId, int churchId, int scheduleId)

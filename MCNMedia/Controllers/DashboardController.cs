@@ -19,14 +19,17 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                List<AnalyticsModel> analyticsList = churchDataAccess.GetAllChurchForAnalytics(eventDate, eventDate).ToList();
                 if (eventDate == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
                 {
                     ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                    ViewBag.TotalCountriesCount = analyticsList.Sum(item => item.CountryCount);
                     eventDate = DateTime.Now;
                 }
                 else
                 {
                     ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
+                    ViewBag.TotalCountriesCount = analyticsList.Sum(item => item.CountryCount);
                 }
                 GenericModel gm = new GenericModel();
 
@@ -34,8 +37,9 @@ namespace MCNMedia_Dev.Controllers
                 gm.ListDashboards2 = dashboardData.GetDashboardCountry_Churches();
                 gm.LDashBoardClients = clientdashboardData.GetDashboardClientInfo(-1);
                gm.AnalyticsList = churchDataAccess.GetAllChurchForAnalytics(eventDate, eventDate);
-             
-                
+                ViewBag.TotalCountriesCount = gm.AnalyticsList.Sum(item => item.CountryCount);
+
+
                 return View(gm);
             }
             catch (Exception e)

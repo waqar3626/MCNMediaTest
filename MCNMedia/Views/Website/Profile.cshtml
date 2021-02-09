@@ -883,16 +883,21 @@
             <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 pr-xl-3 pr-lg-0">
                 @if (Model.newsletter.ChurchNewsLetterId != 0)
                 {
-                    <div class="border bg-white rounded-lg p-4 pr-lg-5" style="position: sticky; top:1px;">
-                        <div class="news-wrap mb-3">
-                            <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
-                            <p class="font-weight-light mb-2 font-12">
-                                <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
-                            </p>
-                            <p class="font-14 mb-0 "></p>
-                            <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
-                        </div>
+                <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
+                    <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
+                         style="background-color: #1f4a79;">
+                        NEWSLETTER
                     </div>
+                    <div class="news-wrap mb-3 p-4">
+
+                        <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
+                        <p class="font-weight-light mb-2 font-12">
+                            <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
+                        </p>
+                        <p class="font-14 mb-0 "></p>
+                        <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
+                    </div>
+                </div>
                 }
 
                 @if (Model.churchDonation.ShowOnWebsite)

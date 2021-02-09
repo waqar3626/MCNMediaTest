@@ -24,14 +24,18 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult DashBoardClient(DateTime eventDate)
         {
+            int ChurchId1 = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            List<AnalyticsModel> analyticsList = churchDataAccessLayer.GetbyChurch(ChurchId1, eventDate, eventDate).ToList();
             if (eventDate==Convert.ToDateTime("1/1/0001 12:00:00 AM"))
             {
                 ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                ViewBag.TotalCountriesCount = analyticsList.Sum(item => item.CountryCount);
                 eventDate = DateTime.Now;
             }
             else
             {
                 ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
+                ViewBag.TotalCountriesCount = analyticsList.Sum(item => item.CountryCount);
             }
             
             try
@@ -63,6 +67,7 @@ namespace MCNMedia_Dev.Controllers
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
                 gm1.AnalyticsList = churchDataAccessLayer.GetbyChurch(ChurchId, eventDate, eventDate);
+                ViewBag.TotalCountriesCount = gm1.AnalyticsList.Sum(item => item.CountryCount);
 
                 HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
