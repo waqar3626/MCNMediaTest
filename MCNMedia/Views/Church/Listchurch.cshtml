@@ -68,7 +68,7 @@
             <option value="-1">--Select Country--</option>
         </select>*@
                                     <select name="Country" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
-                                        <option value="-1">--Select County--</option>
+                                        <option value="-1">--Select Country--</option>
                                     </select>
                                 </div>
                             </div>
