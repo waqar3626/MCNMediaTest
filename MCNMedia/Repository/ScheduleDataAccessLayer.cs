@@ -258,28 +258,5 @@ namespace MCNMedia_Dev.Repository
             return dataTable;
         }
 
-        public Schedule GetInprogressScheduleByCamera(int cameraId)
-        {
-            Schedule schedule = new Schedule();
-
-            _dc.ClearParameters();
-            _dc.AddParameter("CamId", cameraId);
-            DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetInprogressByCamera");
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                schedule.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
-                schedule.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
-                schedule.EventName = dataRow["ScheduleEventName"].ToString();
-                schedule.EventDate = Convert.ToDateTime(dataRow["ScheduleEventDate"].ToString());
-                schedule.EventDay = (dataRow["ScheduleEventDay"].ToString());
-                schedule.EventTime = Convert.ToDateTime(dataRow["ScheduleEventTime"].ToString());
-                schedule.RecordDuration = Convert.ToInt32(dataRow["RecordingDuration"]);
-                schedule.Record = Convert.ToBoolean(dataRow["Record"]);
-                schedule.Password = dataRow["Password"].ToString();
-                schedule.IsRepeated = Convert.ToBoolean(dataRow["IsRepeated"]);
-                schedule.CameraId = Convert.ToInt32(dataRow["CameraId"]);
-            }
-            return schedule;
-        }
     }
 }

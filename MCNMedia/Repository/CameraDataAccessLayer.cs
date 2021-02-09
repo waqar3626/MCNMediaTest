@@ -79,12 +79,6 @@ namespace MCNMedia_Dev.Repository
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 Camera camera = BindingCamera(dataRow);
-               Schedule schedule = scheduleDataAccessLayer.GetInprogressScheduleByCamera(camera.CameraId);
-                camera.ScheduleId = schedule.ScheduleId;
-                if (camera.ScheduleId > 0)
-                {
-                    camera.RecordingInProgress = true;
-                }
                 Balobj.Add(camera);
             }
             return Balobj;
