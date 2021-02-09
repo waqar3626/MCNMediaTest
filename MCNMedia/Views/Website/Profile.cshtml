@@ -1170,7 +1170,8 @@
     window.onload = function () {
         var DateSet = new Date();
         var FromDateSet = new Date();
-        FromDateSet.setDate(FromDateSet.getDate() - 7);
+        //FromDateSet.setDate(FromDateSet.getDate() - 7);
+        FromDateSet.setFullYear(2016,9,1);
         var FromDatestring = moment(FromDateSet).format('YYYY-MMM-DD');
         var ToDatestring = moment(DateSet).format('YYYY-MMM-DD');
         document.getElementById("TxtSearchFromDate").value = FromDatestring;
