@@ -125,7 +125,8 @@ function getPagesList() {
     let uid = sessionStorage.getItem('uid');
     //  alert(uac);
     FB.api(
-        '/' + uid + '/accounts',
+       // '/' + uid + '/accounts',
+        '/me/accounts',
         'GET',
         { "fields": "name,access_token", "access_token": "" + uac + "" },
         function (response) {
@@ -150,7 +151,7 @@ function Request_LiveVedioObj() {
     if (uid != null && uac != null)
     {
         if ($('#facebook_page').val() == "me") {
-            id = uid;
+            id = "me";
             accToken = uac;
         }
         else {
