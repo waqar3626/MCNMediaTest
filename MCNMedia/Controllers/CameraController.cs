@@ -2,19 +2,28 @@
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MCNMedia_Dev.Controllers
 {
     public class CameraController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        private HttpClient client;
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
         GenericModel gm = new GenericModel();
+
+        public CameraController()
+        {
+            client = new HttpClient();
+        }
         public IActionResult Index()
         {
             try
@@ -194,7 +203,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public JsonResult RevokeCamera(int churchId, int cameraId)
+        public JsonResult RevokeCamera( int cameraId)
         {
             Camera camera = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
@@ -220,6 +229,41 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        public async Task<Camera> GetCameras(int id)
+        {
+            var response = await client.GetAsync(
+                "http://michalbialeckicomnetcoreweb20180417060938.azurewebsites.net/api/users/" + id)
+                .ConfigureAwait(false);
+            var user = JsonConvert.DeserializeObject<Camera>(await response.Content.ReadAsStringAsync());
+
+            return user;
+        }
+        public async Task<IEnumerable<Camera>> GetUsers(IEnumerable<int> ids)
+        {
+            var response = await client
+                .PostAsync(
+                    "http://michalbialeckicomnetcoreweb20180417060938.azurewebsites.net/api/users/GetMany",
+                    new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json"))
+                .ConfigureAwait(false);
+
+            var users = JsonConvert.DeserializeObject<IEnumerable<Camera>>(await response.Content.ReadAsStringAsync());
+
+            return users;
+        }
+        public async Task<IEnumerable<Camera>> GetUsersInParallelInWithBatches(IEnumerable<int> cameraId)
+        {
+            var tasks = new List<Task<IEnumerable<Camera>>>();
+            var batchSize = 100;
+            int numberOfBatches = (int)Math.Ceiling((double)cameraId.Count() / batchSize);
+
+            for (int i = 0; i < numberOfBatches; i++)
+            {
+                var currentIds = cameraId.Skip(i * batchSize).Take(batchSize);
+                //tasks.Add(client.GetCameras(currentIds));
+            }
+
+            return (await Task.WhenAll(tasks)).SelectMany(u => u);
+        }
         private void ShowMessage(string exceptionMessage)
         {
             log.Info("Exception: " + exceptionMessage);

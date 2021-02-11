@@ -48,7 +48,7 @@
                                 <th class="text-wrap">Event Name</th>
                                 <th class="text-wrap">Event Status</th>
                                 <th class="text-wrap">Event Time</th>
-
+                                <th class="text-wrap">Start/Stop</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,6 +86,7 @@
                             <td class="font-weight-medium text-black">
                                 @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
                             </td> }
+
                                             else
                                             {
                             <td class="font-weight-medium text-behance">
@@ -95,7 +96,42 @@
                                     @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
                                 </td>
 
-                            </tr>}
+
+
+
+                                 @if (item.ScheduleStatus == "In Progress")
+                                {
+
+                                <td class="font-weight-medium text-black ">
+                                    <button type="submit" onclick="RevokeStopRec(@item.ScheduleId)" class="btn btn-danger btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Stop Rec"><i class="fa fa-stop text-white pr-1"></i>Stop Rec</button>
+
+                                </td>
+                                }
+
+                                else if (DateTime.Now > Convert.ToDateTime(item.ScheduleEventTime) && DateTime.Now < Convert.ToDateTime(item.ScheduleEventTime.ToString()).AddMinutes(item.RecordingDuration) && item.ScheduleStatus == "Pending" && item.RecordingDuration != 0)
+                                {
+
+                                <td class="font-weight-medium text-black ">
+                                    <button type="submit" onclick="RevokeStartRec(@item.ScheduleId)" class="btn btn-success btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="StartRec"><i class="fa fa-play-circle text-white pr-1"></i>Start Rec</button>
+
+                                </td> }
+
+
+
+                                else
+                                {
+
+                                <td class="font-weight-medium text-black ">
+
+                                    <b>Nil</b>
+
+                                </td>}
+
+
+
+
+                            </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -114,5 +150,53 @@
         var date = '@ViewBag.SchDate';
         $('#SetSearchDate').val(date);
     })
+
+
+    function RevokeStartRec(scheduleId) {
+      
+        var formData = new FormData();
+        formData.append("scheduleId", scheduleId);
+   
+        $.ajax({
+
+            type: "POST",
+            url: "/Schedule/StartRecordingSchedule/",
+
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+
+            success: function (result) {
+
+
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+    function RevokeStopRec(scheduleId) {
+        var formData = new FormData();
+        formData.append("scheduleId", scheduleId);
+      
+        $.ajax({
+
+            type: "POST",
+            url: "/Schedule/StopRecordingSchedule/",
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+
+            success: function (result) {
+
+
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
+            }
+        });
+    }
 </script>
 

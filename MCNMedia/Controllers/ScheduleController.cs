@@ -350,7 +350,24 @@ namespace MCNMedia_Dev.Controllers
             return scheduleDataAccess.GetSearchSchedule(churchId, eventDate, eventDay, record).ToList<Schedule>();
         }
 
-        private void ShowMessage(String exceptionMessage)
+        [HttpPost]
+        public JsonResult StartRecordingSchedule(int scheduleId) {
+
+            Wowza wowza = new Wowza();
+            wowza.StartRecordingBySchedule(scheduleId);
+            return Json(1);
+        }
+
+        [HttpPost]
+        public JsonResult StopRecordingSchedule(int scheduleId)
+        
+        {
+            Wowza wowza = new Wowza();
+            wowza.StopRecordingBySchedule(scheduleId);
+            return Json(1);
+        }
+
+        private void ShowMessage(string exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
         }

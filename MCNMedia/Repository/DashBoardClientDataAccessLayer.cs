@@ -122,6 +122,7 @@ namespace MCNMedia_Dev.Repository
         private DashBoardClient BindRecordedEvents(DataRow dataRow)
         {
             DashBoardClient dashBoardClient = new DashBoardClient();
+            dashBoardClient.ScheduleId = Convert.ToInt32(dataRow["ScheduleId"]);
             dashBoardClient.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
             dashBoardClient.ChurchName = dataRow["ChurchName"].ToString();
             dashBoardClient.CameraId = Convert.ToInt32(dataRow["CameraId"]);

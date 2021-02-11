@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="row pt-3">
                                         <div class="col-sm-6   text-wrap border-bottom border-right text-center">
-                                            <button type="submit" onclick="Revoke(@items.CameraId,@items.ChurchId)" class="btn btn-success btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Refresh"><i class="fa fa-refresh text-white pr-1"></i>Refresh</button>
+                                            <button type="submit" onclick="RevokeCamera(@items.CameraId)" class="btn btn-success btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Refresh"><i class="fa fa-refresh text-white pr-1"></i>Refresh</button>
 
                                         </div>
                                         <div class="col-sm-6   text-wrap border-bottom  text-center">
@@ -264,10 +264,10 @@ $(document).ready(function () {
 
     
 
-    function RevokeCamera(cameraId, churchId) {
+    function RevokeCamera(cameraId)
+    {
         var formData = new FormData();
-        formData.append(churchId);
-        formData.append(cameraId);
+        formData.append("cameraId", cameraId);
 
         $.ajax({
 
@@ -289,45 +289,6 @@ $(document).ready(function () {
     }
 
 
-    //function RevokeStartRec() {
-       
-
-    //    $.ajax({
-
-    //        type: "POST",
-    //        url: "/Schedule/StartRecordingSchedule/",
-    //        processData: false,  // tell jQuery not to process the data
-    //        contentType: false,  // tell jQuery not to set contentType
-
-    //        success: function (result) {
-
-
-    //        },
-    //        error: function (errormessage) {
-    //            //alert(errormessage.responseText);
-    //        }
-    //    });
-    //}
-
-
-    //function RevokeStopRec() {
-       
-    //    $.ajax({
-
-    //        type: "POST",
-    //        url: "/Schedule/StopRecordingSchedule/",
-    //        processData: false,  // tell jQuery not to process the data
-    //        contentType: false,  // tell jQuery not to set contentType
-
-    //        success: function (result) {
-
-
-    //        },
-    //        error: function (errormessage) {
-    //            //alert(errormessage.responseText);
-    //        }
-    //    });
-    //}
-
+   
 
 </script>
