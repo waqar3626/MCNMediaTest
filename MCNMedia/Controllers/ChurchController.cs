@@ -175,22 +175,22 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        [HttpGet]
-        public JsonResult Analytics(int churchId, DateTime eventDate1)
-        {
-            if (eventDate1 == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
-            {
-                //ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
-                eventDate1 = DateTime.Now;
-            }
-            else
-            {
-                ViewBag.SchDate = eventDate1.ToString("dd-MMM-yyyy");
-            }
-            churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate1, eventDate1).ToList();
-            return Json(gm);
-        }
+        ////[HttpGet]
+        ////public JsonResult Analytics(int churchId, DateTime eventDate1)
+        ////{
+        ////    if (eventDate1 == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
+        ////    {
+        ////        //ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+        ////        eventDate1 = DateTime.Now;
+        ////    }
+        ////    else
+        ////    {
+        ////        ViewBag.SchDate = eventDate1.ToString("dd-MMM-yyyy");
+        ////    }
+        ////    churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+        ////    gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate1, eventDate1).ToList();
+        ////    return Json(gm);
+        ////}
 
         [HttpGet]
         public IActionResult ChurchDetails(DateTime eventDate)
@@ -215,7 +215,7 @@ namespace MCNMedia_Dev.Controllers
 
                     Church church = churchDataAccess.GetChurchData(churchId);
                 
-                    //gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate, eventDate).ToList();
+                    gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate, eventDate).ToList();
                     gm.Churches = church;
                     if (church == null)
                     {
