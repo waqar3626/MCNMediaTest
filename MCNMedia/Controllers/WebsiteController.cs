@@ -70,14 +70,16 @@ namespace MCNMedia_Dev.Controllers
                 //smtp.Credentials = new NetworkCredential("mcnmedia9@gmail.com ", "M3di@mcN");
                 //smtp.Send(mailmassage);
                 //ViewBag.message = "The Mail has been send by " + web.ContactName + " Successfully....!," + mailmassage.To + ".";
-                _websiteDataAccessLayer.AddContactForm(web);
-                ModelState.Clear();
+              
+              ModelState.Clear();
                 return View();
             }
 
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+                
+                ViewBag.ErrorMsg="Error Occurreds! " + exp.Message;
+                return View();
             }
         }
         public IActionResult Home()
