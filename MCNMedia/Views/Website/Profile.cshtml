@@ -4,6 +4,21 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
 
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsg;
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
 <head>
     <!--Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VNGNMBZGQ"></script>
@@ -112,7 +127,7 @@
                         <div class="card-body">
 
 
-                       
+
                             <div class=" font-20 text-center">
                                 @if (Model.NextScheduleList.Count() > 0)
                                 {
@@ -147,11 +162,11 @@
                                             </b><br />
 
                                         }
-                            <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
+                                        <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
                                     }
                                 }
 
-                              
+
                                 else
                                 {
                                     <br />
@@ -883,21 +898,21 @@
             <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 pr-xl-3 pr-lg-0">
                 @if (Model.newsletter.ChurchNewsLetterId != 0)
                 {
-                <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
-                    <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                         style="background-color: #1f4a79;">
-                        NEWSLETTER
-                    </div>
-                    <div class="news-wrap mb-3 p-4">
+                    <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
+                        <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
+                             style="background-color: #1f4a79;">
+                            NEWSLETTER
+                        </div>
+                        <div class="news-wrap mb-3 p-4">
 
-                        <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
-                        <p class="font-weight-light mb-2 font-12">
-                            <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
-                        </p>
-                        <p class="font-14 mb-0 "></p>
-                        <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
+                            <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
+                            <p class="font-weight-light mb-2 font-12">
+                                <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
+                            </p>
+                            <p class="font-14 mb-0 "></p>
+                            <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
+                        </div>
                     </div>
-                </div>
                 }
 
                 @if (Model.churchDonation.ShowOnWebsite)
@@ -936,48 +951,48 @@
                         <div class="col-12 pt-4 pb-1 pr-4">
                             <div class="row ">
                                 @*<div class="col-12">
-                                    <button id="btnRecordingSearch" type="button" class="btn btn-pink text-white float-right font-14 " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
-                                    <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
-                                    </div>
-                                </div>*@
+                                        <button id="btnRecordingSearch" type="button" class="btn btn-pink text-white float-right font-14 " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
+                                        <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
+                                        </div>
+                                    </div>*@
 
-                                    <div class="col-12">
-                                        <div class="card card-body border bg-white  rounded-lg row m-0">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="row">
-                                                        <div class="news-wrap col-lg-4 col-md-6 col-sm-12 mt-1">
-                                                            <label> Event Name</label>
-                                                            <input type="text" class="form-control" id="TxtSearchEventName" />
+                                <div class="col-12">
+                                    <div class="card card-body border bg-white  rounded-lg row m-0">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="news-wrap col-lg-4 col-md-6 col-sm-12 mt-1">
+                                                        <label> Event Name</label>
+                                                        <input type="text" class="form-control" id="TxtSearchEventName" />
+                                                    </div>
+                                                    <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
+                                                        <label>  Search By Date From</label>
+                                                        <div id="datepicker-popup2" class="input-group date datepicker">
+                                                            <input type="text" id="TxtSearchFromDate" name="fromDate" class="form-control" placeholder="From Date" />
+                                                            <span class="input-group-addon input-group-append border-left">
+                                                                <span class="ti-calendar input-group-text"></span>
+                                                            </span>
                                                         </div>
-                                                        <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
-                                                            <label>  Search By Date From</label>
-                                                            <div id="datepicker-popup2" class="input-group date datepicker">
-                                                                <input type="text" id="TxtSearchFromDate" name="fromDate" class="form-control" placeholder="From Date" />
-                                                                <span class="input-group-addon input-group-append border-left">
-                                                                    <span class="ti-calendar input-group-text"></span>
-                                                                </span>
-                                                            </div>
+                                                    </div>
+                                                    <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
+                                                        <label>To Date</label>
+                                                        <div id="datepicker-popup3" class="input-group date datepicker">
+                                                            <input type="text" id="TxtSearchToDate" name="ToDate" class="form-control" placeholder="To Date" />
+                                                            <span class="input-group-addon input-group-append border-left">
+                                                                <span class="ti-calendar input-group-text"></span>
+                                                            </span>
                                                         </div>
-                                                        <div class="news-wrap col-lg-3 col-md-6 col-sm-12  ">
-                                                            <label>To Date</label>
-                                                            <div id="datepicker-popup3" class="input-group date datepicker">
-                                                                <input type="text" id="TxtSearchToDate" name="ToDate" class="form-control" placeholder="To Date" />
-                                                                <span class="input-group-addon input-group-append border-left">
-                                                                    <span class="ti-calendar input-group-text"></span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="news-wrap col-lg-2 col-md-6 col-sm-12  center">
-                                                            <label></label>
-                                                            <button id="btnSearchRecording" class="btn btn-info bg-blue float-center form-control mt-2">Search</button>
-                                                        </div>
+                                                    </div>
+                                                    <div class="news-wrap col-lg-2 col-md-6 col-sm-12  center">
+                                                        <label></label>
+                                                        <button id="btnSearchRecording" class="btn btn-info bg-blue float-center form-control mt-2">Search</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                              
+                                </div>
+
                             </div>
                         </div>
                         <div class=" col-12">
@@ -1176,7 +1191,7 @@
         var DateSet = new Date();
         var FromDateSet = new Date();
         //FromDateSet.setDate(FromDateSet.getDate() - 7);
-        FromDateSet.setFullYear(2016,9,1);
+        FromDateSet.setFullYear(2016, 9, 1);
         var FromDatestring = moment(FromDateSet).format('YYYY-MMM-DD');
         var ToDatestring = moment(DateSet).format('YYYY-MMM-DD');
         document.getElementById("TxtSearchFromDate").value = FromDatestring;

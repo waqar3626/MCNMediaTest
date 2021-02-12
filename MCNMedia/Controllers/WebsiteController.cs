@@ -390,9 +390,11 @@ namespace MCNMedia_Dev.Controllers
                 _websiteDataAccessLayer.AddContactForm(website);
                 return RedirectToAction("Home");
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -431,9 +433,11 @@ namespace MCNMedia_Dev.Controllers
                     return View();
                 }
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -472,9 +476,11 @@ namespace MCNMedia_Dev.Controllers
                 }
                 return View(recording);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -499,9 +505,11 @@ namespace MCNMedia_Dev.Controllers
                     return View();
                 }
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -665,9 +673,11 @@ namespace MCNMedia_Dev.Controllers
                     return RedirectToAction("Packages", "Subscription");
                 }
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 

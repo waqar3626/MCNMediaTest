@@ -4,6 +4,22 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
 
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsg;
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth lock-full-bg">
