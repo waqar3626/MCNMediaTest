@@ -4,12 +4,26 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 
 }
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsg;
+            </div>
+
+        </div>
+
+    </div>
+
+}
 <style type="text/css">
 
     .bluepurple {
         color: #1f4a79
     }
-
 </style>
 
 <div class="bg-blue" style="">
@@ -62,7 +76,7 @@
                                     {
                                         <tr>
                                             <td scope="row" class="bluepurple font-weight-normal"><b>@schedule.ChurchName, @schedule.Town</b> </td>
-                                            <td  class="bluepurple" >
+                                            <td class="bluepurple">
                                                 <a href="@Url.Action("Profile", "Website",new { id = schedule.Slug })" class="bluepurple">
                                                     @if (schedule.IsRepeated == true && schedule.Record == true)
                                                     {

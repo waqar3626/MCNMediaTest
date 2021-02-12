@@ -86,6 +86,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+
                 LoadCountryDDL();
                 HttpContext.Session.SetString("Password", "");
                 HttpContext.Session.SetString("UserType", "website");
@@ -130,9 +131,11 @@ namespace MCNMedia_Dev.Controllers
                 gmSch.CurrentSchedule = Schedules_WhatsOnNow();
                 return View(gmSch);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -211,9 +214,11 @@ namespace MCNMedia_Dev.Controllers
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -225,9 +230,11 @@ namespace MCNMedia_Dev.Controllers
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -240,9 +247,11 @@ namespace MCNMedia_Dev.Controllers
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -318,9 +327,11 @@ namespace MCNMedia_Dev.Controllers
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
