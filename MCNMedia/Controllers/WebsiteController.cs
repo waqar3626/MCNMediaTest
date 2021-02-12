@@ -523,12 +523,12 @@ namespace MCNMedia_Dev.Controllers
                     HttpContext.Session.SetString("ChurchPassword", profileModel.Churches.Password);
                    
                     HttpContext.Session.SetString("slug", id);
-                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
-                    {
-                        int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
-                    }
-                    else
-                    {
+                    //if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
+                    //{
+                    //    int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
+                    //}
+                    //else
+                    //{
                         if (churchPass == 1)
                         {
 
@@ -537,14 +537,14 @@ namespace MCNMedia_Dev.Controllers
                         {
                             return RedirectToAction(nameof(ChurchLock));
                         }
-                    }
+                    //}
                 }
 
                 int subscriberPaid = Convert.ToInt32(TempData["paymentId"]);
                 Visitor visitor = new Visitor(Request, HttpContext);
                 //string visitorLocation = CheckVisitorLocation();
                 int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitor.CountryName);
-                if (allowToProfile == 1 || subscriberPaid > 0)
+                if (allowToProfile == 1 || subscriberPaid > 0 || !string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
                 {
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
