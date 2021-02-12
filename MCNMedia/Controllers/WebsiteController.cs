@@ -96,9 +96,11 @@ namespace MCNMedia_Dev.Controllers
                 return View(gm);
             }
 
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
