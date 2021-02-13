@@ -563,7 +563,7 @@ namespace MCNMedia_Dev.Controllers
                 Visitor visitor = new Visitor(Request, HttpContext);
                 //string visitorLocation = CheckVisitorLocation();
                 int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitor.CountryName);
-                if (allowToProfile == 1 || subscriberPaid > 0 || !string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
+                if (allowToProfile == 1 || subscriberPaid > 0)
                 {
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
