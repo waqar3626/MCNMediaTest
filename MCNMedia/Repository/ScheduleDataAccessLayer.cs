@@ -31,7 +31,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("SchPassword", schedules.Password);
             _dc.AddParameter("SchCameraId", schedules.CameraId);
             _dc.AddParameter("CreatedBy", schedules.CreatedBy);
-            return _dc.Execute("spschedule_Add");
+            return _dc.Execute("spSchedule_Add");
         }
 
         public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate, string EventDay, int isRecord)

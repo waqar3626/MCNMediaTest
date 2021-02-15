@@ -1,5 +1,5 @@
 ﻿@model MCNMedia_Dev.Models.Schedule
-@using Microsoft.AspNetCore.Http; 
+@using Microsoft.AspNetCore.Http;
 
 @{
     ViewData["Title"] = "Schedule";
@@ -7,138 +7,91 @@
 
 
 
-<form class="needs-validation" novalidate id="AddScheduleChurch" >
-  
-
-
+<form class="needs-validation" novalidate id="AddScheduleByChurch">
     <div class="card">
         <div class="card-body">
-         
             <div class="form-group row">
-               
-
                 <input type="hidden" id="HdnSession" value="@Context.Session.GetInt32("ChurchId")" />
                 <label for="validationCustom03" class="col-sm-2 col-form-label">Event Name</label>
                 <div class="col-sm-10">
-
-                   
-
-                    <input type="text"  class="form-control" id="EventName" placeholder="Event Name" required />
+                    <input type="text" class="form-control" id="EventName" placeholder="Event Name" required />
                     <div class="invalid-feedback">
                         Please provide a valid EventName.
                     </div>
                 </div>
-
             </div>
-
-
             <div class="form-group row">
-
                 <div class="col-sm-12">
-
                     <div class="custom-control custom-switch lg">
-                        <input type="checkbox" class="custom-control-input control"  name="IsRepeated" id="IsRepeated">
+                        <input type="checkbox" class="custom-control-input control" name="IsRepeated" id="IsRepeated">
                         <label class="custom-control-label" for="IsRepeated">Would you like to repeat this event?</label>
-
                     </div>
-
-
                 </div>
             </div>
             <div class="form-group row">
-
                 <label asp-for="EventDate" for="validationCustom05" id="EventLabel1" class="col-sm-2 col-form-label">Event Date</label>
                 <div class="col-sm-4" id="EventInput1">
-                  
                     <div id="datepicker-popup2" class="input-group date datepicker">
-                        <input type="text"  class="form-control" id="EventDate" placeholder="Event Date" />
-
+                        <input type="text" class="form-control" id="EventDate" placeholder="Event Date" />
                         <span class="input-group-addon input-group-append border-left">
                             <span class="ti-calendar input-group-text"></span>
                         </span>
                     </div>
-
                     <div class="invalid-feedback" id="addChurchSchudevalidation">
                         Please provide a valid Event Date.
                     </div>
-
                 </div>
-               
-
-
-
                 <label asp-for="EventDay" for="validationCustom06" id="EventDayLabel1" class="col-sm-2 col-form-label">Event Day</label>
                 <div class="col-sm-4" id="EventDayInput1">
-                  
-
-
-                    <select  class="custom-select" id="EventDay">
+                    <select class="custom-select" id="EventDay">
                         <option selected="selected" disabled="disabled" value="">Please select Day</option>
-                        <option value="Monday"  name="EventDay">Monday</option>
+                        <option value="Monday" name="EventDay">Monday</option>
                         <option value="Tuesday" name="EventDay">Tuesday</option>
                         <option value="Wednesday" name="EventDay">Wednesday</option>
                         <option value="Thursday" name="EventDay">Thursday</option>
                         <option value="Friday" name="EventDay">Friday</option>
                         <option value="Saturday" name="EventDay">Saturday</option>
                         <option value="Sunday" name="EventDay">Sunday</option>
-
                     </select>
                     <div class="invalid-feedback">
                         Please provide a valid Event Day.
                     </div>
                 </div>
-
-                <label  class="col-sm-2 col-form-label" for="validationCustom02">Event Time</label>
+                <label class="col-sm-2 col-form-label" for="validationCustom02">Event Time</label>
                 <div class="col-sm-4">
-                   
                     <div class="form-group">
                         <div class="input-group date " id="timepicker-example" data-target-input="nearest">
-
                             <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
-
-                                <input type="text"  class="form-control datetimepicker-input" id="EventTime" data-target="#timepicker-example" placeholder="Event Time" required />
-
+                                <input type="text" class="form-control datetimepicker-input" id="EventTime" data-target="#timepicker-example" placeholder="Event Time" required />
                                 <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
                                 <div class="invalid-feedback">
                                     Please provide a valid EventTime.
                                 </div>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-
                 <div class="col-sm-12 pt-3">
                     <div class="custom-control custom-switch lg">
-                        <input type="checkbox" class="custom-control-input control"  name="AddToggleRecord" id="AddToggleRecord">
+                        <input type="checkbox" class="custom-control-input control" name="AddToggleRecord" id="AddToggleRecord">
                         <label class="custom-control-label" for="AddToggleRecord">Would you like to record this event?</label>
-
                     </div>
-
-
                 </div>
             </div>
             <div class="form-group row" id="AddDivRecordData">
                 <label asp-for="CameraId" class="col-sm-2 col-form-label">Camera</label>
-
                 <div class="col-sm-4 ">
-                   
-                    <select  name="CameraId" class="custom-select" id="AddScheduleCameraId">
+                    <select name="CameraId" class="custom-select" id="AddScheduleCameraId">
                     </select>
                     <div class="invalid-feedback">
                         Please Select A valid Camera
                     </div>
                 </div>
-
                 <label asp-for="RecordDuration" class="col-sm-2 col-form-label">Duration</label>
-
                 <div class="col-sm-4 ">
-           
-                    <select  class="custom-select" id="RecordDuration">
+                    <select class="custom-select" id="RecordDuration">
                         <option value="" disabled="disabled" selected="selected">--Select Record Duration--</option>
                         <option value="30" name="RecordDuration">30 Minutes</option>
                         <option value="40" name="RecordDuration">40 Minutes</option>
@@ -147,8 +100,6 @@
                         <option value="90" name="RecordDuration">1 Hour 30 Minutes</option>
                         <option value="105" name="RecordDuration">1 Hour 45 Minutes</option>
                         <option value="120" name="RecordDuration">2 Hours</option>
-
-
                     </select>
                     <div class="invalid-feedback">
                         Please Select A valid Duration
@@ -161,62 +112,45 @@
                     <div class="custom-control custom-switch lg">
                         <input type="checkbox" class="custom-control-input control" id="AddpasswordToggle">
                         <label class="custom-control-label" for="AddpasswordToggle">Would you like to password protect this event?</label>
-
                     </div>
-
-
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-sm-6" >
+                <div class="col-sm-6">
                     <div class="form-group row" id="AddSchPassword">
-                        <label  id="AddlblPassword" class="col-sm-4 col-form-label">Password</label>
+                        <label id="AddlblPassword" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-8 ">
-
-                         
                             <input type="text" class="form-control" placeholder="Password" id="AddTextPassword" />
                             <div class="invalid-feedback">
                                 Please Provide a valid Password
                             </div>
                         </div>
                     </div>
-                    
                 </div>
-                <div class="col-sm-6" >
+                <div class="col-sm-6">
                     <div class="float-right">
-                        <a id="addScheduleData_1" value="Create" class="btn btn-success btn-sm text-white" title="Add"><i class="mdi mdi-content-save "></i> Add</a>
+                        <button id="btnAddSchedule" value="Create" class="btn btn-success btn-sm text-white" title="Add"><i class="mdi mdi-content-save"></i>Add</button>
                         <a id="back" class="btn btn-warning btn-sm  text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
-
-                        
                     </div>
                 </div>
-
-
-
-
             </div>
-
-
         </div>
     </div>
-
-
 </form>
 
 <script type="text/javascript">
     $(function () {
-    $('#addScheduleData_1').click(function (e) {
-            var form = $('#AddScheduleChurch')[0];
-        var isValid = form.checkValidity();
-        var isValid2 = CheckAddScheduleValidate()
-
+        $('#btnAddSchedule').click(function (e)
+        {
+            var form = $('#AddScheduleByChurch')[0];
+            var isValid = form.checkValidity();
+            var isValid2 = CheckAddScheduleValidate()
             if (!(isValid && isValid2)) {
                 e.preventDefault();
                 e.stopPropagation();
             }
-
             else {
-                checkScheduleAddNew();
+                AddNewSchedule();
             }
             form.classList.add('was-validated');
             return false; // For testing only to stay on this page
@@ -225,42 +159,24 @@
     });
     function CheckAddScheduleValidate() {
         if ($('#IsRepeated').val().toLowerCase() == 'false' && $('#EventDate').val() == '') {
-
             $('#datepicker-popup2').attr('class', 'input-group date datepicker border-danger');
             $('#addChurchSchudevalidation').attr('style', 'display:block');
-
-
             return false;
-
         }
         else {
             $('#datepicker-popup2').attr('class', 'input-group date datepicker');
             $('#addChurchSchudevalidation').removeAttr('style', 'display:block');
             return true;
         }
+    }
 
-
-
-
-
-        }
-
-
-
-
-
-
-    function checkScheduleAddNew() {
-
-
+    function AddNewSchedule() {
         if ($('#AddToggleRecord').val().toLowerCase() == 'true' && $('#AddScheduleCameraId').val() == null) {
             swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
-
             return false;
         }
         if ($('#AddToggleRecord').val().toLowerCase() == 'true' && $('#RecordDuration').val() == null) {
             swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
-
             return false;
         }
         var eventName = document.getElementById('EventName').value;
@@ -276,44 +192,27 @@
         var passwordtoggle = document.getElementById('AddpasswordToggle').value;
         var password = document.getElementById('AddTextPassword').value;
 
-
-
         $.ajax({
             type: "POST",
-            
               url: '@Url.Action("AddChurchScheduleByJson", "ChurchSchedule")',
-
             data: { eventName: eventName, isRepeat: isRepeat, eventDate: eventDate, eventDay: eventDay, eventTime: eventTime, recordtoggle: recordtoggle, cameraId: cameraId, recordDuration: recordDuration, passwordtoggle: passwordtoggle, password: password },
-
-         
             success: function (response) {
                 if (response.success) {
-
-
-                    
                     $('#AddChurchScheduleModel').modal('hide');
-                    $('#AddScheduleChurch')[0].reset();
+                    $('#AddScheduleByChurch')[0].reset();
                     loadChurchSch();
-
 
                 } else {
                     showDangerToasts(response.responseText);
                 }
-
             },
             error: function (errormessage) {
                 showDangerToasts(errormessage);
             }
-
         });
     }
 
-
-
-
-
     function showDangerToasts(text) {
-
         'use strict';
         resetToastPosition();
         $.toast({
@@ -327,7 +226,6 @@
     };
 
     $(document).ready(function () {
-
         $('#alertDiv').hide();
         $('#EventDayLabel1').hide();
         $('#EventDayInput1').hide();
@@ -338,18 +236,13 @@
         $('#AddpasswordToggle').val("false");
         $('#AddToggleRecord').val("false");
         $('#EventDate').attr('required', 'required');
-
-
-
         AddHidePassword();
         AddHideRecordData();
-
         AddDoPostBack();
     });
 
     $('#EventDate').change(function () {
         if ($('#EventDate').val().length > 0) {
-
             $('#datepicker-popup2').attr('class', 'input-group date datepicker border-success');
             $('#addChurchSchudevalidation').removeAttr('style', 'display:block');
         }
@@ -360,9 +253,7 @@
 
     });
 
-
     $('#IsRepeated').change(function () {
-
         if (this.checked)
         {
             $('#EventDayLabel1').show();
@@ -372,12 +263,7 @@
             $(this).val("true");
             $('#EventDay').attr('required', 'required');
             $('#EventDate').removeAttr('required', 'required');
-
-
-
-
         }
-
         else {
             $('#EventDayLabel1').hide();
             $('#EventDayInput1').hide();
@@ -386,84 +272,54 @@
             $(this).val("false");
             $('#EventDay').removeAttr('required', 'required');
             $('#EventDate').attr('required', 'required');
-
-
         }
-
-
     });
     $('#AddpasswordToggle').change(function () {
-
         if (this.checked) {
-
             $('#AddpasswordToggle').val("true");
             $('#AddTextPassword').attr('required', 'required');
-
             AddShowPassword();
         }
-
         else {
-
             $('#AddpasswordToggle').val("false");
             $('#AddTextPassword').removeAttr('required', 'required');
             AddHidePassword();
         }
-
-
     });
 
     $('#AddToggleRecord').change(function () {
         if (this.checked) {
-
             AddShowRecordData();
             $('#AddToggleRecord').val("true");
             $('#AddScheduleCameraId').attr('required', 'required');
             $('#RecordDuration').attr('required', 'required');
                }
-
         else {
             AddHideRecordData();
             $('#AddToggleRecord').val("false");
             $('#AddScheduleCameraId').removeAttr('required', 'required');
             $('#RecordDuration').removeAttr('required', 'required');
         }
-
-
     });
 
     function AddHidePassword() {
-
-
         $('#AddSchPassword').hide();
-
     }
 
     function AddShowPassword() {
-
         $('#AddSchPassword').show();
-
     }
 
     function AddHideRecordData() {
         $('#AddDivRecordData').hide();
-
-
     }
 
     function AddShowRecordData (){
         $('#AddDivRecordData').show();
-
-
-
-
-
     }
 
-
     function AddDoPostBack() {
-
         var ChurchId = $('#HdnSession').val();
-
         $.ajax({
             url: "/Schedule/LoadCameraDDL",
             type: "GET",
@@ -474,24 +330,14 @@
                 var s ='<option value="" disabled selected>--Select Camera--</option>';
                 $.each(result, function (key, item) {
                     s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
-
                 });
-
                 $("#AddScheduleCameraId").html(s);
-
-
-
-
-
             },
             error: function (errormessage) {
-
                 //alert(errormessage.responseText);
             }
         });
     }
-
-
 </script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
