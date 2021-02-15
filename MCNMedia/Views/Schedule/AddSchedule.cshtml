@@ -9,6 +9,7 @@
     List<SelectListItem> SelectList = Lists.GetChurchListForDDL();
 }
 
+
 <form  id="AddScheduleForm"  method="post" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
  
@@ -88,7 +89,7 @@
 
 
                         <select asp-for="EventDay" class="custom-select" id="validationCustom06" >
-                            <option selected="selected" disabled value="0">Please select Day</option>
+                            <option selected="selected" disabled value="">Please select Day</option>
                             <option value="Monday" name="EventDay">Monday</option>
                             <option value="Tuesday" name="EventDay">Tuesday</option>
                             <option value="Wednesday" name="EventDay">Wednesday</option>
@@ -144,7 +145,7 @@
                         <span asp-validation-for="CameraId" class="text-danger"></span>
                         <select asp-for="CameraId" name="CameraId" class="custom-select" id="CameraId">
                         </select>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" id="EventCameraValidation">
                             Please provide a valid Camera.
                         </div>
                     </div>
@@ -154,7 +155,7 @@
                     <div class="col-sm-4 ">
                         <span asp-validation-for="RecordDuration" class="text-danger"></span>
                         <select asp-for="RecordDuration" class="custom-select" id="Lenght">
-                            <option value="0" disabled selected>--Select--</option>
+                            <option value="" disabled selected>--Select--</option>
                             <option value="30" name="Length">30 Minutes</option>
                             <option value="40" name="Length">40 Minutes</option>
                             <option value="60" name="Length">1 Hour</option>
@@ -165,7 +166,7 @@
 
 
                         </select>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" id="EventLenghtValidation">
                             Please provide a valid Record Duration.
                         </div>
                     </div>
@@ -220,7 +221,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#ddlChurchId').append("<option value='0' selected disabled>--Select Church--</option>");
+       
         $('#alertDiv').hide();
         $('#EventDayLabel1').hide();
         $('#EventDayInput1').hide();
@@ -241,7 +242,8 @@
             var form = $("#AddScheduleForm")[0];
             var isValid = form.checkValidity();
             var isValid2 = CheckAddScheduleValidate();
-            if (!(isValid && isValid2) ) {
+         
+            if (!(isValid && isValid2 )) {
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -257,7 +259,9 @@
             var form = $("#AddScheduleForm")[0];
             var isValid = form.checkValidity();
             var isValid2 = CheckAddScheduleValidate();
-            if (!(isValid && isValid2)) {
+            var isValid3 = CheckRecordingCamera();
+            var isValid4 = CheckRecordingLength();
+            if (!(isValid && isValid2 && isValid3 && isValid4)) {
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -270,8 +274,18 @@
         });
     });
 
-    function AddScheduleNew() {
+       function AddScheduleNew() {
       
+        if ($('#ToggleRecord').val().toLowerCase() == 'true' && $('#CameraId').val() == null) {
+            swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
+
+            return false;
+        }
+        if ($('#ToggleRecord').val().toLowerCase() == 'true' && $('#Lenght').val() == null) {
+            swal("Oops!", "Kindly Select Valid Recording Duration or Disable Recording", "error");
+
+            return false;
+        }
         var churchId = $('#ddlChurchId').val();
         var eventName = $('#validationCustom03').val();
         var isRepeated = $('#IsRepeated').val();
@@ -312,6 +326,7 @@
                     
                     $('#AddScheduleModal').modal('hide');
                     window.location.reload();
+                    
                 }
                 else {
                  
@@ -349,6 +364,8 @@
             $('#datepicker-popup3').attr('class', 'input-group date datepicker border-danger');
             $('#EventDateValidation').attr('style', 'display:block');
             $('#validationCustom06').removeAttr('required', 'required');
+
+
 
             return false;
 
@@ -421,6 +438,7 @@
         if (this.checked) {
             ShowRecordDataAdd();
             $('#ToggleRecord').val('true');
+      
             $('#CameraId').attr('required', 'required');
             $('#Lenght').attr('required', 'required');
         }
@@ -475,7 +493,7 @@
             contentType: "application/json;charset=utf-8",
             datatype: "json",
             success: function (result) {
-                var s='<option value="0" disabled selected>--Select Camera--</option>';
+                var s='<option value="" disabled selected>--Select Camera--</option>';
                 $.each(result, function (key, item) {
                     s += '<option value="' + item.cameraId + '">' + item.cameraName + '</option>'
 
