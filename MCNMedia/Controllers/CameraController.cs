@@ -1,4 +1,5 @@
-﻿using MCNMedia_Dev.Models;
+﻿using MCNMedia_Dev._Helper;
+using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -183,50 +184,13 @@ namespace MCNMedia_Dev.Controllers
                 ShowMessage("Update Cameras Error" + e.Message);
                 throw;
             }
-
-        }
-
-        /// <summary>
-        /// Synchronizing camera status with wowza streaming engine of all installed cameras.
-        /// 1. Fetch all admin cameras
-        /// 2. Fetch status of camera stream from wowza
-        /// 3. Update camera status in database
-        /// </summary>
-        public void SyncAllCamerasWithWowza()
-        {
-            CameraStream cameraStream = new CameraStream();
-            List<Camera> cameraList = camDataAccess.GetAllCameras();
-            foreach (Camera cam in cameraList)
-            {
-                SyncCameraWithWowza(cam);
-            }
         }
 
         [HttpPost]
         public JsonResult RevokeCamera( int cameraId)
         {
-            Camera camera = new Camera();
-            CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
-            camera = cameraDataAccessLayer.GetCameraById(cameraId);
-            SyncCameraWithWowza(camera);
-
-            return Json(1);
-        }
-
-        private void SyncCameraWithWowza(Camera camera)
-        {
-            CameraStream cameraStream;
-            WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
-            cameraStream = wowzaHelper.RequestCameraStatus(camera.ChurchId, camera.CameraId);
-            _Helper.Common.SaveToXXX($"Sync Camera: {camera.CameraId} - Database Status: {camera.IsCameraStreaming} - Wowza Status: {cameraStream.isConnected}");
-            if (camera.IsCameraStreaming != cameraStream.isConnected)
-            {
-                camDataAccess.UpdateCameraStreamingStatus(camera.CameraId, cameraStream.isConnected);
-            }
-            if (cameraStream.isConnected)
-            {
-                cameraStream.isRecordingSet = true;
-            }
+            Wowza wowza = new Wowza();
+            return Json(wowza.SyncCamerasWithWowzaById(cameraId));
         }
 
         public async Task<Camera> GetCameras(int id)
