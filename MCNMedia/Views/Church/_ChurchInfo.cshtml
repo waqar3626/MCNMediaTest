@@ -184,7 +184,7 @@
                     <div class="card-body">
                         <h3 class="card-title">Embeded Code</h3>
                         @{
-                            string SrcAddress = "http://mcnmedia.us-east-1.elasticbeanstalk.com/iframe/" + Model.Churches.UniqueIdentifier;
+                            string SrcAddress = "https://mcnmedia.tv/iframe/" + Model.Churches.UniqueIdentifier;
                             <pre class="font-16 font-weight-bolder" style="background-color:transparent"><code>&lt;iframe src="@SrcAddress" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
                         }
                     </div>
@@ -233,8 +233,6 @@
         $('#ImageText').hide();
         $('#ddlClientId').append("<option value='0' disabled>--Select Church--</option>");
         $('#ddlCountryId').append("<option value='0' disabled>--Select Church--</option>");
-        //$("#Churches_ImageURl").attr("data-default-file", "http://lofrev.net/wp-content/photos/2017/05/Online_logo_2.png");
-        //$('.dropify').dropify();
         var filedropper = $('#Churches_ImageURl').dropify();
         filedropper = filedropper.data('dropify');
         filedropper.resetPreview();
