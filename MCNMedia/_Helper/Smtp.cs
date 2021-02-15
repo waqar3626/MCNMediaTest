@@ -36,15 +36,12 @@ namespace MCNMedia_Dev._Helper
         {
             _smtpClient = new SmtpClient();
             {
-                _Helper.Common.SaveToXXX("Email - Smtp - Begin1");
                 var withBlock = _smtpClient;
                 withBlock.Credentials = new NetworkCredential(userName, password);
-                _Helper.Common.SaveToXXX("Email - Smtp - Begin2");
                 withBlock.DeliveryMethod = SmtpDeliveryMethod.Network;
                 withBlock.EnableSsl = true;
                 withBlock.Host = smtpServer;
                 withBlock.Port = port;
-                _Helper.Common.SaveToXXX("Email - Smtp - End");
             }
         }
 

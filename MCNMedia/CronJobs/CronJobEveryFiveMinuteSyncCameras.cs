@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Controllers;
 using Microsoft.Extensions.Logging;
 
@@ -29,8 +30,8 @@ namespace MCNMedia_Dev.CronJobs
             try
             {
                 _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera Started ");
-                CameraController camera = new CameraController();
-                camera.SyncAllCamerasWithWowza();
+                Wowza wowza = new Wowza();
+                wowza.SyncAllCamerasWithWowza();
                 _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera Ended ");
             }
             catch (Exception ex)

@@ -18,7 +18,6 @@
             </div>
             <div class="card-body">
                 <form method="post" asp-action="Search" asp-controller="RecordingReport">
-
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-4">
@@ -35,11 +34,6 @@
                         </div>
                     </div>
                 </form>
-
-
-
-
-
                 <div class="table-responsive">
                     <table class="table table-striped table-borderless">
                         <thead>
@@ -53,85 +47,72 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.LDashBoardClients)
-                            {
-                            <tr>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
-                                </td>
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
-                                </td>
-                                @if (item.ScheduleStatus == "Pending")
-                                {
-                            <td class="font-weight-medium text-danger">
-                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                            </td> }
-                                            else if (item.ScheduleStatus == "In Progress")
-                                            {
-                            <td class="font-weight-medium text-warning">
-                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                            </td> }
-                                            else if (item.ScheduleStatus == "Completed")
-                                            {
-                            <td class="font-weight-medium text-info">
-                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                            </td> }
-                                            else if (item.ScheduleStatus == "Published")
-                                            {
-                            <td class="font-weight-medium text-success">
-                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                            </td> }
-                                            else if (item.ScheduleStatus == "Waiting")
-                                            {
-                            <td class="font-weight-medium text-black">
-                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                            </td> }
-
-                                            else
-                                            {
-                            <td class="font-weight-medium text-behance">
-                                @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                            </td>}
-                                <td class="text-wrap">
-                                    @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
-                                </td>
-
-
-
-
-                                 @if (item.ScheduleStatus == "In Progress")
-                                {
-
-                                <td class="font-weight-medium text-black ">
-                                    <button type="submit" onclick="RevokeStopRec(@item.ScheduleId)" class="btn btn-danger btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Stop Rec"><i class="fa fa-stop text-white pr-1"></i>Stop Rec</button>
-
-                                </td>
-                                }
-
-                                else if (DateTime.Now > Convert.ToDateTime(item.ScheduleEventTime) && DateTime.Now < Convert.ToDateTime(item.ScheduleEventTime.ToString()).AddMinutes(item.RecordingDuration) && item.ScheduleStatus == "Pending" && item.RecordingDuration != 0)
-                                {
-
-                                <td class="font-weight-medium text-black ">
-                                    <button type="submit" onclick="RevokeStartRec(@item.ScheduleId)" class="btn btn-success btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="StartRec"><i class="fa fa-play-circle text-white pr-1"></i>Start Rec</button>
-
-                                </td> }
-
-
-
-                                else
-                                {
-
-                                <td class="font-weight-medium text-black ">
-
-                                    <b>Nil</b>
-
-                                </td>}
-
-
-
-
-                            </tr>
-                            }
+                             {
+                                <tr>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
+                                    </td>
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+                                    </td>
+                                    @if (item.ScheduleStatus == "Pending")
+                                    {
+                                        <td class="font-weight-medium text-danger">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td> 
+                                    }
+                                    else if (item.ScheduleStatus == "In Progress")
+                                    {
+                                        <td class="font-weight-medium text-warning">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td> 
+                                    }
+                                    else if (item.ScheduleStatus == "Completed")
+                                    {
+                                        <td class="font-weight-medium text-info">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td> 
+                                    }
+                                    else if (item.ScheduleStatus == "Published")
+                                    {
+                                        <td class="font-weight-medium text-success">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td>
+                                    }
+                                    else if (item.ScheduleStatus == "Waiting")
+                                    {
+                                        <td class="font-weight-medium text-black">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td> 
+                                    }
+                                    else
+                                    {
+                                        <td class="font-weight-medium text-behance">
+                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                        </td>
+                                    }
+                                    <td class="text-wrap">
+                                        @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
+                                    </td>
+                                    @if (item.ScheduleStatus == "In Progress")
+                                     {
+                                        <td class="font-weight-medium text-black ">
+                                            <button type="submit" onclick="RevokeStopRec(@item.ScheduleId)" class="btn btn-danger btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Stop Rec"><i class="fa fa-stop text-white pr-1"></i>Stop Rec</button>
+                                        </td>
+                                     }
+                                     else if (DateTime.Now > Convert.ToDateTime(item.ScheduleEventTime) && DateTime.Now < Convert.ToDateTime(item.ScheduleEventTime.ToString()).AddMinutes(item.RecordingDuration) && item.ScheduleStatus == "Pending" && item.RecordingDuration != 0)
+                                     {
+                                        <td class="font-weight-medium text-black ">
+                                            <button type="submit" onclick="RevokeStartRec(@item.ScheduleId)" class="btn btn-success btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="StartRec"><i class="fa fa-play-circle text-white pr-1"></i>Start Rec</button>
+                                        </td>
+                                     }
+                                     else
+                                     {
+                                        <td class="font-weight-medium text-black ">
+                                        </td>
+                                     }
+                                </tr>
+                             }
                         </tbody>
                     </table>
                 </div>
@@ -139,7 +120,6 @@
         </div>
     </div>
     <!--Today Schedules End-->
-
 </div>
 
 @*</div>*@
@@ -151,24 +131,18 @@
         $('#SetSearchDate').val(date);
     })
 
-
     function RevokeStartRec(scheduleId) {
-      
         var formData = new FormData();
         formData.append("scheduleId", scheduleId);
-   
         $.ajax({
-
             type: "POST",
             url: "/Schedule/StartRecordingSchedule/",
-
             data: formData,
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
-
             success: function (result) {
-
-
+                alert(result);
+                location.reload();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
@@ -176,22 +150,17 @@
         });
     }
 
-
     function RevokeStopRec(scheduleId) {
         var formData = new FormData();
         formData.append("scheduleId", scheduleId);
-      
         $.ajax({
-
             type: "POST",
             url: "/Schedule/StopRecordingSchedule/",
             data: formData,
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
-
             success: function (result) {
-
-
+                location.reload();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

@@ -11,6 +11,7 @@ namespace MCNMedia_Dev._Helper
     public class Wowza
     {
         ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
+        CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
 
         #region "Stop Recording"
 
@@ -22,11 +23,6 @@ namespace MCNMedia_Dev._Helper
                 StopRecording(Convert.ToInt32(dr["CameraId"]), Convert.ToInt32(dr["ChurchId"]), Convert.ToInt32(dr["ScheduleId"]));
             }
         }
-
-        //public bool StopRecordingByCamera(int cameraId)
-        //{
-
-        //}
 
         public bool StopRecordingBySchedule(int scheduleId)
         {
@@ -80,19 +76,14 @@ namespace MCNMedia_Dev._Helper
             }
         }
 
-        public void StartRecordingByCamera(int cameraId)
-        {
-
-        }
-
-        public void StartRecordingBySchedule(int scheduleId)
+        public bool StartRecordingBySchedule(int scheduleId)
         {
             Schedule schedule;
             schedule = scheduleDataAccess.GetScheduleById(scheduleId);
-             StartRecording(schedule.CameraId, schedule.ChurchId, schedule.ScheduleId);
+            return StartRecording(schedule.CameraId, schedule.ChurchId, schedule.ScheduleId);
         }
 
-        private void StartRecording(int cameraId, int churchId, int scheduleId)
+        private bool StartRecording(int cameraId, int churchId, int scheduleId)
         {
             WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
             bool res = wowzaHelper.StartRecording(churchId, cameraId);
@@ -103,6 +94,52 @@ namespace MCNMedia_Dev._Helper
                 ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Started, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
                 scheduleDataAccess.InsertScheduleLog(scheduleId: scheduleId, scheduleStatus: 1);
             }
+            return res;
+        }
+
+        #endregion
+
+        #region "Sync Camera"
+
+        /// <summary>
+        /// Synchronizing camera status with wowza streaming engine of all installed cameras.
+        /// 1. Fetch all admin cameras
+        /// 2. Fetch status of camera stream from wowza
+        /// 3. Update camera status in database
+        /// </summary>
+        public void SyncAllCamerasWithWowza()
+        {
+            CameraStream cameraStream = new CameraStream();
+            List<Camera> cameraList = camDataAccess.GetAllCameras();
+            foreach (Camera cam in cameraList)
+            {
+                SyncCameraWithWowza(cam);
+            }
+        }
+
+        /// <summary>
+        /// Synchronizing camera status with wowza streaming engine.
+        /// </summary>
+        /// <param name="cameraId">integer</param>
+        /// <returns></returns>
+        public bool SyncCamerasWithWowzaById(int cameraId)
+        {
+            Camera camera = new Camera();
+            CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+            camera = cameraDataAccessLayer.GetCameraById(cameraId);
+            return SyncCameraWithWowza(camera);
+        }
+
+        private bool SyncCameraWithWowza(Camera camera)
+        {
+            CameraStream cameraStream;
+            WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+            cameraStream = wowzaHelper.RequestCameraStatus(camera.ChurchId, camera.CameraId);
+            if (camera.IsCameraStreaming != cameraStream.isConnected)
+            {
+                camDataAccess.UpdateCameraStreamingStatus(camera.CameraId, cameraStream.isConnected);
+            }
+            return cameraStream.isConnected;
         }
 
         #endregion
