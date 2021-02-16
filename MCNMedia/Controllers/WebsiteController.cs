@@ -524,6 +524,10 @@ namespace MCNMedia_Dev.Controllers
                     churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
                 }
                 ViewData["Title"] = id;
+                if(string.IsNullOrEmpty(id))
+                {
+                    return RedirectToAction(nameof(Cameras));
+                }
                 ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
                 AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
                 CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
