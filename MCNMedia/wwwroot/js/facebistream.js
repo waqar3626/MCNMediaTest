@@ -195,6 +195,7 @@ function Request_LiveVedioObj() {
 function StartLiveStreaming(cameraInfo) {
     var formData = new FormData();
     formData.append("jsonData", JSON.stringify(cameraInfo));
+    formData.append("CamId", $('#camera_list').val());
     $.ajax({
         type: "POST",
         url: "/Client/LiveStreamToFacebook/",
@@ -202,12 +203,20 @@ function StartLiveStreaming(cameraInfo) {
         processData: false,  // tell jQuery not to process the data
         contentType: false,  // tell jQuery not to set contentType
         success: function (result) {
-            alert(result);
-            $('#stopStreaming').show();
-            $('#startStreaming').hide();
+            //alert(result);
+            if (result == "true") {
+                alert("Stream posted to facebook");
+                $('#stopStreaming').show();
+                $('#startStreaming').hide();
+            }
+            else {
+                alert("There is a problem posting to facebook. Please check your stream is started on camera");
+            }
         },
         error: function (errormessage) {
-            //alert(errormessage.responseText);
+            alert("Error when posting to facebook");
+            $('#stopStreaming').hide();
+            $('#startStreaming').show();
         }
     });
 }
@@ -282,10 +291,15 @@ function StopLiveStreaming(cameraInfo) {
         processData: false,  // tell jQuery not to process the data
         contentType: false,  // tell jQuery not to set contentType
         success: function (result) {
-            alert(result);
+           // alert(result);
+            alert("Stream stopped on facebook");
+            $('#startStreaming').css('display', 'normal');
+            $('#stopStreaming').css('display', 'none');
         },
-        error: function (errormessage) {
-            //alert(errormessage.responseText);
+        error: function (result) {
+            alert("Error when stopping stream");
+            $('#startStreaming').css('display', 'none');
+            $('#stopStreaming').css('display', 'normal');
         }
     });
 }

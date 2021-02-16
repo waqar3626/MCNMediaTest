@@ -52,7 +52,30 @@ namespace MCNMedia_Dev.WowzaApi
         #endregion
 
         #region Public Method
-
+        public bool CheckCameraBeforeStreaming(int churchId, int cameraId)
+        {
+            try
+            {
+                log.InfoFormat("Check Camera for Live Streaming. ChurchId: {0}, CameraId: {1} - Start", churchId, cameraId);
+                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                if (GetStream(uniqueIdentifier, cameraId))
+                {
+                    // Stream Exists
+                    log.Info("Camera exists for streaming go Live.");
+                    return true;
+                }
+                else
+                {
+                    log.Info("Camera does not exist for streaming  go Live.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Error Occured - Request Camera for streaming  go Live. ", ex.Message);
+                return false;
+            }
+        }
         public bool RequestCamera(int churchId, int cameraId, string rtspUrl)
         {
             try

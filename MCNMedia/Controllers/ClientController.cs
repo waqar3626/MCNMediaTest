@@ -249,10 +249,21 @@ namespace MCNMedia_Dev.Controllers
 
         [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
-        public JsonResult LiveStreamToFacebook(string jsonData)
+        public JsonResult LiveStreamToFacebook(string jsonData, string CamId)
         {
-            FacebookHelper facebookHelper = new FacebookHelper();
-            return Json(facebookHelper.FacebookLiveStream(jsonData));
+            int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
+            int CameraId = Convert.ToInt32(CamId);
+            WowzaApi.WowzaHelper wowza = new WowzaApi.WowzaHelper();
+            if (wowza.CheckCameraBeforeStreaming(Church_Id, CameraId))
+            {
+                FacebookHelper facebookHelper = new FacebookHelper();
+                return Json(facebookHelper.FacebookLiveStream(jsonData));
+            }
+            else
+            {
+                return Json(false);
+            }
+            
         }
 
         [EnableCors("_myAllowSpecificOrigins")]
