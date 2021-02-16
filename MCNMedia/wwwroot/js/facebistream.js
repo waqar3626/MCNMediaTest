@@ -180,8 +180,8 @@ function Request_LiveVedioObj() {
                     secure_stream_url: "rtmps://live-api-s.facebook.com:443/rtmp/",
                     stream_key: streamkey, //"108000807847714?s_bl=1&s_psm=1&s_sc=108000824514379&s_sw=0&s_vt=api-s&a=Abx34FLUBqF0nyj8"
                 }
-                PosttoLiveStream(cameraInfo);
-
+                //PosttoLiveStream(cameraInfo);
+                StartLiveStreaming(cameraInfo);
             }
         );
     }
@@ -191,15 +191,39 @@ function Request_LiveVedioObj() {
     }
 }
 
+
+function StartLiveStreaming(cameraInfo) {
+    var formData = new FormData();
+    formData.append("jsonData", JSON.stringify(cameraInfo));
+    $.ajax({
+        type: "POST",
+        url: "/Client/LiveStreamToFacebook/",
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        success: function (result) {
+            alert(result);
+            $('#stopStreaming').show();
+            $('#startStreaming').hide();
+        },
+        error: function (errormessage) {
+            //alert(errormessage.responseText);
+        }
+    });
+}
+
 function PosttoLiveStream(cameraInfo) {
     //chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
     $.ajax({
-        url: 'http://52.51.59.126:8182/api/v1/start-fb-live',
+        url: 'https://cors-anywhere.herokuapp.com/http://52.51.59.126:8182/api/v1/start-fb-live',
         type: 'post',
+        crossDomain: true,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(cameraInfo),
-
+        beforeSend: function (request) {
+            request.setRequestHeader("Access-Control-Allow-Origin", "*");
+        },
         success: function (data) {
             if (data.status == "STREAM_NOT_FOUND") {
                 alert("Please start your stream on camera");
@@ -225,24 +249,44 @@ function StopLiveStream() {
         client_name: $('#camera_list option:selected').attr('data-clientname'),
         type: $('#camera_list option:selected').attr('data-camtype')
     }
+
+    StopLiveStreaming(cameraInfo);
+    //$.ajax({
+    //    url: 'http://52.51.59.126:8182/api/v1/stop-fb-live',
+    //    type: 'post',
+    //    dataType: 'json',
+    //    contentType: 'application/json',
+    //    data: JSON.stringify(cameraInfo),
+
+    //    success: function (data) {
+    //        alert("Stream stopped on facebook");
+    //        $('#startStreaming').css('display', 'normal');
+    //        $('#stopStreaming').css('display', 'none');
+    //    },
+    //    error: function (data) {
+    //        alert("Error when stopping stream");
+    //        $('#startStreaming').css('display', 'none');
+    //        $('#stopStreaming').css('display', 'normal');
+    //    }
+
+    //});
+}
+
+function StopLiveStreaming(cameraInfo) {
+    var formData = new FormData();
+    formData.append("jsonData", JSON.stringify(cameraInfo));
     $.ajax({
-        url: 'http://52.51.59.126:8182/api/v1/stop-fb-live',
-        type: 'post',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(cameraInfo),
-
-        success: function (data) {
-            alert("Stream stopped on facebook");
-            $('#startStreaming').css('display', 'normal');
-            $('#stopStreaming').css('display', 'none');
+        type: "POST",
+        url: "/Client/StopLiveStreamToFacebook/",
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        success: function (result) {
+            alert(result);
         },
-        error: function (data) {
-            alert("Error when stopping stream");
-            $('#startStreaming').css('display', 'none');
-            $('#stopStreaming').css('display', 'normal');
+        error: function (errormessage) {
+            //alert(errormessage.responseText);
         }
-
     });
 }
 //#endregion
