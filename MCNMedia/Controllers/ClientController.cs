@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -245,6 +246,22 @@ namespace MCNMedia_Dev.Controllers
         }
 
         #region "Facebook Section
+
+        [EnableCors("_myAllowSpecificOrigins")]
+        [HttpPost]
+        public JsonResult LiveStreamToFacebook(string jsonData)
+        {
+            FacebookHelper facebookHelper = new FacebookHelper();
+            return Json(facebookHelper.FacebookLiveStream(jsonData));
+        }
+
+        [EnableCors("_myAllowSpecificOrigins")]
+        [HttpPost]
+        public JsonResult StopLiveStreamToFacebook(string jsonData)
+        {
+            FacebookHelper facebookHelper = new FacebookHelper();
+            return Json(facebookHelper.StopFacebookLiveStreaming(jsonData));
+        }
 
         public void StreamtoFacebook()
         {
