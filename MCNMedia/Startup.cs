@@ -22,6 +22,8 @@ namespace MCNMedia_Dev
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -72,7 +74,16 @@ namespace MCNMedia_Dev
                 options.DefaultRequestCulture = new RequestCulture("en-PK");
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                             .AllowAnyHeader()
+                                             .AllowAnyMethod();
+                                  });
+            });
             services
                 .AddCronJob<CronJobEveryFiveMinute>(c =>
                 {
@@ -116,7 +127,7 @@ namespace MCNMedia_Dev
             app.UseSession();
             app.UseStaticFiles();
             app.UseAuthorization();
-
+            app.UseCors(MyAllowSpecificOrigins);
             // app.UseStaticFiles(new StaticFileOptions
             // {
             //     FileProvider = new PhysicalFileProvider(
