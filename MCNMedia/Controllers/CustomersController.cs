@@ -27,6 +27,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
+    
         public IActionResult RecordingsList()
         {
             int id = (int)HttpContext.Session.GetInt32("churchId");
@@ -34,6 +35,9 @@ namespace MCNMedia_Dev.Controllers
 
             return View(profileModel);
         }
+
+
+      
         public JsonResult ListSchedule()
         {
             try
@@ -61,16 +65,13 @@ namespace MCNMedia_Dev.Controllers
         {
             string ChurchUniqeIdentity = "";
             if (id != null) {
-                HttpContext.Session.SetString("churchUniqueIdentity", id);
+                
                 
                 ChurchUniqeIdentity = id;
             }
-            else
-            {
-                ChurchUniqeIdentity = HttpContext.Session.GetString("churchUniqueIdentity");
-            }
+           
             Church church = churchDataAccess.GetChurchByUniqueIdentifier(ChurchUniqeIdentity);
-            HttpContext.Session.SetString("ChurchPass", church.Password);
+           
           
             int churchPass = Convert.ToInt32(TempData["ProfileModel"]);
             if (church.Password == HttpContext.Session.GetString("Password"))
@@ -87,6 +88,9 @@ namespace MCNMedia_Dev.Controllers
                     }
                     else
                     {
+                        TempData["ChurchIdentifier"] = ChurchUniqeIdentity;
+                        TempData["Password"] = church.Password;
+                  
                         return RedirectToAction(nameof(CustomerChurchLock));
                     }
 
@@ -102,7 +106,8 @@ namespace MCNMedia_Dev.Controllers
                 profileModel.CameraList = camDataAccess.GetAllCamerasByChurch(churchId);
             profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
             profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
-            return View(profileModel);
+            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
+            return View("CustomerView",profileModel);
             
 
            
@@ -117,17 +122,20 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-                String pass = HttpContext.Session.GetString("ChurchPass").ToString();
+               
+               
+                String pass = TempData["Password"].ToString();
                 if (churchLock.Password == pass)
                 {
                     TempData["ProfileModel"] = 1;
                     HttpContext.Session.SetString("Password", pass);
-                    return RedirectToAction(nameof(CameraLiveStream));
+                    return RedirectToAction(nameof(CameraLiveStream),new {id = TempData["ChurchIdentifier"].ToString() });
                 }
                 else
                 {
                     ViewBag.IsSuccess = 3;
-                    //ViewData["Message"] = "Incorrect Password";
+                    TempData["ChurchIdentifier"] = TempData["ChurchIdentifier"].ToString();
+                    TempData["Password"] = TempData["Password"].ToString();
                     return View();
                 }
             }
@@ -143,6 +151,82 @@ namespace MCNMedia_Dev.Controllers
         private void ShowMesage(string exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);
+        }
+        [HttpGet]
+        public IActionResult Player(int id)
+        {
+            try
+            {
+                int recordingPass = 0;
+                RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
+                if (id == 0)
+                {
+                    TempData["RecordingId"] = id;
+                    id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
+                    recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
+                }
+                Recording recording = recordingDataAccessLayer.Recording_GetById(id);
+                int pass = recording.Password.Count();
+                if (recording.Password.Count() > 0)
+                {
+                    
+                    HttpContext.Session.SetString("RecordingPass", recording.Password);
+                    HttpContext.Session.SetInt32("RecordingId", id);
+                    if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
+                    {
+                        int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
+                    }
+                    else
+                    {
+                        if (recordingPass == 1)
+                        {
+
+                        }
+                        else
+                        {
+                            TempData["RecordingPassword"] = recording.Password;
+                            return RedirectToAction(nameof(RecordingLock));
+                        }
+                    }
+                }
+                return Json(recording);
+            }
+            catch (Exception exp)
+            {
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
+            }
+        }
+        public IActionResult RecordingLock()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult RecordingLock(RecordingLock recordingLock)
+        {
+            try
+            {
+                String pass = TempData["RecordingPassword"].ToString();
+                if (recordingLock.Password == pass)
+                {
+                    HttpContext.Session.SetInt32("RecordingPass", 1);
+                    return RedirectToAction(nameof(Player), new { id = Convert.ToInt32(TempData["RecordingId"]) });
+                }
+                else
+                {
+                    ViewBag.IsSuccess = 3;
+                    TempData["RecordingId"] = TempData["RecordingId"].ToString();
+                    TempData["RecordingPassword"] = TempData["RecordingPassword"].ToString();
+                    return View();
+                }
+            }
+            catch (Exception exp)
+            {
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
+            }
         }
     }
 }

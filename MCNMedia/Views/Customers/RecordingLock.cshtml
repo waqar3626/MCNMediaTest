@@ -1,13 +1,29 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 @{
-    ViewData["Title"] = "CustomerChurchLock";
+    ViewData["Title"] = "RecordingLock";
     Layout = "";
-}
-@{
-    TempData.Keep("ChurchIdentifier");
-    TempData.Keep("Password");
+    TempData.Keep("RecordingPassword");
+    TempData.Keep("RecordingId");
 
 }
+
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsg;
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,7 +88,7 @@
     @*<link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">*@
     <!-- endinject -->
 
-  
+
 </head>
 <body>
     <div class="container-scroller">
@@ -82,21 +98,21 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-transparent text-left p-5 text-center">
                             @*<label>@Model.Churches.ChurchName</label>*@
-                            <form class="pt-5" asp-action="CustomerChurchLock" asp-controller="Customers" method="post">
+                            <form class="pt-5" asp-action="RecordingLock" asp-controller="Website" method="post">
                                 <div class="form-group">
-                                    <input type="hidden" asp-for="churchLock.churchPass" />
-                                    <label for="examplePassword1">Password to unlock</label>
+                                    <input type="hidden" asp-for="recordingLock.RecordingPass" />
+                                    <label for="examplePassword1">Recording Password</label>
 
-                                    <input type="password" asp-for="churchLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
+                                    <input type="password" asp-for="recordingLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
                                 </div>
                                 <div class="mt-5">
-                                    <button type="submit" class="btn btn-block  text-white btn-lg bg-blue font-weight-medium" href="@Url.Action("CustomerChurchLock", "Customers")">Unlock</button>
+                                    <button type="submit" class="btn btn-block btn-pink text-white btn-lg font-weight-medium" href="@Url.Action("ChurchLock", "Website")">Unlock</button>
                                 </div>
                                 <br />
                                 @{ if (ViewBag.IsSuccess == 3)
                                     {
-                                        <div class="alert alert-danger text-danger">
-                                            Password Incorrect
+                                        <div class="form-group alert-danger">
+                                            <label type="password" class="form-control form-control-lg bg-blue text-white">Password Incorrect</label>
                                         </div> } }
                             </form>
                         </div>
@@ -105,7 +121,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <!-- jQuery -->
     <!-- Bootstrap JS bundle w/ Popper.js -->
