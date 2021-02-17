@@ -24,12 +24,13 @@ namespace MCNMedia_Dev.Repository
 
             foreach (DataRow dataRow in dataTable.Rows)
             {
+                
                 Server server = new Server();
                 server.ServerId = Convert.ToInt32(dataRow["ServerId"]);
                 server.ServerName = dataRow["ServerName"].ToString();
                 server.ServerIP = dataRow["ServerIP"].ToString();
-
-                Balobj.Add(server);
+                if (server.ServerId < 3)
+                    Balobj.Add(server);
             }
             return Balobj;
         }

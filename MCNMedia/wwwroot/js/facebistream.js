@@ -204,7 +204,7 @@ function StartLiveStreaming(cameraInfo) {
         contentType: false,  // tell jQuery not to set contentType
         success: function (result) {
             //alert(result);
-            if (result == "true") {
+            if (result ) {
                 alert("Stream posted to facebook");
                 $('#stopStreaming').show();
                 $('#startStreaming').hide();
@@ -293,13 +293,13 @@ function StopLiveStreaming(cameraInfo) {
         success: function (result) {
            // alert(result);
             alert("Stream stopped on facebook");
-            $('#startStreaming').css('display', 'normal');
-            $('#stopStreaming').css('display', 'none');
+            $('#startStreaming').show();
+            $('#stopStreaming').hide();
         },
         error: function (result) {
             alert("Error when stopping stream");
-            $('#startStreaming').css('display', 'none');
-            $('#stopStreaming').css('display', 'normal');
+            $('#stopStreaming').show();
+            $('#startStreaming').hide();
         }
     });
 }

@@ -56,10 +56,14 @@ namespace MCNMedia_Dev.WowzaApi
         {
             try
             {
-                log.InfoFormat("Check Camera for Live Streaming. ChurchId: {0}, CameraId: {1} - Start", churchId, cameraId);
-                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
-                if (GetStream(uniqueIdentifier, cameraId))
+                CameraStream cameraStream = RequestCameraStatus(churchId, cameraId);
+
+                //log.InfoFormat("Check Camera for Live Streaming. ChurchId: {0}, CameraId: {1} - Start", churchId, cameraId);
+                //string uniqueIdentifier = GetUniqueIdentifier(churchId, cameraId);
+                if (cameraStream.isConnected)
                 {
+                    CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+                    camDataAccess.UpdateCameraStreamingStatus(cameraId,true);
                     // Stream Exists
                     log.Info("Camera exists for streaming go Live.");
                     return true;
@@ -116,7 +120,9 @@ namespace MCNMedia_Dev.WowzaApi
 
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
-                    bool startRec = PostAsync($"{GetApplicationUrl(cameraId)}/instances/_definst_/streamrecorders", recordingData);
+                    string applicationUrl = GetApplicationUrl(cameraId);
+                    string uri = UpdateUriBasedOnServer($"{applicationUrl}/instances/#instance#/streamrecorders", uniqueIdentifier);
+                    bool startRec = PostAsync(uri, recordingData);
                     return startRec;
                 }
                 else
@@ -141,7 +147,9 @@ namespace MCNMedia_Dev.WowzaApi
                 log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
-                    bool stopRec = PutAsync($"{GetApplicationUrl(cameraId)}/instances/_definst_/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", "");
+                    string applicationUrl = GetApplicationUrl(cameraId);
+                    string uri = UpdateUriBasedOnServer($"{applicationUrl}/instances/#instance#/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", uniqueIdentifier);
+                    bool stopRec = PutAsync(uri, "");
                     return stopRec;
                 }
                 else
@@ -169,10 +177,13 @@ namespace MCNMedia_Dev.WowzaApi
             try
             {
                 log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
-                string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                string uniqueIdentifier = GetUniqueIdentifier(churchId, cameraId);
                 string streamName = $"{uniqueIdentifier}_{cameraId}";
-                log.DebugFormat("Wowza Request URL: {0}", $"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
-                HttpClient client = CreateHttpClientRequest($"{GetApplicationUrl(cameraId)}/instances/_definst_/incomingstreams/{streamName}.stream");
+
+                string uri = GetApplicationUrl(cameraId);
+                uri = UpdateUriBasedOnServer($"{uri}/instances/#instance#/incomingstreams/{streamName}.stream", uniqueIdentifier);
+                log.DebugFormat("Wowza Request URL: {0}", uri);
+                HttpClient client = CreateHttpClientRequest(uri);
                 // List data response.
                 HttpResponseMessage response = client.GetAsync("").Result;
                 AddLogsToLog4Net(response);
@@ -342,6 +353,17 @@ namespace MCNMedia_Dev.WowzaApi
             return credentialCache;
         }
 
+        private CredentialCache GetCredentials_Server3(Uri uri)
+        {
+            var credentialCache = new CredentialCache();
+            credentialCache.Add(
+            new Uri(uri.GetLeftPart(UriPartial.Authority)), // request url's host
+            "Digest", // authentication type 
+            new NetworkCredential(USER_NAME, "ykdEHGc6XH6e35") // credentials 
+            );
+            return credentialCache;
+        }
+
         private string GetApplicationUrl(int cameraId)
         {
             string uri = $"{GetBasicUri(cameraId)}/applications/{APPLICATION}";
@@ -353,6 +375,16 @@ namespace MCNMedia_Dev.WowzaApi
             string serverIP = RetrieveCameraServerIP(cameraId);
             string uri = $"http://{serverIP}:{PORT}/{API_VERSION}/servers/{SERVER}/vhosts/{VHOST}";
             return uri;
+        }
+
+        private string UpdateUriBasedOnServer(string uri, string uniqueIdentifier)
+        {
+            string instance = "_definst_";
+            if (uri.Contains("52.51.59.126"))
+            {
+                instance = $"_{uniqueIdentifier}_";
+            }
+            return uri.Replace("#instance#", instance);
         }
 
         #endregion
@@ -411,8 +443,14 @@ namespace MCNMedia_Dev.WowzaApi
         {
             Uri uri = new Uri(requestUri);
             var HttpHandler = new HttpClientHandler();
-            HttpHandler.Credentials = GetCredentials(uri);
-
+            if (requestUri.Contains("52.51.59.126"))
+            {
+                HttpHandler.Credentials = GetCredentials_Server3(uri);
+            }
+            else
+            {
+                HttpHandler.Credentials = GetCredentials(uri);
+            }
             HttpClient client = new HttpClient(HttpHandler);
             client.BaseAddress = new Uri(requestUri);
 

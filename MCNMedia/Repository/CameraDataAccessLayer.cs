@@ -172,7 +172,8 @@ namespace MCNMedia_Dev.Repository
             }
             else if (camera.CameraType == _Helper.CameraType.ClientCamera)
             {
-                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
+                string cameraUniqueIdentifier = dataRow["CameraUrl"].ToString().Split("_")[0];
+                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/_{cameraUniqueIdentifier}_/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
             }
             camera.StreamingProtocol = dataRow["StreamingProtocol"].ToString().Trim();
             camera.ChurchUniqueIdentifier = dataRow["UniqueIdentifier"].ToString().Trim();
