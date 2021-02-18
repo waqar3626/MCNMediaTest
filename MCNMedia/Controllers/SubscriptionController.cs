@@ -121,7 +121,6 @@ namespace MCNMedia_Dev.Controllers
                 string pubKey = wowzaConfig["PublishKey"];
                 string secKey = wowzaConfig["SecretKey"];
 
-
                 Subscriptions subscription = new Subscriptions();
                 Dictionary<string, string> Metadata = new Dictionary<string, string>();
                 Metadata.Add("Package Description", Description);
@@ -626,11 +625,21 @@ namespace MCNMedia_Dev.Controllers
                 Message = Message.Replace("#First Name#",user.Name);
                 Message = Message.Replace("#Code#", result);
                 Status sts = emailHelper.SendEmail(emailTemplate.FromEmail, Email, user.Name, "Password Reset Code", Message);
-
-                TempData["Email"] = Email;
-                TempData["OTPCode"] = result;
-                ViewBag.EmailShow = 2;
-                @ViewBag.EmailAddress = Email;
+               if(sts.Success)
+                {
+                    TempData["Email"] = Email;
+                    TempData["OTPCode"] = result;
+                    ViewBag.EmailShow = 2;
+                    @ViewBag.EmailAddress = Email;
+                }
+               else
+                {
+                    ViewBag.Error = 3;
+                    TempData["ErrorMessage"] = sts.Message;
+                    @ViewBag.EmailAddress = Email;
+                    _Helper.Common.SaveToXXX(sts.Message);
+                }
+               
                 return View("ConfirmOtpCode");
             }
             else
