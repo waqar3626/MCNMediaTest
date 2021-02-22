@@ -562,17 +562,18 @@ namespace MCNMedia_Dev.Controllers
                         }
                     //}
                 }
-
-                int subscriberPaid = Convert.ToInt32(TempData["paymentId"]);
-                Visitor visitor = new Visitor(Request, HttpContext);
-                //string visitorLocation = CheckVisitorLocation();
-                int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitor.CountryName);
-                if (allowToProfile == 1 || subscriberPaid > 0)
-                {
+                // it for paper view Know we dont need it
+                //int subscriberPaid = Convert.ToInt32(TempData["paymentId"]);
+                //Visitor visitor = new Visitor(Request, HttpContext);
+                ////string visitorLocation = CheckVisitorLocation();
+                //int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitor.CountryName);
+                ////if (allowToProfile == 1 || subscriberPaid > 0)
+                //if (true)
+                //{
                     HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                     int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
                     String ip = website1.IP;
-                    _websiteDataAccessLayer.Analytics(churchId, visitor.IpAddress, visitor.CountryName);
+                    //_websiteDataAccessLayer.Analytics(churchId, visitor.IpAddress, visitor.CountryName);
                     List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
                     if (announcementList.Count > 0)
                         profileModel.Announcement = announcementList.First<Announcement>();
@@ -668,14 +669,14 @@ namespace MCNMedia_Dev.Controllers
                         profileModel.NextScheduleList = nextEventSchedule;
                     }
                     return View(profileModel);
-                }
-                else
-                {
-                    HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
-                    ViewBag.ChurchId = profileModel.Churches.ChurchId;
-                    churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
-                    return RedirectToAction("Packages", "Subscription");
-                }
+                //}
+                //else
+                //{
+                //    HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
+                //    ViewBag.ChurchId = profileModel.Churches.ChurchId;
+                //    churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
+                //    return RedirectToAction("Packages", "Subscription");
+                //}
             }
             catch (Exception exp)
             {
