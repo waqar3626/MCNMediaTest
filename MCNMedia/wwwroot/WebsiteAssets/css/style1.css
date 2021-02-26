@@ -98,6 +98,10 @@
 .bg-blue{
     background-color: #1f4a79;
 }
+.bg-black {
+    background-color: #000000;
+}
+
 .btn-pink {
     background: #d9356f;
 }
@@ -680,6 +684,56 @@ img.main-img{
 @media (max-width:767px){
     .cover-banner,.cover-banner video {
         height: 450px;
+
+    }
+    .camerlive {
+        width: 100% !important;
+        height: 518px !important;
+        text-align: center;
+    }
+    .displayblock {
+        display: block;
+    }
+
+    .MobileContent {
+        display: none;
+    }
+
+    .MobileContentwebsitelayout {
+        display: block;
+        text-align: left;
+    }
+
+    .Mobileimage {
+        height: 260px;
+        overflow: hidden;
+    }
+}
+@media (min-width:768px) {
+
+    .cameralive {
+        width: 100% !important;
+        height: 518px !important;
+        text-align: center;
+    }
+    .displayblock {
+        display: none;
+    }
+    .MobileContent {
+        display: block;
+        text-align: center;
+    }
+
+
+
+    .MobileContentwebsitelayout {
+        display: block;
+        justify-content: center;
+    }
+
+    .Mobileimage {
+        height: 15vw;
+        overflow: hidden;
     }
 }
 @media (max-width:599px){
@@ -727,3 +781,7 @@ img.main-img{
         width: 50%;
     }
 }
+
+
+
+

@@ -59,10 +59,12 @@
 
         <nav class="navbar navbar-expand-lg navbar-light container-nav  avantgardece text-uppercase pl-0 pr-0">
             <a class="navbar-brand " href="/"><img src="~/WebsiteAssets/img/logo.png" alt="" style="width: 115px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <button class="navbar-toggler" type="button" id="navbtn" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+           
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul id="navbar-nav1" class="navbar-nav mr-auto">
@@ -89,55 +91,55 @@
 
                     @*its for paper view currently we dont need it*@
                     <!--@if (Context.Request.Cookies["SubscriberId"] != null)
-                    {
-                        <li class="nav-item">
-                            <div class="col">
-                                <div class="top-Menu-item font-14 d-flex align-items-center justify-content-end">
-                                    <ul class="navbar-nav navbar-nav-right">
-                                        <li class="nav-item nav-profile dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                                My Account
+            {
+                <li class="nav-item">
+                    <div class="col">
+                        <div class="top-Menu-item font-14 d-flex align-items-center justify-content-end">
+                            <ul class="navbar-nav navbar-nav-right">
+                                <li class="nav-item nav-profile dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                        My Account
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                        <span class="dropdown-item border-bottom font-20">
+                                            <i class="ti-user text-primary"></i>
+                                            <span class="font-18 text-primary">
+
+                                                @if (Context.Request.Cookies["SubscriberName"] != null)
+                                                {
+                                                    @Context.Request.Cookies["SubscriberName"].ToString()
+                                                }
+                                            </span>
+                                        </span>
+                                        <a class="dropdown-item" onclick="changepassword()" data-toggle="tooltip" data-placement="bottom" title="change">
+                                                <i class="ti-lock text-primary"></i>
+                                                change password
                                             </a>
-                                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                                                <span class="dropdown-item border-bottom font-20">
-                                                    <i class="ti-user text-primary"></i>
-                                                    <span class="font-18 text-primary">
+                                        <a class="dropdown-item" asp-action="SubscriperProfile" asp-controller="Subscription">
+                                            <i class="ti-power-off text-primary "></i>
+                                            My Subscription Detail
+                                        </a>
+                                        <a class="dropdown-item" asp-action="SubscriberLogout" asp-controller="Website">
+                                            <i class="ti-power-off text-primary "></i>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+                                <span class="ti-menu"></span>
+                            </button>
 
-                                                        @if (Context.Request.Cookies["SubscriberName"] != null)
-                                                        {
-                                                            @Context.Request.Cookies["SubscriberName"].ToString()
-                                                        }
-                                                    </span>
-                                                </span>
-                                                <a class="dropdown-item" onclick="changepassword()" data-toggle="tooltip" data-placement="bottom" title="change">
-                                                        <i class="ti-lock text-primary"></i>
-                                                        change password
-                                                    </a>
-                                                <a class="dropdown-item" asp-action="SubscriperProfile" asp-controller="Subscription">
-                                                    <i class="ti-power-off text-primary "></i>
-                                                    My Subscription Detail
-                                                </a>
-                                                <a class="dropdown-item" asp-action="SubscriberLogout" asp-controller="Website">
-                                                    <i class="ti-power-off text-primary "></i>
-                                                    Logout
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
-                                        <span class="ti-menu"></span>
-                                    </button>
-
-                                </div>
-                            </div>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link font-14 top-Menu-item pr-2 text-black" href="/Subscription/SubscriptionUserLogin/Home">Subscriber</a>
-                        </li>
-                    }-->
+                        </div>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link font-14 top-Menu-item pr-2 text-black" href="/Subscription/SubscriptionUserLogin/Home">Subscriber</a>
+                </li>
+            }-->
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -164,23 +166,8 @@
                     <img src="~/WebsiteAssets/img/footer-img.png" alt=""> <br>
                     @*<button class="btn btn-outline-pink mt-4 pt-2 pb-2 pl-4 pr-4 font-14 MyriadPro text-white">BECOME a service provider</button>*@
                 </div>
-                @*<div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
-                        <p class="mb-2 font-14 text-white">Customer</p>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">JOBS</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">CAREER</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">ABOUT US</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
-                    </div>*@
-                <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-left">
-                    @*<p class="mb-2 font-14 text-white">MCN On View</p>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">LIVE LEADS</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">PRESS</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">SUBSCRIBE US</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">TALK TO US</p></a>
-                        <a href=""><p class="mb-2 font-12 text-lightdark">COMPANY</p></a>*@
-                </div>
-                <div class="col-md-2 col-sm-6 col-6 pb-3 MyriadPro text-center">
+                <div class="col-md-3 col-sm-2 d-xl-block d-none"></div>
+                <div class="MobileContentwebsitelayout col-md-2 col-sm-6 col-6 pb-3 MyriadPro ">
                     <p class="mb-2 font-14 text-white">Quick Links</p>
                     <a href="/Churches"><p class="mb-2 font-12 text-lightdark">CHURCHES</p></a>
                     <a href="/Cathedrals"><p class="mb-2 font-12 text-lightdark">CATHEDRALS</p></a>
@@ -188,8 +175,8 @@
                     <a href="/Schedules"><p class="mb-2 font-12 text-lightdark">SCHEDULES</p></a>
                     <a href="/ContactUs"><p class="mb-2 font-12 text-lightdark">CONTACT US</p></a>
                 </div>
-                <div class="col-md-3 col-sm-6 pb-2 MyriadPro">
-                    <p class="mb-5 font-14 text-white">Follow Us</p>
+                <div class="col-md-2 col-sm-6 pb-2 MyriadPro">
+                    <p class="mb-2 font-14 text-white">Follow Us</p>
                     <a href="#"><i class="fab font-36 text-white pr-2 ml-2 fa-facebook-square"></i></a>
                     @*<a href="https://twitter.com"><i class="fab font-36 text-white pr-2 fa-twitter-square"></i></a>*@
 
@@ -280,7 +267,14 @@
             }
 
         });
+
+        $(document).ready(function () {
+            $("#navbtn").click(function () {
+                $("#navbarSupportedContent").toggle();
+            });
+        });
     </script>
+    
 </body>
 
 </html>

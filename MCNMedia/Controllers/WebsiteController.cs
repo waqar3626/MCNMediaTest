@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static MCNMedia_Dev.Models.Church;
 using System.IO;
+using Microsoft.AspNetCore.Diagnostics;
 using MaxMind.GeoIP2.Model;
 
 
@@ -87,13 +88,21 @@ namespace MCNMedia_Dev.Controllers
             try
             {
 
-                LoadCountryDDL();
                 HttpContext.Session.SetString("Password", "");
                 HttpContext.Session.SetString("UserType", "website");
                 gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
                 gm.LSchedulesInHour = UpComingSchedulesInCommingHour();
                 gm.CountryList = _placeAccessLayer.GetCountries();
                 //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
+
+                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+
+                ViewBag.Countries = listCoutryDDL;
+                if (listCoutryDDL == null)
+                {
+                    throw new Exception("Country List is Empty");
+                }
+               
                 return View(gm);
             }
 
@@ -101,10 +110,30 @@ namespace MCNMedia_Dev.Controllers
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(gm);
             }
         }
+        //public IActionResult Home()
+        //{
 
+        //    throw new Exception("An Error Occurred");
+        //        LoadCountryDDL();
+        //        HttpContext.Session.SetString("Password", "");
+        //        HttpContext.Session.SetString("UserType", "website");
+        //        gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
+        //        gm.LSchedulesInHour = UpComingSchedulesInCommingHour();
+        //        gm.CountryList = _placeAccessLayer.GetCountries();
+        //        //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
+        //        return View(gm);
+
+
+
+        //}
+
+        private void Exception()
+        {
+            throw new NotImplementedException();
+        }
 
         public JsonResult RecordingList()
         {
@@ -212,6 +241,13 @@ namespace MCNMedia_Dev.Controllers
             {
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(1).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
+                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+
+                ViewBag.Countries = listCoutryDDL;
+                if (listCoutryDDL == null)
+                {
+                    throw new Exception("Country List is Empty");
+                }
                 return View(gm);
             }
             catch (Exception exp)
@@ -228,6 +264,13 @@ namespace MCNMedia_Dev.Controllers
             {
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
+                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+
+                ViewBag.Countries = listCoutryDDL;
+                if (listCoutryDDL == null)
+                {
+                    throw new Exception("Country List is Empty");
+                }
                 return View(gm);
             }
             catch (Exception exp)
@@ -245,6 +288,13 @@ namespace MCNMedia_Dev.Controllers
                 //int churchId = gm.Churches.ChurchId;
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(3).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
+                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+
+                ViewBag.Countries = listCoutryDDL;
+                if (listCoutryDDL == null)
+                {
+                    throw new Exception("Country List is Empty");
+                }
                 return View(gm);
             }
             catch (Exception exp)
@@ -325,13 +375,20 @@ namespace MCNMedia_Dev.Controllers
                 if (gm.ChurchList.Count() == 0)
                     ViewBag.NoChurch = 1;
                 gm.CountryList = _placeAccessLayer.GetCountries();
+                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+
+                ViewBag.Countries = listCoutryDDL;
+                if (listCoutryDDL == null)
+                {
+                    throw new Exception("Country List is Empty");
+                }
                 return View(gm);
             }
             catch (Exception exp)
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(gm);
             }
         }
 
@@ -339,34 +396,36 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                
                 List<Place> countyList = _placeAccessLayer.GetCounties(countryId).ToList();
                 return Json(countyList);
+
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return Json(-1);
+                return Json(exp.Message);
                 //return Json(new { redirecturl = "../Views/Website/Error.cshtml" }, System.Web.Mvc.JsonRequestBehavior.AllowGet);
             }
+
         }
 
-        public void LoadCountryDDL()
+        public List<SelectListItem> LoadCountryDDL()
         {
-            try
-            {
-
+          
                 IEnumerable<Place> countryList = _placeAccessLayer.GetCountries();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countryList)
                 {
                     selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
                 }
-                ViewBag.Countries = selectListItems;
-            }
-            catch (Exception e)
-            {
-                ShowMesage("Load Country DropDown : " + e.Message);
-                throw;
-            }
+              
+                return selectListItems;
+          
+          
+               
+
+            
+
         }
 
         public IActionResult ProcessForm()
@@ -777,9 +836,11 @@ namespace MCNMedia_Dev.Controllers
                 }
                 return RedirectToAction(nameof(Home));
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -788,11 +849,22 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
+       
         public IActionResult Error()
         {
+           
             return View();
         }
 
+        //[Route("Error")]
+        //public IActionResult Error()
+        //{
+        //    var exceptionHandler = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+        //    ViewBag.exceptionPath = exceptionHandler.Path;
+        //    ViewBag.ExceptionMessage = exceptionHandler.Error.Message;
+        //    ViewBag.Stacktrace = exceptionHandler.Error.StackTrace;
+        //    return View();
+        //}
         private void ShowMesage(string exceptionMessage)
         {
             log.Error("Exception : " + exceptionMessage);

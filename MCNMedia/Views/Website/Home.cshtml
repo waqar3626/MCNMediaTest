@@ -20,6 +20,16 @@
 
 }
 
+<div class="row m-0 mb-3" id="divErrorMsg" hidden>
+    <div class="col-lg-12">
+        <div class="alert alert-danger" >
+          <label id="errorMessage"></label>
+        </div>
+
+    </div>
+
+</div>
+
 @{
     int id = -1;
     if (Context.Session.GetInt32("countryId").HasValue)
@@ -123,7 +133,7 @@
 <div class="text-pink font-36 text-center pt-4 bg-white container avantgardece">
 
 </div>
-<div class="bg-blue pt-3 pb-3">
+<div class="bg-blue pt-3 pb-3"  style=" position: sticky; top: 0px; z-index:5">
     <div class="container">
         @*<div class="row m-0">
                 <div class="col-sm-12 text-center text-white font-36 mb-4">
@@ -137,11 +147,19 @@
             <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 ml-auto">
                 <div class="input-serch-d position-relative">
                     @*<input list='text_editors' class="empty" placeholder="&#xF002;  Select Country">
-                        <i class="far fa-angle-down srch-dopr-icn"></i>*@
-
-                    <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
-                        <option value="-1">--Select Country--</option>
-                    </select>
+        <i class="far fa-angle-down srch-dopr-icn"></i>*@
+                    @if(ViewBag.Countries != null)
+                    {
+                        <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries, "Value", "Text", Context.Session.GetInt32("countryId")))">
+                            <option value="-1">--Select Country--</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="select2" name="countryId" class="select-search">
+                            <option value="-1">--Select Country--</option>
+                        </select>
+                    }
                 </div>
             </div>
             <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 mr-auto">
@@ -171,7 +189,7 @@
 </div>
 <div class="row m-0 mt-5 mb-5">
     <div class="col-1 d-lg-block d-none"></div>
-    <div class="col-lg-7  col-md-8 col-sm-6">
+    <div class=" col-lg-7  col-md-8 col-sm-6">
         <div class="row" style="position: sticky; top: 1px; margin-top: -0.5rem">
             @foreach (Church church in Model.ChurchList)
             {
@@ -187,7 +205,7 @@
                 <div class="col-lg-4 col-md-6 p-1 ">
                     <div class=" rounded-lg bg-light-gray p-1">
                         <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
-                            <div class="position-relative darker" style="height:15vw; overflow:hidden;">
+                            <div class="Mobileimage position-relative darker">
                                 <img src="@church.ImageURl" class="w-100 rounded-lg " alt="@church.ChurchName">
                             </div>
                             <div class="avantgardece text-center text-blue font-14 mt-2">@church.ChurchName, @church.Town</div>
@@ -197,7 +215,7 @@
             }
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="MobileContent col-lg-3 col-md-4 col-sm-6">
         <div class="border bg-white p-4" style="position: sticky; top: 1px;">
             @foreach (Place country in Model.CountryList)
             {
@@ -299,8 +317,9 @@
                 <span class="text-white font-36 text-center pt-4 pb-4 container avantgardece ">
                     Do you want to start streaming?
                 </span> <br>
-                <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">Contact us today</a>
+                <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4 mb-sm-5">Contact us today</a>
             </div>
+           
         </div>
     </div>
 </div>
@@ -312,7 +331,7 @@
     </div>*@
 <!-- TESTIMONIALS -->
 <section class="testimonials">
-    <div class="container">
+    <div class="container" >
         @*
             <div class="row">
                 <div class="col-sm-12">
@@ -342,7 +361,7 @@
                         <!--TESTIMONIAL 2 -->
                         <div class="item">
 
-                            <div class="shadow-effect rounded-0 avantgardece">
+                            <div class="shadow-effect rounded-0 avantgardece" >
                                 <img class="img-circle-testamonial rounded-circle mt-3" src="~/WebsiteAssets/img/client.png" alt="">
                                 <div class="text-center mt-4 pt-2 pb-2 mb-4 text-warning">
                                     <i class="fal fa-star"></i>
@@ -421,7 +440,13 @@
                 $("#County").html(s);
             },
             error: function (errormessage) {
-                //alert(errormessage.responseText);
+                alert(errormessage);
+                $('#errorMessage').text(errormessage);
+                $('#divErrorMsg').removeAttr('hidden');
+               
+                var s = '<option value="-1">--Select County--</option>';
+               
+                $("#County").html(s);
             }
         });
     }
@@ -443,6 +468,7 @@
             filter += "&County=all";
         }
         else {
+
             filter += "&County=" + countyName;
         }
         window.location.href = "/Website/Cameras?" + filter;

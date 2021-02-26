@@ -95,7 +95,7 @@
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
             <div class="col-1 d-xl-block d-none"></div>
-            <div class="col-xl-3 col-md-4 p-xl-0">
+            <div class="MobileContent col-xl-3 col-md-4 p-xl-0">
                 <!-- <div class="row m-0"> -->
                 <div class="col-top-img p-0 ml-xl-2">
                     <div class="ml-xl-4">
@@ -196,7 +196,7 @@
                                     <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
                                         @*<img src=" https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/OffLineImage.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />*@
 
-                                        <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                                        <div class=" cameralive bg-black fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
                                             <p class="text-white font-30">
                                                 Our camera is switched off at the moment.
                                                 <br />
@@ -223,7 +223,7 @@
 
                                     <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
                                         @*<img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />*@
-                                        <div class="tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                                        <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
                                             <p class="text-white font-30">
                                                 Our camera is switched off at the moment.
                                                 <br />
@@ -247,7 +247,7 @@
 
                         @if (Model.CameraList.Count() == 0)
                         {
-                            <div class="tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no" style="width:100% !important;height:518px !important; background-color:black; text-align:center;">
+                            <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no" >
                                 <p class="text-white font-30">
                                     Our camera is switched off at the moment.
                                     <br />
