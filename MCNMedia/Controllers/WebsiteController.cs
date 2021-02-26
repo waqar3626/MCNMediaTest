@@ -309,6 +309,13 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+
+                ViewBag.Countries = listCoutryDDL;
+                if (listCoutryDDL == null)
+                {
+                    throw new Exception("Country List is Empty");
+                }
                 List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(clientTypeId: -1).ToList<Church>();
                 ViewBag.NoChurch = 0;
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Country"].ToString()))
@@ -375,13 +382,7 @@ namespace MCNMedia_Dev.Controllers
                 if (gm.ChurchList.Count() == 0)
                     ViewBag.NoChurch = 1;
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
-
-                ViewBag.Countries = listCoutryDDL;
-                if (listCoutryDDL == null)
-                {
-                    throw new Exception("Country List is Empty");
-                }
+               
                 return View(gm);
             }
             catch (Exception exp)
