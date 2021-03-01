@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
 
+@{ 
+    TempData.Keep("SlugToProfile");
+}
+
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
 {
 
@@ -92,6 +96,9 @@
             @Model.Churches.ChurchName , @Model.Churches.Town
         </div>
     </div>
+
+    <input type="hidden" asp-for="Churches.Slug" id="hfslug" />
+    <input type="hidden" value=@ViewData["slugForlockPage"] id="hfslug" />
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
             <div class="col-1 d-xl-block d-none"></div>
@@ -1051,7 +1058,7 @@
         var fileURL = vedioURL;
         jwplayer('' + vedId + '').setup({
             file: fileURL,
-            image: "../WebsiteAssets/img/cover-image.png",
+            image: "../WebsiteAssets/img/Custom-vide-cover-image.png",
             width: "100%",
             height: "518px",
             aspectratio: "16:9",
@@ -1142,12 +1149,13 @@
         var EventName = document.getElementById('TxtSearchEventName').value;
         var FromDate = document.getElementById('TxtSearchFromDate').value;
         var ToDate = document.getElementById('TxtSearchToDate').value;
+        var Slug = document.getElementById('hfslug').value;
 
         $.ajax({
             url: "/Website/SearchRecording",
             type: "GET",
             contentType: "application/json;charset=utf-8",
-            data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate },
+            data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate, Slug: Slug },
             dataType: "json",
             success: function (result) {
 

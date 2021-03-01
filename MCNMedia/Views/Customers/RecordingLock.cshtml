@@ -100,7 +100,7 @@
                             @*<label>@Model.Churches.ChurchName</label>*@
                             <form class="pt-5" asp-action="RecordingLock" asp-controller="Website" method="post">
                                 <div class="form-group">
-                                    <input type="hidden" asp-for="recordingLock.RecordingPass" />
+                                    @*<input type="hidden" asp-for="recordingLock.RecordingPass" />*@
                                     <label for="examplePassword1">Recording Password</label>
 
                                     <input type="password" asp-for="recordingLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">

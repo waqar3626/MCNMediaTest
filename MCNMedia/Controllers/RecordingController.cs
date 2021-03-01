@@ -51,7 +51,7 @@ namespace MCNMedia_Dev.Controllers
                 DateTime FromDate = DateTime.Now.AddDays(-1);
                 DateTime ToDate = DateTime.Now;
                 GenericModel gm = new GenericModel();
-                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, -1, "").ToList<Recording>();
+                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, "",-1, "").ToList<Recording>();
                 ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
                 ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
                 ViewBag.ChurchId = -1;
@@ -75,7 +75,7 @@ namespace MCNMedia_Dev.Controllers
                 DateTime FromDate = Convert.ToDateTime(fromDate);
                 DateTime ToDate = Convert.ToDateTime(toDate);
 
-                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, ChurchId, EventName).ToList<Recording>();
+                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, "",-1, EventName).ToList<Recording>();
                 ViewBag.FromDate = fromDate;
                 ViewBag.ToDate = toDate;
                 ViewBag.ChurchId = ChurchId;

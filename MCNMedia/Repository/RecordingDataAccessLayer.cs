@@ -59,10 +59,11 @@ namespace MCNMedia_Dev.Repository
 
         }
 
-        public IEnumerable<Recording> RecordingSearch(DateTime FromDate, DateTime ToDate, int ChurchId, string RecodingName)
+        public IEnumerable<Recording> RecordingSearch(DateTime FromDate, DateTime ToDate,string slug, int ChurchId, string RecodingName)
         {
             List<Recording> recordingList = new List<Recording>();
             _dc.ClearParameters();
+            _dc.AddParameter("slug", slug);
             _dc.AddParameter("ChrId", ChurchId);
             _dc.AddParameter("fromdate", FromDate);
             _dc.AddParameter("Todate", ToDate);

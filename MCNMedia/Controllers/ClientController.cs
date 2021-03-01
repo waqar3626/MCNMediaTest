@@ -522,7 +522,7 @@ namespace MCNMedia_Dev.Controllers
 
             gm.Churches = chdataAccess.GetChurchData(churchId);
             HttpContext.Session.SetString("ctabId", "/Client/Recording");
-            gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate, churchId, "").ToList<Recording>();
+            gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate,"" ,churchId, "").ToList<Recording>();
             ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
             ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
             ViewBag.EventName = "";
@@ -544,7 +544,7 @@ namespace MCNMedia_Dev.Controllers
                 DateTime ToDate = Convert.ToDateTime(toDate);
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(churchId);
-                gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate, churchId, EventName).ToList<Recording>();
+                gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate,"", churchId, EventName).ToList<Recording>();
                 ViewBag.FromDate = fromDate;
                 ViewBag.ToDate = toDate;
                 ViewBag.EventName = EventName;
