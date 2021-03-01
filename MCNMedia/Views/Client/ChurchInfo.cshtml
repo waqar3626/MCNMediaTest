@@ -117,10 +117,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group float-right">
-                        <button type="submit" id="ValClientChurchSubmit" value="Update" class="btn btn-success btn-sm " title="Update"><i class="mdi mdi-update"></i> Update</button>
-                    </div>
+
+
                 </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-sm-12 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Embeded Code</h3>
+                            @{
+                                string SrcAddress = "http://localhost:56963/iframe/" + Model.Churches.UniqueIdentifier;
+                                <pre class="font-16 font-weight-bolder" style="background-color:transparent"><code>&lt;iframe  src="@SrcAddress" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group float-right">
+                <button type="submit" id="ValClientChurchSubmit" value="Update" class="btn btn-success btn-sm " title="Update"><i class="mdi mdi-update"></i> Update</button>
             </div>
         </div>
     </div>
