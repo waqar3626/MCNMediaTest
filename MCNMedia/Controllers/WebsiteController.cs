@@ -469,20 +469,7 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
-        public IActionResult ChurchLock()
-        {
-            if (!string.IsNullOrEmpty(Convert.ToString(TempData["Slug"])))
-            {
-                string slug = TempData["Slug"].ToString();
-                string Password = TempData["ChurchPassword"].ToString();
-                ViewData["slugForlockPage"] = slug;
-                ViewData["PasswordForlockPage"] = Password;
-                return View();
-            }
-            ViewData["slugForlockPage"] = TempData["SlugToLock"].ToString();
-            ViewData["PasswordForlockPage"] = TempData["ChurchPasswordToChurchLock"].ToString();
-            return View();
-        }
+        
         public IActionResult RecordingLock()
         {
             //here
@@ -565,26 +552,24 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChurchLock(ChurchLock churchLock, string Slug, string Password)
+        public IActionResult ChurchLock(string Password)
         {
             try
             {
-                if (Password==null)
+                string Slug = TempData["Slug"].ToString();
+
+                Church church = _churchDataAccessLayer.GetChurchDataBySlug(Slug);
+
+
+                if (church.Password == Password)
                 {
-                    Password = Convert.ToString(TempData["ChurchPassword"]);
-                    Slug= Convert.ToString(TempData["Slug"]);
-                }
-                //Profile profileModel = new Profile();
-                TempData["SlugFromChurchLock"] = Slug;
-                if (churchLock.Password == Password)
-                {
-                    TempData["SlugToProfile"] = Slug;
                     TempData["ChurchPass"] = "true";
-                    return RedirectToAction(nameof(Profile));
+                    return RedirectToAction(nameof(Profile), new { id = Slug });
                 }
                 else
                 {
                     ViewBag.IsSuccess = 3;
+                    TempData["Slug"] = TempData["Slug"].ToString();
                     return View();
                 }
             }
@@ -605,27 +590,10 @@ namespace MCNMedia_Dev.Controllers
             {
                 string churchPass = "false";
                 String originalPath1 = id;
-                if (id == null)
+                
+                if (!string.IsNullOrEmpty(Convert.ToString(TempData["ChurchPass"])))
                 {
-                    if (!string.IsNullOrEmpty(Convert.ToString(ViewData["slugForlockPage"])))
-                    {
-                        currTime = TempData.Peek("SlugToLock").ToString();
-                        ViewData["slugForlockPage"].ToString();
-                        id = ViewData["slugForlockPage"].ToString();
-                        
-                    }
-                    if (id == null)
-                    {
-                        id = TempData["SlugToProfile"].ToString();
-                    }
-                    TempData["SlugToLock"] = id;
-                    ViewData["slugForlockPage"] = id;
-                    @TempData["SlugToLock"] = id;
-                    TempData.Keep("SlugToLock");
-                    if (!string.IsNullOrEmpty(Convert.ToString(TempData["ChurchPass"])))
-                    {
-                        churchPass = "true";
-                    }
+                    churchPass = TempData["ChurchPass"].ToString();
                 }
                 ViewData["Title"] = id;
                 if (string.IsNullOrEmpty(id))
@@ -653,9 +621,9 @@ namespace MCNMedia_Dev.Controllers
                     else
                     {
                         TempData["Slug"] = id;
-                        TempData["ChurchPassword"] = profileModel.Churches.Password;
-                        string slug1 = TempData["Slug"].ToString();
-                        return RedirectToAction(nameof(ChurchLock));
+                        
+                        
+                        return View("ChurchLock");
                         //Response.Redirect("lock?id=" + id);
                     }
                 }
@@ -768,6 +736,7 @@ namespace MCNMedia_Dev.Controllers
                 // http://localhost:56963/Camera
                 Uri uri = Request.GetTypedHeaders().Referer;
                 ViewData["slugForlockPage"] = id;
+              
                 //Response.Redirect(originalPath+"/"+id);
                 return View(profileModel);
                 //}

@@ -8,7 +8,7 @@
 
 @{
     TempData.Keep("Slug");
-    TempData.Keep("ChurchPassword");
+   
 }
 
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
@@ -36,11 +36,10 @@
                         <Center>
                             <form class="pt-5 col-lg-6  " asp-action="ChurchLock" asp-controller="Website" method="post">
                                 <div class="form-group ">
-                                    <input type="hidden" value=@ViewData["slugForlockPage"] name="Slug" />
-                                    <input type="hidden" value=@ViewData["PasswordForlockPage"] name="Password" />
+                               
 
 
-                                    <input type="password" asp-for="churchLock.Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
+                                    <input type="password" asp-for="churchLock.Password" name="Password" class="form-control text-center" id="examplePassword1" placeholder="Password">
                                 </div>
                                 <div class="mt-5">
                                     <button type="submit" class="btn btn-block bg-blue text-white btn-lg font-weight-medium" href="@Url.Action("ChurchLock", "Website")">Unlock</button>
