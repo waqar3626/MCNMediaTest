@@ -360,5 +360,10 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+
+        public IActionResult Test()
+        {
+            return View();
+        }
     }
 }

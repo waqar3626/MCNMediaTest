@@ -6,36 +6,35 @@
 }
 
 
+<form asp-action="AddRecording" method="post" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card">
+        <div class="card-body">
 
-   <form asp-action="AddRecording"  method="post" class="needs-validation" novalidate>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="card">
-            <div class="card-body">
-                
-              
-                <div class="form-group row">
-                    <label asp-for="RecordingTitle" for="validationCustom01" class="col-sm-3 col-form-label"> Recording Title *</label>
-                    <div class="col-sm-9">
-                        <span asp-validation-for="RecordingTitle" class="text-danger"></span>
-                        <input asp-for="RecordingTitle" class="form-control" id="validationCustom01" placeholder="Recording Title" required />
-                        <div class="invalid-feedback">
-                            Please Provide a valid Recording Title
-                        </div>
+
+            <div class="form-group row">
+                <label asp-for="RecordingTitle" for="validationCustom01" class="col-sm-3 col-form-label"> Recording Title *</label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="RecordingTitle" class="text-danger"></span>
+                    <input asp-for="RecordingTitle" class="form-control" id="validationCustom01" placeholder="Recording Title" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Recording Title
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label asp-for="RecordingURl" for="validationCustom02" class="col-sm-3 col-form-label">Recording URL * </label>
-                    <div class="col-sm-9">
-                        <span asp-validation-for="RecordingURl" class="text-danger"></span>
-                        <input asp-for="RecordingURl" class="form-control" id="validationCustom02" placeholder="Recording URl" required />
-                        <div class="invalid-feedback">
-                            Please Provide a valid Recording URL
-                        </div>
-                    </div> 
-                </div>
-           
+            </div>
             <div class="form-group row">
-                <label asp-for="ChurchId"  class="col-sm-3 col-form-label">Church *</label>
+                <label asp-for="RecordingURl" for="validationCustom02" class="col-sm-3 col-form-label">Recording URL * </label>
+                <div class="col-sm-9">
+                    <span asp-validation-for="RecordingURl" class="text-danger"></span>
+                    <input asp-for="RecordingURl" class="form-control" id="validationCustom02" placeholder="Recording URl" required />
+                    <div class="invalid-feedback">
+                        Please Provide a valid Recording URL
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="ChurchId" class="col-sm-3 col-form-label">Church *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                     <select asp-for="ChurchId" id="select1" class="custom-select" required asp-items="@(new SelectList(@ViewBag.Church , "Value", "Text"))">
@@ -48,11 +47,11 @@
             </div>
 
             <div class="form-group row">
-                <label asp-for="Date"  class="col-sm-3 col-form-label">Date *</label>
+                <label asp-for="Date" class="col-sm-3 col-form-label">Date *</label>
                 <div class="col-sm-3">
                     <span asp-validation-for="Date" class="text-danger"></span>
-                    <div id="datepicker-popup3" class="input-group date datepicker">
-                        <input asp-for="Date" type="text" class="form-control" placeholder="Recording Date" required />
+                    <div id="datepicker" class="input-group date datepicker ">
+                        <input asp-for="Date" type="text" class="form-control " placeholder="Recording Date"  required />
 
                         <span class="input-group-addon input-group-append border-left">
                             <span class="ti-calendar input-group-text"></span>
@@ -69,9 +68,9 @@
                 <label asp-for="Time" for="default-picker" class="col-sm-3 col-form-label text-center">Time *</label>
                 <div class="col-sm-3">
                     <span asp-validation-for="Time" class="text-danger"></span>
-                    <div class="input-group date" id="timepicker-example" data-target-input="nearest">
-                        <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
-                            <input asp-for="Time" type="text" class="form-control datetimepicker-input" data-target="#timepicker-example" id="validationCustom04" placeholder="Recording Time" required />
+                    <div class="input-group date" id="timepicker-example2" data-target-input="nearest">
+                        <div class="input-group" data-target="#timepicker-example2" data-toggle="datetimepicker">
+                            <input asp-for="Time" type="text" class="form-control datetimepicker-input " data-target="#timepicker-example2" id="validationCustom04" placeholder="Recording Time" required />
                             <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
                             <div class="invalid-feedback">
                                 Please Provide a valid Recording Time
@@ -83,7 +82,7 @@
 
             <div class="form-group float-right">
 
-                <button  type="submit" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Add"><i class="mdi mdi-content-save text-white"></i>Add</button>
+                <button type="submit" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Add"><i class="mdi mdi-content-save text-white"></i>Add</button>
                 <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
             </div>
@@ -91,14 +90,13 @@
 
 
         </div>
-        </div>
-      
-
-
-    </form>
+    </div>
 
 
 
-    
+</form>
+
+
+
 
 

@@ -53,7 +53,7 @@
                 <label asp-for="Date" class="col-sm-3 col-form-label">Date</label>
                 <div class="col-sm-3">
                     <span asp-validation-for="Date" class="text-danger"></span>
-                    <div id="datepicker-popup" class="input-group date datepicker">
+                    <div id="datepicker4" class="input-group date datepicker">
                         <input asp-for="Date" type="text" class="form-control" placeholder="Recording Date" required>
                         <span class="input-group-addon input-group-append border-left">
                             <span class="ti-calendar input-group-text"></span>
@@ -69,7 +69,7 @@
                     <span asp-validation-for="Time" class="text-danger"></span>
                     <div class="input-group date" id="timepicker-example" data-target-input="nearest">
                         <div class="input-group" data-target="#timepicker-example" data-toggle="datetimepicker">
-                            <input asp-for="Time" type="text" class="form-control datetimepicker-input" data-target="#timepicker-example" placeholder="Recording Time" required />
+                            <input asp-for="Time" type="text"  class="form-control datetimepicker-input" data-target="#timepicker-example" placeholder="Recording Time" required />
                             <div class="input-group-addon input-group-append"><i class="ti-time input-group-text"></i></div>
                         </div>
                     </div>
@@ -94,6 +94,7 @@
 
             </div>
         </div>
+        </div>
 </form>
 
 <script type="text/javascript">
@@ -115,6 +116,14 @@
         });
     });
     
-    
-
+    $(function () {
+        $("#datepicker4").datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+   
+   
+   
+   
 </script>
