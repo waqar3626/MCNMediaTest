@@ -49,48 +49,6 @@ namespace MCNMedia_Dev._Helper
             });
         }
 
-        //public IEnumerable<GoogleAnalyticsProperty> QueryData(DateTime dateTime)
-        //{
-        //    List<GoogleAnalyticsProperty> Balobj = new List<GoogleAnalyticsProperty>();
-
-        //    DataResource.GaResource.GetRequest request = service.Data.Ga.Get(
-        //       "ga:" + websiteCode,
-        //       //DateTime.Today.AddDays(-15).ToString("yyyy-MM-dd"),
-        //       //DateTime.Today.ToString("yyyy-MM-dd"),
-        //       dateTime.ToString("yyyy-MM-dd"),
-        //       dateTime.ToString("yyyy-MM-dd"),
-        //       //"ga:st-john-the-baptist-church-clontarf-dublin",
-        //       "ga:sessions");
-        //    request.Dimensions = "ga:year,ga:month,ga:day,ga:country";
-        //    request.Dimensions = "ga:country";
-        //    var data = request.Execute();
-        //    //checked if no hits occures
-        //    GoogleAnalyticsProperty googleAnalytics = new GoogleAnalyticsProperty();
-        //    if (data.Rows == null)
-        //    {
-
-
-        //            googleAnalytics.CountryName = "";
-        //            googleAnalytics.Count = 0;
-        //            Balobj.Add(googleAnalytics);
-
-        //        return Balobj;
-        //    }
-        //    else
-        //    {
-        //        foreach (var row in data.Rows)
-        //        {
-        //            googleAnalytics.CountryName = row[0].ToString();
-        //            googleAnalytics.Count = int.Parse(row[1]);
-        //            //googleAnalytics.PageTitle = (row[5]).ToString();
-        //            Balobj.Add(googleAnalytics);
-        //            //visitsData.Add(new ChartRecord(new DateTime(int.Parse(row[0]), int.Parse(row[1]), int.Parse(row[2])).ToString("MM-dd-yyyy"), row[3].ToString(), int.Parse(row[4])));
-        //        }
-        //        return Balobj;
-        //    }
-        //}
-
-
         public IEnumerable<GoogleAnalyticsProperty> QueryDataPer(DateTime dateTime)
         {
             List<GoogleAnalyticsProperty> Balobj = new List<GoogleAnalyticsProperty>();
@@ -99,12 +57,6 @@ namespace MCNMedia_Dev._Helper
                "ga:" + websiteCode,
                dateTime.ToString("yyyy-MM-dd"),
                dateTime.ToString("yyyy-MM-dd"),
-               //DateTime.Today.AddDays(-15).ToString("yyyy-MM-dd"),
-               //DateTime.Today.AddDays(-15).ToString("yyyy-MM-dd"),
-               //DateTime.Today.ToString("yyyy-MM-dd"),
-               //dateTime.ToString("yyyy-MM-dd"),
-               //dateTime.ToString("yyyy-MM-dd"),
-               //"ga:st-john-the-baptist-church-clontarf-dublin",
                "ga:pageviews");
             request.Dimensions = "ga:year,ga:month,ga:day,ga:country";
             //request.Dimensions = "ga:country";
@@ -128,7 +80,6 @@ namespace MCNMedia_Dev._Helper
                     GoogleAnalyticsProperty googleAnalytics = new GoogleAnalyticsProperty();
                     googleAnalytics.CountryName = row[3].ToString();
                     googleAnalytics.Count = int.Parse(row[4]);
-                    //googleAnalytics.PageTitle = (row[4]).ToString();
                     Balobj.Add(googleAnalytics);
                     //visitsData.Add(new ChartRecord(new DateTime(int.Parse(row[0]), int.Parse(row[1]), int.Parse(row[2])).ToString("MM-dd-yyyy"), row[3].ToString(), int.Parse(row[4])));
                 }
@@ -141,17 +92,12 @@ namespace MCNMedia_Dev._Helper
 
             DataResource.GaResource.GetRequest request = service.Data.Ga.Get(
                "ga:" + websiteCode,
-               DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd"),
-               DateTime.Today.ToString("yyyy-MM-dd"),
-               //dateTime.ToString("yyyy-MM-dd"),
-               //dateTime.ToString("yyyy-MM-dd"),
-               //"ga:st-john-the-baptist-church-clontarf-dublin",
+               dateTime.ToString("yyyy-MM-dd"),
+               dateTime.ToString("yyyy-MM-dd"),
                //"ga:sessions"
                "ga:pageviews"
                );
             request.Dimensions = "ga:year,ga:month,ga:day,ga:country,ga:pageTitle";
-            //request.Dimensions = "ga:pageviews";
-            //request.Dimensions = "ga:country";
             var data = request.Execute();
             //checked if no hits occures
             if (data.Rows == null)
@@ -171,7 +117,7 @@ namespace MCNMedia_Dev._Helper
                 {
                     GoogleAnalyticsProperty googleAnalytics = new GoogleAnalyticsProperty();
                     googleAnalytics.CountryName = row[3].ToString();
-                    googleAnalytics.Count = int.Parse(row[2]);
+                    googleAnalytics.Count = int.Parse(row[5]);
                     googleAnalytics.PageTitle = (row[4]).ToString();
                     Balobj.Add(googleAnalytics);
                     //visitsData.Add(new ChartRecord(new DateTime(int.Parse(row[0]), int.Parse(row[1]), int.Parse(row[2])).ToString("MM-dd-yyyy"), row[3].ToString(), int.Parse(row[4])));
