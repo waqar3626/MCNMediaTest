@@ -18,7 +18,8 @@ namespace MCNMedia_Dev._Helper
 
     public class GoogleAnalytics
     {
-        private string keyFilePath = @"C:\Users\pc\Downloads\mcn-project-303512-fe457b99555b.p12";
+        private string keyFilePath = @"wwwroot\WebsiteAssets\mcn-project-303512-fe457b99555b.p12";
+
         //private string keyFilePath = "WebsiteAssets/mcn-project-303512-c459210865b0.p12";
         private string serviceAccountEmail = "mcn-console-api-service-acct@mcn-project-303512.iam.gserviceaccount.com";
         private string keyPassword = "notasecret";
