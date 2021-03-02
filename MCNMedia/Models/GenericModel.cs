@@ -37,6 +37,7 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<Camera> LCameras { get; set; }
 
         public IEnumerable<AnalyticsModel> AnalyticsList { get; set; }
+        public IEnumerable<GoogleAnalyticsProperty> googleAnalytics { get; set; }
         public IEnumerable<User> LUsers { get; set; }
 
         public IEnumerable<Schedule> LSchedules { get; set; }
