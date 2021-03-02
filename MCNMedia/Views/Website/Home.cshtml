@@ -187,7 +187,7 @@
                 <div class="col-lg-4 col-md-6 p-1 ">
                     <div class=" rounded-lg bg-light-gray p-1">
                         <a href="@Url.Action("Profile", "Website",new { id = church.Slug  })" title="Preview">
-                            <div class="position-relative darker" style="height:15vw; overflow:hidden;">
+                            <div class="Mobileimage position-relative darker" >
                                 <img src="@church.ImageURl" class="w-100 rounded-lg " alt="@church.ChurchName">
                             </div>
                             <div class="avantgardece text-center text-blue font-14 mt-2">@church.ChurchName, @church.Town</div>
@@ -197,7 +197,7 @@
             }
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="MobileContent col-lg-3 col-md-4 col-sm-6">
         <div class="border bg-white p-4" style="position: sticky; top: 1px;">
             @foreach (Place country in Model.CountryList)
             {
