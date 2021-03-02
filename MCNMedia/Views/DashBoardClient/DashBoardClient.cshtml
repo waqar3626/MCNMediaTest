@@ -333,16 +333,19 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var dassh in Model.AnalyticsList)
+                            @foreach (var dassh in Model.googleAnalytics)
                             {
                                 <tr>
                                     <td class=" pl-0">
-                                        @Html.DisplayFor(modelItem => dassh.Country)
+                                        @Html.DisplayFor(modelItem => dassh.CountryName)
                                     </td>
+                                    @*<td class=" pl-0">
+                                        @Html.DisplayFor(modelItem => dassh.PageTitle)
+                                    </td>*@
                                     <td>
                                         <p class="mb-0">
                                             <span class="">
-                                                @Html.DisplayFor(modelItem => dassh.CountryCount)
+                                                @Html.DisplayFor(modelItem => dassh.Count)
                                             </span>
                                         </p>
                                     </td>
