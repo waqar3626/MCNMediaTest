@@ -345,7 +345,11 @@
                                     <td>
                                         <p class="mb-0">
                                             <span class="">
-                                                @Html.DisplayFor(modelItem => dassh.Count)
+                                                @if (dassh.Count > 0)
+                                                {
+                                                    @Html.DisplayFor(modelItem => dassh.Count)
+                                                }
+
                                             </span>
                                         </p>
                                     </td>

@@ -67,10 +67,15 @@ namespace MCNMedia_Dev.Controllers
                 gm1.LCameras = camDataAccess.GetAdminCameraByChurch(ChurchId).ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
+                ViewBag.TotalCountriesCount = 0;
                 googleantics.Authenticate();
                 List<GoogleAnalyticsProperty> googleAnalytics = googleantics.QueryDataPerChurch(eventDate).ToList<GoogleAnalyticsProperty>();
-                gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug+ " - MCN"));
-                ViewBag.TotalCountriesCount = gm1.googleAnalytics.Sum(item => item.Count);
+                gm1.googleAnalytics = googleAnalytics;
+                if (googleAnalytics[0].PageTitle != null)
+                {
+                    gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
+                    ViewBag.TotalCountriesCount = gm1.googleAnalytics.Sum(item => item.Count);
+                }
                 HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
                 ViewBag.ChurchId = ChurchId.ToString();

@@ -23,6 +23,9 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer churchDataAccess = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
+
+    
+        GoogleAnalytics googleantics = new GoogleAnalytics();
         GenericModel gm = new GenericModel();
 
         private IWebHostEnvironment environment;
@@ -67,7 +70,7 @@ namespace MCNMedia_Dev.Controllers
                 chr.ChurchName = "";
                 chr.EmailAddress = "";
                 chr.Phone = "";
-                chr.Town = "";
+                chr.Town = ""; 
                 chr.CountryId = -1;
                 List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
                 return View(church);
@@ -175,22 +178,29 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        ////[HttpGet]
-        ////public JsonResult Analytics(int churchId, DateTime eventDate1)
-        ////{
-        ////    if (eventDate1 == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
-        ////    {
-        ////        //ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
-        ////        eventDate1 = DateTime.Now;
-        ////    }
-        ////    else
-        ////    {
-        ////        ViewBag.SchDate = eventDate1.ToString("dd-MMM-yyyy");
-        ////    }
-        ////    churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-        ////    gm.AnalyticsList = churchDataAccess.GetbyChurch(churchId, eventDate1, eventDate1).ToList();
-        ////    return Json(gm);
-        ////}
+        [HttpGet]
+        public JsonResult Analytics(DateTime analyticDate)
+        {
+
+            if (analyticDate.ToString() == "1/1/0001 12:00:00 AM")
+            {
+                analyticDate = DateTime.Now;
+            }
+            GenericModel gm1 = new GenericModel();
+                       int  churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+            googleantics.Authenticate();
+           
+            gm1.Churches = churchDataAccess.GetChurchData(churchId);
+            List<GoogleAnalyticsProperty> googleAnalytics = googleantics.QueryDataPerChurch(analyticDate).ToList<GoogleAnalyticsProperty>();
+            if (googleAnalytics[0].PageTitle !=null)
+            {
+                gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
+            }
+            ViewBag.ChurchId = churchId.ToString();
+            ViewBag.SchDate = analyticDate;
+
+            return Json(gm1.googleAnalytics);
+        }
 
         [HttpGet]
         public IActionResult ChurchDetails(DateTime eventDate)
