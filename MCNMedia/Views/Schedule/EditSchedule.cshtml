@@ -69,7 +69,7 @@
                         <label asp-for="EventDate" for="EditEventDate" id="EditEventLabel1" class="col-sm-2 col-form-label">Event Date</label>
 
                         <div class="col-sm-4" id="EditEventInput1">
-                            <div id="datepicker-popup" class="input-group date datepicker">
+                            <div id="datepicker1" class="input-group date datepicker">
                                 <input type="text" asp-for="EventDate" class="form-control" id="EditEventDate" placeholder="Event Date" />
 
 
@@ -559,7 +559,12 @@
 
 
 
-
+    $(function () {
+        $("#datepicker1").datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
 
 
 
