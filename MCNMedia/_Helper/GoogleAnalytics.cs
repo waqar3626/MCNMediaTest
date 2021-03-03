@@ -25,7 +25,7 @@ namespace MCNMedia_Dev._Helper
         private string keyPassword = "notasecret";
         private string websiteCode = "236800193";
         private AnalyticsService service = null;
-        private List<ChartRecord> visitsData = new List<ChartRecord>();
+        //private List<ChartRecord> visitsData = new List<ChartRecord>();
 
         public void Authenticate()
         {
