@@ -9,6 +9,7 @@ using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting; 
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -26,6 +27,9 @@ namespace MCNMedia_Dev.Controllers
             environment = _environment;
         }
         [HttpPost]
+       
+       
+        [RequestFormLimits(MultipartBodyLengthLimit  = 209715200)]
         public JsonResult AddNewsLetter(string AddChurchNewsLetterTitle, IFormFile mediaFile, bool ShowOnWebsite)
         {
             try
@@ -85,7 +89,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
-
+        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public IActionResult EditNewsLetter(int id)
         {
             try
