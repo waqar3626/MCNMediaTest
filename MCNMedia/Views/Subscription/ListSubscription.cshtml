@@ -6,6 +6,20 @@
 }
 
 
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsg;
+            </div>
+
+        </div>
+
+    </div>
+
+}
 <div class="card mb-3">
     <div class="card-header card-header-custom">
         Search Subscriber
@@ -18,7 +32,7 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">From Date</label>
                             <div class="col-sm-8">
-                                <div id="datepicker-popup" class="input-group date datepicker">
+                                <div id="datepicker" class="input-group date datepicker">
                                     <input type="text" id="SetFromDate" name="fromDate" class="form-control" placeholder="From Date" />
                                     <span class="input-group-addon input-group-append border-left">
                                         <span class="ti-calendar input-group-text"></span>
@@ -31,7 +45,7 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">To Date</label>
                             <div class="col-sm-8">
-                                <div id="datepicker-popup2" class="input-group date datepicker">
+                                <div id="datepicker1" class="input-group date datepicker">
                                     <input type="text" id="SetToDate" name="toDate" class="form-control" placeholder="To Date" />
                                     <span class="input-group-addon input-group-append border-left">
                                         <span class="ti-calendar input-group-text"></span>
@@ -94,8 +108,8 @@
                                         @Html.DisplayFor(modelItem => item.EmailAddress)
                                     </td>
                                     @*<td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.ChurchName)
-                                    </td>*@
+                                            @Html.DisplayFor(modelItem => item.ChurchName)
+                                        </td>*@
                                     <td class="text-wrap">
                                         @Html.DisplayFor(modelItem => item.PackageTitle)
                                     </td>
