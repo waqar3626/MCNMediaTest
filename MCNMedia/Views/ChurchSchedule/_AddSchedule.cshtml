@@ -31,7 +31,7 @@
             <div class="form-group row">
                 <label asp-for="EventDate" for="validationCustom05" id="EventLabel1" class="col-sm-2 col-form-label">Event Date</label>
                 <div class="col-sm-4" id="EventInput1">
-                    <div id="datepicker-popup2" class="input-group date datepicker">
+                    <div id="datepicker" class="input-group date datepicker">
                         <input type="text" class="form-control" id="EventDate" placeholder="Event Date" />
                         <span class="input-group-addon input-group-append border-left">
                             <span class="ti-calendar input-group-text"></span>
@@ -159,12 +159,12 @@
     });
     function CheckAddScheduleValidate() {
         if ($('#IsRepeated').val().toLowerCase() == 'false' && $('#EventDate').val() == '') {
-            $('#datepicker-popup2').attr('class', 'input-group date datepicker border-danger');
+            $('#datepicker').attr('class', 'input-group date datepicker border-danger');
             $('#addChurchSchudevalidation').attr('style', 'display:block');
             return false;
         }
         else {
-            $('#datepicker-popup2').attr('class', 'input-group date datepicker');
+            $('#datepicker').attr('class', 'input-group date datepicker');
             $('#addChurchSchudevalidation').removeAttr('style', 'display:block');
             return true;
         }
@@ -243,11 +243,11 @@
 
     $('#EventDate').change(function () {
         if ($('#EventDate').val().length > 0) {
-            $('#datepicker-popup2').attr('class', 'input-group date datepicker border-success');
+            $('#datepicker').attr('class', 'input-group date datepicker border-success');
             $('#addChurchSchudevalidation').removeAttr('style', 'display:block');
         }
         else {
-            $('#datepicker-popup2').attr('class', 'input-group date datepicker border-danger');
+            $('#datepicker').attr('class', 'input-group date datepicker border-danger');
             $('#addChurchSchudevalidation').attr('style', 'display:block');
         }
 

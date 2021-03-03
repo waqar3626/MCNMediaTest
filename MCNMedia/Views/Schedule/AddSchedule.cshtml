@@ -291,13 +291,13 @@
 
     function CheckAddScheduleValidate() {
         if ($('#IsRepeated').val().toLowerCase() == 'false' && $('#validationCustom05').val() == '') {
-            $('#datepicker-popup3').attr('class', 'input-group date datepicker border-danger');
+            $('#datepicker').attr('class', 'input-group date datepicker border-danger');
             $('#EventDateValidation').attr('style', 'display:block');
             $('#validationCustom06').removeAttr('required', 'required');
             return false;
         }
         else  {
-            $('#datepicker-popup3').attr('class', 'input-group date datepicker border-success');
+            $('#datepicker').attr('class', 'input-group date datepicker border-success');
             $('#EventDateValidation').removeAttr('style', 'display:block');
             return true;
         }
