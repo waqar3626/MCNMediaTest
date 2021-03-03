@@ -492,7 +492,8 @@ namespace MCNMedia_Dev.Controllers
                 {
                     TempData["RecordingPass"] = 1;
                     TempData["RecordingId"] = Convert.ToInt32(recodingId);
-                    return RedirectToAction(nameof(Player));
+                //http://localhost:56963/Website/Player/67
+                    return RedirectToAction(nameof(Player), new { id = recodingId });
                 }
                 else
                 {
@@ -585,7 +586,7 @@ namespace MCNMedia_Dev.Controllers
         {
             String originalPath = new Uri(HttpContext.Request.GetDisplayUrl()).AbsoluteUri;
             string slug = originalPath.Split('/').Last();
-            String currTime;
+           
             try
             {
                 string churchPass = "false";
