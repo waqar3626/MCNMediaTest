@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
-
+using MCNMedia_Dev._Helper;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -20,6 +20,7 @@ namespace MCNMedia_Dev.Controllers
         DashboardDataAccessLayer dashboardDataAccessLayer = new DashboardDataAccessLayer();
         ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
+        GoogleAnalytics googleantics = new GoogleAnalytics();
 
         [HttpGet]
         public IActionResult DashBoardClient(DateTime eventDate)
@@ -66,9 +67,10 @@ namespace MCNMedia_Dev.Controllers
                 gm1.LCameras = camDataAccess.GetAdminCameraByChurch(ChurchId).ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
-                gm1.AnalyticsList = churchDataAccessLayer.GetbyChurch(ChurchId, eventDate, eventDate);
-                ViewBag.TotalCountriesCount = gm1.AnalyticsList.Sum(item => item.CountryCount);
-
+                googleantics.Authenticate();
+                List<GoogleAnalyticsProperty> googleAnalytics = googleantics.QueryDataPerChurch(eventDate).ToList<GoogleAnalyticsProperty>();
+                gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug+ " - MCN"));
+                ViewBag.TotalCountriesCount = gm1.googleAnalytics.Sum(item => item.Count);
                 HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
                 HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
                 ViewBag.ChurchId = ChurchId.ToString();
