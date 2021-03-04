@@ -1,4 +1,5 @@
 ﻿@model MCNMedia_Dev.Models.Website
+
 @{
     ViewData["Title"] = "ContactUs";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
@@ -18,7 +19,9 @@
     </div>
 
 }
-<div class="bg-blue  pt-3 pb-3"  style=" position: sticky; top: 0px; z-index:5">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
+<div class="bg-blue  pt-3 pb-3" style=" position: sticky; top: 0px; z-index:5">
     <div class="container">
         <div class="row m-0 ">
             <div class="text-white font-36 text-center  avantgardece">
@@ -115,6 +118,24 @@
                     <span asp-validation-for="Message" class="text-danger"></span>
                     <textarea class="form-control selectWrapper" asp-for="Message" maxlength="150" rows="4" placeholder="Message" required></textarea>
                 </div>
+                <div class="form-group col-sm-12">
+                    <dnt-captcha asp-captcha-generator-max="999999"
+                                 asp-captcha-generator-min="111111"
+                                 asp-captcha-generator-language="English"
+                                 asp-captcha-generator-display-mode="ShowDigits"
+                                 asp-use-relative-urls="true"
+                                 asp-placeholder="Enter Captcha"
+                                 asp-font-name="Tahoma"
+                                 asp-font-size="20"
+                                 asp-fore-color="#333333"
+                                 asp-back-color="#ccc"
+                                 asp-text-box-class="text-box form-control"
+                                 asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                 asp-validation-error-message="Please enter the security code"
+                                 asp-validation-message-class="text-danger"
+                                 asp-refresh-button-class="fa fa-redo btn-sm"
+                                 asp-use-noise="false" />
+                </div>
                 <div class="form-group col-sm-12 float-right rounded-sm ">
                     <input type="submit" value="Send" asp-action="ContactUs" class="btn btn-pink my-2 font-weight-bolder my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-14" />
                 </div>
@@ -128,5 +149,7 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2316.746365106911!2d-6.780964684117638!3d54.50269748023756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x320a61ca1b228a11!2sMCN+NI+Ltd!5e0!3m2!1sen!2suk!4v1541503340298"
                     height="550" style="width:100%;border:0" frameborder="0" allowfullscreen></iframe>
         </div>*@
-    </div>
+    @*</div>*@
 </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+<script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
