@@ -18,6 +18,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Routing;
+
 namespace MCNMedia_Dev
 {
     public class Startup
@@ -34,26 +36,13 @@ namespace MCNMedia_Dev
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // For Google and Facebook Authentication
-            //services.AddAuthentication()
-            //    .AddGoogle(options =>
-            //    {
-            //        options.ClientId = "";
-            //        options.ClinetSecret = "";
-
-            //    })
-            //      .AddFacebook(options =>
-            //       {
-            //           options.AppId = "";
-            //           options.AppSecret = "";
-            //       });
 
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
             services.Configure<StripeSetting>(Configuration.GetSection("Stripe"));
             services.AddControllersWithViews()
-                .AddXmlDataContractSerializerFormatters();
+                    .AddXmlDataContractSerializerFormatters();
             //services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -63,11 +52,11 @@ namespace MCNMedia_Dev
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "~/UserLogin";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    });
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = "~/UserLogin";
+                        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                    });
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -108,14 +97,7 @@ namespace MCNMedia_Dev
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            //app.UseForwardedHeaders(new ForwardedHeadersOptions
-            //{
-            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor,
 
-            //    // IIS is also tagging a X-Forwarded-For header on, so we need to increase this limit, 
-            //    // otherwise the X-Forwarded-For we are passing along from the browser will be ignored
-            //    ForwardLimit = 2
-            //});
             var forwardingOptions = new ForwardedHeadersOptions()
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -128,120 +110,131 @@ namespace MCNMedia_Dev
             app.UseStaticFiles();
             app.UseAuthorization();
             app.UseCors(MyAllowSpecificOrigins);
-            // app.UseStaticFiles(new StaticFileOptions
-            // {
-            //     FileProvider = new PhysicalFileProvider(
-            //Path.Combine(env.ContentRootPath, "Uploads")),
-            //     RequestPath = "/Uploads"
-            // });
 
             app.UseEndpoints(endpoints =>
             {
-                // Website
-                endpoints.MapControllerRoute(
-                    name: "Home",
-                    pattern: "Home",
-                    defaults: new { controller = "Website", Action = "Home" });
-                endpoints.MapControllerRoute(
-                    name: "churches",
-                    pattern: "churches",
-                    defaults: new { controller = "Website", Action = "Churches" });
-                endpoints.MapControllerRoute(
-                    name: "Cathedrals",
-                    pattern: "Cathedrals",
-                    defaults: new { controller = "Website", Action = "Cathedrals" });
-                endpoints.MapControllerRoute(
-                    name: "FuneralHomes",
-                    pattern: "FuneralHomes",
-                    defaults: new { controller = "Website", Action = "FuneralHomes" });
-                endpoints.MapControllerRoute(
-                    name: "Schedules",
-                    pattern: "Schedules",
-                    defaults: new { controller = "Website", Action = "Schedules" });
-                endpoints.MapControllerRoute(
-                    name: "ContactUs",
-                    pattern: "ContactUs",
-                    defaults: new { controller = "Website", Action = "ContactUs" });
-                endpoints.MapControllerRoute(
-                    name: "TermsAndCondition",
-                    pattern: "Terms",
-                    defaults: new { controller = "Website", Action = "Terms" });
-                endpoints.MapControllerRoute(
-                    name: "PrivacyPolicy",
-                    pattern: "Privacy",
-                    defaults: new { controller = "Website", Action = "Privacy" });
-                endpoints.MapControllerRoute(
-                    name: "UserLogin",
-                    pattern: "UserLogin",
-                    defaults: new { controller = "UserLogin", Action = "UserLogin" });
-                endpoints.MapControllerRoute(
-                    name: "Publish",
-                    pattern: "Publish/Recording",
-                    defaults: new { controller = "Recording", Action = "PublishEvent" });
-                endpoints.MapControllerRoute(
-                    name: "Profile",
-                    pattern: "Camera/{id?}",
-                    defaults: new { controller = "Website", Action = "Profile" });
-                //Admin
-                endpoints.MapControllerRoute(
-                    name: "DashBoard",
-                    pattern: "Admin/DashBoard",
-                    defaults: new { controller = "DashBoard", Action = "DashBoard" });
-                endpoints.MapControllerRoute(
-                    name: "AdminChurchDetails",
-                    pattern: "Admin/Church/{id?}",
-                    defaults: new { controller = "Church", Action = "ChurchDetails" });
-                endpoints.MapControllerRoute(
-                    name: "AdminChurches",
-                    pattern: "Admin/Churches",
-                    defaults: new { controller = "Church", Action = "Listchurch" });
-                endpoints.MapControllerRoute(
-                    name: "AddChurch",
-                    pattern: "Admin/Churches/Add",
-                    defaults: new { controller = "Church", Action = "AddChurch" });
-                endpoints.MapControllerRoute(
-                    name: "AdminChurchPreview",
-                    pattern: "Admin/Preview/{id?}",
-                    defaults: new { controller = "Preview", Action = "Preview" });
-                endpoints.MapControllerRoute(
-                    name: "Users",
-                    pattern: "Admin/Users",
-                    defaults: new { controller = "User", Action = "ListUser" });
-                endpoints.MapControllerRoute(
-                    name: "AdminSchedules",
-                    pattern: "Admin/Schedule",
-                    defaults: new { controller = "Schedule", Action = "ListSchedule" });
-                endpoints.MapControllerRoute(
-                    name: "AdminRecordings",
-                    pattern: "Admin/Recordings",
-                    defaults: new { controller = "Recording", Action = "ListRecording" });
-                //Client
-                endpoints.MapControllerRoute(
-                    name: "ClientDashBoard",
-                    pattern: "Client/DashBoard",
-                    defaults: new { controller = "DashBoard", Action = "DashBoard" });
-                //Roku 
-                endpoints.MapControllerRoute(
-                    name: "1roku.rss",
-                    pattern: "1roku.rss",
-                    defaults: new { controller = "Roku", Action = "GetRoku" });
-                endpoints.MapControllerRoute(
-                    name: "1categories.xml",
-                    pattern: "1categories.xml",
-                    defaults: new { controller = "Roku", Action = "GetCategories" });
-                endpoints.MapControllerRoute(
-                    name: "1xml/county.xml",
-                    pattern: "1xml/{id?}",
-                    defaults: new { controller = "Roku", Action = "GetCamByCategory" });
-                endpoints.MapControllerRoute(
-                    name: "RokuCamera",
-                    pattern: "roku/{id?}",
-                    defaults: new { controller = "Roku", Action = "GetCamByCategory" });
+                WebsiteEndpoints(endpoints);
+                AdminEndPoints(endpoints);
+                ClientEndPoints(endpoints);
+                RokuEndPoints(endpoints);
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Website}/{action=Home}/{id?}",
                 defaults: new { controller = "Website", Action = "Home" });
             });
         }
+
+        private static void WebsiteEndpoints(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapControllerRoute(
+                name: "Home",
+                pattern: "Home",
+                defaults: new { controller = "Website", Action = "Home" });
+            endpoints.MapControllerRoute(
+                name: "churches",
+                pattern: "churches",
+                defaults: new { controller = "Website", Action = "Churches" });
+            endpoints.MapControllerRoute(
+                name: "Cathedrals",
+                pattern: "Cathedrals",
+                defaults: new { controller = "Website", Action = "Cathedrals" });
+            endpoints.MapControllerRoute(
+                name: "FuneralHomes",
+                pattern: "FuneralHomes",
+                defaults: new { controller = "Website", Action = "FuneralHomes" });
+            endpoints.MapControllerRoute(
+                name: "Schedules",
+                pattern: "Schedules",
+                defaults: new { controller = "Website", Action = "Schedules" });
+            endpoints.MapControllerRoute(
+                name: "ContactUs",
+                pattern: "ContactUs",
+                defaults: new { controller = "Website", Action = "ContactUs" });
+            endpoints.MapControllerRoute(
+                name: "TermsAndCondition",
+                pattern: "Terms",
+                defaults: new { controller = "Website", Action = "Terms" });
+            endpoints.MapControllerRoute(
+                name: "PrivacyPolicy",
+                pattern: "Privacy",
+                defaults: new { controller = "Website", Action = "Privacy" });
+            endpoints.MapControllerRoute(
+                name: "UserLogin",
+                pattern: "UserLogin",
+                defaults: new { controller = "UserLogin", Action = "UserLogin" });
+            endpoints.MapControllerRoute(
+                name: "Publish",
+                pattern: "Publish/Recording",
+                defaults: new { controller = "Recording", Action = "PublishEvent" });
+            endpoints.MapControllerRoute(
+                name: "Profile",
+                pattern: "Camera/{id?}",
+                defaults: new { controller = "Website", Action = "Profile" });
+        }
+
+        private static void AdminEndPoints(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapControllerRoute(
+                name: "DashBoard",
+                pattern: "Admin/DashBoard",
+                defaults: new { controller = "DashBoard", Action = "DashBoard" });
+            endpoints.MapControllerRoute(
+                name: "AdminChurchDetails",
+                pattern: "Admin/Church/{id?}",
+                defaults: new { controller = "Church", Action = "ChurchDetails" });
+            endpoints.MapControllerRoute(
+                name: "AdminChurches",
+                pattern: "Admin/Churches",
+                defaults: new { controller = "Church", Action = "Listchurch" });
+            endpoints.MapControllerRoute(
+                name: "AddChurch",
+                pattern: "Admin/Churches/Add",
+                defaults: new { controller = "Church", Action = "AddChurch" });
+            endpoints.MapControllerRoute(
+                name: "AdminChurchPreview",
+                pattern: "Admin/Preview/{id?}",
+                defaults: new { controller = "Preview", Action = "Preview" });
+            endpoints.MapControllerRoute(
+                name: "Users",
+                pattern: "Admin/Users",
+                defaults: new { controller = "User", Action = "ListUser" });
+            endpoints.MapControllerRoute(
+                name: "AdminSchedules",
+                pattern: "Admin/Schedule",
+                defaults: new { controller = "Schedule", Action = "ListSchedule" });
+            endpoints.MapControllerRoute(
+                name: "AdminRecordings",
+                pattern: "Admin/Recordings",
+                defaults: new { controller = "Recording", Action = "ListRecording" });
+        }
+
+        private static void ClientEndPoints(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapControllerRoute(
+                name: "ClientDashBoard",
+                pattern: "Client/DashBoard",
+                defaults: new { controller = "DashBoard", Action = "DashBoard" });
+        }
+
+        private static void RokuEndPoints(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapControllerRoute(
+                name: "1roku.rss",
+                pattern: "1roku.rss",
+                defaults: new { controller = "Roku", Action = "GetRoku" });
+            endpoints.MapControllerRoute(
+                name: "1categories.xml",
+                pattern: "1categories.xml",
+                defaults: new { controller = "Roku", Action = "GetCategories" });
+            endpoints.MapControllerRoute(
+                name: "1xml/county.xml",
+                pattern: "1xml/{id?}",
+                defaults: new { controller = "Roku", Action = "GetCamByCategory" });
+            endpoints.MapControllerRoute(
+                name: "RokuCamera",
+                pattern: "roku/{id?}",
+                defaults: new { controller = "Roku", Action = "GetCamByCategory" });
+        }
+
     }
 }
