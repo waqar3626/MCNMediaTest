@@ -54,6 +54,8 @@
         $('#alertDiv99').hide();
     });
     function AddChurchNewsLetter() {
+        $('#AddChurchNewsLetterModal').modal('hide');
+        displayBusyIndicator();
         var ss = '';
         var newsletterTitle = document.getElementById('newsletterTitle').value;
         var showOnWebsite = document.getElementById('showOnWebsite').value;
@@ -106,7 +108,8 @@
             $('#alertDiv99').hide();
         }
         formData.append("mediaFile", input.files[0]);
-     
+        $('#AddChurchNewsLetterModal').modal('hide');
+        displayBusyIndicator();
         $.ajax({
             type: "POST",
             url: "/ChurchNewsLetter/AddNewsLetter/",
@@ -120,7 +123,8 @@
                     location.reload();
                 }
                 loadNewsLetter();
-                $('#AddChurchNewsLetterModal').modal('hide');
+            
+                displayBusyIndicator2();
                 $('#AddChurchNewsletter')[0].reset();
             },
             error: function (errormessage) {

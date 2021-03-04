@@ -36,7 +36,7 @@
             </div>
             
 
-
+            <div class="loader "
 
             <div class="float-right text-right">
                 <a onclick="UpdateNewsLetter()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="mdi mdi-update text-white"></i> Update</a>
@@ -76,7 +76,8 @@
         var input = document.getElementById('chnewsLetterUrl');
         formData.append("mediaFile", input.files[0]);
 
-
+        $('#EditChurchNewsLetterModal').modal('hide');
+        displayBusyIndicator();
         $.ajax({
             type: "POST",
             url: "/ChurchNewsLetter/UpdateNewsLetter/",
@@ -90,7 +91,7 @@
                     location.reload();
                 }
                 loadNewsLetter();
-                $('#EditChurchNewsLetterModal').modal('hide');
+                displayBusyIndicator2();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

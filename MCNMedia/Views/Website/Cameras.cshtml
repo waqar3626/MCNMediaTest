@@ -3,8 +3,11 @@
 @{
     ViewData["Title"] = "Cameras";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+    
 }
+
   
+
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
 {
 
@@ -203,7 +206,11 @@
 
 <script>
     $(document).ready(function () {
+        $('#select2').val('@ViewBag.CountryID');
+
+
         DoPostBack();
+   $('#County').val('@Context.Session.GetInt32("CountyID")');
     });
     function DoPostBack() {
         var CountryId = document.getElementById('select2').value;
@@ -229,6 +236,11 @@
                 var s = '<option value="-1">--Select County--</option>';
 
                 $("#County").html(s);
+                $('#County').val('@ViewBag.CountyID');
+         
+                
+
+
             }
         });
     }
