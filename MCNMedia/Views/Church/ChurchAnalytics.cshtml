@@ -22,7 +22,7 @@
 
 
                     <div class="col-sm-6 pull-right">
-                        <div id="datepicker-popup3" class="input-group date datepicker">
+                        <div id="datepicker4" class="input-group date datepicker">
                             <input type="text" id="SetAnalyticsDate" name="eventDate" class="form-control" placeholder="Analytics Date"  required/>
                             <span class="input-group-addon input-group-append border-left">
                                 <span class="ti-calendar input-group-text"></span>
@@ -120,21 +120,12 @@
         GetAnalytics();
     });
     $(function () {
-        $('#datepicker-popup3').datetimepicker({
-            maxDate: new Date()
+        $("#datepicker4").datepicker({
+            autoclose: true,
+            todayHighlight: true
         });
     });
 
-    $("#datepicker-popup3").datetimepicker({
-
-        dateFormat: 'dd-M-yy',
-
-
-
-        maxDate: new Date(),
-
-
-    });
 
 </script>
     
