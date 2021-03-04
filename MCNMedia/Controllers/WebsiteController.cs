@@ -68,25 +68,9 @@ namespace MCNMedia_Dev.Controllers
                 EmailHelper em = new EmailHelper();
                 //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
                 em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
-                //string name = web.ContactName;
-                //string email = web.ContactEmail;
-                //string subject = web.ContactSubject;
-                //string massage = web.Message;
-                //MailMessage mailmassage = new MailMessage();
-                //mailmassage.To.Add("mcnmedia9@gmail.com ");
-                //mailmassage.Subject = subject;
-                //mailmassage.Body = massage;
-                //mailmassage.From = new MailAddress(email);
-                //mailmassage.IsBodyHtml = false;
-                //SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                //smtp.Port = 25;
-                //smtp.UseDefaultCredentials = true;
-                //smtp.EnableSsl = true;
-                //smtp.Credentials = new NetworkCredential("mcnmedia9@gmail.com ", "M3di@mcN");
-                //smtp.Send(mailmassage);
-                //ViewBag.message = "The Mail has been send by " + web.ContactName + " Successfully....!," + mailmassage.To + ".";
-
+              
                 ModelState.Clear();
+                ViewBag.SuccessMsg = "Email Send Successfully";
                 return View();
             }
 

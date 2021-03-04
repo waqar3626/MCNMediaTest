@@ -11,7 +11,21 @@
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
             <div class="alert alert-danger">
-                @ViewBag.ErrorMsg;
+                @ViewBag.ErrorMsg
+            </div>
+
+        </div>
+
+    </div>
+
+}
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success">
+                @ViewBag.SuccessMsg
             </div>
 
         </div>
