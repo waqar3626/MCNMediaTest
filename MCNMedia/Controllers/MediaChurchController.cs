@@ -44,6 +44,7 @@ namespace MCNMedia_Dev.Controllers
         #region "Picture"
 
         [HttpPost]
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 15728640)]
         public JsonResult AddMedia(string mediaType, string AddPicTabName, IFormFile mediaFile)
         {
@@ -111,6 +112,7 @@ namespace MCNMedia_Dev.Controllers
 
 
         }
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 15728640)]
 
         public JsonResult UpdateMedia(String ChurchMediaId, string mediaType, String EditPictureTabName, string MediaUrl, string MediaName)
@@ -182,6 +184,7 @@ namespace MCNMedia_Dev.Controllers
         #region "Video"
 
         [HttpPost]
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
 
         public IActionResult AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
@@ -254,7 +257,7 @@ namespace MCNMedia_Dev.Controllers
 
 
         }
-
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
         public JsonResult UpdateVideo(int ChurchMediaId,  string mediaType, String EditVidTabName, string MediaUrl, string MediaName)
         {
@@ -311,6 +314,7 @@ namespace MCNMedia_Dev.Controllers
         #region "Slideshow"
 
         [HttpPost]
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFile mediaFile)
         {
@@ -375,7 +379,7 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public JsonResult UpdateSlide(string ChurchMediaId,  string mediaType, String EditSlideShowTabName, string MediaUrl, string MediaName)
         {

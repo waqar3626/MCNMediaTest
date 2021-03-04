@@ -28,7 +28,7 @@ namespace MCNMedia_Dev.Controllers
         }
         [HttpPost]
        
-       
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit  = 209715200)]
         public JsonResult AddNewsLetter(string AddChurchNewsLetterTitle, IFormFile mediaFile, bool ShowOnWebsite)
         {
