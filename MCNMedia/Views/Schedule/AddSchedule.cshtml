@@ -254,6 +254,10 @@
         formData.append("password", password);
         formData.append("isPassword", isPassword);
 
+        $('#AddScheduleModal').modal('hide');
+
+       displayBusyIndicator();
+
         $.ajax({
             type: "POST",
             url: '@Url.Action("AddScheduleNew", "Schedule")',
@@ -264,7 +268,8 @@
             //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
             success: function (response) {
                 if (response.success) {
-                    $('#AddScheduleModal').modal('hide');
+                    displayBusyIndicator2();
+
                     window.location.reload();
                 }
                 else {

@@ -282,6 +282,10 @@
         NewFormData.append("passwordtoggle", passwordtoggle);
         NewFormData.append("scheduleId", scheduleId);
         NewFormData.append("churchId", churchId);
+
+        $('#EditScheduleModal').modal('hide');
+        displayBusyIndicator();
+
         $.ajax({
             type: "POST",
             url: "/Schedule/UpdateSchedule/",
@@ -292,7 +296,8 @@
 
             success: function (response) {
                 if (response.success) {
-                    $('#EditScheduleModal').modal('hide');
+                    displayBusyIndicator2();
+
                     window.location.reload();
               
 
