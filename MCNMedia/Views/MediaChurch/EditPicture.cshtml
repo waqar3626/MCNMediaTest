@@ -27,7 +27,7 @@
         var ss = "";
         var ChurchMediaId = $('#ChurchMedId').val();
         var EditPictureTabName = document.getElementById('Media_TabName').value;
-       
+
         var mediaUrl = $('#HdnMediaUrl2').val();
         var mediaName = $('#HdnMediaName2').val();
         var formData = new FormData();
@@ -44,7 +44,8 @@
             return;
             $('#EditPicModal').modal('show');
         }
-       
+        $('#EditPicModal').modal('hide');
+        displayBusyIndicator();
         $.ajax({
             type: "POST",
             url: "/MediaChurch/UpdateMedia/",
@@ -53,9 +54,10 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
-                $('#EditPicModal').modal('hide');
+                displayBusyIndicator2();
+
                 if (result === -1) {
-                   
+
                     location.reload();
                 }
                 LoadPicture();

@@ -87,6 +87,8 @@
             $('#AddModal').modal('show');
         }
         formData.append("mediaFile", input.files[0]);
+        $('#AddModal').modal('hide');
+        displayBusyIndicator();
 
         $.ajax({
             type: "POST",
@@ -100,7 +102,7 @@
                     location.reload(); 
                 }
                 loadPicture();
-                $('#AddModal').modal('hide');
+                displayBusyIndicator2();
                 $('#AddPictureForm')[0].reset();
             },
             error: function (errormessage) {

@@ -154,10 +154,10 @@
 
         //var TabName11 = $('#MediaChurchs_TabName').val();
         
-
+        $('#EditVidModal').modal('hide');
+        displayBusyIndicator();
         $.ajax({
-
-
+            
             type: "POST",
             url: "/MediaChurch/UpdateVideo/",
 
@@ -168,7 +168,7 @@
             success: function (result) {
 
                 loadVideo();
-                $('#EditVidModal').modal('hide');
+                displayBusyIndicator2();
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

@@ -47,7 +47,7 @@
             $('#alertDiv11').hide();
         });
         function AddVid() {
-
+          
             var ss='';
 
             var VidTabName = document.getElementById('AddMedVidTabName').value;
@@ -103,7 +103,8 @@
             }
 
             formData.append("mediaFile", input.files[0]);
-
+            $('#AddddModal').modal('hide');
+            displayBusyIndicator();
             $.ajax({
                 type: "POST",
                 url: "/MediaChurch/AddVideo/",
@@ -117,7 +118,7 @@
 
                 success: function (result) {
                     loadVideo();
-                    $('#AddddModal').modal('hide');
+                    displayBusyIndicator2();
                     $('#AddVideoForm')[0].reset();
                 },
                 error: function (errormessage) {

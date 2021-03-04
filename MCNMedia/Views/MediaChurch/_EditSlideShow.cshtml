@@ -70,8 +70,9 @@
         formData.append("MediaName", mediaName);
         //var input = document.getElementById('slideShowMediaURL');
     
+        $('#EditSlideShowModal').modal('hide');
 
-
+        displayBusyIndicator();
         $.ajax({
             type: "POST",
             url: "/MediaChurch/UpdateSlide/",
@@ -85,7 +86,8 @@
                     location.reload();
                 }
                 loadSlideShow();
-                $('#EditSlideShowModal').modal('hide');
+                displayBusyIndicator2();
+
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
