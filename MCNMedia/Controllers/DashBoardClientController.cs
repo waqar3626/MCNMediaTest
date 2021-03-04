@@ -9,18 +9,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using MCNMedia_Dev._Helper;
+using Microsoft.AspNetCore.Hosting;
 
 namespace MCNMedia_Dev.Controllers
 {
     public class DashBoardClientController : Controller
     {
+        private IWebHostEnvironment environment;
+
+        public DashBoardClientController(IWebHostEnvironment _environment)
+        {
+            environment = _environment;
+        }
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         DashBoardClientDataAccessLayer dashboardData = new DashBoardClientDataAccessLayer();
         DashboardDataAccessLayer dashboardDataAccessLayer = new DashboardDataAccessLayer();
         ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
         CameraDataAccessLayer camDataAccess = new CameraDataAccessLayer();
-        GoogleAnalytics googleantics = new GoogleAnalytics();
 
         [HttpGet]
         public IActionResult DashBoardClient(DateTime eventDate)
@@ -68,10 +75,11 @@ namespace MCNMedia_Dev.Controllers
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
                 ViewBag.TotalCountriesCount = 0;
-                googleantics.Authenticate();
-                List<GoogleAnalyticsProperty> googleAnalytics = googleantics.QueryDataPerChurch(eventDate).ToList<GoogleAnalyticsProperty>();
+
+                GoogleAnalytics googleantics = new GoogleAnalytics(environment);
+                List<GoogleAnalyticsProperty> googleAnalytics = googleantics.GoogleAnalytics_GetByChurch(eventDate); 
                 gm1.googleAnalytics = googleAnalytics;
-                if (googleAnalytics[0].PageTitle != null)
+                if (googleAnalytics.Count > 0)
                 {
                     gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
                     ViewBag.TotalCountriesCount = gm1.googleAnalytics.Sum(item => item.Count);
@@ -94,26 +102,26 @@ namespace MCNMedia_Dev.Controllers
             return Json(chrid);
         }
 
-        private void ShowMessage(string exceptionMessage)
-        {
-            log.Info("Exception: " + exceptionMessage);
-        }
-
         [HttpPost]
         public JsonResult ChangeCameraStatus(int cameraId, bool cameraStatus)
         {
-
             try
             {
                 int UserId= Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 camDataAccess.UpdateCameraStatus(cameraId,cameraStatus,UserId);
                 return Json(new { success = true, responseText = "The attached file is not supported." });
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                ShowMessage("Dashboard Error" + e.Message);
                 throw;
             }
+        }
+
+        private void ShowMessage(string exceptionMessage)
+        {
+            _Helper.Common.SaveToXXX(exceptionMessage);
+            log.Info("Exception: " + exceptionMessage);
         }
     }
 }

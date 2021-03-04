@@ -25,15 +25,13 @@ namespace MCNMedia_Dev.Controllers
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
 
     
-        GoogleAnalytics googleantics = new GoogleAnalytics();
-        GenericModel gm = new GenericModel();
-
         private IWebHostEnvironment environment;
 
         public ChurchController(IWebHostEnvironment _environment)
         {
             environment = _environment;
         }
+        GenericModel gm = new GenericModel();
 
         [HttpGet]
         public IActionResult View_Load()
@@ -75,7 +73,6 @@ namespace MCNMedia_Dev.Controllers
                 List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
                 return View(church);
             }
-
             catch (Exception e)
             {
                 ShowMessage("List Church Error" + e.Message);
@@ -83,9 +80,7 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-
         [HttpGet]
-
         [HttpGet()]
         public IActionResult GetAllChurch()
         {
@@ -181,18 +176,18 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public JsonResult Analytics(DateTime analyticDate)
         {
-
-            if (analyticDate.ToString() == "1/1/0001 12:00:00 AM")
+            string date = analyticDate.ToString("dd/mm/yyyy");
+            if (analyticDate.ToString() == "1/1/0001 12:00:00 AM" || date == "01-00-0001")
             {
                 analyticDate = DateTime.Now;
             }
             GenericModel gm1 = new GenericModel();
                        int  churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-            googleantics.Authenticate();
            
             gm1.Churches = churchDataAccess.GetChurchData(churchId);
-            List<GoogleAnalyticsProperty> googleAnalytics = googleantics.QueryDataPerChurch(analyticDate).ToList<GoogleAnalyticsProperty>();
-            if (googleAnalytics[0].PageTitle !=null)
+            GoogleAnalytics googleantics = new GoogleAnalytics(environment);
+            List<GoogleAnalyticsProperty> googleAnalytics = googleantics.GoogleAnalytics_GetByChurch(analyticDate);
+            if (googleAnalytics.Count > 0)
             {
                 gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
             }
@@ -269,7 +264,6 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
                 IEnumerable<Place> countryList = _placeAccessLayer.GetCountries();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countryList)
@@ -325,14 +319,10 @@ namespace MCNMedia_Dev.Controllers
                     int pos = ImageUrl.IndexOf("Upload");
                     if (pos >= 0)
                     {
-                        // String after founder  
-
                         // Remove everything before url but include Upload 
                         string beforeFounder = ImageUrl.Remove(0, pos);
                         church.Churches.ImageURl = beforeFounder;
                     }
-
-
                 }
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 ChurchId = church.Churches.ChurchId;
@@ -408,11 +398,10 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-      
-
         private void ShowMessage(string exceptionMessage)
         {
             log.Info("Exception: " + exceptionMessage);
+            _Helper.Common.SaveToXXX(exceptionMessage);
         }
     }
 }
