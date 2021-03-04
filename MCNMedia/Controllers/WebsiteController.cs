@@ -18,13 +18,18 @@ using System.IO;
 using Microsoft.AspNetCore.Diagnostics;
 using MaxMind.GeoIP2.Model;
 using Microsoft.AspNetCore.Http.Extensions;
+using DNTCaptcha.Core;
+using Microsoft.Extensions.Options;
 
 namespace MCNMedia_Dev.Controllers
 {
     public class WebsiteController : Controller
     {
-
+        
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IDNTCaptchaValidatorService _validatorService;
+        private readonly DNTCaptchaOptions _captchaOptions;
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ScheduleDataAccessLayer _scheduleDataAccessLayer = new ScheduleDataAccessLayer();
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
@@ -37,9 +42,11 @@ namespace MCNMedia_Dev.Controllers
         GenericModel gm = new GenericModel();
         Website website1 = new Website();
         //CookieOptions cookieOptions = new CookieOptions();
-        public WebsiteController(IHostingEnvironment hostingEnvironment)
+        public WebsiteController(IHostingEnvironment hostingEnvironment, IDNTCaptchaValidatorService validatorService, IOptions<DNTCaptchaOptions> captchaOptions)
         {
             _hostingEnvironment = hostingEnvironment;
+            _validatorService = validatorService;
+            _captchaOptions = captchaOptions==null?throw new ArgumentNullException(nameof(captchaOptions)):captchaOptions.Value;
         }
         public IActionResult index()
         {
@@ -47,11 +54,17 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ContactUs(Website web)
 
         {
             try
             {
+                if (!_validatorService.HasRequestValidCaptchaEntry(Language.English, DisplayMode.ShowDigits))
+                {
+                    ViewBag.ErrorMsg = "InValid Captcha Kindly Provide a valid Captcha";
+                    return View(web);
+                }
                 EmailHelper em = new EmailHelper();
                 //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
                 em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
@@ -322,8 +335,12 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Country"].ToString()))
                 {
                     string countryName = Request.Query["Country"].ToString().Replace("-", " ");
-                 if(countryName != "all") { 
-                    churches = churches.FindAll(x => x.CountryName.ToLower() == countryName.ToLower()).ToList<Church>();
+                    ViewBag.CountryID = -1;
+                    if (countryName != "all")
+                    {
+
+                        churches = churches.FindAll(x => x.CountryName.ToLower() == countryName.ToLower()).ToList<Church>();
+                        ViewBag.CountryID = churches.First().CountryId;
                     }
                     ViewBag.countryName = Request.Query["Country"].ToString();
                     HttpContext.Session.SetString("Country", Request.Query["Country"].ToString());
@@ -331,7 +348,14 @@ namespace MCNMedia_Dev.Controllers
                     if (!string.IsNullOrEmpty(HttpContext.Request.Query["County"].ToString()))
                     {
                         string countyName = Request.Query["County"].ToString().Replace("-", " ");
-                        churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
+                        ViewBag.CountyID = -1;
+                        TempData["CountyID"] = -1;
+                        if (countyName != "all")
+                        {
+                            churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
+                            ViewBag.CountyID = churches.First().CountyId;
+
+                        }
                         ViewBag.CountyList = 0;
                         countyName = countyName.Replace("-", " ");
                         ViewBag.SearchFilter = $"County = {countyName}";
@@ -402,6 +426,7 @@ namespace MCNMedia_Dev.Controllers
             {
 
                 List<Place> countyList = _placeAccessLayer.GetCounties(countryId).ToList();
+
                 return Json(countyList);
 
             }
@@ -471,30 +496,30 @@ namespace MCNMedia_Dev.Controllers
             return View();
         }
 
-        
+
         public IActionResult RecordingLock()
         {
             //here
             string Password = Convert.ToString(TempData["RecordingPassword"].ToString());
             ViewData["RecordingId"] = TempData["RecordingId"];
-            ViewData["RecordingPassword"] =Password ;
+            ViewData["RecordingPassword"] = Password;
             return View();
         }
         [HttpPost]
-        public IActionResult RecordingLock(string RecordingPass,string Password,int recodingId)
+        public IActionResult RecordingLock(string RecordingPass, string Password, int recodingId)
         {
             try
             {
-                if (RecordingPass==null)
+                if (RecordingPass == null)
                 {
                     RecordingPass = Convert.ToString(TempData["RecordingPassword"]);
-                    recodingId= Convert.ToInt32(TempData["RecordingId"]);
+                    recodingId = Convert.ToInt32(TempData["RecordingId"]);
                 }
                 if (RecordingPass == Password)
                 {
                     TempData["RecordingPass"] = 1;
                     TempData["RecordingId"] = Convert.ToInt32(recodingId);
-                //http://localhost:56963/Website/Player/67
+                    //http://localhost:56963/Website/Player/67
                     return RedirectToAction(nameof(Player), new { id = recodingId });
                 }
                 else
@@ -519,7 +544,7 @@ namespace MCNMedia_Dev.Controllers
                 RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
                 if (id == 0)
                 {
-                    id =Convert.ToInt32( TempData["RecordingId"]);
+                    id = Convert.ToInt32(TempData["RecordingId"]);
                     recordingPass = Convert.ToInt32(TempData["RecordingPass"]);// Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
                 }
                 Recording recording = recordingDataAccessLayer.Recording_GetById(id);
@@ -533,17 +558,17 @@ namespace MCNMedia_Dev.Controllers
                     {
                         recordingPass = 1;
                     }
-                    
-                        if (recordingPass == 1)
-                        {
 
-                        }
-                        else
-                        {
-                            ViewData["RecordingPassword1"] = recording.Password;
-                            return RedirectToAction(nameof(RecordingLock));
-                        }
+                    if (recordingPass == 1)
+                    {
+
                     }
+                    else
+                    {
+                        ViewData["RecordingPassword1"] = recording.Password;
+                        return RedirectToAction(nameof(RecordingLock));
+                    }
+                }
                 return View(recording);
             }
             catch (Exception exp)
@@ -588,12 +613,12 @@ namespace MCNMedia_Dev.Controllers
         {
             String originalPath = new Uri(HttpContext.Request.GetDisplayUrl()).AbsoluteUri;
             string slug = originalPath.Split('/').Last();
-           
+
             try
             {
                 string churchPass = "false";
                 String originalPath1 = id;
-                
+
                 if (!string.IsNullOrEmpty(Convert.ToString(TempData["ChurchPass"])))
                 {
                     churchPass = TempData["ChurchPass"].ToString();
@@ -616,7 +641,7 @@ namespace MCNMedia_Dev.Controllers
                 TempData["ChurchPasswordToChurchLock"] = profileModel.Churches.Password;
                 if (profileModel.Churches.Password.Count() > 0)
                 {
-                   
+
                     if (churchPass == "true")
                     {
 
@@ -624,8 +649,8 @@ namespace MCNMedia_Dev.Controllers
                     else
                     {
                         TempData["Slug"] = id;
-                        
-                        
+
+
                         return View("ChurchLock");
                         //Response.Redirect("lock?id=" + id);
                     }
@@ -739,7 +764,7 @@ namespace MCNMedia_Dev.Controllers
                 // http://localhost:56963/Camera
                 Uri uri = Request.GetTypedHeaders().Referer;
                 ViewData["slugForlockPage"] = id;
-              
+
                 //Response.Redirect(originalPath+"/"+id);
                 return View(profileModel);
                 //}
@@ -887,5 +912,6 @@ namespace MCNMedia_Dev.Controllers
         {
             log.Error("Exception : " + exceptionMessage);
         }
+
     }
 }
