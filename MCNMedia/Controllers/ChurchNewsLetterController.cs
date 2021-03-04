@@ -26,8 +26,8 @@ namespace MCNMedia_Dev.Controllers
         {
             environment = _environment;
         }
+        
         [HttpPost]
-       
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit  = 209715200)]
         public JsonResult AddNewsLetter(string AddChurchNewsLetterTitle, IFormFile mediaFile, bool ShowOnWebsite)
@@ -89,6 +89,7 @@ namespace MCNMedia_Dev.Controllers
                 throw;
             }
         }
+        [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public IActionResult EditNewsLetter(int id)
         {
