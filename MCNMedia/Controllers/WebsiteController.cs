@@ -322,7 +322,9 @@ namespace MCNMedia_Dev.Controllers
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Country"].ToString()))
                 {
                     string countryName = Request.Query["Country"].ToString().Replace("-", " ");
+                 if(countryName != "all") { 
                     churches = churches.FindAll(x => x.CountryName.ToLower() == countryName.ToLower()).ToList<Church>();
+                    }
                     ViewBag.countryName = Request.Query["Country"].ToString();
                     HttpContext.Session.SetString("Country", Request.Query["Country"].ToString());
 

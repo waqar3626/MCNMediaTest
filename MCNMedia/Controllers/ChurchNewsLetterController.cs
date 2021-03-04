@@ -9,7 +9,7 @@ using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting; 
+ 
 
 namespace MCNMedia_Dev.Controllers
 {
