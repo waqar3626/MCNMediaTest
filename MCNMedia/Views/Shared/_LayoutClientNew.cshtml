@@ -160,6 +160,34 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
+                    @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+                    {
+
+                        <div class="row m-0 mb-3">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger">
+                                    @ViewBag.ErrorMsg
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    }
+                    @if (!string.IsNullOrEmpty(ViewBag.SuccessMsg))
+                    {
+
+                        <div class="row m-0 mb-3">
+                            <div class="col-lg-12">
+                                <div class="alert alert-success">
+                                    @ViewBag.SuccessMsg
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    }
                     @RenderBody()
                     <div class="row">
                         <div class="col-12 grid-margin">
@@ -176,9 +204,9 @@
                                             @Html.Partial("~/Views/UserLogin/ChangeUserPassword.cshtml")
                                         </div>
                                         @*<div class="modal-footer">
-                                                <button type="button" class="btn btn-success">Submit</button>
-                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                                            </div>*@
+                                <button type="button" class="btn btn-success">Submit</button>
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                            </div>*@
                                     </div>
                                 </div>
                             </div>
