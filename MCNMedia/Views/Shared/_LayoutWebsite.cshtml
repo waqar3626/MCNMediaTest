@@ -64,7 +64,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-           
+
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul id="navbar-nav1" class="navbar-nav mr-auto">
@@ -91,55 +91,55 @@
 
                     @*its for paper view currently we dont need it*@
                     <!--@if (Context.Request.Cookies["SubscriberId"] != null)
-            {
-                <li class="nav-item">
-                    <div class="col">
-                        <div class="top-Menu-item font-14 d-flex align-items-center justify-content-end">
-                            <ul class="navbar-nav navbar-nav-right">
-                                <li class="nav-item nav-profile dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                        My Account
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                                        <span class="dropdown-item border-bottom font-20">
-                                            <i class="ti-user text-primary"></i>
-                                            <span class="font-18 text-primary">
-
-                                                @if (Context.Request.Cookies["SubscriberName"] != null)
-                                                {
-                                                    @Context.Request.Cookies["SubscriberName"].ToString()
-                                                }
-                                            </span>
-                                        </span>
-                                        <a class="dropdown-item" onclick="changepassword()" data-toggle="tooltip" data-placement="bottom" title="change">
-                                                <i class="ti-lock text-primary"></i>
-                                                change password
+                    {
+                        <li class="nav-item">
+                            <div class="col">
+                                <div class="top-Menu-item font-14 d-flex align-items-center justify-content-end">
+                                    <ul class="navbar-nav navbar-nav-right">
+                                        <li class="nav-item nav-profile dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                                My Account
                                             </a>
-                                        <a class="dropdown-item" asp-action="SubscriperProfile" asp-controller="Subscription">
-                                            <i class="ti-power-off text-primary "></i>
-                                            My Subscription Detail
-                                        </a>
-                                        <a class="dropdown-item" asp-action="SubscriberLogout" asp-controller="Website">
-                                            <i class="ti-power-off text-primary "></i>
-                                            Logout
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
-                                <span class="ti-menu"></span>
-                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                                <span class="dropdown-item border-bottom font-20">
+                                                    <i class="ti-user text-primary"></i>
+                                                    <span class="font-18 text-primary">
 
-                        </div>
-                    </div>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a class="nav-link font-14 top-Menu-item pr-2 text-black" href="/Subscription/SubscriptionUserLogin/Home">Subscriber</a>
-                </li>
-            }-->
+                                                        @if (Context.Request.Cookies["SubscriberName"] != null)
+                                                        {
+                                                            @Context.Request.Cookies["SubscriberName"].ToString()
+                                                        }
+                                                    </span>
+                                                </span>
+                                                <a class="dropdown-item" onclick="changepassword()" data-toggle="tooltip" data-placement="bottom" title="change">
+                                                        <i class="ti-lock text-primary"></i>
+                                                        change password
+                                                    </a>
+                                                <a class="dropdown-item" asp-action="SubscriperProfile" asp-controller="Subscription">
+                                                    <i class="ti-power-off text-primary "></i>
+                                                    My Subscription Detail
+                                                </a>
+                                                <a class="dropdown-item" asp-action="SubscriberLogout" asp-controller="Website">
+                                                    <i class="ti-power-off text-primary "></i>
+                                                    Logout
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+                                        <span class="ti-menu"></span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link font-14 top-Menu-item pr-2 text-black" href="/Subscription/SubscriptionUserLogin/Home">Subscriber</a>
+                        </li>
+                    }-->
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -156,6 +156,35 @@
 
     <!-- header end -->
     @Html.Partial("~/Views/Shared/_BusyIndicatoPartial.cshtml")
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+    {
+
+        <div class="row m-0 mb-3">
+            <div class="col-lg-12">
+                <div class="alert alert-danger">
+                    @ViewBag.ErrorMsg
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+    @if (!string.IsNullOrEmpty(ViewBag.SuccessMsg))
+    {
+
+        <div class="row m-0 mb-3">
+            <div class="col-lg-12">
+                <div class="alert alert-success">
+                    @ViewBag.SuccessMsg
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+
 
     @RenderBody()
     <!-- footer start -->
@@ -273,8 +302,15 @@
                 $("#navbarSupportedContent").toggle();
             });
         });
+
+        $(".alert-danger").fadeTo(2000, 500).slideUp(500, function () {
+            $(".alert-danger").slideUp(500);
+        });
+        $(".alert-success").fadeTo(2000, 500).slideUp(500, function () {
+            $(".alert-success").slideUp(500);
+        });
     </script>
-    
+
 </body>
 
 </html>

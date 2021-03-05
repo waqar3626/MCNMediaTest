@@ -15,5 +15,18 @@ namespace MCNMedia_Dev.Models
         public string Country { get; set; }
 
         public int CountryCount { get; set; }
+
+
+        public AnalyticsModel()
+        {
+            AnalyticsID = 0;
+            ChurchId = 0;
+            IPAddress ="";
+            DateAndTime = Convert.ToDateTime("01-01-1900");
+            Country = "";
+            CountryCount = 0;
+        }
     }
+
+
 }

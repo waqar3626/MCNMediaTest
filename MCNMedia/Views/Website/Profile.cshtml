@@ -8,20 +8,15 @@
     TempData.Keep("SlugToProfile");
 }
 
-@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
-{
+<style>
+    .display-none{
+        display:none  !important;
+    }
+    .display-block{
+        display:block !important;
+    }
+</style>
 
-    <div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-danger">
-                @ViewBag.ErrorMsg;
-            </div>
-
-        </div>
-
-    </div>
-
-}
 
 <head>
     <!--Global site tag (gtag.js) - Google Analytics -->
@@ -89,7 +84,15 @@
     }
 </style>
 <div class="content-wrapper">
+    <div class="row m-2" >
+        <div class="col-lg-12">
+            <div class="alert alert-danger" id="alertProfile"  >
+                
+            </div>
 
+        </div>
+
+    </div>
     <!-- banner slider start -->
     <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
         <div class="container">
@@ -254,7 +257,7 @@
 
                         @if (Model.CameraList.Count() == 0)
                         {
-                            <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no" >
+                            <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no">
                                 <p class="text-white font-30">
                                     Our camera is switched off at the moment.
                                     <br />
@@ -276,19 +279,19 @@
                         {
                             <div class="tab-pane fade" id="pills-image-@pic.ChurchMediaId" role="tabpanel" aria-labelledby="pills-image-tab">
                                 <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
-                                    <div class="carousel-inner"> 
+                                    <div class="carousel-inner">
                                         <div class="carousel-item active">
                                             <img src="@pic.MediaURL" class="d-block" style="height:518px;width:100%;justify-content:center;" alt="...">
-                                        </div> 
+                                        </div>
                                     </div>
                                     @*<a class="carousel-control-prev" href="#carouselPictures" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselPictures" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>*@
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselPictures" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>*@
                                 </div>
                             </div>
                         }
@@ -316,8 +319,8 @@
                             }
 
                             @*<li class="nav-item">
-            <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
-        </li>*@
+                                    <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
+                                </li>*@
                             @if (Model.VideoList.Count() > 0)
                             {
                                 @foreach (MediaChurch medChurch in Model.VideoList)
@@ -1070,6 +1073,7 @@
     }
 
     $(document).ready(function ($) {
+   
         $('#owl-carousel-video').owlCarousel({
             items: 1,
             merge: true,
@@ -1158,28 +1162,43 @@
             data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate, Slug: Slug },
             dataType: "json",
             success: function (result) {
+                var items = result.split('^');
+                if (items[0] == '-1') {
+                    $('#alertProfile').html(items[1]);
+                  
+             
+                    $('#alertProfile').fadeIn();
+                    
+                    $('#alertProfile').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#alertProfile").slideUp(500);
+                
+      
+                    });
+                } else {
 
-                var html = '';
+                    var html = '';
 
-                $.each(result, function (key, item) {
+                    $.each(result, function (key, item) {
 
-                    html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
-                    html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
-                    var now = new Date(item.date);
-                    var Datestring = moment(now).format('DD MMM YYYY');
+                        html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
+                        html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
+                        var now = new Date(item.date);
+                        var Datestring = moment(now).format('DD MMM YYYY');
 
 
 
-                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring + '</p></div>';
+                        html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring + '</p></div>';
 
-                    html += '<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
-                    html += ' </div>';
+                        html += '<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
+                        html += ' </div>';
 
-                });
-                $('.RecList').html(html);
+                    });
+                    $('.RecList').html(html);
+                }
+              
             },
             error: function (errormessage) {
-                //alert(errormessage.responseText);
+                alert(errormessage);
             }
         });
     }
@@ -1204,7 +1223,7 @@
         LoadRecordingList();
     }
     currentTime();
-
+   
 </script>
 
 

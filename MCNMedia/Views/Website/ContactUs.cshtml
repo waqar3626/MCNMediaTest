@@ -5,34 +5,7 @@
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
 }
 
-@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
-{
 
-    <div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-danger">
-                @ViewBag.ErrorMsg
-            </div>
-
-        </div>
-
-    </div>
-
-}
-@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
-{
-
-    <div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-success">
-                @ViewBag.SuccessMsg
-            </div>
-
-        </div>
-
-    </div>
-
-}
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
 <div class="bg-blue  pt-3 pb-3" style=" position: sticky; top: 0px; z-index:5">

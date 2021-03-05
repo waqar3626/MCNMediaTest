@@ -85,7 +85,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-
+                
                 HttpContext.Session.SetString("Password", "");
                 HttpContext.Session.SetString("UserType", "website");
                 gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
@@ -100,7 +100,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     throw new Exception("Country List is Empty");
                 }
-
+               
                 return View(gm);
             }
 
@@ -111,22 +111,7 @@ namespace MCNMedia_Dev.Controllers
                 return View(gm);
             }
         }
-        //public IActionResult Home()
-        //{
-
-        //    throw new Exception("An Error Occurred");
-        //        LoadCountryDDL();
-        //        HttpContext.Session.SetString("Password", "");
-        //        HttpContext.Session.SetString("UserType", "website");
-        //        gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
-        //        gm.LSchedulesInHour = UpComingSchedulesInCommingHour();
-        //        gm.CountryList = _placeAccessLayer.GetCountries();
-        //        //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
-        //        return View(gm);
-
-
-
-        //}
+       
 
         private void Exception()
         {
@@ -150,19 +135,21 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Schedules()
         {
+            GenericSchedule gmSch = new GenericSchedule();
             try
             {
-                GenericSchedule gmSch = new GenericSchedule();
+                
                 gmSch.TodaySchedule = _scheduleDataAccessLayer.GetSchedule_Today().ToList<Schedule>();
                 gmSch.UpcomingSchedule = UpComingSchedules();
                 gmSch.CurrentSchedule = Schedules_WhatsOnNow();
+       
                 return View(gmSch);
             }
             catch (Exception exp)
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(gmSch);
             }
         }
 
@@ -227,9 +214,11 @@ namespace MCNMedia_Dev.Controllers
             {
                 return View();
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return View("Error");
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
@@ -246,13 +235,14 @@ namespace MCNMedia_Dev.Controllers
                 {
                     throw new Exception("Country List is Empty");
                 }
+               
                 return View(gm);
             }
             catch (Exception exp)
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(gm);
             }
         }
 
@@ -269,13 +259,14 @@ namespace MCNMedia_Dev.Controllers
                 {
                     throw new Exception("Country List is Empty");
                 }
+               
                 return View(gm);
             }
             catch (Exception exp)
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(gm);
             }
         }
 
@@ -293,13 +284,14 @@ namespace MCNMedia_Dev.Controllers
                 {
                     throw new Exception("Country List is Empty");
                 }
+            
                 return View(gm);
             }
             catch (Exception exp)
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(gm);
             }
         }
 
@@ -358,6 +350,7 @@ namespace MCNMedia_Dev.Controllers
                         if (gm.CountyList.Count() == 0)
                             ViewBag.NoChurch = 2;
                         ViewBag.SearchFilter = $"Country = {countryName1}";
+                       
                         return View(gm);
                     }
                 }
@@ -373,6 +366,7 @@ namespace MCNMedia_Dev.Controllers
                     gm.ChurchList = churches;
                     searchFilter = searchFilter.Replace("-", " ");
                     ViewBag.SearchFilter = $"County = {searchFilter}";
+                    
                     return View(gm);
                 }
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Search"].ToString()))
@@ -393,7 +387,7 @@ namespace MCNMedia_Dev.Controllers
                 if (gm.ChurchList.Count() == 0)
                     ViewBag.NoChurch = 1;
                 gm.CountryList = _placeAccessLayer.GetCountries();
-
+             
                 return View(gm);
             }
             catch (Exception exp)
@@ -472,22 +466,50 @@ namespace MCNMedia_Dev.Controllers
 
         public ViewResult Terms()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception exp)
+            {
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
+
+            }
+        
         }
 
         public ViewResult Privacy()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception exp)
+            {
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
+            }
+            
         }
 
 
         public IActionResult RecordingLock()
         {
+            try
+            {
+                string Password = Convert.ToString(TempData["RecordingPassword"].ToString());
+                ViewData["RecordingId"] = TempData["RecordingId"];
+                ViewData["RecordingPassword"] = Password;
+                return View();
+            }
+            catch (Exception exp)
+            {
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
+            }
             //here
-            string Password = Convert.ToString(TempData["RecordingPassword"].ToString());
-            ViewData["RecordingId"] = TempData["RecordingId"];
-            ViewData["RecordingPassword"] = Password;
-            return View();
+           
         }
         [HttpPost]
         public IActionResult RecordingLock(string RecordingPass, string Password, int recodingId)
@@ -508,7 +530,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    ViewBag.IsSuccess = 3;
+                    ViewBag.ErrorMsg = "Password Incorrect ! Please Enter correct password.";
                     return View();
                 }
             }
@@ -522,6 +544,7 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Player(int id)
         {
+            Recording recording = new Recording();
             try
             {
                 int recordingPass = 0;
@@ -531,7 +554,7 @@ namespace MCNMedia_Dev.Controllers
                     id = Convert.ToInt32(TempData["RecordingId"]);
                     recordingPass = Convert.ToInt32(TempData["RecordingPass"]);// Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
                 }
-                Recording recording = recordingDataAccessLayer.Recording_GetById(id);
+                 recording = recordingDataAccessLayer.Recording_GetById(id);
                 int pass = recording.Password.Count();
                 if (recording.Password.Count() > 0)
                 {
@@ -559,7 +582,7 @@ namespace MCNMedia_Dev.Controllers
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(recording);
             }
         }
 
@@ -580,10 +603,11 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    ViewBag.IsSuccess = 3;
-                    TempData["Slug"] = TempData["Slug"].ToString();
+                    ViewBag.ErrorMsg = "Password Incorrect ! Please Enter correct password.";
+                        TempData["Slug"] = TempData["Slug"].ToString();
                     return View();
                 }
+               
             }
             catch (Exception exp)
             {
@@ -597,7 +621,7 @@ namespace MCNMedia_Dev.Controllers
         {
             String originalPath = new Uri(HttpContext.Request.GetDisplayUrl()).AbsoluteUri;
             string slug = originalPath.Split('/').Last();
-
+            Profile profileModel = new Profile();
             try
             {
                 string churchPass = "false";
@@ -620,7 +644,7 @@ namespace MCNMedia_Dev.Controllers
                 MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
                 NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
                 ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
-                Profile profileModel = new Profile();
+               
                 profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
                 TempData["ChurchPasswordToChurchLock"] = profileModel.Churches.Password;
                 if (profileModel.Churches.Password.Count() > 0)
@@ -764,7 +788,7 @@ namespace MCNMedia_Dev.Controllers
             {
 
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View();
+                return View(profileModel);
             }
         }
 
@@ -842,11 +866,13 @@ namespace MCNMedia_Dev.Controllers
                 DateTime toDate = Convert.ToDateTime(ToDate);
                 List<Recording> listRecording = _recordDataAccess.RecordingSearch(fromDate, toDate, Slug, -1, EventName).ToList();
                 ViewData["slugForlockPage"] = Slug;
+              
                 return Json(listRecording);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                return Json(-1);
+                
+                return Json("-1"+"^"+exp.Message);
             }
         }
 
