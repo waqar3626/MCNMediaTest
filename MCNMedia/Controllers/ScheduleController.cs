@@ -30,7 +30,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Schedule View Errors : " + e.Message);
                 throw;
             }
         }
@@ -78,6 +77,7 @@ namespace MCNMedia_Dev.Controllers
                 sch.CreatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
+                    
                     int res = scheduleDataAccess.AddSchedule(sch);
                     return Json(new { success = true, responseText = "The attached file is not supported." });
                 }
@@ -92,6 +92,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public ViewResult ListSchedule()
         {
+            GenericModel gm = new GenericModel();
             try
             {
                 int churchId = -1;
@@ -101,17 +102,14 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
                 ViewBag.SchChurchId = churchId;
                 ViewBag.Schrecord = record;
-
                 LoadChurchDDL();
-                GenericModel gm = new GenericModel();
-
                 gm.LSchedules = SearchSchedules(churchId, eventDay, eventDate, record);
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("List Schedule Errors : " + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occured !"+ exp.Message;
+                return View(gm);
             }
         }
 
@@ -141,7 +139,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Get edit Schedule Data Errors : " + e.Message);
                 throw;
             }
         }
@@ -160,7 +157,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Edit Schedule Errors : " + e.Message);
                 throw;
             }
         }
@@ -236,7 +232,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Schedule Errors :" + e.Message);
                 throw;
             }
         }
@@ -267,7 +262,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("LoadChurch DropDown Errors : " + e.Message);
                 throw;
             }
         }
@@ -281,7 +275,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Load Camera DropDown  Errors : " + e.Message);
                 throw;
             }
         }
@@ -306,10 +299,11 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Search Church  Error" + e.Message);
                 throw;
             }
         }
+
+       
 
         private List<Schedule> SearchSchedules(int churchId, string eventDay, DateTime eventDate, int record)
         {
@@ -333,11 +327,6 @@ namespace MCNMedia_Dev.Controllers
         {
             Wowza wowza = new Wowza();
             return Json(wowza.StopRecordingBySchedule(scheduleId));
-        }
-
-        private void ShowMessage(string exceptionMessage)
-        {
-            log.Error("Exception : " + exceptionMessage);
         }
     }
 }

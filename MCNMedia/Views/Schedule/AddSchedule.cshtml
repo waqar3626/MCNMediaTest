@@ -13,6 +13,17 @@
 <form id="AddScheduleForm" method="post" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger" id="addScheduleErrorMessage">
+
+            </div>
+
+        </div>
+
+    </div>
+   
+
 
     <div class="card">
         <div class="card-body">
@@ -254,9 +265,6 @@
         formData.append("password", password);
         formData.append("isPassword", isPassword);
 
-        $('#AddScheduleModal').modal('hide');
-
-       displayBusyIndicator();
 
         $.ajax({
             type: "POST",
@@ -268,16 +276,33 @@
             //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
             success: function (response) {
                 if (response.success) {
-                    displayBusyIndicator2();
 
-                    window.location.reload();
+                    $('#AddScheduleModal').modal('hide');
+                    setTimeout(function () {
+                        window.location.reload();
+                    },3000);
+                   
+                 
                 }
                 else {
+
                     showDangerToasts(response.responseText);
+
+                    $('#addScheduleErrorMessage').html(response.responseText);
+                    $('#addScheduleErrorMessage').fadeIn();
+
+                    $('#addScheduleErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addScheduleErrorMessage").slideUp(500);
+
+
+                    });
+
+
+
                 }
             },
             error: function (errormessage) {
-                //alert(errormessage.responseText);
+                alert(errormessage);
             }
         });
         }
