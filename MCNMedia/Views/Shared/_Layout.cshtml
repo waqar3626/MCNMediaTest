@@ -606,6 +606,15 @@
         $(".alert-success").fadeTo(2000, 500).slideUp(500, function () {
             $(".alert-success").slideUp(500);
         });
+        function sleep(milliseconds) {
+            let timeStart = new Date().getTime();
+            while (true) {
+                let elapsedTime = new Date().getTime() - timeStart;
+                if (elapsedTime > milliseconds) {
+                    break;
+                }
+            }
+        } 
     </script>
 
     @RenderSection("Scripts", required: false)

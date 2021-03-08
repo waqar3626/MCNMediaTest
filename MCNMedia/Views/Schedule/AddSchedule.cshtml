@@ -203,6 +203,8 @@
         HideRecordDataAdd();
 
         DoPostBackAdd();
+        $('#addScheduleErrorMessage').hide();
+        $('#addScheduleSuccessMessage').hide();
     });
     $(function () {
         $("#addScheduleVal").on("click", function (e) {
@@ -285,21 +287,22 @@
             success: function (response) {
                 if (response.success) {
 
-               
-                    setTimeout(function () {
-                        $('#addScheduleSuccessMessage').fadeIn();
-                    }, 9000);
                     
+                    $('#addScheduleSuccessMessage').fadeIn();
+                    $('#addScheduleSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addScheduleSuccessMessage").slideUp(500);
+                    });
                     
-                        $('#AddScheduleModal').modal('hide');
-                        window.location.reload();
-          
+                 
+
+                    sleep(5000);
+                    var IntervalTime = setTimeout(window.location.reload(), 5000);
                    
                  
                 }
                 else {
 
-                    showDangerToasts(response.responseText);
+                 
 
                     $('#addScheduleErrorMessage').html(response.responseText);
                     $('#addScheduleErrorMessage').fadeIn();

@@ -7,6 +7,24 @@
 }
 <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
 
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="editScheduleErrorMessage">
+
+        </div>
+
+    </div>
+
+</div><div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="editScheduleSuccessMessage">
+            saved Successfully!
+        </div>
+
+    </div>
+
+</div>
+
 <form class="needs-validation" novalidate id="EditGeneralSchForm">
     <div class="row">
         <div class="col-sm-12">
@@ -30,7 +48,7 @@
 
                             <span asp-validation-for="ChurchId" class="text-danger"></span>
 
-                            <div class="invalid-feedback" >
+                            <div class="invalid-feedback">
                                 Please Select the Church
                             </div>
                         </div>
@@ -91,8 +109,8 @@
                             <span asp-validation-for="EventDay" class="text-danger"></span>
 
 
-                            <select asp-for="EventDay" class="custom-select" id="EditEventDay" >
-                                <option  value="0" disabled>Please select Day</option>
+                            <select asp-for="EventDay" class="custom-select" id="EditEventDay">
+                                <option value="0" disabled>Please select Day</option>
                                 <option value="Monday" name="EditEventDay">Monday</option>
                                 <option value="Tuesday" name="EditEventDay">Tuesday</option>
                                 <option value="Wednesday" name="EditEventDay">Wednesday</option>
@@ -190,9 +208,9 @@
                         <div class="col-sm-4 " id="EditSchPassword">
                             <span asp-validation-for="Password" class="text-danger"></span>
                             <input type="text" asp-for="Password" id="SchEditPassword" class="form-control" placeholder="Password" />
-                       <div class="invalid-feedback">
-                           Please Provide a Valid Password
-                       </div>
+                            <div class="invalid-feedback">
+                                Please Provide a Valid Password
+                            </div>
                         </div>
                         <div class="col-sm-6" id="EditbtnSchdule">
                             <div class="float-right">
@@ -222,6 +240,10 @@
 <script src="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <script src="~/theme/js/formpickers.js"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#editScheduleErrorMessage').hide();
+        $('#editScheduleSuccessMessage').hide();
+    });
     $(function () {
         $(".updatebtnclick").on("click", function (e) {
             var form = $("#EditGeneralSchForm")[0];
@@ -233,7 +255,7 @@
                     $('#EditEventDateValidation').attr('style', 'display:block');
 
 
-                  
+
 
                 }
                 e.preventDefault();
@@ -248,12 +270,12 @@
         });
     });
 
-    
 
-   
+
+
     function UpdateChurchSchedule() {
 
-       
+
 
         var eventName = document.getElementById('EditEventName').value;
         var isRepeat = document.getElementById('EditIsRepeated').value;
@@ -283,8 +305,8 @@
         NewFormData.append("scheduleId", scheduleId);
         NewFormData.append("churchId", churchId);
 
-        $('#EditScheduleModal').modal('hide');
-        displayBusyIndicator();
+      
+       
 
         $.ajax({
             type: "POST",
@@ -296,14 +318,29 @@
 
             success: function (response) {
                 if (response.success) {
-                    displayBusyIndicator2();
+                    $('#editScheduleSuccessMessage').fadeIn();
+                    $('#editScheduleSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#editScheduleSuccessMessage").slideUp(500);
+                    });
+
+
+
+                    sleep(5000);
+                    var IntervalTime = setTimeout(window.location.reload(), 5000);
 
                     window.location.reload();
-              
+
 
                 } else {
-                  
-                    showEditDangerToasts(response.responseText);
+
+                    $('#editScheduleErrorMessage').html(response.responseText);
+                    $('#editScheduleErrorMessage').fadeIn();
+
+                    $('#editScheduleErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#editScheduleErrorMessage").slideUp(500);
+
+
+                    });
                 }
 
             },
@@ -342,11 +379,11 @@
             $('#EditEventLabel1').hide();
             $('#EditEventInput1').hide();
             $('#EditEventDay').attr('required', 'required');
-           
 
-            
+
+
             $('#EditIsRepeated').val("true");
-            
+
 
 
         }
@@ -370,7 +407,7 @@
             $('#EditPasswordToggle').attr('checked', true);
             $('#SchEditPassword').attr('required', 'required');
 
-            
+
         }
         else {
             HidePassword();
@@ -531,7 +568,7 @@
     function DoPostBackEdit() {
 
         var ChurchId = $('#EditddlChurchId').val();
-        
+
 
         $.ajax({
             url: "/Schedule/LoadCameraDDL",

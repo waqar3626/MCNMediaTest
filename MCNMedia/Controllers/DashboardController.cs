@@ -29,6 +29,7 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Dashboard(int chrid, DateTime eventDate)
         {
+            GenericModel gm = new GenericModel();
             try
             {
                 if (eventDate == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
@@ -40,7 +41,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
                 }
-                GenericModel gm = new GenericModel();
+               
                 gm.Dashboards = dashboardData.GetDashboardInfo();
                 gm.ListDashboards2 = dashboardData.GetDashboardCountry_Churches();
                 gm.LDashBoardClients = clientdashboardData.GetDashboardClientInfo(-1);
@@ -48,20 +49,17 @@ namespace MCNMedia_Dev.Controllers
                 GoogleAnalytics googleantics = new GoogleAnalytics(environment);
                 gm.googleAnalytics = googleantics.GoogleAnalytics_GetAll(eventDate);
                 ViewBag.TotalCountriesCount = gm.googleAnalytics.Sum(item => item.Count);
+              
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Dashboard Error" + e.Message);
-                 throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(gm);
             }
             
         }
 
-        private void ShowMessage(string exceptionMessage)
-        {
-            _Helper.Common.SaveToXXX(exceptionMessage);
-            log.Info("Exception: " + exceptionMessage);
-        }
+        
     }
 }
