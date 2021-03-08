@@ -21,6 +21,14 @@
 
         </div>
 
+    </div><div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success" id="addScheduleSuccessMessage">
+                saved Successfully! 
+            </div>
+
+        </div>
+
     </div>
    
 
@@ -277,10 +285,15 @@
             success: function (response) {
                 if (response.success) {
 
-                    $('#AddScheduleModal').modal('hide');
+               
                     setTimeout(function () {
+                        $('#addScheduleSuccessMessage').fadeIn();
+                    }, 9000);
+                    
+                    
+                        $('#AddScheduleModal').modal('hide');
                         window.location.reload();
-                    },3000);
+          
                    
                  
                 }
