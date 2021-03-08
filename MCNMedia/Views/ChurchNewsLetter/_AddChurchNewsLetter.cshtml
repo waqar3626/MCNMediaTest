@@ -4,6 +4,13 @@
 
 }
 
+<div class="form-group row p-3" id="alertDiv9999">
+    <div class="col-md-12">
+        <div class="alertNew alert-dangerNew"  id="alertLabel9999">
+            
+        </div>
+    </div>
+</div>
 @using (Html.BeginForm("AddChurchNewsLetter", "ChurchNewsLetter", FormMethod.Post, new { enctype = "multipart/form-data", @id = "AddChurchNewsletter" }))
 
 {
@@ -11,12 +18,13 @@
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
             <div class="alert alert-danger" id="addNewsLetterErrorMessage">
-                
+
             </div>
 
         </div>
 
-    </div><div class="row m-0 mb-3">
+    </div>
+    <div class="row m-0 mb-3">
         <div class="col-lg-12">
             <div class="alert alert-success" id="addNewsLetterSuccessMessage">
                 saved Successfully!
@@ -27,13 +35,7 @@
     </div>
 
 
-    <div class="form-group row p-3" id="alertDiv99">
-        <div class="col-md-12">
-            <div class="alert alert-danger" role="alert" id="alertLabel99">
 
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-sm-12">
 
@@ -68,8 +70,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-
-        $('#alertDiv99').hide();
+        $('#alertDiv9999').hide();
     });
     function AddChurchNewsLetter() {
 
@@ -92,10 +93,10 @@
             $('#newsletter_Url').attr('class', 'form-control border-danger');
             ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
             $('#newsletterTitle').attr('class', 'form-control border-danger');
-            ss += '<label >Please provide a valid NewsLetter Title </label>';
+            ss += '<br/><label >Please provide a valid NewsLetter Title </label>';
 
-            $('#alertLabel99').html(ss);
-            $('#alertDiv99').show();
+            $('#alertLabel9999').html(ss);
+            $('#alertDiv9999').show();
             return;
             $('#AddChurchNewsLetterModal').modal('show');
         }
@@ -104,8 +105,8 @@
             ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
 
 
-            $('#alertLabel99').html(ss);
-            $('#alertDiv99').show();
+            $('#alertLabel9999').html(ss);
+            $('#alertDiv9999').show();
             return;
             $('#AddChurchNewsLetterModal').modal('show');
         }
@@ -114,15 +115,15 @@
             ss += '<label >Please provide a valid Tab Name </label>';
 
 
-            $('#alertLabel99').html(ss);
-            $('#alertDiv99').show();
+            $('#alertLabel9999').html(ss);
+            $('#alertDiv9999').show();
             return;
             $('#AddChurchNewsLetterModal').modal('show');
         }
         else {
             $('#newsletterTitle').attr('class', 'form-control');
             $('#newsletter_Url').attr('class', 'form-controls border-success');
-            $('#alertDiv99').hide();
+            $('#alertDiv9999').hide();
         }
         formData.append("mediaFile", input.files[0]);
         $('#AddChurchNewsLetterModal').modal('hide');
@@ -145,11 +146,11 @@
                     $('#AddChurchNewsletter')[0].reset();
                     var IntervalTime = setTimeout($('#AddChurchNewsLetterModal').modal('hide'), 5000);
 
-                  
-                    
-       
 
-                              
+
+
+
+
                 }
                 else {
                     displayBusyIndicator2();
