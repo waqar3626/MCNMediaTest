@@ -43,16 +43,15 @@ namespace MCNMedia_Dev.Controllers
                     chnewsLetter.NewsLetterUrl = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.NewsLetter, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
                     chnewsLetter.NewsLetterTitle = AddChurchNewsLetterTitle;
                     chnewsLetter.ShowOnWebsite = ShowOnWebsite;
-
-
                     int res = churchNewsLetterDataAccess.AddNewsLetter(chnewsLetter);
+                    return Json(new { success = true, res });
                 }
+              
                 return Json(1);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Add Church NewsLetter Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
         }
 
@@ -81,12 +80,12 @@ namespace MCNMedia_Dev.Controllers
                 }
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 List<NewsLetter> slideInfo = churchNewsLetterDataAccess.GetNewsLetterByChurch(churchId).ToList();
+                throw new Exception();
                 return Json(slideInfo);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Get Specific NewsLetter Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
         }
         [DisableRequestSizeLimit]

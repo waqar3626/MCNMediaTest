@@ -4,9 +4,27 @@
 
 }
 
-@using (Html.BeginForm("AddChurchNewsLetter", "ChurchNewsLetter", FormMethod.Post, new { enctype = "multipart/form-data", @id="AddChurchNewsletter"}))
+@using (Html.BeginForm("AddChurchNewsLetter", "ChurchNewsLetter", FormMethod.Post, new { enctype = "multipart/form-data", @id = "AddChurchNewsletter" }))
 
 {
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger" id="addNewsLetterErrorMessage">
+                
+            </div>
+
+        </div>
+
+    </div><div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success" id="addNewsLetterSuccessMessage">
+                saved Successfully!
+            </div>
+
+        </div>
+
+    </div>
 
 
     <div class="form-group row p-3" id="alertDiv99">
@@ -19,23 +37,23 @@
     <div class="row">
         <div class="col-sm-12">
 
-          
+
             <div class="form-group row">
                 <label asp-for="ChurchNewsLetter.NewsLetterTitle" class="control-label">Title</label>
-                @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterTitle,  new { @class = "form-control form-control-sm", @id = "newsletterTitle", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "100", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterTitle, new { @class = "form-control form-control-sm", @id = "newsletterTitle", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "100", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                 @Html.HiddenFor(model => model.ChurchNewsLetter.ChurchNewsLetterId, new { @id = "ChurchNewsLetterId" })
                 @Html.HiddenFor(model => model.ChurchNewsLetter.ChurchId, new { @id = "ChurchId" })
             </div>
             <div class="form-group ">
                 <div class="col-2 ">
                     <label class="form-check-label">
-                        <input class="form-check-input"  id="showOnWebsite" asp-for="ChurchNewsLetter.ShowOnWebsite" /> @Html.DisplayNameFor(model => model.ChurchNewsLetter.ShowOnWebsite )
-                        </label>
-                        </div>
+                        <input class="form-check-input" id="showOnWebsite" asp-for="ChurchNewsLetter.ShowOnWebsite" /> @Html.DisplayNameFor(model => model.ChurchNewsLetter.ShowOnWebsite)
+                    </label>
+                </div>
                 <div class="col-12">
                     @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterUrl, new { @class = "form-control form-control-sm dropify", @id = "newsletter_Url", @name = "MediaURl4", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                 </div>
-               
+
             </div>
 
             <div class="float-right">
@@ -54,8 +72,7 @@
         $('#alertDiv99').hide();
     });
     function AddChurchNewsLetter() {
-        $('#AddChurchNewsLetterModal').modal('hide');
-        displayBusyIndicator();
+
         var ss = '';
         var newsletterTitle = document.getElementById('newsletterTitle').value;
         var showOnWebsite = document.getElementById('showOnWebsite').value;
@@ -113,19 +130,40 @@
         $.ajax({
             type: "POST",
             url: "/ChurchNewsLetter/AddNewsLetter/",
-           
+
             data: formData,// tell jQuery not to set contentType
             contentType: false,
-            processData: false,  
+            processData: false,
             success: function (result) {
-                if (result === -1) {
+                if (result.success) {
+                    $('#addScheduleSuccessMessage').fadeIn();
+                    $('#addScheduleSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addScheduleSuccessMessage").slideUp(500);
+                    });
+                    sleep(5000);
+                    loadNewsLetter();
+                    $('#AddChurchNewsletter')[0].reset();
+                    var IntervalTime = setTimeout($('#AddChurchNewsLetterModal').modal('hide'), 5000);
 
-                    location.reload();
+                  
+                    
+       
+
+                              
                 }
-                loadNewsLetter();
-            
-                displayBusyIndicator2();
-                $('#AddChurchNewsletter')[0].reset();
+                else {
+                    displayBusyIndicator2();
+                    $('#AddChurchNewsLetterModal').modal('show');
+                    $('#addNewsLetterErrorMessage').html(result.responseText);
+                    $('#addNewsLetterErrorMessage').fadeIn();
+
+                    $('#addNewsLetterErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addNewsLetterErrorMessage").slideUp(500);
+
+
+                    });
+
+                }
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
