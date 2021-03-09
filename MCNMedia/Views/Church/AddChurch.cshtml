@@ -12,6 +12,22 @@
         color: #dc3545;
     }
 </style>
+
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsgPartial))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsgPartial
+            </div>
+
+        </div>
+
+    </div>
+
+}
 <form asp-action="AddChurch" asp-controller="Church" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="grid-margin stretch-card">
         <div class="card">
@@ -173,7 +189,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-       
+
         $('#ImageText').hide();
         $(function () {
             $("#InstallationDate").datepicker({
@@ -182,7 +198,7 @@
             });
             $("#InstallationDate").datepicker('setDate', new Date());
         });
-        
+
     });
     $('#ValChurchSubmit').click(function () {
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];

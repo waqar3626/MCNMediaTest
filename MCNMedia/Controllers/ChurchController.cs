@@ -127,6 +127,14 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        private List<Church> UserList(Church church)
+        {
+            List<Church> ListChurch = churchDataAccess.GetAllChurch(church).ToList<Church>();
+            return ListChurch;
+
+
+        }
+
         [HttpPost]
         public IActionResult AddChurch(Church church, IFormFile imageURl2)
         {
@@ -143,13 +151,31 @@ namespace MCNMedia_Dev.Controllers
                 church.CreateBy = (int)HttpContext.Session.GetInt32("UserId");
                 church.Slug = ((church.ChurchName + "-" + church.Town).ToLower()).Replace(" ", "-").Replace("'", "").Replace("_", "-").Replace("(", "-").Replace(".", "");
                 churchDataAccess.AddChurch(church);
+                List<Church> ListChurch = churchDataAccess.GetAllChurch(church).ToList<Church>();
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
-                return RedirectToAction("Listchurch");
+                //throw new Exception();
+                return RedirectToAction("Listchurch", ListChurch);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage(" Add Church Error" + e.Message);
-                throw;
+                Church chr = new Church();
+                chr.ChurchId = 1;
+                chr.CountyId = -1;
+                chr.ClientTypeId = -1;
+                chr.ChurchName = "";
+                chr.EmailAddress = "";
+                chr.Phone = "";
+                chr.Town = "";
+                chr.CountryId = -1;
+
+                LoadServerDDL();
+                LoadClientDDL();
+                LoadCountyDDL();
+                LoadCountryDDL();
+                List<Church> ListChurch = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                ViewBag.PartalBit = "-1";
+                ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
+                return View("Listchurch", ListChurch);
             }
 
         }

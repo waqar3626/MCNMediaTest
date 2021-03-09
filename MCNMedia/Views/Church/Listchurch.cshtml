@@ -12,6 +12,16 @@
         <div class="card-header card-header-custom">
             Search Church
         </div>
+        @if (ViewBag.PartalBit == "-1")
+        {
+            <input type="hidden" id="hdnViewPartialBit" value="@ViewBag.PartalBit" />
+
+
+        }
+        else
+        {
+            <input type="hidden" id="hdnViewPartialBit" value="none" />
+        }
         <div class="card-body">
             <div class="">
                 <form method="post" asp-action="SearchChurch" asp-controller="church">
@@ -65,8 +75,8 @@
                                 <label class="col-sm-4 col-form-label">Country</label>
                                 <div class="col-sm-8">
                                     @*<select id="select1" name="Country" class="select-search" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
-            <option value="-1">--Select Country--</option>
-        </select>*@
+                                        <option value="-1">--Select Country--</option>
+                                    </select>*@
                                     <select name="Country" id="select1" class="form-control" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",Context.Session.GetInt32("countryId")))">
                                         <option value="-1">--Select Country--</option>
                                     </select>
@@ -233,6 +243,13 @@
 <script>
     $(document).ready(function () {
         $('#order-listing').removeAttr('hidden');
+
+
+        if ($('#hdnViewPartialBit').val() == '-1') {
+            $('#AddChurchPopUp').modal('show');
+
+
+        }
     });
 
 
