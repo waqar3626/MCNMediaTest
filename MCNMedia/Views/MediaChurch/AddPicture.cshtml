@@ -4,12 +4,29 @@
 
 }
 
-@using (Html.BeginForm("AddPicture", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", @id="AddPictureForm" }))
+@using (Html.BeginForm("AddPicture", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", @id = "AddPictureForm" }))
 
 {
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger" id="addPictureErrorMessage">
+
+            </div>
+
+        </div>
+
+    </div><div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success" id="addPictureSuccessMessage">
+                saved Successfully!
+            </div>
+
+        </div>
+
+    </div>
     <div class="form-group row p-3" id="alertDiv">
         <div class="col-md-12">
-            <div class="alert alert-danger" role="alert" id="alertLabel">
+            <div class="alertNew alert-dangerNew"  id="alertLabel">
 
             </div>
         </div>
@@ -30,11 +47,11 @@
             </div>
 
             <div class="form-group row">
-                
+
                 <div class="col-12">
                     @Html.TextBoxFor(model => model.Media.MediaURL, new { @class = "form-control form-control-sm dropify", @id = "Picture_Url", @name = "MediaURl3", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                 </div>
-                
+
             </div>
 
 
@@ -54,7 +71,7 @@
     });
 
 
-   
+
     function AddPictures() {
         var s = "";
         var pictureTabName = document.getElementById('picTabName').value;
@@ -97,13 +114,31 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
-                if (result === -1) {
-                    
-                    location.reload(); 
+                
+                if (result.success) {
+                    $('#addPictureSuccessMessage').fadeIn();
+                    $('#addPictureSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addPictureSuccessMessage").slideUp(500);
+                    });
+                    sleep(5000);
+                    loadPicture();
+                    $('#AddPictureForm')[0].reset();
+                    var IntervalTime = setTimeout($('#AddModal').modal('hide'), 5000);
+
                 }
-                loadPicture();
-                displayBusyIndicator2();
-                $('#AddPictureForm')[0].reset();
+                else {
+                    displayBusyIndicator2();
+                    $('#AddModal').modal('show');
+                    $('#addPictureErrorMessage').html(result.responseText);
+                    $('#addPictureErrorMessage').fadeIn();
+
+                    $('#addPictureErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addPictureErrorMessage").slideUp(500);
+
+
+                    });
+
+                }
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

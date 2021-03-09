@@ -3,11 +3,28 @@
 
 }
 
-@using (Html.BeginForm("AddVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @id= "AddVideoForm" }))
+@using (Html.BeginForm("AddVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @id = "AddVideoForm" }))
 {
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger" id="addVideoErrorMessage">
+
+            </div>
+
+        </div>
+
+    </div><div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success" id="addVideoSuccessMessage">
+                saved Successfully!
+            </div>
+
+        </div>
+
+    </div>
     <div class="form-group row p-3" id="alertDiv11">
         <div class="col-md-12">
-            <div class="alert alert-danger" role="alert" id="alertLabel11">
+            <div class="alertNew alert-dangerNew"  id="alertLabel11">
 
             </div>
         </div>
@@ -47,18 +64,18 @@
             $('#alertDiv11').hide();
         });
         function AddVid() {
-          
-            var ss='';
+
+            var ss = '';
 
             var VidTabName = document.getElementById('AddMedVidTabName').value;
             var formData = new FormData();
             formData.append("mediaType", "Video");
             formData.append("AddVidTabName", VidTabName);
             var input = document.getElementById('VidFile');
-            var fileExtension = ['mp4','flv','avi'];
+            var fileExtension = ['mp4', 'flv', 'avi'];
             if ($.inArray($('#VidFile').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
 
-           
+
                 input = "";
 
 
@@ -74,9 +91,7 @@
                 return;
                 $('#AddddModal').modal('show');
             }
-            else if (input == '' && VidTabName != '')
-
-            {
+            else if (input == '' && VidTabName != '') {
                 $('#VidFile').attr('class', 'form-control border-danger');
                 ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
 
@@ -117,9 +132,31 @@
 
 
                 success: function (result) {
-                    loadVideo();
-                    displayBusyIndicator2();
-                    $('#AddVideoForm')[0].reset();
+                   
+                    if (result.success) {
+                        $('#addVideoSuccessMessage').fadeIn();
+                        $('#addVideoSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addVideoSuccessMessage").slideUp(500);
+                        });
+                        sleep(5000);
+                        loadVideo();
+                        $('#AddVideoForm')[0].reset();
+                        var IntervalTime = setTimeout($('#AddddModal').modal('hide'), 5000);
+
+                    }
+                    else {
+                        displayBusyIndicator2();
+                        $('#AddddModal').modal('show');
+                        $('#addVideoErrorMessage').html(result.responseText);
+                        $('#addVideoErrorMessage').fadeIn();
+
+                        $('#addVideoErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addVideoErrorMessage").slideUp(500);
+
+
+                        });
+
+                    }
                 },
                 error: function (errormessage) {
                     //alert(errormessage.responseText);

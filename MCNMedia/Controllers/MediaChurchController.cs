@@ -63,17 +63,19 @@ namespace MCNMedia_Dev.Controllers
                     mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, mediaChurch.ChurchId);
                     mediaChurch.MediaType = mediaType;
                     mediaChurch.TabName = AddPicTabName;
+
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
+                    return Json(new { success = true, res });
                 }
+
                 return Json(1);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Add Picture Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
-
         }
+    
 
         public JsonResult GetMediaByTypeId(string medType)
         {
@@ -144,17 +146,14 @@ namespace MCNMedia_Dev.Controllers
                     mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                     res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
                 }
-               
 
-
-                return Json(res);
-            }
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+            
+        }
             catch (Exception e)
             {
-                ShowMessage("Update Picture Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
-
         }
 
         public IActionResult DeleteMedia(int id)
@@ -204,18 +203,17 @@ namespace MCNMedia_Dev.Controllers
                     media.MediaType = mediaType;
                     media.MediaName = mediaFile.FileName.ToString();
                     media.TabName = AddVidTabName;
+
                     int res = mediaChurchDataAccess.AddMedia(media);
-                    return Json(res);
+                   
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
                 }
                 return RedirectToAction("Listchurch", "Church");
             }
-
             catch (Exception e)
             {
-                ShowMessage("Add Video Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
-
         }
 
         public JsonResult ListVideo(string medType)
@@ -277,16 +275,18 @@ namespace MCNMedia_Dev.Controllers
                 mediaupdate.MediaType = mediaType;
                 mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
-                return Json(res);
+                return Json(new
+                {
+                    success = true,
+                    res
+                });
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Update Video Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
-
-
         }
+     
 
         public IActionResult DeleteVideo(int id)
         {
@@ -336,15 +336,15 @@ namespace MCNMedia_Dev.Controllers
                 {
 
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
+                    return Json(new { success = true, res });
                 }
+
                 return Json(1);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Add Slide Show Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
-
         }
 
         public JsonResult GetSlideShowByTypeId(string medType)
@@ -399,14 +399,13 @@ namespace MCNMedia_Dev.Controllers
                 mediaupdate.TabName = EditSlideShowTabName;
                 mediaupdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.UpdateMedia(mediaupdate);
-                return Json(res);
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+
             }
             catch (Exception e)
             {
-                ShowMessage("Update Slide Show Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
-
         }
 
         public IActionResult DeleteSlide(int id)
