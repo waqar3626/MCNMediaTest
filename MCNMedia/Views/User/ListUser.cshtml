@@ -9,6 +9,16 @@
     <div class="card-header card-header-custom">
         Search User
     </div>
+    @if (ViewBag.PartalBit == "-1")
+    {
+        <input type="hidden" id="hdnViewPartialBit" value="@ViewBag.PartalBit" />
+
+
+    }
+    else
+    {
+        <input type="hidden" id="hdnViewPartialBit" value="none" />
+    }
     <div class="card-body">
         <div class="">
             <form method="post" asp-action="Search" asp-controller="user">
@@ -265,6 +275,11 @@
 <script>
     $(document).ready(function () {
         $('#order-listing').removeAttr('hidden');
+        if ($('#hdnViewPartialBit').val() == '-1') {
+            $('#AddUserPopUp').modal('show');
+
+
+        }
     });
 
 

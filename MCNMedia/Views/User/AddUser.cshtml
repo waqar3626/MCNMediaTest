@@ -44,6 +44,23 @@
             box-shadow: 0 0 0 0.2rem rgba(246, 204, 208, 0.25);
         }
 </style>
+
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsgPartial))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsgPartial
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
 <form asp-action="AddUser" id="AddUserForm" class="needs-validation" novalidate>
 
     <div class="card">

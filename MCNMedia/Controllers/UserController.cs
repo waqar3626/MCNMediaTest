@@ -19,6 +19,7 @@ namespace MCNMedia_Dev.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         UserDataAccessLayer userDataAccess = new UserDataAccessLayer();
+        //GenericModel gm = new GenericModel();
 
         [HttpGet]
         public IActionResult AddUser()
@@ -50,9 +51,11 @@ namespace MCNMedia_Dev.Controllers
                 user.RoleId = -1;
                 ViewBag.UserType = -1;
                 GenericModel gm = new GenericModel();
-                ViewBag.IsSuccess = Convert.ToInt32(TempData["IsSuccess"]);
+                gm.LUsers = UserList(user);
+                //ViewBag.IsSuccess = Convert.ToInt32(TempData["IsSuccess"]);
+                ViewBag.PartalBit = "none";
                 ViewBag.Message = TempData["Message"];
-                gm.LUsers = userDataAccess.GetAllUser(user).ToList<User>();
+                //gm.LUsers = userDataAccess.GetAllUser(user).ToList<User>();
                    return View(gm);
 
             }
@@ -62,6 +65,14 @@ namespace MCNMedia_Dev.Controllers
                     ShowMessage("List User Error" + e.Message);
                     throw;
             }
+        }
+
+        private List<User> UserList(User user)
+        {
+            List<User> ListUser = userDataAccess.GetAllUser(user).ToList<User>();
+            return ListUser;
+
+
         }
 
         [HttpGet]
@@ -89,6 +100,7 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult AddUser(User usr)
         {
+            GenericModel gm=new GenericModel();
             try {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
@@ -98,9 +110,19 @@ namespace MCNMedia_Dev.Controllers
                 {
                     usr.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     userDataAccess.AddUser(usr);
-                    TempData["IsSuccess"] = 1;
-                    TempData["Message"] = "User Added Successfully";
-                    return RedirectToAction("ListUser");
+                    gm.LUsers = UserList(usr);
+                    gm.Users = usr;
+
+                    //TempData["IsSuccess"] = 1;
+                    //TempData["Message"] = "User Added Successfully";
+                    //ViewBag.SuccessMsg = "Email Send Successfully";
+
+                    //throw new Exception();
+                    return View("ListUser", gm);
+
+                    //before
+                    //throw new Exception();
+                    //return RedirectToAction("ListUser");
                 }
                 else
                 {
@@ -108,10 +130,14 @@ namespace MCNMedia_Dev.Controllers
                     return View();
                 }
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                    ShowMessage("Add User Error" + e.Message);
-                    throw;
+                LoadDDL();
+                ViewBag.PartalBit = "-1";
+                ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
+                return View("ListUser", gm);
+                //ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                //return View();
             }
 
           
