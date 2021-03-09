@@ -15,6 +15,14 @@
 
 
     }
+    
+    @if (ViewBag.PartalBit == "-2")
+    {
+        <input type="hidden" id="hdnViewPartialBit" value="@ViewBag.PartalBit" />
+
+
+    }
+
     else
     {
         <input type="hidden" id="hdnViewPartialBit" value="none" />
@@ -277,6 +285,11 @@
         $('#order-listing').removeAttr('hidden');
         if ($('#hdnViewPartialBit').val() == '-1') {
             $('#AddUserPopUp').modal('show');
+
+
+        }
+        if ($('#hdnViewPartialBit').val() == '-2') {
+            $('#EditUserModal').modal('show');
 
 
         }

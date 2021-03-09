@@ -170,6 +170,14 @@ namespace MCNMedia_Dev.Controllers
         
         public IActionResult UpdateUser([Bind] User user, string NewPass)
         {
+            GenericModel gm = new GenericModel();
+            User user1 = new User();
+            user1.RoleId = -1;
+            user1.UserId = -1;
+            user1.EmailAddress = "";
+            user1.FirstName = "";
+            user1.LastName = "";
+
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -186,20 +194,27 @@ namespace MCNMedia_Dev.Controllers
                     {
                         user.NewPassword = user.LoginPassword;
                     }
-                    
                     userDataAccess.UpdateUser(user);
-                return RedirectToAction("ListUser");
+                    gm.LUsers = UserList(user1);
+                    gm.Users = user;
+                    //throw new Exception();
+                    return RedirectToAction("ListUser", gm);
                 }
                 else
-                { LoadDDL();
+                {
+                    LoadDDL();
                     return PartialView("Edit");
                 }
             }
 
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Edit User Error" + e.Message);
-                throw;
+                LoadDDL();
+                gm.LUsers = UserList(user1);
+                ViewBag.PartalBit = "-2";
+                ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
+                return View("ListUser", gm);
+
             }
 
 
