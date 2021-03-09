@@ -11,9 +11,17 @@
     @if (ViewBag.PartalBit == "-1")
     {
         <input type="hidden" id="hdnViewPartialBit" value="@ViewBag.PartalBit" />
-       
+
 
     }
+
+    @if (ViewBag.PartalBit == "-2")
+    {
+        <input type="hidden" id="hdnViewPartialBit" value="@ViewBag.PartalBit" />
+
+
+    }
+
     else
     {
         <input type="hidden" id="hdnViewPartialBit" value="none" />
@@ -183,7 +191,7 @@
                     <div class="modal-body" id="AddRecordPreview">
                         @Html.Partial("~/Views/Recording/AddRecording.cshtml", Model.Recordings)
                     </div>
-                
+
                 </div>
             </div>
         </div>
@@ -321,10 +329,13 @@
 
         if ($('#hdnViewPartialBit').val() == '-1') {
             $('#AddRecordingPopUp').modal('show');
-    
-            
         }
-    });
+            if ($('#hdnViewPartialBit').val() == '-2') {
+                $('#EditRecordingModal').modal('show');
+
+
+            }
+        });
 
 
 </script>

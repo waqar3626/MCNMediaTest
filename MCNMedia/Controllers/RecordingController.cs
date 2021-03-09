@@ -181,6 +181,7 @@ namespace MCNMedia_Dev.Controllers
                 if (HttpContext.Session.GetString("UserType") == "admin")
                 {
                     recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                    //throw new Exception();
                     recordDataAccess.UpdateRecording(recording);
                     gm.LRecordings = RecordingList();
                    
@@ -205,10 +206,14 @@ namespace MCNMedia_Dev.Controllers
                 }
                 return Json(1);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Edit Recording Errors 'Post' : " + e.Message);
-                throw;
+                LoadChurchDDL();
+                gm.LRecordings = RecordingList();
+                ViewBag.PartalBit = "-2";
+                ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
+                return View("ListRecording", gm);
+
             }
 
         }
