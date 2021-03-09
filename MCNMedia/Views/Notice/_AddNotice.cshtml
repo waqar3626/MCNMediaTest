@@ -11,10 +11,27 @@
     <div class="row">
         <div class="col">
             <form asp-action="Add" class="needs-validation" novalidate>
+                <div class="row m-0 mb-3">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" id="addNoticeErrorMessage">
+
+                        </div>
+
+                    </div>
+
+                </div><div class="row m-0 mb-3">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success" id="addNoticeSuccessMessage">
+                            saved Successfully!
+                        </div>
+
+                    </div>
+
+                </div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group row p-3" id="alertDiv21">
                     <div class="col-md-12">
-                        <div class="alert alert-danger" role="alert" id="alertLabel21">
+                        <div class="alertNew alert-dangerNew" id="alertLabel21">
 
                         </div>
                     </div>
@@ -39,7 +56,7 @@
 
                 <div class="form-group float-right">
 
-                    <a onclick="AddNotice1()"  class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Add"><i class="mdi mdi-content-save text-white"></i>Add</a>
+                    <a onclick="AddNotice1()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Add"><i class="mdi mdi-content-save text-white"></i>Add</a>
                     <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Cancle"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
 
                 </div>
@@ -108,12 +125,30 @@
 
 
                 success: function (result) {
-                    if (result === -1) {
+             
+                    if (result.success) {
+                        $('#addNoticeSuccessMessage').fadeIn();
+                        $('#addNoticeSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addNoticeSuccessMessage").slideUp(500);
+                        });
+                        sleep(5000);
+                        loadNotice();
+                        var IntervalTime = setTimeout($('#AddNoticeModal').modal('hide'), 5000);
 
-                        location.reload();
                     }
-                    loadNotice();
-                    $('#AddNoticeModal').modal('hide');
+                    else {
+                        displayBusyIndicator2();
+                        $('#AddNoticeModal').modal('show');
+                        $('#addNoticeErrorMessage').html(result.responseText);
+                        $('#addNoticeErrorMessage').fadeIn();
+
+                        $('#addNoticeErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addNoticeErrorMessage").slideUp(500);
+
+
+                        });
+
+                    }
                 },
                 error: function (errormessage) {
                     //alert(errormessage.responseText);

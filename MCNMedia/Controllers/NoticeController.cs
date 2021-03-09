@@ -47,14 +47,16 @@ namespace MCNMedia_Dev.Controllers
 
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
+    
                     int res = noticeDataAccess.AddNotice(notice);
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
                 }
+
                 return Json(1);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMesage("Add Notice Errors  'Post' : " + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
         }
 
@@ -130,15 +132,16 @@ namespace MCNMedia_Dev.Controllers
                 notice.ChurchNoticeId = Convert.ToInt32(ChurchNoticeId);
                 notice.NoticeTitle = NoticeTitle;
                 notice.NoticeName = NoticeName;
-
+              
                 int res = noticeDataAccess.UpdateNotice(notice);
-                return Json(res);
+                return Json(new { success = true, responseText = "The attached file is not supported." });
             }
+
             catch (Exception e)
             {
-                ShowMesage("UpdateNotice Errors : " + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
+
         }
 
         private void ShowMesage(String exceptionMessage)

@@ -11,6 +11,23 @@
 
 @using (Html.BeginForm("UpdateNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger" id="editNoticeErrorMessage">
+
+            </div>
+
+        </div>
+
+    </div><div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success" id="editNoticeSuccessMessage">
+                saved Successfully!
+            </div>
+
+        </div>
+
+    </div>
 
     <div class="row">
         <div class="col">
@@ -41,6 +58,12 @@
 
 
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#editNoticeErrorMessage').hide();
+            $('#editNoticeSuccessMessage').hide();
+        });
+
         function UpdateNotice() {
 
             var churchNoticeId = $('#chNoticeId').val();
@@ -49,9 +72,9 @@
             formData.append("ChurchNoticeId", churchNoticeId);
             formData.append("NoticeTitle", noticeTitle);
             var noticeName = $("#summernoteExample").summernote('code');
-  
-            
-       
+
+
+
             formData.append("NoticeName", noticeName);
 
             $.ajax({
@@ -62,15 +85,33 @@
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,  // tell jQuery not to set contentType
 
-
                 success: function (result) {
-                    if (result === -1) {
 
-                        location.reload();
+                    if (result.success) {
+                        $('#editNoticeSuccessMessage').fadeIn();
+                        $('#editNoticeSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#editNoticeSuccessMessage").slideUp(500);
+                        });
+                        sleep(5000);
+                        loadNotice();
+                        var IntervalTime = setTimeout($('#EditNoticeModal').modal('hide'), 5000);
+
                     }
-                    loadNotice();
-                    $('#EditNoticeModal').modal('hide');
+                    else {
+                        displayBusyIndicator2();
+                        $('#EditNoticeModal').modal('show');
+                        $('#editNoticeErrorMessage').html(result.responseText);
+                        $('#editNoticeErrorMessage').fadeIn();
+
+                        $('#editNoticeErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#editNoticeErrorMessage").slideUp(500);
+
+
+                        });
+
+                    }
                 },
+
                 error: function (errormessage) {
                     //alert(errormessage.responseText);
                 }
