@@ -80,7 +80,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 List<NewsLetter> slideInfo = churchNewsLetterDataAccess.GetNewsLetterByChurch(churchId).ToList();
-                throw new Exception();
+         
                 return Json(slideInfo);
             }
             catch (Exception exp)
