@@ -124,10 +124,10 @@
                     loadPicture();
                     $('#AddPictureForm')[0].reset();
                     var IntervalTime = setTimeout($('#AddModal').modal('hide'), 5000);
-
+                    displayBusyIndicator2();
                 }
                 else {
-                    displayBusyIndicator2();
+                  
                     $('#AddModal').modal('show');
                     $('#addPictureErrorMessage').html(result.responseText);
                     $('#addPictureErrorMessage').fadeIn();

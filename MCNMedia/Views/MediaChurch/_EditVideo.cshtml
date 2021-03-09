@@ -183,10 +183,10 @@
                     loadVideo();
 
                     var IntervalTime = setTimeout($('#EditVidModal').modal('hide'), 5000);
-
+                    displayBusyIndicator2();
                 }
                 else {
-                    displayBusyIndicator2();
+                
                     $('#EditVidModal').modal('show');
                     $('#editVideoErrorMessage').html(result.responseText);
                     $('#editVideoErrorMessage').fadeIn();

@@ -146,14 +146,14 @@
                     $('#AddChurchNewsletter')[0].reset();
                     var IntervalTime = setTimeout($('#AddChurchNewsLetterModal').modal('hide'), 5000);
 
-
+                    displayBusyIndicator2();
 
 
 
 
                 }
                 else {
-                    displayBusyIndicator2();
+                   
                     $('#AddChurchNewsLetterModal').modal('show');
                     $('#addNewsLetterErrorMessage').html(result.responseText);
                     $('#addNewsLetterErrorMessage').fadeIn();

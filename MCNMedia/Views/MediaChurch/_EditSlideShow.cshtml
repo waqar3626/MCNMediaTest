@@ -101,10 +101,10 @@
                     loadSlideShow();
                 
                     var IntervalTime = setTimeout($('#EditSlideShowModal').modal('hide'), 5000);
-
+                    displayBusyIndicator2();
                 }
                 else {
-                    displayBusyIndicator2();
+                  
                     $('#EditSlideShowModal').modal('show');
                     $('#editSlideshowErrorMessage').html(result.responseText);
                     $('#editSlideshowErrorMessage').fadeIn();

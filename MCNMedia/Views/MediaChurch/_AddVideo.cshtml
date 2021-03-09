@@ -142,10 +142,10 @@
                         loadVideo();
                         $('#AddVideoForm')[0].reset();
                         var IntervalTime = setTimeout($('#AddddModal').modal('hide'), 5000);
-
+                        displayBusyIndicator2();
                     }
                     else {
-                        displayBusyIndicator2();
+                       
                         $('#AddddModal').modal('show');
                         $('#addVideoErrorMessage').html(result.responseText);
                         $('#addVideoErrorMessage').fadeIn();

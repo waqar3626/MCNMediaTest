@@ -88,10 +88,10 @@
                     loadPicture();
 
                     var IntervalTime = setTimeout($('#EditPicModal').modal('hide'), 5000);
-
+                    displayBusyIndicator2();
                 }
                 else {
-                    displayBusyIndicator2();
+                   
                     $('#EditPicModal').modal('show');
                     $('#editPictureErrorMessage').html(result.responseText);
                     $('#editPictureErrorMessage').fadeIn();

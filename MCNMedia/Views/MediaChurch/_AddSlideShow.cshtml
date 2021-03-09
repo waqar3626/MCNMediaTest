@@ -135,10 +135,10 @@
                     loadSlideShow();
                     $('#AddSlideShowForm')[0].reset();
                     var IntervalTime = setTimeout($('#AddSlideShowModal').modal('hide'), 5000);
-
+                    displayBusyIndicator2();
                 }
                 else {
-                    displayBusyIndicator2();
+                  
                     $('#AddSlideShowModal').modal('show');
                     $('#addSlideshowErrorMessage').html(result.responseText);
                     $('#addSlideshowErrorMessage').fadeIn();
