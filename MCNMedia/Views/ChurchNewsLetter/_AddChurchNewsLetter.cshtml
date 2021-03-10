@@ -6,8 +6,8 @@
 
 <div class="form-group row p-3" id="alertDiv9999">
     <div class="col-md-12">
-        <div class="alertNew alert-dangerNew"  id="alertLabel9999">
-            
+        <div class="alertNew alert-dangerNew" id="alertLabel9999">
+
         </div>
     </div>
 </div>
@@ -15,24 +15,7 @@
 
 {
 
-    <div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-danger" id="addNewsLetterErrorMessage" hidden>
 
-            </div>
-
-        </div>
-
-    </div>
-    <div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-success" id="addNewsLetterSuccessMessage" hidden>
-                saved Successfully!
-            </div>
-
-        </div>
-
-    </div>
 
 
 
@@ -142,20 +125,20 @@
                     $('#AddChurchNewsLetterModal').modal('hide');
                     $('#addNewLetterListSuccessMessage').removeAttr('hidden');
                     displayBusyIndicator2();
-                  
+                    $('#addNewLetterListSuccessMessage').html('News letter added successfully!');
                     $('#addNewLetterListSuccessMessage').fadeIn();
                     $('#addNewLetterListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
                         $("#addNewLetterListSuccessMessage").slideUp(500);
                     });
-                  
-                    
+
+
                     $('#addNewLetterListSuccessMessage').attr('hidden');
 
 
 
                 }
                 else {
-                   
+
                     $('#AddChurchNewsLetterModal').modal('show');
                     $('#addNewsLetterErrorMessage').html(result.responseText);
                     $('#addNewsLetterErrorMessage').removeAttr('hidden');

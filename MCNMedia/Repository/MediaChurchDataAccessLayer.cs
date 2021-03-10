@@ -96,12 +96,13 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurchMedia_Update");
         }
 
-        public bool DeleteMedia(int chMediaId,int UpdateBy)
+        public int DeleteMedia(int chMediaId,int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", chMediaId);
             _dc.AddParameter("UserId", UpdateBy);
-            return _dc.ReturnBool("spChurchMedia_Delete");
+             _dc.ReturnBool("spChurchMedia_Delete");
+            return 1;
         }
     }
 }

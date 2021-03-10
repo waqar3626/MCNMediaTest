@@ -13,63 +13,64 @@
 <script type="text/javascript">
 
 </script>
+
 <div class="float-right mb-3">
     <button type="submit" id="AddNewsLetter1" class="btn btn-outline-behance btn-sm float-right " title="Add New" onclick="AddChNewsLetter()"> <i class="mdi mdi-plus"></i> Add NewsLetter</button>
 </div>
-    <div class="card-body">
-        <div id="newsletterView" class="row lightGallery newsLetterTab">
-        </div>
+<div class="card-body">
+    <div id="newsletterView" class="row lightGallery newsLetterTab">
     </div>
+</div>
 
 
 
-    <div class="row">
-        <div class="col-12 grid-margin">
-            <div class="modal fade" id="AddChurchNewsLetterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add NewsLetter</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="AddChurchNewsLetterPreview">
-                            @Html.Partial("~/Views/ChurchNewsLetter/_AddChurchNewsLetter.cshtml", Model.ChurchNewsLetter)
-                        </div>
-                        @*<div class="modal-footer">
-                                <button type="button" class="btn btn-success">Submit</button>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                            </div>*@
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="AddChurchNewsLetterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add NewsLetter</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
                     </div>
+                    <div class="modal-body" id="AddChurchNewsLetterPreview">
+                        @Html.Partial("~/Views/ChurchNewsLetter/_AddChurchNewsLetter.cshtml", Model.ChurchNewsLetter)
+                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 grid-margin">
-            <div class="modal fade" id="EditChurchNewsLetterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit NewsLetter</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="EditChurchNewsLetterPreview">
-                            @Html.Partial("~/Views/ChurchNewsLetter/_EditChurchNewsLetter.cshtml", Model.ChurchNewsLetter)
-                        </div>
-                        @*<div class="modal-footer">
-                                <button type="button" class="btn btn-success">Submit</button>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                            </div>*@
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="modal fade" id="EditChurchNewsLetterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit NewsLetter</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
+                        </button>
                     </div>
+                    <div class="modal-body" id="EditChurchNewsLetterPreview">
+                        @Html.Partial("~/Views/ChurchNewsLetter/_EditChurchNewsLetter.cshtml", Model.ChurchNewsLetter)
+                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
+</div>
+<script type="text/javascript">
     $(document).ready(function () {
 
         loadNewsLetter();
@@ -121,31 +122,43 @@
 
     function DeleteNewsLetter(churchNewsLetterId) {
 
-    var ans = confirm("Are you sure you want to delete this NewsLetter?");
-    if (ans) {
-        $.ajax({
-            url: "/ChurchNewsLetter/DeleteNewsLetter/" + churchNewsLetterId,
-            type: "POST",
+        var ans = confirm("Are you sure you want to delete this NewsLetter?");
+        if (ans) {
+            $.ajax({
+                url: "/ChurchNewsLetter/DeleteNewsLetter/" + churchNewsLetterId,
+                type: "POST",
 
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                if (result === -1) {
-                    location.reload();
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        loadNewsLetter();
+                        $('#addNewLetterListSuccessMessage').removeAttr('hidden');
+                        $('#addNewLetterListSuccessMessage').html('News Letter Deleted Successfully');
+                        $('#addNewLetterListSuccessMessage').fadeIn();
+
+                        $('#addNewLetterListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addNewLetterListSuccessMessage").slideUp(500);
+                        });
+                        $('#addNewLetterListSuccessMessage').attr('hidden');
+                    }
+                    else {
+                        $('#addNewLetterListErrorMessage').removeAttr('hidden');
+                        $('#addNewLetterListErrorMessage').html(result.responseText);
+                        $('#addNewLetterListErrorMessage').fadeIn();
+
+                        $('#addNewLetterListErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addNewLetterListErrorMessage").slideUp(500);
+                        });
+                        $('#addNewLetterListErrorMessage').attr('hidden');
+
+                    }
+                },
+                error: function (errormessage) {
+                    // alert(errormessage.responseText);
                 }
-                else {
-
-
-                    loadNewsLetter();
-                    if (result) { alert("Record Deleted"); }
-                }
-            },
-            error: function (errormessage) {
-               // alert(errormessage.responseText);
-            }
-        });
-    }
+            });
+        }
     }
 
-
-    </script>
+</script>

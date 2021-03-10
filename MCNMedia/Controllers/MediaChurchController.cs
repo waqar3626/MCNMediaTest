@@ -298,12 +298,11 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
-                return Json(res);
+                return Json(new { success = true, res });
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Video Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
 
         }
