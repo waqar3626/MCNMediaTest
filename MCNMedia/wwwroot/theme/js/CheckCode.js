@@ -380,6 +380,32 @@
         }
     });
 
+    $.contextMenu({
+        selector: '#context-menu-hover-autohideNewsLetter',
+        trigger: 'hover',
+        delay: 500,
+        autoHide: true,
+        callback: function (key, options) {
+            var m = "clicked: " + key;
+            var churchNewsletterid = options.$trigger[0].getAttribute('churchNewsLetterId');
+            if (key == "delete") {
+                DeleteNewsLetter(churchNewsletterid);
+            }
+           
+
+
+        },
+        items: {
+           
+            "delete": {
+                name: "Delete",
+                icon: "delete"
+
+            }
+
+        }
+    });
+
 
     $.contextMenu({
         selector: '#context-menu-hover-autohideRecording',

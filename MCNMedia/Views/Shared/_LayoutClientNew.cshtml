@@ -25,12 +25,22 @@
     <link rel="stylesheet" href="~/theme/css/horizontal-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/theme/images/favicon.png" />
-
+    <link rel="stylesheet" href="~/theme/vendors/lightgallery/css/lightgallery.css">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link href="~/theme/Loader.css" rel="stylesheet" />
     <link href="~/theme/ClientTheme.css" rel="stylesheet" />
     <link href="~/theme/CustomToggle.css" rel="stylesheet" />
+    <style type="text/css">
+        .for-generic {
+            height: 30px;
+            background-color: #1f4a79;
+            margin-bottom: 0px;
+            text-align: center;
+            padding-top: 5px;
+        }
+    </style>
     <style>
+
         .alertNew {
             position: relative;
             padding: 0.75rem 1.25rem;
@@ -219,9 +229,9 @@
                                             @Html.Partial("~/Views/UserLogin/ChangeUserPassword.cshtml")
                                         </div>
                                         @*<div class="modal-footer">
-                                <button type="button" class="btn btn-success">Submit</button>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                            </div>*@
+                                                <button type="button" class="btn btn-success">Submit</button>
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +267,7 @@
     <script src="~/theme/js/template.js"></script>
     <script src="~/theme/js/settings.js"></script>
     <script src="~/theme/js/todolist.js"></script>
-  
+
 
 
     <!-- endinject -->
@@ -280,7 +290,9 @@
     <!--End DateTimePicker-->
     <!-- endinject -->
     <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+    <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
 
+    <script src="~/theme/js/CheckCode.js"></script>
     <script src="~/theme/js/off-canvas.js"></script>
     <script src="~/theme/js/hoverable-collapse.js"></script>
     <script src="~/theme/js/template.js"></script>
@@ -327,7 +339,7 @@
     <script src="~/theme/js/todolist.js"></script>
 
     <script src="~/theme/vendors/chart.js/Chart.min.js"></script>
-
+    <script src="~/theme/js/light-gallery.js"></script>
     <script src="~/theme/js/bt-maxLength.js"></script>
     <script src="~/theme/js/tablesorter.js"></script>
     <script src="~/theme/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
