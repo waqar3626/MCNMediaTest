@@ -37,11 +37,55 @@ namespace MCNMedia_Dev.Controllers
 
         #region church info
 
+        private GenericModel InfoChurchAndDonation()
+        {
+           
 
+            int churchId = 0;
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+            {
+                churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+            }
+
+            Church church = chdataAccess.GetChurchData(churchId);
+            if (church == null)
+            {
+                return new GenericModel();
+            }
+            HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
+
+
+            ChurchDonation churchDonation = DonationDataAccessLayer.GetDonationByChurch(churchId);
+            gm.Churches = church;
+            gm.ChurchDonations = churchDonation;
+            return gm;
+        }
 
         [HttpGet]
         public IActionResult ChurchInfo()
         {
+            GenericModel gm = new GenericModel();
+            try
+            {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
+                gm = InfoChurchAndDonation();
+                return View(gm);
+            }
+            catch (Exception exp)
+            {
+                HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(gm);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UpdateChurchInfo([Bind] GenericModel church, IFormFile ImageUrl, string hdnImageUrl)
+        {
+            GenericModel gm = new GenericModel();
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -49,63 +93,38 @@ namespace MCNMedia_Dev.Controllers
                     return RedirectToAction("UserLogin", "UserLogin");
                 }
 
-                int churchId = 0;
-                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                string fileName = "";
+                if (ImageUrl != null)
                 {
-                    churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                    fileName = Path.GetFileName(ImageUrl.FileName);
+                    church.Churches.ImageURl = FileUploadUtility.UploadFile(ImageUrl, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
                 }
+                else
+                {
+                    int pos = hdnImageUrl.IndexOf("Upload");
+                    if (pos >= 0)
+                    {
+                        // String after founder  
 
-                Church church = chdataAccess.GetChurchData(churchId);
-                if (church == null)
-                {
-                    return NotFound();
+                        // Remove everything before url but include Upload 
+                        string beforeFounder = hdnImageUrl.Remove(0, pos);
+                        church.Churches.ImageURl = beforeFounder;
+                    }
+
                 }
+                church.Churches.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+                chdataAccess.UpdateChurch(church.Churches);
+                gm = InfoChurchAndDonation();
+                ViewBag.SuccessMsg = "Church Info Updated Successfully!";
+                return View("ChurchInfo",gm);
+            }
+            catch (Exception exp)
+            {
                 HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
-
-                GenericModel gm = new GenericModel();
-                ChurchDonation churchDonation = DonationDataAccessLayer.GetDonationByChurch(churchId);
-                gm.Churches = church;
-                gm.ChurchDonations = churchDonation;
-
-                return View(gm);
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View("ChurchInfo", gm);
             }
-            catch (Exception e)
-            {
-                ShowMessage("Church Info Errors : " + e.Message);
-                throw;
-            }
-        }
-
-        [HttpPost]
-        public IActionResult UpdateChurchInfo([Bind] GenericModel church, IFormFile ImageUrl, string hdnImageUrl)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
-            {
-                return RedirectToAction("UserLogin", "UserLogin");
-            }
-
-            string fileName = "";
-            if (ImageUrl != null)
-            {
-                fileName = Path.GetFileName(ImageUrl.FileName);
-                church.Churches.ImageURl = FileUploadUtility.UploadFile(ImageUrl, UploadingAreas.ChurchProfileImage); // Path.Combine(dirPath, fileName).Replace(@"\", @"/"); 
-            }
-            else
-            {
-                int pos = hdnImageUrl.IndexOf("Upload");
-                if (pos >= 0)
-                {
-                    // String after founder  
-
-                    // Remove everything before url but include Upload 
-                    string beforeFounder = hdnImageUrl.Remove(0, pos);
-                    church.Churches.ImageURl = beforeFounder;
-                }
-
-            }
-            church.Churches.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-            chdataAccess.UpdateChurch(church.Churches);
-            return RedirectToAction("ChurchInfo");
+            
 
         }
         #endregion
@@ -509,52 +528,74 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult Recording()
 
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
-            {
-                return RedirectToAction("UserLogin", "UserLogin");
-            }
+            GenericModel gm = new GenericModel();
             DateTime FromDate = DateTime.Now.AddDays(-7);
             DateTime ToDate = DateTime.Now;
-            GenericModel gm = new GenericModel();
-
-            LoadChurchDDL();
-            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-
-            gm.Churches = chdataAccess.GetChurchData(churchId);
-            HttpContext.Session.SetString("ctabId", "/Client/Recording");
-            gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate,"" ,churchId, "").ToList<Recording>();
-            ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
-            ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
-            ViewBag.EventName = "";
-
-            return View(gm);
-        }
-
-        [HttpPost]
-        public IActionResult SearchRecording(string fromDate, string toDate, string EventName)
-        {
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return RedirectToAction("UserLogin", "UserLogin");
                 }
-                GenericModel gm = new GenericModel();
-                DateTime FromDate = Convert.ToDateTime(fromDate);
-                DateTime ToDate = Convert.ToDateTime(toDate);
+               
+
+
+                LoadChurchDDL();
+                int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
+
+                gm.Churches = chdataAccess.GetChurchData(churchId);
+                HttpContext.Session.SetString("ctabId", "/Client/Recording");
+                gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate, "", churchId, "").ToList<Recording>();
+                ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
+                ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
+                ViewBag.EventName = "";
+                
+                return View(gm);
+            }
+            catch (Exception exp)
+            {
+                LoadChurchDDL();
+                ViewBag.FromDate = FromDate.ToString("dd-MMM-yyyy");
+                ViewBag.ToDate = ToDate.ToString("dd-MMM-yyyy");
+                ViewBag.EventName = "";
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(gm);
+            }
+
+           
+        }
+
+        [HttpPost]
+        public IActionResult SearchRecording(string fromDate, string toDate, string EventName)
+        {
+            GenericModel gm = new GenericModel();
+            DateTime FromDate = Convert.ToDateTime(fromDate);
+            DateTime ToDate = Convert.ToDateTime(toDate);
+            try
+            {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
+               
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.Churches = chdataAccess.GetChurchData(churchId);
                 gm.LRecordings = recordingDataAccess.RecordingSearch(FromDate, ToDate,"", churchId, EventName).ToList<Recording>();
                 ViewBag.FromDate = fromDate;
                 ViewBag.ToDate = toDate;
                 ViewBag.EventName = EventName;
+               
                 LoadChurchDDL();
                 return View("Recording", gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Client Search Recording  Errors : " + e.Message);
-                throw;
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+                ViewBag.EventName = EventName;
+                LoadChurchDDL();
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View("Recording", gm);
             }
         }
 

@@ -19,17 +19,28 @@ namespace MCNMedia_Dev.Controllers
         
         public IActionResult ListDonation()
         {
-            int id = 0;
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
-            {
-                id = (int)HttpContext.Session.GetInt32("ChurchId");
-            }
-
             GenericModel gm = new GenericModel();
-          
-            gm.Churches = chdataAccess.GetChurchData(id);
-            ChurchDonation churchDonation = new ChurchDonation();
-            return View(gm);
+
+            try
+            {
+                int id = 0;
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    id = (int)HttpContext.Session.GetInt32("ChurchId");
+                }
+
+                
+                gm.Churches = chdataAccess.GetChurchData(id);
+                ChurchDonation churchDonation = new ChurchDonation();
+                return View(gm);
+            }
+            catch (Exception)
+            {
+
+                return View(gm);
+            }
+           
+            
         }
 
         public JsonResult UpdateDonation(string ChurchDonationId, IFormFile mediaFile,  string EditWebsiteUrl, string ImageUrlChurch,bool ShowOnWebsite)
@@ -57,12 +68,12 @@ namespace MCNMedia_Dev.Controllers
 
                 string logMessage = $"Donate info for church '{churchName}' updated by {HttpContext.Session.GetString("UserName")} on {DateTime.Now}";
                 ActivityLogDataAccessLayer.AddActivityLog(Operation.Update, Categories.Donate_Link, message: logMessage, churchId: churchId, userId: userId);
-                return Json(res);
+                return Json(new {success=true, res });
             }
             catch (Exception e)
             {
-                ShowMessage("Update Donation Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText=e.Message });
+               
             }
         }
 

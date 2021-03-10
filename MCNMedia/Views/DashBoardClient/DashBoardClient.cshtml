@@ -22,6 +22,24 @@
         top: 40% !important;
     }
 </style>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="addDashBoardErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="addDashBoardSuccessMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
 <div class="row">
     <div class="col-md-12 grid-margin">
         <div class="row">
@@ -405,13 +423,27 @@
 
             success: function (response) {
                 if (response.success) {
-                    swal("Camera Status Changed Successfully!", {
-                        icon: "success",
+                    $("body").scrollTop(0);
+                    $('#addDashBoardSuccessMessage').removeAttr('hidden');
+                    $('#addDashBoardSuccessMessage').html('Camera Status Changed Successfully!');
+                    $('#addDashBoardSuccessMessage').fadeIn();
 
-                    })
+                    $('#addDashBoardSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addDashBoardSuccessMessage").slideUp(500);
+                    });
+                    $('#addDashBoardErrorMessage').attr('hidden');
                 } else {
-                    // DoSomethingElse()
-                    alert(response.responseText);
+                    $("body").scrollTop(0);
+                    $('#addDashBoardErrorMessage').removeAttr('hidden');
+                    $('#addDashBoardErrorMessage').html(result.responseText);
+                    $('#addDashBoardErrorMessage').fadeIn();
+
+                    $('#addDashBoardErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addDashBoardErrorMessage").slideUp(500);
+                        $('#addDashBoardErrorMessage').attr('hidden');
+                    });
+                    $('#addDashBoardErrorMessages').attr('hidden');
+                   
                 }
             },
             error: function (errormessage) {

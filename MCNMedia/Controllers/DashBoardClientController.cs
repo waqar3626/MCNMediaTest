@@ -45,7 +45,8 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
                 ViewBag.TotalCountriesCount = analyticsList.Sum(item => item.CountryCount);
             }
-            
+            GenericModel gm1 = new GenericModel();
+            ViewBag.TotalCountriesCount = 0;
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -54,7 +55,7 @@ namespace MCNMedia_Dev.Controllers
                 }
 
                 int ChurchId = 0;
-                GenericModel gm1 = new GenericModel();
+                
              
                 int usrId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 int UsrAssignChurchId = dashboardData.GetUserAssignTopChurchId(usrId);
@@ -74,7 +75,7 @@ namespace MCNMedia_Dev.Controllers
                 gm1.LCameras = camDataAccess.GetAdminCameraByChurch(ChurchId).ToList();
                 gm1.DashBoardClients = dashboardData.GetCountClientDashBoard(ChurchId);
                 gm1.Churches = churchDataAccessLayer.GetChurchData(ChurchId);
-                ViewBag.TotalCountriesCount = 0;
+                
 
                 GoogleAnalytics googleantics = new GoogleAnalytics(environment);
                 List<GoogleAnalyticsProperty> googleAnalytics = googleantics.GoogleAnalytics_GetByChurch(eventDate); 
@@ -84,15 +85,16 @@ namespace MCNMedia_Dev.Controllers
                     gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
                     ViewBag.TotalCountriesCount = gm1.googleAnalytics.Sum(item => item.Count);
                 }
-                HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
-                HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
+               
                 ViewBag.ChurchId = ChurchId.ToString();
                 return View(gm1);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Dashboard Error" + e.Message);
-                throw;
+                HttpContext.Session.SetString("ChurchName", gm1.Churches.ChurchName);
+                HttpContext.Session.SetString("ctabId", "/DashBoardClient/DashBoardClient");
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(gm1);
             }
         }
 
@@ -113,8 +115,8 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Dashboard Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
+
             }
         }
 

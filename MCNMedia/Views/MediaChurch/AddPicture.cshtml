@@ -9,16 +9,8 @@
 {
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
-            <div class="alert alert-danger" id="addPictureErrorMessage">
+            <div class="alert alert-danger" id="addPictureErrorMessage" hidden>
 
-            </div>
-
-        </div>
-
-    </div><div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-success" id="addPictureSuccessMessage">
-                saved Successfully!
             </div>
 
         </div>
@@ -66,7 +58,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
+     
+        $('#picTabName').attr('class', 'form-control');
         $('#alertDiv').hide();
     });
 
@@ -86,15 +79,21 @@
 
 
         }
-        if (input == '') {
-            s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+        if (input == '' && pictureTabName == '' ) {
+            s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label><br/>';
+
+            
+            $('#picTabName').attr('class', 'form-control border-danger');
+            s += '<label >Please provide a valid Tab Name </label>';
+
 
             $('#alertLabel').html(s);
             $('#alertDiv').show();
+            return;
+            $('#AddModal').modal('show');
 
         }
-
-        if (pictureTabName == '') {
+        else if (pictureTabName == '' && input != '' ) {
             $('#picTabName').attr('class', 'form-control border-danger');
             s += '<label >Please provide a valid Tab Name </label>';
 
@@ -104,7 +103,18 @@
             return;
             $('#AddModal').modal('show');
         }
+        else if (pictureTabName != '' && input == '') {
+            $('#picTabName').attr('class', 'form-control border-success');
+            s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label><br/>';
+
+
+            $('#alertLabel').html(s);
+            $('#alertDiv').show();
+            return;
+            $('#AddModal').modal('show');
+        }
         else {
+            $('#alertDiv').hide();
             $('#picTabName').attr('class', 'form-control border-success');
         }
         formData.append("mediaFile", input.files[0]);
@@ -120,15 +130,20 @@
             success: function (result) {
                 
                 if (result.success) {
-                    $('#addPictureSuccessMessage').fadeIn();
-                    $('#addPictureSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#addPictureSuccessMessage").slideUp(500);
-                    });
-                    sleep(5000);
-                    loadPicture();
-                    $('#AddPictureForm')[0].reset();
-                    var IntervalTime = setTimeout($('#AddModal').modal('hide'), 5000);
+                 
                     displayBusyIndicator2();
+                    loadPicture();
+                    
+                    $('#AddPictureForm')[0].reset();
+                    
+                    $('#addMediaSuccessMessage').removeAttr('hidden');
+                    $('#addMediaSuccessMessage').html('Picture added successfully');
+                    $('#addMediaSuccessMessage').fadeIn();
+                    $('#addMediaSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                 $("#addMediaSuccessMessage").slideUp(500);
+                    });
+                    $('#addMediaSuccessMessage').attr('hidden');
+                    
                 }
                 else {
                   

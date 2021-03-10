@@ -63,9 +63,9 @@ namespace MCNMedia_Dev.Controllers
                     mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, mediaChurch.ChurchId);
                     mediaChurch.MediaType = mediaType;
                     mediaChurch.TabName = AddPicTabName;
-
+                   
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
-                    return Json(new { success = true, res });
+                    return Json(new { success = true });
                 }
 
                 return Json(1);
@@ -156,7 +156,7 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-        public IActionResult DeleteMedia(int id)
+        public JsonResult DeleteMedia(int id)
         {
             try
             {
@@ -166,13 +166,12 @@ namespace MCNMedia_Dev.Controllers
                 }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-                bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
-                return Json(res);
+                int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
+                return Json(new {success=true });
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Picture Error" + e.Message);
-                throw;
+                return Json(new { success = false,responseText=e.Message  });
             }
 
 
@@ -298,7 +297,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-                bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
+                int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
                 return Json(res);
             }
             catch (Exception e)
@@ -418,7 +417,7 @@ namespace MCNMedia_Dev.Controllers
                 }
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
-                bool res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
+                int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
                 return Json(res);
             }
             catch (Exception e)

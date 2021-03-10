@@ -37,6 +37,24 @@
 <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
 <!-- End plugin css for this page -->
 
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="addMediaErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="addMediaSuccessMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
 
 <div class="row">
     <div class="col-sm-12 grid-margin stretch-card d-none d-md-flex w-100">
@@ -46,18 +64,18 @@
                 <div class="card">
                     <div class="card-body">
 
-                        
+
 
 
                         <div class="tab-content tab-content-vertical" id="v-pills-tabContent">
                             @*<div class="tab-pane fade show active" id="Camera-1" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                <div class="media">
- 
-                                    <div class="media-body">
-                                        @Html.Partial("~/Views/Client/ListMobileCamera.cshtml")
+                                    <div class="media">
+
+                                        <div class="media-body">
+                                            @Html.Partial("~/Views/Client/ListMobileCamera.cshtml")
+                                        </div>
                                     </div>
-                                </div>
-                            </div>*@
+                                </div>*@
                             <div class="tab-pane fade show active" id="Picture-1" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div class="media">
 
@@ -99,11 +117,11 @@
 
                         <ul class="nav nav-pills nav-pills-vertical nav-pills-info" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             @*<li class="nav-item">
-                                <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true">
-                                    <i class="fa fa-camera-retro text-dark">
-                                    </i>  Camera
-                                </a>
-                            </li>*@
+                                    <a class="nav-link active" id="Camera-tab" data-toggle="tab" href="#Camera-1" role="tab" aria-controls="Camera-1" aria-selected="true">
+                                        <i class="fa fa-camera-retro text-dark">
+                                        </i>  Camera
+                                    </a>
+                                </li>*@
                             <li class="nav-item">
                                 <a class="nav-link active" id="Picture-tab" data-toggle="tab" href="#Picture-1" role="tab" aria-controls="Picture-1" aria-selected="false">
                                     <i class="fa fa-picture-o text-success">

@@ -15,6 +15,24 @@
     }
 </style>
 
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="addChurchListErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="addChurchListSuccessMessage" hidden>
+           
+        </div>
+
+    </div>
+
+</div>
 <form asp-action="UpdateChurchInfo" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="card">
         <div class="card-header card-header-custom">
@@ -265,6 +283,29 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
+                if (result.success) {
+                    $("body").scrollTop(0);
+                    $('#addChurchListSuccessMessage').removeAttr('hidden');
+                    $('#addChurchListSuccessMessage').html('Church donation updated successfully');
+                    $('#addChurchListSuccessMessage').fadeIn();
+
+                    $('#addChurchListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addChurchListSuccessMessage").slideUp(500);
+                    });
+                    $('#addChurchListSuccessMessage').attr('hidden');
+                }
+                else {
+                    $("body").scrollTop(0);
+                    $('#addChurchListErrorMessage').removeAttr('hidden');
+                    $('#addChurchListErrorMessage').html(result.responseText);
+                    $('#addChurchListErrorMessage').fadeIn();
+
+                    $('#addChurchListErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addChurchListErrorMessage").slideUp(500);
+                        $('#addChurchListErrorMessage').attr('hidden');
+                    });
+                    $('#addChurchListErrorMessage').attr('hidden');
+                }
 
             },
             error: function (errormessage) {
