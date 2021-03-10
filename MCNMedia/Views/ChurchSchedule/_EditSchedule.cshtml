@@ -339,17 +339,17 @@
 
             success: function (response) {
                 if (response.success) {
-                    $('#editScheduleSuccessMessage').fadeIn();
-                    $('#editScheduleSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#editScheduleSuccessMessage").slideUp(500);
-                    });
+                  
 
-
-
-                    sleep(5000);
                     loadChurchSch();
-                    var IntervalTime = setTimeout($('#EditChurchScheduleModal').modal('hide'), 5000);
-                    
+                   $('#EditChurchScheduleModal').modal('hide');
+                    $('#addScheduleListSuccessMessage').removeAttr('hidden');
+                    $('#addScheduleListSuccessMessage').html('Schedule Updated Successfully')
+                    $('#addScheduleListSuccessMessage').fadeIn();
+                    $('#addScheduleListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addScheduleListSuccessMessage").slideUp(500);
+                    });
+                    $('#addScheduleListSuccessMessage').attr('hidden');
                   
                 } else {
                    

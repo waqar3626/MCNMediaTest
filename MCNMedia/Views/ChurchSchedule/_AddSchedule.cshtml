@@ -215,20 +215,16 @@
             data: { eventName: eventName, isRepeat: isRepeat, eventDate: eventDate, eventDay: eventDay, eventTime: eventTime, recordtoggle: recordtoggle, cameraId: cameraId, recordDuration: recordDuration, passwordtoggle: passwordtoggle, password: password },
             success: function (response) {
                 if (response.success) {
-
-                    $('#addScheduleSuccessMessage').fadeIn();
-                    $('#addScheduleSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#addScheduleSuccessMessage").slideUp(500);
-                    });
-
-
-
-                    sleep(5000);
                     loadChurchSch();
-                    
-                    $('#AddScheduleByChurch')[0].reset();
-                    var IntervalTime = setTimeout($('#AddChurchScheduleModel').modal('hide'), 5000);
-
+                  $('#AddScheduleByChurch')[0].reset();
+                    $('#AddChurchScheduleModel').modal('hide')
+                    $('#addScheduleListSuccessMessage').removeAttr('hidden');
+                    $('#addScheduleListSuccessMessage').html('Added Successfully')
+                    $('#addScheduleListSuccessMessage').fadeIn();
+                    $('#addScheduleListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addScheduleListSuccessMessage").slideUp(500);
+                    });
+                    $('#addScheduleListSuccessMessage').attr('hidden');
                     
 
                 } else {

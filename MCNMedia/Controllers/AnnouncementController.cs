@@ -31,12 +31,12 @@ namespace MCNMedia_Dev.Controllers
 
                 List<Announcement> announcementsList = AnnouncementDataAccessLayer.GetAnnouncement(churchId).ToList();
                 return Json(announcementsList);
+             
 
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("List Announcement Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
           
         }
@@ -53,20 +53,20 @@ namespace MCNMedia_Dev.Controllers
                     announcement.AnnouncementTitle = announceTittle;
                     announcement.AnnouncementText = announceText;
                     announcement.CreatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                
                     int res = AnnouncementDataAccessLayer.AddAnnouncement(announcement);
 
 
-                    return Json(res);
+                    return Json(new { success = true, res });
                 }
                 return RedirectToAction("UserLogin", "UserLogin");
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Add Announcement Error" + e.Message);
+                return Json(new { success = false, responseText = exp.Message });
 
-                throw;
             }
-        
+
         }
 
 
@@ -90,7 +90,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        public IActionResult DeleteAnnouncement(int id)
+        public JsonResult DeleteAnnouncement(int id)
         {
             try
             {
@@ -101,13 +101,12 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = AnnouncementDataAccessLayer.DeleteAnnouncement(id,UpdateBy);
-                return Json(res);
+                return Json(new { success = true, res });
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-              
-                ShowMessage("Delete Announcement Error" + e.Message);
-                throw;
+
+                return Json(new { success = false, responseText = exp.Message });
             }
 
         }
@@ -125,17 +124,17 @@ namespace MCNMedia_Dev.Controllers
                 announcement.AnnouncementTitle = editAnnounceTitle;
                 announcement.AnnouncementText = editAnnounceText;
             announcement.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                
                 int res = AnnouncementDataAccessLayer.UpdateAnnouncement(announcement);
 
-
-                return Json(res);
+                return Json(new { success = true, res });
+            
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
 
 
-                ShowMessage("Update Announcement Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText=exp.Message });
             }
             
         }

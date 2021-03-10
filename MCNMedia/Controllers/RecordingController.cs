@@ -52,10 +52,7 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
 
                 gm.LRecordings = RecordingList();
-                ViewBag.FromDate = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
-                ViewBag.ToDate = DateTime.Now.ToString("dd-MMM-yyyy");
-                ViewBag.ChurchId = -1;
-                ViewBag.EventName = "";
+                RecordingViewBagData();
                 LoadChurchDDL();
                 ViewBag.PartalBit = "none";
                 return View(gm);
@@ -97,6 +94,11 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+                ViewBag.ChurchId = ChurchId;
+                ViewBag.EventName = EventName;
+                LoadChurchDDL();
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View("ListRecording", gm);
             }
@@ -152,13 +154,11 @@ namespace MCNMedia_Dev.Controllers
             {
                 record.CreatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 record.ScheduleId = -1;
+
                 recordDataAccess.AddRecording(record);
                 gm.LRecordings = RecordingList();
                 gm.Recordings = record;
-                ViewBag.FromDate = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
-                ViewBag.ToDate = DateTime.Now.ToString("dd-MMM-yyyy");
-                ViewBag.ChurchId = -1;
-                ViewBag.EventName = "";
+                RecordingViewBagData();
                 LoadChurchDDL();
             
                 return View("ListRecording", gm);
@@ -166,11 +166,20 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
+                RecordingViewBagData();
                 LoadChurchDDL();
                 ViewBag.PartalBit = "-1";
                 ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
                 return View("ListRecording", gm);
             }
+        }
+
+        private void RecordingViewBagData()
+        {
+            ViewBag.FromDate = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
+            ViewBag.ToDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            ViewBag.ChurchId = -1;
+            ViewBag.EventName = "";
         }
 
         [HttpPost]
@@ -181,14 +190,13 @@ namespace MCNMedia_Dev.Controllers
                 if (HttpContext.Session.GetString("UserType") == "admin")
                 {
                     recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-                    //throw new Exception();
-                    recordDataAccess.UpdateRecording(recording);
                     gm.LRecordings = RecordingList();
-                   
-                    ViewBag.FromDate = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
-                    ViewBag.ToDate = DateTime.Now.ToString("dd-MMM-yyyy");
-                    ViewBag.ChurchId = -1;
-                    ViewBag.EventName = "";
+                    throw new Exception();
+                    recordDataAccess.UpdateRecording(recording);
+
+                    RecordingViewBagData();
+
+
                     LoadChurchDDL();
 
                     return View("ListRecording", gm);
@@ -209,7 +217,8 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception exp)
             {
                 LoadChurchDDL();
-                gm.LRecordings = RecordingList();
+
+                RecordingViewBagData();
                 ViewBag.PartalBit = "-2";
                 ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
                 return View("ListRecording", gm);
@@ -231,11 +240,8 @@ namespace MCNMedia_Dev.Controllers
                 recordDataAccess.DeleteRecording(id, UpdateBy);
                 GenericModel gm = new GenericModel();
                 gm.LRecordings = RecordingList();
-         
-                ViewBag.FromDate = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
-                ViewBag.ToDate = DateTime.Now.ToString("dd-MMM-yyyy");
-                ViewBag.ChurchId = -1;
-                ViewBag.EventName = "";
+
+                RecordingViewBagData();
                 LoadChurchDDL();
 
                 return View("ListRecording", gm);
@@ -244,10 +250,7 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception exp)
             {
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                ViewBag.FromDate = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
-                ViewBag.ToDate = DateTime.Now.ToString("dd-MMM-yyyy");
-                ViewBag.ChurchId = -1;
-                ViewBag.EventName = "";
+                RecordingViewBagData();
                 LoadChurchDDL();
                 return View("ListRecording",gm);
             }

@@ -29,8 +29,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Add Church Schedule Errors : " + e.Message);
-                throw;
+                return Json(new {success=false, e.Message});
             }
         }
 
@@ -201,12 +200,12 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = SchDataAccess.DeleteSchedule(id, UpdatedBy);
-                return Json(res);
+                return Json(new {success=true, res });
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Notice Errors :" + e.Message);
-                throw;
+                return Json(new { success = false, responseText=e.Message });
+               
             }
         }
 

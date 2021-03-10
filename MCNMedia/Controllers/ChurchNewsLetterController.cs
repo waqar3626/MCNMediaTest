@@ -75,8 +75,7 @@ namespace MCNMedia_Dev.Controllers
                         redirectUrl = Url.Action("~/UserLogin"),
                         isRedirect = true
                     });
-                    //    RedirectToAction("UserLogin", "UserLogin");
-                    //    return Json(-1);
+                  
                 }
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 List<NewsLetter> slideInfo = churchNewsLetterDataAccess.GetNewsLetterByChurch(churchId).ToList();
@@ -146,12 +145,11 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = churchNewsLetterDataAccess.DeleteNewsLetter(id, UpdateBy);
-                return Json(res);
+                return Json(new { success = true, res });
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Delete Slide Show Error" + e.Message);
-                throw;
+                return Json(new { success = true, exp.Message });
             }
         }
 

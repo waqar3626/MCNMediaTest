@@ -10,7 +10,15 @@
 <link rel="stylesheet" href="~/theme/vendors/quill/quill.snow.css">
 <link rel="stylesheet" href="~/theme/vendors/simplemde/simplemde.min.css">
 
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="editAnnouncementErrorMessage">
 
+        </div>
+
+    </div>
+
+</div>
 <div class="row">
     <div class="col">
         <form asp-action="Edit">
@@ -41,6 +49,10 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#editAnnouncementErrorMessage').hide();
+            });
     function UpdateAnnouncement() {
 
         var churchAnnounceId = $('#chAnnoId').val();
@@ -67,12 +79,34 @@
 
 
             success: function (result) {
-                if (result === -1) {
+                if (result.success) {
 
-                    location.reload();
+                    loadAnnouncement();
+                    $('#EditAnnouncementModal').modal('hide');
+                    $('#addAnnouncementListSuccessMessage').removeAttr('hidden');
+                    $('#addAnnouncementListSuccessMessage').html('Announcement Updated Successfully');
+                    $('#addAnnouncementListSuccessMessage').fadeIn();
+
+                    $('#addAnnouncementListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#addAnnouncementListSuccessMessage").slideUp(500);
+                    });
+                    $('#addAnnouncementListSuccessMessage').attr('hidden');
                 }
-                loadAnnouncement();
-                $('#EditAnnouncementModal').modal('hide');
+                else {
+
+
+                    $('#editAnnouncementErrorMessage').removeAttr('hidden');
+                    $('#editAnnouncementErrorMessage').html(result.responseText);
+                    $('#editAnnouncementErrorMessage').fadeIn();
+
+                    $('#editAnnouncementErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                    $("#editAnnouncementErrorMessage").slideUp(500);
+                    });
+
+                    $('#editAnnouncementErrorMessage').attr('hidden');
+                }
+              
+                
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
