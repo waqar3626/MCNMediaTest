@@ -95,6 +95,7 @@
         }
 
         if (pictureTabName == '') {
+            $('#picTabName').attr('class', 'form-control border-danger');
             s += '<label >Please provide a valid Tab Name </label>';
 
 
@@ -102,6 +103,9 @@
             $('#alertDiv').show();
             return;
             $('#AddModal').modal('show');
+        }
+        else {
+            $('#picTabName').attr('class', 'form-control border-success');
         }
         formData.append("mediaFile", input.files[0]);
         $('#AddModal').modal('hide');

@@ -80,16 +80,16 @@ namespace MCNMedia_Dev.Controllers
                         gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
 
                         HttpContext.Session.SetString("TabName", "Camera");
+                        throw new Exception();
                         var queryString = new { chId = churchId };
                         return Json(new { success = true, responseText = "The attached file is not supported." });
                     }
                 }
                 return RedirectToAction("Listchurch", "Church");
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Add Camera Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
         }
 
@@ -176,16 +176,15 @@ namespace MCNMedia_Dev.Controllers
                 CamUpdate.RtspPort = RtspPort;
                 CamUpdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = camDataAccess.UpdateCamera(CamUpdate);
+                throw new Exception();
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                return Json(res);
+                return Json(new { success = true, responseText = "The attached file is not supported." });
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Update Cameras Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
         }
-
         [HttpPost]
         public JsonResult RevokeCamera( int cameraId)
         {

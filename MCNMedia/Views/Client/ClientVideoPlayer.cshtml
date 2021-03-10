@@ -1,8 +1,27 @@
-﻿@model MCNMedia_Dev.Models.GenericModel
-@{  
-        ViewData["Title"] = "ClientVideoPlayer";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    
+﻿@using Microsoft.AspNetCore.Http
+@model MCNMedia_Dev.Models.GenericModel
+
+@{
+    ViewData["Title"] = "ClientVideoPlayer";
+   
+
+    @if (string.IsNullOrEmpty(Context.Session.GetString("UserType")))
+    {
+        Context.Response.Redirect("../UserLogin");
+    }
+    else
+    {
+        if(Context.Session.GetString("UserType").ToLower() == "client")
+        {
+            Layout = "~/Views/Shared/_NestedLayout.cshtml";
+        }
+        else if (Context.Session.GetString("UserType").ToLower() == "admin")
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+
+    }
+
 }
 
 <style type="text/css">
@@ -45,7 +64,7 @@
 </style>
 <div class="row">
 
-    
+
 
     <div class="col-12">
         <video controls class='video' width='100%'>
@@ -53,7 +72,7 @@
                     type="video/mp4" />
         </video>
     </div>
-    
+
 </div>
 
 

@@ -1,11 +1,13 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
 
 
-<h4 class="card-header-custom">Videos Gallery <button type="submit" value="Add" class="btn btn-outline-white float-right  btn-sm " title="Add New" onclick="AddVideo()"><i class="fa fa-plus"></i> Add New Video</button></h4>
+<div class="float-right mb-3">
+    <button type="submit" value="Add" class="btn btn-outline-behance  btn-sm " title="Add New" onclick="AddVideo()"><i class="fa fa-plus"></i> Add New Video</button>
+</div>
 <div class="card-body">
 
     <div id="video-gallery" class="row lightGallery videosTab ">
-      
+
     </div>
 </div>
 
@@ -85,20 +87,21 @@
     }
 
     function loadVideo() {
-       
+
         $.ajax({
-            url: "/Client/_ListVideoClient",
+            url: "/MediaChurch/ListVideo",
             type: "GET",
             contentType: "application/json;charset=utf-8",
+            data: { medType: "Video" },
             dataType: "json",
             success: function (result) {
                 var html = '';
 
                 $.each(result, function (key, item) {
-                   
+
                     //html += '<div class="col-sm-3 border border-danger p-2 ml-5 mb-3"><div class="for-generic  text-white font-16 font-weight-bolder  w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><video controls="controls" class="w-100"><source src=" ' + item.mediaURL + '" type="video/mp4" /></video></div>';
                     html += '<div class="col-sm-3  p-2 ml-5 mb-3"><div class="w-100" id="context-menu-hover-autohideVideos" mediachurchid=" ' + item.churchMediaId + '"><a class="image-tile col-xl-3 col-lg-3 col-md-3 col-md-4 col-6" href = " ' + item.mediaURL + '"><img src ="../theme/images/lightbox/thumb-v-v-1.jpg" alt = "image" /><div class="demo-gallery-poster"> <img src="../theme/images/lightbox/play-button.png" alt="image"></div></a></div></div>';
-              
+
                 });
                 $('.videosTab').html(html);
             },
@@ -108,7 +111,7 @@
         });
     }
 
-   
+
     function EditVideo(churchMediaId) {
          $.ajax({
             type: "Get",
@@ -143,27 +146,6 @@
         });
     }
     }
-
-    jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
-    $(document).on("click", ".ti-control-play", function () {
-        var url = $(this).data('id');
-
-        jwplayer('videoUrl').setup({
-            file: url,
-            image: "../Images/jwerror.jpg",
-            width: "100%",
-            aspectratio: "16:9",
-            //autostart: 'true',
-            "autostart": "viewable",
-            "advertising": {
-                "client": "vast",
-                "tag": ""
-            }
-        });
-        jwplayer().onError(function () {
-            jwplayer().play();
-        });
-    });
 
 
 </script>

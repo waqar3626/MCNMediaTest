@@ -21,8 +21,16 @@
     <title>@ViewData["Title"] - MCN</title>
     <!-- plugins:css -->
 
-
-
+    <style type="text/css">
+        .for-generic {
+            height: 30px;
+            background-color: #1f4a79;
+            margin-bottom: 0px;
+            text-align: center;
+            padding-top: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="~/theme/vendors/lightgallery/css/lightgallery.css">
     <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -371,17 +379,17 @@
                         </a>
                     </li>
                     @*<li class="nav-item">
-            <a class="nav-link" href="/Subscription/ListSubscription">
-                <i class="fa fa-th-list menu-icon"></i>
-                <span class="menu-title">Subscribers</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/Subscription/Revenue">
-                <i class="fa  fa-gbp menu-icon"></i>
-                <span class="menu-title">Revenue Report</span>
-            </a>
-        </li>*@
+                            <a class="nav-link" href="/Subscription/ListSubscription">
+                                <i class="fa fa-th-list menu-icon"></i>
+                                <span class="menu-title">Subscribers</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Subscription/Revenue">
+                                <i class="fa  fa-gbp menu-icon"></i>
+                                <span class="menu-title">Revenue Report</span>
+                            </a>
+                        </li>*@
 
 
                 </ul>
@@ -441,9 +449,9 @@
                                                     @Html.Partial("~/Views/UserLogin/ChangeUserPassword.cshtml")
                                                 </div>
                                                 @*<div class="modal-footer">
-                                <button type="button" class="btn btn-success">Submit</button>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                            </div>*@
+                                                        <button type="button" class="btn btn-success">Submit</button>
+                                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                                    </div>*@
                                             </div>
                                         </div>
                                     </div>
@@ -478,7 +486,7 @@
     <script src="~/theme/js/template.js"></script>
     <script src="~/theme/js/settings.js"></script>
     <script src="~/theme/js/todolist.js"></script>
-
+    <script src="~/theme/js/CheckCode.js"></script>
 
 
     <!-- endinject -->
@@ -553,7 +561,10 @@
     <script src="~/theme/js/tablesorter.js"></script>
     <script src="~/theme/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
     <script src="~/theme/js/toastDemo.js"></script>
+    <script src="~/theme/vendors/lightgallery/js/lightgallery-all.min.js"></script>
+    <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
 
+    <script src="~/theme/js/CheckCode.js"></script>
     <!-- End custom js for this page-->
     <!-- End custom js for this page-->
     <script>
@@ -630,7 +641,7 @@
                     break;
                 }
             }
-        } 
+        }
     </script>
 
     @RenderSection("Scripts", required: false)
