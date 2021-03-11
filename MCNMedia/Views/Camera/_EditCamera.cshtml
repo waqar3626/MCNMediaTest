@@ -21,6 +21,24 @@
     </div>
     <div class="col-sm-6">
         <form asp-action="Edit" id="EditCameraForm" class="needs-validation" novalidate>
+
+            <div class="row m-0 mb-3">
+                <div class="col-lg-12">
+                    <div class="alert alert-danger" id="editCameraErrorMessage">
+
+                    </div>
+
+                </div>
+
+            </div><div class="row m-0 mb-3">
+                <div class="col-lg-12">
+                    <div class="alert alert-success" id="editCameraSuccessMessage">
+                        saved Successfully!
+                    </div>
+
+                </div>
+
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Cameras.CameraId" id="CamId" />
             <input type="hidden" asp-for="Cameras.LiveStreamUrl" id="livestreamUrl" />
@@ -57,6 +75,10 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#editCameraErrorMessage').hide();
+        $('#editCameraSuccessMessage').hide();
+    });
     $(function () {
         $("#EditCameraBtnId").on("click", function (e) {
             var form = $("#EditCameraForm")[0];
@@ -98,11 +120,35 @@
 
             //   contentType: "application/json;charset=UTF-8",
             //  dataType: "json",
+          
             success: function (result) {
-                
-                $('#EditModal').modal('hide');
-                window.location.reload();
+
+                if (result.success) {
+                    $('#editCameraSuccessMessage').fadeIn();
+                    $('#editCameraSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#editCameraSuccessMessage").slideUp(500);
+                    });
+                    sleep(5000);
+   
+                    var IntervalTime = setTimeout($('#EditModal').modal('hide'), 5000);
+                    window.location.reload();
+
+                }
+                else {
+                    displayBusyIndicator2();
+                    $('#EditModal').modal('show');
+                    $('#editCameraErrorMessage').html(result.responseText);
+                    $('#editCameraErrorMessage').fadeIn();
+
+                    $('#editCameraErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                        $("#editCameraErrorMessage").slideUp(500);
+
+
+                    });
+
+                }
             },
+
             error: function (errormessage) {
                 //alert(errormessage.responseText);
             }
