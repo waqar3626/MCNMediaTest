@@ -27,58 +27,87 @@
     }
 </style>
 
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="addMobileCameraListErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="addMobileCameraListSuccessMessage" hidden>
+            saved Successfully!
+        </div>
+
+    </div>
+
+</div>
+
 @if (ViewBag.NewCamera == 2)
 {
+    <div class="row m-0 m-3">
+        <div class="col-lg-12">
+            <div class="alert alert-success" >
+               Camera Added Successfully
+            </div>
+
+        </div>
+
+    </div>
+
     var data = Model.Cameras.CameraUrl;
     var data2 = data.Split('_');
     var Application = "live/_" + data2[0] + "_";
     var StreamKey = Model.Cameras.CameraUrl + ".stream";
-    <div class="row m-3">
+<div class="row m-3">
 
-        <div class="col-md-12">
-            <div class="card">
-                <div class=" card-body">
-                    @*<div class="form-group row">
-                            <div class="col-md-12">
-                                <h4>
-                                    Your Mobile Streaming Details
-                                </h4>
-                            </div>
-                            <div class="col-md-12  border-bottom p-3" style="border-color:lightgray">
-                                <span class="font-weight-bolder  float-right font-12">
-                                    This information can be optained again by visiting your camera section.
-                                </span>
-                            </div>
-                            <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+    <div class="col-md-12">
+        <div class="card">
+            <div class=" card-body">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <h4>
+                            Your Mobile Streaming Details
+                        </h4>
+                    </div>
+                    <div class="col-md-12  border-bottom p-3" style="border-color:lightgray">
+                        <span class="font-weight-bolder  float-right font-12">
+                            This information can be optained again by visiting your camera section.
+                        </span>
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                                Please download this <a href="~/Files/mcnmobilestreaming.pdf" target="_blank" class="text-info">PDF Tutorial </a>on how to set up your phone.
+                        Please download this <a href="~/Files/mcnmobilestreaming.pdf" target="_blank" class="text-info">PDF Tutorial </a>on how to set up your phone.
 
-                            </div>
-                            <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                                <strong>Host:</strong> Stream.mcnmedia.tv
+                        <strong>Host:</strong> Stream.mcnmedia.tv
 
-                            </div>
-                            <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                                <strong>Port:</strong> 1935
+                        <strong>Port:</strong> 1935
 
-                            </div>
-                            <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+                    </div>
+                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                                <strong>Application:</strong>@Application
+                        <strong>Application:</strong>@Application
 
-                            </div>
-                            <div class="col-md-12  p-4" >
+                    </div>
+                    <div class="col-md-12  p-4">
 
-                                <strong>Stream Key:</strong>@StreamKey
+                        <strong>Stream Key:</strong>@StreamKey
 
-                            </div>
-                        </div>*@
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 }
 <div class="card">
 
@@ -97,77 +126,78 @@
                 </div>
             </div>
         </div>
-   
-            <div class=" col-lg-12 ">
-            
 
-                <div class="row">
+        <div class=" col-lg-12 ">
 
-                    @{ var Counter = 1; }
-                    @foreach (var items in Model.LCameras)
-                    {
-                        var data = items.CameraUrl;
-                        var data2 = data.Split('_');
-                        var Application = "live/_" + data2[0] + "_";
-                        var StreamKey = items.CameraUrl + ".stream";
 
-                        <div class="col-sm-6 mb-3">
-                            <div class="card ">
-                                <div class="card-body mb-3 mt-2">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100 " height="280" controls>
-                                                <source id="LiveStreamSrc_@Counter" src="@items.LiveStreamUrl" type="application/x-mpegURL">
-                                            </video>
+            <div class="row">
+
+                @{ var Counter = 1; }
+                @foreach (var items in Model.LCameras)
+                {
+                    var data = items.CameraUrl;
+                    var data2 = data.Split('_');
+                    var Application = "live/_" + data2[0] + "_";
+                    var StreamKey = items.CameraUrl + ".stream";
+
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card ">
+                            <div class="card-body mb-3 mt-2">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <video id='CameraLiveStream_@Counter' class="video-js vjs-default-skin w-100 " height="280" controls>
+                                            <source id="LiveStreamSrc_@Counter" src="@items.LiveStreamUrl" type="application/x-mpegURL">
+                                        </video>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="row pt-3">
+                                            <div class="col-sm-6   text-wrap border-bottom border-right text-center"  >
+                                                <label> Camera Name     |</label>
+                                                <i style="color: #1f4a79"></i>&nbsp; @items.CameraName
+                                            </div>
+                                            <div class="col-sm-6   text-wrap border-bottom" >
+                                                <label> Application     |</label>
+                                                <i style="color: #1f4a79"></i>&nbsp; @Application
+                                            </div>
+
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="row pt-3">
-                                                <div class="col-sm-6   text-wrap border-bottom border-right text-center" id="context-menu-hover-autohideNew2" cameraId="@items.CameraName">
-                                                    <label> Camera Name     |</label>
-                                                    <i style="color: #1f4a79"></i>&nbsp; @items.CameraName
-                                                </div>
-                                                <div class="col-sm-6   text-wrap border-bottom" id="context-menu-hover-autohideNew2" cameraId="@items.CameraName">
-                                                    <label> Application     |</label>
-                                                    <i style="color: #1f4a79"></i>&nbsp; @Application
-                                                </div>
+
+                                        <div class="row pt-3">
+                                            <div class="col-sm-12 text-wrap border-bottom">
+                                                <label> URL |</label>
+                                                <i style="color: #1f4a79"></i>&nbsp; @StreamKey
+                                            </div>
+                                        </div>
+
+                                        <div class="row pt-3">
+                                            <div class="col-sm-6   text-wrap border-bottom border-right text-center">
+                                                <button type="submit" onclick="DeleteCamera(@items.CameraId)" class="btn btn-danger btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Refresh"><i class="fa fa-trash text-white pr-1"></i>Delete</button>
 
                                             </div>
+                                            <div class="col-sm-6 text-wrap border-bottom text-center">
+                                                <div class="custom-control custom-switch lg">
+                                                    <input type="checkbox" class="custom-control-input control" checked="@items.IsCameraLive" onchange="ChangeCameraStatus(@items.CameraId)" id="IsOnlineCamera_@items.CameraId">
+                                                    <label class="custom-control-label" for="IsOnlineCamera_@items.CameraId"><span class="text-danger">OFF</span><span>/</span> <span class="text-success">ON</span> </label>
 
-                                            <div class="row pt-3">
-                                                <div class="col-sm-12 text-wrap border-bottom">
-                                                    <label> URL |</label>
-                                                    <i style="color: #1f4a79"></i>&nbsp; @StreamKey
                                                 </div>
                                             </div>
 
-                                            <div class="row pt-3">
-                                                <div class="col-sm-6   text-wrap border-bottom border-right text-center">
-                                                    <button type="submit" onclick="RevokeCamera(@items.CameraId)" class="btn btn-success btn-sm text-white mb-2" data-toggle="tooltip" data-placement="bottom" title="Refresh"><i class="fa fa-refresh text-white pr-1"></i>Refresh</button>
-
-                                                </div>
-                                                <div class="col-sm-6 text-wrap border-bottom text-center">
-                                                    <div class="custom-control custom-switch lg">
-                                                        <input type="checkbox" class="custom-control-input control" checked="@items.IsCameraLive" onchange="ChangeCameraStatus(@items.CameraId)" id="IsOnlineCamera_@items.CameraId">
-                                                        <label class="custom-control-label" for="IsOnlineCamera_@items.CameraId"><span class="text-danger">OFF</span><span>/</span> <span class="text-success">ON</span> </label>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
+
+
                             </div>
                         </div>
-                        Counter++;
-                    }
-                </div>
+                    </div>
+                    Counter++;
+                }
             </div>
+        </div>
 
 
-        
+
     </div>
 </div>
 
@@ -222,7 +252,36 @@
                         contentType: "application/json;charset=UTF-8",
                         dataType: "json",
                         success: function (result) {
-                            window.location.reload();
+                            if (result.success) {
+                                $(window).scrollTop(0);
+                                $('#addMobileCameraListSuccessMessage').removeAttr('hidden');
+                                $('#addMobileCameraListSuccessMessage').html('Mobile Camera Deleted Successfully');
+                                $('#addMobileCameraListSuccessMessage').fadeIn();
+
+                                $('#addMobileCameraListSuccessMessage').fadeTo(4000, 500).slideUp(500, function () {
+                                    $("#addMobileCameraListSuccessMessage").slideUp(500);
+                                });
+                                
+                                $('#addMobileCameraListSuccessMessage').attr('hidden');
+                                
+                                window.location.reload();
+
+
+                            }
+                            else {
+                                $(window).scrollTop(0);
+                                $('#addMobileCameraListErrorMessage').removeAttr('hidden');
+                                $('#addMobileCameraListErrorMessage').html(result.responseText);
+                                $('#addMobileCameraListErrorMessage').fadeIn();
+
+                                $('#addMobileCameraListErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#addMobileCameraListErrorMessage").slideUp(500);
+                                    $('#addMobileCameraListErrorMessage').attr('hidden');
+                                });
+                                $('#addMobileCameraListErrorMessage').attr('hidden');
+
+                            }
+
                         },
                         error: function (errormessage) {
                             // alert(errormessage.responseText);
@@ -241,7 +300,41 @@
             var player = videojs('CameraLiveStream_'+i);
         player.autoplay(false);
     }
- });
+    });
+    function ChangeCameraStatus(camId) {
+        var cameraID = camId;
+
+        var cameraStatus = $('#IsOnlineCamera_' + cameraID).prop("checked");
+
+
+        var formData = new FormData();
+        formData.append("cameraId", cameraID);
+        formData.append("cameraStatus", cameraStatus);
+
+        $.ajax({
+            type: "POST",
+            url: "/Client/ChangeMobileCameraStatus/",
+
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                if (response.success) {
+                    swal("Camera Status Changed Successfully!", {
+                        icon: "success",
+
+                    })
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                }
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
+            }
+        });
+    }
 </script>
 
 

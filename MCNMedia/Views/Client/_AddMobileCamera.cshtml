@@ -68,6 +68,16 @@
             success: function (result) {
 
                 $('#AddMobileCameraPopUp').modal('hide');
+                $(window).scrollTop(0);
+                $('#addMobileCameraListSuccessMessage').removeAttr('hidden');
+                $('#addMobileCameraListSuccessMessage').html('Mobile Camera Deleted Successfully');
+                $('#addMobileCameraListSuccessMessage').fadeIn();
+
+                $('#addMobileCameraListSuccessMessage').fadeTo(4000, 500).slideUp(500, function () {
+                    $("#addMobileCameraListSuccessMessage").slideUp(500);
+                });
+
+                $('#addMobileCameraListSuccessMessage').attr('hidden');
                 window.location.reload();
 
 

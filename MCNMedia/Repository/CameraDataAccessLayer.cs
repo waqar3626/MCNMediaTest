@@ -210,6 +210,15 @@ namespace MCNMedia_Dev.Repository
 
             return _dc.Execute("spCamera_UpdateStatus");
         }
+        public int UpdateMobileCameraStatus(int cameraId, bool cameraStatus, int UpdatedBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", cameraId);
+            _dc.AddParameter("cameraStatus", cameraStatus);
+            _dc.AddParameter("UpdateBy", UpdatedBy);
+
+            return _dc.Execute("spMobileCamera_UpdateStatus");
+        }
 
         public int UpdateCameraStreamingStatus(int cameraId, bool isStreaming)
         {

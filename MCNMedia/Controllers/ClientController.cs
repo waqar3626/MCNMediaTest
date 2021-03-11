@@ -195,7 +195,7 @@ namespace MCNMedia_Dev.Controllers
             int CameraId = Convert.ToInt32(TempData["CameraId"]);
             if (CameraId > 0)
             {
-                ViewBag.NewCamera = 2;
+                 ViewBag.NewCamera = 2;
                 Camera camera = camDataAccess.GetCameraById(CameraId);
                 gm.Cameras = camera;
             }
@@ -255,12 +255,12 @@ namespace MCNMedia_Dev.Controllers
                 }
                 GenericModel gm = new GenericModel();
                 bool res = camDataAccess.DeleteCamera(id);
-                return Json(res);
+                return Json(new {success=true, res });
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Camera Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText=e.Message });
+
             }
 
         }
@@ -795,6 +795,20 @@ namespace MCNMedia_Dev.Controllers
         }
 
 
+        public JsonResult ChangeMobileCameraStatus(int cameraId, bool cameraStatus)
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                camDataAccess.UpdateMobileCameraStatus(cameraId, cameraStatus, UserId);
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, responseText = e.Message });
+
+            }
+        }
 
 
         private void ShowMessage(string exceptionMessage)
