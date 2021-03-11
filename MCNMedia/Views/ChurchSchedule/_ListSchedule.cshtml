@@ -238,7 +238,9 @@
                 dataType: "json",
                 success: function (result) {
                     if (result.success) {
+
                         loadChurchSch();
+                        $(window).scrollTop(0);
                         $('#addScheduleListSuccessMessage').removeAttr('hidden');
                         $('#addScheduleListSuccessMessage').html('Schedule deleted successfully');
                         $('#addScheduleListSuccessMessage').fadeIn();
@@ -249,6 +251,7 @@
                         $('#addScheduleListSuccessMessage').attr('hidden');
                     }
                     else {
+                        $(window).scrollTop(0);
                         $('#addScheduleListErrorMessage').removeAttr('hidden');
                         $('#addScheduleListErrorMessage').html(result.responseText);
                         $('#addScheduleListErrorMessage').fadeIn();

@@ -98,8 +98,32 @@
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    loadSlideShow();
-                    if (result) { alert("Record Deleted"); }
+                    if (result.success) {
+                        loadSlideShow();
+                        $(window).scrollTop(0);
+                        $('#addMediaSuccessMessage').removeAttr('hidden');
+                        $('#addMediaSuccessMessage').html('Slide show  deleted successfully');
+                        $('#addMediaSuccessMessage').fadeIn();
+
+                        $('#addMediaSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addMediaSuccessMessage").slideUp(500);
+                        });
+                        $('#addMediaSuccessMessage').attr('hidden');
+                    }
+                    else {
+                        $(window).scrollTop(0);
+                        $('#addMediaErrorMessage').removeAttr('hidden');
+                        $('#addMediaErrorMessage').html(result.responseText);
+                        $('#addMediaErrorMessage').fadeIn();
+
+                        $('#addMediaErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addMediaErrorMessage").slideUp(500);
+
+                        });
+                        $('#addMediaErrorMessage').attr('hidden');
+                    }
+
+              
                 },
                 error: function (errormessage) {
                 // alert(errormessage.responseText);

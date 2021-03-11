@@ -35,8 +35,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Index Media Church  Error" + e.Message);
-                throw;
+                return View(gm);
             }
 
         }
@@ -63,7 +62,7 @@ namespace MCNMedia_Dev.Controllers
                     mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Picture, mediaChurch.ChurchId);
                     mediaChurch.MediaType = mediaType;
                     mediaChurch.TabName = AddPicTabName;
-                   
+
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
                     return Json(new { success = true });
                 }
@@ -75,7 +74,7 @@ namespace MCNMedia_Dev.Controllers
                 return Json(new { success = false, responseText = exp.Message });
             }
         }
-    
+
 
         public JsonResult GetMediaByTypeId(string medType)
         {
@@ -91,8 +90,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Get Specific Picture Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
 
 
@@ -100,16 +98,16 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult EditMedia(int id)
         {
+            GenericModel gm = new GenericModel();
             try
             {
-                GenericModel gm = new GenericModel();
+                
                 gm.Media = mediaChurchDataAccess.GetMediaById(id);
                 return PartialView("EditPicture", gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Edit Picture Error" + e.Message);
-                throw;
+                return PartialView("EditPicture", gm);
             }
 
 
@@ -139,7 +137,7 @@ namespace MCNMedia_Dev.Controllers
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditPictureTabName;
                 mediaupdate.MediaType = mediaType;
-                
+
                 int res = 0;
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
@@ -148,8 +146,8 @@ namespace MCNMedia_Dev.Controllers
                 }
 
                 return Json(new { success = true, responseText = "The attached file is not supported." });
-            
-        }
+
+            }
             catch (Exception e)
             {
                 return Json(new { success = false, responseText = e.Message });
@@ -167,11 +165,11 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
-                return Json(new {success=true });
+                return Json(new { success = true });
             }
             catch (Exception e)
             {
-                return Json(new { success = false,responseText=e.Message  });
+                return Json(new { success = false, responseText = e.Message });
             }
 
 
@@ -204,7 +202,7 @@ namespace MCNMedia_Dev.Controllers
                     media.TabName = AddVidTabName;
 
                     int res = mediaChurchDataAccess.AddMedia(media);
-                   
+
                     return Json(new { success = true, responseText = "The attached file is not supported." });
                 }
                 return RedirectToAction("Listchurch", "Church");
@@ -229,10 +227,9 @@ namespace MCNMedia_Dev.Controllers
                 List<MediaChurch> vidList = mediaChurchDataAccess.GetByMediaType(medType, churchId).ToList();
                 return Json(vidList);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("List Video Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
 
 
@@ -240,23 +237,23 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult EditVideo(int id)
         {
+            GenericModel gm = new GenericModel();
             try
             {
-                GenericModel gm = new GenericModel();
+               
                 gm.Media = mediaChurchDataAccess.GetMediaById(id);
                 return PartialView("_EditVideo", gm);
             }
             catch (Exception e)
             {
-                ShowMessage("Edit Video Error" + e.Message);
-                throw;
+                return PartialView("_EditVideo", gm);
             }
 
 
         }
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
-        public JsonResult UpdateVideo(int ChurchMediaId,  string mediaType, String EditVidTabName, string MediaUrl, string MediaName)
+        public JsonResult UpdateVideo(int ChurchMediaId, string mediaType, String EditVidTabName, string MediaUrl, string MediaName)
         {
             try
             {
@@ -266,9 +263,9 @@ namespace MCNMedia_Dev.Controllers
                 }
                 MediaChurch mediaupdate = new MediaChurch();
 
-                 mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaURL = MediaUrl;
                 mediaupdate.MediaName = MediaName;
-            
+
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditVidTabName;
                 mediaupdate.MediaType = mediaType;
@@ -285,7 +282,7 @@ namespace MCNMedia_Dev.Controllers
                 return Json(new { success = false, responseText = exp.Message });
             }
         }
-     
+
 
         public IActionResult DeleteVideo(int id)
         {
@@ -353,10 +350,9 @@ namespace MCNMedia_Dev.Controllers
                 List<MediaChurch> slideInfo = mediaChurchDataAccess.GetByMediaType(medType, churchId).ToList();
                 return Json(slideInfo);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Get Specific Slide Show Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
 
 
@@ -364,22 +360,23 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult EditSlide(int id)
         {
+            GenericModel gm = new GenericModel();
             try
             {
-                GenericModel gm = new GenericModel();
+                
                 gm.Media = mediaChurchDataAccess.GetMediaById(id);
                 return PartialView("_EditSlideShow", gm);
             }
             catch (Exception e)
             {
-                ShowMessage("Edit Slide Show Error" + e.Message);
-                throw;
+                return PartialView("_EditSlideShow", gm);
+
             }
 
         }
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
-        public JsonResult UpdateSlide(string ChurchMediaId,  string mediaType, String EditSlideShowTabName, string MediaUrl, string MediaName)
+        public JsonResult UpdateSlide(string ChurchMediaId, string mediaType, String EditSlideShowTabName, string MediaUrl, string MediaName)
         {
             try
             {
@@ -388,10 +385,10 @@ namespace MCNMedia_Dev.Controllers
                     return Json(-1);
                 }
                 MediaChurch mediaupdate = new MediaChurch();
-               
-                   
-                 mediaupdate.MediaURL = MediaUrl;
-                  mediaupdate.MediaName = MediaName;
+
+
+                mediaupdate.MediaURL = MediaUrl;
+                mediaupdate.MediaName = MediaName;
 
                 mediaupdate.ChurchMediaId = Convert.ToInt32(ChurchMediaId);
                 mediaupdate.TabName = EditSlideShowTabName;
@@ -417,21 +414,19 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
-                return Json(res);
+                return Json(new { success = true, res });
+
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Slide Show Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
-
         }
 
-
-        #endregion
-        private void ShowMessage(string exceptionMessage)
-        {
-            log.Info("Exception: " + exceptionMessage);
-        }
     }
+
+
+    #endregion
+
+    
 }

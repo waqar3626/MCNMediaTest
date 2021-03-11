@@ -7,16 +7,8 @@
 {
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
-            <div class="alert alert-danger" id="addVideoErrorMessage">
+            <div class="alert alert-danger" id="addVideoErrorMessage" hidden>
 
-            </div>
-
-        </div>
-
-    </div><div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-success" id="addVideoSuccessMessage">
-                saved Successfully!
             </div>
 
         </div>
@@ -134,19 +126,25 @@
                 success: function (result) {
                    
                     if (result.success) {
-                        $('#addVideoSuccessMessage').fadeIn();
-                        $('#addVideoSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                            $("#addVideoSuccessMessage").slideUp(500);
-                        });
-                        sleep(5000);
                         loadVideo();
                         $('#AddVideoForm')[0].reset();
-                        var IntervalTime = setTimeout($('#AddddModal').modal('hide'), 5000);
                         displayBusyIndicator2();
+                        $('#AddddModal').modal('hide');
+                 
+                        $('#addMediaSuccessMessage').removeAttr('hidden');
+                        $(window).scrollTop(0);
+                        $('#addMediaSuccessMessage').html('Video Added Successfully');
+                        $('#addMediaSuccessMessage').fadeIn();
+                        $('#addMediaSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addMediaSuccessMessage").slideUp(500);
+                        });
+                        $('#addMediaSuccessMessage').attr('hidden');
+                       
                     }
                     else {
                        
                         $('#AddddModal').modal('show');
+                        $('#addVideoErrorMessage').removeAttr('hidden');
                         $('#addVideoErrorMessage').html(result.responseText);
                         $('#addVideoErrorMessage').fadeIn();
 
@@ -155,7 +153,7 @@
 
 
                         });
-
+                        $('#addVideoErrorMessage').attr('hidden');
                     }
                 },
                 error: function (errormessage) {

@@ -146,28 +146,45 @@
 
 
     function DeleteSlideShow(churchMediaId) {
-    var ans = confirm("Are you sure you want to delete this SlideShow?");
-    if (ans) {
-        $.ajax({
-            url: "/MediaChurch/DeleteSlide/" + churchMediaId,
-            type: "POST",
+        var ans = confirm("Are you sure you want to delete this SlideShow?");
+        if (ans) {
+            $.ajax({
+                url: "/MediaChurch/DeleteSlide/" + churchMediaId,
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        loadSlideShow();
+                        $(window).scrollTop(0);
+                        $('#addMediaSuccessMessage').removeAttr('hidden');
+                        $('#addMediaSuccessMessage').html('Slide show deleted successfully');
+                        $('#addMediaSuccessMessage').fadeIn();
 
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                if (result === -1) {
+                        $('#addMediaSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addMediaSuccessMessage").slideUp(500);
+                        });
+                        $('#addMediaSuccessMessage').attr('hidden');
+                    }
+                    else {
+                        $(window).scrollTop(0);
+                        $('#addMediaErrorMessage').removeAttr('hidden');
+                        $('#addMediaErrorMessage').html(result.responseText);
+                        $('#addMediaErrorMessage').fadeIn();
 
-                    location.reload();
+                        $('#addMediaErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                            $("#addMediaErrorMessage").slideUp(500);
+
+                        });
+                        $('#addMediaErrorMessage').attr('hidden');
+                    }
+
+
+                },
+                error: function (errormessage) {
+                    // alert(errormessage.responseText);
                 }
-                loadSlideShow();
-                if (result) { alert("Record Deleted");}
-            },
-            error: function (errormessage) {
-               // alert(errormessage.responseText);
-            }
-        });
+            });
+        }
     }
-    }
-
-
 </script>

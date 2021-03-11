@@ -284,7 +284,7 @@
             contentType: false,  // tell jQuery not to set contentType
             success: function (result) {
                 if (result.success) {
-                    $("body").scrollTop(0);
+                    $(window).scrollTop(0);
                     $('#addChurchListSuccessMessage').removeAttr('hidden');
                     $('#addChurchListSuccessMessage').html('Church donation updated successfully');
                     $('#addChurchListSuccessMessage').fadeIn();
@@ -295,7 +295,7 @@
                     $('#addChurchListSuccessMessage').attr('hidden');
                 }
                 else {
-                    $("body").scrollTop(0);
+                    $(window).scrollTop(0);
                     $('#addChurchListErrorMessage').removeAttr('hidden');
                     $('#addChurchListErrorMessage').html(result.responseText);
                     $('#addChurchListErrorMessage').fadeIn();

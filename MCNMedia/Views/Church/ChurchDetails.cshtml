@@ -26,10 +26,28 @@
     <div class="grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+                <div class="row m-0 mb-3">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" id="addMediaErrorMessage" hidden>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row m-0 mb-3">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success" id="addMediaSuccessMessage" hidden>
+
+                        </div>
+
+                    </div>
+
+                </div>
                 @*<h4 class="card-title">Church Details</h4>*@
                 <div class="col-12 col-xl-7 mb-4 mb-xl-0">
                     <h4 class="font-weight-bold">@Model.Churches.ChurchName, @Model.Churches.Town  </h4>
-             
+
                 </div>
                 <h3>@ViewData["message"]</h3>
                 <ul class="nav nav-tabs small" role="tablist">
@@ -42,7 +60,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="Information-tab" data-toggle="tab" href="#Information-1" role="tab" aria-controls="Information-1" aria-selected="false"><i class="fa fa-info-circle text-info pr-1"></i><b>Information</b> </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" id="Slideshow-tab" data-toggle="tab" href="#Slideshow-1" role="tab" aria-controls="Slideshow-1" aria-selected="false"><i class="mdi mdi-folder-multiple-image text-info pr-1"></i><b>Slideshow</b> </a>
                     </li>

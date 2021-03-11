@@ -112,6 +112,7 @@ namespace MCNMedia_Dev.Controllers
                     }
 
                 }
+                HttpContext.Session.SetString("ctabId", "/Client/ChurchInfo");
                 church.Churches.UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 chdataAccess.UpdateChurch(church.Churches);
                 gm = InfoChurchAndDonation();
