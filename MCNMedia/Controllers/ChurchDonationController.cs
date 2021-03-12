@@ -88,8 +88,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Delete Donation Error" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
 
 

@@ -52,10 +52,15 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.UserType = -1;
                 GenericModel gm = new GenericModel();
                 gm.LUsers = UserList(user);
-                //ViewBag.IsSuccess = Convert.ToInt32(TempData["IsSuccess"]);
+                if (Convert.ToInt32(TempData["addUserSuccess"]) == 1){
+                    ViewBag.SuccessMsg = "User Added SuccessFully";
+                }
+                if (Convert.ToInt32(TempData["deleteUserMsg"]) == 1)
+                {
+                    ViewBag.SuccessMsg = "User Deleted SuccessFully";
+                }
                 ViewBag.PartalBit = "none";
-                ViewBag.Message = TempData["Message"];
-                //gm.LUsers = userDataAccess.GetAllUser(user).ToList<User>();
+         
                    return View(gm);
 
             }
@@ -119,7 +124,8 @@ namespace MCNMedia_Dev.Controllers
                     //ViewBag.SuccessMsg = "Email Send Successfully";
 
                     //throw new Exception();
-                    return View("ListUser", gm);
+                    TempData["addUserSuccess"] = 1;
+                    return RedirectToAction("ListUser");
 
                     //before
                     //throw new Exception();
@@ -235,6 +241,7 @@ namespace MCNMedia_Dev.Controllers
                 int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
 
                 userDataAccess.DeleteUser(id, UpdateBy);
+                TempData["deleteUserMsg"] = 1;
                 return RedirectToAction("ListUser");
             }
 

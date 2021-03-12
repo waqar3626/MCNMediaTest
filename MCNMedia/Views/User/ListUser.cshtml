@@ -216,7 +216,7 @@
         });
 
     }
-    function DeleteUserClick(UserId) {
+    function DeleteUserClick(id) {
 
         swal({
   title: "Are you sure?",
@@ -227,17 +227,8 @@
 })
 .then((willDelete) => {
   if (willDelete) {
-    swal("Poof! Your file has been deleted!", {
-        icon: "success",
 
-    });
-        $.ajax({
-            type: "Get",
-            url: '@Url.Action("Delete", "User")',
-            data: { id: UserId },
-
-        });
-      window.location.reload();
+      window.location.href = '/User/Delete/' + id;
   } else {
          swal("Your file is safe!");
   }
