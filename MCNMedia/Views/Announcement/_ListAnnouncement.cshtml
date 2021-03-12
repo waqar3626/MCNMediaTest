@@ -7,24 +7,7 @@
 <div class="card">
     <div class="card-body">
 
-        <div class="row m-0 mb-3">
-            <div class="col-lg-12">
-                <div class="alert alert-danger" id="addAnnouncementListErrorMessage" hidden>
-
-                </div>
-
-            </div>
-
-        </div>
-        <div class="row m-0 mb-3">
-            <div class="col-lg-12">
-                <div class="alert alert-success" id="addAnnouncementListSuccessMessage" hidden>
-                    saved Successfully!
-                </div>
-
-            </div>
-
-        </div>
+      
         <div class="float-right">
             <button type="submit" value="Add" id="BtnAddAnnouncement" class="btn btn-outline-behance btn-sm " title="Add New" onclick="AddAnnouncement()"><i class="fa fa-plus"></i> Add Announcement</button>
         </div>
@@ -178,26 +161,28 @@
             success: function (result) {
                 if (result.success) {
                     loadAnnouncement();
-                    $('#addAnnouncementListSuccessMessage').removeAttr('hidden');
-                    $('#addAnnouncementListSuccessMessage').html('Announcement Deleted Successfully');
-                    $('#addAnnouncementListSuccessMessage').fadeIn();
+                    $(window).scrollTop(0);
+                    $('#addMediaSuccessMessage').removeAttr('hidden');
+                    $('#addMediaSuccessMessage').html('Announcement Deleted Successfully');
+                    $('#addMediaSuccessMessage').fadeIn();
 
-                    $('#addAnnouncementListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#addAnnouncementListSuccessMessage").slideUp(500);
+                    $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMediaSuccessMessage").slideUp(500);
                     });
-                    $('#addAnnouncementListSuccessMessage').attr('hidden');
+                    $('#addMediaSuccessMessage').attr('hidden');
 
                 }
                 else {
-                    $('#addAnnouncementListErrorMessage').removeAttr('hidden');
-                    $('#addAnnouncementListErrorMessage').html(result.responseText);
-                    $('#addAnnouncementListErrorMessage').fadeIn();
+                    $(window).scrollTop(0);
+                    $('#addMediaErrorMessage').removeAttr('hidden');
+                    $('#addMediaErrorMessage').html(result.responseText);
+                    $('#addMediaErrorMessage').fadeIn();
 
-                    $('#addAnnouncementListErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#addAnnouncementListErrorMessage").slideUp(500);
-                        $('#addAnnouncementListErrorMessage').attr('hidden');
+                    $('#addMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMediaErrorMessage").slideUp(500);
+                        $('#addMediaErrorMessage').attr('hidden');
                     });
-                    $('#addAnnouncementListErrorMessage').attr('hidden');
+                    $('#addMediaErrorMessage').attr('hidden');
 
                 }
                

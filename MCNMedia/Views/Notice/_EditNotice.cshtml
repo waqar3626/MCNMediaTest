@@ -9,25 +9,18 @@
 <link rel="stylesheet" href="~/theme/vendors/simplemde/simplemde.min.css">
 <!-- End plugin css for this page -->
 
-@using (Html.BeginForm("UpdateNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-danger" id="editNoticeErrorMessage">
-
-            </div>
-
-        </div>
-
-    </div><div class="row m-0 mb-3">
-        <div class="col-lg-12">
-            <div class="alert alert-success" id="editNoticeSuccessMessage">
-                saved Successfully!
-            </div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="editNoticesErrorMessage" hidden>
 
         </div>
 
     </div>
+
+</div>
+@using (Html.BeginForm("UpdateNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    
 
     <div class="row">
         <div class="col">
@@ -86,31 +79,39 @@
                 contentType: false,  // tell jQuery not to set contentType
 
                 success: function (result) {
-
                     if (result.success) {
-                        $('#editNoticeSuccessMessage').fadeIn();
-                        $('#editNoticeSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                            $("#editNoticeSuccessMessage").slideUp(500);
-                        });
-                        sleep(5000);
                         loadNotice();
-                        var IntervalTime = setTimeout($('#EditNoticeModal').modal('hide'), 5000);
+                      
+                        $('#EditCameraForm')[0].reset();
+                        $('#EditNoticeModal').modal('hide');
+                        $('#addMediaSuccessMessage').removeAttr('hidden');
+                        $('#addMediaSuccessMessage').html('Notice Updated successfully');
+                        $('#addMediaSuccessMessage').fadeIn();
+                        $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                            $("#addMediaSuccessMessage").slideUp(500);
+                        });
+                        $('#addMediaSuccessMessage').attr('hidden');
+
+                      
 
                     }
                     else {
-                        displayBusyIndicator2();
-                        $('#EditNoticeModal').modal('show');
-                        $('#editNoticeErrorMessage').html(result.responseText);
-                        $('#editNoticeErrorMessage').fadeIn();
+                       
+                       
+                       
+                        $('#editNoticesErrorMessage').removeAttr('hidden');
+                        $('#editNoticesErrorMessage').html(response.responseText);
+                        $('#editNoticesErrorMessage').fadeIn();
 
-                        $('#editNoticeErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
-                            $("#editNoticeErrorMessage").slideUp(500);
+                        $('#editNoticesErrorMessage').fadeTo(5000, 500).slideUp(500,
+                            function () {
+                                $("#editNoticesErrorMessage").slideUp(500);
 
 
-                        });
-
+                            });
+                        $('#editNoticesErrorMessage').attr('hidden');
                     }
-                },
+                                   },
 
                 error: function (errormessage) {
                     //alert(errormessage.responseText);

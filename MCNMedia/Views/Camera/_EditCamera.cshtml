@@ -13,6 +13,29 @@
         top: 4em !important;
     }
 </style>
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMsgPartial))
+{
+
+    <div class="row m-0 mb-3">
+        <div class="col-lg-12">
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMsgPartial
+            </div>
+
+        </div>
+
+    </div>
+
+}
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="editCameraErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
 <div class="row">
     <div class="col-sm-6">
         <video id='CameraLiveStream' class="video-js vjs-default-skin" width="400" height="300" controls>
@@ -21,24 +44,6 @@
     </div>
     <div class="col-sm-6">
         <form asp-action="Edit" id="EditCameraForm" class="needs-validation" novalidate>
-
-            <div class="row m-0 mb-3">
-                <div class="col-lg-12">
-                    <div class="alert alert-danger" id="editCameraErrorMessage">
-
-                    </div>
-
-                </div>
-
-            </div><div class="row m-0 mb-3">
-                <div class="col-lg-12">
-                    <div class="alert alert-success" id="editCameraSuccessMessage">
-                        saved Successfully!
-                    </div>
-
-                </div>
-
-            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Cameras.CameraId" id="CamId" />
             <input type="hidden" asp-for="Cameras.LiveStreamUrl" id="livestreamUrl" />
@@ -75,10 +80,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#editCameraErrorMessage').hide();
-        $('#editCameraSuccessMessage').hide();
-    });
     $(function () {
         $("#EditCameraBtnId").on("click", function (e) {
             var form = $("#EditCameraForm")[0];
@@ -88,7 +89,7 @@
                 e.stopPropagation();
             }
             else {
-               
+
                 Openit(CamId.value);
             }
             form.classList.add('was-validated');
@@ -110,6 +111,8 @@
         var HttpPort = $('#Cameras_HttpPort').val();
         var RtspPort = $('#Cameras_RtspPort').val();
 
+        $('#AddCameraModal').modal('hide');
+        displayBusyIndicator();
 
         $.ajax({
             type: "POST",
@@ -120,35 +123,39 @@
 
             //   contentType: "application/json;charset=UTF-8",
             //  dataType: "json",
-          
             success: function (result) {
-
                 if (result.success) {
-                    $('#editCameraSuccessMessage').fadeIn();
-                    $('#editCameraSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#editCameraSuccessMessage").slideUp(500);
+                    displayBusyIndicator2();
+                    $('#EditCameraForm')[0].reset();
+                    $('#EditCameraForm')[0].reset();
+                    $('#addMediaSuccessMessage').removeAttr('hidden');
+                    $('#addMediaSuccessMessage').html('Camera Updated successfully');
+                    $('#addMediaSuccessMessage').fadeIn();
+                    $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMediaSuccessMessage").slideUp(500);
                     });
-                    sleep(5000);
-   
-                    var IntervalTime = setTimeout($('#EditModal').modal('hide'), 5000);
+                    $('#addMediaSuccessMessage').attr('hidden');
+
                     window.location.reload();
 
                 }
                 else {
                     displayBusyIndicator2();
-                    $('#EditModal').modal('show');
-                    $('#editCameraErrorMessage').html(result.responseText);
+                    $('#EditCameraForm').modal('show');
+                    $('#editCameraErrorMessage').removeAttr('hidden');
+                    $('#editCameraErrorMessage').html(response.responseText);
                     $('#editCameraErrorMessage').fadeIn();
 
-                    $('#editCameraErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#editCameraErrorMessage").slideUp(500);
+                    $('#editCameraErrorMessage').fadeTo(5000, 500).slideUp(500,
+                        function () {
+                            $("#editCameraErrorMessage").slideUp(500);
 
 
-                    });
-
+                        });
+                    $('#editCameraErrorMessage').attr('hidden');
                 }
-            },
 
+            },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
             }

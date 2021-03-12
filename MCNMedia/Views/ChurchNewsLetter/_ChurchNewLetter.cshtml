@@ -150,24 +150,24 @@
                 success: function (result) {
                     if (result.success) {
                         loadNewsLetter();
-                        $('#addNewLetterListSuccessMessage').removeAttr('hidden');
-                        $('#addNewLetterListSuccessMessage').html('News Letter Deleted Successfully');
-                        $('#addNewLetterListSuccessMessage').fadeIn();
+                        $('#addMediaSuccessMessage').removeAttr('hidden');
+                        $('#addMediaSuccessMessage').html('News Letter Deleted Successfully');
+                        $('#addMediaSuccessMessage').fadeIn();
 
-                        $('#addNewLetterListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                            $("#addNewLetterListSuccessMessage").slideUp(500);
+                        $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                            $("#addMediaSuccessMessage").slideUp(500);
                         });
-                        $('#addNewLetterListSuccessMessage').attr('hidden');
+                        $('#addMediaSuccessMessage').attr('hidden');
                     }
                     else {
-                        $('#addNewLetterListErrorMessage').removeAttr('hidden');
-                        $('#addNewLetterListErrorMessage').html(result.responseText);
-                        $('#addNewLetterListErrorMessage').fadeIn();
+                        $('#addMediaErrorMessage').removeAttr('hidden');
+                        $('#addMediaErrorMessage').html(result.responseText);
+                        $('#addMediaErrorMessage').fadeIn();
 
-                        $('#addNewLetterListErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
-                            $("#addNewLetterListErrorMessage").slideUp(500);
+                        $('#addMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                            $("#addMediaErrorMessage").slideUp(500);
                         });
-                        $('#addNewLetterListErrorMessage').attr('hidden');
+                        $('#addMediaErrorMessage').attr('hidden');
 
                     }
                 },

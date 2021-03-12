@@ -320,7 +320,7 @@
             success: function (response) {
                 if (response.success) {
                     $('#editScheduleSuccessMessage').fadeIn();
-                    $('#editScheduleSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                    $('#editScheduleSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#editScheduleSuccessMessage").slideUp(500);
                     });
 
@@ -337,7 +337,7 @@
                     $('#editScheduleErrorMessage').html(response.responseText);
                     $('#editScheduleErrorMessage').fadeIn();
 
-                    $('#editScheduleErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                    $('#editScheduleErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#editScheduleErrorMessage").slideUp(500);
 
 

@@ -22,10 +22,10 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 return View(gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMesage("Index Errors : " + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(gm);
             }
         }
 
@@ -75,25 +75,25 @@ namespace MCNMedia_Dev.Controllers
                 return Json(noticeInfo);
 
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMesage("Get All Notice Errors : " + e.Message);
-                throw;
+                return Json(new { success = false, responseText = exp.Message });
             }
         }
         public IActionResult EditNotice(int id)
         {
+            GenericModel gm = new GenericModel();
             try
             {
 
-                GenericModel gm = new GenericModel();
+            
                 gm.Notices = noticeDataAccess.GetNoticeById(id);
                 return PartialView("_EditNotice", gm);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMesage("Edit Notice Errors : " + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return PartialView("_EditNotice", gm);
             }
         }
         
@@ -110,12 +110,11 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 bool res = noticeDataAccess.DeleteNotice(id, UpdatedBy);
-                return Json(res);
+                return Json(new {success=true,res });
             }
             catch (Exception e)
             {
-                ShowMesage("Delete Notice Errors :" + e.Message);
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
         }
         public JsonResult UpdateNotice(int ChurchNoticeId, string NoticeTitle, string NoticeName)
@@ -144,10 +143,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        private void ShowMesage(String exceptionMessage)
-        {
-            log.Error("Exception : " + exceptionMessage);
-        }
+      
 
     }
 }

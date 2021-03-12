@@ -243,7 +243,7 @@ namespace MCNMedia_Dev.Controllers
 
                 RecordingViewBagData();
                 LoadChurchDDL();
-
+                ViewBag.SuccessMsg = "Recording Deleted SuccessFully";
                 return View("ListRecording", gm);
                 
             }

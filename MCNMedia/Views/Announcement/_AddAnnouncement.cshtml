@@ -126,14 +126,14 @@
 
                     loadAnnouncement();
                     $('#AddAnnouncementPopUp').modal('hide');
-                    $('#addAnnouncementListSuccessMessage').removeAttr('hidden');
-                    $('#addAnnouncementListSuccessMessage').html('Announcement Added Successfully');
-                    $('#addAnnouncementListSuccessMessage').fadeIn();
+                    $('#addMediaSuccessMessage').removeAttr('hidden');
+                    $('#addMediaSuccessMessage').html('Announcement Added Successfully');
+                    $('#addMediaSuccessMessage').fadeIn();
 
-                    $('#addAnnouncementListSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
-                        $("#addAnnouncementListSuccessMessage").slideUp(500);
+                    $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMediaSuccessMessage").slideUp(500);
                     });
-                    $('#addAnnouncementListSuccessMessage').attr('hidden');
+                    $('#addMediaSuccessMessage').attr('hidden');
                 }
                 else {
 
@@ -142,7 +142,7 @@
                     $('#addAnnouncementErrorMessage').html(result.responseText);
                     $('#addAnnouncementErrorMessage').fadeIn();
 
-                    $('#addAnnouncementErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                    $('#addAnnouncementErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#addAnnouncementErrorMessage").slideUp(500);
                     });
                     $('#addAnnouncementErrorMessage').attr('hidden');

@@ -428,7 +428,7 @@
                     $('#addDashBoardSuccessMessage').html('Camera Status Changed Successfully!');
                     $('#addDashBoardSuccessMessage').fadeIn();
 
-                    $('#addDashBoardSuccessMessage').fadeTo(2000, 500).slideUp(500, function () {
+                    $('#addDashBoardSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#addDashBoardSuccessMessage").slideUp(500);
                     });
                     $('#addDashBoardErrorMessage').attr('hidden');
@@ -438,7 +438,7 @@
                     $('#addDashBoardErrorMessage').html(result.responseText);
                     $('#addDashBoardErrorMessage').fadeIn();
 
-                    $('#addDashBoardErrorMessage').fadeTo(2000, 500).slideUp(500, function () {
+                    $('#addDashBoardErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#addDashBoardErrorMessage").slideUp(500);
                         $('#addDashBoardErrorMessage').attr('hidden');
                     });
