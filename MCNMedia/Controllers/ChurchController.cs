@@ -44,21 +44,22 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Add Church Error" + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
+                return View();
             }
         }
 
         [HttpGet]
         public IActionResult Listchurch()
         {
+            List<Church> church = new List<Church>();
             try
             {
                 LoadServerDDL();
                 LoadClientDDL();
                 LoadCountyDDL();
                 LoadCountryDDL();
-
+           
                 Church chr = new Church();
                 HttpContext.Session.SetInt32("ClientType", 0);
                 HttpContext.Session.SetInt32("County", 0);
@@ -70,13 +71,33 @@ namespace MCNMedia_Dev.Controllers
                 chr.Phone = "";
                 chr.Town = ""; 
                 chr.CountryId = -1;
-                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                 church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                if (Convert.ToInt32(TempData["SuccessMsg"]) == 1)
+                {
+                    ViewBag.SuccessMsg = "Church Deleted SuccessFully";
+                }
+                if (Convert.ToInt32(TempData["ErrorBit"]) == 1)
+                {
+                    ViewBag.ErrorMsg= "Error Occurreds! " + TempData["ErrorMsg"];
+                    return View(church);
+                }
+                if (Convert.ToInt32(TempData["addSuccessMsg"]) == 1)
+                {
+                    ViewBag.SuccessMsg = "Church Added Successfully";
+                    
+                }
+               
                 return View(church);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("List Church Error" + e.Message);
-                throw;
+                LoadServerDDL();
+                LoadClientDDL();
+                LoadCountyDDL();
+                LoadCountryDDL();
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(church);
             }
         }
 
@@ -98,19 +119,21 @@ namespace MCNMedia_Dev.Controllers
                 churchDataAccess.GetAllChurch(chr);
                 return View();
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage(" All Churches Error" + e.Message);
-                throw;
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View();
             }
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            Church church = new Church();
             try
             {
-                Church church = churchDataAccess.GetChurchData(id);
+                 church = churchDataAccess.GetChurchData(id);
                 if (church == null)
                 {
                     return NotFound();
@@ -120,10 +143,12 @@ namespace MCNMedia_Dev.Controllers
                 LoadCountyDDL();
                 return View(church);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage(" Edit Church Error" + e.Message);
-                throw;
+                LoadClientDDL();
+                LoadCountyDDL();
+                ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
+                return View(church);
             }
         }
 
@@ -140,6 +165,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+               
                 string fileName = "missing-image.jpg";
                 church.ImageURl = "Uploads/ProfileImages/missing-image.jpg";
                 church.CreateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
@@ -153,13 +179,13 @@ namespace MCNMedia_Dev.Controllers
                 churchDataAccess.AddChurch(church);
                 List<Church> ListChurch = churchDataAccess.GetAllChurch(church).ToList<Church>();
                 ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
-                //throw new Exception();
+                TempData["addSuccessMsg"] = 1;
                 return RedirectToAction("Listchurch", ListChurch);
             }
             catch (Exception exp)
             {
                 Church chr = new Church();
-                chr.ChurchId = 1;
+                chr.ChurchId = -1;
                 chr.CountyId = -1;
                 chr.ClientTypeId = -1;
                 chr.ChurchName = "";
@@ -179,8 +205,8 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-        [HttpGet]
-        public IActionResult Delete(int id)
+      [HttpGet]
+        public IActionResult DeleteChurch(int id)
         {
             try
             {
@@ -188,39 +214,51 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return RedirectToAction("Listchurch", "Church");
                 }
+             
                 int UpdateBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 churchDataAccess.DeleteChurch(id, UpdateBy);
+                TempData["SuccessMsg"] = 1;
                 return RedirectToAction("Listchurch");
+                
             }
             catch (Exception e)
             {
-                ShowMessage(" Delete Church Error" + e.Message);
-                throw;
+                TempData["ErrorBit"] = 1;
+                TempData["ErrorMsg"] = e.Message;
+                return RedirectToAction("Listchurch");
             }
         }
 
         [HttpGet]
         public JsonResult Analytics(DateTime analyticDate)
         {
-            string date = analyticDate.ToString("dd/mm/yyyy");
-            if (analyticDate.ToString() == "1/1/0001 12:00:00 AM" || date == "01-00-0001")
+            try
             {
-                analyticDate = DateTime.Now;
-            }
-            GenericModel gm1 = new GenericModel();
-                       int  churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-           
-            gm1.Churches = churchDataAccess.GetChurchData(churchId);
-            GoogleAnalytics googleantics = new GoogleAnalytics(environment);
-            List<GoogleAnalyticsProperty> googleAnalytics = googleantics.GoogleAnalytics_GetByChurch(analyticDate);
-            if (googleAnalytics.Count > 0)
-            {
-                gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
-            }
-            ViewBag.ChurchId = churchId.ToString();
-            ViewBag.SchDate = analyticDate;
+                string date = analyticDate.ToString("dd/mm/yyyy");
+                if (analyticDate.ToString() == "1/1/0001 12:00:00 AM" || date == "01-00-0001")
+                {
+                    analyticDate = DateTime.Now;
+                }
+                GenericModel gm1 = new GenericModel();
+                int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
 
-            return Json(gm1.googleAnalytics);
+                gm1.Churches = churchDataAccess.GetChurchData(churchId);
+                GoogleAnalytics googleantics = new GoogleAnalytics(environment);
+                List<GoogleAnalyticsProperty> googleAnalytics = googleantics.GoogleAnalytics_GetByChurch(analyticDate);
+                if (googleAnalytics.Count > 0)
+                {
+                    gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
+                }
+                ViewBag.ChurchId = churchId.ToString();
+                ViewBag.SchDate = analyticDate;
+
+                return Json(new {success=true, gm1.googleAnalytics });
+            }
+            catch (Exception exp)
+            {
+                return Json(new { success = false, exp.Message });
+            }
+            
         }
 
         [HttpGet]
@@ -261,16 +299,16 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage(" Church Detail Error" + e.Message);
-                throw;
+                TempData["ErrorBit"] = 1;
+                TempData["ErrorMsg"] = e.Message;
+                return RedirectToAction("Listchurch");
             }
 
         }
 
         public void LoadClientDDL()
         {
-            try
-            {
+            
                 IEnumerable<ClientType> clientList = churchDataAccess.GetClients();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in clientList)
@@ -278,18 +316,13 @@ namespace MCNMedia_Dev.Controllers
                     selectListItems.Add(new SelectListItem { Text = item.ClientTypeTitle.ToString(), Value = item.ClientTypeId.ToString() });
                 }
                 ViewBag.ClientTypes = selectListItems;
-            }
-            catch (Exception e)
-            {
-                ShowMessage(" Client Type Can't load Error" + e.Message);
-                throw;
-            }
+            
+          
         }
 
         public void LoadCountryDDL()
         {
-            try
-            {
+            
                 IEnumerable<Place> countryList = _placeAccessLayer.GetCountries();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countryList)
@@ -297,19 +330,13 @@ namespace MCNMedia_Dev.Controllers
                     selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
                 }
                 ViewBag.Countries = selectListItems;
-            }
-            catch (Exception e)
-            {
-                ShowMessage("Load Country DropDown : " + e.Message);
-                throw;
-            }
+          
         }
 
 
         public void LoadCountyDDL()
         {
-            try
-            {
+            
                 IEnumerable<Place> countyList = _placeAccessLayer.GetCounties(-1);
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in countyList)
@@ -317,12 +344,7 @@ namespace MCNMedia_Dev.Controllers
                     selectListItems.Add(new SelectListItem { Text = item.PlaceName.ToString(), Value = item.PlaceId.ToString() });
                 }
                 ViewBag.Counties = selectListItems;
-            }
-            catch (Exception e)
-            {
-                ShowMessage(" County Can't Load Error" + e.Message);
-                throw;
-            }
+           
         }
 
         [HttpPost]
@@ -368,16 +390,19 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                ShowMessage("Update Church  Error" + e.Message);
-                throw;
+                TempData["ErrorBit"] = 1;
+                TempData["ErrorMsg"] = e.Message;
+                return RedirectToAction("Listchurch");
             }
 
         }
         [HttpPost]
         public IActionResult SearchChurch(string ChurchName, int ClientType, string EmailAddress, int County, int Country, string town, string PhoneNo)
         {
+            List<Church> church = new List<Church>();
             try
             {
+            
                 LoadClientDDL();
                 LoadCountyDDL();
                 LoadCountryDDL();
@@ -393,20 +418,24 @@ namespace MCNMedia_Dev.Controllers
                 chr.Town = town;
                 chr.CountryId = Country;
                 chr.Phone = PhoneNo;
-                List<Church> church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+                church = churchDataAccess.GetAllChurch(chr).ToList<Church>();
+   
                 return View("/Views/Church/Listchurch.cshtml", church);
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-                ShowMessage("Search Church  Error" + e.Message);
-                throw;
+
+                LoadClientDDL();
+                LoadCountyDDL();
+                LoadCountryDDL();
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View("/Views/Church/Listchurch.cshtml", church);
             }
         }
 
         public void LoadServerDDL()
         {
-            try
-            {
+            
                 ServerDAL serverDAL = new ServerDAL();
                 List<Server> serverList = serverDAL.GetServer();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
@@ -416,18 +445,9 @@ namespace MCNMedia_Dev.Controllers
                 }
                 ViewBag.Server = selectListItems;
 
-            }
-            catch (Exception e)
-            {
-                ShowMessage("Server Can't Load  Error" + e.Message);
-                throw;
-            }
+           
         }
 
-        private void ShowMessage(string exceptionMessage)
-        {
-            log.Info("Exception: " + exceptionMessage);
-            _Helper.Common.SaveToXXX(exceptionMessage);
-        }
+      
     }
 }

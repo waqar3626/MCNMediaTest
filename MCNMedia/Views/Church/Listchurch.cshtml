@@ -203,8 +203,8 @@
 
     }
 
-    function DeleteChurchClick(ChurchId) {
-
+        function DeleteChurchClick(id) {
+    
         swal({
   title: "Are you sure?",
   text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -214,17 +214,9 @@
 })
 .then((willDelete) => {
   if (willDelete) {
-    swal("Poof! Your file has been deleted!", {
-        icon: "success",
-
-    });
-        $.ajax({
-            type: "Get",
-            url: '@Url.Action("Delete", "Church")',
-            data: { id: ChurchId },
-
-        });
-      window.location.reload();
+      
+      window.location.href = '/Church/DeleteChurch/' + id;
+     
   } else {
          swal("Your file is safe!");
   }
