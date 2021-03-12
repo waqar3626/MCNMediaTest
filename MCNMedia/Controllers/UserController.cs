@@ -102,6 +102,7 @@ namespace MCNMedia_Dev.Controllers
         {
             GenericModel gm=new GenericModel();
             try {
+                LoadDDL();
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return RedirectToAction("UserLogin", "UserLogin");
@@ -126,7 +127,8 @@ namespace MCNMedia_Dev.Controllers
                 }
                 else
                 {
-                    LoadDDL();
+
+
                     return View();
                 }
             }

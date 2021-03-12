@@ -105,6 +105,27 @@ namespace MCNMedia_Dev.Repository
             return user;
         }
 
+        public void ResetUserPassword(int UserId, string newPassword)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("usrId", UserId);
+            
+            _dc.AddParameter("newPassword", Hashing.HashPassword(newPassword) );
+            _dc.Execute("spUser_ResetPassword");
+
+        }
+        public User GetUserDataByEmail(string email)
+        {
+            User user = new User();
+            _dc.ClearParameters();
+            _dc.AddParameter("emailAddress", email);
+            DataTable dataTable = _dc.ReturnDataTable("spUser_GetByEmail");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                user = BindUserData(dataRow);
+            }
+            return user;
+        }
         public User UserLogin(User usr)
         {
             User user = new User();
