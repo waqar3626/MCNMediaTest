@@ -32,7 +32,43 @@ namespace MCNMedia_Dev.Controllers
             }
           
         }
+        public IActionResult ReadMessage(int MessageId)
+        {
+            Inbox inbox = new Inbox();
+            try
+            {
+                inboxDataAccessLayer.ChangeMailStatus(MessageId,3);
+                inbox = inboxDataAccessLayer.GetMailDataById(MessageId);
+                return View(inbox);
+            }
+            catch (Exception exp)
+            {
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(inbox);
+            }
 
-     
+        }
+        public IActionResult DeleteMail(int MessageId)
+        {
+            List<Inbox> inbox = new List<Inbox>();
+            try
+            {
+                bool res = inboxDataAccessLayer.DeleteMail(MessageId);
+
+                inbox = inboxDataAccessLayer.GetAllEmails().ToList();
+                ViewBag.SuccessMsg = "Mail Deleted Successfully";
+                return View("Inbox",inbox);
+
+            }
+            catch (Exception exp)
+            {
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View("Inbox",inbox);
+            }
+
+        }
+
+
+
     }
 }

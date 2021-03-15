@@ -24,7 +24,7 @@
                                         <th class="sortStyle">Contact Name</th>
                                         <th class="sortStyle">Email Address</th>
                                         <th class="sortStyle">Email Subject</th>
-                                        
+                                       
                                         <th class="sortStyle">Email Date </th>
                                         <th class="sortStyle">Status </th>
 
@@ -73,21 +73,11 @@
                                             </td>
 
                                             <td>
-
                                                 @*<button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
-                                                <div class="dropdown">
-                                                    <button class="btn btn-primary dropdown-toggle btn-lg text-white" type="button"  data-placement="bottom" title="Read Message" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-tasks "></i> Actions
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#"> <i class="fa fa-envelope-open"></i> Read</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-mail-reply"></i> Replay</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-mail-forward"></i> Forword</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
 
-                                                    </div>
-                                                </div>
-                                              
+                                                <a href="@Url.Action("ReadMessage", "Inbox", new { MessageId=item.ContactId})" class="btn btn-primary btn-sm text-white"  data-toggle="tooltip" data-placement="bottom" title="Read Message"><i class="fa fa-envelope-open "></i></a>
+                                                <a href="@Url.Action("DeleteMail", "Inbox", new { MessageId=item.ContactId})" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
+
 
                                             </td>
                                         </tr>

@@ -49,8 +49,41 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
           return _dc.ReturnBool("spUnreadMailStatus_Update");
         }
+        public bool ChangeMailStatus(int MessageId,int Status)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("messageId", MessageId);
+            _dc.AddParameter("status", Status);
+            return _dc.ReturnBool("spMailStatus_Update");
+        }
 
+        public Inbox GetMailDataById(int id)
+        {
+            Inbox inbox = new Inbox();
 
-
+            _dc.ClearParameters();
+            _dc.AddParameter("messageId", id);
+            DataTable dataTable = _dc.ReturnDataTable("spEmailGetById");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+               
+                inbox.ContactId = Convert.ToInt32(dataRow["ContactId"].ToString());
+                inbox.ContactMail = dataRow["ContactMail"].ToString();
+                inbox.ContactName = dataRow["ContactName"].ToString();
+                inbox.ContactSubject = dataRow["ContactSubject"].ToString();
+                inbox.Message = dataRow["Message"].ToString();
+                inbox.Status = Convert.ToInt32(dataRow["Status"].ToString());
+                inbox.EmailDate = Convert.ToDateTime(dataRow["EmailDate"].ToString());
+                inbox.SysTime = Convert.ToDateTime(dataRow["EmailDate"]).ToString("dd-MMM-yyyy");
+            }
+            return inbox;
+        }
+        public bool DeleteMail(int id)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("messageId", id);
+            
+         return   _dc.ReturnBool("spMail_Delete");
+        }
     }
 }
