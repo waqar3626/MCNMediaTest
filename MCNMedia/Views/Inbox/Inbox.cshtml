@@ -1,0 +1,117 @@
+﻿@model IEnumerable<MCNMedia_Dev.Models.Inbox>;
+@{ ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card ">
+            <div class="card-header card-header-custom">
+                Manage Inbox
+            </div>
+            <div class="card-body">
+
+
+
+                <div id="order-listing_wrapper" class="dt-bootstrap4 no-footer">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                                <thead>
+                                    <tr>
+                                        <th class="sortStyle">Contact Name</th>
+                                        <th class="sortStyle">Email Address</th>
+                                        <th class="sortStyle">Email Subject</th>
+                                        
+                                        <th class="sortStyle">Email Date </th>
+                                        <th class="sortStyle">Status </th>
+
+
+                                        <th>Actions</th>
+                                    </tr>
+
+
+                                </thead>
+                                <tbody>
+                            
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            <td class="text-wrap">
+                                                @item.ContactName
+                                            </td>
+                                            <td class="text-wrap">
+                                                @item.ContactMail
+                                            </td>
+                                            <td class="text-wrap">
+                                                @item.ContactSubject
+
+                                           
+                                            <td class="text-wrap">
+                                                @item.SysTime
+                                            </td>
+                                            <td class="text-wrap">
+                                                @if (item.Status <= 2)
+                                                {
+                                                    <div class="badge badge-pill badge-danger">New</div>
+                                                }
+                                                else if (item.Status == 3)
+                                                {
+                                                    <div class="badge badge-pill badge-info">Seen</div>
+                                                }
+                                                else if (item.Status == 4)
+                                                {
+                                                    <div class="badge badge-pill badge-primary">Replayed</div>
+                                                }
+                                                else if (item.Status == 5)
+                                                {
+                                                    <div class="badge badge-pill badge-warning">Forword</div>
+                                                }
+                                            </td>
+
+                                            <td>
+
+                                                @*<button type="button" data-id="@item.Src" id="playModelCheck" class="btn btn-success btn-sm ti-control-play" title="Play" data-toggle="modal" data-target="#PlayRecordingModal"></button>*@
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle btn-lg text-white" type="button"  data-placement="bottom" title="Read Message" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-tasks "></i> Actions
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"> <i class="fa fa-envelope-open"></i> Read</a>
+                                                        <a class="dropdown-item" href="#"><i class="fa fa-mail-reply"></i> Replay</a>
+                                                        <a class="dropdown-item" href="#"><i class="fa fa-mail-forward"></i> Forword</a>
+                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+
+                                                    </div>
+                                                </div>
+                                              
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#order-listing').removeAttr('hidden');
+
+           });
+
+
+</script>

@@ -68,7 +68,7 @@ namespace MCNMedia_Dev.Controllers
                 EmailHelper em = new EmailHelper();
                 //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
                 em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
-              
+                _websiteDataAccessLayer.AddContactForm(web);
                 ModelState.Clear();
                 ViewBag.SuccessMsg = "Email Send Successfully";
                 return View();

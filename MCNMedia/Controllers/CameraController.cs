@@ -27,17 +27,17 @@ namespace MCNMedia_Dev.Controllers
         }
         public IActionResult Index()
         {
+            GenericModel gm = new GenericModel();
             try
-            {               
-                GenericModel gm = new GenericModel();
+            {
+
                 int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
                 return View(gm);
             }
             catch (Exception e)
             {
-                ShowMessage("Index Camera Error" + e.Message);
-                throw;
+                return View(gm);
             }
         }
 
@@ -80,7 +80,7 @@ namespace MCNMedia_Dev.Controllers
                         gm.LCameras = camDataAccess.GetAdminCameraByChurch(churchId);
 
                         HttpContext.Session.SetString("TabName", "Camera");
-                        
+
                         var queryString = new { chId = churchId };
                         return Json(new { success = true, responseText = "The attached file is not supported." });
                     }
@@ -98,7 +98,7 @@ namespace MCNMedia_Dev.Controllers
             GenericModel gm = new GenericModel();
             try
             {
-             
+
                 gm.Cameras = camDataAccess.GetCameraById(id);
                 return PartialView("_EditCamera", gm);
             }
@@ -133,8 +133,8 @@ namespace MCNMedia_Dev.Controllers
         {
             Camera camera = new Camera();
             try
-            {    
-               
+            {
+
                 if (HttpContext.Session.GetString("UserType") == "admin")
                 {
 
@@ -166,7 +166,7 @@ namespace MCNMedia_Dev.Controllers
                     ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
                     return View("Views/Client/CameraDetail", gm);
                 }
-                return Json(new { success=false,responseText=e.Message});
+                return Json(new { success = false, responseText = e.Message });
             }
 
         }
@@ -177,7 +177,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
-                    return Json(new { Url="UserLogin"});
+                    return Json(new { Url = "UserLogin" });
                 }
                 Camera CamUpdate = new Camera();
                 CamUpdate.CameraId = Convert.ToInt32(CameraId);
@@ -187,7 +187,7 @@ namespace MCNMedia_Dev.Controllers
                 CamUpdate.RtspPort = RtspPort;
                 CamUpdate.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = camDataAccess.UpdateCamera(CamUpdate);
-          
+
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 return Json(new { success = true, responseText = "The attached file is not supported." });
             }
@@ -197,7 +197,7 @@ namespace MCNMedia_Dev.Controllers
             }
         }
         [HttpPost]
-        public JsonResult RevokeCamera( int cameraId)
+        public JsonResult RevokeCamera(int cameraId)
         {
             try
             {
@@ -209,7 +209,7 @@ namespace MCNMedia_Dev.Controllers
 
                 return Json(new { success = false, responseText = e.Message });
             }
-         
+
         }
 
         public async Task<Camera> GetCameras(int id)
@@ -246,10 +246,6 @@ namespace MCNMedia_Dev.Controllers
             }
 
             return (await Task.WhenAll(tasks)).SelectMany(u => u);
-        }
-        private void ShowMessage(string exceptionMessage)
-        {
-            log.Info("Exception: " + exceptionMessage);
         }
     }
 }

@@ -34,8 +34,9 @@ namespace MCNMedia_Dev.Controllers
 
             catch (Exception e)
             {
-                ShowMessage("Add User Error" + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
+                return View();
+              
             }
         }
         
@@ -43,14 +44,14 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult ListUser(User user)
         {
-
+            LoadDDL();
+            user.RoleId = -1;
+            ViewBag.UserType = -1;
+            GenericModel gm = new GenericModel();
             try
             {
 
-                    LoadDDL();
-                user.RoleId = -1;
-                ViewBag.UserType = -1;
-                GenericModel gm = new GenericModel();
+                   
                 gm.LUsers = UserList(user);
                 if (Convert.ToInt32(TempData["addUserSuccess"]) == 1){
                     ViewBag.SuccessMsg = "User Added SuccessFully";
@@ -67,8 +68,8 @@ namespace MCNMedia_Dev.Controllers
 
             catch (Exception e)
             {
-                    ShowMessage("List User Error" + e.Message);
-                    throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
+                return View(gm);
             }
         }
 
@@ -83,20 +84,22 @@ namespace MCNMedia_Dev.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            LoadDDL();
+            User user = new User();
             try {
 
-                    User user = userDataAccess.GetUserData(id);
+                   user = userDataAccess.GetUserData(id);
                     if (user == null)
                     {
                         return NotFound();
                     }
-                LoadDDL();
+                
                 return PartialView("Edit",user);
             }
             catch (Exception e)
             {
-                    ShowMessage("Edit User Error" + e.Message);
-                    throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
+                return PartialView("Edit", user);
             }
 
         }
@@ -119,17 +122,11 @@ namespace MCNMedia_Dev.Controllers
                     gm.LUsers = UserList(usr);
                     gm.Users = usr;
 
-                    //TempData["IsSuccess"] = 1;
-                    //TempData["Message"] = "User Added Successfully";
-                    //ViewBag.SuccessMsg = "Email Send Successfully";
-
-                    //throw new Exception();
+                   
                     TempData["addUserSuccess"] = 1;
                     return RedirectToAction("ListUser");
 
-                    //before
-                    //throw new Exception();
-                    //return RedirectToAction("ListUser");
+                 
                 }
                 else
                 {
@@ -144,8 +141,7 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.PartalBit = "-1";
                 ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
                 return View("ListUser", gm);
-                //ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                //return View();
+           
             }
 
           
@@ -166,8 +162,8 @@ namespace MCNMedia_Dev.Controllers
 
             catch (Exception e)
             {
-                ShowMessage("All Users Error" + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
+                return View();
             }
 
 
@@ -205,8 +201,7 @@ namespace MCNMedia_Dev.Controllers
                     userDataAccess.UpdateUser(user);
                     gm.LUsers = UserList(user1);
                     gm.Users = user;
-                    //throw new Exception();
-                    return RedirectToAction("ListUser", gm);
+                    return RedirectToAction("ListUser");
                 }
                 else
                 {
@@ -247,26 +242,28 @@ namespace MCNMedia_Dev.Controllers
 
             catch (Exception e)
             {
-                ShowMessage("Delete User Error" + e.Message);
-                throw;
+                ViewBag.PartalBit = "-1";
+                ViewBag.ErrorMsgPartial = "Error Occurreds! " + e.Message;
+                return RedirectToAction("ListUser");
             }
         }
 
         [HttpPost]
         public IActionResult Search(string FirstName, string LastName, string EmailAddress, int Role) 
         {
+            LoadDDL();
+            User usr = new User();
+            usr.FirstName = FirstName;
+            usr.LastName = LastName;
+            usr.EmailAddress = EmailAddress;
+            usr.RoleId = Role;
+            ViewBag.UserType = Role;
+            //List<User> user = userDataAccess.GetAllUser(usr).ToList<User>();
+            GenericModel gm = new GenericModel();
 
             try
             {
-                LoadDDL();
-                User usr = new User();
-                usr.FirstName = FirstName;
-                usr.LastName = LastName;
-                usr.EmailAddress = EmailAddress;
-                usr.RoleId = Role;
-                ViewBag.UserType = Role;
-                //List<User> user = userDataAccess.GetAllUser(usr).ToList<User>();
-                GenericModel gm = new GenericModel();
+              
                 gm.LUsers = userDataAccess.GetAllUser(usr).ToList<User>();
                 return View("/Views/User/ListUser.cshtml", gm);
 
@@ -274,16 +271,14 @@ namespace MCNMedia_Dev.Controllers
 
            catch (Exception e)
             {
-                ShowMessage("Search User Error" + e.Message);
-                throw;
+                ViewBag.ErrorMsg = "Error Occurreds! " + e.Message;
+                return View("/Views/User/ListUser.cshtml", gm);
             }
         }
 
         public void LoadDDL()
             
         {
-            try
-            {
                 IEnumerable<UserRoles> RoleList = userDataAccess.GetRoles();
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 foreach (var item in RoleList)
@@ -291,20 +286,12 @@ namespace MCNMedia_Dev.Controllers
                     selectListItems.Add(new SelectListItem { Text = item.RoleName.ToString(), Value = item.RoleId.ToString() });
                 }
                 ViewBag.State = selectListItems;
-            }
-            catch (Exception e)
-            {
-                ShowMessage("User Role Error" + e.Message);
-
-                throw;
-            }
+            
+          
 
         }
 
-        private void ShowMessage(string exceptionMessage)
-        {
-            log.Info("Exception: " + exceptionMessage);
-        }
+        
 
 
 

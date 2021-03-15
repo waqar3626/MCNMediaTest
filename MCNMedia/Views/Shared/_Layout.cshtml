@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http;
-
+@using MCNMedia_Dev.Repository;
 <!DOCTYPE html>
 
 <html lang="en">
@@ -106,6 +106,15 @@
         Context.Session.Clear();
         Context.Response.Redirect("../UserLogin");
     }
+
+    @{
+        
+            InboxDataAccessLayes inboxDataAccessLayer = new InboxDataAccessLayes();
+            var countUnreadMail = inboxDataAccessLayer.GetUnreadEmail();
+        
+
+     }
+    
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -378,18 +387,35 @@
                             <span class="menu-title">Users</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Inbox" asp-controller="Inbox">
+
+                            <i class="ti-email  menu-icon"></i>
+                            <span class="menu-title">Inbox</span>
+
+                            @if (countUnreadMail>0)
+                            {
+                                <span class="badge badge-pill badge-success">
+                                    @countUnreadMail New Mails </span >
+
+                                }
+
+
+                        </a>
+                       
+                    </li>
                     @*<li class="nav-item">
-                            <a class="nav-link" href="/Subscription/ListSubscription">
-                                <i class="fa fa-th-list menu-icon"></i>
-                                <span class="menu-title">Subscribers</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Subscription/Revenue">
-                                <i class="fa  fa-gbp menu-icon"></i>
-                                <span class="menu-title">Revenue Report</span>
-                            </a>
-                        </li>*@
+            <a class="nav-link" href="/Subscription/ListSubscription">
+                <i class="fa fa-th-list menu-icon"></i>
+                <span class="menu-title">Subscribers</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Subscription/Revenue">
+                <i class="fa  fa-gbp menu-icon"></i>
+                <span class="menu-title">Revenue Report</span>
+            </a>
+        </li>*@
 
 
                 </ul>
