@@ -17,16 +17,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    
     <PackageReference Include="AWSSDK.Core" Version="3.5.1.35" />
     <PackageReference Include="AWSSDK.S3" Version="3.5.4" />
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="cloudscribe.Pagination.Models" Version="1.1.0" />
     <PackageReference Include="cloudscribe.Web.Pagination" Version="3.1.0" />
+    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
     <PackageReference Include="Cronos" Version="0.7.0" />
+    <PackageReference Include="Daimto.Google.Analytics.Tracker.SDK" Version="1.0.5-beta" />
+    <PackageReference Include="DNTCaptcha.Core" Version="3.5.0" />
+    <PackageReference Include="Google.Apis.Analytics.v3" Version="1.50.0.1679" />
+    <PackageReference Include="Google.Apis.Tasks.v1" Version="1.50.0.2231" />
+    <PackageReference Include="GoogleAnalyticsTracker.AspNetCore" Version="6.0.5" />
     <PackageReference Include="log4net" Version="2.0.9" />
     <PackageReference Include="MaxMind.GeoIP2" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="MySql.Data" Version="8.0.21" />
     <PackageReference Include="MySqlConnector" Version="1.0.1" />
     <PackageReference Include="Otp.NET" Version="1.2.2" />
@@ -40,6 +47,12 @@
 
   <ItemGroup>
     <None Include="wwwroot\WebsiteAssets\js\main.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="iDiTect.Converter">
+      <HintPath>bin\iDiTect.Converter.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
