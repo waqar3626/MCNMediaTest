@@ -55,4 +55,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="mscorlib.dll">
+      <HintPath>bin\mscorlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
