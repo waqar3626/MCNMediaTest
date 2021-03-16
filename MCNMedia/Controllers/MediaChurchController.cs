@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using MCNMedia_Dev._Helper;
+using iDiTect.Pdf;
+
+
+
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -313,6 +317,8 @@ namespace MCNMedia_Dev.Controllers
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFile mediaFile)
         {
+            string filePath = "";
+            string OutPutFolderUrl = "";
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -329,19 +335,41 @@ namespace MCNMedia_Dev.Controllers
 
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
+                   
 
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
-                    return Json(new { success = true, res });
+
+                    
+                        string UploadFolderUrl = Path.Combine(environment.WebRootPath, "Files");
+                         OutPutFolderUrl = Path.Combine(environment.WebRootPath, "OutPutNewFiles");
+                       filePath = Path.Combine(UploadFolderUrl, mediaChurch.MediaName);
+                        mediaFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                   
+
+               
+
+                    PdfConverter document = new PdfConverter(filePath);
+                    document.DPI = 96;
+
+                    for (int i = 0; i < document.PageCount; i++)
+                    {
+                        System.Drawing.Image pageImage = document.PageToImage(i);
+                        pageImage.Save(OutPutFolderUrl+i.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                        return Json(new { success = true, res });
+                   
+                   
                 }
 
                 return Json(1);
             }
             catch (Exception exp)
             {
+               
                 return Json(new { success = false, responseText = exp.Message });
             }
         }
-
+     
         public JsonResult GetSlideShowByTypeId(string medType)
         {
             try
