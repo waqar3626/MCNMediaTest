@@ -11,6 +11,7 @@ namespace MCNMedia_Dev.Repository
     public class InboxDataAccessLayes
     {
 
+
         AwesomeDal.DatabaseConnect _dc;
 
         public InboxDataAccessLayes()

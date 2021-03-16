@@ -50,6 +50,7 @@ namespace MCNMedia_Dev.Controllers
         }
         public IActionResult DeleteMail(int MessageId)
         {
+           
             List<Inbox> inbox = new List<Inbox>();
             try
             {
