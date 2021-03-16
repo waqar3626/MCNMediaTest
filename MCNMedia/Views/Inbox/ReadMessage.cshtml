@@ -3,6 +3,8 @@
     ViewData["Title"] = "ReadMessage";
 }
 
+
+
 <div class="row">
     <div class="col-md-12">
 
@@ -20,20 +22,20 @@
                     <div class="col-md-3 p-2"><input type="text" class="form-control font-weight-bold" value="Email Subject" readonly /></div>
                     <div class="col-md-9 p-2"><input type="text" class="form-control font-weight-bold" value="@Model.ContactSubject" readonly /></div>
                     <div class="col-md-12 p-2"><input type="text" class="form-control font-weight-bold" value="Message" readonly /></div>
-                    <div class="col-md-12 p-2"><textarea type="text" class="form-control text-justify " style="font-size:medium; text-justify:auto; line-height:normal"  rows="10" readonly> @Model.Message</textarea></div>
+                    <div class="col-md-12 p-2"><textarea type="text" class="form-control text-justify " style="font-size:medium; text-justify:auto; line-height:normal" rows="10" readonly> @Model.Message</textarea></div>
                 </div>
-                <div class="row m-2">
+                @*<div class="row m-2">
                     <div class="col-md-12 ">
                         <div class="float-right">
-                            <a class="btn btn-info "><i class="fa fa-mail-reply"> Replay</i></a>
+                            <button type="submit" id="AddCamera1" class="btn btn-info " title=" Add New" onclick="AddCamera()"><i class="fa fa-mail-reply"> Replay</i></button>
                             <a class="btn btn-warning "><i class="fa fa-mail-forward"> Forword</i></a>
-
+                            
                         </div>
-                          </div>
-                </div>
+                    </div>
+                </div>*@
 
 
-                
+
 
 
             </div>
@@ -42,4 +44,3 @@
         </div>
     </div>
 </div>
-

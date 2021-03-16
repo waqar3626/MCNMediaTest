@@ -63,7 +63,7 @@
         formData.append("mediaType", "SlideShow");
         formData.append("AddSlideshowTabName", slideshowTabName);
         var input = document.getElementById('slideShow_Url');
-        var fileExtension = ['pptx', 'ppt'];
+        var fileExtension = ['pptx', 'ppt','pdf'];
         if ($.inArray($('#slideShow_Url').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
 
 
