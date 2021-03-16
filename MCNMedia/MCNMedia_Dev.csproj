@@ -21,9 +21,9 @@
     <PackageReference Include="AWSSDK.Core" Version="3.5.1.35" />
     <PackageReference Include="AWSSDK.S3" Version="3.5.4" />
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="BitMiracle.Docotic.Pdf" Version="8.0.11774" />
     <PackageReference Include="cloudscribe.Pagination.Models" Version="1.1.0" />
     <PackageReference Include="cloudscribe.Web.Pagination" Version="3.1.0" />
-    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
     <PackageReference Include="Cronos" Version="0.7.0" />
     <PackageReference Include="Daimto.Google.Analytics.Tracker.SDK" Version="1.0.5-beta" />
     <PackageReference Include="DNTCaptcha.Core" Version="3.5.0" />
@@ -50,14 +50,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="iDiTect.Converter">
-      <HintPath>bin\iDiTect.Converter.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="mscorlib.dll">
-      <HintPath>bin\mscorlib.dll</HintPath>
-    </Reference>
+    <Folder Include="wwwroot\OutPutNewFiles\" />
   </ItemGroup>
 </Project>
