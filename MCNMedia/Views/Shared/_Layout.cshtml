@@ -390,20 +390,28 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-action="Inbox" asp-controller="Inbox">
 
-                            <i class="ti-email  menu-icon"></i>
-                            <span class="menu-title">Inbox</span>
+                            <i class="fa fa-inbox menu-icon"></i>
+                            <span class="menu-title ">Inbox</span>
 
-                            @if (countUnreadMail>0)
+                            @if (countUnreadMail > 0)
                             {
                                 <span class="badge badge-pill badge-success">
-                                    @countUnreadMail New Mails </span >
+                                    @countUnreadMail New Mails
+                                </span>
 
-                                }
+                            }
 
 
                         </a>
-                       
+
                     </li>
+
+                    @*<li class="nav-item">
+                        <a class="nav-link"  href="/EmailTemplate/ListEmail" >
+                            <i class="ti-email  menu-icon  "></i>
+                            <span class="menu-title">EMail Us</span>
+                        </a>
+                    </li>*@
                     @*<li class="nav-item">
             <a class="nav-link" href="/Subscription/ListSubscription">
                 <i class="fa fa-th-list menu-icon"></i>
