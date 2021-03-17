@@ -329,7 +329,13 @@ namespace MCNMedia_Dev.Controllers
                         if (countyName != "all")
                         {
                             churches = churches.FindAll(x => x.CountyName.ToLower() == countyName.ToLower()).ToList<Church>();
-                            ViewBag.CountyID = churches.First().CountyId;
+                            if (churches.Count() > 0) {
+                               ViewBag.CountyID = churches.First().CountyId;
+                            }
+                            else
+                            {
+                                ViewBag.CountyID = -1;
+                            }
 
                         }
                         ViewBag.CountyList = 0;
