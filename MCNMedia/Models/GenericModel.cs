@@ -60,7 +60,8 @@ namespace MCNMedia_Dev.Models
 
         public IEnumerable<RssFeedModel> RssFeedsList { get; set; }
 
-
+        public EmailTemplate EmailTemplates { get; set; }
+        public IEnumerable<EmailTemplate> LEmailTemplate { get; set; }
 
     }
 }

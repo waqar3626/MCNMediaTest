@@ -12,6 +12,11 @@ namespace MCNMedia_Dev.Models
         public string Subject { get; set; }
         public string FromEmail { get; set; }
         public string FromName { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public int UpdatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public int SystemEMail { get; set; }
 
     }
 }
