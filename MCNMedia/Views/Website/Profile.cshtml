@@ -86,7 +86,7 @@
 <div class="content-wrapper">
     <div class="row m-2" >
         <div class="col-lg-12">
-            <div class="alert alert-danger" id="alertProfile"  >
+            <div class="alert alert-danger" id="alertProfile"  hidden>
                 
             </div>
 
@@ -1164,6 +1164,7 @@
             success: function (result) {
                 var items = result.split('^');
                 if (items[0] == '-1') {
+                    $('#alertProfile').removeAttr('hidden');
                     $('#alertProfile').html(items[1]);
                   
              
@@ -1174,6 +1175,7 @@
                 
       
                     });
+                    $('#alertProfile').attr('hidden');
                 } else {
 
                     var html = '';
