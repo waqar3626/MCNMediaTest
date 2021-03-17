@@ -797,7 +797,7 @@ img.main-img {
         }
     }
 
-    @media (max-width:767px) {
+    @media (max-width:780px) {
         .cover-banner, .cover-banner video {
             height: 450px;
         }
@@ -824,7 +824,7 @@ img.main-img {
         }
 
     }
-@media (min-width:768px) {
+@media (min-width:781px) {
 
 
     .cameralive {

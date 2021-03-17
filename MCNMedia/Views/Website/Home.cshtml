@@ -113,17 +113,17 @@
 <div class="bg-blue pt-3 pb-3">
     <div class="container">
         @*<div class="row m-0">
-                <div class="col-sm-12 text-center text-white font-36 mb-4">
-                    Find your Church
-                </div>
+            <div class="col-sm-12 text-center text-white font-36 mb-4">
+            Find your Church
+            </div>
             </div>*@
         <div class="row m-0">
-            <div class="col-lg-4 col-md-5  text-white font-32 ">
+            <div class="col-lg-4 col-md-6 text-white font-32 ">
                 Search your Church
             </div>
-            <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 ml-auto">
+            <div class="col-lg-4 col-md-3 p-2 selectors-3 col-sm-6 ml-auto">
                 <div class="input-serch-d position-relative">
-                    @*<input list='text_editors' class="empty" placeholder="&#xF002;  Select Country">
+                    @*<input list='text_editors' class="empty" placeholder="&#xF002; Select Country">
                         <i class="far fa-angle-down srch-dopr-icn"></i>*@
 
                     <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries,"Value","Text",-1))">
@@ -131,9 +131,9 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-5 p-2 selectors-3 col-sm-6 mr-auto">
+            <div class="col-lg-4 col-md-3 p-2 selectors-3 col-sm-6 mr-auto">
                 <div class="input-serch-d position-relative">
-                    @*<input list='text_editors2' class="empty" placeholder="&#xF002;  Select State">
+                    @*<input list='text_editors2' class="empty" placeholder="&#xF002; Select State">
                         <i class="far fa-angle-down srch-dopr-icn"></i>*@
                     <select name="County" class="select-search" id="County" onchange="SearchCameraByCounty();">
                         <option value="-1">--Select County--</option>
@@ -142,23 +142,24 @@
                 @* <datalist id="text_editors2">
 
                     <select multiple size=8>
-                        <option value="Atom">Atom</option>
-                        <option value="Brackets">Brackets</option>
-                        <option value="Notepad ++">Notepad ++</option>
-                        <option value="Notepad">Notepad</option>
-                        <option value="Sublime Text">Sublime Text</option>
-                        <option value="TextEdit">TextEdit</option>
-                        <option value="TextMate">TextMate</option>
-                        <option value="Wordpad">Wordpad</option>
+                    <option value="Atom">Atom</option>
+                    <option value="Brackets">Brackets</option>
+                    <option value="Notepad ++">Notepad ++</option>
+                    <option value="Notepad">Notepad</option>
+                    <option value="Sublime Text">Sublime Text</option>
+                    <option value="TextEdit">TextEdit</option>
+                    <option value="TextMate">TextMate</option>
+                    <option value="Wordpad">Wordpad</option>
                     </select>
                     </datalist>*@
             </div>
         </div>
     </div>
 </div>
+      
 <div class="row m-0 mt-5 mb-5">
     <div class="col-1 d-lg-block d-none"></div>
-    <div class="col-lg-7  col-md-8 col-sm-6">
+    <div class="col-lg-7  col-md-12 col-sm-6">
         <div class="row" style="position: sticky; top: 1px; margin-top: -0.5rem">
             @foreach (Church church in Model.ChurchList)
             {
@@ -282,11 +283,11 @@
 
 
             </div>
-            <div class="col-md-6 text-center self-center">
+            <div class="col-md-6 col-sm-6 text-center self-center">
                 <span class="text-white font-36 text-center pt-4 pb-4 container avantgardece ">
                     Do you want to start streaming?
-                </span> <br>
-                <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4">Contact us today</a>
+                </span> <br> 
+                <a href="/Website/ContactUs" class="btn btn-pink font-14 avantgardece text-white mt-5 pl-4 pr-4 mb-3">Contact us today</a>
             </div>
         </div>
     </div>

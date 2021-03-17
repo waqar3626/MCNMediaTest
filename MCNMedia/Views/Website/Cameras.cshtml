@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Cameras";
     Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
-    
+
 }
 
-  
+
 
 <div class="bg-blue  pt-3 pb-3" style=" position: sticky; top: 0px; z-index:5">
     <div class="container">
@@ -147,39 +147,41 @@
     }
 
     <div class="col-1 d-lg-block d-none"></div>
-    <div class="displayblock bg-blue pt-3 pb-3 " style=" position: sticky; top: 0px; z-index:5">
-        <div class="container">
+
+</div>
+<div class="displayblock bg-blue pt-3 pb-3 " style=" position: sticky; top: 0px; z-index:5">
+    <div class="container">
 
 
-            <div class="row m-0">
+        <div class="row m-0">
 
-                <div class=" col-lg-6 col-md-5 p-2 selectors-3 col-sm-6 ml-auto">
-                    <div class="input-serch-d position-relative">
-                        @*<input list='text_editors' class="empty" placeholder="&#xF002;  Select Country">
+            <div class=" col-lg-6 col-md-5 p-2 selectors-3 col-sm-6 ml-auto">
+                <div class="input-serch-d position-relative">
+                    @*<input list='text_editors' class="empty" placeholder="&#xF002;  Select Country">
                         <i class="far fa-angle-down srch-dopr-icn"></i>*@
-                        @if (ViewBag.Countries != null)
-                        {
-                            <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries, "Value", "Text", Context.Session.GetInt32("countryId")))">
-                                <option value="-1">--Select Country--</option>
-                            </select>
-                        }
-                        else
-                        {
-                            <select id="select2" name="countryId" class="select-search">
-                                <option value="-1">--Select Country--</option>
-                            </select>
-                        }
-                    </div>
-                </div>
-                <div class=" col-lg-6 col-md-5 p-2 selectors-3 col-sm-6 mr-auto">
-                    <div class="input-serch-d position-relative">
-                        @*<input list='text_editors2' class="empty" placeholder="&#xF002;  Select State">
-                        <i class="far fa-angle-down srch-dopr-icn"></i>*@
-                        <select name="County" class="select-search" id="County" onchange="SearchCameraByCounty();">
-                            <option value="-1">--Select County--</option>
+                    @if (ViewBag.Countries != null)
+                    {
+                        <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries, "Value", "Text", Context.Session.GetInt32("countryId")))">
+                            <option value="-1">--Select Country--</option>
                         </select>
-                    </div>
-                    @* <datalist id="text_editors2">
+                    }
+                    else
+                    {
+                        <select id="select2" name="countryId" class="select-search">
+                            <option value="-1">--Select Country--</option>
+                        </select>
+                    }
+                </div>
+            </div>
+            <div class=" col-lg-6 col-md-5 p-2 selectors-3 col-sm-6 mr-auto">
+                <div class="input-serch-d position-relative">
+                    @*<input list='text_editors2' class="empty" placeholder="&#xF002;  Select State">
+                        <i class="far fa-angle-down srch-dopr-icn"></i>*@
+                    <select name="County" class="select-search" id="County" onchange="SearchCameraByCounty();">
+                        <option value="-1">--Select County--</option>
+                    </select>
+                </div>
+                @* <datalist id="text_editors2">
 
                     <select multiple size=8>
                         <option value="Atom">Atom</option>
@@ -192,13 +194,11 @@
                         <option value="Wordpad">Wordpad</option>
                     </select>
                     </datalist>*@
-                </div>
             </div>
-
         </div>
+
     </div>
 </div>
-
 
 <script>
     $(document).ready(function () {
@@ -233,8 +233,8 @@
 
                 $("#County").html(s);
                 $('#County').val('@ViewBag.CountyID');
-         
-                
+
+
 
 
             }
