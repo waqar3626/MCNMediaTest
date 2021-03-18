@@ -606,6 +606,7 @@ img.main-img {
     border-radius: 30px;
     /* margin-top: -159px; */
 }
+
 .img-background-bnner {
     height: 451px;
     border: 1.5px solid #d6d6d6;
@@ -681,16 +682,17 @@ img.main-img{
         margin-left: auto;
     }
 }
-@media (max-width:767px){
-    .cover-banner,.cover-banner video {
+@media (max-width:780px) {
+    .cover-banner, .cover-banner video {
         height: 450px;
-
     }
+
     .camerlive {
         width: 100% !important;
         height: 518px !important;
         text-align: center;
     }
+
     .displayblock {
         display: block;
     }
@@ -709,16 +711,18 @@ img.main-img{
         overflow: hidden;
     }
 }
-@media (min-width:768px) {
+@media (min-width:781px) {
 
     .cameralive {
         width: 100% !important;
         height: 518px !important;
         text-align: center;
     }
+
     .displayblock {
         display: none;
     }
+
     .MobileContent {
         display: block;
         text-align: center;
