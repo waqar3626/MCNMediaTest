@@ -17,10 +17,10 @@ namespace MCNMedia_Dev._Helper
 {
     public class GoogleAnalytics
     {
-        private string keyFilePath = @"/WebsiteAssets/mcn-project-303512-fe457b99555b.p12";
-        private string serviceAccountEmail = "mcn-console-api-service-acct@mcn-project-303512.iam.gserviceaccount.com";
+        private string keyFilePath = @"/WebsiteAssets/mcnservice-6f2c92e8dee2.p12"; // .p12 file of MCNLive Trafic
+        private string serviceAccountEmail = "mcn-802@mcnservice.iam.gserviceaccount.com"; //php
         private string keyPassword = "notasecret";
-        private string websiteCode = "236800193";
+        private string websiteCode = "237777915"; // view id of MCNLive Trafic
 
         private AnalyticsService analyticsservice = null;
         private IWebHostEnvironment environment;
@@ -69,6 +69,13 @@ namespace MCNMedia_Dev._Helper
                dateTime.ToString("yyyy-MM-dd"),
                dateTime.ToString("yyyy-MM-dd"),
                "ga:pageviews");
+            //DataResource.GaResource.GetRequest request = analyticsservice.Data.Ga.Get(
+            //   "ga:" + websiteCode,
+            //   //DateTime.Now.AddDays(-7).ToString(),
+            //   //dateTime.ToString("yyyy-MM-dd"),
+            //   "2020-12-01",
+            //   "2021-03-01",
+            //   "ga:sessions");
             request.Dimensions = "ga:year,ga:month,ga:day,ga:country";
             //request.Dimensions = "ga:country";
             var data = request.Execute();

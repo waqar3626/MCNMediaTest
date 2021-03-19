@@ -77,9 +77,8 @@
     });
 
     function GetAnalytics() {
-
         var analyticDate = document.getElementById('SetAnalyticsDate').value;
-
+        displayBusyIndicator();
         $.ajax({
             url: "/Church/Analytics",
             type: "GET",
@@ -87,11 +86,12 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-
+                
                 var html = '';
                 var Total = 0;
 
                 $.each(result, function (key, item) {
+
                                         html += '<tr>';
                     html += '<td>' + item.countryName + '</td>';
 
@@ -107,7 +107,7 @@
                 $('#tableData').html(html);
                 $('#TotalCount').html(Total);
 
-
+                displayBusyIndicator2();
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);

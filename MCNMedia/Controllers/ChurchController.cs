@@ -252,7 +252,7 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.ChurchId = churchId.ToString();
                 ViewBag.SchDate = analyticDate;
 
-                return Json(new {success=true, gm1.googleAnalytics });
+                return Json(gm1.googleAnalytics );
             }
             catch (Exception exp)
             {
