@@ -38,9 +38,21 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("MedURL", media.MediaURL);
             _dc.AddParameter("MedName",media.MediaName);
             _dc.AddParameter("ChurchId2", media.ChurchId);
-            return _dc.Execute("spChurchMedia_Add");
+            return _dc.ReturnInt("spChurchMedia_Add");
         }
-        
+
+        public int AddSlideShowImages(int ChurchMediaId, string MediaUrl,int DisplayOrder, int CreatedBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("churchMediaId", ChurchMediaId);
+            _dc.AddParameter("mediaURL", MediaUrl);
+            _dc.AddParameter("displayOrder", DisplayOrder);
+            _dc.AddParameter("createdBy", CreatedBy);
+
+            
+            return _dc.ReturnInt("spSlideShowImages_Add");
+        }
+
         public IEnumerable<MediaChurch> GetByMediaType(string medType,int ChrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
@@ -78,6 +90,7 @@ namespace MCNMedia_Dev.Repository
                 mediaChurch.MediaType = dataRow["MediaType"].ToString();
                 mediaChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}"; 
                 mediaChurch.MediaName = dataRow["MediaName"].ToString();
+                mediaChurch.ChurchName = dataRow["ChurchName"].ToString();
 
             }
             return mediaChurch;

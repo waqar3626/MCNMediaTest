@@ -19,7 +19,8 @@ namespace MCNMedia_Dev._Helper
         SlideShow,
         UserProfileImage,
         NewsLetter,
-        Donation
+        Donation,
+        SlideShowPic
     }
 
     public enum CameraType

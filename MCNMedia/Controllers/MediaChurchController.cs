@@ -9,15 +9,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using MCNMedia_Dev._Helper;
-using iDiTect.Pdf;
-
-
-
+using BitMiracle.Docotic.Pdf;
+using Microsoft.Extensions.Configuration;
 
 namespace MCNMedia_Dev.Controllers
 {
     public class MediaChurchController : Controller
     {
+        private readonly string AWS_S3_BUCKET_URI;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
@@ -28,6 +27,12 @@ namespace MCNMedia_Dev.Controllers
         public MediaChurchController(IWebHostEnvironment _environment)
         {
             environment = _environment;
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
+            var root = builder.Build();
+            var awsS3bucket = root.GetSection("S3BucketConfiguration");
+            var sysConfig = root.GetSection("SystemConfiguration");
+            AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
         }
 
         public IActionResult Index()
@@ -316,9 +321,11 @@ namespace MCNMedia_Dev.Controllers
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFile mediaFile)
-        {
-            string filePath = "";
-            string OutPutFolderUrl = "";
+        { 
+
+
+        string filePath = "";
+            
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -328,35 +335,62 @@ namespace MCNMedia_Dev.Controllers
                 MediaChurch mediaChurch = new MediaChurch();
                 mediaChurch.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 mediaChurch.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                mediaChurch.MediaName = Path.GetFileName(mediaFile.FileName);
+                mediaChurch.MediaName = System.IO.Path.GetFileName(mediaFile.FileName);
                 mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShow, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
                 mediaChurch.MediaType = mediaType;
                 mediaChurch.TabName = AddSlideshowTabName;
 
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-                   
+                 
 
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
+                    if (res > 0) {
+                        MediaChurch GetData = mediaChurchDataAccess.GetMediaById(res);
+
+                        string folderUrl = "Upload/SlideShowPic/" + GetData.ChurchName + "/" + DateTime.Now.ToString("dd-MMM-yyyy");
+
+                        string UploadFolderUrl = Path.Combine(environment.WebRootPath, folderUrl);
+                        bool exists = System.IO.Directory.Exists(UploadFolderUrl);
+
+                        if (!exists)
+                        {
+                            System.IO.Directory.CreateDirectory(UploadFolderUrl);
+                        }
+                     
+                        filePath = Path.Combine(UploadFolderUrl, mediaChurch.MediaName );
+                        FileStream fileStream = new FileStream(filePath, FileMode.Create);
+                        mediaFile.CopyTo(fileStream);
+                        fileStream.Close();
+
+
+
+                        
+                      
+                        using (var pdf = new PdfDocument(filePath)) 
+                    {
+                        PdfDrawOptions options = PdfDrawOptions.Create();
+                        options.BackgroundColor = new PdfRgbColor(255, 255, 255);
+                        options.HorizontalResolution = 300;
+                        options.VerticalResolution = 300;
+                            int displayOrder = 1;
+                        for (int i = 0; i <pdf.PageCount; ++i)
+                        {
+                            string fileName = Guid.NewGuid().ToString() + "_" + res + "page_" + i + ".jpg";
+                            pdf.Pages[i].Save($"{UploadFolderUrl +"/" + fileName}", options);
+                                int userId = (int)HttpContext.Session.GetInt32("UserId");
+                                string pathFile = folderUrl + "/" + fileName;
+                                mediaChurchDataAccess.AddSlideShowImages(res, pathFile, displayOrder, userId);
+                                displayOrder++;
+                        }
+                    }  
+                    }
 
                     
-                        string UploadFolderUrl = Path.Combine(environment.WebRootPath, "Files");
-                         OutPutFolderUrl = Path.Combine(environment.WebRootPath, "OutPutNewFiles");
-                       filePath = Path.Combine(UploadFolderUrl, mediaChurch.MediaName);
-                        mediaFile.CopyTo(new FileStream(filePath, FileMode.Create));
-                   
 
-               
 
-                    PdfConverter document = new PdfConverter(filePath);
-                    document.DPI = 96;
 
-                    for (int i = 0; i < document.PageCount; i++)
-                    {
-                        System.Drawing.Image pageImage = document.PageToImage(i);
-                        pageImage.Save(OutPutFolderUrl+i.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                    }
-                        return Json(new { success = true, res });
+                    return Json(new { success = true, res });
                    
                    
                 }
