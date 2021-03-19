@@ -307,7 +307,8 @@
         var password = document.getElementById('SchEditPassword').value;
         var scheduleId = document.getElementById('HdnEditScheduleID').value;
         var churchId = document.getElementById('EditddlChurchId').value;
-
+        $('#EditChurchScheduleModal').modal('hide');
+        displayBusyIndicator();
         var NewFormData = new FormData();
         NewFormData.append("eventName", eventName);
         NewFormData.append("isRepeat", isRepeat);
@@ -334,7 +335,10 @@
                   
 
                     loadChurchSch();
-                    $('#EditChurchScheduleModal').modal('hide');
+                  
+
+                    displayBusyIndicator2();
+                   
                     $(window).scrollTop(0);
                     $('#addScheduleListSuccessMessage').removeAttr('hidden');
                     $('#addScheduleListSuccessMessage').html('Schedule Updated Successfully')
@@ -345,6 +349,8 @@
                     $('#addScheduleListSuccessMessage').attr('hidden');
                   
                 } else {
+                    displayBusyIndicator2();
+                    $('#EditChurchScheduleModal').modal('show');
                     $(window).scrollTop(0);
                     $('#editScheduleErrorMessage').removeAttr('hidden');
                     $('#editScheduleErrorMessage').html(response.responseText);

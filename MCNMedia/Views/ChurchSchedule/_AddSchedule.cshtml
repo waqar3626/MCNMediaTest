@@ -188,6 +188,8 @@
             swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
             return false;
         }
+        $('#AddChurchScheduleModel').modal('hide');
+        displayBusyIndicator();
         var eventName = document.getElementById('EventName').value;
         var isRepeat = document.getElementById('IsRepeated').value;
         var eventDate = document.getElementById('EventDate').value;
@@ -209,7 +211,8 @@
                 if (response.success) {
                     loadChurchSch();
                   $('#AddScheduleByChurch')[0].reset();
-                    $('#AddChurchScheduleModel').modal('hide')
+                
+                    displayBusyIndicator2();
                     $(window).scrollTop(0);
                     $('#addScheduleListSuccessMessage').removeAttr('hidden');
                     $('#addScheduleListSuccessMessage').html('Added Successfully')
@@ -221,6 +224,8 @@
                     
 
                 } else {
+                    displayBusyIndicator2();
+                    $('#AddChurchScheduleModel').modal('show');
                     $(window).scrollTop(0);
                     $('#addScheduleErrorMessage').removeAttr('hidden');
                     $('#addScheduleErrorMessage').html(response.responseText);

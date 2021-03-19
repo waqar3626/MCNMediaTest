@@ -9,7 +9,7 @@
 
 <div class="row m-0 mb-3">
     <div class="col-lg-12">
-        <div class="alert alert-danger" id="editScheduleErrorMessage">
+        <div class="alert alert-danger" id="editScheduleErrorMessage" hidden>
 
         </div>
 
@@ -18,7 +18,7 @@
 </div>
 <div class="row m-0 mb-3">
     <div class="col-lg-12">
-        <div class="alert alert-success" id="editScheduleSuccessMessage">
+        <div class="alert alert-success" id="editScheduleSuccessMessage" hidden>
             saved Successfully!
         </div>
 
@@ -275,8 +275,8 @@
 
 
     function UpdateChurchSchedule() {
-
-
+        $('#EditChurchScheduleModal').modal('hide');
+        displayBusyIndicator();
 
         var eventName = document.getElementById('EditEventName').value;
         var isRepeat = document.getElementById('EditIsRepeated').value;
@@ -291,7 +291,7 @@
         var password = document.getElementById('SchEditPassword').value;
         var scheduleId = document.getElementById('HdnEditScheduleID').value;
         var churchId = document.getElementById('EditddlChurchId').value;
-
+        
         var NewFormData = new FormData();
         NewFormData.append("eventName", eventName);
         NewFormData.append("isRepeat", isRepeat);
@@ -319,21 +319,25 @@
 
             success: function (response) {
                 if (response.success) {
+                    displayBusyIndicator2();
+                    $(window).scrollTop(0);
+                    $('#editScheduleSuccessMessage').removeAttr('hidden');
                     $('#editScheduleSuccessMessage').fadeIn();
                     $('#editScheduleSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#editScheduleSuccessMessage").slideUp(500);
                     });
+                    $('#editScheduleSuccessMessage').attr('hidden');
 
 
-
-                    sleep(5000);
-                    var IntervalTime = setTimeout(window.location.reload(), 5000);
-
+                    
                     window.location.reload();
 
 
                 } else {
-
+                    displayBusyIndicator2();
+                    $('#EditChurchScheduleModal').modal('show');
+                    $(window).scrollTop(0);
+                    $('#editScheduleErrorMessage').removeAttr('hidden');
                     $('#editScheduleErrorMessage').html(response.responseText);
                     $('#editScheduleErrorMessage').fadeIn();
 
@@ -342,6 +346,7 @@
 
 
                     });
+                    $('#editScheduleErrorMessage').attr('hidden');
                 }
 
             },
