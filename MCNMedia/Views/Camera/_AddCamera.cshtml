@@ -122,10 +122,10 @@
             success: function (response) {
                 if (response.success)
                 {
-
+               
                     displayBusyIndicator2();
-                        $('#AddCameraForm')[0].reset();
-                        $('#AddCameraModal')[0].reset();
+                    $('#AddCameraForm')[0].reset();
+                    $('#AddCameraModal').modal('hide');
                         $('#addMediaSuccessMessage').removeAttr('hidden');
                         $('#addMediaSuccessMessage').html('Camera added successfully');
                         $('#addMediaSuccessMessage').fadeIn();
@@ -133,8 +133,8 @@
                             $("#addMediaSuccessMessage").slideUp(500);
                         });
                         $('#addMediaSuccessMessage').attr('hidden');
-                  
-                        window.location.reload();
+            
+                    window.location.reload();
 
                 }
                 else
