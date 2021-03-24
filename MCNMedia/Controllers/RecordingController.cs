@@ -191,7 +191,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     recording.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                     gm.LRecordings = RecordingList();
-                    throw new Exception();
+                
                     recordDataAccess.UpdateRecording(recording);
 
                     RecordingViewBagData();
