@@ -595,11 +595,12 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public IActionResult ChurchLock(string Password)
         {
+            Church church = new Church();
             try
             {
                 string Slug = TempData["Slug"].ToString();
 
-                Church church = _churchDataAccessLayer.GetChurchDataBySlug(Slug);
+                 church = _churchDataAccessLayer.GetChurchDataBySlug(Slug);
 
 
                 if (church.Password == Password)
@@ -611,13 +612,14 @@ namespace MCNMedia_Dev.Controllers
                 {
                     ViewBag.ErrorMsg = "Password Incorrect ! Please Enter correct password.";
                         TempData["Slug"] = TempData["Slug"].ToString();
+                    TempData["ChrName"] = church.ChurchName;
                     return View();
                 }
                
             }
             catch (Exception exp)
             {
-
+                TempData["ChrName"] = church.ChurchName;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View();
             }
@@ -663,7 +665,7 @@ namespace MCNMedia_Dev.Controllers
                     else
                     {
                         TempData["Slug"] = id;
-
+                        TempData["ChrName"] = profileModel.Churches.ChurchName;
 
                         return View("ChurchLock");
                         //Response.Redirect("lock?id=" + id);

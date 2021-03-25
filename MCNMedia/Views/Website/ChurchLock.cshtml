@@ -8,7 +8,7 @@
 
 @{
     TempData.Keep("Slug");
-
+    TempData.Keep("ChrName");
 }
 
 
@@ -22,7 +22,8 @@
             <div class="row w-100 justify-content-center">
                 <div class="col-lg-8 mx-auto">
                     <div class="auth-form-transparent text-left p-0 text-center">
-                        <label class="mb-1 pt-4 font-18 font-weight-bolder text-pink " for="examplePassword1"><p>This Camera has been Password Protected.</p> <p> Please contact <b> @Context.Session.GetString("chrName") </b> for the password for this Camera.</p></label>
+                        <label class="mb-1 pt-4 font-18 font-weight-bolder text-pink " for="examplePassword1"><p>This Camera has been Password Protected.</p> 
+                        <p> Please contact <b> @TempData["ChrName"] </b> for the password for this Camera.</p></label>
                         <Center>
                             <form class="pt-5 col-lg-6  " asp-action="ChurchLock" asp-controller="Website" method="post">
                                 <div class="form-group ">
