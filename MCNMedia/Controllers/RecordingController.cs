@@ -104,7 +104,37 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
-      
+        [HttpPost]
+      public JsonResult onDownloadClick(string url)
+        {
+
+            try
+            {
+                NameValueCollection urlParams = HttpUtility.ParseQueryString(url);
+
+
+
+                string videoTitle = "Video" + Guid.NewGuid().ToString() + DateTime.Now.ToString("dd-MMM-yyyy");
+                string videoFormt = "mp4";
+              
+                string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                string sFilePath = string.Format(Path.Combine(downloadPath, "Downloads\\{0}.{1}"), videoTitle, videoFormt);
+
+
+
+                WebClient webClient = new WebClient();
+                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                webClient.DownloadFileAsync(new Uri(url), sFilePath);
+               
+                return Json(new { success = true, responseText = "The attached file is not supported." });
+            }
+            catch (Exception exp)
+            {
+                return Json(new { success = false, responseText = exp.Message });
+
+            }
+           
+        }
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
 

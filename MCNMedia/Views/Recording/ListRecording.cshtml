@@ -4,6 +4,24 @@
     ViewData["Title"] = "ListRecording";
 }
 <script src="~/js/jwplayer.js"></script>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="DownloadRecordingErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="DownloadRecordingSuccessMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
 <div class="card mb-3">
     <div class="card-header card-header-custom">
         Search Recording
@@ -14,6 +32,7 @@
 
 
     }
+
 
     @if (ViewBag.PartalBit == "-2")
     {
@@ -152,7 +171,7 @@
 
 
 
-                                                    <a href="@item.Src" download="Video.mp4" class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
+                                                    <a onclick="onDownloadClick('@item.Src')" class="btn btn-warning btn-sm ti-download text-white" title="Download"></a>
 
                                                     <a onclick="EditRecording(@item.RecordingId)" class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <a onclick="DeleteRecordingClick(@item.RecordingId)" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>
@@ -235,7 +254,12 @@
         </div>
     </div>
 </div>
-<script>
+<iframe id="my_iframe" style="display:none;"></iframe>
+<script type="text/javascript">
+
+
+
+
     jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
     $(document).on("click", ".ti-control-play", function () {
         var url = $(this).data('id');
@@ -266,8 +290,51 @@
         });
 
 
-    function Download(url) {
-        $('<iframe>', { id: 'idown', src: url }).hide().appendTo('body').click();
+    function onDownloadClick(url) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Recording/onDownloadClick/",
+            //data: camObj,
+
+            data: { url: url},
+
+            //   contentType: "application/json;charset=UTF-8",
+            //  dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $(window).scrollTop(0);
+
+                    $('#DownloadRecordingSuccessMessage').removeAttr('hidden');
+                    $('#DownloadRecordingSuccessMessage').html('Kindly check your download folder file downloading is in progress');
+                    $('#DownloadRecordingSuccessMessage').fadeIn();
+                    $('#DownloadRecordingSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#DownloadRecordingSuccessMessage").slideUp(500);
+                    });
+                    $('#DownloadRecordingSuccessMessage').attr('hidden');
+
+
+                }
+                else {
+                    $(window).scrollTop(0);
+                    $('#DownloadRecordingErrorMessage').removeAttr('hidden');
+                    $('#DownloadRecordingErrorMessage').html(response.text);
+                    $('#DownloadRecordingErrorMessage').fadeIn();
+                    $('#DownloadRecordingErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#DownloadRecordingErrorMessage").slideUp(500);
+                    });
+                    $('#DownloadRecordingErrorMessage').attr('hidden');
+
+
+                }
+
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
+            }
+
+        });
+
     }
 
 
@@ -300,7 +367,7 @@ function DeleteRecordingClick(RecordingId) {
 })
 .then((willDelete) => {
   if (willDelete) {
-    
+
         $.ajax({
             type: "Get",
             url: '@Url.Action("Delete", "Recording")',
@@ -316,11 +383,7 @@ function DeleteRecordingClick(RecordingId) {
 
     }
 
-</script>
 
-
-
-<script>
     $(document).ready(function () {
         $('#order-listing').removeAttr('hidden');
 
