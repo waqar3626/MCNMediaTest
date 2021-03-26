@@ -377,15 +377,17 @@ namespace MCNMedia_Dev.Controllers
                 }
                 if (!string.IsNullOrEmpty(HttpContext.Request.Query["Search"].ToString()))
                 {
-                    string searchFilter = Request.Query["Search"].ToString().ToLower();
                     //string searchFilter = Request.Query["Search"].ToString().ToLower();
-                    string input = new String(searchFilter.Where(c => c != '-' && (c < '0' || c > '9')).ToArray());
-                    input.ToLower();
-                    string last = input.Split(' ').Last();
-                    churches = churches.FindAll(x => x.ChurchName.ToLower().Contains(input) ||
-                    x.Town.ToLower().Contains(last) ||
-                    x.CountryName.ToLower().Contains(last) ||
-                    x.CountyName.ToLower().Contains(last)).ToList<Church>();
+                    string searchFilter = Request.Query["Search"].ToString().ToLower();
+                    //string input = new String(searchFilter.Where(c => c != '-' && (c < '0' || c > '9')).ToArray());
+                    //input.ToLower();
+                    searchFilter.ToLower();
+                    string first = searchFilter.Split(' ').First();
+                    churches = churches.FindAll(x => x.ChurchName.ToLower().Contains(searchFilter) ||
+                    x.Slug.ToLower().Contains(searchFilter) ||
+                    x.Town.ToLower().Contains(first) ||
+                    x.CountryName.ToLower().Contains(searchFilter) ||
+                    x.CountyName.ToLower().Contains(first)).ToList<Church>();
                     ViewBag.CountyList = 0;
                     ViewBag.SearchFilter = Request.Query["Search"].ToString();
                 }
