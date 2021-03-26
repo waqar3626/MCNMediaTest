@@ -41,7 +41,7 @@
 
  
                    
-                <input type="file" id="DownloadFileUrl" class="form-control form-control-file" multiple />
+                <input type="file" id="DownloadFileUrl" class="form-control form-control-file" multiple  />
                 </div>
             </div>
             
@@ -68,7 +68,7 @@
         formData.append("AddSlideshowTabName", slideshowTabName);
         var formFiles = $('#DownloadFileUrl').get(0);
         var input = formFiles.files;
-        alert(input.length);
+
        
        
         
@@ -142,7 +142,7 @@
 
                 }
                 else {
-
+                    displayBusyIndicator2();
                     $('#AddSlideShowModal').modal('show');
                     $('#addSlideshowErrorMessage').removeAttr('hidden');
                     $(window).scrollTop(0);

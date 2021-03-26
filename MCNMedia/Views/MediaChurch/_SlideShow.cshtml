@@ -2,41 +2,35 @@
 @{
 
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
 <script src="~/theme/js/modal-demo.js"></script>
 <script type="text/javascript">
- 
+
 </script>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row" id="SlideShowImages">
+               
+                
+                </div>
+       
 
-
-<div class="card">
-    <div class="card-body">
-        <button type="submit" id="AddSlideShow1" class="btn btn-outline-behance btn-sm float-right " title="Add New" onclick="AddSlideShow()"> <i class="mdi mdi-plus"></i> Add New SlideShow</button>
-        <div class="">
-           
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Tab Name
-                        </th>
-                        <th>
-                            File Name
-                        </th>
-                        <th>
-                            Created By
-                        </th>
-                        <th>
-                            Created Date
-                        </th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="SlideShowList">
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
 </div>
+
 
 <div class="row">
     <div class="col-12 grid-margin">
@@ -64,7 +58,7 @@
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="EditSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
+            <div class="modal-dialog modal-dialog-scrollable mt-4 " role="document" style="max-width:40%;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Edit SlideShow</h5>
@@ -91,32 +85,67 @@
 
     function loadSlideShow() {
         $.ajax({
-            url: "/MediaChurch/GetSlideShowByTypeId",
+            url: "/MediaChurch/GetSlideShowImages",
             type: "GET",
             data: { medType:"SlideShow"},
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
                 if (result === -1) {
-                    
+
                     location.reload();
                 }
                 var html = '';
-
+                var countimages = 0;
+                var checkdata = 0;
                 $.each(result, function (key, item) {
-                    html += '<tr >';
-                    html += '<td class="text-wrap">' + item.tabName + '</td>';
-                    html += '<td class="text-wrap">' + item.mediaName + '</td>';
-                    html += '<td class="text-wrap">' + item.createdBy + '</td>';
-                    html += '<td class="text-wrap">' + item.sysTime + '</td>';
-              
-                    html += ' <td>';
-                    html += '<a onclick="EditSlideShow(' + item.churchMediaId + ')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit text-white"></i></a>&nbsp;';
-                    html += '<a onclick="DeleteSlideShow(' + item.churchMediaId + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i></a>';
-                    html += ' </td>';
-                    html += '</tr>';
+                    var mediaUrl = item.mediaURL;
+                    var str = item.mediaName;
+                    var count = 0;
+                    var array = str.split('|');
+                   
+                    html += '<div class="col-lg-6"><div class="card"><div class="card-body"><div class="row"><div class="col-sm-12"><div id="demo' + countimages+'" class="carousel slide" data-ride="carousel">';
+                    html += '<ul class="carousel-indicators">';
+                    for (var i = 0; i < array.length; i++) {
+                    if (checkdata == 0) {
+                        html += '<li data-target="#demo' + i + '" data-slide-to="' + i + '" class="active"></li> ';
+                        checkdata ++;
+                    }
+                    else {
+                        html += '<li data-target="#demo' + i + '" data-slide-to="' + i + '" ></li> ';
+                    }
+                    }
+                    html += '</ul ><div class="carousel-inner w-100" style="height: 250px !important">';
+                   
+                    $.each(array, function (key, item2) {
+
+                        var array2 = item2.split('^');
+                        
+                       
+                            
+                            if (count == 0) {
+
+                                html += '  <div class="carousel-item active"><img src="' + mediaUrl + array2[1] + '"  style="height:250px !important"></div>';
+                                count++;
+                            }
+                            else {
+                                html += '<div class="carousel-item" > <img src="' + mediaUrl + array2[1] + '"  style="height:250px !important"></div>';
+                        }
+
+                                                });
+
+                    html += '</div>';
+                 
+                    html += '<a class="carousel-control-prev" href="#demo' + countimages+'" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>';
+                    html += '<a class="carousel-control-next" href="#demo' + countimages+'" data-slide="next"><span class="carousel-control-next-icon"></span></a>';
+                   
+                    html += '</div></div></div>';
+                    html += '<div class="row m-2 border-light"><div class="col-sm-6 border-bottom border-right"><span class="bold p-2">' + item.tabName + '</span></div>';
+                    html += '<div class="col-sm-6"><a class="btn btn-sm btn-danger p-2"><i class="mdi mdi-delete text-white"></i></a><a class="btn btn-sm btn-warning p-2"><i class="mdi mdi-window-open text-white"></i></a></div>';
+                    html +='</div></div></div></div>';
+                    countimages++;
                 });
-                $('.SlideShowList').html(html);
+                $('#SlideShowImages').html(html);
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);

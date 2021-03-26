@@ -117,5 +117,32 @@ namespace MCNMedia_Dev.Repository
              _dc.ReturnBool("spChurchMedia_Delete");
             return 1;
         }
+        public int DeleteSlideShowImages(int chMediaId, int UpdateBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("MediaId", chMediaId);
+            _dc.AddParameter("UserId", UpdateBy);
+            _dc.ReturnBool("spSlideShowImage_Delete");
+            return 1;
+        }
+
+        public IEnumerable<MediaChurch> SlideShowImaeGetAll(int chrId)
+        {
+            List<MediaChurch> Balobj = new List<MediaChurch>();
+            _dc.ClearParameters();
+            _dc.AddParameter("chrId", chrId);
+             DataTable dataTable = _dc.ReturnDataTable("spChurchSlideshowImage_GetAll");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                MediaChurch mdChurch = new MediaChurch();
+                mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
+                mdChurch.TabName = dataRow["TabName"].ToString();
+                mdChurch.MediaName = dataRow["MediaDetail"].ToString();
+                mdChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/";
+                Balobj.Add(mdChurch);
+            }
+            return Balobj;
+        }
+
     }
 }

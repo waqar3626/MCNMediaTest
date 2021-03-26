@@ -58,6 +58,8 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+              
+
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return Json(-1);
@@ -318,18 +320,32 @@ namespace MCNMedia_Dev.Controllers
         #region "Slideshow"
 
         [HttpPost]
-        [DisableRequestSizeLimit]
-        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
-        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFileCollection files)
+      
+        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName)
         { 
 
             
             try
             {
-                var UploadedFiles = Request.Form.Files;
-                UploadedFiles = HttpContext.Request.Form.Files;
+                 
+                var UploadedFiles = HttpContext.Request.Form.Files;
 
-                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                foreach (var file in UploadedFiles)
+                {
+                    string Extension = Path.GetExtension(file.FileName);
+
+                    if (Extension.ToLower() == ".jpg" || Extension.ToLower() == ".png" || Extension.ToLower() == ".jpeg" || Extension.ToLower() == ".bmp") 
+                    {
+                                                                  
+                    }
+                    else
+                    {
+                        throw new Exception("Invalid File Type Kindly Upload Image only in Format [.jpg , .jpeg , .png , .bmp]");
+                    }
+
+                }
+
+                    if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return Json(-1);
                 }
@@ -368,12 +384,12 @@ namespace MCNMedia_Dev.Controllers
             }
         }
      
-        public JsonResult GetSlideShowByTypeId(string medType)
+        public JsonResult GetSlideShowImages(string medType)
         {
             try
             {
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
-                List<MediaChurch> slideInfo = mediaChurchDataAccess.GetByMediaType(medType, churchId).ToList();
+                List<MediaChurch> slideInfo = mediaChurchDataAccess.SlideShowImaeGetAll(churchId).ToList();
                 return Json(slideInfo);
             }
             catch (Exception exp)
@@ -440,7 +456,16 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
-                return Json(new { success = true, res });
+                if (res > 0) {
+
+                  int  res2 = mediaChurchDataAccess.DeleteSlideShowImages(id, UpdateBy);
+
+                    if (res2 > 0) { 
+                         return Json(new { success = true, res2 });
+                    }
+                }
+
+                return Json(1);
 
             }
             catch (Exception e)
