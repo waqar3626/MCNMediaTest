@@ -320,14 +320,15 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
-        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFile mediaFile)
+        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName, IFormFileCollection files)
         { 
 
-
-        string filePath = "";
             
             try
             {
+                var UploadedFiles = Request.Form.Files;
+                UploadedFiles = HttpContext.Request.Form.Files;
+
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return Json(-1);
@@ -335,61 +336,24 @@ namespace MCNMedia_Dev.Controllers
                 MediaChurch mediaChurch = new MediaChurch();
                 mediaChurch.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
                 mediaChurch.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                mediaChurch.MediaName = System.IO.Path.GetFileName(mediaFile.FileName);
-                mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShow, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
+                mediaChurch.MediaName = "";
+                mediaChurch.MediaURL = "";
                 mediaChurch.MediaType = mediaType;
                 mediaChurch.TabName = AddSlideshowTabName;
 
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-                 
-
+                
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
-                    if (res > 0) {
-                        MediaChurch GetData = mediaChurchDataAccess.GetMediaById(res);
+                    var OrderBy = 1;
 
-                        string folderUrl = "Upload/SlideShowPic/" + GetData.ChurchName + "/" + DateTime.Now.ToString("dd-MMM-yyyy");
-
-                        string UploadFolderUrl = Path.Combine(environment.WebRootPath, folderUrl);
-                        bool exists = System.IO.Directory.Exists(UploadFolderUrl);
-
-                        if (!exists)
-                        {
-                            System.IO.Directory.CreateDirectory(UploadFolderUrl);
-                        }
-                     
-                        filePath = Path.Combine(UploadFolderUrl, mediaChurch.MediaName );
-                        FileStream fileStream = new FileStream(filePath, FileMode.Create);
-                        mediaFile.CopyTo(fileStream);
-                        fileStream.Close();
-
-
-
-                        
-                      
-                        using (var pdf = new PdfDocument(filePath)) 
+                    foreach (var file in UploadedFiles)
                     {
-                        PdfDrawOptions options = PdfDrawOptions.Create();
-                        options.BackgroundColor = new PdfRgbColor(255, 255, 255);
-                        options.HorizontalResolution = 300;
-                        options.VerticalResolution = 300;
-                            int displayOrder = 1;
-                        for (int i = 0; i <pdf.PageCount; ++i)
-                        {
-                            string fileName = Guid.NewGuid().ToString() + "_" + res + "page_" + i + ".jpg";
-                            pdf.Pages[i].Save($"{UploadFolderUrl +"/" + fileName}", options);
-                                int userId = (int)HttpContext.Session.GetInt32("UserId");
-                                string pathFile = folderUrl + "/" + fileName;
-                                mediaChurchDataAccess.AddSlideShowImages(res, pathFile, displayOrder, userId);
-                                displayOrder++;
-                        }
-                    }  
+                        string Url = FileUploadUtility.UploadFile(file, UploadingAreas.SlideShowPic, Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId")));
+                        int userId = (int)HttpContext.Session.GetInt32("UserId");
+                        mediaChurchDataAccess.AddSlideShowImages(res, Url, OrderBy, userId);
+                        OrderBy++;
                     }
-
-                    
-
-
-
                     return Json(new { success = true, res });
                    
                    
