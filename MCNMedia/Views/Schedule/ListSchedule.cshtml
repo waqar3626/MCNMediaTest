@@ -210,11 +210,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-       
 
 
 
-        
+
+
         var date = '@ViewBag.SchDate';
 
 
@@ -237,7 +237,7 @@
 
         ShowDateDiv();
         loadSchedule();
-       
+
     });
 
     function Open(camId) {
@@ -252,33 +252,26 @@
         })
     }
 
-    function DeleteSchedule(ScheduleID) {
-
+    function DeleteSchedule(id) {
+      
         swal({
   title: "Are you sure?",
   text: "Once deleted, you will not be able to recover this imaginary file!",
   icon: "warning",
   buttons: true,
   dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("Poof! Your file has been deleted!", {
-        icon: "success",
+        })
+            .then((willDelete) => {
+                if (willDelete) {
 
-    });
+                    window.location.href = '/Schedule/DeleteSch/' + id;
 
-        $.ajax({
-            type: "Get",
-            url: '@Url.Action("Delete", "Schedule")',
-            data: { id: ScheduleID },
+                } else {
+                    swal("Your file is safe!");
+                }
+            });
+        
 
-        });
-      window.location.reload();
-  } else {
-         swal("Your file is safe!");
-  }
-});
     }
 
 
