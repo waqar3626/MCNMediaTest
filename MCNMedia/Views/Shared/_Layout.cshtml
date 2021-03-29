@@ -30,11 +30,6 @@
             padding-top: 5px;
         }
     </style>
-
-    <!-- Required meta tags -->
-
-
-
     <link rel="stylesheet" href="~/theme/vendors/lightgallery/css/lightgallery.css">
     <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
@@ -43,15 +38,14 @@
     <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/theme/vendors/jquery-toast-plugin/jquery.toast.min.css">
     <link rel="stylesheet" href="~/theme/vendors/dropzone/dropzone.css">
-    <link rel="stylesheet" href="~/theme/vendors/jquery-file-upload/uploadfile.css">
-    <link rel="stylesheet" href="~/theme/vendors/jquery-tags-input/jquery.tagsinput.min.css">
+
     <link rel="stylesheet" href="~/css/vertical-layout-light/style.css">
 
     <link rel="shortcut icon" href="~/images/favicon.png" />
 
-   
+    <link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
-  
+    <link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
 
     <link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="~/theme/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
@@ -61,12 +55,11 @@
     <!-- End plugin css for this page -->
 
     <link rel="stylesheet" href="~/theme/vendors/dropify/dropify.min.css">
-    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
+
     <!-- Plugin css for this page -->
-  
+    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.css">
-  
-  
+    <link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
     <!-- End plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -398,19 +391,19 @@
 
 
                     @*<li class="nav-item">
-                        <a class="nav-link" asp-action="Inbox" asp-controller="Inbox">
+                            <a class="nav-link" asp-action="Inbox" asp-controller="Inbox">
 
-                            <i class="fa fa-inbox menu-icon"></i>
-                            <span class="menu-title ">Inbox</span>
+                                <i class="fa fa-inbox menu-icon"></i>
+                                <span class="menu-title ">Inbox</span>
 
-                            @if (countUnreadMail > 0)
-                            {
-                                <span class="badge badge-pill badge-success">
-                                    @countUnreadMail New Mails
-                                </span>
-                            }
-                        </a>
-                    </li>*@
+                                @if (countUnreadMail > 0)
+                                {
+                                    <span class="badge badge-pill badge-success">
+                                        @countUnreadMail New Mails
+                                    </span>
+                                }
+                            </a>
+                        </li>*@
 
 
                     @*<li class="nav-item">
@@ -517,19 +510,20 @@
     <!-- container-scroller -->
 
 
-    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <!-- plugins:js -->
-
+    <script src="~/theme/vendors/js/vendor.bundle.base.js"></script>
     <script src="../../vendors/chart.js/Chart.min.js"></script>
     <!-- endinject -->
     <script src="~/theme/vendors/dropify/dropify.min.js"></script>
     <!-- inject:js -->
-
-
-
+    <script src="~/theme/js/off-canvas.js"></script>
+    <script src="~/theme/js/hoverable-collapse.js"></script>
+    <script src="~/theme/js/template.js"></script>
+    <script src="~/theme/js/settings.js"></script>
     <script src="~/theme/js/todolist.js"></script>
     <script src="~/theme/js/CheckCode.js"></script>
 
@@ -551,11 +545,6 @@
     <script src="~/theme/js/dropify.js"></script>
     <script src="~/theme/vendors/datatables.net/jquery.dataTables.js"></script>
     <script src="~/theme/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-    <script src="~/theme/vendors/jquery-file-upload/jquery.uploadfile.min.js"></script>
-    <script src="~/theme/vendors/jquery-tags-input/jquery.tagsinput.min.js"></script>
-    <script src="~/theme/vendors/dropzone/dropzone.js"></script>
-    <script src="~/theme/vendors/jquery.repeater/jquery.repeater.min.js"></script>
-    <script src="~/theme/vendors/inputmask/jquery.inputmask.bundle.js"></script>
     <!--End DateTimePicker-->
     <!-- endinject -->
     <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
@@ -566,20 +555,7 @@
     <script src="~/theme/js/settings.js"></script>
     <script src="~/theme/js/todolist.js"></script>
 
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="~/themejs/formpickers.js"></script>
-    <script src="~/themejs/form-addons.js"></script>
-    <script src="~/themejs/x-editable.js"></script>
-    <script src="~/themejs/dropify.js"></script>
-    <script src="~/themejs/dropzone.js"></script>
-    <script src="~/themejs/jquery-file-upload.js"></script>
-    <script src="~/themejs/formpickers.js"></script>
-    <script src="~/themejs/form-repeater.js"></script>
-    <script src="~/themejs/inputmask.js"></script>
-
     <!-- plugin js for this page -->
-
     <script src="~/theme/js/owl-carousel.js"></script>
     <script src="~/theme/vendors/dropify/dropify.min.js"></script>
     <script src="~/theme/vendors/jquery-file-upload/jquery.uploadfile.min.js"></script>
@@ -591,9 +567,11 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="~/theme/js/FormValidation.js"></script>
-
-
-
+    <script src="~/theme/js/off-canvas.js"></script>
+    <script src="~/theme/js/hoverable-collapse.js"></script>
+    <script src="~/theme/js/template.js"></script>
+    <script src="~/theme/js/settings.js"></script>
+    <script src="~/theme/js/todolist.js"></script>
 
 
     <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
@@ -605,7 +583,7 @@
     <script src="~/theme/js/dropify.js"></script>
     <script src="~/theme/js/dropzone.js"></script>
     <script src="~/theme/js/jquery-file-upload.js"></script>
-
+    <script src="~/theme/js/owl-carousel.js"></script>
 
     <script src="~/theme/vendors/summernote/dist/summernote-bs4.min.js"></script>
     <!-- endinject -->
@@ -624,8 +602,7 @@
     <script src="~/theme/js/toastDemo.js"></script>
     <script src="~/theme/vendors/lightgallery/js/lightgallery-all.min.js"></script>
     <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
-    <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <script src="~/theme/js/owl-carousel.js"></script>
+
     <script src="~/theme/js/CheckCode.js"></script>
     <!-- End custom js for this page-->
     <!-- End custom js for this page-->
