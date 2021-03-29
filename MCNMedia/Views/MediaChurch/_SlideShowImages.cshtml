@@ -47,7 +47,7 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <table id="order-listing" class="table dataTable no-footer" role="grid" hidden>
+                                    <table id="order-listing" class="table dataTable no-footer" role="grid" >
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">Image </th>
@@ -117,7 +117,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('#order-listing').removeAttr('hidden');
+      
 
 
         if ($('#hdnViewPartialBit').val() == '-1') {
@@ -126,20 +126,10 @@
 
         }
     });
-    function ChangeImagesOrder(id) {
-
-        var rows = document.getElementById('imagesTableBody').rows.length;
-        for (var i = 0; i < rows; i++) {
-
-            alert(document.getElementById('imagesTableBody').rows[i].cells[1].);
-
-        }
-        alert(rows);
-
-    }
+  
 
     function DeleteSingleImage(id) {
-
+        
         var data = id.split('^');
 
         swal({
