@@ -273,16 +273,38 @@ namespace MCNMedia_Dev.Controllers
 
                 RecordingViewBagData();
                 LoadChurchDDL();
-                ViewBag.SuccessMsg = "Recording Deleted SuccessFully";
-                return View("ListRecording", gm);
-                
+
+              
+                if (HttpContext.Session.GetString("UserType") == "admin")
+                {
+                    ViewBag.SuccessMsg = "Recording Deleted SuccessFully";
+                    return View("ListRecording", gm);
+                }
+                else if (HttpContext.Session.GetString("UserType") == "client")
+                {
+                    ViewBag.SuccessMsg = "Recording Deleted SuccessFully";
+                    return RedirectToAction("Recording", "Client");
+                }
+                return RedirectToAction("UserLogin", "UserLogin");
             }
             catch (Exception exp)
             {
-                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                RecordingViewBagData();
-                LoadChurchDDL();
-                return View("ListRecording",gm);
+                if (HttpContext.Session.GetString("UserType") == "admin")
+                {
+                    ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                    RecordingViewBagData();
+                    LoadChurchDDL();
+                    return View("ListRecording", gm);
+                }
+                else if (HttpContext.Session.GetString("UserType") == "client")
+                {
+                    ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                    RecordingViewBagData();
+                    LoadChurchDDL();
+                    return View("Views/Client/Recording.cshtml", gm);
+                }
+                return RedirectToAction("UserLogin", "UserLogin");
+
             }
 
         }

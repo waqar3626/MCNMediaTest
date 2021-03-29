@@ -66,7 +66,7 @@
             success: function (result) {
                 var html = '';
                 $.each(result, function (key, item) {
-                    html += '<a href=" ' + item.mediaURL + ' " target="_blank" class="image-tile "><div class="for-generic  text-white font-16 font-weight-bolder w-100  " id="context-menu-hover-autohideSlideShow"  mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><div class="border border-dark"><div class="row"> <div class="col-12 text-center mt-3"><img src="../theme/images/ppt.svg" style="width:100px; " /></div></div> <div class="row mt-2"><div class="col-12 text-center m-2 font-20">' + item.mediaName + ' </div></div></div></a>';
+                    html += '<a href=" ' + item.mediaURL + ' " target="_blank" class="image-tile "><div class="for-generic  text-white font-16 font-weight-bolder w-100  " id="context-menu-hover-autohideSlideShow"  mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><div class="border border-dark"><div class="row"> <div class="col-12 text-center mt-3"><img src="../theme/images/PdfImage.png" style="width:100px; " /></div></div> <div class="row mt-2"><div class="col-12 text-center m-2 font-20">' + item.mediaName + ' </div></div></div></a>';
                 });
                 $('.slideShowTab').html(html);
             },
