@@ -24,6 +24,9 @@ namespace MCNMedia_Dev.Models
         public int UpdatedBy { get; set; }
         public string SysTime { get; set; }
 
+        public int ImageId { get; set; }
+        public int DisplayOrder { get; set; }
+
     }
 
 }

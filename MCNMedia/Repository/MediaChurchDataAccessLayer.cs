@@ -144,5 +144,33 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
+        public IEnumerable<MediaChurch> SlideShowImaeGetByMediaId(int chrId)
+        {
+            List<MediaChurch> Balobj = new List<MediaChurch>();
+            _dc.ClearParameters();
+            _dc.AddParameter("churchMediaId", chrId);
+            DataTable dataTable = _dc.ReturnDataTable("spGetSlideShowImagesByMediaId");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                MediaChurch mdChurch = new MediaChurch();
+                mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
+                mdChurch.TabName = dataRow["TabName"].ToString();
+                mdChurch.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
+                mdChurch.ImageId = Convert.ToInt32(dataRow["ImageId"].ToString());
+                mdChurch.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"].ToString());
+                mdChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}";
+                Balobj.Add(mdChurch);
+            }
+            return Balobj;
+        }
+
+        public int DeleteSlideShowSingleImage(int chMediaId, int UpdateBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("MediaId", chMediaId);
+            _dc.AddParameter("UserId", UpdateBy);
+            _dc.ReturnBool("spSlideShowDeleteSingleImage");
+            return 1;
+        }
     }
 }

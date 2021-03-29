@@ -58,7 +58,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
-              
+
 
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
@@ -112,7 +112,7 @@ namespace MCNMedia_Dev.Controllers
             GenericModel gm = new GenericModel();
             try
             {
-                
+
                 gm.Media = mediaChurchDataAccess.GetMediaById(id);
                 return PartialView("EditPicture", gm);
             }
@@ -251,7 +251,7 @@ namespace MCNMedia_Dev.Controllers
             GenericModel gm = new GenericModel();
             try
             {
-               
+
                 gm.Media = mediaChurchDataAccess.GetMediaById(id);
                 return PartialView("_EditVideo", gm);
             }
@@ -320,23 +320,23 @@ namespace MCNMedia_Dev.Controllers
         #region "Slideshow"
 
         [HttpPost]
-      
-        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName)
-        { 
 
-            
+        public JsonResult AddSlide(string mediaType, string AddSlideshowTabName)
+        {
+
+
             try
             {
-                 
+
                 var UploadedFiles = HttpContext.Request.Form.Files;
 
                 foreach (var file in UploadedFiles)
                 {
                     string Extension = Path.GetExtension(file.FileName);
 
-                    if (Extension.ToLower() == ".jpg" || Extension.ToLower() == ".png" || Extension.ToLower() == ".jpeg" || Extension.ToLower() == ".bmp") 
+                    if (Extension.ToLower() == ".jpg" || Extension.ToLower() == ".png" || Extension.ToLower() == ".jpeg" || Extension.ToLower() == ".bmp")
                     {
-                                                                  
+
                     }
                     else
                     {
@@ -345,7 +345,7 @@ namespace MCNMedia_Dev.Controllers
 
                 }
 
-                    if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return Json(-1);
                 }
@@ -359,7 +359,7 @@ namespace MCNMedia_Dev.Controllers
 
                 if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
                 {
-                
+
                     int res = mediaChurchDataAccess.AddMedia(mediaChurch);
                     var OrderBy = 1;
 
@@ -371,19 +371,19 @@ namespace MCNMedia_Dev.Controllers
                         OrderBy++;
                     }
                     return Json(new { success = true, res });
-                   
-                   
+
+
                 }
 
                 return Json(1);
             }
             catch (Exception exp)
             {
-               
+
                 return Json(new { success = false, responseText = exp.Message });
             }
         }
-     
+
         public JsonResult GetSlideShowImages(string medType)
         {
             try
@@ -400,12 +400,46 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
+        public IActionResult SlideShowImages(int id)
+        {
+            List<MediaChurch> mediaChurch = new List<MediaChurch>();
+            try
+            {
+
+                mediaChurch = mediaChurchDataAccess.SlideShowImaeGetByMediaId(id).ToList();
+                return PartialView("_SlideShowImages", mediaChurch);
+            }
+            catch (Exception e)
+            {
+                return PartialView("_SlideShowImages", mediaChurch);
+
+            }
+
+        }
+
+
+        public JsonResult GetSlideShowImagesJson(int churchMediaId)
+        {
+            try
+            {
+                int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
+                List<MediaChurch> slideInfo = mediaChurchDataAccess.SlideShowImaeGetByMediaId(churchMediaId).ToList();
+                return Json(slideInfo);
+            }
+            catch (Exception exp)
+            {
+                return Json(new { success = false, responseText = exp.Message });
+            }
+
+
+        }
+
         public IActionResult EditSlide(int id)
         {
             GenericModel gm = new GenericModel();
             try
             {
-                
+
                 gm.Media = mediaChurchDataAccess.GetMediaById(id);
                 return PartialView("_EditSlideShow", gm);
             }
@@ -456,12 +490,14 @@ namespace MCNMedia_Dev.Controllers
                 GenericModel gm = new GenericModel();
                 int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
                 int res = mediaChurchDataAccess.DeleteMedia(id, UpdateBy);
-                if (res > 0) {
+                if (res > 0)
+                {
 
-                  int  res2 = mediaChurchDataAccess.DeleteSlideShowImages(id, UpdateBy);
+                    int res2 = mediaChurchDataAccess.DeleteSlideShowImages(id, UpdateBy);
 
-                    if (res2 > 0) { 
-                         return Json(new { success = true, res2 });
+                    if (res2 > 0)
+                    {
+                        return Json(new { success = true, res2 });
                     }
                 }
 
@@ -474,10 +510,71 @@ namespace MCNMedia_Dev.Controllers
             }
         }
 
+        public IActionResult DeleteSlideshowSingleImage(int id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("Listchurch", "Church");
+                }
+                GenericModel gm = new GenericModel();
+                int UpdateBy = (int)HttpContext.Session.GetInt32("UserId");
+
+
+                int res2 = mediaChurchDataAccess.DeleteSlideShowSingleImage(id, UpdateBy);
+
+
+                return Json(new { success = true, res2 });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, responseText = e.Message
+    });
+            }
+        }
+
+
+        [HttpPost]
+            public JsonResult AddSingleImageSlideShows(IFormFile mediaFile,int mediaChurchId,int OrderBy)
+        {
+            try
+            {
+
+
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return Json(-1);
+                }
+                MediaChurch mediaChurch = new MediaChurch();
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+                {
+                    mediaChurch.ChurchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId").ToString());
+                    mediaChurch.MediaName = Path.GetFileName(mediaFile.FileName);
+                    mediaChurch.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.SlideShowPic, mediaChurch.ChurchId);
+                    mediaChurch.MediaType = "SlideShow";
+                    mediaChurch.TabName = "";
+                    int userId = (int)HttpContext.Session.GetInt32("UserId");
+                    MediaChurch mdchr= mediaChurchDataAccess.SlideShowImaeGetByMediaId(mediaChurchId).ToList().Last();
+                    OrderBy = mdchr.DisplayOrder+1;
+                    mediaChurchDataAccess.AddSlideShowImages(mediaChurchId, mediaChurch.MediaURL, OrderBy, userId);
+                    return Json(new { success = true });
+                }
+
+                return Json(1);
+            }
+            catch (Exception exp)
+            {
+                return Json(new { success = false, responseText = exp.Message });
+            }
+        }
+
+
     }
 
 
     #endregion
 
-    
+
 }
