@@ -297,9 +297,10 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Cameras()
         {
+            List<SelectListItem> listCoutryDDL = new List<SelectListItem>();
             try
             {
-                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+                listCoutryDDL = LoadCountryDDL();
 
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
@@ -400,7 +401,9 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
+             
 
+                ViewBag.Countries = listCoutryDDL;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gm);
             }

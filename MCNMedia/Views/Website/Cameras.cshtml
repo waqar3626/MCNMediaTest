@@ -45,6 +45,7 @@
 
         <div class=" MobileContent border bg-white p-4" style="position: sticky; top: 103px;">
 
+            @if(Model.CountryList != null) { 
             @foreach (Place country in Model.CountryList)
             {
                 <div class="news-wrap mb-3">
@@ -53,6 +54,7 @@
                         @country.PlaceName
                     </a>
                 </div>
+            }
             }
         </div>
 
