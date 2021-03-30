@@ -241,7 +241,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-
+                ViewBag.Countries = listCoutryDDL;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gm);
             }
