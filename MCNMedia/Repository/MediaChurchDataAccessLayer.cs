@@ -172,5 +172,16 @@ namespace MCNMedia_Dev.Repository
             _dc.ReturnBool("spSlideShowDeleteSingleImage");
             return 1;
         }
+
+        public bool ChangeSlideShowImageOrder(int ImageId,int chMediaId, int DisplayOrder, int UpdateBy)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("imgId", ImageId);
+            _dc.AddParameter("medChrId", chMediaId);
+            _dc.AddParameter("disOrder", DisplayOrder);
+            _dc.AddParameter("CrBy", UpdateBy);
+          return  _dc.ReturnBool("spChangeSlideShowImageOrder");
+            
+        }
     }
 }

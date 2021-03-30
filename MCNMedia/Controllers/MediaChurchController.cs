@@ -400,6 +400,24 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult ChangeDisplayOrder(int DisplayOrder,int ChurchMediaId,int ImageId)
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId").ToString());
+                bool res = mediaChurchDataAccess.ChangeSlideShowImageOrder(ImageId, ChurchMediaId, DisplayOrder, UserId);
+                return Json(new { success = true,res });
+            }
+            catch (Exception exp)
+            {
+
+                return Json(new { success = false, responseText = exp.Message });
+            }
+
+
+        }
+
         public IActionResult SlideShowImages(int id)
         {
             List<MediaChurch> mediaChurch = new List<MediaChurch>();

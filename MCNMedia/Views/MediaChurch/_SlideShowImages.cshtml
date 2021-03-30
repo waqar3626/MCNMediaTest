@@ -47,7 +47,7 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <table id="order-listing" class="table dataTable no-footer" role="grid" >
+                                    <table id="order-listing" class="table dataTable no-footer" role="grid">
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">Image </th>
@@ -64,14 +64,15 @@
                                                     <td>
                                                         <input type="hidden" id="hdnDisplayOrder" value="@item.DisplayOrder" />
                                                         <input type="hidden" id="hdnChurchMediaId" value="@item.ChurchMediaId" />
+                                                        <input type="hidden" id="hdnImageId" value="@item.ImageId" />
                                                         <img src="@item.MediaURL" class="tdimg" />
                                                     </td>
                                                     <td class="text-wrap">
-                                                        <input type="text" class="text-wrap form-control" asp-for="@item.DisplayOrder" />
+                                                        <input type="text" id="txtDisplayOrder" class="text-wrap form-control" asp-for="@item.DisplayOrder" />
 
                                                     </td>
                                                     <td class="text-wrap">
-                                                        <a onclick="ChangeImagesOrder('@(item.ImageId +"^" + item.ChurchMediaId)')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Change Order"><i class="mdi mdi-file-replace text-white"></i><span class="text-white"> Change Order</span></a>&nbsp;
+                                                        <a id="btnChangeOrderClick" onclick="ChangeOrderClick(this)" class="btn btn-primary btn-sm " data-toggle="tooltip" data-placement="bottom" title="Change Order"><i class="mdi mdi-file-replace text-white"></i><span class="text-white"> Change Order</span></a>&nbsp;
                                                         <a onclick="DeleteSingleImage('@(item.ImageId +"^" + item.ChurchMediaId)')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i><span class="text-white"> Delete</span></a>
                                                     </td>
 
@@ -98,8 +99,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel33">Add New Image</h5>
-                        <button type="button" class="close"  onclick="addImageModelClose()" >
-                            <span ><i class="fa fa-window-close-o"></i></span>
+                        <button type="button" class="close" onclick="addImageModelClose()">
+                            <span><i class="fa fa-window-close-o"></i></span>
                         </button>
                     </div>
                     <div class="modal-body" id="AddSlideShowImagePreview">
@@ -117,7 +118,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-      
+
 
 
         if ($('#hdnViewPartialBit').val() == '-1') {
@@ -126,10 +127,67 @@
 
         }
     });
-  
+
+    function ChangeOrderClick(e) {
+        var $row = $(e).closest("tr");    // Find the row
+        var DisplayOrder = $row.find("#txtDisplayOrder").val(); // Find the text
+        var ChurchMediaId = $row.find("#hdnChurchMediaId").val();
+        var ImageId = $row.find("#hdnImageId").val();// Find the text
+        // Let's test it out
+    
+        var formData = new FormData();
+        formData.append("DisplayOrder", DisplayOrder);
+        formData.append("ChurchMediaId", ChurchMediaId);
+        formData.append("ImageId", ImageId);
+
+        $.ajax({
+            url: "/MediaChurch/ChangeDisplayOrder",
+            type: "POST",
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,
+            success: function (result) {
+                if (result.success) {
+
+                    LoadSlideShowImagesTable(ChurchMediaId);
+                    loadSlideShow();
+                    $(window).scrollTop(0);
+                    $('#addImageMediaSuccessMessage').removeAttr('hidden');
+                    $('#addImageMediaSuccessMessage').html('Image order has been changed successfully');
+                    $('#addImageMediaSuccessMessage').fadeIn();
+
+                    $('#addImageMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addImageMediaSuccessMessage").slideUp(500);
+                    });
+                    $('#addImageMediaSuccessMessage').attr('hidden');
+                }
+                else {
+                    $(window).scrollTop(0);
+                    $('#addImageMediaErrorMessage').removeAttr('hidden');
+                    $('#addImageMediaErrorMessage').html(result.responseText);
+                    $('#addImageMediaErrorMessage').fadeIn();
+
+                    $('#addImageMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addImageMediaErrorMessage").slideUp(500);
+
+                    });
+                    $('#addImageMediaErrorMessage').attr('hidden');
+                }
+
+
+
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
+            }
+        });
+    }
+
+   
+
 
     function DeleteSingleImage(id) {
-        
+
         var data = id.split('^');
 
         swal({
@@ -207,13 +265,15 @@
                 var html = '';
 
                 $.each(result, function (key, item) {
-                    var id = "'"+item.imageId+"^"+item.churchMediaId+"'";
+                    var id = "'" + item.imageId + "^" + item.churchMediaId + "'";
                     html += '<tr>';
-                    html += '<td> <input type="hidden" id="hdnDisplayOrder" value="'+item.displayOrder+'" />  <input type="hidden" id="hdnChurchMediaId" value="'+item.churchMediaId+'" /> <img src="' + item.mediaURL + '" class="tdimg" /></td>';
 
-                    html += '<td><input type="text" class="text-wrap form-control" text="' + item.displayOrder +'" value="' + item.displayOrder +' " asp-for="' + item.displayOrder + '" /></td>';
-                    html += '<td> <a onclick="ChangeImagesOrder('+id+')" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Change Order"><i class="mdi mdi-file-replace text-white"></i><span class="text-white"> Change Order</span></a>&nbsp;';
-                    html += '<a onclick="DeleteSingleImage('+id+')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i><span class="text-white"> Delete</span></a></td>';
+                    html += '<td> <input type="hidden" id="hdnDisplayOrder" value="' + item.displayOrder + '" />  <input type="hidden" id="hdnChurchMediaId" value="' + item.churchMediaId + '" /><input type="hidden" id="hdnImageId" value="' + item.imageId + '" /> <img src="' + item.mediaURL + '" class="tdimg" /></td>';
+
+
+                    html += '<td><input type="text" id="txtDisplayOrder" class="text-wrap form-control" text="' + item.displayOrder + '" value="' + item.displayOrder + ' " asp-for="' + item.displayOrder + '" /></td>';
+                    html += '<td><a id="btnChangeOrderClick" onclick="ChangeOrderClick(this)" class="btn btn-primary btn-sm " data-toggle="tooltip" data-placement="bottom" title="Change Order"><i class="mdi mdi-file-replace text-white"></i><span class="text-white"> Change Order</span></a>&nbsp;';
+                    html += '<a onclick="DeleteSingleImage(' + id + ')" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash text-white"></i><span class="text-white"> Delete</span></a></td>';
                     html += '</tr>';
 
 
