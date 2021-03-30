@@ -31,7 +31,7 @@
                 <label asp-for="FirstName" for="validationCustom10" class="col-sm-3 col-form-label">First Name *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
-                    <input asp-for="FirstName" type="text" class="form-control" id="validationCustom10" pattern="^[a-zA-Z\s][a-zA-Z\s]+$" placeholder="First Name" required />
+                    <input asp-for="FirstName" type="text" class="form-control" id="validationCustom10"  placeholder="First Name" required />
                     <input type="hidden" asp-for="UserId" />
                     <div class="invalid-feedback">
                         Please Provide a valid First Name
@@ -43,7 +43,7 @@
                 <label asp-for="LastName" for="validationCustom11" class="col-sm-3 col-form-label">Last Name *</label>
                 <div class="col-sm-9">
                     <span asp-validation-for="LastName" class="text-danger"></span>
-                    <input asp-for="LastName" type="text" class="form-control" placeholder="Last Name" pattern="^[a-zA-Z\s][a-zA-Z\s]+$" id="validationCustom11" required />
+                    <input asp-for="LastName" type="text" class="form-control" placeholder="Last Name"  id="validationCustom11" required />
                     <div class="invalid-feedback">
                         Please Provide a valid Last Name
                     </div>
