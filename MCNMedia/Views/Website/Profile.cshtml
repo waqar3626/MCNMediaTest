@@ -139,50 +139,59 @@
 
 
                             <div class=" font-20 text-center">
-                                @if (Model.NextScheduleList.Count() > 0)
+                                @if (Model.NextScheduleList != null)
                                 {
-
-                                    @foreach (var schedule in Model.NextScheduleList.Take(1))
+                                    @if (Model.NextScheduleList.Count() > 0)
                                     {
-                                        @if (schedule.IsRepeated == true && schedule.Record == true)
-                                        {
-                                            <b>
-                                                @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
-                                            </b><br />
 
-                                        }
-                                        else if (schedule.IsRepeated == true && schedule.Record == false)
+                                        @foreach (var schedule in Model.NextScheduleList.Take(1))
                                         {
-                                            <b>
-                                                @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                            </b><br />
+                                            @if (schedule.IsRepeated == true && schedule.Record == true)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
+                                                </b><br />
 
-                                        }
-                                        else if (schedule.IsRepeated == false && schedule.Record == true)
-                                        {
-                                            <b>
-                                                @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-                                            </b><br />
+                                            }
+                                            else if (schedule.IsRepeated == true && schedule.Record == false)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                </b><br />
 
-                                        }
-                                        else
-                                        {
-                                            <b>
-                                                @schedule.EventName
-                                            </b><br />
+                                            }
+                                            else if (schedule.IsRepeated == false && schedule.Record == true)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+                                                </b><br />
 
+                                            }
+                                            else
+                                            {
+                                                <b>
+                                                    @schedule.EventName
+                                                </b><br />
+
+                                            }
+                                            <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
                                         }
-                                        <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
                                     }
+
+
+                                    else
+                                    {
+                                        <br />
+                                        <p>No Events Scheduled</p>
+                                    }
+
+
                                 }
-
-
                                 else
                                 {
-                                    <br />
-                                    <p>No Events Scheduled</p>
+                                <br />
+                                <p>No Events Scheduled</p>
                                 }
-
                             </div>
                         </div>
                     </div>
