@@ -203,113 +203,135 @@
             <div class="col-xl-7 col-md-8 p-lg-0">
                 <div class="card" id="top-card">
                     <div class="tab-content" id="pills-tabContent">
-                        @{
-                            int camCounter = 0;
-                        }
-                        @foreach (Camera cam in Model.CameraList)
+                       @{ 
+
+                           int camCounter = 0;
+                       }
+                        
+                        @if (Model.CameraList != null)
                         {
-                            if (camCounter == 0)
+
+                            
+
+                            foreach (Camera cam in Model.CameraList)
                             {
-                                if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
+                                if (camCounter == 0)
                                 {
-                                    <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                        @*<img src=" https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/OffLineImage.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />*@
+                                    if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
+                                    {
+                                        <div class="tab-pane fade show active" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                            @*<img src=" https://mcnmedia-app.s3-eu-west-1.amazonaws.com/WebsiteAssects/OffLineImage.jpg" id="LiveStreamSrc-@camCounter" class="w-100" style="width:100%" />*@
 
-                                        <div class=" cameralive bg-black fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
-                                            <p class="text-white font-30">
-                                                Our camera is switched off at the moment.
-                                                <br />
-                                                Please come back when there is a service scheduled
-                                            </p>
+                                            <div class=" cameralive bg-black fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
+                                                <p class="text-white font-30">
+                                                    Our camera is switched off at the moment.
+                                                    <br />
+                                                    Please come back when there is a service scheduled
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
 
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane fade show active " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                                            <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin vjs-16-9' style="width:100%;">
+                                                <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                                            </video>
+                                        </div>
+                                    }
                                 }
                                 else
                                 {
-                                    <div class="tab-pane fade show active " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                        <i class="fal fa-play-circle text-white vide-play-in"></i>
-                                        <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin vjs-16-9' style="width:100%;">
-                                            <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
-                                        </video>
-                                    </div>
+                                    if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
+                                    {
+
+                                        <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                            @*<img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />*@
+                                            <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
+                                                <p class="text-white font-30">
+                                                    Our camera is switched off at the moment.
+                                                    <br />
+                                                    Please come back when there is a service scheduled
+                                                </p>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane fade" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
+                                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                                            <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin  vjs-16-9' style="width:100%;">
+                                                <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
+                                            </video>
+                                        </div>
+                                    }
                                 }
+                                camCounter = camCounter + 1;
                             }
-                            else
+
+                            if (Model.CameraList.Count() == 0)
                             {
-                                if (cam.IsCameraLive == true && cam.IsCameraStreaming == false)
-                                {
-
-                                    <div class="tab-pane fade " id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                        @*<img src="~/Images/offline-notice.png" id="LiveStreamSrc-@camCounter" style="width:100%" />*@
-                                        <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" @*id="pills-camera-no"*@ id="LiveStreamSrc-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
-                                            <p class="text-white font-30">
-                                                Our camera is switched off at the moment.
-                                                <br />
-                                                Please come back when there is a service scheduled
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="tab-pane fade" id="pills-camera-@camCounter" role="tabpanel" aria-labelledby="pills-camera-tab-@camCounter">
-                                        <i class="fal fa-play-circle text-white vide-play-in"></i>
-                                        <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin  vjs-16-9' style="width:100%;">
-                                            <source id="LiveStreamSrc-@camCounter" src="@cam.LiveStreamUrl" type="application/x-mpegURL">
-                                        </video>
-                                    </div>
-                                }
+                                <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no">
+                                    <p class="text-white font-30">
+                                        Our camera is switched off at the moment.
+                                        <br />
+                                        Please come back when there is a service scheduled
+                                    </p>
+                                </div>
                             }
-                            camCounter = camCounter + 1;
                         }
 
-                        @if (Model.CameraList.Count() == 0)
+                        @if (Model.VideoList != null)
                         {
-                            <div class="cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center show active" id="pills-camera-no" role="tabpanel" aria-labelledby="pills-camera-tab-no">
-                                <p class="text-white font-30">
-                                    Our camera is switched off at the moment.
-                                    <br />
-                                    Please come back when there is a service scheduled
-                                </p>
-                            </div>
-                        }
-                        @foreach (MediaChurch vid in Model.VideoList)
-                        {
-                            <div class="tab-pane fade" id="pills-video-@vid.ChurchMediaId" role="tabpanel" aria-labelledby="pills-video-tab">
-                                <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
+                            @foreach (MediaChurch vid in Model.VideoList)
+                            {
+                                <div class="tab-pane fade" id="pills-video-@vid.ChurchMediaId" role="tabpanel" aria-labelledby="pills-video-tab">
+                                    <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded">
 
-                                    <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL" class="vedslide"></div>
+                                        <div id='v-@vid.ChurchMediaId' mediaurl="@vid.MediaURL" class="vedslide"></div>
 
-                                </div>
-                            </div>
-                        }
-                        @foreach (MediaChurch pic in Model.PictureList)
-                        {
-                            <div class="tab-pane fade" id="pills-image-@pic.ChurchMediaId" role="tabpanel" aria-labelledby="pills-image-tab">
-                                <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="@pic.MediaURL" class="d-block" style="height:518px;width:100%;justify-content:center;" alt="...">
-                                        </div>
                                     </div>
-                                    @*<a class="carousel-control-prev" href="#carouselPictures" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselPictures" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>*@
                                 </div>
-                            </div>
+                            }
+
+                        }
+
+                        @if (Model.PictureList != null)
+                        {
+                            @foreach (MediaChurch pic in Model.PictureList)
+                            {
+                                <div class="tab-pane fade" id="pills-image-@pic.ChurchMediaId" role="tabpanel" aria-labelledby="pills-image-tab">
+                                    <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="@pic.MediaURL" class="d-block" style="height:518px;width:100%;justify-content:center;" alt="...">
+                                            </div>
+                                        </div>
+                                        @*<a class="carousel-control-prev" href="#carouselPictures" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselPictures" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>*@
+                                    </div>
+                                </div>
+                            }
                         }
                     </div>
                     <div class="bg-blue pt-3 pb-3">
                         <ul class="nav nav-tabs weekly font-14 mt-0 p-0 mb-0" id="pills-tab" role="tablist">
+                           
                             @{
                                 int camTabCounter = 0;
                             }
+                            
+                            @if (Model.PictureList != null) { 
+                           
+
                             @foreach (Camera cam in Model.CameraList)
                             {
                                 if (camCounter == 0)
@@ -326,10 +348,10 @@
                                 }
                                 camTabCounter = camTabCounter + 1;
                             }
-
+                            }
                             @*<li class="nav-item">
-                                    <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
-                                </li>*@
+            <a class="nav-link" id="pills-slideshow-tab" data-toggle="pill" href="#pills-slideshow" role="tab" aria-controls="pills-slideshow" aria-selected="false">Slideshow</a>
+        </li>*@
                             @if (Model.VideoList.Count() > 0)
                             {
                                 @foreach (MediaChurch medChurch in Model.VideoList)
