@@ -224,11 +224,12 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Churches()
         {
+            List<SelectListItem> listCoutryDDL = new List<SelectListItem>();
             try
             {
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(1).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+                 listCoutryDDL = LoadCountryDDL();
 
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
@@ -248,11 +249,12 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Cathedrals()
         {
+            List<SelectListItem> listCoutryDDL = new List<SelectListItem>();
             try
             {
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+                 listCoutryDDL = LoadCountryDDL();
 
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
@@ -264,7 +266,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-
+                ViewBag.Countries = listCoutryDDL;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gm);
             }
@@ -272,12 +274,13 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult FuneralHomes()
         {
+            List<SelectListItem> listCoutryDDL = new List<SelectListItem>();
             try
             {
                 //int churchId = gm.Churches.ChurchId;
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(3).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                List<SelectListItem> listCoutryDDL = LoadCountryDDL();
+                listCoutryDDL = LoadCountryDDL();
 
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
@@ -289,7 +292,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-
+                ViewBag.Countries = listCoutryDDL;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gm);
             }
