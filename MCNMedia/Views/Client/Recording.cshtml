@@ -16,7 +16,24 @@
     }
 </style>
 <script src="~/js/jwplayer.js"></script>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="DownloadRecordingErrorMessage" hidden>
 
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="DownloadRecordingSuccessMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
 <div class="card mb-3">
     <div class="card-header card-header-custom">
         Search Published Files
@@ -86,40 +103,40 @@
             <div class="card-header card-header-custom">
                 Published Files
                 @*<button type="submit" id="ADDEmployee" class="btn btn-outline-whites btn-sm float-right " title="Add New" onclick="AddRecording1()" >
-            <i class="fa fa-plus"></i>
-            Add Recording
-        </button>*@
+                        <i class="fa fa-plus"></i>
+                        Add Recording
+                    </button>*@
             </div>
             <div class="card-body">
                 <div id="video-gallery" class="row lightGallery">
                     @foreach (var item in Model.LRecordings)
                     {
-                      
-                      
-                    <div class="col-lg-4 col-md-6 col-sm-12 p-2  mb-3  ">
-                        <div class="row m-0">
-                            <div class="col-12">
-                                <div class="for-generic  text-white font-16 font-weight-bolder w-100 mb-0" id="context-menu-hover-autohideRecording" recordingSrc="@item.Src" recordingId="@item.RecordingId">
 
-                                    @item.RecordingTitle
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 p-2  mb-3  ">
+                            <div class="row m-0">
+                                <div class="col-12">
+                                    <div class="for-generic  text-white font-16 font-weight-bolder w-100 mb-0" id="context-menu-hover-autohideRecording" recordingSrc="@item.Src" recordingId="@item.RecordingId">
+
+                                        @item.RecordingTitle
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row m-0">
-                            <div class="col-12">
-                                <video class="w-100 h-100" controls>
-                                    <source src=" @item.Src" type="" />
-                                </video>
+                            <div class="row m-0">
+                                <div class="col-12">
+                                    <video class="w-100 h-100" controls>
+                                        <source src=" @item.Src" type="" />
+                                    </video>
+                                </div>
                             </div>
+
+
                         </div>
 
-
-                    </div>
-                   
                     }
-                        </div>
-                    </div>
-                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -210,9 +227,53 @@
                 $('#SetEventName').val('@ViewBag.EventName');
 
         });
-     function Download(url) {
-                $('<iframe>', { id: 'idown', src: url }).hide().appendTo('body').click();
+    function onDownloadClick(url) {
+        alert(url);
+
+        $.ajax({
+            type: "POST",
+            url: "/Recording/onDownloadClick/",
+            //data: camObj,
+
+            data: { url: url },
+
+            //   contentType: "application/json;charset=UTF-8",
+            //  dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $(window).scrollTop(0);
+
+                    $('#DownloadRecordingSuccessMessage').removeAttr('hidden');
+                    $('#DownloadRecordingSuccessMessage').html('Kindly check your download folder file downloading is in progress');
+                    $('#DownloadRecordingSuccessMessage').fadeIn();
+                    $('#DownloadRecordingSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#DownloadRecordingSuccessMessage").slideUp(500);
+                    });
+                    $('#DownloadRecordingSuccessMessage').attr('hidden');
+
+
+                }
+                else {
+                    $(window).scrollTop(0);
+                    $('#DownloadRecordingErrorMessage').removeAttr('hidden');
+                    $('#DownloadRecordingErrorMessage').html(response.text);
+                    $('#DownloadRecordingErrorMessage').fadeIn();
+                    $('#DownloadRecordingErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#DownloadRecordingErrorMessage").slideUp(500);
+                    });
+                    $('#DownloadRecordingErrorMessage').attr('hidden');
+
+
+                }
+
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
             }
+
+        });
+
+    }
 
 
      function AddRecording1() {
@@ -221,7 +282,7 @@
 
             }
     function EditRecording(recordingId) {
-      
+
                  $.ajax({
                      type: "Get",
                      url: '@Url.Action("EditClientRecording", "Client")',

@@ -223,7 +223,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteSch(int id)
         {
             try
             {
@@ -237,8 +237,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                
-                throw;
+                return Json(new { success = false, responseText = e.Message });
             }
         }
 

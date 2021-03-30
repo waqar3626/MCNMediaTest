@@ -428,13 +428,8 @@
                 window.location.href = "../Recording/ClientPlayer/" + recordingId;
             }
             else if (key == "download") {
-     
-                $('<a/>', {
-                    "href": recordingSrc,
-                    "download": "video.mp4",
-                    id: "videoDownloadLink"
-                }).appendTo(document.body);
-                $('#videoDownloadLink').get(0).click().remove();
+              
+                onDownloadClick(recordingSrc);
        
             }
 
