@@ -20,6 +20,7 @@ using MaxMind.GeoIP2.Model;
 using Microsoft.AspNetCore.Http.Extensions;
 using DNTCaptcha.Core;
 using Microsoft.Extensions.Options;
+using System.Web;
 
 namespace MCNMedia_Dev.Controllers
 {
@@ -65,13 +66,25 @@ namespace MCNMedia_Dev.Controllers
                     ViewBag.ErrorMsg = "InValid Captcha Kindly Provide a valid Captcha";
                     return View(web);
                 }
-                EmailHelper em = new EmailHelper();
-                //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
-                em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
-                _websiteDataAccessLayer.AddContactForm(web);
-                ModelState.Clear();
-                ViewBag.SuccessMsg = "Email Send Successfully";
-                return View();
+
+                bool containsHTML = (web.ContactName != HttpUtility.HtmlEncode(web.ContactName));
+                bool containsHTML2 = (web.ContactEmail != HttpUtility.HtmlEncode(web.ContactEmail));
+                bool containsHTML3 = (web.ContactSubject != HttpUtility.HtmlEncode(web.ContactSubject));
+                bool containsHTML4 = (web.Message != HttpUtility.HtmlEncode(web.Message));
+                if (containsHTML || containsHTML2 || containsHTML3 || containsHTML4) {
+                    throw new Exception("Data is invalid kindly provide a valid data");
+                  
+                }
+                else
+                {
+                    EmailHelper em = new EmailHelper();
+                    //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
+                    em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
+                    _websiteDataAccessLayer.AddContactForm(web);
+                    ModelState.Clear();
+                    ViewBag.SuccessMsg = "Email Send Successfully";
+                    return View();
+                }
             }
 
             catch (Exception exp)
