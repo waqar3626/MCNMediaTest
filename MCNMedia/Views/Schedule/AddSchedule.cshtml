@@ -15,7 +15,7 @@
 
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
-            <div class="alert alert-danger" id="addScheduleErrorMessage" hidden>
+            <div class="alert alert-danger" id="addScheduleErrorMessage">
 
             </div>
 
@@ -24,14 +24,14 @@
     </div>
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
-            <div class="alert alert-success" id="addScheduleSuccessMessage" hidden>
-                saved Successfully! 
+            <div class="alert alert-success" id="addScheduleSuccessMessage">
+                saved Successfully!
             </div>
 
         </div>
 
     </div>
-   
+
 
 
     <div class="card">
@@ -243,8 +243,7 @@
         });
     });
 
-    function AddScheduleNew() {
-       
+       function AddScheduleNew() {
         if ($('#ToggleRecord').val().toLowerCase() == 'true' && $('#CameraId').val() == null) {
             swal("Oops!", "Kindly Select Camera or Disable Recording", "error");
             return false;
@@ -253,8 +252,6 @@
             swal("Oops!", "Kindly Select Valid Recording Duration or Disable Recording", "error");
             return false;
         }
-        $('#AddChurchScheduleModel').modal('hide');
-        displayBusyIndicator();
         var churchId = $('#ddlChurchId').val();
         var eventName = $('#validationCustom03').val();
         var isRepeated = $('#IsRepeated').val();
@@ -277,8 +274,8 @@
         formData.append("recordDuration", recordDuration);
         formData.append("cameraId", cameraId);
         formData.append("password", password);
-        formData.append("isPassword", isPassword);
-
+           formData.append("isPassword", isPassword);
+           displayBusyIndicator();
 
         $.ajax({
             type: "POST",
@@ -290,28 +287,21 @@
             //data: { AddVidTabName: AddvidTabName, VidFile11: VidFile1 },
             success: function (response) {
                 if (response.success) {
-
                     displayBusyIndicator2();
-                    $(window).scrollTop(0);
-                    $('#addScheduleSuccessMessage').removeAttr('hidden');
+                    $('#AddScheduleModal').modal('hide');
                     $('#addScheduleSuccessMessage').fadeIn();
                     $('#addScheduleSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
                         $("#addScheduleSuccessMessage").slideUp(500);
                     });
-                    
-                 
-                    $('#addScheduleSuccessMessage').attr('hidden');
-                    
-                window.location.reload();
+
+
+                    window.location.reload();
                    
-                 
-                }
+                      }
                 else {
 
+
                     displayBusyIndicator2();
-                    $('#AddChurchScheduleModel').modal('show');
-                    $(window).scrollTop(0);
-                    $('#addScheduleErrorMessage').removeAttr('hidden');
                     $('#addScheduleErrorMessage').html(response.responseText);
                     $('#addScheduleErrorMessage').fadeIn();
 
@@ -320,7 +310,7 @@
 
 
                     });
-                    $('#addScheduleErrorMessage').attr('hidden');
+
 
 
                 }
