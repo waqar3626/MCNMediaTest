@@ -27,36 +27,38 @@
 
     <div class="col-lg-3 col-md-4 col-sm-6">
         @*<div class="deskContent">
-                <div class="border bg-white p-4" style="position: sticky; top: 103px;">
+            <div class="border bg-white p-4" style="position: sticky; top: 103px;">
 
-                    @foreach (Place country in Model.CountryList)
-                    {
-                        <div class="news-wrap mb-3">
-                            <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
-                               href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
-                                @country.PlaceName
-                            </a>
-                        </div>
-                    }
-                </div>
-            </div>*@
+                @foreach (Place country in Model.CountryList)
+                {
+                    <div class="news-wrap mb-3">
+                        <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
+                           href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
+                            @country.PlaceName
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>*@
 
 
+        @if (Model.CountryList != null)
+        {
+            <div class=" MobileContent border bg-white p-4" style="position: sticky; top: 103px;">
 
-        <div class=" MobileContent border bg-white p-4" style="position: sticky; top: 103px;">
 
-            @if(Model.CountryList != null) { 
-            @foreach (Place country in Model.CountryList)
-            {
-                <div class="news-wrap mb-3">
-                    <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
-                       href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
-                        @country.PlaceName
-                    </a>
-                </div>
-            }
-            }
-        </div>
+                @foreach (Place country in Model.CountryList)
+                {
+                    <div class="news-wrap mb-3">
+                        <a class="btn btn-pink my-2 my-sm-0 pl-xl-5 pl-4 pr-xl-5 pr-4 text-white font-weight-bolder font-14 mb-2" style="width:100%"
+                           href="@Url.Action("Cameras", "Website",new {Country = country.PlaceName.Replace(' ','-')})">
+                            @country.PlaceName
+                        </a>
+                    </div>
+                }
+
+            </div>
+        }
 
 
 
@@ -147,6 +149,21 @@
 
         </div>
     }
+   
+else if (ViewBag.SearchFilter != null)
+        {
+            <div class="container bg-blue">
+                <div class="row m-0 ">
+                    <div class="col-sm-12 text-white font-26 text-center pt-2 pb-2 avantgardece">
+                        Search Result for: @ViewBag.SearchFilter
+                    </div>
+                    <div class="col-sm-12 text-white font-26 text-center pt-2  pb-4 avantgardece">
+                        Sorry, there doesn't seem to be matching this search
+                    </div>
+                </div>
+            </div>
+        }
+    
 
     <div class="col-1 d-lg-block d-none"></div>
 

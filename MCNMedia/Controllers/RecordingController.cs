@@ -396,43 +396,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
        
-        public IActionResult ClientPlayer(int id)
-        {
-            int recordingPass = 0;
-            GenericModel gm = new GenericModel();
-            RecordingDataAccessLayer recordingDataAccessLayer = new RecordingDataAccessLayer();
-            if (id == 0)
-            {
-                id = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingId"));
-                recordingPass = Convert.ToInt32(HttpContext.Session.GetInt32("RecordingPass"));
-            }
-            Recording recording = recordingDataAccessLayer.Recording_GetById(id);
-            int churchId = (int)HttpContext.Session.GetInt32("ChurchId");
-            gm.Churches = chdataAccess.GetChurchData(churchId);
-            int pass = recording.Password.Count();
-            if (recording.Password.Count() > 0)
-            {
-                HttpContext.Session.SetString("RecordingPass", recording.Password);
-                HttpContext.Session.SetInt32("RecordingId", id);
-                if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("UserId").ToString()))
-                {
-                    int usertype = Convert.ToInt32(HttpContext.Session.GetInt32("UserType"));
-                }
-                else
-                {
-                    if (recordingPass == 1)
-                    {
-
-                    }
-                    else
-                    {
-                        return RedirectToAction(nameof(RecordingLock));
-                    }
-                }
-            }
-            gm.Recordings = recording;
-            return View(gm);
-        }
+     
 
         private void ShowMessage(string exceptionMessage)
         {

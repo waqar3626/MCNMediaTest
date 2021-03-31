@@ -34,6 +34,7 @@
 
 </div>
 <form asp-action="UpdateChurchInfo" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+   @if(Model.Churches != null) { 
     <div class="card">
         <div class="card-header card-header-custom">
             <label id="HeaderChurchName">@Model.Churches.ChurchName, @Model.Churches.Town</label>
@@ -158,6 +159,7 @@
             </div>
         </div>
     </div>
+                                }
 </form>
 <form asp-action="Edit" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

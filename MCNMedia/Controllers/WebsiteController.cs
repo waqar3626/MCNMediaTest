@@ -35,7 +35,7 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
         RecordingDataAccessLayer _recordDataAccess = new RecordingDataAccessLayer();
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
-        SubscriptionDataAccessLayer subDataAccess = new SubscriptionDataAccessLayer();
+
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
         TestinomialDataAccessLayer testinomialDataAccess = new TestinomialDataAccessLayer();
         ChurchDonationDataAccessLayer churchDonationDataAccessLayes = new ChurchDonationDataAccessLayer();
@@ -308,6 +308,7 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
                 {
+                    
                     throw new Exception("Country List is Empty");
                 }
                 List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(clientTypeId: -1).ToList<Church>();
@@ -320,7 +321,15 @@ namespace MCNMedia_Dev.Controllers
                     {
 
                         churches = churches.FindAll(x => x.CountryName.ToLower() == countryName.ToLower()).ToList<Church>();
-                        ViewBag.CountryID = churches.First().CountryId;
+                        if (churches.Count > 0)
+                        {
+                            ViewBag.CountryID = churches.First().CountryId;
+                        }
+                        else {
+                            ViewBag.SearchFilter = $"Country = {countryName}";
+
+                            throw new Exception("Country not exists");
+                        }
                     }
                     ViewBag.countryName = Request.Query["Country"].ToString();
                     HttpContext.Session.SetString("Country", Request.Query["Country"].ToString());
@@ -404,7 +413,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-             
 
                 ViewBag.Countries = listCoutryDDL;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;

@@ -108,13 +108,7 @@
         Context.Response.Redirect("../UserLogin");
     }
 
-    @{
-
-        InboxDataAccessLayes inboxDataAccessLayer = new InboxDataAccessLayes();
-        var countUnreadMail = inboxDataAccessLayer.GetUnreadEmail();
-
-
-    }
+   
 
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->

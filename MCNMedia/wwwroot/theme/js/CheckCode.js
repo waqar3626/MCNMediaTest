@@ -423,10 +423,6 @@
             else if (key == "delete") {
                 DeleteRecordingClick(recordingId);
             }
-            else if (key == "play") {
-              
-                window.location.href = "../Recording/ClientPlayer/" + recordingId;
-            }
             else if (key == "download") {
               
                 onDownloadClick(recordingSrc);
