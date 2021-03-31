@@ -9,7 +9,7 @@
 
       
         <div class="float-right">
-            <button type="submit" value="Add" id="BtnAddAnnouncement" class="btn btn-outline-behance btn-sm " title="Add New" onclick="AddAnnouncement()"><i class="fa fa-plus"></i> Add Announcement</button>
+            <button type="submit" value="Add" id="BtnAddAnnouncement" hidden class="btn btn-outline-behance btn-sm " title="Add New" onclick="AddAnnouncement()"><i class="fa fa-plus"></i> Add Announcement</button>
         </div>
 
         <div class="">
@@ -42,7 +42,7 @@
 
 <div class="row">
     <div class="col-12 grid-margin">
-        <div class="modal fade" id="AddAnnouncementPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="AddAnnouncementPopUp" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:60%;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -103,9 +103,11 @@
                 }
                 var html = '';
                 if (result.length > 0) {
+                    $('#BtnAddAnnouncement').attr('hidden');
                     $('#BtnAddAnnouncement').hide();
                 }
                 else {
+                    $('#BtnAddAnnouncement').removeAttr('hidden');
                     $('#BtnAddAnnouncement').show();
                 }
                 $.each(result, function (key, item) {
