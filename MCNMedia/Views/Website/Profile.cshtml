@@ -1208,22 +1208,7 @@
             data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate, Slug: Slug },
             dataType: "json",
             success: function (result) {
-                var items = result.split('^');
-                if (items[0] == '-1') {
-                    $('#alertProfile').removeAttr('hidden');
-                    $('#alertProfile').html(items[1]);
-
-
-                    $('#alertProfile').fadeIn();
-
-                    $('#alertProfile').fadeTo(5000, 500).slideUp(500, function () {
-                        $("#alertProfile").slideUp(500);
-
-
-                    });
-                    $('#alertProfile').attr('hidden');
-                } else {
-
+             
                     var html = '';
 
                     $.each(result, function (key, item) {
@@ -1242,7 +1227,7 @@
 
                     });
                     $('.RecList').html(html);
-                }
+                
 
             },
             error: function (errormessage) {
