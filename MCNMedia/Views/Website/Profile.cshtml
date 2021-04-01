@@ -1051,19 +1051,7 @@
                             <div class=" font-32  pb-4 bg-white text-pink">
                             </div>
                             <div class="border bg-white pb-4 rounded-lg pt-4 row m-0 RecList">
-                                @*@foreach (Recording recording in Model.RecordingList)
-                                    {
-                                        <div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">
-                                            <h4 class="news-heading font-16 font-weight-normal">@recording.RecordingTitle</h4>
-                                            <div class="font-weight-light in-icon-arrow d-inline-block font-12">
-                                                <p class="mb-0">@recording.Date.ToString("dd MMM yyyy")</p>
-                                            </div>
-                                            <a href="@Url.Action("Player", "Website",new { id = recording.RecordingId })" target="_blank" class="ply-vid">
-                                                <i class="fal fa-play-circle font-36"></i>
-                                            </a>
-
-                                        </div>
-                                    }*@
+                           
                             </div>
                         </div>
                     </div>

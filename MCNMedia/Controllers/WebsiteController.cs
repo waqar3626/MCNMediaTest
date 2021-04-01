@@ -719,7 +719,7 @@ namespace MCNMedia_Dev.Controllers
                 else
                     profileModel.notice = new Notice();
 
-                profileModel.mediaList = camDataAccess.GetWebsiteMediaByChurch(churchId);
+                profileModel.mediaList = camDataAccess.GetWebsiteMedia(churchId);
                 profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
                 profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
                 profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();

@@ -20,14 +20,14 @@ namespace MCNMedia_Dev.Repository
         public int AddSchedule(Schedule schedules)
         {
             _dc.ClearParameters();
-            _dc.AddParameter("ScheduleEventName", schedules.EventName);
-            _dc.AddParameter("ScheduleEventDate", schedules.EventDate);
-            _dc.AddParameter("ScheduleEventDay", schedules.EventDay);
-            _dc.AddParameter("ScheduleEventTime", schedules.EventTime);
-            _dc.AddParameter("ScheduleLength", schedules.RecordDuration);
+            _dc.AddParameter("SchEventName", schedules.EventName);
+            _dc.AddParameter("SchEventDate", schedules.EventDate);
+            _dc.AddParameter("SchdEventDay", schedules.EventDay);
+            _dc.AddParameter("SchEventTime", schedules.EventTime);
+            _dc.AddParameter("SchLength", schedules.RecordDuration);
             _dc.AddParameter("SchRecord", schedules.Record);
             _dc.AddParameter("ChurchId", schedules.ChurchId);
-            _dc.AddParameter("IsRepeated", schedules.IsRepeated);
+            _dc.AddParameter("IsRepeat", schedules.IsRepeated);
             _dc.AddParameter("SchPassword", schedules.Password);
             _dc.AddParameter("SchCameraId", schedules.CameraId);
             _dc.AddParameter("CreatedBy", schedules.CreatedBy);
