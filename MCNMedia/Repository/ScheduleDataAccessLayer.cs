@@ -106,7 +106,7 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("record", schedule.Record);
             _dc.AddParameter("UpdateBy", schedule.UpdatedBy);
             _dc.AddParameter("SchPassword", schedule.Password);
-            _dc.AddParameter("IsRepeated", schedule.IsRepeated);
+            _dc.AddParameter("IsRepeat", schedule.IsRepeated);
             _dc.AddParameter("SchCameraId", schedule.CameraId);
             _dc.AddParameter("SchChurchId", schedule.ChurchId);
             return _dc.Execute("spSchedule_Update");
