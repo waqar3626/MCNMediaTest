@@ -170,7 +170,7 @@
                             <div class="form-group row">*@
                         <div class="col-sm-6">
                             <label asp-for="Phone" class=" text-center" for="validationCustom07">Phone</label>
-                            <input asp-for="Phone" class="form-control" id="validationCustom07" placeholder="Phone" data-inputmask-alias="99999999999999999999999999999999" im-insert="true" required />
+                            <input asp-for="Phone" class="form-control" id="validationCustom07" placeholder="Phone" type="text" onkeypress="isNumberKey(event)" required />
                             <div class="invalid-feedback">
                                 Please Provide a valid Phone
                             </div>
@@ -193,13 +193,14 @@
         $('#ImageText').hide();
         $(function () {
             $("#InstallationDate").datepicker({
-                dateFormat: 'dd-MMM-yyyy',
-                defaultDate: new Date()
+                dateformat: 'dd-mmm-yyyy',
+                defaultdate: new date()
             });
-            $("#InstallationDate").datepicker('setDate', new Date());
         });
-
+        $("#InstallationDate").datepicker().datepicker("setDate", new Date());
     });
+
+
     $('#ValChurchSubmit').click(function () {
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
         if ($('#UploadImage').val().length > 0) {
@@ -213,6 +214,15 @@
                 $('#cardImage').attr("class", "card border-success");
                 $('#ImageText').hide();
             }
+        }
+    );
+
+    $("#validationCustom07").keypress(function (e) {
+        //if the letter is not digit then display error and don't type anything
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            //display error message
+           
+            return false;
         }
     });
 
@@ -228,6 +238,16 @@
             $('#ImageText').hide();
         }
     });
+
+    function isNumberKey(evt) {
+        
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
 </script>
 
 @section Scripts {
