@@ -1,7 +1,4 @@
-﻿using Google.Analytics.SDK.Core;
-using Google.Analytics.SDK.Core.Extensions;
-using Google.Analytics.SDK.Core.Services.Interfaces;
-using Google.Apis.Analytics.v3;
+﻿using Google.Apis.Analytics.v3;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using MCNMedia_Dev.Controllers;

@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MCNMedia_Dev.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace MCNMedia_Dev.Repository
 {
     public class CameraDataAccessLayer
     {
         AwesomeDal.DatabaseConnect _dc;
+        private readonly string AWS_S3_BUCKET_URI;
 
         public CameraDataAccessLayer()
         {
             _dc = new AwesomeDal.DatabaseConnect();
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
+            var root = builder.Build();
+            var awsS3bucket = root.GetSection("S3BucketConfiguration");
+            var sysConfig = root.GetSection("SystemConfiguration");
+            AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
         }
 
         public int AddCamera(Camera camera)
@@ -235,6 +244,51 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("churchId", ChurchId);
             _dc.AddParameter("userId", UserId);
             return _dc.ReturnInt("spClientMobileCamera_Add");
+        }
+
+        public List<WebsiteMedia> GetWebsiteMedia(int chruchId)
+        {
+            DataTable dataTable = GetWebsiteMediaByChurch(chruchId);
+            List<WebsiteMedia> mediaList = new List<WebsiteMedia>();
+            WebsiteMedia websiteMedia = new WebsiteMedia();
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                websiteMedia = new WebsiteMedia();
+                websiteMedia.MediaId = Convert.ToInt32(dataRow["MediaId"].ToString());
+                websiteMedia.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
+                websiteMedia.ChurchName = dataRow["ChurchName"].ToString();
+                websiteMedia.UniqueIdentifier = dataRow["UniqueIdentifier"].ToString();
+                websiteMedia.TabName = dataRow["TabName"].ToString();
+                websiteMedia.MediaURL = dataRow["MediaURL"].ToString();
+                websiteMedia.IsCameraLive = Convert.ToBoolean(dataRow["IsCameraLive"]);
+                websiteMedia.IsCameraStreaming = Convert.ToBoolean(dataRow["IsCameraStreaming"]);
+                websiteMedia.MediaType = dataRow["MediaType"].ToString();
+                websiteMedia.ServerUrl = dataRow["ServerUrl"].ToString();
+                websiteMedia.CreatedAt = dataRow["CreatedAt"].ToString();
+                if (websiteMedia.MediaType == _Helper.CameraType.AdminCamera.ToString())
+                {
+                    websiteMedia.MediaURL = $"https://{websiteMedia.ServerUrl }/live/{ websiteMedia.UniqueIdentifier}_{ websiteMedia.MediaId }.stream/playlist.m3u8";
+                }
+                else if (websiteMedia.MediaType == _Helper.CameraType.ClientCamera.ToString())
+                {
+                    string cameraUniqueIdentifier = dataRow["MediaURL"].ToString().Split("_")[0];
+                    websiteMedia.MediaURL = $"https://{websiteMedia.ServerUrl }/live/_{cameraUniqueIdentifier}_/{dataRow["MediaURL"]}.stream/playlist.m3u8";
+                }
+                else
+                {
+                    websiteMedia.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}";
+                }
+                mediaList.Add(websiteMedia);
+            }
+            return mediaList;
+        }
+
+        public DataTable GetWebsiteMediaByChurch(int chruchId)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("ChrId", chruchId);
+            DataTable dataTable = _dc.ReturnDataTable("spMedia_GetByChurch");
+            return dataTable;
         }
 
         #region "Facebook Section"

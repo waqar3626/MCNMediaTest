@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Google.Analytics.SDK.Core;
-using Google.Analytics.SDK.Core.Extensions;
-using Google.Analytics.SDK.Core.Services.Interfaces;
 using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
 using MCNMedia_Dev.Repository;

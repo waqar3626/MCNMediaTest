@@ -7,7 +7,6 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using MCNMedia_Dev._Helper;
 using MCNMedia_Dev.Models;
-using MCNMedia_Dev._Helper;
 using Microsoft.AspNetCore.Hosting;
 using MCNMedia_Dev.Repository;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +35,7 @@ namespace MCNMedia_Dev.Controllers
         ChurchDataAccessLayer _churchDataAccessLayer = new ChurchDataAccessLayer();
         RecordingDataAccessLayer _recordDataAccess = new RecordingDataAccessLayer();
         WebsiteDataAccessLayer _websiteDataAccessLayer = new WebsiteDataAccessLayer();
-
+        //SubscriptionDataAccessLayer subDataAccess = new SubscriptionDataAccessLayer();
         PlaceAccessLayer _placeAccessLayer = new PlaceAccessLayer();
         TestinomialDataAccessLayer testinomialDataAccess = new TestinomialDataAccessLayer();
         ChurchDonationDataAccessLayer churchDonationDataAccessLayes = new ChurchDonationDataAccessLayer();
@@ -71,19 +70,20 @@ namespace MCNMedia_Dev.Controllers
                 bool containsHTML2 = (web.ContactEmail != HttpUtility.HtmlEncode(web.ContactEmail));
                 bool containsHTML3 = (web.ContactSubject != HttpUtility.HtmlEncode(web.ContactSubject));
                 bool containsHTML4 = (web.Message != HttpUtility.HtmlEncode(web.Message));
-                if (containsHTML || containsHTML2 || containsHTML3 || containsHTML4) {
+                if (containsHTML || containsHTML2 || containsHTML3 || containsHTML4)
+                {
                     throw new Exception("Data is invalid kindly provide a valid data");
-                  
+
                 }
                 else
                 {
                     EmailHelper em = new EmailHelper();
-                    //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
-                    em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
-                    _websiteDataAccessLayer.AddContactForm(web);
-                    ModelState.Clear();
-                    ViewBag.SuccessMsg = "Email Send Successfully";
-                    return View();
+                //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
+                em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
+                _websiteDataAccessLayer.AddContactForm(web);
+                ModelState.Clear();
+                ViewBag.SuccessMsg = "Email Send Successfully";
+                return View();
                 }
             }
 
@@ -242,7 +242,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(1).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                 listCoutryDDL = LoadCountryDDL();
+                listCoutryDDL = LoadCountryDDL();
 
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
@@ -267,7 +267,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 gm.ChurchList = _churchDataAccessLayer.GetByClientTypeChurch(2).ToList();
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                 listCoutryDDL = LoadCountryDDL();
+                listCoutryDDL = LoadCountryDDL();
 
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
@@ -321,7 +321,6 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.Countries = listCoutryDDL;
                 if (listCoutryDDL == null)
                 {
-                    
                     throw new Exception("Country List is Empty");
                 }
                 List<Church> churches = _churchDataAccessLayer.GetByClientTypeChurch(clientTypeId: -1).ToList<Church>();
@@ -338,7 +337,8 @@ namespace MCNMedia_Dev.Controllers
                         {
                             ViewBag.CountryID = churches.First().CountryId;
                         }
-                        else {
+                        else
+                        {
                             ViewBag.SearchFilter = $"Country = {countryName}";
 
                             throw new Exception("Country not exists");
@@ -426,7 +426,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-
                 ViewBag.Countries = listCoutryDDL;
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gm);
@@ -629,7 +628,7 @@ namespace MCNMedia_Dev.Controllers
             {
                 string Slug = TempData["Slug"].ToString();
 
-                 church = _churchDataAccessLayer.GetChurchDataBySlug(Slug);
+                church = _churchDataAccessLayer.GetChurchDataBySlug(Slug);
 
 
                 if (church.Password == Password)
@@ -656,13 +655,13 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult Profile(string id)
         {
-            String originalPath = new Uri(HttpContext.Request.GetDisplayUrl()).AbsoluteUri;
+            string originalPath = new Uri(HttpContext.Request.GetDisplayUrl()).AbsoluteUri;
             string slug = originalPath.Split('/').Last();
             Profile profileModel = new Profile();
             try
             {
                 string churchPass = "false";
-                String originalPath1 = id;
+                string originalPath1 = id;
 
                 if (!string.IsNullOrEmpty(Convert.ToString(TempData["ChurchPass"])))
                 {
@@ -686,18 +685,15 @@ namespace MCNMedia_Dev.Controllers
                 TempData["ChurchPasswordToChurchLock"] = profileModel.Churches.Password;
                 if (profileModel.Churches.Password.Count() > 0)
                 {
-
                     if (churchPass == "true")
                     {
-
+                        // Password provided
                     }
                     else
                     {
                         TempData["Slug"] = id;
                         TempData["ChrName"] = profileModel.Churches.ChurchName;
-
                         return View("ChurchLock");
-                        //Response.Redirect("lock?id=" + id);
                     }
                 }
                 // it for paper view Know we dont need it
@@ -723,6 +719,7 @@ namespace MCNMedia_Dev.Controllers
                 else
                     profileModel.notice = new Notice();
 
+                profileModel.mediaList = camDataAccess.GetWebsiteMediaByChurch(churchId);
                 profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
                 profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
                 profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();

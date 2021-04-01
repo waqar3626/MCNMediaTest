@@ -25,9 +25,6 @@ namespace MCNMedia_Dev.Repository
             var sysConfig = root.GetSection("SystemConfiguration");
             AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
         }
-
-        
-
         
         public int AddMedia(MediaChurch media)
         {
@@ -48,8 +45,6 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("mediaURL", MediaUrl);
             _dc.AddParameter("displayOrder", DisplayOrder);
             _dc.AddParameter("createdBy", CreatedBy);
-
-            
             return _dc.ReturnInt("spSlideShowImages_Add");
         }
 
@@ -79,7 +74,6 @@ namespace MCNMedia_Dev.Repository
         public MediaChurch GetMediaById(int mediaId)
         {
             MediaChurch mediaChurch = new MediaChurch();
-
             _dc.ClearParameters();
             _dc.AddParameter("mediaId", mediaId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetById");
@@ -91,11 +85,9 @@ namespace MCNMedia_Dev.Repository
                 mediaChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}"; 
                 mediaChurch.MediaName = dataRow["MediaName"].ToString();
                 mediaChurch.ChurchName = dataRow["ChurchName"].ToString();
-
             }
             return mediaChurch;
         }
-
 
         public int UpdateMedia(MediaChurch med)
         {

@@ -20,6 +20,7 @@ namespace MCNMedia_Dev.Models
 
         // Lists
         public IEnumerable<Church> ChurchList { get; set; }
+        public List<WebsiteMedia> mediaList { get; set; }
         public IEnumerable<Camera> CameraList { get; set; }
         public IEnumerable<MediaChurch> VideoList { get; set; }
         public IEnumerable<MediaChurch> SlideshowList { get; set; }
