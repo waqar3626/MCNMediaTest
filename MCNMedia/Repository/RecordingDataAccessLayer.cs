@@ -81,7 +81,6 @@ namespace MCNMedia_Dev.Repository
                 recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
                 recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 recording.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
-                recording.Password = dataRow["Password"].ToString();
                 recording.ChurchName = dataRow["ChurchName"].ToString();
                 recording.Town = dataRow["Town"].ToString();
                 recording.Src = $"{AWS_S3_BUCKET_URI}/{dataRow["UniqueIdentifier"]}/videos/{dataRow["RecordingURL"]}.mp4";
