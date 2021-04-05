@@ -213,7 +213,7 @@
                     loadChurchSch();
 
                   $('#AddScheduleByChurch')[0].reset();
-                
+                    ProcessingDataChecks();
                     displayBusyIndicator2();
                     $('#AddChurchScheduleModel').modal('hide');
                     $(window).scrollTop(0);
@@ -272,7 +272,8 @@
         })
     };
 
-    $(document).ready(function () {
+    function ProcessingDataChecks() {
+
         $('#alertDiv').hide();
         $('#EventDayLabel1').hide();
         $('#EventDayInput1').hide();
@@ -288,6 +289,10 @@
         AddDoPostBack();
         $('#addScheduleErrorMessage').hide();
         $('#addScheduleSuccessMessage').hide();
+    }
+
+    $(document).ready(function () {
+        ProcessingDataChecks();
     });
 
     $('#EventDate').change(function () {
