@@ -20,6 +20,7 @@ using Newtonsoft.Json.Serialization;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Routing;
 using DNTCaptcha.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace MCNMedia_Dev
 {
@@ -57,9 +58,22 @@ namespace MCNMedia_Dev
             services.Configure<StripeSetting>(Configuration.GetSection("Stripe"));
             services.AddControllersWithViews()
                 .AddXmlDataContractSerializerFormatters();
+
+   
             //services.AddDistributedMemoryCache();
             services.AddDNTCaptcha(option=> option.UseCookieStorageProvider()
-            .ShowThousandsSeparators(false));
+            .AbsoluteExpiration(minutes: 5)
+            .ShowThousandsSeparators(false)
+              .WithEncryptionKey("This is my secure key!")
+               .InputNames(// This is optional. Change it if you don't like the default names.
+                   new DNTCaptchaComponent
+                   {
+                       CaptchaHiddenInputName = "DNTCaptchaText",
+                       CaptchaHiddenTokenName = "DNTCaptchaToken",
+                       CaptchaInputName = "DNTCaptchaInputText"
+                   })
+               .Identifier("dntCaptcha")// This is optional. Change it if you don't like its default name.
+               );
 
             services.AddSession(options =>
             {
@@ -68,8 +82,14 @@ namespace MCNMedia_Dev
                 //options.Cookie.IsEssential = true;
             });
 
-            
            
+
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.Limits.MaxConcurrentConnections = 99999;
+                options.Limits.MaxConcurrentUpgradedConnections = 99999;
+            });
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
