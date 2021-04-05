@@ -1,15 +1,40 @@
 ﻿@model MCNMedia_Dev.Models.GenericModel
+@{
 
-<h4 class="card-header-custom">
-    Slide Show
-    <button type="submit" id="AddSlideShow1" class="btn btn-outline-white btn-sm float-right " title="Add New" onclick="AddSlideShow()">
-        <i class="fa fa-plus"></i> Add New SlideShow
-    </button>
-</h4>
-<div class="card-body">
-    <div id="video-gallery" class="row lightGallery slideShowTab">
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<script src="~/theme/js/modal-demo.js"></script>
+<script type="text/javascript">
+
+</script>
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="card">
+            <h4 class="card-header-custom">Slide Show  <button type="submit" id="AddSlideShow1" class="btn btn-outline-white btn-sm float-right" title=" Add New" onclick="AddSlideShow()"> <i class="fa fa-plus"></i> Add New SlideShow</button></h4>
+            <div class="card-body">
+                <div class="row" id="SlideShowImages">
+
+
+                </div>
+
+
+            </div>
+        </div>
     </div>
 </div>
+
+
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="modal fade" id="AddSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,51 +49,109 @@
                     <div class="modal-body" id="AddSlideShowPreview">
                         @Html.Partial("~/Views/MediaChurch/_AddSlideShow.cshtml", Model.Media)
                     </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
                 </div>
             </div>
         </div>
     </div>
 </div>
-@*<div class="row">
+
+
+<div class="row">
     <div class="col-12 grid-margin">
-        <div class="modal fade" id="EditSlideShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable mt-4" role="document" style="max-width:40%;">
-                <div class="modal-content">
+        <div class="modal fade" id="SlideShowImagesModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable mt-4 " role="document" style="max-width:50%;">
+                <div class="modal-content ">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit SlideShow</h5>
+                        <h5 class="modal-title" id="exampleModalLabel2">Slide Show Images</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa fa-window-close-o"></i></span>
                         </button>
                     </div>
-                    <div class="modal-body" id="EditSlideShowPreview">
-                        @Html.Partial("~/Views/MediaChurch/_EditSlideShow.cshtml", Model.Media)
+                    <div class="modal-body" id="SlideShowImagesPreview">
+                        @Html.Partial("~/Views/MediaChurch/_SlideShowImages.cshtml", new List<MediaChurch>())
                     </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        </div>*@
                 </div>
             </div>
         </div>
     </div>
-</div>*@
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
+
         loadSlideShow();
     });
 
-    function AddSlideShow() {
-        $('#AddSlideShowModal').modal('show');
-    }
-
     function loadSlideShow() {
         $.ajax({
-            url: "/Client/_ListSlideShowClient",
+            url: "/MediaChurch/GetSlideShowImages",
             type: "GET",
+            data: { medType:"SlideShow"},
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+                if (result === -1) {
+
+                    location.reload();
+                }
                 var html = '';
+                var countimages = 0;
+                var checkdata = 0;
                 $.each(result, function (key, item) {
-                    html += '<a href=" ' + item.mediaURL + ' " target="_blank" class="image-tile "><div class="for-generic  text-white font-16 font-weight-bolder w-100  " id="context-menu-hover-autohideSlideShow"  mediachurchid=" ' + item.churchMediaId + '">' + item.tabName + '</div><div class="border border-dark"><div class="row"> <div class="col-12 text-center mt-3"><img src="../theme/images/PdfImage.png" style="width:100px; " /></div></div> <div class="row mt-2"><div class="col-12 text-center m-2 font-20">' + item.mediaName + ' </div></div></div></a>';
+                    var mediaUrl = item.mediaURL;
+                    var str = item.mediaName;
+                    var count = 0;
+                    var array = str.split('|');
+
+                    html += '<div class="col-lg-6 mb-3"><div class="card"><div class="card-body"><div class="row"><div class="col-sm-12"><div id="demo' + countimages+'" class="carousel slide" data-ride="carousel">';
+                    html += '<ul class="carousel-indicators">';
+                    for (var i = 0; i < array.length; i++) {
+                    if (checkdata == 0) {
+                        html += '<li data-target="#demo' + i + '" data-slide-to="' + i + '" class="active"></li> ';
+                        checkdata ++;
+                    }
+                    else {
+                        html += '<li data-target="#demo' + i + '" data-slide-to="' + i + '" ></li> ';
+                    }
+                    }
+                    html += '</ul ><div class="carousel-inner w-100" style="height: 250px !important">';
+
+                    $.each(array, function (key, item2) {
+
+                        var array2 = item2.split('^');
+
+
+
+                            if (count == 0) {
+
+                                html += '  <div class="carousel-item active"><img src="' + mediaUrl + array2[1] + '"  style="height:250px !important"></div>';
+                                count++;
+                            }
+                            else {
+                                html += '<div class="carousel-item" > <img src="' + mediaUrl + array2[1] + '"  style="height:250px !important"></div>';
+                        }
+
+                                                });
+
+                    html += '</div>';
+
+                    html += '<a class="carousel-control-prev" href="#demo' + countimages+'" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>';
+                    html += '<a class="carousel-control-next" href="#demo' + countimages+'" data-slide="next"><span class="carousel-control-next-icon"></span></a>';
+
+                    html += '</div></div></div>';
+                    html += '<div class="row m-2 border-light"><div class="col-sm-8 border-bottom border-right"><span class="bold p-2">' + item.tabName + '</span></div>';
+                    html += '<div class="col-sm-4 border-bottom"><div class="float-right"><a onclick="SlideImageManagement(' + item.churchMediaId+')" class="btn btn-sm btn-warning p-2 mr-1" title="Image Management"><i class="mdi mdi-window-open text-white"></i></a><a onclick="DeleteSlideShow(' + item.churchMediaId + ')" class="btn btn-sm btn-danger p-2" title="Delete Slide Show"><i class="mdi mdi-delete text-white"></i></a></div></div>';
+                    html +='</div></div></div></div>';
+                    countimages++;
                 });
-                $('.slideShowTab').html(html);
+                $('#SlideShowImages').html(html);
             },
             error: function (errormessage) {
                 //alert(errormessage.responseText);
@@ -76,7 +159,28 @@
         });
     }
 
-    function EditSlideShow(churchMediaId) {
+    function AddSlideShow() {
+
+    $('#AddSlideShowModal').modal('show');
+
+      }
+
+    function SlideImageManagement(churchMediaId) {
+        $.ajax({
+        type: "Get",
+        url: '@Url.Action("SlideShowImages", "MediaChurch")',
+            data: { id: churchMediaId },
+            success: function (data) {
+
+            $('#SlideShowImagesPreview').html(data);
+                $('#SlideShowImagesModel').modal('show');
+        }
+        })
+
+
+    }
+
+     function EditSlideShow(churchMediaId) {
         $.ajax({
         type: "Get",
         url: '@Url.Action("EditSlide", "MediaChurch")',
@@ -86,49 +190,66 @@
             $('#EditSlideShowModal').modal('show');
         }
         })
+
+
     }
 
+
+
+
     function DeleteSlideShow(churchMediaId) {
-    var ans = confirm("Are you sure you want to delete this SlideShow?");
-        if (ans)
-        {
-            $.ajax({
-                url: "/MediaChurch/DeleteSlide/" + churchMediaId,
-                type: "POST",
-                contentType: "application/json;charset=UTF-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result.success) {
-                        loadSlideShow();
-                        $(window).scrollTop(0);
-                        $('#addMediaSuccessMessage').removeAttr('hidden');
-                        $('#addMediaSuccessMessage').html('Slide show  deleted successfully');
-                        $('#addMediaSuccessMessage').fadeIn();
 
-                        $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
-                            $("#addMediaSuccessMessage").slideUp(500);
-                        });
-                        $('#addMediaSuccessMessage').attr('hidden');
-                    }
-                    else {
-                        $(window).scrollTop(0);
-                        $('#addMediaErrorMessage').removeAttr('hidden');
-                        $('#addMediaErrorMessage').html(result.responseText);
-                        $('#addMediaErrorMessage').fadeIn();
 
-                        $('#addMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
-                            $("#addMediaErrorMessage").slideUp(500);
+        swal({
+            title: "Are you sure you want to delete this SlideShow?",
+            text: "Once deleted, you will not be able to recover this file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
 
-                        });
-                        $('#addMediaErrorMessage').attr('hidden');
-                    }
+                    $.ajax({
+                        url: "/MediaChurch/DeleteSlide/" + churchMediaId,
+                        type: "POST",
+                        contentType: "application/json;charset=UTF-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.success) {
+                                loadSlideShow();
+                                $(window).scrollTop(0);
+                                $('#addMediaSuccessMessage').removeAttr('hidden');
+                                $('#addMediaSuccessMessage').html('Slide show deleted successfully');
+                                $('#addMediaSuccessMessage').fadeIn();
 
-              
-                },
-                error: function (errormessage) {
-                // alert(errormessage.responseText);
+                                $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                                    $("#addMediaSuccessMessage").slideUp(500);
+                                });
+                                $('#addMediaSuccessMessage').attr('hidden');
+                            }
+                            else {
+                                $(window).scrollTop(0);
+                                $('#addMediaErrorMessage').removeAttr('hidden');
+                                $('#addMediaErrorMessage').html(result.responseText);
+                                $('#addMediaErrorMessage').fadeIn();
+
+                                $('#addMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                                    $("#addMediaErrorMessage").slideUp(500);
+
+                                });
+                                $('#addMediaErrorMessage').attr('hidden');
+                            }
+
+
+                        },
+                        error: function (errormessage) {
+                            // alert(errormessage.responseText);
+                        }
+                    });
+                } else {
+                    swal("Your file is safe!");
                 }
             });
-        }
     }
 </script>
