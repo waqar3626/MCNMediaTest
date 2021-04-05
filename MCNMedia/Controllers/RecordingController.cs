@@ -66,11 +66,13 @@ namespace MCNMedia_Dev.Controllers
 
         private List<Recording> RecordingList()
         {
-            
-                DateTime FromDate = DateTime.Now.AddDays(-1);
+            int churchId = -1;
+            DateTime FromDate = DateTime.Now.AddDays(-1);
                 DateTime ToDate = DateTime.Now;
-            List<Recording> ListRecording = recordDataAccess.RecordingSearch(FromDate, ToDate, "", -1, "").ToList<Recording>();
-                  return ListRecording;
+            ViewBag.ChurchId = churchId;
+            List<Recording> ListRecording = recordDataAccess.RecordingSearch(FromDate, ToDate, "", churchId, "").ToList<Recording>();
+          
+            return ListRecording;
             
             
         }
@@ -84,7 +86,7 @@ namespace MCNMedia_Dev.Controllers
                 DateTime FromDate = Convert.ToDateTime(fromDate);
                 DateTime ToDate = Convert.ToDateTime(toDate);
 
-                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, "",-1, EventName).ToList<Recording>();
+                gm.LRecordings = recordDataAccess.RecordingSearch(FromDate, ToDate, "", ChurchId, EventName).ToList<Recording>();
                 ViewBag.FromDate = fromDate;
                 ViewBag.ToDate = toDate;
                 ViewBag.ChurchId = ChurchId;
