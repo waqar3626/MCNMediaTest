@@ -83,7 +83,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label class="form-label">Phone</label>
-                            <input type="text" class="form-control" data-inputmask-alias="99999999999999999999" im-insert="true" placeholder="Phone" asp-for="Churches.Phone" required />
+                            <input type="text" class="form-control" placeholder="Phone" asp-for="Churches.Phone" id="validationCustom01" onkeypress="isNumberKey(event)" required/>
                             <div class="invalid-feedback">
                                 Please Provide a valid Phone
                             </div>
@@ -215,6 +215,16 @@
 </form>
 
 <script>
+
+    $("#validationCustom01").keypress(function (e) {
+        //if the letter is not digit then display error and don't type anything
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            //display error message
+
+            return false;
+        }
+    });
+
     var ImageData_Donation = $('#Donation_ImageURl').val();
 
     $('#Donation_ImageURl').change(function () {
