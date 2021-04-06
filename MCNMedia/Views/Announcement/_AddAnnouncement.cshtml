@@ -104,11 +104,11 @@
 
 
         }
-
+        displayBusyIndicator();
         var formData = new FormData();
         formData.append("announceTittle", announcementTitle);
         formData.append("announceText", announcementText);
-
+ 
 
         $.ajax({
             type: "POST",
@@ -123,8 +123,9 @@
 
             success: function (result) {
                 if (result.success) {
-
+                   
                     loadAnnouncement();
+                    displayBusyIndicator2();
                     $('#AddAnnouncementPopUp').modal('hide');
                     $('#addMediaSuccessMessage').removeAttr('hidden');
                     $('#addMediaSuccessMessage').html('Announcement Added Successfully');
@@ -137,7 +138,7 @@
                 }
                 else {
 
-                  
+                    displayBusyIndicator2();
                     $('#addAnnouncementErrorMessage').removeAttr('hidden');
                     $('#addAnnouncementErrorMessage').html(result.responseText);
                     $('#addAnnouncementErrorMessage').fadeIn();

@@ -61,7 +61,7 @@
         editAnnounceText = tinymce.get("tinyMceExample").getContent();
           
         //var editAnnounceText = document.getElementsByName('Announcement_AnnouncementText').value;
-
+        displayBusyIndicator();
         var formData = new FormData();
         formData.append("churchAnnounceId", churchAnnounceId);
         formData.append("editAnnounceTitle", editAnnounceTitle);
@@ -82,6 +82,7 @@
                 if (result.success) {
 
                     loadAnnouncement();
+                    displayBusyIndicator2();
                     $('#EditAnnouncementModal').modal('hide');
                     $('#addMediaSuccessMessage').removeAttr('hidden');
                     $('#addMediaSuccessMessage').html('Announcement Updated Successfully');
@@ -93,7 +94,7 @@
                     $('#addMediaSuccessMessage').attr('hidden');
                 }
                 else {
-
+                    displayBusyIndicator2();
 
                     $('#editAnnouncementErrorMessage').removeAttr('hidden');
                     $('#editAnnouncementErrorMessage').html(result.responseText);

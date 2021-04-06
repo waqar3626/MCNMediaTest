@@ -387,6 +387,7 @@ namespace MCNMedia_Dev.Controllers
         public JsonResult GetSlideShowImages(string medType)
         {
             try
+           
             {
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 List<MediaChurch> slideInfo = mediaChurchDataAccess.SlideShowImaeGetAll(churchId).ToList();
