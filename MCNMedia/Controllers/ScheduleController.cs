@@ -46,6 +46,10 @@ namespace MCNMedia_Dev.Controllers
                 sch.ChurchId = churchId;
                 if (sch.IsRepeated == false)
                 {
+                    if (Convert.ToDateTime(eventDate.ToString("yyyy-MMM-dd")) < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MMM-dd")))
+                    {
+                        throw new Exception("Invalid Date!" + eventDate + "Kindly Provide a valid date");
+                    }
                     sch.EventDate = eventDate;
                     sch.EventDay = sch.EventDate.ToString("dddd");
                 }
@@ -178,6 +182,10 @@ namespace MCNMedia_Dev.Controllers
                 sch.EventTime = Convert.ToDateTime(eventTime);
                 if (sch.IsRepeated == false)
                 {
+                    if (Convert.ToDateTime(eventDate.ToString("yyyy-MMM-dd")) < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MMM-dd")))
+                    {
+                        throw new Exception("Invalid Date!" + eventDate + "Kindly Provide a valid date");
+                    }
                     sch.EventDate = eventDate;
                     sch.EventDay = sch.EventDate.ToString("dddd");
                 }

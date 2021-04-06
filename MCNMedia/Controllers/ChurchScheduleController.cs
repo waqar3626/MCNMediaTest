@@ -44,7 +44,7 @@ namespace MCNMedia_Dev.Controllers
                 sch.EventTime = Convert.ToDateTime(eventTime);
                 if (sch.IsRepeated == false)
                 {
-                    if (eventDate.ToString("yyyy-MMM-dd")== "1900-Jan-01")
+                    if (Convert.ToDateTime(eventDate.ToString("yyyy-MMM-dd")) < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MMM-dd")))
                     {
                         throw new Exception("Invalid Date!" + eventDate + "Kindly Provide a valid date");
                     }
@@ -126,7 +126,7 @@ namespace MCNMedia_Dev.Controllers
                 sch.EventTime = Convert.ToDateTime(eventTime);
                 if (sch.IsRepeated == false)
                 {
-                    if (eventDate.ToString("yyyy-MMM-dd") == "1900-Jan-01")
+                    if (Convert.ToDateTime(eventDate.ToString("yyyy-MMM-dd")) < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MMM-dd")))
                     {
                         throw new Exception("Invalid Date!" + eventDate + "Kindly Provide a valid date");
                     }
