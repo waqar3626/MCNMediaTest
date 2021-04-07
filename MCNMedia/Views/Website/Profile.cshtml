@@ -284,57 +284,63 @@
                                 tabCounter = 0;
                                 activeClassName = "active";
                             }
-                            @if(Model.mediaList != null) { 
-                            @foreach (WebsiteMedia webMedia in Model.mediaList)
+                            @if (Model.mediaList != null)
                             {
-                                if (tabCounter > 0)
+                                @foreach (WebsiteMedia webMedia in Model.mediaList)
                                 {
-                                    activeClassName = "";
-                                }
-                                if (webMedia.MediaType == "AdminCamera" || webMedia.MediaType == "ClientCamera")
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
-                                    </li>
-                                }
-                                else
-                                {
+                                    if (tabCounter > 0)
+                                    {
+                                        activeClassName = "";
+                                    }
+                                    if (webMedia.MediaType == "AdminCamera" || webMedia.MediaType == "ClientCamera")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
 
-                                    <li class="nav-item">
-                                        <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
-                                    </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
+                                        </li>
+                                    }
+                                    tabCounter = tabCounter + 1;
                                 }
-                                tabCounter = tabCounter + 1;
-                            }
                             }
                         </ul>
                     </div>
                 </div>
+                @if (Model.notice != null)
+                {
+                    if (Model.notice.ChurchNoticeId != 0)
+                    {
+                        <div class="text-praaa mt-2 mb-2">
+                            <div class="border bg-white rounded-lg  ">
+                                <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
+                                     style="background-color: #1f4a79;">
+                                    Notices
+                                </div>
+                                <div class="news-wrap mb-2 p-2">
 
-                <div class="text-praaa mt-2 mb-2">
-                    <div class="border bg-white rounded-lg  ">
-                        <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                             style="background-color: #1f4a79;">
-                            Notices
-                        </div>
-                        <div class="news-wrap mb-2 p-2">
-
-                            <div class="font-25 bg-white font-weight-bold ProximaNova">
-                                @Model.notice.NoticeTitle
+                                    <div class="font-25 bg-white font-weight-bold ProximaNova">
+                                        @Model.notice.NoticeTitle
+                                    </div>
+                                    <p class="font-16 mb-2">
+                                        @Html.Raw(Model.notice.NoticeName)
+                                    </p>
+                                </div>
                             </div>
-                            <p class="font-16 mb-2">
-                                @Html.Raw(Model.notice.NoticeName)
-                            </p>
+
                         </div>
-                    </div>
-                    
-                </div>
+                    }
+                }
             </div>
             <div class="col-1 d-xl-block d-none"></div>
         </div>
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
             <div class="col-1 d-xl-block d-none"></div>
-            <div class="col-xl-8 col-lg-9  col-md-11 pl-lg-0 pr-sm-0 col-sm-7">
+            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-7">
                 @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
                     <div class="heding-week pt-2 pb-2 col-md-4 text-white font-20 text-center rounded-lg"
@@ -946,6 +952,8 @@
                         </div>
                     </div>
                 }
+                @if(Model.Announcement != null) {
+                    if(Model.Announcement.ChurchAnnouncementId != 0) { 
             <div class="text-praaa mt-2 mb-2">
                 <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
                     <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
@@ -964,9 +972,11 @@
               
                 
             </div>
+                    }
+                }
             </div>
-            <div class="col-xl-2 col-lg-3 col-md-11 col-sm-12 pr-xl-3 pr-lg-0">
-                @if(Model.newsletter != null) { 
+            <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 ">
+                @if (Model.newsletter != null) {
                 @if (Model.newsletter.ChurchNewsLetterId != 0)
                 {
                     <div class="border bg-white rounded-lg  " >
