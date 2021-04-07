@@ -105,9 +105,9 @@
     <input type="hidden" asp-for="Churches.Slug" id="hfslug" />
     <input type="hidden" value=@ViewData["slugForlockPage"] id="hfslug" />
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
-        <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
+        <div class="row m-0 mb-5 pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
             <div class="col-1 d-xl-block d-none"></div>
-            <div class="MobileContent col-xl-3  p-md-0 p-xl-0">
+            <div class="MobileContent col-xl-3 col-lg-4  p-md-0 p-xl-0">
                 <!-- <div class="row m-0"> -->
                 <div class="col-top-img p-0 ml-xl-2">
                     <div class="ml-xl-4">
@@ -137,7 +137,7 @@
                             Next Scheduled Event
                         </div>
                         <div class="card-body">
-                            <div class=" font-20 text-center">
+                            <div class=" font-18 text-center">
                                 @if (Model.NextScheduleList != null)
                                 {
                                     if (Model.NextScheduleList.Count() > 0)
@@ -190,7 +190,7 @@
                 <!-- </div> -->
                 <div class="clearfix"></div>
             </div>
-            <div class="col-xl-7 col-md-12 p-lg-0">
+            <div class="col-xl-7 col-lg-8 col-md-12 p-lg-0">
                 <div class="card" id="top-card">
                     <div class="tab-content" id="pills-tabContent">
                         @{
@@ -214,6 +214,7 @@
                                         {
                                             <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <i class="fal fa-play-circle text-white vide-play-in"></i>
+                                              
                                                 <video id='CameraLiveStream-@tabCounter' controls class='video-js vjs-default-skin vjs-16-9' style="width:100%;">
                                                     <source id="LiveStreamSrc-@tabCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
                                                 </video>
@@ -340,7 +341,7 @@
         </div>
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
             <div class="col-1 d-xl-block d-none"></div>
-            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-7">
+            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3">
                 @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
                     <div class="heding-week pt-2 pb-2 col-md-4 text-white font-20 text-center rounded-lg"
@@ -437,7 +438,7 @@
                                                 else
                                                 {
                                                     <tr>
-                                                        <td scope="row" class="row col-md-12 font-weight-normal text-purple">
+                                                        <td scope="row" class="font-weight-normal text-purple">
                                                             There is currently nothing scheduled for today.
                                                         </td>
                                                     </tr>
@@ -528,7 +529,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td scope="row" class="row col-md-12 font-weight-normal text-purple">
+                                                    <td scope="row" class="font-weight-normal text-purple">
                                                         There is currently nothing scheduled for this day.
                                                     </td>
                                                 </tr>
