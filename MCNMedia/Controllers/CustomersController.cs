@@ -21,6 +21,7 @@ namespace MCNMedia_Dev.Controllers
         NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
         ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
         Profile profileModel = new Profile();
+  
         public IActionResult Index()
         {
             return View();
@@ -28,23 +29,26 @@ namespace MCNMedia_Dev.Controllers
 
 
     
-        public IActionResult RecordingsList()
-        {
-            int id = (int)HttpContext.Session.GetInt32("churchId");
-            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(id);
-
-            return View(profileModel);
-        }
+    
 
 
-      
-        public JsonResult ListSchedule()
+        public JsonResult ListSchedule(string id)
         {
             try
             {
-                int churchId = (int)HttpContext.Session.GetInt32("churchId");
-                List<Schedule> ChurchSchedule = scheduleDataAccess.GetScheduleByChurch(churchId).ToList();
-                return Json(ChurchSchedule);
+                
+                    string ChurchUniqeIdentity = "";
+                    if (id != null)
+                    {
+
+
+                        ChurchUniqeIdentity = id;
+                    }
+
+                    Church church = churchDataAccess.GetChurchByUniqueIdentifier(ChurchUniqeIdentity);
+                    List<Schedule> ChurchSchedule = scheduleDataAccess.GetScheduleByChurch(church.ChurchId).ToList();
+                    return Json(ChurchSchedule);
+                
             }
             catch (Exception e)
             {
@@ -54,12 +58,7 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
-        public IActionResult SchedulesList()
-        {
-            int id = (int)HttpContext.Session.GetInt32("churchId");
-           
-            return View(profileModel);
-        }
+
         [Route("/iframe/{id?}")]
         public IActionResult CameraLiveStream(string? id)
         {
@@ -69,10 +68,11 @@ namespace MCNMedia_Dev.Controllers
                 
                 ChurchUniqeIdentity = id;
             }
-           
+            TempData["ChurchIdentifier"] = ChurchUniqeIdentity;
             Church church = churchDataAccess.GetChurchByUniqueIdentifier(ChurchUniqeIdentity);
+
            
-          
+            
             int churchPass = Convert.ToInt32(TempData["ProfileModel"]);
             if (church.Password == HttpContext.Session.GetString("Password"))
             {
@@ -88,7 +88,7 @@ namespace MCNMedia_Dev.Controllers
                     }
                     else
                     {
-                        TempData["ChurchIdentifier"] = ChurchUniqeIdentity;
+                      
                         TempData["Password"] = church.Password;
                   
                         return RedirectToAction(nameof(CustomerChurchLock));
@@ -101,12 +101,14 @@ namespace MCNMedia_Dev.Controllers
                 }
             }
 
-                int churchId = church.ChurchId;
-                HttpContext.Session.SetInt32("churchId", churchId);
-                profileModel.CameraList = camDataAccess.GetAllCamerasByChurch(churchId);
-            profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
-            profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
-            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
+               
+                 
+          
+                profileModel.CameraList = camDataAccess.GetAllCamerasByChurch(church.ChurchId);
+            profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", church.ChurchId).ToList();
+            profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", church.ChurchId).ToList();
+            profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(church.ChurchId);
+         
             return View("CustomerView",profileModel);
             
 
@@ -124,11 +126,11 @@ namespace MCNMedia_Dev.Controllers
             {
                
                
-                String pass = TempData["Password"].ToString();
+                string pass = TempData["Password"].ToString();
                 if (churchLock.Password == pass)
                 {
                     TempData["ProfileModel"] = 1;
-                    HttpContext.Session.SetString("Password", pass);
+                  
                     return RedirectToAction(nameof(CameraLiveStream),new {id = TempData["ChurchIdentifier"].ToString() });
                 }
                 else

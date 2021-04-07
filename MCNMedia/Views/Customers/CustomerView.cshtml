@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Customer Data";
     Layout = "";
+    TempData.Keep("Password");
+    TempData.Keep("ChurchIdentifier");
+
 }
 <html>
 <head>
@@ -242,6 +245,7 @@
                         <div class="tab-pane fade" id="Schedules" role="tabpanel" aria-labelledby="Schedules-tab">
                             <div class="row">
                                 <div class="col-md-12">
+                                   <input type="hidden" value="@TempData["ChurchIdentifier"]" id="churchIdForCustomerView"/>
 
 
                                     <script src="~/theme/js/modal-demo.js"></script>
@@ -313,9 +317,10 @@
                                         });
 
                                         function loadChurchSch() {
-
+                                            var ChurchSlug = $('#churchIdForCustomerView').val();
+                                        
                                             $.ajax({
-                                                url: "/Customers/ListSchedule",
+                                                url: "/Customers/ListSchedule/" + ChurchSlug,
                                                 type: "GET",
                                                 contentType: "application/json;charset=utf-8",
                                                 dataType: "json",
