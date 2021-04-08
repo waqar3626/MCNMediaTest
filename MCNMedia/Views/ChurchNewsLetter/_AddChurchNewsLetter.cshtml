@@ -67,7 +67,7 @@
 
         var ss = '';
         var newsletterTitle = document.getElementById('newsletterTitle').value;
-        var showOnWebsite = document.getElementById('showOnWebsite').value;
+        var showOnWebsite = document.getElementById('showOnWebsite').checked;
         var formData = new FormData();
         formData.append("AddChurchNewsLetterTitle", newsletterTitle);
         formData.append("ShowOnWebsite", showOnWebsite);
