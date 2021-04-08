@@ -86,7 +86,7 @@ a.nav-link.active i {
 /*********************************************************************/
 /*Title Bar Section of Form on each page*/
 .card-header-custom {
-    padding: 0.75rem 1.25rem;
+    padding: 1.25rem 1.25rem 1.0rem;
     margin-bottom: 0;
     background-color: #1f4a79;
     border-bottom: 1px solid white;
