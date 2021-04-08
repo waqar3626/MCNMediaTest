@@ -197,13 +197,27 @@ else
 
             success: function (response) {
                 if (response.success) {
-                    swal("Camera Status Changed Successfully!", {
-                        icon: "success",
+                    $(window).scrollTop(0);
+                    $('#addMediaSuccessMessage').removeAttr('hidden');
+                    $('#addMediaSuccessMessage').html('Camera Status Changed successfully');
+                
 
-                    })
+                    $('#addMediaSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMediaSuccessMessage").slideUp(500);
+                    });
+                    $('#addMediaSuccessMessage').attr('hidden');
                 } else {
-                    // DoSomethingElse()
-                    alert(response.responseText);
+                   
+                    $(window).scrollTop(0);
+                    $('#addMediaErrorMessage').removeAttr('hidden');
+                    $('#addMediaErrorMessage').html(response.responseText);
+                 
+
+                    $('#addMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMediaErrorMessage").slideUp(500);
+
+                    });
+                    $('#addMediaErrorMessage').attr('hidden');
                 }
             },
             error: function (errormessage) {
