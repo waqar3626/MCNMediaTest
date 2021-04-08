@@ -317,19 +317,20 @@
     <div class="col-md-6 grid-margin">
 
         <div class="card">
-            
+
             <div class="card-header text-white" style="background-color:#1f4a79">
                 <form>
 
                     ANALYTICS
 
                     <div class="col-sm-2 pull-right">
-                        <button type="submit" asp-action="DashBoardClient" asp-controller="DashBoardClient" class="btn btn-primary btn text-white" title="Search">Go</button>
+                        @*<button type="submit" asp-action="DashBoardClient" asp-controller="DashBoardClient" class="btn btn-primary btn text-white" title="Search">Go</button>*@
+                        <a id="BtnSearchAnalytics" class="btn btn-primary btn text-white" title="Search">Go</a>
                     </div>
 
                     <div class="col-sm-6 pull-right">
                         <div id="datepicker" class="input-group date datepicker">
-                            <input type="text" id="SetEventDate" name="eventDate" class="form-control" placeholder="Event Date" />
+                            <input type="text" id="SetAnalyticsDate" name="eventDate" class="form-control" placeholder="Event Date" />
                             <span class="input-group-addon input-group-append border-left">
                                 <span class="ti-calendar input-group-text"></span>
                             </span>
@@ -337,7 +338,7 @@
                     </div>
                 </form>
             </div>
-            
+
             <div class="card-body">
 
                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
@@ -350,35 +351,12 @@
                             </tr>
                         </thead>
 
-                        <tbody>
-                            @foreach (var dassh in Model.googleAnalytics)
-                            {
-                                <tr>
-                                    <td class=" pl-0">
-                                        @Html.DisplayFor(modelItem => dassh.CountryName)
-                                    </td>
-                                    @*<td class=" pl-0">
-                                        @Html.DisplayFor(modelItem => dassh.PageTitle)
-                                    </td>*@
-                                    <td>
-                                        <p class="mb-0">
-                                            <span class="">
-                                                @if (dassh.Count > 0)
-                                                {
-                                                    @Html.DisplayFor(modelItem => dassh.Count)
-                                                }
-
-                                            </span>
-                                        </p>
-                                    </td>
-
-                                </tr>
-                            }
+                        <tbody id="tableData">
                         </tbody>
                     </table>
                     <div class="container-fluid mt-5 w-100">
 
-                        <h4 class="text-right mb-5">Grand Total : @ViewBag.TotalCountriesCount </h4>
+                        <h4 class="text-right mb-5">Grand Total : <span id="TotalCount"></span> </h4>
                         <hr>
                     </div>
                 </div>
@@ -386,6 +364,20 @@
         </div>
     </div>
     <script>
+        $(document).ready(function () {
+        var date = '@ViewBag.SchDate';
+
+            $('#SetAnalyticsDate').val(date);
+            GetAnalytics();
+        var count = '@Model.LCameras.Count()';
+        var i;
+        for ( i= 1; i <= count; i++){
+            var player = videojs('CameraLiveStream_'+i);
+            player.autoplay(false);
+
+    }
+
+    });
     $('#UserAdminBtn').click(
         function () {
 
@@ -399,10 +391,7 @@
     }
     );
 
-    </script>
 
-
-    <script type="text/javascript">
     function ChangeCameraStatus(camId) {
         var cameraStatus = false;
         var cameraID = camId;
@@ -424,6 +413,7 @@
             success: function (response) {
                 if (response.success) {
                     $("body").scrollTop(0);
+                    $(window).scrollTop(0);
                     $('#addDashBoardSuccessMessage').removeAttr('hidden');
                     $('#addDashBoardSuccessMessage').html('Camera Status Changed Successfully!');
                     $('#addDashBoardSuccessMessage').fadeIn();
@@ -434,6 +424,7 @@
                     $('#addDashBoardErrorMessage').attr('hidden');
                 } else {
                     $("body").scrollTop(0);
+                    $(window).scrollTop(0);
                     $('#addDashBoardErrorMessage').removeAttr('hidden');
                     $('#addDashBoardErrorMessage').html(result.responseText);
                     $('#addDashBoardErrorMessage').fadeIn();
@@ -443,25 +434,58 @@
                         $('#addDashBoardErrorMessage').attr('hidden');
                     });
                     $('#addDashBoardErrorMessages').attr('hidden');
-                   
+
                 }
             },
             error: function (errormessage) {
-                alert(errormessage.responseText);
+                //alert(errormessage.responseText);
             }
         });
     }
 
-    $(document).ready(function () {
-        var date = '@ViewBag.SchDate';
-        $('#SetEventDate').val(date);
 
-        var count = '@Model.LCameras.Count()';
-        var i;
-        for ( i= 1; i <= count; i++){
-            var player = videojs('CameraLiveStream_'+i);
-        player.autoplay(false);
-    }
 
-    });
+
+        function GetAnalytics() {
+            displayBusyIndicator();
+            var analyticDate = document.getElementById('SetAnalyticsDate').value;
+
+            $.ajax({
+                url: "/Church/Analytics",
+                type: "GET",
+                data: { analyticDate: analyticDate },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    var html = '';
+                    var Total = 0;
+
+                    $.each(result, function (key, item) {
+
+                        html += '<tr>';
+                        html += '<td>' + item.countryName + '</td>';
+
+                        html += '<td>' + item.count + '</td>'
+                        Total += item.count;
+
+
+
+
+                        html += '</td ></tr>';
+                    });
+
+                    $('#tableData').html(html);
+                    $('#TotalCount').html(Total);
+                    displayBusyIndicator2();
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        $('#BtnSearchAnalytics').click(function () {
+            GetAnalytics();
+        });
     </script>
