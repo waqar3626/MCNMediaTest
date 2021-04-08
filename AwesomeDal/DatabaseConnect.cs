@@ -793,8 +793,7 @@
         /// </returns>
         internal DataSet Connect(string storedProcedureName)
         {
-            try
-            {
+            
                 if (MaliciousTagsFound)
                     return null;
 
@@ -836,12 +835,7 @@
 
                 ds = ds.DeNull(true);
                 return ds;
-            }
-            catch (Exception)
-            {
-                Refresh();
-                throw;
-            }
+            
         }
 
         /// <summary>
