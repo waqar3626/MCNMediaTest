@@ -114,7 +114,6 @@
             $('#alertDiv33').hide();
         }
   
-        $('#AddSlideShowModal').modal('hide');
         displayBusyIndicator();
         $.ajax({
             type: "POST",
@@ -141,7 +140,7 @@
                 }
                 else {
                     displayBusyIndicator2();
-                    $('#AddSlideShowModal').modal('show');
+                  
                     $('#addSlideshowErrorMessage').removeAttr('hidden');
                     $(window).scrollTop(0);
                     $('#addSlideshowErrorMessage').html(result.responseText);
