@@ -26,6 +26,13 @@
         <div class="col">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row p-3" id="alertDiv61">
+                    <div class="col-md-12">
+                        <div class="alertNew alert-dangerNew" id="alertLabel62">
+
+                        </div>
+                    </div>
+                </div>
                 <input type="hidden" asp-for="Notices.ChurchNoticeId" id="chNoticeId" />
                 <div class="form-group">
                     <label asp-for="Notices.NoticeTitle" class="control-label">Title</label>
@@ -51,6 +58,12 @@
 
 
     <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $('#alertDiv61').hide();
+        });
+
 
         $(document).ready(function () {
             $('#editNoticeErrorMessage').hide();
@@ -60,14 +73,46 @@
         function UpdateNotice() {
 
             var churchNoticeId = $('#chNoticeId').val();
+            var noticeTitle = document.getElementById('editnoticeTitle').value; 
+            var noticeName = $("#summernoteExample").summernote('code');
+            var s = "";
+         
+            if (noticeTitle == '' && noticeName == '<p><br></p>') {
+                $('#editnoticeTitle').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Notice Title </label></br>'
+                $('#summernoteExample').attr('class', 'border-danger');
+                s += '<label>Please Provide a Valid Notice </label></br>';
+                $('#alertLabel62').html(s);
+                $('#alertDiv61').show();
+                return;
+                $('#EditNoticeModal').modal('show');
+
+
+            }
+            else if (noticeName == '<p><br></p>' && noticeTitle != '') {
+                $('#summernoteExample').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Notice</label></br>';
+                $('#alertLabel62').html(s);
+                $('#alertDiv61').show();
+                return;
+                $('#EditNoticeModal').modal('show');
+
+
+            }
+            else if (noticeName != '<p><br></p>' && noticeTitle == '') {
+                $('#editnoticeTitle').attr('class', 'form-control border-danger');
+                s += '<label>Please Provide a Valid Notice Title </label></br>'
+                $('#alertLabel62').html(s);
+                $('#alertDiv61').show();
+                return;
+                $('#EditNoticeModal').modal('show');
+
+
+            }
+
             var formData = new FormData();
-            var noticeTitle = document.getElementById('editnoticeTitle').value;
             formData.append("ChurchNoticeId", churchNoticeId);
             formData.append("NoticeTitle", noticeTitle);
-            var noticeName = $("#summernoteExample").summernote('code');
-
-
-
             formData.append("NoticeName", noticeName);
 
             $.ajax({

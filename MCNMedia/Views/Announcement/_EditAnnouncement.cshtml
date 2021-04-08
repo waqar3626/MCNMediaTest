@@ -23,6 +23,13 @@
     <div class="col">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row p-3" id="alertDiv71">
+                <div class="col-md-12">
+                    <div class="alertNew alert-dangerNew" role="alert" id="alertLabel72">
+
+                    </div>
+                </div>
+            </div>
             <input type="hidden" asp-for="Announcement.ChurchAnnouncementId" id="chAnnoId" />
 
             <div class="form-group">
@@ -50,6 +57,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#alertDiv71').hide();
+    });
+
+    $(document).ready(function () {
 
         $('#editAnnouncementErrorMessage').hide();
             });
@@ -57,17 +68,49 @@
 
         var churchAnnounceId = $('#chAnnoId').val();
         var editAnnounceTitle = $('#editAnnouncementTitle').val();
+        var editAnnounceText = tinymce.get("tinyMceExample").getContent(); 
+      
+        var s = "";
+ 
+        if (editAnnounceTitle == '' && editAnnounceText == '') {
+            $('#editAnnouncementTitle').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Announcement Title </label></br>'
+            $('#tinyMceExample').attr('class', 'border-danger');
+            s += '<label>Please Provide a Valid Announcement</label></br>';
+            $('#alertLabel72').html(s);
+            $('#alertDiv71').show();
+            return;
+            $('#EditAnnouncementModal').modal('show');
 
-        editAnnounceText = tinymce.get("tinyMceExample").getContent();
-          
-        //var editAnnounceText = document.getElementsByName('Announcement_AnnouncementText').value;
+
+        }
+        else if (editAnnounceText == '' && editAnnounceTitle != '') {
+            $('#tinyMceExample').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Announcement</label></br>';
+            $('#alertLabel72').html(s);
+            $('#alertDiv71').show();
+            return;
+            $('#EditAnnouncementModal').modal('show');
+
+
+        }
+        
+        else if (editAnnounceText != '' && editAnnounceTitle == '') {
+            $('editAnnouncementTitle').attr('class', 'form-control border-danger');
+            s += '<label>Please Provide a Valid Announcement Title </label></br>'
+            $('#alertLabel72').html(s);
+            $('#alertDiv71').show();
+            return;
+            $('#EditAnnouncementModal').modal('show');
+
+
+        }
+       
         displayBusyIndicator();
         var formData = new FormData();
         formData.append("churchAnnounceId", churchAnnounceId);
         formData.append("editAnnounceTitle", editAnnounceTitle);
         formData.append("editAnnounceText", editAnnounceText);
-
-        //var TabName11 = $('#MediaChurchs_TabName').val();
 
         $.ajax({
             type: "POST",
