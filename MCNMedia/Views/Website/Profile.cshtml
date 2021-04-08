@@ -248,7 +248,7 @@
                                         }
                                         else
                                         {
-                                            <div class="tab-pane fade " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <div class="embed-responsive embed-responsive-16by9 cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center  show active" id="LiveStreamSrc-@tabCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
                                                     
                                                             <p class="text-white font-26 ">
@@ -277,7 +277,7 @@
                                     }
                                     else if (webMedia.MediaType == "Video")
                                     {
-                                        <div class="tab-pane fade   show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter" >
+                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter" >
                                             <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded " >
                                                 <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"   ></div>
                           
@@ -329,6 +329,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
                                         </li>
+                                        camTabCounter++;
                                     }
                                     else
                                     {
@@ -1136,6 +1137,7 @@
  
     window.onresize=myFunction;
     function OpenCamera(camId) {
+     
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
         player.autoplay(false);
@@ -1196,7 +1198,7 @@
             var divid = vedioSlides.item(i).id;
             var divurl = vedioSlides.item(i).getAttribute('mediaurl');
             
-            OpenVedio(divid, divurl);
+            OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'));
             
 
         }
@@ -1210,18 +1212,21 @@
 
     function myFunction() {
 
-    if ($(window).width() <= 480) {
+        if ($(window).width() <= 480) {
+         
         $('.jwplayer').attr("style", "height:184.5px !important");
         $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
        
     }       
-    else if ($(window).width() > 480 && $(window).width() <= 800) {
+        else if ($(window).width() > 480 && $(window).width() <= 800) {
+           
         $('.jwplayer').attr("style", "height:414px !important");
         $('.embed-responsive-16by9').attr("style", "height:414px !important");
 
       
     }
-    else if ($(window).width() >800 && $(window).width() <= 1030) {
+        else if ($(window).width() > 800 && $(window).width() <= 1030) {
+           
         $('.jwplayer').attr("style", "height:370.867px !important");
         $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
       
@@ -1340,7 +1345,7 @@
       
         myFunction();
         LoadRecordingList();
-
+       
 
     }
     currentTime();
