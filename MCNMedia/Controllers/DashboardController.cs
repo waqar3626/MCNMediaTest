@@ -40,10 +40,7 @@ namespace MCNMedia_Dev.Controllers
                 gm.Dashboards = dashboardData.GetDashboardInfo();
                 gm.ListDashboards2 = dashboardData.GetDashboardCountry_Churches();
                 gm.LDashBoardClients = clientdashboardData.GetDashboardClientInfo(-1);
-                gm.AnalyticsList = churchDataAccess.GetAllChurchForAnalytics(eventDate, eventDate);
-                GoogleAnalytics googleantics = new GoogleAnalytics(environment);
-                gm.googleAnalytics = googleantics.GoogleAnalytics_GetAll(eventDate);
-                ViewBag.TotalCountriesCount = gm.googleAnalytics.Sum(item => item.Count);
+               
               
                 return View(gm);
             }
@@ -52,9 +49,46 @@ namespace MCNMedia_Dev.Controllers
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gm);
             }
+
+
+            
             
         }
 
-        
+        [HttpGet]
+        public JsonResult GoogleAnalyticsDashboard(DateTime eventDate)
+        {
+            GenericModel gm = new GenericModel();
+            try
+            {
+                if (eventDate == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
+                {
+                    ViewBag.SchDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                    eventDate = DateTime.Now;
+                }
+                else
+                {
+                    ViewBag.SchDate = eventDate.ToString("dd-MMM-yyyy");
+                }
+
+                
+                gm.AnalyticsList = churchDataAccess.GetAllChurchForAnalytics(eventDate, eventDate);
+                GoogleAnalytics googleantics = new GoogleAnalytics(environment);
+                gm.googleAnalytics = googleantics.GoogleAnalytics_GetAll(eventDate);
+                
+
+                return Json(gm.googleAnalytics);
+            }
+            catch (Exception exp)
+            {
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return Json(new { success = false, responseText = exp.Message });
+            }
+
+
+
+
+        }
+
     }
 }
