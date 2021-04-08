@@ -426,9 +426,9 @@
 
     $('#googleAnalyticsBtn').click(
         function () {
-            displayBusyIndicator();
+            
             GoogleAnalyticsClick();
-            displayBusyIndicator2();
+            
 
         }
     );
@@ -437,7 +437,7 @@
 
 
     function GoogleAnalyticsClick() {
-    
+        displayBusyIndicator();
         var eventDate = $('#SetEventDate').val();
        
         $.ajax({
@@ -468,7 +468,7 @@
                 $('#tableData').html(html);
                 $('#TotalCount').html(Total);
 
-                
+                displayBusyIndicator2();
             },
             error: function (errormessage) {
                // alert(errormessage.responseText);
