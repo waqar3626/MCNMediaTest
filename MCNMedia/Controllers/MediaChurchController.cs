@@ -330,6 +330,7 @@ namespace MCNMedia_Dev.Controllers
 
                 var UploadedFiles = HttpContext.Request.Form.Files;
 
+                if (UploadedFiles.Count != 0) { 
                 foreach (var file in UploadedFiles)
                 {
                     string Extension = Path.GetExtension(file.FileName);
@@ -344,7 +345,10 @@ namespace MCNMedia_Dev.Controllers
                     }
 
                 }
-
+                }else
+                {
+                    throw new Exception("Please select atleast one Image only in Format [.jpg , .jpeg , .png , .bmp]");
+                }
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return Json(-1);
