@@ -120,7 +120,7 @@
                     if (result.success) {
                         loadNotice();
 
-                        $('#EditCameraForm')[0].reset();
+                        displayBusyIndicator2();
                         $('#AddNoticeModal').modal('hide');
                         $('#addMediaSuccessMessage').removeAttr('hidden');
                         $('#addMediaSuccessMessage').html('Notice added successfully');
