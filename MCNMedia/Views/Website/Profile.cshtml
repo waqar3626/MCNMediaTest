@@ -7,6 +7,9 @@
 @{
     TempData.Keep("SlugToProfile");
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <style>
     .display-none {
@@ -19,12 +22,13 @@
 
     @@media (max-width: 480px) {
 
-        
+
         .jw-player {
             height: 184.5px !important;
         }
     }
-    @@media  (min-width: 481px) {
+
+    @@media (min-width: 481px) {
 
 
 
@@ -41,7 +45,6 @@
             height: 518px !important;
         }
     }
-
 </style>
 
 
@@ -240,7 +243,7 @@
                                         {
                                             <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <i class="fal fa-play-circle text-white vide-play-in"></i>
-                                              
+
                                                 <video id='CameraLiveStream-@tabCounter' controls class='video-js vjs-default-skin vjs-16-9 embed-responsive-item'>
                                                     <source id="LiveStreamSrc-@tabCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
                                                 </video>
@@ -250,15 +253,15 @@
                                         {
                                             <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <div class="embed-responsive embed-responsive-16by9 cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center  show active" id="LiveStreamSrc-@tabCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
-                                                    
-                                                            <p class="text-white font-26 ">
 
-                                                                Our camera is switched off at the moment.
-                                                                <br />
-                                                                Please come back when there is a service scheduled
-                                                            </p>
-                                                      
-                                                    
+                                                    <p class="text-white font-26 ">
+
+                                                        Our camera is switched off at the moment.
+                                                        <br />
+                                                        Please come back when there is a service scheduled
+                                                    </p>
+
+
                                                 </div>
                                             </div>
                                         }
@@ -275,12 +278,70 @@
                                             </div>
                                         </div>
                                     }
+                                    else if (webMedia.MediaType == "SlideShow")
+                                    {
+
+                                        var slideShowImages = Model.MediaChurchList.FindAll(m => m.ChurchMediaId == webMedia.MediaId).ToList();
+                                        var countimages = 0;
+                                        var checkdata = 0;
+                                        var countSliders = 0;
+
+                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            
+                                            <div id="demoslideshow-@webMedia.MediaId" class="carousel slide" data-ride="carousel">
+
+
+
+                                                <ul class="carousel-indicators">
+                                                    @for (var i = 0; i < slideShowImages.Count; i++)
+                                                    {
+                                                        @if (checkdata == 0)
+                                                        {
+                                                            <li data-target="#demoslideshow-@webMedia.MediaId" data-slide-to="@i" class="active"></li>
+                                                            checkdata++;
+                                                        }
+                                                        else
+                                                        {
+                                                            <li data-target="#demoslideshow-@webMedia.MediaId" data-slide-to="@i"></li>
+
+                                                        }
+                                                    }
+                                                </ul>
+                                                <div class="carousel-inner">
+                                                    @for (var i = 0; i < slideShowImages.Count; i++)
+                                                    {
+                                                        @if (countimages == 0)
+                                                        {
+                                                            <div class="carousel-item active slideshowcarousel">
+                                                                <img src="@slideShowImages[i].MediaURL" style="width:100%; height:100%" class="d-block " alt="...">
+                                                            </div>
+                                                            countimages++;
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="carousel-item slideshowcarousel">
+                                                                <img src="@slideShowImages[i].MediaURL" style="width:100%; height:100%" class="d-block " alt="...">
+                                                            </div>
+
+                                                        }
+                                                    }
+
+                                                </div>
+
+
+                                               
+                                                    <a class="carousel-control-prev" href="#demoslideshow-@webMedia.MediaId" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>
+                                                    <a class="carousel-control-next" href="#demoslideshow-@webMedia.MediaId" data-slide="next"><span class="carousel-control-next-icon"></span></a>
+
+                                                </div>
+                                        </div>
+                                    }
                                     else if (webMedia.MediaType == "Video")
                                     {
-                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter" >
-                                            <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded " >
-                                                <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"   ></div>
-                          
+                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
+                                                <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
+
                                             </div>
                                         </div>
                                     }
@@ -985,65 +1046,71 @@
                         </div>
                     </div>
                 }
-                @if(Model.Announcement != null) {
-                    if(Model.Announcement.ChurchAnnouncementId != 0) { 
-            <div class="text-praaa mt-2 mb-2">
-                <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
-                    <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                         style="background-color: #1f4a79;">
-                        Announcements
-                    </div>
-                    <div class="news-wrap mb-2 p-2">
+                @if (Model.Announcement != null)
+                {
+                    if (Model.Announcement.ChurchAnnouncementId != 0)
+                    {
+                        <div class="text-praaa mt-2 mb-2">
+                            <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
+                                <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
+                                     style="background-color: #1f4a79;">
+                                    Announcements
+                                </div>
+                                <div class="news-wrap mb-2 p-2">
 
-                        <div class="font-25  bg-white font-weight-bold ProximaNova">
-                            @Model.Announcement.AnnouncementTitle
+                                    <div class="font-25  bg-white font-weight-bold ProximaNova">
+                                        @Model.Announcement.AnnouncementTitle
+                                    </div>
+                                    <p class="font-16 mb-2">
+                                        @Html.Raw(Model.Announcement.AnnouncementText)
+                                    </p>
+                                </div>
+                            </div>
+
+
                         </div>
-                        <p class="font-16 mb-2">
-                            @Html.Raw(Model.Announcement.AnnouncementText)
-                        </p> </div>
-                </div>
-              
-                
-            </div>
                     }
                 }
             </div>
             <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 ">
-                @if (Model.newsletter != null) {
-                @if (Model.newsletter.ChurchNewsLetterId != 0)
+                @if (Model.newsletter != null)
                 {
-                    <div class="border bg-white rounded-lg  " >
-                        <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                             style="background-color: #1f4a79;">
-                            NEWSLETTER
-                        </div>
-                        <div class="news-wrap mb-3 p-4">
+                    @if (Model.newsletter.ChurchNewsLetterId != 0)
+                    {
 
-                            <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
-                            <p class="font-weight-light mb-2 font-12">
-                                <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
-                            </p>
-                            <p class="font-14 mb-0 "></p>
-                            <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
-                        </div>
-                    </div>
-                }
-                }
-                @if (Model.churchDonation != null) { 
-                @if (Model.churchDonation.ShowOnWebsite)
-                {
-                    <div class="col-sm-12  news pr-0 pl-0 mt-2" >
-                        <div class="form-group row news">
-                            <div class="col-sm-12">
-                                <div class="max-width-100 max-height-100 ">
-                                    <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100  rounded-top" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
-                                    <a href="@Model.churchDonation.WebSiteUrl" class="btn btn-info rounded-bottom w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
-                                </div>
+                        <div class="border bg-white rounded-lg  ">
+                            <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
+                                 style="background-color: #1f4a79;">
+                                NEWSLETTER
+                            </div>
+                            <div class="news-wrap mb-3 p-4">
 
+                                <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
+                                <p class="font-weight-light mb-2 font-12">
+                                    <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
+                                </p>
+                                <p class="font-14 mb-0 "></p>
+                                <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
+                @if (Model.churchDonation != null)
+                {
+                    @if (Model.churchDonation.ShowOnWebsite)
+                    {
+                        <div class="col-sm-12  news pr-0 pl-0 mt-2">
+                            <div class="form-group row news">
+                                <div class="col-sm-12">
+                                    <div class="max-width-100 max-height-100 ">
+                                        <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100  rounded-top" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
+                                        <a href="@Model.churchDonation.WebSiteUrl" class="btn btn-info rounded-bottom w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
                 }
             </div>
             <div class="col-1 d-xl-block d-none"></div>
@@ -1115,7 +1182,7 @@
                             <div class=" font-32  pb-4 bg-white text-pink">
                             </div>
                             <div class="border bg-white pb-4 rounded-lg pt-4 row m-0 RecList">
-                           
+
                             </div>
                         </div>
                     </div>
@@ -1134,10 +1201,10 @@
 <script src="~/theme/js/owl-carousel.js"></script>
 <script src="~/js/jwplayer.js"></script>
 <script type="text/javascript">
- 
-    window.onresize=myFunction;
+
+    window.onresize = myFunction;
     function OpenCamera(camId) {
-     
+
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
         player.autoplay(false);
@@ -1163,10 +1230,10 @@
         jwplayer('' + vedId + '').setup({
             file: fileURL,
             width: "100%",
-    
+
             aspectratio: "16:9",
             autostart: 'false',
-        
+
         });
         jwplayer().onError(function () {
             jwplayer().play();
@@ -1174,7 +1241,7 @@
     }
 
     $(document).ready(function ($) {
-               $('#owl-carousel-video').owlCarousel({
+        $('#owl-carousel-video').owlCarousel({
             items: 1,
             merge: true,
             loop: true,
@@ -1191,20 +1258,20 @@
                 }
             }
         });
-     
+
         var vedioSlides = document.getElementsByClassName("vedslide");
         for (var i = 0; i < vedioSlides.length; i++) {
             // Distribute(slides.item(i));
             var divid = vedioSlides.item(i).id;
             var divurl = vedioSlides.item(i).getAttribute('mediaurl');
-            
+
             OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'));
-            
+
 
         }
-       
+
         OpenCamera('CameraLiveStream-0');
-       
+
         LoadRecordingList();
 
 
@@ -1213,29 +1280,30 @@
     function myFunction() {
 
         if ($(window).width() <= 480) {
-         
-        $('.jwplayer').attr("style", "height:184.5px !important");
-        $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
-       
-    }       
-        else if ($(window).width() > 480 && $(window).width() <= 800) {
-           
-        $('.jwplayer').attr("style", "height:414px !important");
-        $('.embed-responsive-16by9').attr("style", "height:414px !important");
 
-      
-    }
+            $('.jwplayer').attr("style", "height:184.5px !important");
+            $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
+            $('.slideshowcarousel').attr("style", "height:184.5px !important");
+            
+        }
+        else if ($(window).width() > 480 && $(window).width() <= 800) {
+
+            $('.jwplayer').attr("style", "height:414px !important");
+            $('.embed-responsive-16by9').attr("style", "height:414px !important");
+            $('.slideshowcarousel').attr("style", "height:414px !important");
+
+        }
         else if ($(window).width() > 800 && $(window).width() <= 1030) {
-           
-        $('.jwplayer').attr("style", "height:370.867px !important");
-        $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
-      
-    }
-    else {
-        $('.jwplayer').attr("style", "height:518px !important");
-        $('.embed-responsive-16by9').attr("style", "height:518px !important");
-        
-    }
+
+            $('.jwplayer').attr("style", "height:370.867px !important");
+            $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
+            $('.slideshowcarousel').attr("style", "height:370.867px !important");
+        }
+        else {
+            $('.jwplayer').attr("style", "height:518px !important");
+            $('.embed-responsive-16by9').attr("style", "height:518px !important");
+            $('.slideshowcarousel').attr("style", "height:518px !important");
+        }
     }
 
     function currentTime() {
@@ -1297,26 +1365,26 @@
             data: { EventName: EventName, FromDate: FromDate, ToDate: ToDate, Slug: Slug },
             dataType: "json",
             success: function (result) {
-             
-                    var html = '';
 
-                    $.each(result, function (key, item) {
+                var html = '';
 
-                        html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
-                        html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
-                        var now = new Date(item.date);
-                        var Datestring = moment(now).format('DD MMM YYYY');
+                $.each(result, function (key, item) {
+
+                    html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
+                    html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
+                    var now = new Date(item.date);
+                    var Datestring = moment(now).format('DD MMM YYYY');
 
 
 
-                        html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring + '</p></div>';
+                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring + '</p></div>';
 
-                        html += '<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
-                        html += ' </div>';
+                    html += '<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
+                    html += ' </div>';
 
-                    });
-                    $('.RecList').html(html);
-                
+                });
+                $('.RecList').html(html);
+
 
             },
             error: function (errormessage) {
@@ -1342,10 +1410,10 @@
         document.getElementById("TxtSearchFromDate").value = FromDatestring;
 
         $("#TxtSearchToDate").val(ToDatestring);
-      
+
         myFunction();
         LoadRecordingList();
-       
+
 
     }
     currentTime();

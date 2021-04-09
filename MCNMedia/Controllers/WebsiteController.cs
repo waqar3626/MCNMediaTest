@@ -740,7 +740,7 @@ namespace MCNMedia_Dev.Controllers
                 profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
                 profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
                 profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-
+                profileModel.MediaChurchList = mediaChurchDataAccess.spSlideShowImagesGetByChurch(churchId).ToList();
                 List<Schedule> nextEventSchedule = new List<Schedule>();
                 foreach (Schedule schedule in profileModel.ScheduleListDay0)
                 {

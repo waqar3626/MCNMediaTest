@@ -28,11 +28,10 @@ namespace MCNMedia_Dev.Models
         public IEnumerable<NewsLetter> ChurchNewsLetterList { get; set; }
         public IEnumerable<Schedule> ScheduleList { get; set; }
         public IEnumerable<Recording> RecordingList { get; set; }
-
+        public MediaChurch mediaChurch { get; set; }
+        public List<MediaChurch> MediaChurchList { get; set; }
         public IEnumerable<Notice> NoticeList { get; set; }
         public IEnumerable<Schedule> NowScheduleList { get; set; }
-
-
         public IEnumerable<Schedule> NextScheduleList { get; set; }
         public IEnumerable<Schedule> ScheduleListDay0 { get; set; }
         public IEnumerable<Schedule> ScheduleListDay1 { get; set; }

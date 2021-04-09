@@ -25,7 +25,7 @@ namespace MCNMedia_Dev.Repository
             var sysConfig = root.GetSection("SystemConfiguration");
             AWS_S3_BUCKET_URI = $"{awsS3bucket["aws_bucket_url"]}/{sysConfig["system_mode"]}";
         }
-        
+
         public int AddMedia(MediaChurch media)
         {
             _dc.ClearParameters();
@@ -33,12 +33,12 @@ namespace MCNMedia_Dev.Repository
             _dc.AddParameter("MedType", media.MediaType);
             _dc.AddParameter("MedTabName", media.TabName);
             _dc.AddParameter("MedURL", media.MediaURL);
-            _dc.AddParameter("MedName",media.MediaName);
+            _dc.AddParameter("MedName", media.MediaName);
             _dc.AddParameter("ChurchId2", media.ChurchId);
             return _dc.ReturnInt("spChurchMedia_Add");
         }
 
-        public int AddSlideShowImages(int ChurchMediaId, string MediaUrl,int DisplayOrder, int CreatedBy)
+        public int AddSlideShowImages(int ChurchMediaId, string MediaUrl, int DisplayOrder, int CreatedBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("churchMediaId", ChurchMediaId);
@@ -48,7 +48,7 @@ namespace MCNMedia_Dev.Repository
             return _dc.ReturnInt("spSlideShowImages_Add");
         }
 
-        public IEnumerable<MediaChurch> GetByMediaType(string medType,int ChrId)
+        public IEnumerable<MediaChurch> GetByMediaType(string medType, int ChrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
 
@@ -60,9 +60,9 @@ namespace MCNMedia_Dev.Repository
             {
                 MediaChurch mdChurch = new MediaChurch();
                 mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
-                mdChurch.TabName= dataRow["TabName"].ToString();
-                mdChurch.MediaName= dataRow["MediaName"].ToString();
-                mdChurch.CreatedAt = Convert.ToDateTime( dataRow["CreatedAt"].ToString());
+                mdChurch.TabName = dataRow["TabName"].ToString();
+                mdChurch.MediaName = dataRow["MediaName"].ToString();
+                mdChurch.CreatedAt = Convert.ToDateTime(dataRow["CreatedAt"].ToString());
                 mdChurch.SysTime = Convert.ToDateTime(dataRow["CreatedAt"]).ToString("dd-MMM-yyyy");
                 mdChurch.CreatedBy = dataRow["FirstName"].ToString();
                 mdChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}";
@@ -70,7 +70,7 @@ namespace MCNMedia_Dev.Repository
             }
             return Balobj;
         }
-       
+
         public MediaChurch GetMediaById(int mediaId)
         {
             MediaChurch mediaChurch = new MediaChurch();
@@ -82,7 +82,7 @@ namespace MCNMedia_Dev.Repository
                 mediaChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"]);
                 mediaChurch.TabName = dataRow["TabName"].ToString();
                 mediaChurch.MediaType = dataRow["MediaType"].ToString();
-                mediaChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}"; 
+                mediaChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}";
                 mediaChurch.MediaName = dataRow["MediaName"].ToString();
                 mediaChurch.ChurchName = dataRow["ChurchName"].ToString();
             }
@@ -101,12 +101,12 @@ namespace MCNMedia_Dev.Repository
             return _dc.Execute("spChurchMedia_Update");
         }
 
-        public int DeleteMedia(int chMediaId,int UpdateBy)
+        public int DeleteMedia(int chMediaId, int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", chMediaId);
             _dc.AddParameter("UserId", UpdateBy);
-             _dc.ReturnBool("spChurchMedia_Delete");
+            _dc.ReturnBool("spChurchMedia_Delete");
             return 1;
         }
         public int DeleteSlideShowImages(int chMediaId, int UpdateBy)
@@ -123,7 +123,7 @@ namespace MCNMedia_Dev.Repository
             List<MediaChurch> Balobj = new List<MediaChurch>();
             _dc.ClearParameters();
             _dc.AddParameter("chrId", chrId);
-             DataTable dataTable = _dc.ReturnDataTable("spChurchSlideshowImage_GetAll");
+            DataTable dataTable = _dc.ReturnDataTable("spChurchSlideshowImage_GetAll");
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 MediaChurch mdChurch = new MediaChurch();
@@ -156,6 +156,26 @@ namespace MCNMedia_Dev.Repository
             return Balobj;
         }
 
+        public IEnumerable<MediaChurch> spSlideShowImagesGetByChurch(int chrId)
+        {
+            List<MediaChurch> Balobj = new List<MediaChurch>();
+            _dc.ClearParameters();
+            _dc.AddParameter("chrId", chrId);
+            DataTable dataTable = _dc.ReturnDataTable("spSlideShowImages_GetByChurch");
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                MediaChurch mdChurch = new MediaChurch();
+                mdChurch.ChurchMediaId = Convert.ToInt32(dataRow["ChurchMediaId"].ToString());
+                mdChurch.TabName = dataRow["TabName"].ToString();
+                mdChurch.ChurchId = Convert.ToInt32(dataRow["ChurchId"].ToString());
+                mdChurch.ImageId = Convert.ToInt32(dataRow["ImageId"].ToString());
+                mdChurch.MediaType = dataRow["MediaType"].ToString();
+                mdChurch.DisplayOrder = Convert.ToInt32(dataRow["DisplayOrder"].ToString());
+                mdChurch.MediaURL = $"{AWS_S3_BUCKET_URI}/{dataRow["MediaURL"]}";
+                Balobj.Add(mdChurch);
+            }
+            return Balobj;
+        }
         public int DeleteSlideShowSingleImage(int chMediaId, int UpdateBy)
         {
             _dc.ClearParameters();
@@ -165,15 +185,15 @@ namespace MCNMedia_Dev.Repository
             return 1;
         }
 
-        public bool ChangeSlideShowImageOrder(int ImageId,int chMediaId, int DisplayOrder, int UpdateBy)
+        public bool ChangeSlideShowImageOrder(int ImageId, int chMediaId, int DisplayOrder, int UpdateBy)
         {
             _dc.ClearParameters();
             _dc.AddParameter("imgId", ImageId);
             _dc.AddParameter("medChrId", chMediaId);
             _dc.AddParameter("disOrder", DisplayOrder);
             _dc.AddParameter("CrBy", UpdateBy);
-          return  _dc.ReturnBool("spChangeSlideShowImageOrder");
-            
+            return _dc.ReturnBool("spChangeSlideShowImageOrder");
+
         }
     }
 }

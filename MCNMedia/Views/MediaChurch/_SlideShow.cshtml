@@ -118,11 +118,11 @@
                     html += '<ul class="carousel-indicators">';
                     for (var i = 0; i < array.length; i++) {
                     if (checkdata == 0) {
-                        html += '<li data-target="#demo' + i + '" data-slide-to="' + i + '" class="active"></li> ';
+                        html += '<li data-target="#demo' + countimages + '" data-slide-to="' + i + '" class="active"></li> ';
                         checkdata ++;
                     }
                     else {
-                        html += '<li data-target="#demo' + i + '" data-slide-to="' + i + '" ></li> ';
+                        html += '<li data-target="#demo' + countimages + '" data-slide-to="' + i + '" ></li> ';
                     }
                     }
                     html += '</ul ><div class="carousel-inner w-100" style="height: 250px !important">';
