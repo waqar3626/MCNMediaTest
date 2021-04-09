@@ -113,7 +113,7 @@ namespace MCNMedia_Dev.Controllers
                 {
                     throw new Exception("Country List is Empty");
                 }
-               
+              
                 return View(gm);
             }
 
@@ -683,6 +683,8 @@ namespace MCNMedia_Dev.Controllers
                
                 profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
                 TempData["ChurchPasswordToChurchLock"] = profileModel.Churches.Password;
+               if(profileModel.Churches.ChurchId != 0) { 
+                
                 if (profileModel.Churches.Password.Count() > 0)
                 {
                     if (churchPass == "true")
@@ -695,6 +697,16 @@ namespace MCNMedia_Dev.Controllers
                         TempData["ChrName"] = profileModel.Churches.ChurchName;
                         return View("ChurchLock");
                     }
+                }
+                }
+                else
+                {
+                    profileModel.Churches.ChurchId=0;
+                    TempData["ErrorMsgBit"] = "404";
+                    ViewBag.ErrorMsg = "No church found against your action";
+
+                    return RedirectToAction(nameof(Home));
+
                 }
                 // it for paper view Know we dont need it
                 //int subscriberPaid = Convert.ToInt32(TempData["paymentId"]);
@@ -892,6 +904,10 @@ namespace MCNMedia_Dev.Controllers
             string url = HttpContext.Request.Query.ToString();
             try
             {
+                if (Slug == null)
+                {
+                    Slug = "^^^^^^_____++++++++++";
+                }
                 if (true)
                 {
                     url = Convert.ToString(HttpContext.Request.Query["Camera/{id?}"].ToString());

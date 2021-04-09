@@ -127,7 +127,9 @@
     <!-- banner slider start -->
     <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
         <div class="container">
-            @Model.Churches.ChurchName , @Model.Churches.Town
+            @if (Model.Churches.ChurchId != 0) {
+            <span>@Model.Churches.ChurchName , @Model.Churches.Town</span>
+                    }
         </div>
     </div>
 
@@ -1104,7 +1106,7 @@
                                 <div class="col-sm-12">
                                     <div class="max-width-100 max-height-100 ">
                                         <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100  rounded-top" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
-                                        <a href="@Model.churchDonation.WebSiteUrl" class="btn btn-info rounded-bottom w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
+                                        <a href="@Model.churchDonation.WebSiteUrl" target="_blank" class="btn btn-info rounded-bottom w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
                                     </div>
 
                                 </div>
