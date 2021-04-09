@@ -78,14 +78,7 @@ namespace MCNMedia_Dev.Controllers
                 
 
                 GoogleAnalytics googleantics = new GoogleAnalytics(environment);
-                List<GoogleAnalyticsProperty> googleAnalytics = googleantics.GoogleAnalytics_GetByChurch(eventDate); 
-                gm1.googleAnalytics = googleAnalytics;
-                if (googleAnalytics.Count > 0)
-                {
-                    gm1.googleAnalytics = googleAnalytics.FindAll(x => x.PageTitle.Contains(gm1.Churches.Slug + " - MCN"));
-                    ViewBag.TotalCountriesCount = gm1.googleAnalytics.Sum(item => item.Count);
-                }
-               
+
                 ViewBag.ChurchId = ChurchId.ToString();
                 return View(gm1);
             }

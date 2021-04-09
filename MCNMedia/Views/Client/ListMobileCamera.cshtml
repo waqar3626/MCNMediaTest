@@ -236,6 +236,8 @@
     }
 
     function DeleteCamera(camId) {
+       
+       
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this file!",
@@ -253,20 +255,17 @@
                         dataType: "json",
                         success: function (result) {
                             if (result.success) {
+
                                 $(window).scrollTop(0);
                                 $('#addMobileCameraListSuccessMessage').removeAttr('hidden');
-                                $('#addMobileCameraListSuccessMessage').html('Mobile Camera Deleted Successfully');
+                                $('#addMobileCameraListSuccessMessage').html('Camera deleted successfully');
                                 $('#addMobileCameraListSuccessMessage').fadeIn();
 
-                                $('#addMobileCameraListSuccessMessage').fadeTo(4000, 500).slideUp(500, function () {
+                                $('#addMobileCameraListSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
                                     $("#addMobileCameraListSuccessMessage").slideUp(500);
                                 });
-                                
                                 $('#addMobileCameraListSuccessMessage').attr('hidden');
-                                
                                 window.location.reload();
-
-
                             }
                             else {
                                 $(window).scrollTop(0);
@@ -274,20 +273,53 @@
                                 $('#addMobileCameraListErrorMessage').html(result.responseText);
                                 $('#addMobileCameraListErrorMessage').fadeIn();
 
-                                $('#addMobileCameraListErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
-                                    $("#addMobileCameraListErrorMessage").slideUp(500);
-                                    $('#addMobileCameraListErrorMessage').attr('hidden');
+                                $('#addMediaErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                                    $("#addMediaErrorMessage").slideUp(500);
+
                                 });
-                                $('#addMobileCameraListErrorMessage').attr('hidden');
-
+                                $('#addMediaErrorMessage').attr('hidden');
                             }
-
                         },
                         error: function (errormessage) {
-                            // alert(errormessage.responseText);
+                            //alert(errormessage.responseText);
                         }
+                        //    if (result.success) {
+                        //        $(window).scrollTop(0);
+                        //        $('#addMobileCameraListSuccessMessage').removeAttr('hidden');
+                        //        $('#addMobileCameraListSuccessMessage').html('Mobile Camera Deleted Successfully');
+                        //        $('#addMobileCameraListSuccessMessage').fadeIn();
+
+                        //        $('#addMobileCameraListSuccessMessage').fadeTo(4000, 500).slideUp(500, function () {
+                        //            $("#addMobileCameraListSuccessMessage").slideUp(500);
+                        //        });
+                                
+                        //        $('#addMobileCameraListSuccessMessage').attr('hidden');
+                                
+                        //        window.location.reload();
+
+
+                        //    }
+                        //    else {
+                        //        $(window).scrollTop(0);
+                        //        $('#addMobileCameraListErrorMessage').removeAttr('hidden');
+                        //        $('#addMobileCameraListErrorMessage').html(result.responseText);
+                        //        $('#addMobileCameraListErrorMessage').fadeIn();
+
+                        //        $('#addMobileCameraListErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        //            $("#addMobileCameraListErrorMessage").slideUp(500);
+                        //            $('#addMobileCameraListErrorMessage').attr('hidden');
+                        //        });
+                        //        $('#addMobileCameraListErrorMessage').attr('hidden');
+
+                        //    }
+
+                        //},
+                        //error: function (errormessage) {
+                        //    // alert(errormessage.responseText);
+                        //}
                     });
-                } else {
+                }
+                else {
                     swal("Your file is safe!");
                 }
             });
@@ -301,6 +333,10 @@
         player.autoplay(false);
     }
     });
+
+    function loadCameras() {
+
+    };
     function ChangeCameraStatus(camId) {
         var cameraID = camId;
 
@@ -321,17 +357,32 @@
 
             success: function (response) {
                 if (response.success) {
-                    swal("Camera Status Changed Successfully!", {
-                        icon: "success",
+                    $("body").scrollTop(0);
+                    $(window).scrollTop(0);
+                    $('#addMobileCameraListSuccessMessage').removeAttr('hidden');
+                    $('#addMobileCameraListSuccessMessage').html('Camera Status Changed Successfully!');
+                    $('#addMobileCameraListSuccessMessage').fadeIn();
 
-                    })
+                    $('#addMobileCameraListSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMobileCameraListSuccessMessage").slideUp(500);
+                    });
+                    $('#addMobileCameraListErrorMessage').attr('hidden');
                 } else {
-                    // DoSomethingElse()
-                    alert(response.responseText);
+                    $("body").scrollTop(0);
+                    $(window).scrollTop(0);
+                    $('#addMobileCameraListErrorMessage').removeAttr('hidden');
+                    $('#addMobileCameraListErrorMessage').html(result.responseText);
+                    $('#addMobileCameraListErrorMessage').fadeIn();
+
+                    $('#addMobileCameraListErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#addMobileCameraListErrorMessage").slideUp(500);
+                        $('#addMobileCameraListErrorMessage').attr('hidden');
+                    });
+                    $('#addMobileCameraListErrorMessage').attr('hidden');
+
                 }
             },
-            error: function (errormessage) {
-                //alert(errormessage.responseText);
+            error: function (errormessage) { 
             }
         });
     }
