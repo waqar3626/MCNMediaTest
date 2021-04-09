@@ -25,6 +25,8 @@ namespace MCNMedia_Dev.Models
 
         public string Town { get; set; }
 
+        public Boolean AllowDownload { get; set; }
+
         public int ChurchId { get; set; }
         public String UniqueChurchId { get; set; }
         public String Src { get; set; }

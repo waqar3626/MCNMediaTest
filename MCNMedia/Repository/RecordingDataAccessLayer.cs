@@ -80,6 +80,7 @@ namespace MCNMedia_Dev.Repository
                 recording.Date = Convert.ToDateTime(dataRow["RecordingDate"].ToString());
                 recording.Time = Convert.ToDateTime(dataRow["RecordingTime"].ToString());
                 recording.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
+                recording.AllowDownload = Convert.ToBoolean(dataRow["AllowDownload"]);
                 recording.UniqueChurchId = dataRow["UniqueChurchId"].ToString();
                 recording.ChurchName = dataRow["ChurchName"].ToString();
                 recording.Town = dataRow["Town"].ToString();
