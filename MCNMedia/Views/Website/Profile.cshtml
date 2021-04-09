@@ -113,6 +113,27 @@
         display: block;
     }
 </style>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-danger" id="DownloadRecordingErrorMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row m-0 mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-success" id="DownloadRecordingSuccessMessage" hidden>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
 <div class="content-wrapper">
     <div class="row m-2">
         <div class="col-lg-12">
@@ -127,9 +148,10 @@
     <!-- banner slider start -->
     <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
         <div class="container">
-            @if (Model.Churches.ChurchId != 0) {
-            <span>@Model.Churches.ChurchName , @Model.Churches.Town</span>
-                    }
+            @if (Model.Churches.ChurchId != 0)
+            {
+                <span>@Model.Churches.ChurchName , @Model.Churches.Town</span>
+            }
         </div>
     </div>
 
@@ -274,7 +296,7 @@
                                             <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
                                                 <div class="carousel-inner">
                                                     <div class="carousel-item active embed-responsive embed-responsive-16by9">
-                                                        <img src="@webMedia.MediaURL" class="d-block embed-responsive-item"  alt="...">
+                                                        <img src="@webMedia.MediaURL" class="d-block embed-responsive-item" alt="...">
                                                     </div>
                                                 </div>
                                             </div>
@@ -289,7 +311,7 @@
                                         var countSliders = 0;
 
                                         <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                            
+
                                             <div id="demoslideshow-@webMedia.MediaId" class="carousel slide" data-ride="carousel">
 
 
@@ -331,11 +353,11 @@
                                                 </div>
 
 
-                                               
-                                                    <a class="carousel-control-prev" href="#demoslideshow-@webMedia.MediaId" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>
-                                                    <a class="carousel-control-next" href="#demoslideshow-@webMedia.MediaId" data-slide="next"><span class="carousel-control-next-icon"></span></a>
 
-                                                </div>
+                                                <a class="carousel-control-prev" href="#demoslideshow-@webMedia.MediaId" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>
+                                                <a class="carousel-control-next" href="#demoslideshow-@webMedia.MediaId" data-slide="next"><span class="carousel-control-next-icon"></span></a>
+
+                                            </div>
                                         </div>
                                     }
                                     else if (webMedia.MediaType == "Video")
@@ -1225,6 +1247,53 @@
         // }
     }
 
+    function onDownloadClickWebsite(url) {
+        alert(url);
+
+        $.ajax({
+            type: "POST",
+            url: "/Recording/onDownloadClick/",
+            //data: camObj,
+
+            data: { url: url },
+
+            //   contentType: "application/json;charset=UTF-8",
+            //  dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $(window).scrollTop(0);
+
+                    $('#DownloadRecordingSuccessMessage').removeAttr('hidden');
+                    $('#DownloadRecordingSuccessMessage').html('Kindly check your download folder file downloading is in progress');
+                    $('#DownloadRecordingSuccessMessage').fadeIn();
+                    $('#DownloadRecordingSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#DownloadRecordingSuccessMessage").slideUp(500);
+                    });
+                    $('#DownloadRecordingSuccessMessage').attr('hidden');
+
+
+                }
+                else {
+                    $(window).scrollTop(0);
+                    $('#DownloadRecordingErrorMessage').removeAttr('hidden');
+                    $('#DownloadRecordingErrorMessage').html(response.text);
+                    $('#DownloadRecordingErrorMessage').fadeIn();
+                    $('#DownloadRecordingErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
+                        $("#DownloadRecordingErrorMessage").slideUp(500);
+                    });
+                    $('#DownloadRecordingErrorMessage').attr('hidden');
+
+
+                }
+
+            },
+            error: function (errormessage) {
+                //alert(errormessage.responseText);
+            }
+
+        });
+
+    }
     function OpenVedio
         (vedId, vedioURL) {
         jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
@@ -1286,7 +1355,7 @@
             $('.jwplayer').attr("style", "height:184.5px !important");
             $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
             $('.slideshowcarousel').attr("style", "height:184.5px !important");
-            
+
         }
         else if ($(window).width() > 480 && $(window).width() <= 800) {
 
@@ -1352,8 +1421,12 @@
         });
     $("#btnSearchRecording").click(
         function () {
-            LoadRecordingList();  
+            LoadRecordingList();
         });
+
+
+
+
     function LoadRecordingList() {
         var EventName = document.getElementById('TxtSearchEventName').value;
         var FromDate = document.getElementById('TxtSearchFromDate').value;
@@ -1372,16 +1445,25 @@
 
                 $.each(result, function (key, item) {
 
-                    html += '<div class="news-wrap col-lg-3 col-md-4 col-sm-6 pb-3 pt-3 ">';
+                    html += '<div class="news-wrap col-lg-4 col-md-6 col-sm-12 pb-3 pt-3 ">';
+                    // html += '<div class="  text-white font-16 font-weight-bolder w-100 mb-0" id="context-menu-hover-autohideRecording"  recordingId="' + item.recordingId + '">' + item.recordingTitle + '</div>';
                     html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
                     var now = new Date(item.date);
                     var Datestring = moment(now).format('DD MMM YYYY');
 
 
 
-                    html += '<div class="font-weight-light in-icon-arrow d-inline-block font-12"><p class="mb-0">' + Datestring + '</p></div>';
+                    html += '<div class="row"><div class="col-lg-8 col-md-8 col-sm-8 pb-2"><div class="font-weight-light in-icon-arrow d-inline-block font-10"><p class="mb-0">' + Datestring + '</p></div></div>';
+                    var srcUrl = "'" + item.src + "'";
+                    if (item.allowDownload) {
+                        html += '<div class="col-lg-4 col-md-4 col-sm-4 pb-3"><a onclick="onDownloadClickWebsite(' + srcUrl + ')" class="text-warning "   title="Download"><i class="fal fa-arrow-circle-down font-36"></i></a>&nbsp;&nbsp;<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a></div></div>';
 
-                    html += '<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a>';
+                    }
+                    else {
+                        html += '<div class="col-lg-4 col-md-4 col-sm-4 pb-3"><a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a></div></div>';
+
+                    }
+                    // html += '<button onclick="onDownloadClick(' + item.src + ')" ><i class="fal fa-play-circle font-36"></i></a>';
                     html += ' </div>';
 
                 });
