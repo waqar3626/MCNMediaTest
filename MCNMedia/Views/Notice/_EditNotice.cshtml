@@ -18,9 +18,9 @@
     </div>
 
 </div>
-@using (Html.BeginForm("UpdateNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UpdateNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data", @id= "churchEditNotices" }))
 {
-    
+
 
     <div class="row">
         <div class="col">
@@ -74,7 +74,9 @@
 
             var churchNoticeId = $('#chNoticeId').val();
             var noticeTitle = document.getElementById('editnoticeTitle').value; 
+        
             var noticeName = $("#summernoteExample").summernote('code');
+           
             var s = "";
          
             if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '<br>')) {
@@ -108,6 +110,14 @@
                 $('#EditNoticeModal').modal('show');
 
 
+            } else {
+                s = '';
+                $('#alertLabel62').html(s);
+                $('#alertDiv61').hide();
+                $('#EditNoticeModal').modal('hide');
+                $('#churchEditNotices')[0].reset();
+                $('#editnoticeTitle').attr('class', 'form-control');
+                $('#editnoticeTitle').attr('style','border-color:#c9ccd7');
             }
 
             var formData = new FormData();

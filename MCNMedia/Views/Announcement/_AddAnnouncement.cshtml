@@ -16,7 +16,7 @@
 
 </div>
 
-<form asp-action="AddAnnouncement" asp-controller="Announcement" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+<form asp-action="AddAnnouncement" id="churchAddAnnouncement" asp-controller="Announcement" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="row">
         <div class="col">
 
@@ -102,6 +102,17 @@
             return;
             $('#AddAnnouncementPopUp').modal('show');
 
+
+        }
+        else {
+            $('#alertLabel22').html('');
+            $('#alertDiv22').hide();
+            $('#AddAnnouncementPopUp').modal('hide');
+            $('#summernote-basic').summernote('reset');
+            $('#churchAddAnnouncement')[0].reset();
+            $('#AddAnnouncementTitle').attr('class', 'form-control');
+            $('#AddAnnouncementTitle').attr('style', 'border-color:#c9ccd7');
+           
 
         }
         displayBusyIndicator();

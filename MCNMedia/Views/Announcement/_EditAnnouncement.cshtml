@@ -21,7 +21,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="churchEditAnnouncement">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group row p-3" id="alertDiv71">
                 <div class="col-md-12">
@@ -94,7 +94,7 @@
 
 
         }
-        
+
         else if (editAnnounceText != '' && editAnnounceTitle == '') {
             $('editAnnouncementTitle').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'
@@ -104,6 +104,14 @@
             $('#EditAnnouncementModal').modal('show');
 
 
+        }
+        else {
+            s = '';
+            $('#alertLabel72').html(s);
+            $('#alertDiv71').hide();
+            $('#EditAnnouncementModal').modal('hide');
+            $('#churchEditAnnouncement')[0].reset();
+            $('#editAnnouncementTitle').attr('class', 'form-control border-light');
         }
        
         displayBusyIndicator();

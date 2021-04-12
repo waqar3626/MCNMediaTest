@@ -14,7 +14,7 @@
 </div>
 
 <!-- End plugin css for this page -->
-@using (Html.BeginForm("AddNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddNotice", "Notice", FormMethod.Post, new { enctype = "multipart/form-data", @id= "churchAddNotices" }))
 {
     <div class="row">
         <div class="col">
@@ -102,6 +102,16 @@
                 $('#AddNoticeModal').modal('show');
 
 
+            }
+            else { 
+                s = '';
+                $('#alertLabel21').html(s);
+                $('#alertDiv21').hide();
+                $('#AddNoticeModal').modal('hide');
+                $('#churchAddNotices')[0].reset();
+                $('#summernote-basic2').summernote('reset');
+                $('#editnoticeTitle').attr('class', 'form-control');
+                $('#editnoticeTitle').attr('style', 'border-color:#c9ccd7');
             }
             var formData = new FormData();     
             formData.append("NoticeTitle", noticeTitle);
