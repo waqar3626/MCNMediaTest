@@ -105,7 +105,7 @@
             }
             else {
                 $('#AddMedVidTabName').attr('class', 'form-control');
-                $('#VidFile').attr('class', 'form-controls border-success');
+           
                 $('#alertDiv11').hide();
             }
 
@@ -130,7 +130,7 @@
                         $('#AddVideoForm')[0].reset();
                         displayBusyIndicator2();
                         $('#AddddModal').modal('hide');
-                 
+                        clearDropifyVideo();
                         $('#addMediaSuccessMessage').removeAttr('hidden');
                         $(window).scrollTop(0);
                         $('#addMediaSuccessMessage').html('Video Added Successfully');
@@ -160,6 +160,12 @@
                     //alert(errormessage.responseText);
                 }
             });
+        }
+        function clearDropifyVideo() {
+            var EventDre = $('#VidFile').dropify();
+            EventDre = EventDre.data('dropify');
+            EventDre.resetPreview();
+            EventDre.clearElement();
         }
     </script>
 }

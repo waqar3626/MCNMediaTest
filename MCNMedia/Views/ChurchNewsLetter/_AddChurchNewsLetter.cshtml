@@ -44,7 +44,7 @@
                     </label>
                 </div>
                 <div class="col-12">
-                    @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterUrl, new { @class = "form-control form-control-sm dropify", @id = "newsletter_Url", @name = "MediaURl4", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
+                    @Html.TextBoxFor(model => model.ChurchNewsLetter.NewsLetterUrl, new { @class = "form-control form-control-sm dropify clearpic", @id = "newsletter_Url", @name = "MediaURl4", @type = "file", @required = "required", @size = "40", @placeholder = "", @vfield = "Y", @nreq = "Y", @maxlength = "60", @nmaxlen = "60", @ntype = "nonNumeric", @nfrom = "register" })
                 </div>
 
             </div>
@@ -113,7 +113,7 @@
         }
         else {
             $('#newsletterTitle').attr('class', 'form-control');
-            $('#newsletter_Url').attr('class', 'form-controls border-success');
+           
             $('#alertDiv9999').hide();
         }
         formData.append("mediaFile", input.files[0]);
@@ -130,6 +130,7 @@
                 if (result.success) {
                     loadNewsLetter();
                     $('#AddChurchNewsletter')[0].reset();
+                    clearDropifyNewsLetter();
                     $('#AddChurchNewsLetterModal').modal('hide');
                     $('#addNewLetterListSuccessMessage').removeAttr('hidden');
                     displayBusyIndicator2();
@@ -142,7 +143,7 @@
 
                     $('#addNewLetterListSuccessMessage').attr('hidden');
 
-
+                    
 
                 }
                 else {
@@ -164,6 +165,13 @@
                 //alert(errormessage.responseText);
             }
         });
+    }
+
+    function clearDropifyNewsLetter() {
+        var EventDre = $('#newsletter_Url').dropify();
+        EventDre = EventDre.data('dropify');
+        EventDre.resetPreview();
+        EventDre.clearElement();
     }
 </script>
 

@@ -115,7 +115,7 @@
         }
         else {
             $('#alertDiv').hide();
-            $('#picTabName').attr('class', 'form-control border-success');
+            $('#picTabName').attr('class', 'form-control');
         }
         formData.append("mediaFile", input.files[0]);
         $('#AddModal').modal('hide');
@@ -135,7 +135,7 @@
                     loadPicture();
                     
                     $('#AddPictureForm')[0].reset();
-                    
+                    clearDropifyPicture();
                     $('#addMediaSuccessMessage').removeAttr('hidden');
                     $('#addMediaSuccessMessage').html('Picture added successfully');
                     $('#addMediaSuccessMessage').fadeIn();
@@ -165,5 +165,11 @@
                 //alert(errormessage.responseText);
             }
         });
+    }
+    function clearDropifyPicture() {
+        var EventDre = $('#Picture_Url').dropify();
+        EventDre = EventDre.data('dropify');
+        EventDre.resetPreview();
+        EventDre.clearElement();
     }
 </script>
