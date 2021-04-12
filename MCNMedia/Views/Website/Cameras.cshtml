@@ -150,19 +150,7 @@
         </div>
     }
    
-else if (ViewBag.SearchFilter == null)
-        {
-            <div class="container bg-blue">
-                <div class="row m-0 ">
-                    <div class="col-sm-12 text-white font-26 text-center pt-2 pb-2 avantgardece">
-                        Search Result for: @ViewBag.SearchFilter
-                    </div>
-                    <div class="col-sm-12 text-white font-26 text-center pt-2  pb-4 avantgardece">
-                        Sorry, there doesn't seem to be matching this search
-                    </div>
-                </div>
-            </div>
-        }
+
     
 
     <div class="col-1 d-lg-block d-none"></div>
@@ -181,7 +169,7 @@ else if (ViewBag.SearchFilter == null)
                     @if (ViewBag.Countries != null)
                     {
                         <select id="select2" name="countryId" class="select-search" onchange="DoPostBack();" asp-items="@(new SelectList(@ViewBag.Countries, "Value", "Text", Context.Session.GetInt32("countryId")))">
-                            <option value="-1">--Select Country--</option>
+                            <option value="-1" selected>--Select Country--</option>
                         </select>
                     }
                     else
@@ -221,7 +209,7 @@ else if (ViewBag.SearchFilter == null)
 
 <script>
     $(document).ready(function () {
-        $('#select2').val('@ViewBag.CountryID');
+        $('#select2').val('-1');
 
 
         DoPostBack();
@@ -242,6 +230,7 @@ else if (ViewBag.SearchFilter == null)
                     s += '<option value="' + item.countyId + '">' + item.placeName + '</option>'
                 });
                 $("#County").html(s);
+                
             },
             error: function (errormessage) {
                 alert(errormessage);
