@@ -190,6 +190,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+              
                 string Code = Input1 + Input2 + Input3 + Input4 + Input5 + Input6;
                 int OtpCode = Convert.ToInt32(Code);
                 string Email = TempData["Email"].ToString();
@@ -197,7 +198,7 @@ namespace MCNMedia_Dev.Controllers
                 if (OtpCode == ConfirmOtpCode)
                 {
                     ViewBag.Email = Email;
-                    
+
                     TempData["UserName"] = TempData["UserName"];
                     TempData["UserId"] = TempData["UserId"];
                     TempData["Email"] = TempData["Email"];
@@ -239,6 +240,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
+                TempData["UserName"] = TempData["UserName"].ToString();
                 TempData["UserId"] = TempData["UserId"];
                 TempData["Email"] = TempData["Email"];
                 ViewBag.ErrorMsg = "Error occured " + exp.Message;

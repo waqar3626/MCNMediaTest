@@ -281,7 +281,9 @@ namespace MCNMedia_Dev.Controllers
             }
             else
             {
-                return Json(false);
+                FacebookHelper facebookHelper = new FacebookHelper();
+                return Json(facebookHelper.FacebookLiveStream(jsonData));
+                //return Json(false);
             }
             
         }
