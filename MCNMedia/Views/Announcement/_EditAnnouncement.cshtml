@@ -73,6 +73,7 @@
         var s = "";
  
         if (editAnnounceTitle == '' && editAnnounceText == '') {
+            $(window).scrollTop(0);
             $('#editAnnouncementTitle').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'
             $('#tinyMceExample').attr('class', 'border-danger');
@@ -85,6 +86,7 @@
 
         }
         else if (editAnnounceText == '' && editAnnounceTitle != '') {
+            $(window).scrollTop(0);
             $('#tinyMceExample').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement</label></br>';
             $('#alertLabel72').html(s);
@@ -96,6 +98,7 @@
         }
 
         else if (editAnnounceText != '' && editAnnounceTitle == '') {
+            $(window).scrollTop(0);
             $('editAnnouncementTitle').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'
             $('#alertLabel72').html(s);

@@ -67,12 +67,14 @@
 
 
         var announcementTitle = document.getElementById('validationCustom12').value;
-
+        
         var announcementText = $("#summernote-basic").summernote('code');
+  
         var s = "";
 
 
-        if (announcementTitle == '' && announcementText == '<p><br></p>') {
+        if (announcementTitle == '' && (announcementText == '<p><br></p>' || announcementText == '')) {
+            $(window).scrollTop(0);
             $('#validationCustom12').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'
             $('#summernote-basic').attr('class', 'border-danger');
@@ -84,7 +86,8 @@
 
 
         }
-        else if (announcementText == '<p><br></p>' && announcementTitle != '') {
+        else if ((announcementText == '<p><br></p>' || announcementText == '') && announcementTitle != '') {
+            $(window).scrollTop(0);
             $('#summernote-basic').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement</label></br>';
             $('#alertLabel22').html(s);
@@ -94,7 +97,8 @@
 
 
         }
-        else if (announcementText != '<p><br></p>' && announcementTitle == '') {
+        else if ((announcementText != '<p><br></p>' || announcementText != '') && announcementTitle == '') {
+            $(window).scrollTop(0);
             $('AddAnnouncementTitle').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'
             $('#alertLabel22').html(s);

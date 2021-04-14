@@ -80,6 +80,7 @@
             var s = "";
          
             if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '<br>')) {
+                $(window).scrollTop(0);
                 $('#editnoticeTitle').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
                 $('#summernoteExample').attr('class', 'border-danger');
@@ -92,6 +93,7 @@
 
             }
             else if ((noticeName == '<p><br></p>' || noticeName == '<br>') && noticeTitle != '') {
+                $(window).scrollTop(0);
                 $('#summernoteExample').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice</label></br>';
                 $('#alertLabel62').html(s);
@@ -102,6 +104,7 @@
 
             }
             else if ((noticeName != '<p><br></p>' || noticeName != '<br>') && noticeTitle == '') {
+                $(window).scrollTop(0);
                 $('#editnoticeTitle').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
                 $('#alertLabel62').html(s);

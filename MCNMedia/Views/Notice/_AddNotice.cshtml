@@ -71,7 +71,8 @@
             var s = "";
 
 
-            if (noticeTitle == '' && noticeName == '<p><br></p>') {
+            if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '')) {
+                $(window).scrollTop(0);
                 $('#validationCustom13').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
                 $('#summernote-basic2').attr('class', 'border-danger');
@@ -83,7 +84,8 @@
 
 
             }
-            else if (noticeName == '<p><br></p>' && noticeTitle != '') {
+            else if ((noticeName == '<p><br></p>' || noticeName == '') && noticeTitle != '') {
+                $(window).scrollTop(0);
                 $('#summernote-basic2').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice</label></br>';
                 $('#alertLabel21').html(s);
@@ -93,7 +95,8 @@
 
 
             }
-            else if (noticeName != '<p><br></p>' && noticeTitle == '') {
+            else if ((noticeName != '<p><br></p>' || noticeName != '') && noticeTitle == '') {
+                $(window).scrollTop(0);
                 $('#validationCustom13').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
                 $('#alertLabel21').html(s);
@@ -110,8 +113,8 @@
                 $('#AddNoticeModal').modal('hide');
                 $('#churchAddNotices')[0].reset();
                 $('#summernote-basic2').summernote('reset');
-                $('#editnoticeTitle').attr('class', 'form-control');
-                $('#editnoticeTitle').attr('style', 'border-color:#c9ccd7');
+                $('#validationCustom13').attr('class', 'form-control');
+                $('#validationCustom13').attr('style', 'border-color:#c9ccd7');
             }
             var formData = new FormData();     
             formData.append("NoticeTitle", noticeTitle);
