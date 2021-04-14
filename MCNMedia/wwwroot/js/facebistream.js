@@ -151,6 +151,16 @@ function Request_LiveVedioObj() {
     var accToken = '';
     if (uid != null && uac != null)
     {
+        if ($('#camera_list').val() == 0) {
+
+            swal({
+                icon: "error",
+                title: "Error",
+                text: "Please select your camera first",
+
+            });
+            return;
+        }
         if ($('#facebook_page').val() == "me") {
             id = "me";
             accToken = uac;
@@ -171,16 +181,7 @@ function Request_LiveVedioObj() {
 
 
             function (response) {
-                if ($('#camera_list').val() == 0) {
-
-                    swal({
-                        icon: "error",
-                        title: "Error",
-                        text: "Please select your camera first",
-
-                    });
-                    return;
-                }
+              
                 var jsons = JSON.stringify(response);
                 // alert(jsons);
                 var cameraId = $('#camera_list option:selected').attr('data-clientname') + '_' + $('#camera_list').val();
@@ -389,6 +390,16 @@ function changeOptions() {
 }
 
 function savesettings() {
+    if ($('#camera_list').val() == 0) {
+
+        swal({
+            icon: "error",
+            title: "Error",
+            text: "Please select your camera first",
+
+        });
+        return;
+    }
     var formData = new FormData();
     formData.append("cameraId", $('#camera_list').val());
     formData.append("pageId", $('#facebook_page').val());
