@@ -268,8 +268,8 @@
                                             <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <i class="fal fa-play-circle text-white vide-play-in"></i>
 
-                                                <video id='CameraLiveStream-@tabCounter' controls class='video-js vjs-default-skin embed-responsive-item'>
-                                                    <source id="LiveStreamSrc-@tabCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
+                                                <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin embed-responsive-item'>
+                                                    <source id="LiveStreamSrc-@camCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
                                                     
                                                 </video>
                                             </div>
@@ -290,6 +290,7 @@
                                                 </div>
                                             </div>
                                         }
+                                        camCounter++;
                                     }
                                     else if (webMedia.MediaType == "Picture")
                                     {
@@ -1235,7 +1236,7 @@
 
     window.onresize = myFunction;
     function OpenCamera(camId) {
-
+        
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
         player.autoplay(false);
