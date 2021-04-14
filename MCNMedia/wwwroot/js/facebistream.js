@@ -2,7 +2,7 @@
 //#region Initialize API
 window.fbAsyncInit = function () {
     FB.init({
-        appId: '1517160011742266',
+        appId: '220664392765773',
         autoLogAppEvents: true,
         status: true,
         cookie: true,                     // Enable cookies to allow the server to access the session.
@@ -50,7 +50,7 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
     getUserInfo();
     $('#stopStreaming').css('display', 'none');
 
-    $('#streamsettings').hide();
+    $('#streamsettings').show();
 }
 function checkLoginState() {               // Called when a person is finished with the Login Button.
     FB.getLoginStatus(function (response) {   // See the onlogin handler
@@ -144,6 +144,7 @@ function getPagesList() {
 
 //#region Streaming
 function Request_LiveVedioObj() {
+    
     var id = '';
     let uid = sessionStorage.getItem('uid');
     let uac = sessionStorage.getItem('uac');
@@ -167,14 +168,27 @@ function Request_LiveVedioObj() {
             {
                 "status": "LIVE_NOW", "access_token": "" + accToken + ""
             },
+
+
             function (response) {
+                if ($('#camera_list').val() == 0) {
+
+                    swal({
+                        icon: "error",
+                        title: "Error",
+                        text: "Please select your camera first",
+
+                    });
+                    return;
+                }
                 var jsons = JSON.stringify(response);
                 // alert(jsons);
-
+                var cameraId = $('#camera_list option:selected').attr('data-clientname') + '_' + $('#camera_list').val();
                 var streamkey = response.stream_url.substring(response.stream_url.indexOf("rtmp/") + 5);
+     
                 var cameraInfo = {
-                    camera_id: $('#camera_list').val(),
-                    client_name: $('#camera_list option:selected').attr('data-clientname'),
+                    camera_id: cameraId,
+                    client_name: '',
                     type: $('#camera_list option:selected').attr('data-camtype'),
                     stream_url: "rtmp://live-api-s.facebook.com:80/rtmp/",
                     secure_stream_url: "rtmps://live-api-s.facebook.com:443/rtmp/",
@@ -187,7 +201,13 @@ function Request_LiveVedioObj() {
     }
     else
     {
-        alert("Please login to facebook");
+        swal({
+            icon: "error",
+            title: "Error",
+            text: "Please login to facebook",
+
+        });
+       
     }
 }
 
@@ -204,17 +224,35 @@ function StartLiveStreaming(cameraInfo) {
         contentType: false,  // tell jQuery not to set contentType
         success: function (result) {
             //alert(result);
-            if (result ) {
-                alert("Stream posted to facebook");
+            if (result) {
+                swal({
+                    icon: "success",
+                    title: "Stream posted",
+                    text: "Stream posted to facebook",
+
+                });
+               
                 $('#stopStreaming').show();
                 $('#startStreaming').hide();
             }
             else {
-                alert("There is a problem posting to facebook. Please check your stream is started on camera");
+                swal({
+                    icon: "error",
+                    title: "Error",
+                    text: "There is a problem posting to facebook.Please check your stream is started on camera",
+
+                });
+               
             }
         },
         error: function (errormessage) {
-            alert("Error when posting to facebook");
+            swal({
+                icon: "error",
+                title: "Error",
+                text: "Error when posting to facebook",
+
+            });
+          
             $('#stopStreaming').hide();
             $('#startStreaming').show();
         }
@@ -235,16 +273,34 @@ function PosttoLiveStream(cameraInfo) {
         },
         success: function (data) {
             if (data.status == "STREAM_NOT_FOUND") {
-                alert("Please start your stream on camera");
+                swal({
+                    icon: "info",
+                    title: "start Stream",
+                    text: "Please start your stream on camera",
+
+                });
+                
             }
             else {
-                alert("Stream posted to facebook");
+                swal({
+                    icon: "success",
+                    title: "Stream Posted",
+                    text: "Stream posted to facebook",
+
+                });
+              
                 $('#stopStreaming').show();
                 $('#startStreaming').hide();
             }
         },
         error: function (data) {
-            alert("Error when posting to facebook");
+            swal({
+                icon: "error",
+                title: "Error",
+                text: "Error when posting to facebook",
+
+            });
+           
             $('#stopStreaming').hide();
             $('#startStreaming').show();
         }
@@ -292,12 +348,24 @@ function StopLiveStreaming(cameraInfo) {
         contentType: false,  // tell jQuery not to set contentType
         success: function (result) {
            // alert(result);
-            alert("Stream stopped on facebook");
+            swal({
+                icon: "success",
+                title: "Stream stopped",
+                text: "Stream stopped on facebook",
+
+            });
+            
             $('#startStreaming').show();
             $('#stopStreaming').hide();
         },
         error: function (result) {
-            alert("Error when stopping stream");
+            swal({
+                icon: "error",
+                title: "Error",
+                text: "Error when stopping stream",
+
+            });
+            
             $('#stopStreaming').show();
             $('#startStreaming').hide();
         }
@@ -337,11 +405,22 @@ function savesettings() {
 
 
         success: function (result) {
-            alert("Settings have been updated");
+            swal({
+                icon: "success",
+                title: "Saved",
+                text: "Settings have been updated",
+
+            });
+         
 
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            swal({
+                icon: "error",
+                title: "Error Occured",
+                text: errormessage.responseText,
+
+            });
         }
     });
 }
@@ -404,7 +483,12 @@ function saveUserInfo(accessToken, userId, expiresIn) {
 
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            swal({
+                icon: "error",
+                title: "Error Occured",
+                text: errormessage.responseText,
+
+            });
         }
     });
 }
@@ -426,7 +510,13 @@ function getUserInfo() {
             $('#streamDescription').val(msg);
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            swal({
+                icon: "error",
+                title: "Error Occured",
+                text: errormessage.responseText,
+                
+            });
+          
         }
     });
 }

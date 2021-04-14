@@ -57,19 +57,19 @@
             <div class="col-sm-8">
                 <br />
                 <label class="form-label">Area</label><br />
-                <select class="form-control-sm" name="facebook_page" id="facebook_page" required>
+                <select class="form-control-sm custom-select" name="facebook_page" id="facebook_page" required>
                     <option value="me" data-acctok="Your Timeline">
                         My Timeline
                     </option>
                 </select><br /><br />
                 <label class="form-label">Camera</label><br />
-                <select class="form-control-sm" name="camera_list" id="camera_list" required>
-                    <option id="me" data-camtype="--Select--" data-clientname="--Select--" value="0">
+                <select class="form-control-sm custom-select" name="camera_list" id="camera_list" required>
+                    <option id="me" data-camtype="--Select--" dastreamsettingsta-clientname="--Select--" value="0">
                         --Select--
                     </option>
                 </select><br /><br />
                 <label class="form-label">Description</label><br />
-                <input type="text" class="form-control" id="streamDescription" />
+                <input type="text" class="form-control " id="streamDescription" />
                 <br /><br />
                 <button type="button" id="btnSave" onclick="savesettings();" class="btn btn-sm btn-dark">Save</button>
             </div>
@@ -79,7 +79,7 @@
         <p class="text-muted pt-2">your live stream will be broad cast on 'Church Name'</p>
         @*<button type="button" id="passParams" onclick="getstreamparams();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Pass Stream Info</button>*@
         <button type="button" id="startStreaming" onclick="Request_LiveVedioObj();" class="btn btn-social-icon-text btn-facebook"><i class="ti-facebook"></i>Start Streaming</button>
-        <button type="button" id="changeSettings" onclick="changeOptions();" class="btn btn-dark">Change</button>
+        <button type="button" id="changeSettings" onclick="changeOptions();" class="btn btn-dark">Close</button>
         <button type="button" id="stopStreaming" onclick="StopLiveStream();" class="btn btn-danger">Stop Streaming</button>
         <input id="fbUserId" name="fbUserId" type="hidden" value="" />
         <input id="fbUserToken" name="fbUserToken" type="hidden" value="" />
@@ -120,6 +120,7 @@
     }
 </script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="2k6IFbG5"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="~/js/facebistream.js"></script>
 <!-- plugin js for this page -->
 <script src="~/theme/vendors/owl-carousel-2/owl.carousel.min.js"></script>
@@ -130,4 +131,5 @@
 <!-- Custom js for this page-->
 
 <script src="~/theme/js/owl-carousel.js"></script>
+
 <!-- End custom js for this page-->
