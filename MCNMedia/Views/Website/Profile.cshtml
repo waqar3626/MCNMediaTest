@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 <style>
     .display-none {
         display: none !important;
@@ -270,7 +270,7 @@
 
                                                 <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-default-skin embed-responsive-item'>
                                                     <source id="LiveStreamSrc-@camCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
-                                                    
+                                                    <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
                                                 </video>
                                             </div>
                                         }
@@ -1151,10 +1151,10 @@
                             Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
                         </div>
                         <div class="text-white font-14  pt-2 pb-4 avantgardece">
-                           
-                                If the event you are looking for is not listed below then it was NOT RECORDED and NO PLAYBACK is available.<br>
-                                All recording queries and requests should be directed to the Parish.
-                            
+
+                            If the event you are looking for is not listed below then it was NOT RECORDED and NO PLAYBACK is available.<br>
+                            All recording queries and requests should be directed to the Parish.
+
                         </div>
                     </div>
                 </div>
@@ -1232,11 +1232,12 @@
 
 <script src="~/theme/js/owl-carousel.js"></script>
 <script src="~/js/jwplayer.js"></script>
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script type="text/javascript">
 
     window.onresize = myFunction;
     function OpenCamera(camId) {
-        
+
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
         var player = videojs(camId);
         player.autoplay(false);
