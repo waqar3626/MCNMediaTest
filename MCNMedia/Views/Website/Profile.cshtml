@@ -250,7 +250,6 @@
                             int camCounter = 0;
                             int tabCounter = 0;
                             string activeClassName = "active";
-                            var videoCount = 0;
                         }
                         @if (Model.mediaList != null)
                         {
@@ -266,11 +265,11 @@
                                     {
                                         if (webMedia.IsCameraStreaming)
                                         {
-                                            <div class="tab-pane fade show  @activeClassName  " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <i class="fal fa-play-circle text-white vide-play-in"></i>
 
-                                                <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-16-9  vjs-default-skin '>
-                                                    <source id="LiveStreamSrc-@camCounter" src="@webMedia.MediaURL" class="w-100" type="application/x-mpegURL">
+                                                <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-16-9 vjs-default-skin embed-responsive-item'>
+                                                    <source id="LiveStreamSrc-@camCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
                                                     <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
                                                 </video>
                                             </div>
@@ -296,14 +295,13 @@
                                     else if (webMedia.MediaType == "Picture")
                                     {
                                         <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                            <div class="embed-responsive embed-responsive-16by9 vjs-16-9 cameralive bg-black tab-pane fade d-flex align-items-center justify-content-center  show active" id="LiveStreamSrc-@tabCounter" role="tabpanel" aria-labelledby="pills-camera-tab-no">
-
-                                                <img src="@webMedia.MediaURL" class="picturetab d-block " alt="..." width="100%">
-
-
+                                            <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
+                                                <div class="carousel-inner">
+                                                    <div class="carousel-item active embed-responsive embed-responsive-16by9">
+                                                        <img src="@webMedia.MediaURL" class="d-block embed-responsive-item" alt="...">
+                                                    </div>
+                                                </div>
                                             </div>
-
-
                                         </div>
                                     }
                                     else if (webMedia.MediaType == "SlideShow")
@@ -313,7 +311,6 @@
                                         var countimages = 0;
                                         var checkdata = 0;
                                         var countSliders = 0;
-
 
                                         <div class="tab-pane fade show  @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
 
@@ -367,20 +364,12 @@
                                     }
                                     else if (webMedia.MediaType == "Video")
                                     {
-                                        <div class="tab-pane fade show  @activeClassName  " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
+                                                <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
 
-                                            <video id='videoId-@videoCount' controls class="video-js vjs-16-9 vjs-default-skin ">
-                                                <source id="videoSourceId-@videoCount" src="@webMedia.MediaURL">
-
-                                            </video>
+                                            </div>
                                         </div>
-                                        @*<div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                                <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
-                                                    <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
-
-                                                </div>
-                                            </div>*@
                                     }
                                     tabCounter = tabCounter + 1;
                                 }
@@ -413,7 +402,6 @@
                                 int camTabCounter = 0;
                                 tabCounter = 0;
                                 activeClassName = "active";
-                                var countVideos = 0;
                             }
                             @if (Model.mediaList != null)
                             {
@@ -429,13 +417,6 @@
                                             <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
                                         </li>
                                         camTabCounter++;
-                                    }
-                                    else if (webMedia.MediaType == "Video")
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="OpenVideoJS('videoId-@countVideos')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
-                                        </li>
-                                        countVideos++;
                                     }
                                     else
                                     {
@@ -1261,12 +1242,7 @@
         var player = videojs(camId);
         player.autoplay(false);
     }
-    function OpenVideoJS(videoId) {
 
-        //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
-        var player = videojs(videoId);
-        player.autoplay(false);
-    }
     function OpenPictures() {
         var cameras = document.getElementById("CamerasContainer");
         var images = document.getElementById("carouselExampleCaptions");
@@ -1327,7 +1303,8 @@
         });
 
     }
-    function OpenVedio(vedId, vedioURL) {
+    function OpenVedio
+        (vedId, vedioURL) {
         jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
         var fileURL = vedioURL;
         jwplayer('' + vedId + '').setup({
@@ -1344,12 +1321,37 @@
     }
 
     $(document).ready(function ($) {
+        $('#owl-carousel-video').owlCarousel({
+            items: 1,
+            merge: true,
+            loop: true,
+            margin: 10,
+            video: true,
+            lazyLoad: true,
+            center: true,
+            responsive: {
+                480: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                }
+            }
+        });
+
+        var vedioSlides = document.getElementsByClassName("vedslide");
+        for (var i = 0; i < vedioSlides.length; i++) {
+            // Distribute(slides.item(i));
+            var divid = vedioSlides.item(i).id;
+            var divurl = vedioSlides.item(i).getAttribute('mediaurl');
+
+            OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'));
 
 
-
+        }
 
         OpenCamera('CameraLiveStream-0');
-        OpenVideoJS('videoId-0');
+
         LoadRecordingList();
 
 
@@ -1359,42 +1361,28 @@
 
         if ($(window).width() <= 480) {
 
-            $('.video-js').attr("style", "height:184.5px !important");
+            $('.jwplayer').attr("style", "height:184.5px !important");
             $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
             $('.slideshowcarousel').attr("style", "height:184.5px !important");
-            $('.picturetab').attr("style", "height:184.5px !important");
-            picturetab
+
         }
         else if ($(window).width() > 480 && $(window).width() <= 800) {
 
-
-            $('.video-js').attr("style", "height:414px !important");
+            $('.jwplayer').attr("style", "height:414px !important");
             $('.embed-responsive-16by9').attr("style", "height:414px !important");
             $('.slideshowcarousel').attr("style", "height:414px !important");
-            $('.picturetab').attr("style", "height:414px !important");
+
         }
         else if ($(window).width() > 800 && $(window).width() <= 1030) {
 
-            $('.video-js').attr("style", "height:370.867px !important");
+            $('.jwplayer').attr("style", "height:370.867px !important");
             $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
             $('.slideshowcarousel').attr("style", "height:370.867px !important");
-            $('.picturetab').attr("style", "height:370.867px !important");
-        }
-        else if ($(window).width() > 1030 && $(window).width() <= 1400) {
-
-            $('.video-js').attr("style", "height:440px !important");
-            $('.vjs-tech').attr("style", "height:440px !important");
-
-            $('.embed-responsive-16by9').attr("style", "height:440px !important");
-            $('.slideshowcarousel').attr("style", "height:440px !important");
-            $('.picturetab').attr("style", "height:440px !important");
         }
         else {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:544.533px !important");
-            $('.picturetab').attr("style", "height:544.533px !important");
-            $('.slideshowcarousel').attr("style", "height:544.533px !important");
+            $('.jwplayer').attr("style", "height:518px !important");
+            $('.embed-responsive-16by9').attr("style", "height:518px !important");
+            $('.slideshowcarousel').attr("style", "height:518px !important");
         }
     }
 
