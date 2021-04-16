@@ -312,7 +312,7 @@
                                         var countimages = 0;
                                         var checkdata = 0;
                                         var countSliders = 0;
-                                    
+
                                         <div class="tab-pane fade show  @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
 
                                             <div id="demoslideshow-@webMedia.MediaId" class="carousel slide" data-ride="carousel">
@@ -365,13 +365,20 @@
                                     }
                                     else if (webMedia.MediaType == "Video")
                                     {
-                                      
-                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                        <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            <i class="fal fa-play-circle text-white vide-play-in"></i>
+
+                                            <video id='v-@webMedia.MediaId' controls class='video-js vjs-16-9 vjs-default-skin embed-responsive-item'>
+                                                <source id="vv-@webMedia.MediaId" src="@webMedia.MediaURL" type="application/x-mpegURL">
+                                                <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
+                                            </video>
+                                        </div>
+                                        @*<div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                             <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
                                                 <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
 
                                             </div>
-                                        </div>
+                                        </div>*@
                                     }
                                     tabCounter = tabCounter + 1;
                                 }
@@ -1360,7 +1367,7 @@
     });
 
     function myFunction() {
-        alert($(window).width());
+ 
         if ($(window).width() <= 480) {
 
             $('.jwplayer').attr("style", "height:184.5px !important");
