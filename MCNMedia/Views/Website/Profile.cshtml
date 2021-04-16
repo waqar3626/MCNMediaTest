@@ -269,7 +269,7 @@
                                             <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <i class="fal fa-play-circle text-white vide-play-in"></i>
 
-                                                <video id='CameraLiveStream-@camCounter' controls class='video-js vjs-16-9 vjs-default-skin embed-responsive-item'>
+                                                <video id='CameraLiveStream-@camCounter' class="video-js vjs-16-9 vjs-default-skin embed-responsive-item" controls >
                                                     <source id="LiveStreamSrc-@camCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
                                                     <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
                                                 </video>
@@ -364,8 +364,8 @@
                                         <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                             <i class="fal fa-play-circle text-white vide-play-in"></i>
 
-                                            <video id='v-@webMedia.MediaId' controls class='video-js vjs-16-9 vjs-default-skin embed-responsive-item'>
-                                                <source id="vv-@webMedia.MediaId" src="@webMedia.MediaURL" type="application/x-mpegURL">
+                                            <video id='vid-@videoCount' controls class='video-js vjs-16-9 vjs-default-skin embed-responsive-item'>
+                                                <source id="vvid-@videoCount" src="@webMedia.MediaURL" >
                                                 <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
                                             </video>
                                         </div>
@@ -375,6 +375,7 @@
 
                                             </div>
                                         </div>*@
+                                        videoCount++;
                                     }
                                     tabCounter = tabCounter + 1;
                                 }
@@ -407,6 +408,7 @@
                                 int camTabCounter = 0;
                                 tabCounter = 0;
                                 activeClassName = "active";
+                                var countVideos = 0;
                             }
                             @if (Model.mediaList != null)
                             {
@@ -422,6 +424,13 @@
                                             <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="OpenCamera('CameraLiveStream-@camTabCounter')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
                                         </li>
                                         camTabCounter++;
+                                    }
+                                    else  if (webMedia.MediaType == "Video")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="  OpenVidJs('vid-@countVideos')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
+                                        </li>
+                                        countVideos++;
                                     }
                                     else
                                     {
@@ -1239,7 +1248,7 @@
 <script src="~/js/jwplayer.js"></script>
 <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script type="text/javascript">
-
+   
     window.onresize = myFunction;
     function OpenCamera(camId) {
 
@@ -1247,7 +1256,13 @@
         var player = videojs(camId);
         player.autoplay(false);
     }
+   
+    function OpenVidJs(VidId) {
 
+        //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
+        var player = videojs(VidId);
+        player.autoplay(false);
+    }
     function OpenPictures() {
         var cameras = document.getElementById("CamerasContainer");
         var images = document.getElementById("carouselExampleCaptions");
@@ -1308,55 +1323,12 @@
         });
 
     }
-    function OpenVedio
-        (vedId, vedioURL) {
-        jwplayer.key = "SNzmJfLzOyLvUOZxE3J2qsi0RmsfnZKN8DnKtQ==";
-        var fileURL = vedioURL;
-        jwplayer('' + vedId + '').setup({
-            file: fileURL,
-            width: "100%",
-
-            aspectratio: "16:9",
-            autostart: 'false',
-
-        });
-        jwplayer().onError(function () {
-            jwplayer().play();
-        });
-    }
+   
 
     $(document).ready(function ($) {
-        $('#owl-carousel-video').owlCarousel({
-            items: 1,
-            merge: true,
-            loop: true,
-            margin: 10,
-            video: true,
-            lazyLoad: true,
-            center: true,
-            responsive: {
-                480: {
-                    items: 1
-                },
-                600: {
-                    items: 1
-                }
-            }
-        });
-
-        var vedioSlides = document.getElementsByClassName("vedslide");
-        for (var i = 0; i < vedioSlides.length; i++) {
-            // Distribute(slides.item(i));
-            var divid = vedioSlides.item(i).id;
-            var divurl = vedioSlides.item(i).getAttribute('mediaurl');
-
-            OpenVedio(vedioSlides.item(i).id, vedioSlides.item(i).getAttribute('mediaurl'));
-
-
-        }
-
+    
         OpenCamera('CameraLiveStream-0');
-
+        OpenVidJs('vid-0');
         LoadRecordingList();
 
 
@@ -1397,11 +1369,9 @@
             $('.slideshowcarousel').attr("style", "height:497.36px !important");
         }
         else {
-            $('.jwplayer').attr("style", "height:544.533px !important");
-            
-            $('.jwplayer video').addClass("video-js vjs-16-9 vjs-default-skin embed-responsive-item");
-            $('.embed-responsive-16by9').attr("style", "height:544.533px !important");
-            $('.slideshowcarousel').attr("style", "height:544.533px !important");
+           
+            $('.embed-responsive-16by9').attr("style", "height:544.35px !important");
+            $('.slideshowcarousel').attr("style", "height:544.35px  !important");
         }
     }
 
