@@ -250,6 +250,7 @@
                             int camCounter = 0;
                             int tabCounter = 0;
                             string activeClassName = "active";
+                            var videoCount = 0;
                         }
                         @if (Model.mediaList != null)
                         {
@@ -311,7 +312,7 @@
                                         var countimages = 0;
                                         var checkdata = 0;
                                         var countSliders = 0;
-
+                                    
                                         <div class="tab-pane fade show  @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
 
                                             <div id="demoslideshow-@webMedia.MediaId" class="carousel slide" data-ride="carousel">
@@ -364,6 +365,7 @@
                                     }
                                     else if (webMedia.MediaType == "Video")
                                     {
+                                      
                                         <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                             <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
                                                 <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
@@ -1379,8 +1381,16 @@
             $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
             $('.slideshowcarousel').attr("style", "height:370.867px !important");
         }
+        else if ($(window).width() > 1030 && $(window).width() <= 1400) {
+
+            $('.jwplayer').attr("style", "height:441.5px !important");
+            $('.embed-responsive-16by9').attr("style", "height:441.5px !important");
+            $('.slideshowcarousel').attr("style", "height:441.5px !important");
+        }
         else {
             $('.jwplayer').attr("style", "height:518px !important");
+            
+            $('.jwplayer video').addClass("video-js vjs-16-9 vjs-default-skin embed-responsive-item");
             $('.embed-responsive-16by9').attr("style", "height:518px !important");
             $('.slideshowcarousel').attr("style", "height:518px !important");
         }
