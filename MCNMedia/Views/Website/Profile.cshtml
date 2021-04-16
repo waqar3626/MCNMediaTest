@@ -1360,7 +1360,7 @@
     });
 
     function myFunction() {
-
+        alert($(window).width());
         if ($(window).width() <= 480) {
 
             $('.jwplayer').attr("style", "height:184.5px !important");
@@ -1386,6 +1386,12 @@
             $('.jwplayer').attr("style", "height:441.5px !important");
             $('.embed-responsive-16by9').attr("style", "height:441.5px !important");
             $('.slideshowcarousel').attr("style", "height:441.5px !important");
+        }
+        else if ($(window).width() > 1400 && $(window).width() <= 1600) {
+
+            $('.jwplayer').attr("style", "height:497.36px !important");
+            $('.embed-responsive-16by9').attr("style", "height:497.36px !important");
+            $('.slideshowcarousel').attr("style", "height:497.36px !important");
         }
         else {
             $('.jwplayer').attr("style", "height:518px !important");
