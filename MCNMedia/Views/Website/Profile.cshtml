@@ -295,14 +295,10 @@
                                     }
                                     else if (webMedia.MediaType == "Picture")
                                     {
-                                        <div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                            <div id="carouselPictures" class="carousel slide" data-ride="carousel" data-interval="500000000000">
-                                                <div class="carousel-inner">
-                                                    <div class="carousel-item active embed-responsive embed-responsive-16by9">
-                                                        <img src="@webMedia.MediaURL" class="d-block embed-responsive-item" alt="...">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="tab-pane fade show @activeClassName embed-responsive embed-responsive-16by9" id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                            
+                                    <img src="@webMedia.MediaURL" class="d-block vjs-16-9  embed-responsive-item" alt="...">
+                                                 
                                         </div>
                                     }
                                     else if (webMedia.MediaType == "SlideShow")
@@ -313,7 +309,7 @@
                                         var checkdata = 0;
                                         var countSliders = 0;
 
-                                        <div class="tab-pane fade show  @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                        <div class="tab-pane fade show  @activeClassName" id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
 
                                             <div id="demoslideshow-@webMedia.MediaId" class="carousel slide" data-ride="carousel">
 
@@ -1401,11 +1397,11 @@
             $('.slideshowcarousel').attr("style", "height:497.36px !important");
         }
         else {
-            $('.jwplayer').attr("style", "height:518px !important");
+            $('.jwplayer').attr("style", "height:544.533px !important");
             
             $('.jwplayer video').addClass("video-js vjs-16-9 vjs-default-skin embed-responsive-item");
-            $('.embed-responsive-16by9').attr("style", "height:518px !important");
-            $('.slideshowcarousel').attr("style", "height:518px !important");
+            $('.embed-responsive-16by9').attr("style", "height:544.533px !important");
+            $('.slideshowcarousel').attr("style", "height:544.533px !important");
         }
     }
 
