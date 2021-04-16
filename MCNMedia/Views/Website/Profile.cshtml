@@ -1335,36 +1335,50 @@
     });
 
     function myFunction() {
- 
-        if ($(window).width() <= 480) {
+        alert($(window).width());
+        if ($(window).width() > 200 && $(window).width() <= 370) {
 
-            $('.jwplayer').attr("style", "height:184.5px !important");
+           
             $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
             $('.slideshowcarousel').attr("style", "height:184.5px !important");
 
         }
+        else if ($(window).width() > 370 && $(window).width() <= 380) {
+
+
+            $('.embed-responsive-16by9').attr("style", "height:192.933px !important");
+            $('.slideshowcarousel').attr("style", "height:192.933px !important");
+
+        }
+        else if ($(window).width() > 380 && $(window).width() <= 480) {
+
+          
+            $('.embed-responsive-16by9').attr("style", "height:214.867px !important");
+            $('.slideshowcarousel').attr("style", "height:214.867px !important");
+
+        }
         else if ($(window).width() > 480 && $(window).width() <= 800) {
 
-            $('.jwplayer').attr("style", "height:414px !important");
+           
             $('.embed-responsive-16by9').attr("style", "height:414px !important");
             $('.slideshowcarousel').attr("style", "height:414px !important");
 
         }
         else if ($(window).width() > 800 && $(window).width() <= 1030) {
 
-            $('.jwplayer').attr("style", "height:370.867px !important");
+         
             $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
             $('.slideshowcarousel').attr("style", "height:370.867px !important");
         }
         else if ($(window).width() > 1030 && $(window).width() <= 1400) {
 
-            $('.jwplayer').attr("style", "height:441.5px !important");
+          
             $('.embed-responsive-16by9').attr("style", "height:441.5px !important");
             $('.slideshowcarousel').attr("style", "height:441.5px !important");
         }
         else if ($(window).width() > 1400 && $(window).width() <= 1600) {
 
-            $('.jwplayer').attr("style", "height:497.36px !important");
+           
             $('.embed-responsive-16by9').attr("style", "height:497.36px !important");
             $('.slideshowcarousel').attr("style", "height:497.36px !important");
         }
