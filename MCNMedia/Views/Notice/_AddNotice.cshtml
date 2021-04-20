@@ -68,10 +68,11 @@
         function AddNotice1() {
             var noticeTitle = document.getElementById('validationCustom13').value;
             var noticeName = $("#summernote-basic2").summernote('code');
+     
             var s = "";
 
 
-            if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '')) {
+            if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '' || noticeName == '<br>')) {
                 $(window).scrollTop(0);
                 $('#validationCustom13').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
@@ -84,7 +85,7 @@
 
 
             }
-            else if ((noticeName == '<p><br></p>' || noticeName == '') && noticeTitle != '') {
+            else if ((noticeName == '<p><br></p>' || noticeName == '' || noticeName == '<br>') && noticeTitle != '') {
                 $(window).scrollTop(0);
                 $('#summernote-basic2').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice</label></br>';
@@ -95,7 +96,7 @@
 
 
             }
-            else if ((noticeName != '<p><br></p>' || noticeName != '') && noticeTitle == '') {
+            else if ((noticeName != '<p><br></p>' || noticeName != '' || noticeName !== '<br>') && noticeTitle == '') {
                 $(window).scrollTop(0);
                 $('#validationCustom13').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'

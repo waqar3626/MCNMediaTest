@@ -72,7 +72,7 @@
       
         var s = "";
  
-        if (editAnnounceTitle == '' && editAnnounceText == '') {
+        if (editAnnounceTitle == '' && (editAnnounceText == '<p><br></p>' || editAnnounceText == '' || editAnnounceText == '<br>')) {
             $(window).scrollTop(0);
             $('#editAnnouncementTitle').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'
@@ -85,7 +85,7 @@
 
 
         }
-        else if (editAnnounceText == '' && editAnnounceTitle != '') {
+        else if ((editAnnounceText == '<p><br></p>' || editAnnounceText == '' || editAnnounceText == '<br>') && editAnnounceTitle != '') {
             $(window).scrollTop(0);
             $('#tinyMceExample').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement</label></br>';
@@ -97,7 +97,7 @@
 
         }
 
-        else if (editAnnounceText != '' && editAnnounceTitle == '') {
+        else if ((editAnnounceText !== '<p><br></p>' || editAnnounceText !== '' || editAnnounceText !== '<br>') && editAnnounceTitle == '') {
             $(window).scrollTop(0);
             $('editAnnouncementTitle').attr('class', 'form-control border-danger');
             s += '<label>Please Provide a Valid Announcement Title </label></br>'

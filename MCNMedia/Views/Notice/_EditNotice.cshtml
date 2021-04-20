@@ -79,7 +79,7 @@
            
             var s = "";
          
-            if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '<br>')) {
+            if (noticeTitle == '' && (noticeName == '<p><br></p>' || noticeName == '<br>' || noticeName == '')) {
                 $(window).scrollTop(0);
                 $('#editnoticeTitle').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
@@ -92,7 +92,7 @@
 
 
             }
-            else if ((noticeName == '<p><br></p>' || noticeName == '<br>') && noticeTitle != '') {
+            else if ((noticeName == '<p><br></p>' || noticeName == '<br>' || noticeName == '') && noticeTitle != '') {
                 $(window).scrollTop(0);
                 $('#summernoteExample').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice</label></br>';
@@ -103,7 +103,7 @@
 
 
             }
-            else if ((noticeName != '<p><br></p>' || noticeName != '<br>') && noticeTitle == '') {
+            else if ((noticeName != '<p><br></p>' || noticeName != '<br>' || noticeName !== '') && noticeTitle == '') {
                 $(window).scrollTop(0);
                 $('#editnoticeTitle').attr('class', 'form-control border-danger');
                 s += '<label>Please Provide a Valid Notice Title </label></br>'
