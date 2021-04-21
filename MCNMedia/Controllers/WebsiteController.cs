@@ -341,7 +341,7 @@ namespace MCNMedia_Dev.Controllers
                         {
                             ViewBag.SearchFilter = $"Country = {countryName}";
 
-                            throw new Exception("Country not exists");
+                            
                         }
                     }
                     ViewBag.countryName = Request.Query["Country"].ToString();
