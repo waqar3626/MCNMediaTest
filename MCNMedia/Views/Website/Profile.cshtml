@@ -162,22 +162,67 @@
             <div class="col-1 d-xl-block d-none"></div>
             <div class="MobileContent col-xl-3 col-lg-4  p-md-0 p-xl-0">
                 <!-- <div class="row m-0"> -->
-                <div class="col-top-img p-0 ml-xl-2">
-                    <div class="ml-xl-4">
-                        <img src="@Model.Churches.ImageURl" alt="" class="rounded-lg main-img">
+                <div class="col-top-img p-0">
+                    <div class="row">
+
+                        <div class="col-2">
+
+                        </div>
+                        <div class="col-4">
+                            <img src="@Model.Churches.ImageURl" alt="" class="rounded-lg main-img">
+
+                        </div>
+                       
                     </div>
+                   
                 </div>
-                <div class="col-top-img p-0 font-14 mt-3">
-                    <p class="icon-top-s">
-                        <i class="fas fa-home font-25 mr-3"></i> @Model.Churches.ChurchName, @Model.Churches.Town
+                <div class="col-top-img p-0 font-14 mt-3 ">
+                    <p class="icon-top-s float-left  text-wrap">
+                        <div class="row">
+                            <div class="col-1"> </div>
+                            <div class="col-1">
+                                <i class="fas fa-home font-25 "></i>
+                            </div>
+                            <div class="col-8">
+                                <div class="float-left ml-2">
+                                    @Model.Churches.ChurchName, @Model.Churches.Town
+                                </div>
+                              
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
                     </p>
-                    <p class="icon-top-s">
-                        <i class="fas fa-envelope font-25 mr-3"></i>
-                        @Model.Churches.EmailAddress
+                    <p class="icon-top-s float-left   text-wrap">
+                        <div class="row">
+                            <div class="col-1"> </div>
+                            <div class="col-1">
+                                <i class="fas fa-envelope font-25 "></i>
+                            </div>
+                            <div class="col-8">
+                                <div class="float-left ml-2">
+                                    @Model.Churches.EmailAddress
+                                </div>
+                                
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                       
+                      
                     </p>
-                    <p class="icon-top-s">
-                        <i class="fas fa-globe font-25 mr-3"></i>
-                        @Model.Churches.Website
+                    <p class="icon-top-s float-left text-wrap">
+                        <div class="row">
+                            <div class="col-1"> </div>
+                            <div class="col-1">
+                                <i class="fas fa-globe font-25"></i>
+                            </div>
+                            <div class="col-8 ">
+                                <div class="float-left ml-2">   @Model.Churches.Website</div>
+                             
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    
+                       
                     </p>
                 </div>
                 <br />
