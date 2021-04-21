@@ -1330,7 +1330,7 @@
     }
 
     function onDownloadClickWebsite(url) {
-        alert(url);
+      
 
         $.ajax({
             type: "POST",
@@ -1466,12 +1466,12 @@
         var eventtime = document.getElementById("eventtime");
         var currenttime = document.getElementById("clock");
         if (eventtime > currenttime) {
-            alert("true");
+           
             return true;
 
         }
         else {
-            alert("false");
+        
             return false;
         }
     }
@@ -1538,7 +1538,7 @@
 
             },
             error: function (errormessage) {
-                alert(errormessage);
+             //   alert(errormessage);
             }
         });
     }
