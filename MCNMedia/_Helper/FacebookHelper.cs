@@ -27,7 +27,7 @@ namespace MCNMedia_Dev._Helper
             {
                 //string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
                 //string streamName = $"{uniqueIdentifier}_{cameraId}";
-               return PostAsync("http://52.51.59.126:8182/api/v1/start-fb-live", jsonData);
+               return PostAsync("http://54.217.38.80:8182/api/v1/start-fb-live", jsonData);
                 //HttpClient client = CreateHttpClientRequest($"http://52.51.59.126:8182/api/v1/start-fb-live");
                 //// List data response.
                 //HttpResponseMessage response = client.GetAsync("").Result;
@@ -54,7 +54,7 @@ namespace MCNMedia_Dev._Helper
         {
             try
             {
-                return PostAsync("http://52.51.59.126:8182/api/v1/stop-fb-live", jsonData);
+                return PostAsync("http://54.217.38.80:8182/api/v1/stop-fb-live", jsonData);
             }
             catch (Exception ex)
             {

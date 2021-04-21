@@ -147,13 +147,21 @@
 
     <!-- banner slider start -->
     <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
-        <div class="container">
-            @if (Model.Churches.ChurchId != 0)
-            {
-                <span>@Model.Churches.ChurchName , @Model.Churches.Town</span>
-            }
+       
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-11">
+                    <div class="float-left">
+                        @if (Model.Churches.ChurchId != 0)
+                        {
+                            <span class="float-center">@Model.Churches.ChurchName , @Model.Churches.Town</span>
+                        }
+                    </div>
+                    </div>
+            </div>
+           
         </div>
-    </div>
+   
 
     <input type="hidden" asp-for="Churches.Slug" id="hfslug" />
     <input type="hidden" value=@ViewData["slugForlockPage"] id="hfslug" />
@@ -179,7 +187,7 @@
                 <div class="col-top-img p-0 font-14 mt-3 ">
                     <p class="icon-top-s float-left  text-wrap">
                         <div class="row">
-                            <div class="col-1"> </div>
+                            
                             <div class="col-1">
                                 <i class="fas fa-home font-25 "></i>
                             </div>
@@ -194,7 +202,7 @@
                     </p>
                     <p class="icon-top-s float-left   text-wrap">
                         <div class="row">
-                            <div class="col-1"> </div>
+                         
                             <div class="col-1">
                                 <i class="fas fa-envelope font-25 "></i>
                             </div>
@@ -211,7 +219,7 @@
                     </p>
                     <p class="icon-top-s float-left text-wrap">
                         <div class="row">
-                            <div class="col-1"> </div>
+                          
                             <div class="col-1">
                                 <i class="fas fa-globe font-25"></i>
                             </div>
