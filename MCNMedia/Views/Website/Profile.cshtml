@@ -112,6 +112,9 @@
         background-color: blue;
         display: block;
     }
+    .wordbreak {
+        overflow-wrap: break-word;
+    }
 </style>
 <div class="row m-0 mb-3">
     <div class="col-lg-12">
@@ -168,135 +171,8 @@
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
             <div class="col-1 d-xl-block d-none"></div>
-            <div class="MobileContent col-xl-3 col-lg-4  p-md-0 p-xl-0">
-                <!-- <div class="row m-0"> -->
-                <div class="col-top-img p-0">
-                    <div class="row">
 
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4">
-                            <img src="@Model.Churches.ImageURl" alt="" class="rounded-lg main-img">
-
-                        </div>
-                       
-                    </div>
-                   
-                </div>
-                <div class="col-top-img p-0 font-14 mt-3 ">
-                    <p class="icon-top-s float-left  text-wrap">
-                        <div class="row">
-                            
-                            <div class="col-1">
-                                <i class="fas fa-home font-25 "></i>
-                            </div>
-                            <div class="col-8">
-                                <div class="float-left ml-2">
-                                    @Model.Churches.ChurchName, @Model.Churches.Town
-                                </div>
-                              
-                            </div>
-                            <div class="col-1"></div>
-                        </div>
-                    </p>
-                    <p class="icon-top-s float-left   text-wrap">
-                        <div class="row">
-                         
-                            <div class="col-1">
-                                <i class="fas fa-envelope font-25 "></i>
-                            </div>
-                            <div class="col-8">
-                                <div class="float-left ml-2">
-                                    @Model.Churches.EmailAddress
-                                </div>
-                                
-                            </div>
-                            <div class="col-1"></div>
-                        </div>
-                       
-                      
-                    </p>
-                    <p class="icon-top-s float-left text-wrap">
-                        <div class="row">
-                          
-                            <div class="col-1">
-                                <i class="fas fa-globe font-25"></i>
-                            </div>
-                            <div class="col-8 ">
-                                <div class="float-left ml-2">   @Model.Churches.Website</div>
-                             
-                            </div>
-                            <div class="col-1"></div>
-                        </div>
-                    
-                       
-                    </p>
-                </div>
-                <br />
-
-                @if (Model.Churches.ScheduleShowOnWebSite == false)
-                {
-                    <div class=" border border-dark col-sm-10 pr-0 pl-0 rounded-lg">
-                        <div class="card-header-custom text-white font-20 text-center w-100  "
-                             style="background-color: #1f4a79;">
-                            Next Scheduled Event
-                        </div>
-                        <div class="card-body">
-                            <div class=" font-18 text-center">
-                                @if (Model.NextScheduleList != null)
-                                {
-                                    if (Model.NextScheduleList.Count() > 0)
-                                    {
-                                        @foreach (var schedule in Model.NextScheduleList.Take(1))
-                                        {
-                                            @if (schedule.IsRepeated == true && schedule.Record == true)
-                                            {
-                                                <b>
-                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
-                                                </b><br />
-                                            }
-                                            else if (schedule.IsRepeated == true && schedule.Record == false)
-                                            {
-                                                <b>
-                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                </b><br />
-                                            }
-                                            else if (schedule.IsRepeated == false && schedule.Record == true)
-                                            {
-                                                <b>
-                                                    @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-                                                </b><br />
-                                            }
-                                            else
-                                            {
-                                                <b>
-                                                    @schedule.EventName
-                                                </b><br />
-                                            }
-                                            <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <br />
-                                        <p>No Events Scheduled</p>
-                                    }
-                                }
-                                else
-                                {
-                                    <br />
-                                    <p>No Events Scheduled</p>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-                <br />
-                <!-- </div> -->
-                <div class="clearfix"></div>
-            </div>
-            <div class="col-xl-7 col-lg-8 col-md-12 p-lg-0">
+            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3">
                 <div class="card" id="top-card">
                     <div class="tab-content" id="pills-tabContent">
                         @{
@@ -322,7 +198,7 @@
                                             <div class="tab-pane fade show embed-responsive embed-responsive-16by9 @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
                                                 <i class="fal fa-play-circle text-white vide-play-in"></i>
 
-                                                <video id='CameraLiveStream-@camCounter' class="video-js vjs-16-9 vjs-default-skin embed-responsive-item" controls >
+                                                <video id='CameraLiveStream-@camCounter' class="video-js vjs-16-9 vjs-default-skin embed-responsive-item" controls>
                                                     <source id="LiveStreamSrc-@camCounter" src="@webMedia.MediaURL" type="application/x-mpegURL">
                                                     <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
                                                 </video>
@@ -349,9 +225,9 @@
                                     else if (webMedia.MediaType == "Picture")
                                     {
                                         <div class="tab-pane fade show @activeClassName embed-responsive embed-responsive-16by9" id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                            
-                                    <img src="@webMedia.MediaURL" class="d-block vjs-16-9  embed-responsive-item" alt="...">
-                                                 
+
+                                            <img src="@webMedia.MediaURL" class="d-block vjs-16-9  embed-responsive-item" alt="...">
+
                                         </div>
                                     }
                                     else if (webMedia.MediaType == "SlideShow")
@@ -418,7 +294,7 @@
                                             <i class="fal fa-play-circle text-white vide-play-in"></i>
 
                                             <video id='vid-@videoCount' controls class='video-js vjs-16-9 vjs-default-skin embed-responsive-item'>
-                                                <source id="vvid-@videoCount" src="@webMedia.MediaURL" >
+                                                <source id="vvid-@videoCount" src="@webMedia.MediaURL">
                                                 <track label="English subtitles" kind="subtitles" srclang="en" src="/static/the-web-is-always-changing.vtt" default="">
                                             </video>
                                         </div>
@@ -478,7 +354,7 @@
                                         </li>
                                         camTabCounter++;
                                     }
-                                    else  if (webMedia.MediaType == "Video")
+                                    else if (webMedia.MediaType == "Video")
                                     {
                                         <li class="nav-item">
                                             <a class="nav-link @activeClassName pt-1 pb-1 pl-sm-3 pr-sm-3 pl-2 pr-2 text-white" onclick="  OpenVidJs('vid-@countVideos')" id="pills-@webMedia.MediaType-tab-@tabCounter" data-toggle="pill" href="#pills-@webMedia.MediaType-@tabCounter" role="tab" aria-controls="pills-@webMedia.MediaType-@tabCounter" aria-selected="true">@webMedia.TabName</a>
@@ -523,7 +399,152 @@
                     }
                 }
             </div>
-            <div class="col-1 d-xl-block d-none"></div>
+
+            <div class="MobileContent col-xl-2 col-lg-3 col-md-12 col-sm-12 ">
+                <!-- <div class="row m-0"> -->
+                <div class="col-top-img p-0 ">
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <div class="float-left">
+                                <img src="@Model.Churches.ImageURl" alt="" class="rounded-lg main-img">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-top-img p-0 font-14 mt-3 ">
+                    <div class="card">
+                        <div class="card-body p-1">
+                            <p class="icon-top-s">
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="float-left">
+                                            <i class="fas fa-home font-25 "></i>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 ml-2 ">
+                                        <div class="float-left text-left wordbreak" style="max-width:18ch; text-align:left">
+                                            @Model.Churches.ChurchName, @Model.Churches.Town
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </p>
+                            <p class="icon-top-s">
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="float-left">
+                                            <i class="fas fa-envelope font-25 "></i>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 ml-2 ">
+                                        <div class="float-left text-left wordbreak" style="max-width:18ch; text-align:left">
+                                            @Model.Churches.EmailAddress
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </p>
+                            <p class="icon-top-s">
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="float-left">
+                                            <i class="fas fa-globe font-25 "></i>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 ml-2  ">
+                                        <div class="float-left text-left wordbreak" style="max-width:18ch; text-align:left">
+
+                                            @Model.Churches.Website
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <br />
+
+                @if (Model.Churches.ScheduleShowOnWebSite == false)
+                {
+                    <div class=" border border-dark col-sm-12 pr-0 pl-0 rounded-lg">
+                        <div class="card-header-custom text-white font-20 text-center w-100  "
+                             style="background-color: #1f4a79;">
+                            Next Scheduled Event
+                        </div>
+                        <div class="card-body">
+                            <div class=" font-18 text-center">
+                                @if (Model.NextScheduleList != null)
+                                {
+                                    if (Model.NextScheduleList.Count() > 0)
+                                    {
+                                        @foreach (var schedule in Model.NextScheduleList.Take(1))
+                                        {
+                                            @if (schedule.IsRepeated == true && schedule.Record == true)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
+                                                </b><br />
+                                            }
+                                            else if (schedule.IsRepeated == true && schedule.Record == false)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                </b><br />
+                                            }
+                                            else if (schedule.IsRepeated == false && schedule.Record == true)
+                                            {
+                                                <b>
+                                                    @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
+                                                </b><br />
+                                            }
+                                            else
+                                            {
+                                                <b>
+                                                    @schedule.EventName
+                                                </b><br />
+                                            }
+                                            <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <br />
+                                        <p>No Events Scheduled</p>
+                                    }
+                                }
+                                else
+                                {
+                                    <br />
+                                    <p>No Events Scheduled</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+                <!-- </div> -->
+                <div class="clearfix"></div>
+            </div>
+
         </div>
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
             <div class="col-1 d-xl-block d-none"></div>
@@ -1211,21 +1232,27 @@
         <!-- recording start -->
         @if (Model.Churches.RecordingShowOnWebSite == false)
         {
-            <div class="bg-blue">
-                <div class="container">
-                    <div class="row m-0 ">
-                        <div class="text-white font-30 text-center pt-4  avantgardece">
-                            Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
-                        </div>
-                        <div class="text-white font-14  pt-2 pb-4 avantgardece">
+            <div class="bg-blue ">
 
-                            If the event you are looking for is not listed below then it was NOT RECORDED and NO PLAYBACK is available.<br>
-                            All recording queries and requests should be directed to the Parish.
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-11">
+                        <div class="float-left">
+                            <div class="text-white font-30 text-center pt-4  avantgardece">
+                                Recordings of past events at @Model.Churches.ChurchName, @Model.Churches.Town
+                            </div>
+                            <div class="text-white font-14  pt-2 pb-4 avantgardece">
 
+                                If the event you are looking for is not listed below then it was NOT RECORDED and NO PLAYBACK is available.<br>
+                                All recording queries and requests should be directed to the Parish.
+
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+         
             <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
                 <div class="col-1 d-xl-block d-none"></div>
                 <div class="col-xl-10">
@@ -1233,10 +1260,10 @@
                         <div class="col-12 pt-4 pb-1 pr-4">
                             <div class="row ">
                                 @*<div class="col-12">
-                                        <button id="btnRecordingSearch" type="button" class="btn btn-pink text-white float-right font-14 " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
-                                        <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
-                                        </div>
-                                    </div>*@
+                                    <button id="btnRecordingSearch" type="button" class="btn btn-pink text-white float-right font-14 " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
+                                    <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
+                                    </div>
+                                </div>*@
 
                                 <div class="col-12">
                                     <div class="card card-body border bg-white  rounded-lg row m-0">
