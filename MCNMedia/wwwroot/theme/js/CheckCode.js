@@ -442,11 +442,6 @@
                 name: "Delete",
                 icon: "delete"
             },
-
-            "play": {
-                name: "Play",
-                icon: "play"
-            },
             "download": {
                 name: "Download",
                 icon: "download"
