@@ -20,31 +20,13 @@
         display: block !important;
     }
 
-    @@media (max-width: 480px) {
+   @@media only screen and (min-width: 770px) {
+ 
+  .ChurchInfoCard {
+   display:none;
+  }
+}
 
-
-        .jw-player {
-            height: 184.5px !important;
-        }
-    }
-
-    @@media (min-width: 481px) {
-
-
-
-        .jwplayer {
-            height: 414px !important;
-        }
-    }
-
-    @@media (min-width: 801px) {
-
-
-
-        .jwplayer {
-            height: 518px !important;
-        }
-    }
 </style>
 
 
@@ -112,6 +94,7 @@
         background-color: blue;
         display: block;
     }
+
     .wordbreak {
         overflow-wrap: break-word;
     }
@@ -150,26 +133,26 @@
 
     <!-- banner slider start -->
     <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
-       
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-11">
-                    <div class="float-left">
-                        @if (Model.Churches.ChurchId != 0)
-                        {
-                            <span class="float-center">@Model.Churches.ChurchName , @Model.Churches.Town</span>
-                        }
-                    </div>
-                    </div>
+
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-11">
+                <div class="float-left">
+                    @if (Model.Churches.ChurchId != 0)
+                    {
+                        <span class="float-center">@Model.Churches.ChurchName , @Model.Churches.Town</span>
+                    }
+                </div>
             </div>
-           
         </div>
-   
+
+    </div>
+
 
     <input type="hidden" asp-for="Churches.Slug" id="hfslug" />
     <input type="hidden" value=@ViewData["slugForlockPage"] id="hfslug" />
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
-        <div class="row m-0 mb-5 pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
+        <div class="row m-0 mb-3 pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
             <div class="col-1 d-xl-block d-none"></div>
 
             <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3">
@@ -299,11 +282,11 @@
                                             </video>
                                         </div>
                                         @*<div class="tab-pane fade show @activeClassName " id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
-                                            <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
-                                                <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
+                                                <div id="owl-carousel-video" class="owl-carousel owl-theme owl-center owl-loaded ">
+                                                    <div id='v-@webMedia.MediaId' mediaurl="@webMedia.MediaURL" class="vedslide"></div>
 
-                                            </div>
-                                        </div>*@
+                                                </div>
+                                            </div>*@
                                         videoCount++;
                                     }
                                     tabCounter = tabCounter + 1;
@@ -545,6 +528,30 @@
                 <div class="clearfix"></div>
             </div>
 
+        </div>
+        <div class="row ChurchInfoCard">
+            
+            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3">
+                <div class="card m-3">
+                    <div class="card-body">
+                        <table>
+                            <tr class="m-2 pt-2">
+                                <td class="p-2"> <i class="fas fa-home font-25 mr-3"></i></td>
+                                <td>@Model.Churches.ChurchName, @Model.Churches.Town</td>
+                            </tr>
+                            <tr  class="m-2 pt-2">
+                                <td class="p-2"> <i class="fas fa-envelope font-25 mr-3"></i></td>
+                                <td>  @Model.Churches.EmailAddress</td>
+                            </tr>
+                            <tr  class="m-2 pt-2">
+                                <td class="p-2"><i class="fas fa-globe font-25 mr-3 "></i></td>
+                                <td style="max-width:18ch; text-align:left">  @Model.Churches.Website</td>
+                            </tr>
+                        </table>
+                      
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row m-0 mb-5 pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3">
             <div class="col-1 d-xl-block d-none"></div>
@@ -1252,7 +1259,7 @@
                 </div>
 
             </div>
-         
+
             <div class="row m-0 pl-xl-0 pl-lg-5 pr-xl-0 pr-lg-5">
                 <div class="col-1 d-xl-block d-none"></div>
                 <div class="col-xl-10">
@@ -1260,10 +1267,10 @@
                         <div class="col-12 pt-4 pb-1 pr-4">
                             <div class="row ">
                                 @*<div class="col-12">
-                                    <button id="btnRecordingSearch" type="button" class="btn btn-pink text-white float-right font-14 " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
-                                    <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
-                                    </div>
-                                </div>*@
+                                        <button id="btnRecordingSearch" type="button" class="btn btn-pink text-white float-right font-14 " data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search Recording</button>
+                                        <div class="collapse bg-white  news row m-0 mt-2 w-100" id="collapseExample">
+                                        </div>
+                                    </div>*@
 
                                 <div class="col-12">
                                     <div class="card card-body border bg-white  rounded-lg row m-0">
@@ -1328,7 +1335,7 @@
 <script src="~/js/jwplayer.js"></script>
 <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script type="text/javascript">
-   
+
     window.onresize = myFunction;
     function OpenCamera(camId) {
 
@@ -1336,7 +1343,7 @@
         var player = videojs(camId);
         player.autoplay(false);
     }
-   
+
     function OpenVidJs(VidId) {
 
         //$('#LiveStreamSrc').attr("src", '' + liveUrl + '');
@@ -1357,7 +1364,7 @@
     }
 
     function onDownloadClickWebsite(url) {
-      
+
 
         $.ajax({
             type: "POST",
@@ -1403,10 +1410,10 @@
         });
 
     }
-   
+
 
     $(document).ready(function ($) {
-    
+
         OpenCamera('CameraLiveStream-0');
         OpenVidJs('vid-0');
         LoadRecordingList();
@@ -1415,10 +1422,10 @@
     });
 
     function myFunction() {
-        
+
         if ($(window).width() > 200 && $(window).width() <= 370) {
 
-           
+
             $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
             $('.slideshowcarousel').attr("style", "height:184.5px !important");
 
@@ -1432,38 +1439,38 @@
         }
         else if ($(window).width() > 380 && $(window).width() <= 480) {
 
-          
+
             $('.embed-responsive-16by9').attr("style", "height:214.867px !important");
             $('.slideshowcarousel').attr("style", "height:214.867px !important");
 
         }
         else if ($(window).width() > 480 && $(window).width() <= 800) {
 
-           
+
             $('.embed-responsive-16by9').attr("style", "height:414px !important");
             $('.slideshowcarousel').attr("style", "height:414px !important");
 
         }
         else if ($(window).width() > 800 && $(window).width() <= 1030) {
 
-         
+
             $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
             $('.slideshowcarousel').attr("style", "height:370.867px !important");
         }
         else if ($(window).width() > 1030 && $(window).width() <= 1400) {
 
-          
+
             $('.embed-responsive-16by9').attr("style", "height:441.5px !important");
             $('.slideshowcarousel').attr("style", "height:441.5px !important");
         }
         else if ($(window).width() > 1400 && $(window).width() <= 1600) {
 
-           
+
             $('.embed-responsive-16by9').attr("style", "height:497.36px !important");
             $('.slideshowcarousel').attr("style", "height:497.36px !important");
         }
         else {
-           
+
             $('.embed-responsive-16by9').attr("style", "height:544.35px !important");
             $('.slideshowcarousel').attr("style", "height:544.35px  !important");
         }
@@ -1493,12 +1500,12 @@
         var eventtime = document.getElementById("eventtime");
         var currenttime = document.getElementById("clock");
         if (eventtime > currenttime) {
-           
+
             return true;
 
         }
         else {
-        
+
             return false;
         }
     }
@@ -1565,7 +1572,7 @@
 
             },
             error: function (errormessage) {
-             //   alert(errormessage);
+                //   alert(errormessage);
             }
         });
     }
