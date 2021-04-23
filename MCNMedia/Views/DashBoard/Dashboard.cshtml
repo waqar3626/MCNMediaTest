@@ -285,7 +285,7 @@
                                     ANALYTICS
 
                                     <div class="col-sm-2 pull-right">
-                                        <button id="googleAnalyticsBtn" class="btn btn-primary btn text-white" title="Search">Go</button>
+                                        <a id="googleAnalyticsBtn" class="btn btn-primary btn text-white" title="Search">Go</a>
                                     </div>
 
                                     <div class="col-sm-6 pull-right">
@@ -353,56 +353,88 @@
                                         <tbody>
                                             @foreach (var item in Model.LDashBoardClients)
                                             {
-                                <tr>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
-                                    </td>
-                                    <td class="text-wrap">
-                                        @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
-                                    </td>
-                                    @if (item.ScheduleStatus == "Pending")
-                                    {
-                    <td class="font-weight-medium text-danger">
-                        @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                <tr>
+                                                    <td class="text-wrap">
+                                                        @Html.DisplayFor(modelItem => item.ChurchName, new { @class = "text-wrap" })
                                                     </td>
-                                 }
-                                                else if (item.ScheduleStatus == "In Progress")
-                                                {
-                                <td class="font-weight-medium text-warning">
-                                    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                </td>
-                                 }
-                                else if (item.ScheduleStatus == "Completed")
-                                {
-                                <td class="font-weight-medium text-info">
-                                    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                </td>
-                                 }
-                                else if (item.ScheduleStatus == "Published")
-                                {
-                                <td class="font-weight-medium text-success">
-                                    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                </td>
-                                 }
-                                else if (item.ScheduleStatus == "Waiting")
-                                {
-                                <td class="font-weight-medium text-black">
-                                    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                </td>
-                                 }
-                                else
-                                {
-                                <td class="font-weight-medium text-behance">
-                                    @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
-                                </td>
-                                }
-                                                                    <td class="text-wrap">
-                                                                        @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
-                                                                    </td>
-                                                                </tr>
-                                }
+                                                    <td class="text-wrap">
+                                                        @Html.DisplayFor(modelItem => item.ScheduleEventName, new { @class = "text-wrap" })
+                                                    </td>
+                                                    @if (item.ScheduleStatus == "Pending")
+                                                    {
+                                                        <td class="font-weight-medium text-danger">
+                                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                        </td>
+                                                    }
+                                                    else if (item.ScheduleStatus == "In Progress")
+                                                    {
+                                                        <td class="font-weight-medium text-warning">
+                                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                        </td>
+                                                    }
+                                                    else if (item.ScheduleStatus == "Completed")
+                                                    {
+                                                        <td class="font-weight-medium text-info">
+                                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                        </td>
+                                                    }
+                                                    else if (item.ScheduleStatus == "Published")
+                                                    {
+                                                        <td class="font-weight-medium text-success">
+                                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                        </td>
+                                                    }
+                                                    else if (item.ScheduleStatus == "Waiting")
+                                                    {
+                                                        <td class="font-weight-medium text-black">
+                                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="font-weight-medium text-behance">
+                                                            @Html.DisplayFor(modelItem => item.ScheduleStatus, new { @class = "text-wrap" })
+                                                        </td>
+                                                    }
+                                                    <td class="text-wrap">
+                                                        @Html.DisplayFor(modelItem => item.ScheduleEventTime, new { @class = "text-wrap" })
+                                                    </td>
+                                                </tr>
+                                            }
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ChartsGoogleAnalytics" >
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header card-header-custom">
+                                    Google Analytics Map chart
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="google-chart-container">
+                                        <div id="regions-chart" class="google-charts"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header card-header-custom">
+                                    Google Analytics Donut chart
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="google-chart-container">
+                                        <div id="Donut-chart" class="google-charts"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -415,14 +447,19 @@
 
     </div>
 </div>
-
 <script src="~/theme/vendors/chart.js/Chart.min.js"></script>
+
 <script>
-     $(document).ready(function () {
+    
+    $(document).ready(function () {
+       
         var date = '@ViewBag.SchDate';
          $('#SetEventDate').val(date);
-
+        $('#ChartsGoogleAnalytics').hide();
          GoogleAnalyticsClick();
+        
+
+
     });
 
     
@@ -437,7 +474,7 @@
     );
 
 
-
+ 
 
     function GoogleAnalyticsClick() {
         displayBusyIndicator();
@@ -453,7 +490,9 @@
 
                 var html = '';
                 var Total = 0;
-
+                var res = [];
+                res[0] = ['Country', 'Views'];
+              
                 $.each(result, function (key, item) {
 
                     html += '<tr>';
@@ -461,7 +500,8 @@
 
                     html += '<td>' + item.count + '</td>'
                     Total += item.count;
-
+                    res.push([item.countryName, item.count]);
+                   
 
 
 
@@ -470,6 +510,59 @@
 
                 $('#tableData').html(html);
                 $('#TotalCount').html(Total);
+                google.charts.load('current', {
+                    'packages': ['geochart'],
+                    // Note: you will need to get a mapsApiKey for your project.
+                    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+                    'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+                });
+                
+           
+                google.charts.setOnLoadCallback(drawRegionsMapNew);
+
+                function drawRegionsMapNew() {
+                   
+                    var data = google.visualization.arrayToDataTable(res);
+
+                    var options = {
+                        colorAxis: {
+                            colors: ['#76C1FA', '#63CF72', '#F36368', '#FABA66']
+                        }
+                    };
+                    var chart = new google.visualization.GeoChart(document.getElementById('regions-chart'));
+
+                    chart.draw(data, options);
+                }
+
+                // Donut Chart Starts
+
+                google.charts.load("current", {
+                    packages: ["corechart"]
+                });
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(res);
+
+                    var options = {
+                        title: 'Google Analytics',
+                        pieHole: 0.4,
+                        colors: ['#76C1FA', '#63CF72', '#F36368', '#FABA66'],
+                        chartArea: {
+                            width: 500
+                        },
+                    };
+
+                    var Donutchart = new google.visualization.PieChart(document.getElementById('Donut-chart'));
+                    Donutchart.draw(data, options);
+                }
+
+                if (Total != 0) {
+                    $('#ChartsGoogleAnalytics').show();
+                }
+                else {
+                    $('#ChartsGoogleAnalytics').hide();
+                }
 
                 displayBusyIndicator2();
             },
@@ -481,6 +574,8 @@
     }
    
 
+    // Region Charts Starts
 
+    
 
 </script>
