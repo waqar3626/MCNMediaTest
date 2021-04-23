@@ -93,10 +93,6 @@
             background-color: #f8d7da;
             border-color: #f5c6cb;
         }
-        body {
-           
-            overflow-x: hidden; /* Hide horizontal scrollbar */
-        }
     </style>
 
 </head>
@@ -601,10 +597,9 @@
     <script src="~/theme/vendors/lightgallery/js/lightgallery-all.min.js"></script>
     <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
     <script src="~/theme/vendors/inputmask/jquery.inputmask.bundle.js"></script>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="~/theme/js/inputmask.js"></script>
     <script src="~/theme/js/CheckCode.js"></script>
-   
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- End custom js for this page-->
     <!-- End custom js for this page-->
     <script>
@@ -620,7 +615,7 @@
         $(window).unload(function () {
             displayBusyIndicator();
         });
-       
+        s
         $(document).on('submit', 'form', function () {
             displayBusyIndicator();
         });
@@ -630,7 +625,10 @@
             $('#ChangeModal').modal('show');
         }
 
+    </script>
 
+
+    <script type="text/javascript">
 
         $(function () {
             $("#datepicker").datepicker({
