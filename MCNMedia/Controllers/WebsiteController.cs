@@ -54,13 +54,17 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult ContactUs(Website web)
 
         {
             try
             {
-                
+                //if (!_validatorService.HasRequestValidCaptchaEntry(Language.English, DisplayMode.ShowDigits))
+                //{
+                //    ViewBag.ErrorMsg = "InValid Captcha Kindly Provide a valid Captcha";
+                //    return View(web);
+                //}
 
                 bool containsHTML = (web.ContactName != HttpUtility.HtmlEncode(web.ContactName));
                 bool containsHTML2 = (web.ContactEmail != HttpUtility.HtmlEncode(web.ContactEmail));
