@@ -118,16 +118,19 @@ namespace MCNMedia_Dev.Controllers
 
                 string videoTitle = "Video" + Guid.NewGuid().ToString() + DateTime.Now.ToString("dd-MMM-yyyy");
                 string videoFormt = "mp4";
-              
-                string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                string sFilePath = string.Format(Path.Combine(downloadPath, "Downloads\\{0}.{1}"), videoTitle, videoFormt);
+                   
+                string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string sFilePath = string.Format(Path.Combine(downloadPath, "MCN Videos\\{0}.{1}"), videoTitle, videoFormt);
 
+                if (!Directory.Exists(downloadPath+ "\\MCN Videos"))
+                {
+                    Directory.CreateDirectory(downloadPath + "\\MCN Videos");
+                }
 
 
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
                 webClient.DownloadFileAsync(new Uri(url), sFilePath);
-               
                 return Json(new { success = true, responseText = "The attached file is not supported." });
             }
             catch (Exception exp)
