@@ -1598,7 +1598,7 @@
                     html += '<div class="row"><div class="col-lg-8 col-md-8 col-sm-8 pb-2"><div class="font-weight-light in-icon-arrow d-inline-block font-10"><p class="mb-0">' + Datestring + '</p></div></div>';
                     var srcUrl = "'" + item.src + "'";
                     if (item.allowDownload) {
-                        html += '<div class="col-lg-4 col-md-4 col-sm-4 pb-3"><a onclick="onDownloadClickWebsite(' + srcUrl + ')" class="text-warning "   title="Download"><i class="fal fa-arrow-circle-down font-36"></i></a>&nbsp;&nbsp;<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a></div></div>';
+                        html += '<div class="col-lg-4 col-md-4 col-sm-4 pb-3"><a href="' + item.src+'" download="recordingVideos.mp4" class="text-warning "   title="Download"><i class="fal fa-arrow-circle-down font-36"></i></a>&nbsp;&nbsp;<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a></div></div>';
 
                     }
                     else {

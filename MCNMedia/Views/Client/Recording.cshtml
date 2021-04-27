@@ -228,50 +228,9 @@
 
         });
     function onDownloadClick(url) {
-        alert(url);
-
-        $.ajax({
-            type: "POST",
-            url: "/Recording/onDownloadClick/",
-            //data: camObj,
-
-            data: { url: url },
-
-            //   contentType: "application/json;charset=UTF-8",
-            //  dataType: "json",
-            success: function (response) {
-                if (response.success) {
-                    $(window).scrollTop(0);
-
-                    $('#DownloadRecordingSuccessMessage').removeAttr('hidden');
-                    $('#DownloadRecordingSuccessMessage').html('Kindly check your download folder file downloading is in progress');
-                    $('#DownloadRecordingSuccessMessage').fadeIn();
-                    $('#DownloadRecordingSuccessMessage').fadeTo(5000, 500).slideUp(500, function () {
-                        $("#DownloadRecordingSuccessMessage").slideUp(500);
-                    });
-                    $('#DownloadRecordingSuccessMessage').attr('hidden');
-
-
-                }
-                else {
-                    $(window).scrollTop(0);
-                    $('#DownloadRecordingErrorMessage').removeAttr('hidden');
-                    $('#DownloadRecordingErrorMessage').html(response.text);
-                    $('#DownloadRecordingErrorMessage').fadeIn();
-                    $('#DownloadRecordingErrorMessage').fadeTo(5000, 500).slideUp(500, function () {
-                        $("#DownloadRecordingErrorMessage").slideUp(500);
-                    });
-                    $('#DownloadRecordingErrorMessage').attr('hidden');
-
-
-                }
-
-            },
-            error: function (errormessage) {
-                //alert(errormessage.responseText);
-            }
-
-        });
+       
+       
+        window.location.href = url;
 
     }
 
