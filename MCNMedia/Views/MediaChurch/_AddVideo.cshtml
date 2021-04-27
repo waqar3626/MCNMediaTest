@@ -5,6 +5,21 @@
 
 @using (Html.BeginForm("AddVideo", "MediaChurch", FormMethod.Post, new { enctype = "multipart/form-data", @id = "AddVideoForm" }))
 {
+
+    <div class="progress progress-lg mt-2">
+        <div id="progress" class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+            <label class="control-label" id="label">0%</label>
+        </div>
+    </div>
+    @*<div class="progress">
+            <div id="progressBardiv" class="Circle Progress Bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+                <span class="sr-only"></span>
+            </div>
+        </div>*@
+
+    @*<div class="progress progress-lg mt-2">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+        </div>*@
     <div class="row m-0 mb-3">
         <div class="col-lg-12">
             <div class="alert alert-danger" id="addVideoErrorMessage" hidden>
@@ -16,7 +31,7 @@
     </div>
     <div class="form-group row p-3" id="alertDiv11">
         <div class="col-md-12">
-            <div class="alertNew alert-dangerNew"  id="alertLabel11">
+            <div class="alertNew alert-dangerNew" id="alertLabel11">
 
             </div>
         </div>
@@ -41,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="btnAddVideos">
                     <div class="float-right">
                         <a onclick="AddVid()" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="bottom" title="Add"><i class="mdi mdi-content-save text-white"></i>Add</a>
                         <a id="back" class="btn btn-warning btn-sm text-white " data-dismiss="modal" aria-label="Close" title="Cancel"><i class="fa fa-window-close-o text-white"></i> Cancel</a>
@@ -58,7 +73,7 @@
         function AddVid() {
 
             var ss = '';
-
+            
             var VidTabName = document.getElementById('AddMedVidTabName').value;
             var formData = new FormData();
             formData.append("mediaType", "Video");
@@ -105,16 +120,17 @@
             }
             else {
                 $('#AddMedVidTabName').attr('class', 'form-control');
-           
+
                 $('#alertDiv11').hide();
             }
-
-            formData.append("mediaFile", input.files[0]);
-            $('#AddddModal').modal('hide');
-            displayBusyIndicator();
+            $('#btnAddVideos').hide();
+            formData.append("files", input.files[0]);
+            //$('#AddddModal').modal('hide');
+            //displayBusyIndicator();
+            startUpdatingProgressIndicator();
             $.ajax({
                 type: "POST",
-                url: "/MediaChurch/AddVideo/",
+                url: "/MediaChurch/Upload/",
 
                 data: formData,
                 processData: false,  // tell jQuery not to process the data
@@ -124,12 +140,16 @@
 
 
                 success: function (result) {
-                   
+
                     if (result.success) {
                         loadVideo();
+                      
                         $('#AddVideoForm')[0].reset();
-                        displayBusyIndicator2();
+                        $('#btnAddVideos').show();
+                        $("#progress").hide();
                         $('#AddddModal').modal('hide');
+                        $("#progress").css({ width: 0+ "%" });
+                        $("#label").html(0+"%");
                         clearDropifyVideo();
                         $('#addMediaSuccessMessage').removeAttr('hidden');
                         $(window).scrollTop(0);
@@ -139,11 +159,13 @@
                             $("#addMediaSuccessMessage").slideUp(500);
                         });
                         $('#addMediaSuccessMessage').attr('hidden');
-                       
+
                     }
                     else {
-                       
+                        alert(result.responseText);
+                        $('#btnAddVideos').show(); 
                         $('#AddddModal').modal('show');
+
                         $('#addVideoErrorMessage').removeAttr('hidden');
                         $('#addVideoErrorMessage').html(result.responseText);
                         $('#addVideoErrorMessage').fadeIn();
@@ -167,5 +189,74 @@
             EventDre.resetPreview();
             EventDre.clearElement();
         }
+        var intervalId;
+
+        function startUpdatingProgressIndicator() {
+            $("#progress").show();
+
+            intervalId = setInterval(
+                function () {
+                    // We use the POST requests here to avoid caching problems (we could use the GET requests and disable the cache instead)
+                    $.post(
+                        "/MediaChurch/Progress/",
+                        function (progress) {
+                            //$("#bar").css({ width: progress + "%" });
+                            $("#progress").css({ width: progress + "%" });
+                            $("#label").html(progress + "%");
+                        }
+                    );
+                },
+                10
+            );
+        }
+
+        function stopUpdatingProgressIndicator() {
+            clearInterval(intervalId);
+            $('#AddddModal').modal('hide');
+
+        }
     </script>
+
+    @*<script>
+        $(document).ready(function () {
+            $('#Upload').click(function () {
+
+                var fileUpload = $("#files").get(0);
+                var files = fileUpload.files;
+
+                // Create  a FormData object
+                var fileData = new FormData();
+
+                // if there are multiple files , loop through each files
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/Home/UploadFiles", true);
+                xhr.upload.onprogress = function (e) {
+
+                    if (e.lengthComputable) {
+                        //updating progress bar here
+                        $("#progressBardiv").attr('max', e.total);
+                        $("#progressBardiv").css('width', e.loaded);
+
+                    }
+                }
+                xhr.upload.onloadstart = function (e) {
+                    //updating progress bar on strt of AJAX request
+                    $("#progressBardiv").css('width', 0);
+
+                }
+                xhr.upload.onloadend = function (e) {
+                    //called on file upload is done.
+                    $("#progressBardiv").css('width', e.loaded);
+
+                }
+                //send form Data
+                xhr.send(fileData);
+
+            });
+        });
+    </script>*@
 }

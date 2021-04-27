@@ -11,11 +11,14 @@ using System.IO;
 using MCNMedia_Dev._Helper;
 using BitMiracle.Docotic.Pdf;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http.Headers;
 
 namespace MCNMedia_Dev.Controllers
 {
     public class MediaChurchController : Controller
     {
+        private IHostingEnvironment hostingEnvironment;
+
         private readonly string AWS_S3_BUCKET_URI;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -24,8 +27,9 @@ namespace MCNMedia_Dev.Controllers
 
         private IWebHostEnvironment environment;
 
-        public MediaChurchController(IWebHostEnvironment _environment)
+        public MediaChurchController(IWebHostEnvironment _environment, IHostingEnvironment _hostingEnvironment)
         {
+            hostingEnvironment = _hostingEnvironment;
             environment = _environment;
             IConfigurationBuilder builder = new ConfigurationBuilder();
             builder.AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
@@ -48,6 +52,130 @@ namespace MCNMedia_Dev.Controllers
             }
 
         }
+
+        #region upload file
+        [HttpPost]
+        [DisableRequestSizeLimit]
+        [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
+        public async Task<IActionResult> Upload(IFormFile files, string mediaType, String AddVidTabName)
+        {
+            long totalBytes = files.Length;
+            long totalReadBytes = 0;
+
+
+            string filename = ContentDispositionHeaderValue.Parse(files.ContentDisposition).FileName.ToString().Trim('"');
+
+            filename = this.EnsureCorrectFilename(filename);
+            byte[] buffer = new byte[16 * 1024];
+
+            string namafileExcell = "";
+            string namafilenewExcell = "";
+            string extension = "";
+
+            namafileExcell = files.FileName;
+            extension = namafileExcell.Substring(namafileExcell.LastIndexOf('.') + 1);
+            namafileExcell = namafileExcell.Replace(namafileExcell.Substring(namafileExcell.LastIndexOf('.') + 1), "");
+            namafilenewExcell = namafileExcell.Replace(".", "") + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "." + extension;
+
+            try
+            {
+               
+                Startup.Progress = 0;
+
+          
+            var path = Path.Combine(
+            Directory.GetCurrentDirectory(), "wwwroot\\UploadFile",
+            namafilenewExcell);
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+            {
+                return RedirectToAction("Listchurch", "Church");
+            }
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+            {
+                    MediaChurch media = new MediaChurch();
+                media.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+                media.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+                media.MediaURL = FileUploadUtility.UploadFile(files, UploadingAreas.Video, media.ChurchId);
+                media.MediaType = mediaType;
+                media.MediaName = files.FileName.ToString();
+                media.TabName = AddVidTabName;
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await files.CopyToAsync(stream);
+                    }
+
+
+                    int readBytes;
+                    using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(namafilenewExcell)))
+                    {
+                        using (Stream input = files.OpenReadStream())
+                        {
+                            while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                await output.WriteAsync(buffer, 0, readBytes);
+                                totalReadBytes += readBytes;
+                                Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
+                                await Task.Delay(10); // It is only to make the process slower
+                            }
+                        }
+                    }
+                    System.IO.File.Delete(path);
+                    int res = mediaChurchDataAccess.AddMedia(media);
+                    return Json(new { success = true, responseText = "The attached file is not supported." });
+
+
+
+
+
+
+                }
+
+
+
+
+                return RedirectToAction("Listchurch", "Church");
+            }
+                catch (Exception err)
+                {
+                    string msgError = "";
+                    msgError = err.ToString();
+                    Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
+                    return Json(new { message = msgError });
+                }
+
+
+
+
+            
+        }
+
+        [HttpPost]
+        public ActionResult Progress()
+        {
+            return this.Content(Startup.Progress.ToString());
+        }
+
+        private string EnsureCorrectFilename(string filename)
+        {
+            if (filename.Contains("\\"))
+                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+
+            return filename;
+        }
+
+        private string GetPathAndFilename(string filename)
+        {
+            string path = this.hostingEnvironment.WebRootPath + "\\FileUpload\\";
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            return path + filename;
+        }
+
+        #endregion
 
         #region "Picture"
 
@@ -193,9 +321,13 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
-
-        public IActionResult AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
+        public async Task<IActionResult> AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
         {
+            Startup.Progress = 0;
+
+            long totalBytes = mediaFile.Length;
+            long totalReadBytes = 0;
+            byte[] buffer = new byte[16 * 1024];
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -211,6 +343,26 @@ namespace MCNMedia_Dev.Controllers
                     media.MediaType = mediaType;
                     media.MediaName = mediaFile.FileName.ToString();
                     media.TabName = AddVidTabName;
+                    using (var stream = new MemoryStream())
+                    {
+                        await mediaFile.CopyToAsync(stream);
+
+
+                    }
+                    int readBytes;
+                    FileStream output = System.IO.File.Create(media.MediaName);
+                    using (Stream input = mediaFile.OpenReadStream())
+                    {
+                        while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            await output.WriteAsync(buffer, 0, readBytes);
+                            totalReadBytes += readBytes;
+                            Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
+                            await Task.Delay(10); // It is only to make the process slower
+                        }
+                    }
+
+
 
                     int res = mediaChurchDataAccess.AddMedia(media);
 
@@ -220,9 +372,47 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
+                string msgError = "";
+                msgError = e.ToString();
+                Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
                 return Json(new { success = false, responseText = e.Message });
             }
         }
+
+        //[HttpPost]
+        //public ActionResult Progress()
+        //{
+        //    return this.Content(Startup.Progress.ToString());
+        //}
+        //public IActionResult AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
+        //{
+        //    try
+        //    {
+        //        if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+        //        {
+        //            return RedirectToAction("Listchurch", "Church");
+        //        }
+        //        if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
+        //        {
+        //            MediaChurch media = new MediaChurch();
+        //            media.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
+        //            media.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
+        //            media.MediaURL = FileUploadUtility.UploadFile(mediaFile, UploadingAreas.Video, media.ChurchId);
+        //            media.MediaType = mediaType;
+        //            media.MediaName = mediaFile.FileName.ToString();
+        //            media.TabName = AddVidTabName;
+
+        //            int res = mediaChurchDataAccess.AddMedia(media);
+
+        //            return Json(new { success = true, responseText = "The attached file is not supported." });
+        //        }
+        //        return RedirectToAction("Listchurch", "Church");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Json(new { success = false, responseText = e.Message });
+        //    }
+        //}
 
         public JsonResult ListVideo(string medType)
         {
@@ -330,22 +520,24 @@ namespace MCNMedia_Dev.Controllers
 
                 var UploadedFiles = HttpContext.Request.Form.Files;
 
-                if (UploadedFiles.Count != 0) { 
-                foreach (var file in UploadedFiles)
+                if (UploadedFiles.Count != 0)
                 {
-                    string Extension = Path.GetExtension(file.FileName);
-
-                    if (Extension.ToLower() == ".jpg" || Extension.ToLower() == ".png" || Extension.ToLower() == ".jpeg" || Extension.ToLower() == ".bmp")
+                    foreach (var file in UploadedFiles)
                     {
+                        string Extension = Path.GetExtension(file.FileName);
+
+                        if (Extension.ToLower() == ".jpg" || Extension.ToLower() == ".png" || Extension.ToLower() == ".jpeg" || Extension.ToLower() == ".bmp")
+                        {
+
+                        }
+                        else
+                        {
+                            throw new Exception("Invalid File Type Kindly Upload Image only in Format [.jpg , .jpeg , .png , .bmp]");
+                        }
 
                     }
-                    else
-                    {
-                        throw new Exception("Invalid File Type Kindly Upload Image only in Format [.jpg , .jpeg , .png , .bmp]");
-                    }
-
                 }
-                }else
+                else
                 {
                     throw new Exception("Please select atleast one Image only in Format [.jpg , .jpeg , .png , .bmp]");
                 }
@@ -391,7 +583,7 @@ namespace MCNMedia_Dev.Controllers
         public JsonResult GetSlideShowImages(string medType)
         {
             try
-           
+
             {
                 int churchId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId"));
                 List<MediaChurch> slideInfo = mediaChurchDataAccess.SlideShowImaeGetAll(churchId).ToList();
@@ -406,13 +598,13 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public JsonResult ChangeDisplayOrder(int DisplayOrder,int ChurchMediaId,int ImageId)
+        public JsonResult ChangeDisplayOrder(int DisplayOrder, int ChurchMediaId, int ImageId)
         {
             try
             {
                 int UserId = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchId").ToString());
                 bool res = mediaChurchDataAccess.ChangeSlideShowImageOrder(ImageId, ChurchMediaId, DisplayOrder, UserId);
-                return Json(new { success = true,res });
+                return Json(new { success = true, res });
             }
             catch (Exception exp)
             {
@@ -553,14 +745,17 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                return Json(new { success = false, responseText = e.Message
-    });
+                return Json(new
+                {
+                    success = false,
+                    responseText = e.Message
+                });
             }
         }
 
 
         [HttpPost]
-            public JsonResult AddSingleImageSlideShows(IFormFile mediaFile,int mediaChurchId,int OrderBy)
+        public JsonResult AddSingleImageSlideShows(IFormFile mediaFile, int mediaChurchId, int OrderBy)
         {
             try
             {
@@ -579,8 +774,8 @@ namespace MCNMedia_Dev.Controllers
                     mediaChurch.MediaType = "SlideShow";
                     mediaChurch.TabName = "";
                     int userId = (int)HttpContext.Session.GetInt32("UserId");
-                    MediaChurch mdchr= mediaChurchDataAccess.SlideShowImaeGetByMediaId(mediaChurchId).ToList().Last();
-                    OrderBy = mdchr.DisplayOrder+1;
+                    MediaChurch mdchr = mediaChurchDataAccess.SlideShowImaeGetByMediaId(mediaChurchId).ToList().Last();
+                    OrderBy = mdchr.DisplayOrder + 1;
                     mediaChurchDataAccess.AddSlideShowImages(mediaChurchId, mediaChurch.MediaURL, OrderBy, userId);
                     return Json(new { success = true });
                 }
@@ -599,5 +794,5 @@ namespace MCNMedia_Dev.Controllers
 
     #endregion
 
-
+   
 }

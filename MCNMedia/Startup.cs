@@ -26,6 +26,8 @@ namespace MCNMedia_Dev
 {
     public class Startup
     {
+        public static int Progress { get; set; }
+
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
