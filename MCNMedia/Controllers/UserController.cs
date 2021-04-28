@@ -109,8 +109,9 @@ namespace MCNMedia_Dev.Controllers
         public IActionResult AddUser(User usr)
         {
             GenericModel gm=new GenericModel();
+            LoadDDL();
             try {
-                LoadDDL();
+            
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return RedirectToAction("UserLogin", "UserLogin");
@@ -137,10 +138,10 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-                LoadDDL();
+               
                 ViewBag.PartalBit = "-1";
                 ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
-                return View("ListUser", gm);
+                return View(gm.Users);
            
             }
 
