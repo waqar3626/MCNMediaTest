@@ -111,7 +111,7 @@ namespace MCNMedia_Dev.Controllers
             GenericModel gm=new GenericModel();
             LoadDDL();
             try {
-            
+                
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return RedirectToAction("UserLogin", "UserLogin");
@@ -119,9 +119,10 @@ namespace MCNMedia_Dev.Controllers
                 if (ModelState.IsValid)
                 {
                     usr.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
-                    userDataAccess.AddUser(usr);
                     gm.LUsers = UserList(usr);
                     gm.Users = usr;
+                    userDataAccess.AddUser(usr);
+                   
 
                    
                     TempData["addUserSuccess"] = 1;
@@ -141,7 +142,7 @@ namespace MCNMedia_Dev.Controllers
                
                 ViewBag.PartalBit = "-1";
                 ViewBag.ErrorMsgPartial = "Error Occurreds! " + exp.Message;
-                return View(gm.Users);
+                return View("ListUser", gm);
            
             }
 
