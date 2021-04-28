@@ -75,7 +75,7 @@
                                 <label asp-for="ClientTypeId">Client Type </label>
                                 @*<input asp-for="ClientTypeId" class="form-control" />*@
                                 <select asp-for="ClientTypeId" id="select1" class="custom-select" asp-items="@(new SelectList(@ViewBag.ClientTypes,"Value","Text"))" required>
-                                    <option value="0" disabled selected>--Select Client--</option>
+                                    <option value="" disabled selected>--Select Client--</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please Provide a valid Client Type
