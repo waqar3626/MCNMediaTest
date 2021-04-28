@@ -1391,6 +1391,7 @@
 <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script type="text/javascript">
 
+    var timeOutFunction = setTimeout(LoadRecordingList, 2000);
   
     function OpenCamera(camId) {
 
@@ -1472,6 +1473,7 @@
         LoadRecordingList();
 
         OpenCamera('CameraLiveStream-0');
+        
         OpenVidJs('vid-0');
 
     });
@@ -1528,7 +1530,7 @@
 
 
     function LoadRecordingList() {
-    
+
         var EventName = document.getElementById('TxtSearchEventName').value;
         var FromDate = document.getElementById('TxtSearchFromDate').value;
         var ToDate = document.getElementById('TxtSearchToDate').value;
@@ -1600,7 +1602,7 @@
         OpenCamera('CameraLiveStream-0');
       
        
-
+       
 
     }
     currentTime();
