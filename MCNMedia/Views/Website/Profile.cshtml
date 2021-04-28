@@ -1528,6 +1528,7 @@
 
 
     function LoadRecordingList() {
+    
         var EventName = document.getElementById('TxtSearchEventName').value;
         var FromDate = document.getElementById('TxtSearchFromDate').value;
         var ToDate = document.getElementById('TxtSearchToDate').value;
@@ -1568,6 +1569,7 @@
                     html += ' </div>';
 
                 });
+               
                 $('.RecList').html(html);
 
 
@@ -1597,7 +1599,7 @@
         $("#TxtSearchToDate").val(ToDatestring);
         OpenCamera('CameraLiveStream-0');
       
-        LoadRecordingList();
+       
 
 
     }
