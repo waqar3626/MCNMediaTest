@@ -145,8 +145,8 @@ namespace MCNMedia_Dev.Controllers
                     string msgError = "";
                     msgError = err.ToString();
                     Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
-                    return Json(new { message = msgError });
-                }
+                return Json(new { success = false, responseText = err.Message });
+            }
 
 
 
