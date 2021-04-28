@@ -135,7 +135,7 @@
                             <label asp-for="CountyId" class=" text-center">County</label>
                             @*<input asp-for="CountyId" class="form-control" />*@
                             <select asp-for="CountyId" id="select2" class="custom-select" required asp-items="@(new SelectList(@ViewBag.Counties,"Value","Text"))">
-                                <option value="0" selected disabled>--Select County--</option>
+                                <option value="" selected disabled>--Select County--</option>
                             </select>
                             <div class="invalid-feedback">
                                 Please Provide a valid Country
