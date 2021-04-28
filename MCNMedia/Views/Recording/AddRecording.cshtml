@@ -52,7 +52,7 @@
                 <div class="col-sm-9">
                     <span asp-validation-for="ChurchId" class="text-danger"></span>
                     <select asp-for="ChurchId" id="select1" class="custom-select" required asp-items="@(new SelectList(@ViewBag.Church , "Value", "Text"))">
-                        <option value="0" selected disabled>--Select Church--</option>
+                        <option value="" selected disabled>--Select Church--</option>
                     </select>
                     <div class="invalid-feedback">
                         Please Provide a valid Church
