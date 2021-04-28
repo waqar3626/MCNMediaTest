@@ -89,53 +89,66 @@
     .display-block {
         display: block !important;
     }
+    .embed-responsive-16by9 {
+        height: 56.25% !important;
+    }
 
-    @@media only screen and (min-width: 770px) {
 
-        .ChurchInfoCard {
+    @@media only screen and (min-width: 10px) and (max-width: 850px) {
+        .MobileContent {
             display: none;
         }
-
-        .LaptopScreenSetup {
-            margin: 3rem !important;
-        }
-
-        .ProfileHeadbar {
-            margin-left: 3rem !important;
-        }
     }
 
-    @@media only screen and (min-width: 800px) and (max-width: 1400px) {
+        @@media only screen and (min-width: 850px) {
 
-        .maxWidthTitle {
-            max-width: 25ch;
+            .ChurchInfoCard {
+                display: none;
+            }
+
+            .LaptopScreenSetup {
+                margin: 3rem !important;
+            }
+
+            .ProfileHeadbar {
+                margin-left: 3rem !important;
+            }
         }
-    }
-    @@media only screen and (min-width: 1401px) and (max-width: 1501px) {
 
-        .maxWidthTitle {
-            max-width: 27ch;
+        @@media only screen and (min-width: 800px) and (max-width: 1400px) {
+
+            .maxWidthTitle {
+                max-width: 25ch;
+            }
         }
-    }
-    @@media only screen and (min-width: 1501px) and (max-width: 1600px) {
 
-        .maxWidthTitle {
-            max-width: 28ch;
+        @@media only screen and (min-width: 1401px) and (max-width: 1501px) {
+
+            .maxWidthTitle {
+                max-width: 27ch;
+            }
         }
-    }
-    @@media only screen and (min-width: 1601px)  {
 
-        .maxWidthTitle {
-            max-width: 35ch;
+        @@media only screen and (min-width: 1501px) and (max-width: 1600px) {
+
+            .maxWidthTitle {
+                max-width: 28ch;
+            }
         }
-    }
 
-    @@media only screen and (min-width: 200px) and (max-width: 450px) {
+        @@media only screen and (min-width: 1601px) {
 
-        .maxMobileScreenWidth {
-            max-width: 25ch
+            .maxWidthTitle {
+                max-width: 35ch;
+            }
         }
-    }
+
+        @@media only screen and (min-width: 200px) and (max-width: 450px) {
+
+            .maxMobileScreenWidth {
+                max-width: 25ch
+            }
+        }
 
 </style>
 <div class="row m-0 mb-3">
@@ -260,9 +273,9 @@
                                         var checkdata = 0;
                                         var countSliders = 0;
 
-                                        <div class="tab-pane fade show  @activeClassName" id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
+                                        <div class="tab-pane fade show  @activeClassName embed-responsive-16by9" id="pills-@webMedia.MediaType-@tabCounter" role="tabpanel" aria-labelledby="pills-@webMedia.MediaType-tab-@tabCounter">
 
-                                            <div id="demoslideshow-@webMedia.MediaId" class="carousel slide" data-ride="carousel">
+                                            <div id="demoslideshow-@webMedia.MediaId" class="carousel slide embed-responsive-16by9" data-ride="carousel">
 
 
 
@@ -281,20 +294,20 @@
                                                         }
                                                     }
                                                 </ul>
-                                                <div class="carousel-inner">
+                                                <div class="carousel-inner embed-responsive-16by9 vjs-16-9" >
                                                     @for (var i = 0; i < slideShowImages.Count; i++)
                                                     {
                                                         @if (countimages == 0)
                                                         {
                                                             <div class="carousel-item active slideshowcarousel">
-                                                                <img src="@slideShowImages[i].MediaURL" style="width:100%; height:100%" class="d-block " alt="...">
+                                                                <img src="@slideShowImages[i].MediaURL" class="d-block " style="width:100%; "  alt="...">
                                                             </div>
                                                             countimages++;
                                                         }
                                                         else
                                                         {
                                                             <div class="carousel-item slideshowcarousel">
-                                                                <img src="@slideShowImages[i].MediaURL" style="width:100%; height:100%" class="d-block " alt="...">
+                                                                <img src="@slideShowImages[i].MediaURL" class="d-block" style="width: 100%; " alt="...">
                                                             </div>
 
                                                         }
@@ -1463,61 +1476,7 @@
 
     });
 
-    function myFunction() {
-      
-        if ($(window).width() > 200 && $(window).width() <= 370) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:184.5px !important");
-            $('.slideshowcarousel').attr("style", "height:184.5px !important");
-
-        }
-        else if ($(window).width() > 370 && $(window).width() <= 380) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:192.933px !important");
-            $('.slideshowcarousel').attr("style", "height:192.933px !important");
-
-        }
-        else if ($(window).width() > 380 && $(window).width() <= 480) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:214.867px !important");
-            $('.slideshowcarousel').attr("style", "height:214.867px !important");
-
-        }
-        else if ($(window).width() > 480 && $(window).width() <= 800) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:414px !important");
-            $('.slideshowcarousel').attr("style", "height:414px !important");
-
-        }
-        else if ($(window).width() > 800 && $(window).width() <= 1030) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:370.867px !important");
-            $('.slideshowcarousel').attr("style", "height:370.867px !important");
-        }
-        else if ($(window).width() > 1030 && $(window).width() <= 1400) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:441.5px !important");
-            $('.slideshowcarousel').attr("style", "height:441.5px !important");
-        }
-        else if ($(window).width() > 1400 && $(window).width() <= 1600) {
-
-
-            $('.embed-responsive-16by9').attr("style", "height:497.36px !important");
-            $('.slideshowcarousel').attr("style", "height:497.36px !important");
-        }
-        else {
-
-            $('.embed-responsive-16by9').attr("style", "height:544.35px !important");
-            $('.slideshowcarousel').attr("style", "height:544.35px  !important");
-        }
-    }
-
+  
     function currentTime() {
         var systemdate = new Date(); /* creating object of Date class */
         var ukTime = systemdate.toLocaleString("en-US", { timeZone: 'Europe/London' })
@@ -1587,7 +1546,7 @@
 
                 $.each(result, function (key, item) {
 
-                    html += '<div class="news-wrap col-lg-4 col-md-6 col-sm-12 pb-3 pt-3 ">';
+                    html += '<div class="news-wrap col-xl-3 col-lg-4 col-md-6 col-sm-12 pb-3 pt-3 ">';
                     // html += '<div class="  text-white font-16 font-weight-bolder w-100 mb-0" id="context-menu-hover-autohideRecording"  recordingId="' + item.recordingId + '">' + item.recordingTitle + '</div>';
                     html += '<h4 class="news-heading font-16 font-weight-normal">' + item.recordingTitle + '</h4>';
                     var now = new Date(item.date);
@@ -1595,10 +1554,10 @@
 
 
 
-                    html += '<div class="row"><div class="col-lg-8 col-md-8 col-sm-8 pb-2"><div class="font-weight-light in-icon-arrow d-inline-block font-10"><p class="mb-0">' + Datestring + '</p></div></div>';
+                    html += '<div class="row"><div class="col-xl-6 col-lg-8 col-md-8 col-sm-6 pb-2"><div class="font-weight-light in-icon-arrow d-inline-block font-10"><p class="mb-0">' + Datestring + '</p></div></div>';
                     var srcUrl = "'" + item.src + "'";
                     if (item.allowDownload) {
-                        html += '<div class="col-lg-4 col-md-4 col-sm-4 pb-3"><a href="' + item.src+'" download="recordingVideos.mp4" class="text-warning "   title="Download"><i class="fal fa-arrow-circle-down font-36"></i></a>&nbsp;&nbsp;<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a></div></div>';
+                        html += '<div class="col-xl-6 col-lg-4 col-md-4 col-sm-6 pb-3"><a href="' + item.src+'" download="recordingVideos.mp4" class="text-warning "   title="Download"><i class="fal fa-arrow-circle-down font-36"></i></a>&nbsp;&nbsp;<a href="../Website/Player/' + item.recordingId + '"  class="ply-vid"><i class="fal fa-play-circle font-36"></i></a></div></div>';
 
                     }
                     else {
@@ -1637,7 +1596,7 @@
 
         $("#TxtSearchToDate").val(ToDatestring);
 
-        myFunction();
+      
         LoadRecordingList();
 
 

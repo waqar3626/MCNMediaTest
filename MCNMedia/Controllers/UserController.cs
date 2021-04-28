@@ -122,9 +122,6 @@ namespace MCNMedia_Dev.Controllers
                     gm.LUsers = UserList(usr);
                     gm.Users = usr;
                     userDataAccess.AddUser(usr);
-                   
-
-                   
                     TempData["addUserSuccess"] = 1;
                     return RedirectToAction("ListUser");
 

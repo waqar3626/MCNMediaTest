@@ -104,6 +104,7 @@ namespace MCNMedia_Dev.Controllers
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await files.CopyToAsync(stream);
+                       
                     }
 
 
@@ -119,7 +120,9 @@ namespace MCNMedia_Dev.Controllers
                                 Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
                                 await Task.Delay(10); // It is only to make the process slower
                             }
+                           
                         }
+                    
                     }
                     System.IO.File.Delete(path);
                     int res = mediaChurchDataAccess.AddMedia(media);
