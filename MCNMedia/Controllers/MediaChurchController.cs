@@ -53,132 +53,7 @@ namespace MCNMedia_Dev.Controllers
 
         }
 
-        #region upload file
-        [HttpPost]
-        [DisableRequestSizeLimit]
-        [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
-        public async Task<IActionResult> Upload(IFormFile files, string mediaType, String AddVidTabName)
-        {
-            long totalBytes = files.Length;
-            long totalReadBytes = 0;
 
-
-            string filename = ContentDispositionHeaderValue.Parse(files.ContentDisposition).FileName.ToString().Trim('"');
-
-            filename = this.EnsureCorrectFilename(filename);
-            byte[] buffer = new byte[16 * 1024];
-
-            string namafileExcell = "";
-            string namafilenewExcell = "";
-            string extension = "";
-
-            namafileExcell = files.FileName;
-            extension = namafileExcell.Substring(namafileExcell.LastIndexOf('.') + 1);
-            namafileExcell = namafileExcell.Replace(namafileExcell.Substring(namafileExcell.LastIndexOf('.') + 1), "");
-            namafilenewExcell = namafileExcell.Replace(".", "") + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "." + extension;
-
-            try
-            {
-               
-                Startup.Progress = 0;
-
-          
-            var path = Path.Combine(
-            Directory.GetCurrentDirectory(), "wwwroot\\UploadFile",
-            namafilenewExcell);
-
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
-            {
-                return RedirectToAction("Listchurch", "Church");
-            }
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetInt32("ChurchId").ToString()))
-            {
-                    MediaChurch media = new MediaChurch();
-                media.ChurchId = (int)HttpContext.Session.GetInt32("ChurchId");
-                media.UpdatedBy = (int)HttpContext.Session.GetInt32("UserId");
-                media.MediaURL = FileUploadUtility.UploadFile(files, UploadingAreas.Video, media.ChurchId);
-                media.MediaType = mediaType;
-                media.MediaName = files.FileName.ToString();
-                media.TabName = AddVidTabName;
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await files.CopyToAsync(stream);
-                       
-                    }
-
-
-                    int readBytes;
-                    using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(namafilenewExcell)))
-                    {
-                        using (Stream input = files.OpenReadStream())
-                        {
-                            while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                await output.WriteAsync(buffer, 0, readBytes);
-                                totalReadBytes += readBytes;
-                                Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
-                                await Task.Delay(10); // It is only to make the process slower
-                            }
-                           
-                        }
-                    
-                    }
-                    System.IO.File.Delete(path);
-                    int res = mediaChurchDataAccess.AddMedia(media);
-                    return Json(new { success = true, responseText = "The attached file is not supported." });
-
-
-
-
-
-
-                }
-
-
-
-
-                return RedirectToAction("Listchurch", "Church");
-            }
-                catch (Exception err)
-                {
-                    string msgError = "";
-                    msgError = err.ToString();
-                    Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
-                return Json(new { success = false, responseText = err.Message });
-            }
-
-
-
-
-            
-        }
-
-        [HttpPost]
-        public ActionResult Progress()
-        {
-            return this.Content(Startup.Progress.ToString());
-        }
-
-        private string EnsureCorrectFilename(string filename)
-        {
-            if (filename.Contains("\\"))
-                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
-
-            return filename;
-        }
-
-        private string GetPathAndFilename(string filename)
-        {
-            string path = this.hostingEnvironment.WebRootPath + "\\FileUpload\\";
-
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            return path + filename;
-        }
-
-        #endregion
 
         #region "Picture"
 
@@ -324,13 +199,9 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
-        public async Task<IActionResult> AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
+        public IActionResult AddVideo(IFormFile mediaFile, string mediaType, String AddVidTabName)
         {
-            Startup.Progress = 0;
 
-            long totalBytes = mediaFile.Length;
-            long totalReadBytes = 0;
-            byte[] buffer = new byte[16 * 1024];
             try
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
@@ -346,24 +217,6 @@ namespace MCNMedia_Dev.Controllers
                     media.MediaType = mediaType;
                     media.MediaName = mediaFile.FileName.ToString();
                     media.TabName = AddVidTabName;
-                    using (var stream = new MemoryStream())
-                    {
-                        await mediaFile.CopyToAsync(stream);
-
-
-                    }
-                    int readBytes;
-                    FileStream output = System.IO.File.Create(media.MediaName);
-                    using (Stream input = mediaFile.OpenReadStream())
-                    {
-                        while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            await output.WriteAsync(buffer, 0, readBytes);
-                            totalReadBytes += readBytes;
-                            Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
-                            await Task.Delay(10); // It is only to make the process slower
-                        }
-                    }
 
 
 
@@ -375,9 +228,6 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception e)
             {
-                string msgError = "";
-                msgError = e.ToString();
-                Startup.Progress = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
                 return Json(new { success = false, responseText = e.Message });
             }
         }
@@ -797,5 +647,5 @@ namespace MCNMedia_Dev.Controllers
 
     #endregion
 
-   
+
 }
