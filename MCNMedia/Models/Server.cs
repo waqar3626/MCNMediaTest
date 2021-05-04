@@ -10,5 +10,8 @@ namespace MCNMedia_Dev.Models
         public int ServerId { get; set; }
         public string ServerName { get; set; }
         public string ServerIP { get; set; }
+        public string ServerPort { get; set; }
+        public string ServerUser { get; set; }
+        public string ServerPassword { get; set; }
     }
 }

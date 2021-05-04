@@ -20,14 +20,13 @@ namespace MCNMedia_Dev.WowzaApi
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region Readonly Properties
-
-        private readonly string PORT;
+        Server server = new Server();
+      
         private readonly string API_VERSION;
         private readonly string SERVER;
         private readonly string VHOST;
         private readonly string APPLICATION;
-        private readonly string USER_NAME;
-        private readonly string SECURITY_KEY;
+   
 
         #endregion
 
@@ -40,13 +39,12 @@ namespace MCNMedia_Dev.WowzaApi
             var root = builder.Build();
             var wowzaConfig = root.GetSection("WowzaConfiguration");
 
-            PORT = wowzaConfig["wowza_port"];
+           
             API_VERSION = wowzaConfig["wowza_apiVersion"];
             SERVER = wowzaConfig["wowza_servers"];
             VHOST = wowzaConfig["wowza_vhosts"];
             APPLICATION = wowzaConfig["wowza_application"];
-            USER_NAME = wowzaConfig["wowza_user"];
-            SECURITY_KEY = wowzaConfig["wowza_secretKey"];
+          
         }
 
         #endregion
@@ -282,14 +280,19 @@ namespace MCNMedia_Dev.WowzaApi
             return church.UniqueIdentifier;
         }
 
-        private string RetrieveCameraServerIP(int cameraId)
+        private Server RetrieveCameraServerIP(int cameraId)
         {
             Camera cam = new Camera();
             CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
             cam = cameraDataAccessLayer.GetCameraById(cameraId);
             if (cam.ServerIP is null)
                 cam.ServerIP = "54.217.38.80";
-            return cam.ServerIP;
+ 
+            server.ServerIP = cam.ServerIP;
+            server.ServerPort = cam.ServerPort;
+            server.ServerUser = cam.ServerUser;
+            server.ServerPassword = cam.ServerPassword;
+            return server;
         }
 
         #endregion
@@ -348,7 +351,7 @@ namespace MCNMedia_Dev.WowzaApi
             credentialCache.Add(
             new Uri(uri.GetLeftPart(UriPartial.Authority)), // request url's host
             "Digest", // authentication type 
-            new NetworkCredential(USER_NAME, SECURITY_KEY) // credentials 
+            new NetworkCredential(server.ServerUser, server.ServerPassword) // credentials 
             );
             return credentialCache;
         }
@@ -359,7 +362,7 @@ namespace MCNMedia_Dev.WowzaApi
             credentialCache.Add(
             new Uri(uri.GetLeftPart(UriPartial.Authority)), // request url's host
             "Digest", // authentication type 
-            new NetworkCredential(USER_NAME, "ykdEHGc6XH6e35") // credentials 
+            new NetworkCredential(server.ServerUser, server.ServerPassword) // credentials 
             );
             return credentialCache;
         }
@@ -372,8 +375,9 @@ namespace MCNMedia_Dev.WowzaApi
 
         private string GetBasicUri(int cameraId)
         {
-            string serverIP = RetrieveCameraServerIP(cameraId);
-            string uri = $"http://{serverIP}:{PORT}/{API_VERSION}/servers/{SERVER}/vhosts/{VHOST}";
+            Server server = RetrieveCameraServerIP(cameraId);
+      
+            string uri = $"http://{server.ServerIP}:{server.ServerPort}/{API_VERSION}/servers/{SERVER}/vhosts/{VHOST}";
             return uri;
         }
 

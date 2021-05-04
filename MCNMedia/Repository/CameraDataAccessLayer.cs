@@ -173,6 +173,9 @@ namespace MCNMedia_Dev.Repository
             camera.ServerId = Convert.ToInt32(dataRow["ServerId"]);
             camera.ServerName = dataRow["ServerName"].ToString();
             camera.ServerIP = dataRow["ServerIP"].ToString();
+            camera.ServerPort = dataRow["ServerPort"].ToString();
+            camera.ServerUser = dataRow["ServerUser"].ToString();
+            camera.ServerPassword = dataRow["ServerPassword"].ToString();
             camera.IsCameraLive = Convert.ToBoolean(dataRow["IsCameraLive"]);
             camera.IsCameraStreaming = Convert.ToBoolean(dataRow["IsCameraStreaming"]);
             if (camera.CameraType == _Helper.CameraType.AdminCamera)
