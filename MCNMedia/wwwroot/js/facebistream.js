@@ -2,7 +2,7 @@
 //#region Initialize API
 window.fbAsyncInit = function () {
     FB.init({
-        appId: '1382182532164145',
+        appId: AppId,
         autoLogAppEvents: true,
         status: true,
         cookie: true,                     // Enable cookies to allow the server to access the session.
@@ -339,7 +339,7 @@ function StopLiveStream() {
 
 function StopLiveStreaming(cameraInfo) {
     var camId = $('#camera_list').val();
-    alert(camId);
+  
     var formData = new FormData();
     formData.append("jsonData", JSON.stringify(cameraInfo));
     formData.append("camId", camId);

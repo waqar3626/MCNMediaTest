@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using Org.BouncyCastle.Asn1.Crmf;
 
 namespace MCNMedia_Dev.Controllers
@@ -21,6 +22,8 @@ namespace MCNMedia_Dev.Controllers
     public class ClientController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly IConfiguration _iConfig;
+
 
 
         ChurchDataAccessLayer chdataAccess = new ChurchDataAccessLayer();
@@ -34,6 +37,10 @@ namespace MCNMedia_Dev.Controllers
         GenericModel gm = new GenericModel();
         ChurchDonationDataAccessLayer DonationDataAccessLayer = new ChurchDonationDataAccessLayer();
 
+        public ClientController(IConfiguration iConfig)
+        {
+            _iConfig = iConfig;
+        }
 
         #region church info
 
@@ -187,34 +194,44 @@ namespace MCNMedia_Dev.Controllers
 
         public IActionResult ListMobileCamera()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
-            {
-                return RedirectToAction("UserLogin", "UserLogin");
-            }
             GenericModel gm = new GenericModel();
-            int CameraId = Convert.ToInt32(TempData["CameraId"]);
-            if (CameraId > 0)
+            string FacebookAppKey="";
+            try
             {
-                 ViewBag.NewCamera = 2;
-                Camera camera = camDataAccess.GetCameraById(CameraId);
-                gm.Cameras = camera;
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
+                {
+                    return RedirectToAction("UserLogin", "UserLogin");
+                }
+
+                int CameraId = Convert.ToInt32(TempData["CameraId"]);
+                if (CameraId > 0)
+                {
+                    ViewBag.NewCamera = 2;
+                    Camera camera = camDataAccess.GetCameraById(CameraId);
+                    gm.Cameras = camera;
+                }
+                else
+                {
+                    ViewBag.NewCamera = 1;
+                }
+
+                int id = (int)HttpContext.Session.GetInt32("ChurchId");
+
+                FacebookAppKey = mediaChurchDataAccess.fbAppKeyget();
+                gm.LCameras = camDataAccess.GetMobileCameraByChurch(id);
+
+                gm.Churches = chdataAccess.GetChurchData(id);
+
+                HttpContext.Session.SetString("ctabId", "/Client/ListMobileCamera");
+
+                @ViewBag.FacebookAppKey = FacebookAppKey;
+                return View(gm);
             }
-            else
+            catch (Exception)
             {
-                ViewBag.NewCamera = 1;
-            }
-
-            int id = (int)HttpContext.Session.GetInt32("ChurchId");
-
-
-            gm.LCameras = camDataAccess.GetMobileCameraByChurch(id);
-
-            gm.Churches = chdataAccess.GetChurchData(id);
-
-            HttpContext.Session.SetString("ctabId", "/Client/ListMobileCamera");
-
-
-            return View(gm);
+                @ViewBag.FacebookAppKey = FacebookAppKey;
+                return View(gm);
+            } 
         }
 
         [HttpPost]

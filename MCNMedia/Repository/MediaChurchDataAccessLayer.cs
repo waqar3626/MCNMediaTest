@@ -195,5 +195,22 @@ namespace MCNMedia_Dev.Repository
             return _dc.ReturnBool("spChangeSlideShowImageOrder");
 
         }
+        public string fbAppKeyget()
+        {
+
+            DataTable dataTable = _dc.ReturnDataTable("sp_fbAppKeyget");
+
+            int id = 0;
+            string FacebookAppKey = "";
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+
+                id = Convert.ToInt32(dataRow["Id"]);
+                FacebookAppKey = dataRow["FacebookAppKey"].ToString();
+
+
+            }
+            return FacebookAppKey;
+        }
     }
 }
