@@ -20,7 +20,9 @@ namespace MCNMedia_Dev._Helper
             DataTable dt = scheduleDataAccess.GetScheduleReadyToStop();
             foreach (DataRow dr in dt.Rows)
             {
-                StopRecording(Convert.ToInt32(dr["CameraId"]), Convert.ToInt32(dr["ChurchId"]), Convert.ToInt32(dr["ScheduleId"]));
+               StopRecording(Convert.ToInt32(dr["CameraId"]), Convert.ToInt32(dr["ChurchId"]), Convert.ToInt32(dr["ScheduleId"]));
+              //  StopRecordingNew(Convert.ToInt32(dr["CameraId"]), Convert.ToInt32(dr["ChurchId"]), Convert.ToInt32(dr["ScheduleId"]), dr["UniqueIdentifier"].ToString()); 
+
             }
         }
 
@@ -37,6 +39,22 @@ namespace MCNMedia_Dev._Helper
             WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
 
             bool res = wowzaHelper.StopRecording(churchId, cameraId);
+            if (res)
+            {
+                scheduleDataAccess.UpdateScheduleStatus(scheduleId: scheduleId, scheduleStatus: 2);
+                string logMessage = $"Recording (ScheduleId: {scheduleId}) stopped for camera (CameraID: {cameraId}) on {DateTime.Now}";
+                ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Stopped, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
+                scheduleDataAccess.UpdateScheduleLog(scheduleId: scheduleId, scheduleStatus: 2);
+            }
+            return res;
+        }
+
+        private bool StopRecordingNew(int cameraId, int churchId, int scheduleId,string UniqueIdentifier)
+        {
+            _Helper.Common.SaveToXXX($"Stop Recording (ScheduleId: {scheduleId}) on Camera: {cameraId}");
+            WowzaApi.WowzaHelper2 wowzaHelper = new WowzaApi.WowzaHelper2();
+
+            bool res = wowzaHelper.StopRecording(churchId, cameraId, UniqueIdentifier);
             if (res)
             {
                 scheduleDataAccess.UpdateScheduleStatus(scheduleId: scheduleId, scheduleStatus: 2);
@@ -71,6 +89,7 @@ namespace MCNMedia_Dev._Helper
                 }
                 else
                 {
+                   // StartRecordingNew(Convert.ToInt32(dr["CameraId"]), Convert.ToInt32(dr["ChurchId"]), Convert.ToInt32(dr["ScheduleId"]), dr["UniqueIdentifier"].ToString(), dr["ScheduleEventName"].ToString());
                     StartRecording(Convert.ToInt32(dr["CameraId"]), Convert.ToInt32(dr["ChurchId"]), Convert.ToInt32(dr["ScheduleId"]));
                 }
             }
@@ -86,7 +105,25 @@ namespace MCNMedia_Dev._Helper
         private bool StartRecording(int cameraId, int churchId, int scheduleId)
         {
             WowzaApi.WowzaHelper wowzaHelper = new WowzaApi.WowzaHelper();
+            
             bool res = wowzaHelper.StartRecording(churchId, cameraId);
+           
+            if (res)
+            {
+                scheduleDataAccess.UpdateScheduleStatus(scheduleId: scheduleId, scheduleStatus: 1);
+                string logMessage = $"Recording (ScheduleId: {scheduleId}) started for camera (CameraID: {cameraId}) on {DateTime.Now}";
+                ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Started, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
+                scheduleDataAccess.InsertScheduleLog(scheduleId: scheduleId, scheduleStatus: 1);
+            }
+            return res;
+        }
+
+        private bool StartRecordingNew(int cameraId, int churchId, int scheduleId,string UniqueIdentifier,string EventName)
+        {
+            WowzaApi.WowzaHelper2 wowzaHelper = new WowzaApi.WowzaHelper2();
+
+            bool res = wowzaHelper.StartRecording(churchId, cameraId,UniqueIdentifier,EventName,scheduleId);
+
             if (res)
             {
                 scheduleDataAccess.UpdateScheduleStatus(scheduleId: scheduleId, scheduleStatus: 1);

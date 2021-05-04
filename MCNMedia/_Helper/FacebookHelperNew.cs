@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MCNMedia_Dev._Helper
 {
-    public class FacebookHelper
+    public class FacebookHelperNew
     {
 
 
@@ -21,15 +21,23 @@ namespace MCNMedia_Dev._Helper
         /// <param name="churchId">The id of <see cref="Church" />.</param>
         /// <param name="cameraId">The id of <see cref="Camera"/></param>
         /// <returns>Return A <see cref="CameraStream"/></returns>
-        
-        
-        public bool FacebookLiveStream(string jsonData)
+
+
+        public bool FacebookLiveStream(int cameraId,string StreamKey,int churchId)
         {
             try
             {
+                string UniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                FacebookParameter facebookParameter = new FacebookParameter();
+                facebookParameter.camera_id = UniqueIdentifier+"_"+cameraId.ToString();
+                facebookParameter.client_name = "definst";
+                facebookParameter.type = "rtmp";
+                facebookParameter.stream_url = "rtmp://live-api-s.facebook.com:80/rtmp/";
+                facebookParameter.secure_stream_url = "rtmps://live-api-s.facebook.com:443/rtmp/";
+                facebookParameter.stream_key = StreamKey;
                 //string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
                 //string streamName = $"{uniqueIdentifier}_{cameraId}";
-               return PostAsync("http://54.217.38.80:8182/api/v1/start-fb-live", jsonData);
+                return PostAsync("http://54.217.38.80:8182/api/v1/start-fb-live", facebookParameter);
                 //HttpClient client = CreateHttpClientRequest($"http://52.51.59.126:8182/api/v1/start-fb-live");
                 //// List data response.
                 //HttpResponseMessage response = client.GetAsync("").Result;
@@ -52,11 +60,19 @@ namespace MCNMedia_Dev._Helper
             }
         }
 
-        public bool StopFacebookLiveStreaming(string jsonData)
+        public bool StopFacebookLiveStreaming(int cameraId,  int churchId)
         {
             try
             {
-                return PostAsync("http://54.217.38.80:8182/api/v1/stop-fb-live", jsonData);
+                string UniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
+                FacebookParameter facebookParameter = new FacebookParameter();
+                facebookParameter.camera_id = UniqueIdentifier + "_" + cameraId.ToString();
+                facebookParameter.client_name = "definst";
+                facebookParameter.type = "rtmp";
+                facebookParameter.stream_url = "rtmp://live-api-s.facebook.com:80/rtmp/";
+                facebookParameter.secure_stream_url = "rtmps://live-api-s.facebook.com:443/rtmp/";
+         
+                return PostAsync("http://54.217.38.80:8182/api/v1/stop-fb-live", facebookParameter);
             }
             catch (Exception ex)
             {
@@ -64,15 +80,18 @@ namespace MCNMedia_Dev._Helper
             }
         }
 
-        private bool PostAsync(string requestUri, string data)
+        private bool PostAsync(string requestUri, object data)
         {
+            
             HttpClient client = CreateHttpClientRequest(requestUri);
 
-            //var jsonData = JsonConvert.SerializeObject(data);
-            var encodeData = new StringContent(data, Encoding.UTF8, "application/json");
+            var jsonData = JsonConvert.SerializeObject(data);
+         
+            var encodeData = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             // List data response.
             HttpResponseMessage response = client.PostAsync(requestUri, encodeData).Result;
+          
             return response.IsSuccessStatusCode;
         }
 
@@ -97,6 +116,21 @@ namespace MCNMedia_Dev._Helper
             ChurchDataAccessLayer churchDataAccessLayer = new ChurchDataAccessLayer();
             church = churchDataAccessLayer.GetChurchData(churchId);
             return church.UniqueIdentifier;
+        }
+
+        public class FacebookParameter
+        {
+            public string camera_id { get; set; }
+            public string client_name { get; set; }
+
+            public string type { get; set; }
+
+            public string stream_url { get; set; }
+            public string secure_stream_url { get; set; }
+
+            public string stream_key { get; set; }
+           
+
         }
 
 

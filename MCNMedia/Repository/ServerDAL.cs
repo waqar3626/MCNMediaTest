@@ -29,7 +29,7 @@ namespace MCNMedia_Dev.Repository
                 server.ServerId = Convert.ToInt32(dataRow["ServerId"]);
                 server.ServerName = dataRow["ServerName"].ToString();
                 server.ServerIP = dataRow["ServerIP"].ToString();
-                if (server.ServerId < 3)
+                //if (server.ServerId < 3)
                     Balobj.Add(server);
             }
             return Balobj;

@@ -36,7 +36,7 @@ namespace MCNMedia_Dev._Helper
             string fileName = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(fileToUpload.FileName);
             using (var stream = new MemoryStream())
             {
-                fileToUpload.CopyTo(stream);
+              fileToUpload.CopyTo(stream);
                 AmazonUploader.SendMyFileToS3(stream, contentDirectory, fileName);
                 //UploadFileToS3Bucket(contentDirectory, fileName, stream);
             }

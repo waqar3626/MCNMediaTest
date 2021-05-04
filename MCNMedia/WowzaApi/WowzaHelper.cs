@@ -116,7 +116,7 @@ namespace MCNMedia_Dev.WowzaApi
                 log.DebugFormat("Church Unique Identifier: {0}", uniqueIdentifier);
                 RecordingData recordingData = new RecordingData();
 
-                recordingData.recorderName = $"{uniqueIdentifier}_{cameraId}.stream";
+                recordingData.recorderName = $"definst_{uniqueIdentifier}_{cameraId}.stream";
 
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
@@ -148,7 +148,7 @@ namespace MCNMedia_Dev.WowzaApi
                 if (GetStream(uniqueIdentifier, cameraId))
                 {
                     string applicationUrl = GetApplicationUrl(cameraId);
-                    string uri = UpdateUriBasedOnServer($"{applicationUrl}/instances/#instance#/streamrecorders/{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", uniqueIdentifier);
+                    string uri = UpdateUriBasedOnServer($"{applicationUrl}/instances/#instance#/streamrecorders/definst_{uniqueIdentifier}_{cameraId}.stream/actions/stopRecording", uniqueIdentifier);
                     bool stopRec = PutAsync(uri, "");
                     return stopRec;
                 }
@@ -178,7 +178,7 @@ namespace MCNMedia_Dev.WowzaApi
             {
                 log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
                 string uniqueIdentifier = GetUniqueIdentifier(churchId, cameraId);
-                string streamName = $"{uniqueIdentifier}_{cameraId}";
+                string streamName = $"definst_{uniqueIdentifier}_{cameraId}";
 
                 string uri = GetApplicationUrl(cameraId);
                 uri = UpdateUriBasedOnServer($"{uri}/instances/#instance#/incomingstreams/{streamName}.stream", uniqueIdentifier);
@@ -298,14 +298,14 @@ namespace MCNMedia_Dev.WowzaApi
 
         private bool GetStream(string churchIdentifier, int cameraId)
         {
-            string streamName = $"{churchIdentifier}_{cameraId}";
+            string streamName = $"definst_{churchIdentifier}_{cameraId}";
             return GetAsync($"{GetApplicationUrl(cameraId)}/streamfiles/{streamName}", "");
         }
 
         private bool Stream_Create(string churchIdentifier, int cameraId, string rtspUrl)
         {
             bool connectStream = false;
-            string streamFileName = $"{churchIdentifier}_{cameraId}";
+            string streamFileName = $"definst_{churchIdentifier}_{cameraId}";
             log.InfoFormat("Add Camera(CameraID: {0}) on wowza having stream file name: {1} - Start", cameraId, streamFileName);
 
             StreamFile streamFile = new StreamFile();

@@ -325,6 +325,7 @@
                                                 contentType: "application/json;charset=utf-8",
                                                 dataType: "json",
                                                 success: function (result) {
+                                                    
                                                     var html = '';
 
                                                     $.each(result, function (key, item) {
@@ -332,13 +333,14 @@
 
                                                         html += "<td class='border-right-sm w-25 p-0'><div class='card'> <div class='card-body bg-info'> " + item.eventDay + "</div></div ></td > ";
                                                         var str = item.eventName;
+                                                       
                                                         var array = str.split('|');
                                                         html += "<td class='text-wrap p-0'>";
                                                         $.each(array, function (key, item2) {
                                                             if (item2.length > 0) {
                                                                 var IconRecord = "<i class='fa  fa-video-camera  text-danger'></i>"
                                                                 var array2 = item2.split('^');
-
+                                                               
                                                                 html += "<div class='p-2 float-left'><div class='panel-body '><div class='card'><div class='card-body zoom '>" + array2[0] + "&emsp; " + (array2[2] == 1 ? IconRecord : '') + " </div></div></div> </div>";
                                                             }
                                                         }
@@ -346,6 +348,7 @@
 
                                                         html += '</td ></tr>';
                                                     });
+                                                 
                                                     $('.SchList').html(html);
                                                 },
                                                 error: function (errormessage) {

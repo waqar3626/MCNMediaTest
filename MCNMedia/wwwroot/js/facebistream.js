@@ -2,7 +2,7 @@
 //#region Initialize API
 window.fbAsyncInit = function () {
     FB.init({
-        appId: '220664392765773',
+        appId: '1382182532164145',
         autoLogAppEvents: true,
         status: true,
         cookie: true,                     // Enable cookies to allow the server to access the session.
@@ -125,7 +125,7 @@ function getPagesList() {
     let uid = sessionStorage.getItem('uid');
     //  alert(uac);
     FB.api(
-       // '/' + uid + '/accounts',
+        // '/' + uid + '/accounts',
         '/me/accounts',
         'GET',
         { "fields": "name,access_token", "access_token": "" + uac + "" },
@@ -144,13 +144,12 @@ function getPagesList() {
 
 //#region Streaming
 function Request_LiveVedioObj() {
-    
+
     var id = '';
     let uid = sessionStorage.getItem('uid');
     let uac = sessionStorage.getItem('uac');
     var accToken = '';
-    if (uid != null && uac != null)
-    {
+    if (uid != null && uac != null) {
         if ($('#camera_list').val() == 0) {
 
             swal({
@@ -181,12 +180,12 @@ function Request_LiveVedioObj() {
 
 
             function (response) {
-              
+
                 var jsons = JSON.stringify(response);
                 // alert(jsons);
                 var cameraId = $('#camera_list option:selected').attr('data-clientname') + '_' + $('#camera_list').val();
                 var streamkey = response.stream_url.substring(response.stream_url.indexOf("rtmp/") + 5);
-     
+
                 var cameraInfo = {
                     camera_id: cameraId,
                     client_name: '',
@@ -200,15 +199,14 @@ function Request_LiveVedioObj() {
             }
         );
     }
-    else
-    {
+    else {
         swal({
             icon: "error",
             title: "Error",
             text: "Please login to facebook",
 
         });
-       
+
     }
 }
 
@@ -217,6 +215,7 @@ function StartLiveStreaming(cameraInfo) {
     var formData = new FormData();
     formData.append("jsonData", JSON.stringify(cameraInfo));
     formData.append("CamId", $('#camera_list').val());
+    formData.append("stream_key", cameraInfo.stream_key)
     $.ajax({
         type: "POST",
         url: "/Client/LiveStreamToFacebook/",
@@ -232,7 +231,7 @@ function StartLiveStreaming(cameraInfo) {
                     text: "Stream posted to facebook",
 
                 });
-               
+
                 $('#stopStreaming').show();
                 $('#startStreaming').hide();
             }
@@ -243,7 +242,7 @@ function StartLiveStreaming(cameraInfo) {
                     text: "There is a problem posting to facebook.Please check your stream is started on camera",
 
                 });
-               
+
             }
         },
         error: function (errormessage) {
@@ -253,7 +252,7 @@ function StartLiveStreaming(cameraInfo) {
                 text: "Error when posting to facebook",
 
             });
-          
+
             $('#stopStreaming').hide();
             $('#startStreaming').show();
         }
@@ -280,7 +279,7 @@ function PosttoLiveStream(cameraInfo) {
                     text: "Please start your stream on camera",
 
                 });
-                
+
             }
             else {
                 swal({
@@ -289,7 +288,7 @@ function PosttoLiveStream(cameraInfo) {
                     text: "Stream posted to facebook",
 
                 });
-              
+
                 $('#stopStreaming').show();
                 $('#startStreaming').hide();
             }
@@ -301,7 +300,7 @@ function PosttoLiveStream(cameraInfo) {
                 text: "Error when posting to facebook",
 
             });
-           
+
             $('#stopStreaming').hide();
             $('#startStreaming').show();
         }
@@ -339,8 +338,13 @@ function StopLiveStream() {
 }
 
 function StopLiveStreaming(cameraInfo) {
+    var camId = $('#camera_list').val();
+    alert(camId);
     var formData = new FormData();
     formData.append("jsonData", JSON.stringify(cameraInfo));
+    formData.append("camId", camId);
+    
+   
     $.ajax({
         type: "POST",
         url: "/Client/StopLiveStreamToFacebook/",
@@ -348,14 +352,14 @@ function StopLiveStreaming(cameraInfo) {
         processData: false,  // tell jQuery not to process the data
         contentType: false,  // tell jQuery not to set contentType
         success: function (result) {
-           // alert(result);
+            // alert(result);
             swal({
                 icon: "success",
                 title: "Stream stopped",
                 text: "Stream stopped on facebook",
 
             });
-            
+
             $('#startStreaming').show();
             $('#stopStreaming').hide();
         },
@@ -366,7 +370,7 @@ function StopLiveStreaming(cameraInfo) {
                 text: "Error when stopping stream",
 
             });
-            
+
             $('#stopStreaming').show();
             $('#startStreaming').hide();
         }
@@ -422,7 +426,7 @@ function savesettings() {
                 text: "Settings have been updated",
 
             });
-         
+
 
         },
         error: function (errormessage) {
@@ -525,9 +529,9 @@ function getUserInfo() {
                 icon: "error",
                 title: "Error Occured",
                 text: errormessage.responseText,
-                
+
             });
-          
+
         }
     });
 }

@@ -46,6 +46,7 @@ namespace MCNMedia_Dev.Controllers
         {
             try
             {
+                
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserType")))
                 {
                     return RedirectToAction("UserLogin", "UserLogin");
@@ -118,9 +119,11 @@ namespace MCNMedia_Dev.Controllers
                 {
                     return Json(new { Url = "UserLogin" });
                 }
+              
                 GenericModel gm = new GenericModel();
                 bool res = camDataAccess.DeleteCamera(id);
-                return Json(new { success = true, res });
+                
+                    return Json(new { success = true, res });
             }
             catch (Exception e)
             {

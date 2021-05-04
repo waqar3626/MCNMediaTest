@@ -177,12 +177,12 @@ namespace MCNMedia_Dev.Repository
             camera.IsCameraStreaming = Convert.ToBoolean(dataRow["IsCameraStreaming"]);
             if (camera.CameraType == _Helper.CameraType.AdminCamera)
             {
-                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
+                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/definst_{dataRow["UniqueIdentifier"]}_{dataRow["CameraId"]}.stream/playlist.m3u8";
             }
             else if (camera.CameraType == _Helper.CameraType.ClientCamera)
             {
                 string cameraUniqueIdentifier = dataRow["CameraUrl"].ToString().Split("_")[0];
-                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/_{cameraUniqueIdentifier}_/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
+                camera.LiveStreamUrl = $"https://{dataRow["ServerURL"]}/live/{dataRow["CameraUrl"]}.stream/playlist.m3u8";
             }
             camera.StreamingProtocol = dataRow["StreamingProtocol"].ToString().Trim();
             camera.ChurchUniqueIdentifier = dataRow["UniqueIdentifier"].ToString().Trim();
@@ -267,12 +267,12 @@ namespace MCNMedia_Dev.Repository
                 websiteMedia.CreatedAt = dataRow["CreatedAt"].ToString();
                 if (websiteMedia.MediaType == _Helper.CameraType.AdminCamera.ToString())
                 {
-                    websiteMedia.MediaURL = $"https://{websiteMedia.ServerUrl }/live/{ websiteMedia.UniqueIdentifier}_{ websiteMedia.MediaId }.stream/playlist.m3u8";
+                    websiteMedia.MediaURL = $"https://{websiteMedia.ServerUrl }/live/definst_{ websiteMedia.UniqueIdentifier}_{ websiteMedia.MediaId }.stream/playlist.m3u8";
                 }
                 else if (websiteMedia.MediaType == _Helper.CameraType.ClientCamera.ToString())
                 {
                     string cameraUniqueIdentifier = dataRow["MediaURL"].ToString().Split("_")[0];
-                    websiteMedia.MediaURL = $"https://{websiteMedia.ServerUrl }/live/_{cameraUniqueIdentifier}_/{dataRow["MediaURL"]}.stream/playlist.m3u8";
+                    websiteMedia.MediaURL = $"https://{websiteMedia.ServerUrl }/live/{dataRow["MediaURL"]}.stream/playlist.m3u8";
                 }
                 else
                 {

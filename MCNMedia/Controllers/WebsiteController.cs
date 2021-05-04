@@ -732,7 +732,7 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.notice = new Notice();
 
                 profileModel.mediaList = camDataAccess.GetWebsiteMedia(churchId);
-                profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
+               // profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
                 profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
                 profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
                 profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
@@ -743,7 +743,7 @@ namespace MCNMedia_Dev.Controllers
                 profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
                 profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
 
-                profileModel.NowScheduleList = Schedules_WhatsOnNow();
+                //profileModel.NowScheduleList = Schedules_WhatsOnNow();
                 profileModel.churchDonation = churchDonationDataAccessLayes.GetDonationByChurch(churchId);
                 profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
                 profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);

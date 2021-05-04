@@ -269,31 +269,32 @@ namespace MCNMedia_Dev.Controllers
 
         [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
-        public JsonResult LiveStreamToFacebook(string jsonData, string CamId)
+        public JsonResult LiveStreamToFacebook(string jsonData, string CamId,string stream_key)
         {
             int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
             int CameraId = Convert.ToInt32(CamId);
             WowzaApi.WowzaHelper wowza = new WowzaApi.WowzaHelper();
             if (wowza.CheckCameraBeforeStreaming(Church_Id, CameraId))
             {
-                FacebookHelper facebookHelper = new FacebookHelper();
-                return Json(facebookHelper.FacebookLiveStream(jsonData));
+                FacebookHelperNew facebookHelper = new FacebookHelperNew();
+                return Json(facebookHelper.FacebookLiveStream(CameraId, stream_key,Church_Id));
             }
             else
             {
-                FacebookHelper facebookHelper = new FacebookHelper();
-                return Json(facebookHelper.FacebookLiveStream(jsonData));
-                //return Json(false);
+                
+                return Json(false);
             }
             
         }
 
         [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
-        public JsonResult StopLiveStreamToFacebook(string jsonData)
+        public JsonResult StopLiveStreamToFacebook(string jsonData,int camId)
         {
-            FacebookHelper facebookHelper = new FacebookHelper();
-            return Json(facebookHelper.StopFacebookLiveStreaming(jsonData));
+            FacebookHelperNew facebookHelper = new FacebookHelperNew();
+        int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
+        int CameraId = camId;
+            return Json(facebookHelper.StopFacebookLiveStreaming(CameraId, Church_Id));
         }
 
         public void StreamtoFacebook()
