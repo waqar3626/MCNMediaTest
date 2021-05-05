@@ -190,6 +190,8 @@ namespace MCNMedia_Dev.Controllers
                                         }
                                     }
                                     dt.Rows.Add(cameraId, cameraStream.serverName, cameraStream.name, cameraStream.uri, ip, streamFile.id);
+                                    CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+                                    cameraDataAccessLayer.WowzaUrl_Old_Add(cameraId, cameraStream.serverName, cameraStream.uri, ip, streamFile.id);
                                 }
                                 catch (Exception ex)
                                 {
@@ -212,7 +214,7 @@ namespace MCNMedia_Dev.Controllers
                 error += ex.Message;
                 _Helper.Common.SaveToXXX(ex.Message);
             }
-            dt.Rows.Add(-1, "", "", "","", error);
+            dt.Rows.Add(-1, "", "", "", "", error);
             return dt;
         }
 
@@ -237,6 +239,40 @@ namespace MCNMedia_Dev.Controllers
             return table;
         }
 
+        public void GetWowzaStreamURL()
+        {
+            StreamFile cameraStream = new StreamFile();
+            CameraDataAccessLayer camDAL = new CameraDataAccessLayer();
+            List<Camera> camList = new List<Camera>();
+            camList = camDAL.GetAllAdminCameras();
+            foreach(Camera cam in camList)
+            {
+                string serverIP;
+                if (cam.ServerId == 1)
+                    serverIP = "52.51.59.126";
+                else
+                    serverIP = "52.211.229.30";
+
+                string requestUrl = $"http://{serverIP}:8087/v2/servers/_defaultServer_/vhosts/_defaultVHost_/applications/live/streamfiles";
+
+                HttpClient clienta = CreateHttpClientRequest($"{requestUrl}/{cam.ChurchUniqueIdentifier}_{cam.CameraId}");
+                // List data response.
+                HttpResponseMessage responsea = clienta.GetAsync("").Result;
+                if (responsea.IsSuccessStatusCode)
+                {
+                    var responseBodya = responsea.Content.ReadAsStringAsync().Result;
+                    try
+                    {
+                        cameraStream = JsonConvert.DeserializeObject<StreamFile>(responseBodya);
+                        camDAL.WowzaUrl_Required_Add(cam.CameraId, cameraStream.serverName, cameraStream.uri, serverIP, $"{cam.ChurchUniqueIdentifier}_{cam.CameraId}");
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
+                }
+            }
+        }
 
         private HttpClient CreateHttpClientRequest(string requestUri)
         {

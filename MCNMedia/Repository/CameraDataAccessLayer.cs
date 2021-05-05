@@ -346,6 +346,33 @@ namespace MCNMedia_Dev.Repository
 
         }
         #endregion
+
+
+        // Save Wowza URLs
+
+
+        public int WowzaUrl_Old_Add(int cameraId, string serverName, string streamUri, string serIP, string streamName)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", cameraId);
+            _dc.AddParameter("serverNam", serverName);
+            _dc.AddParameter("url", streamUri);
+            _dc.AddParameter("versn", serIP);
+            _dc.AddParameter("streamNam", streamName);
+            return _dc.ReturnInt("spWowzaUrl_Old_Add");
+        }
+
+        public int WowzaUrl_Required_Add(int cameraId, string serverName, string streamUri, string serIP, string streamName)
+        {
+            _dc.ClearParameters();
+            _dc.AddParameter("CamId", cameraId);
+            _dc.AddParameter("serverNam", serverName);
+            _dc.AddParameter("url", streamUri);
+            _dc.AddParameter("versn", serIP);
+            _dc.AddParameter("streamNam", streamName);
+            return _dc.ReturnInt("spWowzaUrl_Required_Add");
+        }
+
     }
 
 

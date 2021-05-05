@@ -29,15 +29,15 @@ namespace MCNMedia_Dev.CronJobs
             log.Info($"{DateTime.Now:hh:mm:ss} CronJob Every 5 Minute Syncing Camera is working.");
             try
             {
-                _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera Started ");
+                //_Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera Started ");
                 Wowza wowza = new Wowza();
                 wowza.SyncAllCamerasWithWowza();
-                _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera Ended ");
+               // _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera Ended ");
             }
             catch (Exception ex)
             {
                 log.Info("CronJob Every 5 Minute Syncing Camera - Error - " + ex.Message.ToString());
-                _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera - Error - " + ex.Message.ToString());
+               // _Helper.Common.SaveToXXX("CronJob Every 5 Minute Syncing Camera - Error - " + ex.Message.ToString());
             }
             return Task.CompletedTask;
         }
