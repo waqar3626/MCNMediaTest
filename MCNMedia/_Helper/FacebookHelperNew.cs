@@ -27,9 +27,21 @@ namespace MCNMedia_Dev._Helper
         {
             try
             {
+                Camera cam = new Camera();
+                CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+                cam = cameraDataAccessLayer.GetCameraById(cameraId);
                 string UniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
                 FacebookParameter facebookParameter = new FacebookParameter();
-                facebookParameter.camera_id = UniqueIdentifier+"_"+cameraId.ToString();
+                if (cam.CameraType == _Helper.CameraType.AdminCamera)
+                {
+                    facebookParameter.camera_id = UniqueIdentifier + "_" + cameraId.ToString();
+
+                }
+                else
+                {
+                    facebookParameter.camera_id =  cameraId.ToString();
+                }
+                
                 facebookParameter.client_name = "definst";
                 facebookParameter.type = "rtmp";
                 facebookParameter.stream_url = "rtmp://live-api-s.facebook.com:80/rtmp/";
@@ -37,7 +49,7 @@ namespace MCNMedia_Dev._Helper
                 facebookParameter.stream_key = StreamKey;
                 //string uniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
                 //string streamName = $"{uniqueIdentifier}_{cameraId}";
-                return PostAsync("http://54.217.38.80:8182/api/v1/start-fb-live", facebookParameter);
+                return PostAsync($"http://{cam.ServerIP}:8182/api/v1/start-fb-live", facebookParameter);
                 //HttpClient client = CreateHttpClientRequest($"http://52.51.59.126:8182/api/v1/start-fb-live");
                 //// List data response.
                 //HttpResponseMessage response = client.GetAsync("").Result;
@@ -64,15 +76,27 @@ namespace MCNMedia_Dev._Helper
         {
             try
             {
+                Camera cam = new Camera();
+                CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+                cam = cameraDataAccessLayer.GetCameraById(cameraId);
                 string UniqueIdentifier = RetrieveChurchUniqueIdentifier(churchId);
                 FacebookParameter facebookParameter = new FacebookParameter();
-                facebookParameter.camera_id = UniqueIdentifier + "_" + cameraId.ToString();
+                if (cam.CameraType == _Helper.CameraType.AdminCamera)
+                {
+                    facebookParameter.camera_id = UniqueIdentifier + "_" + cameraId.ToString();
+
+                }
+                else
+                {
+                    facebookParameter.camera_id = cameraId.ToString();
+                }
+
                 facebookParameter.client_name = "definst";
                 facebookParameter.type = "rtmp";
                 facebookParameter.stream_url = "rtmp://live-api-s.facebook.com:80/rtmp/";
                 facebookParameter.secure_stream_url = "rtmps://live-api-s.facebook.com:443/rtmp/";
          
-                return PostAsync("http://54.217.38.80:8182/api/v1/stop-fb-live", facebookParameter);
+                return PostAsync($"http://{cam.ServerIP}:8182/api/v1/stop-fb-live", facebookParameter);
             }
             catch (Exception ex)
             {

@@ -174,10 +174,19 @@ namespace MCNMedia_Dev.WowzaApi
             CameraStream cameraStream = new CameraStream();
             try
             {
+                string streamName = "";
+                Camera cam = new Camera();
+                CameraDataAccessLayer cameraDataAccessLayer = new CameraDataAccessLayer();
+                cam = cameraDataAccessLayer.GetCameraById(cameraId);
                 log.InfoFormat("RequestCameraStatus Event Called for ChurchId: {0} and CameraId: {1} - Start", churchId, cameraId);
                 string uniqueIdentifier = GetUniqueIdentifier(churchId, cameraId);
-                string streamName = $"definst_{uniqueIdentifier}_{cameraId}";
-
+                if (cam.CameraType == _Helper.CameraType.AdminCamera) { 
+                streamName = $"definst_{uniqueIdentifier}_{cameraId}";
+                }
+                else
+                {
+                    streamName = $"definst_{cameraId}";
+                }
                 string uri = GetApplicationUrl(cameraId);
                 uri = UpdateUriBasedOnServer($"{uri}/instances/#instance#/incomingstreams/{streamName}.stream", uniqueIdentifier);
                 log.DebugFormat("Wowza Request URL: {0}", uri);

@@ -185,7 +185,7 @@ function Request_LiveVedioObj() {
                 // alert(jsons);
                 var cameraId = $('#camera_list option:selected').attr('data-clientname') + '_' + $('#camera_list').val();
                 var streamkey = response.stream_url.substring(response.stream_url.indexOf("rtmp/") + 5);
-
+               
                 var cameraInfo = {
                     camera_id: cameraId,
                     client_name: '',
