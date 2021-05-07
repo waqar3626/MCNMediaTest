@@ -94,7 +94,7 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", med.ChurchMediaId);
             _dc.AddParameter("MedTabName", med.TabName);
-            _dc.AddParameter("MedURL", med.MediaURL);
+            //_dc.AddParameter("MedURL", med.MediaURL);
             _dc.AddParameter("MedName", med.MediaName);
             _dc.AddParameter("UserId", med.UpdatedBy);
 
