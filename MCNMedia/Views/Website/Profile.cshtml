@@ -7,12 +7,8 @@
 @{
     TempData.Keep("SlugToProfile");
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css" />
-<link href="~/css/Carusal.css" rel="stylesheet" />
+
+
 <!-- endinject -->
 <!-- Plugin css for this page -->
 <!-- End plugin css for this page -->
@@ -20,47 +16,18 @@
 
 
 
-<head>
-    <!--Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VNGNMBZGQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'G-6VNGNMBZGQ');
-    </script>
-
-
-</head>
-
+<link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
 <style type="text/css">
     .vjs-big-play-button {
         left: 45% !important;
         top: 45% !important;
     }
 </style>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.carousel.css">
 
-<!-- plugins:css -->
-<link rel="stylesheet" href="~/theme/vendors/ti-icons/css/themify-icons.css">
-<link rel="stylesheet" href="~/theme/vendors/css/vendor.bundle.base.css">
-<link rel="stylesheet" href="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="~/theme/vendors/mdi/css/materialdesignicons.min.css">
-<!-- endinject -->
-<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.carousel.min.css">
-<link rel="stylesheet" href="~/theme/vendors/owl-carousel-2/owl.theme.default.min.css">
 
-<!-- inject:css -->
-@*<link rel="stylesheet" href="~/theme/css/vertical-layout-light/style.css">*@
-<!-- endinject -->
 
-<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
-<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
-<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
-<link href="~/WebsiteAssets/css/style1.css" rel="stylesheet" />
+
 
 <style>
     #owl-carousel-video {
@@ -297,13 +264,13 @@
                                                         }
                                                     }
                                                 </ul>
-                                                <div class="carousel-inner embed-responsive-16by9 vjs-16-9" >
+                                                <div class="carousel-inner embed-responsive-16by9 vjs-16-9">
                                                     @for (var i = 0; i < slideShowImages.Count; i++)
                                                     {
                                                         @if (countimages == 0)
                                                         {
                                                             <div class="carousel-item active slideshowcarousel">
-                                                                <img src="@slideShowImages[i].MediaURL" class="d-block " style="width:100%; "  alt="...">
+                                                                <img src="@slideShowImages[i].MediaURL" class="d-block " style="width:100%; " alt="...">
                                                             </div>
                                                             countimages++;
                                                         }
@@ -621,12 +588,12 @@
                         <div class="card-header-custom text-white font-20  w-100 rounded-top   "
                              style="background-color: #1f4a79;">
                             <div class="row m-2  ">
-                              
+
                                 <div class="col-7">
                                     <span class="m-2 pt-4 mt-4">
                                         Weekly Schedule
                                     </span>
-                                    
+
                                 </div>
                                 <div class="col-5 ">
                                     <span class="float-right m-2">
@@ -635,8 +602,8 @@
                                     </span>
                                 </div>
                             </div>
-                           
-                           
+
+
                         </div>
                         <div class="card-body bg-blue m-0 p-0">
                             <div class="row m-0">
@@ -1324,13 +1291,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                               
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
 
@@ -1500,12 +1467,25 @@
     </div>
 
 </div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 <script src="~/js/jwplayer.js"></script>
 <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script src="~/theme/js/dashboard.js"></script>
+<script src="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!--Global site tag (gtag.js) - Google Analytics -->
+@*<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VNGNMBZGQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-6VNGNMBZGQ');
+    </script>*@
 <script type="text/javascript">
 
 
