@@ -113,13 +113,13 @@
         }
     }
 
-    .flex-xl-row {
+    . {
         flex-direction: row !important;
     }
 
-    .d-flex {
-        display: flex !important;
-    }
+        .d-flex {
+            display: flex !important;
+        }
 </style>
 <div class="row m-0 mb-3">
     <div class="col-lg-12">
@@ -576,11 +576,730 @@
 
                     </div>
                 </div>
+                @if (Model.Churches.ScheduleShowOnWebSite == false)
+                {
+                    <div class="card m-0 p-0">
+                        <div class="card-header-custom text-white font-20  w-100 rounded-top   "
+                             style="background-color: #1f4a79;">
+                            <div class="row m-2  ">
+
+                                <div class="col-7">
+                                    <span class="m-2  float-left">
+                                        Weekly Schedule
+                                    </span>
+
+                                </div>
+                                <div class="col-5 ">
+                                    <span class="float-right m-2">
+                                        <a class="btn btn-sm  text-white ml-2" style=" background-color: #2d5a89 !important;" href="#performanceOverview" role="button" data-slide="prev"><i class="fas fa-angle-left fa-1x"></i></a>
+                                        <a class="btn btn-sm  text-white " style=" background-color: #2d5a89 !important;" href="#performanceOverview" role="button" data-slide="next"><i class="fas fa-angle-right fa-1x"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="card-body bg-blue m-0 p-0">
+                            <div class="row m-0">
+                                <div class="col-md-12 grid-margin">
+                                    <div class="card bg-blue border-0 position-relative">
+                                        <div class="card-body m-0">
+                                            <div id="performanceOverview" class="carousel slide performance-overview-carousel position-static pt-2" data-interval="false">
+                                                <div class="carousel-inner">
+                                                    <div class="carousel-item active">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">Today</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay0 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay0.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay0)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="carousel-item ">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">  @DateTime.Now.AddDays(1).ToString("dddd")</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.AddDays(1).ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay1 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay1.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay1)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="carousel-item ">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">  @DateTime.Now.AddDays(2).ToString("dddd")</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.AddDays(2).ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table   table-borderless w-100" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay2 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay2.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay2)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="carousel-item">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">  @DateTime.Now.AddDays(3).ToString("dddd")</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.AddDays(3).ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table     w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay3 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay3.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay3)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">  @DateTime.Now.AddDays(4).ToString("dddd")</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.AddDays(4).ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay4 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay4.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay4)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">  @DateTime.Now.AddDays(5).ToString("dddd")</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.AddDays(5).ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay5 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay5.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay5)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="carousel-item ">
+
+                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+
+                                                            <div class="content text-white">
+
+                                                                <div class="row">
+                                                                    <div class="col-7">
+                                                                        <h4 class="font-weight-light ">  @DateTime.Now.AddDays(6).ToString("dddd")</h4>
+                                                                    </div>
+                                                                    <div class="col-5 mt-2">
+
+                                                                        <small>
+                                                                            <span class="float-right">
+                                                                                <i class="fa fa-calendar text-white "></i>
+                                                                                @DateTime.Now.AddDays(6).ToString("dd-MMM-yyyy")
+                                                                            </span>
+                                                                        </small>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                    <tbody>
+                                                                        @if (Model.ScheduleListDay6 != null)
+                                                                        {
+                                                                            @if (Model.ScheduleListDay6.Count() > 0)
+                                                                            {
+                                                                                @foreach (var itm in Model.ScheduleListDay6)
+                                                                                {
+
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                        <td scope="row" class="font-weight-normal text-purple">
+                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
+                                                                                                </span>
+                                                                                            }
+                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>
+                                                                                                    @itm.EventName
+                                                                                                </span>
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
+                                                                                        @if (itm.Record == true)
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                                <i class="fa fa-video text-red"></i>
+                                                                                            </td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td class="font-weight-normal">
+                                                                                            </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                    <td scope="row" class="font-weight-normal text-purple">
+                                                                                        There is currently nothing scheduled for today.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
+                                                                                <td scope="row" class="font-weight-normal text-purple">
+                                                                                    There is currently nothing scheduled for today.
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
             </div>
         </div>
         <div class="row m-0 LaptopScreenSetup pl-xl-0 pl-lg-3 pr-xl-0 pr-lg-3 mb-3 ">
 
-            <div class="col-xl-9 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3 ">
+            <div class="col-xl-9 MobileContent col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3 ">
                 @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
 
@@ -590,7 +1309,7 @@
                             <div class="row m-2  ">
 
                                 <div class="col-7">
-                                    <span class="m-2 pt-4 mt-4">
+                                    <span class="m-2  float-left">
                                         Weekly Schedule
                                     </span>
 
@@ -615,15 +1334,15 @@
                                                     <div class="carousel-item active">
                                                         <div class="row">
                                                             <div class="col-md-4 item border-right">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">Today</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -636,7 +1355,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay0 != null)
                                                                                 {
@@ -689,7 +1408,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -698,7 +1417,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -710,15 +1429,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 item border-right">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">  @DateTime.Now.AddDays(1).ToString("dddd")</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -731,7 +1450,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay1 != null)
                                                                                 {
@@ -784,7 +1503,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -793,7 +1512,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -805,15 +1524,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 item border-right">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">  @DateTime.Now.AddDays(2).ToString("dddd")</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -826,7 +1545,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table   table-borderless w-100" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay2 != null)
                                                                                 {
@@ -879,7 +1598,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -888,7 +1607,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -904,15 +1623,15 @@
                                                     <div class="carousel-item">
                                                         <div class="row">
                                                             <div class="col-md-4 item border-right">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">  @DateTime.Now.AddDays(3).ToString("dddd")</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -925,7 +1644,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table     w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay3 != null)
                                                                                 {
@@ -978,7 +1697,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -987,7 +1706,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -999,15 +1718,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 item border-right">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">  @DateTime.Now.AddDays(4).ToString("dddd")</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -1020,7 +1739,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay4 != null)
                                                                                 {
@@ -1073,7 +1792,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -1082,7 +1801,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -1094,15 +1813,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 item border-right">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">  @DateTime.Now.AddDays(5).ToString("dddd")</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -1115,7 +1834,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay5 != null)
                                                                                 {
@@ -1168,7 +1887,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -1177,7 +1896,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -1193,15 +1912,15 @@
                                                     <div class="carousel-item ">
                                                         <div class="row">
                                                             <div class="col-md-4 item ">
-                                                                <div class="d-flex flex-column flex-xl-row mt-4 mt-md-0 mr-0">
+                                                                <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
 
                                                                     <div class="content text-white">
 
                                                                         <div class="row">
-                                                                            <div class="col-6">
+                                                                            <div class="col-7">
                                                                                 <h4 class="font-weight-light ">  @DateTime.Now.AddDays(6).ToString("dddd")</h4>
                                                                             </div>
-                                                                            <div class="col-6 mt-2">
+                                                                            <div class="col-5 mt-2">
 
                                                                                 <small>
                                                                                     <span class="float-right">
@@ -1214,7 +1933,7 @@
                                                                         </div>
 
 
-                                                                        <table class="table  table-responsive-md table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
+                                                                        <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
                                                                             <tbody>
                                                                                 @if (Model.ScheduleListDay6 != null)
                                                                                 {
@@ -1267,7 +1986,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <tr>
+                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                             <td scope="row" class="font-weight-normal text-purple">
                                                                                                 There is currently nothing scheduled for today.
                                                                                             </td>
@@ -1276,7 +1995,7 @@
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <tr class="text-white font-12">
+                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
                                                                                         <td scope="row" class="font-weight-normal text-purple">
                                                                                             There is currently nothing scheduled for today.
                                                                                         </td>
@@ -1467,6 +2186,9 @@
     </div>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 
