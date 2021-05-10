@@ -685,46 +685,171 @@ namespace MCNMedia_Dev.Controllers
                 MediaChurchDataAccessLayer mediaChurchDataAccess = new MediaChurchDataAccessLayer();
                 NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer();
                 ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
-               
+
                 profileModel.Churches = churchDataAccess.GetChurchDataBySlug(id);
                 TempData["ChurchPasswordToChurchLock"] = profileModel.Churches.Password;
-               if(profileModel.Churches.ChurchId != 0) { 
-                
-                if (profileModel.Churches.Password.Count() > 0)
+                if (profileModel.Churches.ChurchId != 0)
                 {
-                    if (churchPass == "true")
+
+                    if (profileModel.Churches.Password.Count() > 0)
                     {
-                        // Password provided
+                        if (churchPass == "true")
+                        {
+                            //Password provided
+                        }
+                        else
+                        {
+                            TempData["Slug"] = id;
+                            TempData["ChrName"] = profileModel.Churches.ChurchName;
+                            return View("ChurchLock");
+                        }
                     }
-                    else
-                    {
-                        TempData["Slug"] = id;
-                        TempData["ChrName"] = profileModel.Churches.ChurchName;
-                        return View("ChurchLock");
-                    }
-                }
                 }
                 else
                 {
-                    profileModel.Churches.ChurchId=0;
+                    profileModel.Churches.ChurchId = 0;
                     TempData["ErrorMsgBit"] = "404";
                     ViewBag.ErrorMsg = "No church found against your action";
 
                     return RedirectToAction(nameof(Home));
 
                 }
-                // it for paper view Know we dont need it
-                //int subscriberPaid = Convert.ToInt32(TempData["paymentId"]);
-                //Visitor visitor = new Visitor(Request, HttpContext);
-                ////string visitorLocation = CheckVisitorLocation();
-                //int allowToProfile = subDataAccess.ChurchRegionCheck(profileModel.Churches.ChurchId, visitor.CountryName);
-                ////if (allowToProfile == 1 || subscriberPaid > 0)
-                //if (true)
-                //{
-                //HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
                 int churchId = profileModel.Churches.ChurchId;// profileModel.Churches = churchDataAccess.GetChurchData(Convert.ToInt32( churchId));
                 String ip = website1.IP;
-                //_websiteDataAccessLayer.Analytics(churchId, visitor.IpAddress, visitor.CountryName);
+             
+
+                profileModel.mediaList = camDataAccess.GetWebsiteMedia(churchId);
+                profileModel.MediaChurchList = mediaChurchDataAccess.spSlideShowImagesGetByChurch(churchId).ToList();
+                //List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
+                //if (announcementList.Count > 0)
+                //    profileModel.Announcement = announcementList.First<Announcement>();
+                //else
+                //    profileModel.Announcement = new Announcement();
+                //List<Notice> noticeList = noticeDataAccess.GetAllNotices(churchId).ToList();
+                //if (noticeList.Count > 0)
+                //    profileModel.notice = noticeList.First<Notice>();
+                //else
+                //    profileModel.notice = new Notice();
+                //profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
+                //profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
+                //profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
+                //profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
+                //profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(churchId);
+
+               // profileModel.UpcomingSchedule = UpComingSchedulesForChurch(churchId);
+
+            //    profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
+             //   profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
+
+                //profileModel.NowScheduleList = Schedules_WhatsOnNow();
+               // profileModel.churchDonation = churchDonationDataAccessLayes.GetDonationByChurch(churchId);
+                //profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
+                //profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
+                //profileModel.ScheduleListDay2 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(2), System.DateTime.Now.AddDays(2).ToString("dddd"), -1);
+                //profileModel.ScheduleListDay3 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(3), System.DateTime.Now.AddDays(3).ToString("dddd"), -1);
+                //profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
+                //profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
+                //profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
+               
+                //List<Schedule> nextEventSchedule = new List<Schedule>();
+                //foreach (Schedule schedule in profileModel.ScheduleListDay0)
+                //{
+                //    if (Convert.ToDateTime(schedule.EventTime) > DateTime.Now)
+                //    {
+                //        schedule.EventDay = "Today";
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay1.Count() > 0)
+                //{
+                //    foreach (Schedule schedule in profileModel.ScheduleListDay1)
+                //    {
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay2.Count() > 0)
+                //{
+                //    foreach (Schedule schedule in profileModel.ScheduleListDay2)
+                //    {
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay3.Count() > 0)
+                //{
+                //    foreach (Schedule schedule in profileModel.ScheduleListDay3)
+                //    {
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay4.Count() > 0)
+                //{
+                //    foreach (Schedule schedule in profileModel.ScheduleListDay4)
+                //    {
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay5.Count() > 0)
+                //{
+                //    foreach (Schedule schedule in profileModel.ScheduleListDay5)
+                //    {
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //else if (nextEventSchedule.Count == 0 && profileModel.ScheduleListDay6.Count() > 0)
+                //{
+                //    foreach (Schedule schedule in profileModel.ScheduleListDay6)
+                //    {
+                //        nextEventSchedule.Add(schedule);
+                //        profileModel.NextScheduleList = nextEventSchedule;
+                //    }
+                //}
+                //else
+                //{
+                //    profileModel.NextScheduleList = nextEventSchedule;
+                //}
+            http://localhost:56963/Camera
+                Uri uri = Request.GetTypedHeaders().Referer;
+                ViewData["slugForlockPage"] = id;
+
+               // Response.Redirect(originalPath + "/" + id);
+                return View(profileModel);
+
+            }
+            catch (Exception exp)
+            {
+
+                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                return View(profileModel);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ProfileSchedule(int id)
+        {
+            try
+            {
+                string originalPath = new Uri(HttpContext.Request.GetDisplayUrl()).AbsoluteUri;
+                string slug = originalPath.Split('/').Last();
+                Profile profileModel = new Profile();
+                ScheduleDataAccessLayer scheduleDataAccess = new ScheduleDataAccessLayer();
+                AnnouncementDataAccessLayer announcementDataAccessLayer = new AnnouncementDataAccessLayer();
+                NoticeDataAccessLayer noticeDataAccess = new NoticeDataAccessLayer(); int churchId = 0;
+                ChurchNewsLetterDataAccessLayer churchNewsLetterDataAccess = new ChurchNewsLetterDataAccessLayer();
+                ChurchDonationDataAccessLayer churchDonationDataAccessLayer = new ChurchDonationDataAccessLayer();                if (id != 0)
+                {
+                    churchId = id;
+                }
+                else
+                {
+                    Church church = _churchDataAccessLayer.GetChurchDataBySlug(slug);
+                    churchId = church.ChurchId;
+                }
                 List<Announcement> announcementList = announcementDataAccessLayer.GetAnnouncement(churchId).ToList();
                 if (announcementList.Count > 0)
                     profileModel.Announcement = announcementList.First<Announcement>();
@@ -735,20 +860,7 @@ namespace MCNMedia_Dev.Controllers
                     profileModel.notice = noticeList.First<Notice>();
                 else
                     profileModel.notice = new Notice();
-
-                profileModel.mediaList = camDataAccess.GetWebsiteMedia(churchId);
-               // profileModel.CameraList = camDataAccess.GetActiveCameraByChurch(churchId);
-                profileModel.VideoList = mediaChurchDataAccess.GetByMediaType("Video", churchId).ToList();
-                profileModel.SlideshowList = mediaChurchDataAccess.GetByMediaType("SlideShow", churchId).ToList();
-                profileModel.PictureList = mediaChurchDataAccess.GetByMediaType("Picture", churchId).ToList();
                 profileModel.newsletter = churchNewsLetterDataAccess.GetLetestNewsletterByChurch(churchId);
-
-                profileModel.UpcomingSchedule = UpComingSchedulesForChurch(churchId);
-
-                profileModel.RecordingList = recordDataAccess.Recording_GetByChurch(churchId);
-                profileModel.ScheduleList = scheduleDataAccess.GetSearchSchedule(churchId, DateTime.Now, DateTime.Now.ToString("dddd"), -1).ToList<Schedule>();
-
-                //profileModel.NowScheduleList = Schedules_WhatsOnNow();
                 profileModel.churchDonation = churchDonationDataAccessLayes.GetDonationByChurch(churchId);
                 profileModel.ScheduleListDay0 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now, System.DateTime.Now.ToString("dddd"), -1);
                 profileModel.ScheduleListDay1 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(1).ToString("dddd"), -1);
@@ -757,7 +869,7 @@ namespace MCNMedia_Dev.Controllers
                 profileModel.ScheduleListDay4 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(4), System.DateTime.Now.AddDays(4).ToString("dddd"), -1);
                 profileModel.ScheduleListDay5 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(5), System.DateTime.Now.AddDays(5).ToString("dddd"), -1);
                 profileModel.ScheduleListDay6 = scheduleDataAccess.GetSearchSchedule(churchId, System.DateTime.Now.AddDays(6), System.DateTime.Now.AddDays(6).ToString("dddd"), -1);
-                profileModel.MediaChurchList = mediaChurchDataAccess.spSlideShowImagesGetByChurch(churchId).ToList();
+
                 List<Schedule> nextEventSchedule = new List<Schedule>();
                 foreach (Schedule schedule in profileModel.ScheduleListDay0)
                 {
@@ -820,27 +932,21 @@ namespace MCNMedia_Dev.Controllers
                 {
                     profileModel.NextScheduleList = nextEventSchedule;
                 }
-                // http://localhost:56963/Camera
-                Uri uri = Request.GetTypedHeaders().Referer;
-                ViewData["slugForlockPage"] = id;
 
-                //Response.Redirect(originalPath+"/"+id);
-                return View(profileModel);
-                //}
-                //else
-                //{
-                //    HttpContext.Session.SetInt32("chrId", profileModel.Churches.ChurchId);
-                //    ViewBag.ChurchId = profileModel.Churches.ChurchId;
-                //    churchPass = Convert.ToInt32(HttpContext.Session.GetInt32("ChurchPass"));
-                //    return RedirectToAction("Packages", "Subscription");
-                //}
+                if (profileModel.NextScheduleList.Count() > 0)
+                {
+                    profileModel.NextSchedule = profileModel.NextScheduleList.FirstOrDefault();
+                }
+
+
+                return Json(profileModel);
             }
             catch (Exception exp)
             {
 
-                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
-                return View(profileModel);
+                return Json("Error Occured !" + exp.Message);
             }
+            
         }
 
         private string CheckVisitorLocation()

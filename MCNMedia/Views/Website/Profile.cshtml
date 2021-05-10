@@ -173,6 +173,7 @@
 
     <input type="hidden" asp-for="Churches.Slug" id="hfslug" />
     <input type="hidden" value=@ViewData["slugForlockPage"] id="hfslug" />
+    <input type="hidden" value="@Model.Churches.ChurchId" id="hfChurchId" />
     <div class="arialNova bg-white" id="website-topmenu" style="z-index: 3;">
         <div class="row m-0 LaptopScreenSetup   pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
 
@@ -379,30 +380,10 @@
                         </ul>
                     </div>
                 </div>
-                @if (Model.notice != null)
-                {
-                    if (Model.notice.ChurchNoticeId != 0)
-                    {
-                        <div class="text-praaa mt-2 mb-2">
-                            <div class="border bg-white rounded-lg  ">
-                                <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                                     style="background-color: #1f4a79;">
-                                    Notices
-                                </div>
-                                <div class="news-wrap mb-2 p-2">
-
-                                    <div class="font-25 bg-white font-weight-bold ProximaNova">
-                                        @Model.notice.NoticeTitle
-                                    </div>
-                                    <p class="font-16 mb-2">
-                                        @Html.Raw(Model.notice.NoticeName)
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-                    }
-                }
+                <div id="ProfileNotices">
+                
+                </div>
+             
             </div>
 
             <div class="MobileContent col-xl-3 col-lg-3 col-md-12 col-sm-12 ">
@@ -499,51 +480,8 @@
                             Next Scheduled Event
                         </div>
                         <div class="card-body">
-                            <div class=" font-18 text-center">
-                                @if (Model.NextScheduleList != null)
-                                {
-                                    if (Model.NextScheduleList.Count() > 0)
-                                    {
-                                        @foreach (var schedule in Model.NextScheduleList.Take(1))
-                                        {
-                                            @if (schedule.IsRepeated == true && schedule.Record == true)
-                                            {
-                                                <b>
-                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span> <i class="fa fa-video-camera text-danger"></i><br />
-                                                </b><br />
-                                            }
-                                            else if (schedule.IsRepeated == true && schedule.Record == false)
-                                            {
-                                                <b>
-                                                    @schedule.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                </b><br />
-                                            }
-                                            else if (schedule.IsRepeated == false && schedule.Record == true)
-                                            {
-                                                <b>
-                                                    @schedule.EventName <i class="fa fa-video-camera text-danger"></i>
-                                                </b><br />
-                                            }
-                                            else
-                                            {
-                                                <b>
-                                                    @schedule.EventName
-                                                </b><br />
-                                            }
-                                            <p>@schedule.EventDay @schedule.EventTime.ToString("h:mm tt")</p>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <br />
-                                        <p>No Events Scheduled</p>
-                                    }
-                                }
-                                else
-                                {
-                                    <br />
-                                    <p>No Events Scheduled</p>
-                                }
+                            <div class=" font-18 text-center" id="nextScheduleEvent">
+                              
                             </div>
                         </div>
                     </div>
@@ -579,7 +517,7 @@
                 @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
                     <div class="card m-0 p-0">
-                        <div class="card-header-custom text-white font-20  w-100 rounded-top   "
+                        <div class="card-header-custom text-white font-20  w-100 rounded-top "
                              style="background-color: #1f4a79;">
                             <div class="row m-2  ">
 
@@ -630,73 +568,8 @@
 
 
                                                                 <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay0 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay0.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay0)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList0">
+                                                                    
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -727,73 +600,8 @@
 
 
                                                                 <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay1 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay1.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay1)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList1">
+                                                                      
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -824,73 +632,8 @@
 
 
                                                                 <table class="table   table-borderless w-100" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay2 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay2.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay2)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList2">
+                                                                       
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -921,73 +664,8 @@
 
 
                                                                 <table class="table     w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay3 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay3.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay3)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList3">
+                                                                       
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1017,73 +695,8 @@
 
 
                                                                 <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay4 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay4.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay4)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList4">
+                                                                       
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1113,73 +726,8 @@
 
 
                                                                 <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay5 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay5.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay5)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList5">
+                                                                       
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1210,73 +758,8 @@
 
 
                                                                 <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                    <tbody>
-                                                                        @if (Model.ScheduleListDay6 != null)
-                                                                        {
-                                                                            @if (Model.ScheduleListDay6.Count() > 0)
-                                                                            {
-                                                                                @foreach (var itm in Model.ScheduleListDay6)
-                                                                                {
-
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                </span>
-                                                                                            }
-                                                                                            else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <span>
-                                                                                                    @itm.EventName
-                                                                                                </span>
-                                                                                            }
-                                                                                        </td>
-                                                                                        <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                        @if (itm.Record == true)
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                                <i class="fa fa-video text-red"></i>
-                                                                                            </td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td class="font-weight-normal">
-                                                                                            </td>
-                                                                                        }
-                                                                                    </tr>
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                    <td scope="row" class="font-weight-normal text-purple">
-                                                                                        There is currently nothing scheduled for today.
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                    There is currently nothing scheduled for today.
-                                                                                </td>
-                                                                            </tr>
-                                                                        }
+                                                                    <tbody class="ScheduleEventList6">
+                                                                     
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1356,73 +839,8 @@
 
 
                                                                         <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay0 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay0.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay0)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList0">
+                                                                               
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -1451,73 +869,8 @@
 
 
                                                                         <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay1 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay1.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay1)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList1">
+                                                                                
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -1546,73 +899,8 @@
 
 
                                                                         <table class="table   table-borderless w-100" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay2 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay2.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay2)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList2">
+                                                                                
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -1645,73 +933,8 @@
 
 
                                                                         <table class="table     w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay3 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay3.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay3)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList3">
+                                                                                
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -1740,73 +963,8 @@
 
 
                                                                         <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay4 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay4.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay4)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList4">
+                                                                               
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -1835,73 +993,8 @@
 
 
                                                                         <table class="table  w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay5 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay5.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay5)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList5">
+                                                                               
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -1934,73 +1027,8 @@
 
 
                                                                         <table class="table w-100 table-borderless" style="border-collapse: separate; border-spacing: 0 5px; ">
-                                                                            <tbody>
-                                                                                @if (Model.ScheduleListDay6 != null)
-                                                                                {
-                                                                                    @if (Model.ScheduleListDay6.Count() > 0)
-                                                                                    {
-                                                                                        @foreach (var itm in Model.ScheduleListDay6)
-                                                                                        {
-
-                                                                                            <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                                <td scope="row" class="font-weight-normal text-purple">
-                                                                                                    @if (itm.IsRepeated == true && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == true && itm.Record == false)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName <span class="text-pink">(</span>Weekly<span class="text-pink">)</span>
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else if (itm.IsRepeated == false && itm.Record == true)
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <span>
-                                                                                                            @itm.EventName
-                                                                                                        </span>
-                                                                                                    }
-                                                                                                </td>
-                                                                                                <td scope="row" class="font-weight-normal">@itm.EventTime.ToString("h:mm tt")</td>
-                                                                                                @if (itm.Record == true)
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                        <i class="fa fa-video text-red"></i>
-                                                                                                    </td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td class="font-weight-normal">
-                                                                                                    </td>
-                                                                                                }
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                            <td scope="row" class="font-weight-normal text-purple">
-                                                                                                There is currently nothing scheduled for today.
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">
-                                                                                        <td scope="row" class="font-weight-normal text-purple">
-                                                                                            There is currently nothing scheduled for today.
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                }
+                                                                            <tbody class="ScheduleEventList6">
+                                                                               
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -2026,72 +1054,24 @@
 
 
                 }
-                @if (Model.Announcement != null)
-                {
-                    if (Model.Announcement.ChurchAnnouncementId != 0)
-                    {
-                        <div class="text-praaa mt-2 mb-2">
-                            <div class="border bg-white rounded-lg  " style="position: sticky; top:1px;">
-                                <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                                     style="background-color: #1f4a79;">
-                                    Announcements
-                                </div>
-                                <div class="news-wrap mb-2 p-2">
+                <div id="ProfileAnnouncement">
 
-                                    <div class="font-25  bg-white font-weight-bold ProximaNova">
-                                        @Model.Announcement.AnnouncementTitle
-                                    </div>
-                                    <p class="font-16 mb-2">
-                                        @Html.Raw(Model.Announcement.AnnouncementText)
-                                    </p>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    }
-                }
+                </div>
+               
+               
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 ">
-                @if (Model.newsletter != null)
-                {
-                    @if (Model.newsletter.ChurchNewsLetterId != 0)
-                    {
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 "  >
+             
 
-                        <div class="border bg-white rounded-lg  ">
-                            <div class="card-header-custom text-white font-20 text-center w-100 rounded-top   "
-                                 style="background-color: #1f4a79;">
-                                NEWSLETTER
-                            </div>
-                            <div class="news-wrap mb-3 p-4">
-
-                                <h4 class="news-heading font-16 font-weight-bold">@Model.newsletter.NewsLetterTitle</h4>
-                                <p class="font-weight-light mb-2 font-12">
-                                    <a href="@Model.newsletter.NewsLetterUrl" target="_blank">Click Here</a>
-                                </p>
-                                <p class="font-14 mb-0 "></p>
-                                <p class="font-14 mb-0 ">@Model.newsletter.CreatedAt.ToString("dd MMM yyyy")</p>
-                            </div>
+                        <div class="border bg-white rounded-lg" id="ProfileNewsLetter" >
+                        
                         </div>
-                    }
-                }
-                @if (Model.churchDonation != null)
-                {
-                    @if (Model.churchDonation.ShowOnWebsite)
-                    {
-                        <div class="col-sm-12  news pr-0 pl-0 mt-2">
-                            <div class="form-group row news">
-                                <div class="col-sm-12">
-                                    <div class="max-width-100 max-height-100 ">
-                                        <img src="@Model.churchDonation.ImageUrl" class="max-height-100 w-100  rounded-top" style="border-top-left-radius:30px;border-top-right-radius:30px; " alt="Alternate Text" />
-                                        <a href="@Model.churchDonation.WebSiteUrl" target="_blank" class="btn btn-info rounded-bottom w-100" style="border-bottom-left-radius:30px;border-bottom-right-radius:30px; ">Donate Now</a>
-                                    </div>
-
-                                </div>
-                            </div>
+                
+             
+                        <div class="col-sm-12  news pr-0 pl-0 mt-2" id="ProfileChurchDonation">
+                          
                         </div>
-                    }
-                }
+               
             </div>
             <div class="col-1 d-xl-block d-none"></div>
         </div>
@@ -2200,6 +1180,7 @@
 <script src="~/theme/js/dashboard.js"></script>
 <script src="~/theme/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <!--Global site tag (gtag.js) - Google Analytics -->
+<script src="~/js/ProfileSchedule.js"></script>
 @*<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VNGNMBZGQ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -2287,8 +1268,10 @@
 
 
     $(document).ready(function () {
-
-        LoadRecordingList();
+       
+        var ChurchId = $('#hfChurchId').val();
+        ProfileSchedule(ChurchId);
+        
 
         OpenCamera('CameraLiveStream-0');
         OpenVidJs('vid-0');
@@ -2347,10 +1330,12 @@
 
 
     function LoadRecordingList() {
+      
         var EventName = document.getElementById('TxtSearchEventName').value;
         var FromDate = document.getElementById('TxtSearchFromDate').value;
         var ToDate = document.getElementById('TxtSearchToDate').value;
         var Slug = document.getElementById('hfslug').value;
+        
 
         $.ajax({
 
@@ -2387,6 +1372,7 @@
                     html += ' </div>';
 
                 });
+                
                 $('.RecList').html(html);
 
 
@@ -2414,9 +1400,10 @@
         document.getElementById("TxtSearchFromDate").value = FromDatestring;
 
         $("#TxtSearchToDate").val(ToDatestring);
-        OpenCamera('CameraLiveStream-0');
-
         LoadRecordingList();
+        OpenCamera('CameraLiveStream-0');
+       
+        
 
 
     }
