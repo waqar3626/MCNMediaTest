@@ -1,7 +1,7 @@
 ﻿function ProfileSchedule(ChurchId) {
     
     $.ajax({
-        url: "/Website/ProfileSchedule/" + ChurchId,
+        url: "/Website/ProfileDataByJson/" + ChurchId,
         type: "POST",
         contentType: "application/json;charset=UTF-8",
         dataType: "json",

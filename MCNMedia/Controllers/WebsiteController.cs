@@ -830,7 +830,7 @@ namespace MCNMedia_Dev.Controllers
         }
 
         [HttpPost]
-        public JsonResult ProfileSchedule(int id)
+        public JsonResult ProfileDataByJson(int id)
         {
             try
             {
