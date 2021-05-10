@@ -78,10 +78,15 @@ namespace MCNMedia_Dev.Controllers
                 else
                 {
                     EmailHelper em = new EmailHelper();
-                //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
-                em.SendEmail(web.ContactEmail, "mcnmedia9@gmail.com", web.ContactName, web.ContactSubject, web.Message);
-                _websiteDataAccessLayer.AddContactForm(web);
-                ModelState.Clear();
+                    _websiteDataAccessLayer.AddContactForm(web);
+                    ModelState.Clear();
+                    var bodyemail = web.ContactEmail + "" + web.Message;
+                    // From email Address info@mcnmedia.tv hardcoded
+                    // to email ADD tech@mcnmedia.tv 
+                    // from email add captured on the form will cancatenated with body
+                    //em.SendEmail(string fromEmail, string toEmail, string toName, string subject, string body);
+                    em.SendEmail("info@mcnmedia.tv", "tech@mcnmedia.tv", web.ContactName, web.ContactSubject, bodyemail);
+             
                 ViewBag.SuccessMsg = "Email Send Successfully";
                 return View();
                 }

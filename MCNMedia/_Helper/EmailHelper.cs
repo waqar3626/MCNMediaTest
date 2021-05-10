@@ -26,7 +26,7 @@ namespace MCNMedia_Dev._Helper
         {
             EmailMessage email = new EmailMessage();
 
-            email.From.Name = null;
+            email.From.Name = "MCN Media";
             email.From.Email = fromEmail;
 
             email.To.Name = toName;
