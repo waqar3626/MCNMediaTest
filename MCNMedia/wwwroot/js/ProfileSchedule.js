@@ -219,7 +219,10 @@ function ProfileNewsLetter(newsletter) {
             html += '<p class="font-weight-light mb-2 font-12">';
             html += '<a href="' + newsletter.newsLetterUrl + '" target="_blank">Click Here</a>';
             html += '</p><p class="font-14 mb-0 " ></p >';
-            html += '<p class="font-14 mb-0 ">' + newsletter.createdAt + '</p></div>';
+
+            var date = new Date(newsletter.createdAt);
+            var newLetterCreatedAt = date.toLocaleString("en-US", { day: "numeric", month: "short", year: "numeric", });
+            html += '<p class="font-14 mb-0 ">' + newLetterCreatedAt  + '</p></div>';
         }
         else { 
             $('#ProfileNewsLetter').hide();
