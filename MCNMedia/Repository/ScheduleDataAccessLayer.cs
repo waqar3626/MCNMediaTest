@@ -179,7 +179,7 @@ namespace MCNMedia_Dev.Repository
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", -1);
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNowInHour");
-           
+            _dc.CloseAndDispose();
             return ConvertScheduleTableToList(dataTable);
         }
 

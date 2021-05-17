@@ -40,6 +40,7 @@ namespace MCNMedia_Dev.Repository
                 country.PlaceName = dataRow["CountryName"].ToString();
                 countryLst.Add(country);
             }
+            _dc.CloseAndDispose();
             return countryLst;
         }
 

@@ -292,7 +292,6 @@ namespace MCNMedia_Dev.Repository
                 Church church = new Church();
                 church.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 church.ChurchName = dataRow["ChurchName"].ToString();
-
                 church.Address = dataRow["Address"].ToString();
                 church.Town = dataRow["Town"].ToString();
                 church.CountyName = dataRow["CountyName"].ToString();
@@ -303,13 +302,14 @@ namespace MCNMedia_Dev.Repository
                 church.Slug = dataRow["Slug"].ToString();
                 churchList.Add(church);
             }
+            _dc.CloseAndDispose();
             return churchList;
         }
 
         public IEnumerable<Church> GetByClientTypeChurch(int clientTypeId)
         {
             List<Church> churchList = new List<Church>();
-
+            
             _dc.ClearParameters();
             _dc.AddParameter("cTypeId", clientTypeId);
 
