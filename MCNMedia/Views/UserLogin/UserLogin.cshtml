@@ -51,10 +51,11 @@
                     <div class="col-lg-6 login-half-bg d-flex flex-row">
                         <p class="text-white font-weight-medium text-center flex-grow align-self-end"></p>
                     </div>
-                    <div class="col-lg-6 d-flex align-items-center justify-content-center login-half-right-bg">
-                        <div class="signIn_panel">
-                            <div class="auth-form-transparent text-left p-3">
-                                <div style="text-align:center; ">
+                    <div class="col-lg-6 col-sm-12 col-md-12 d-flex align-items-center justify-content-center login-half-right-bg">
+
+                        <div class="row w-100 mx-0">
+                            <div class="col-lg-6 mx-auto">
+                                <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                                     <div class="brand-logo">
                                         <img src="~/theme/images/MCNLogo.png" alt="Logo" />
 
@@ -62,8 +63,7 @@
                                     <h4>Welcome to MCN Media Churches</h4>
                                     <h6 class="font-weight-light">Sign in to continue.</h6>
 
-                                    <form id="commentform" method="post" asp-controller="UserLogin" asp-action="UserLogin" class="cmxform">
-
+                                    <form class="pt-3" method="post" asp-controller="UserLogin" asp-action="UserLogin">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-lg" asp-for="EmailAddress" id="exampleInputEmail1" placeholder="Username" required>
                                         </div>
@@ -85,22 +85,20 @@
                                             <button type="submit" id="BtnLogin" class="btn btn-block  btn-lg font-weight-medium auth-form-btn text-white" style="background-color:#d9356f">SIGN IN</button>
                                         </div>
 
-                                        <div class="my-2 d-flex justify-content-between align-items-center">
+                                        <div class="text-center mt-4 font-weight-light">
                                             <a asp-action="ForgetPassword" asp-controller="UserLogin" class="auth-link text-black">Forget Password</a>
                                             <div class="form-check">
 
                                             </div>
                                             <a href="/" class="auth-link text-black">Go Back To Site</a>
                                         </div>
-
-
                                     </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
 
-                </div>
+                    </div>
             </div>
             <!-- content-wrapper ends -->
         </div>
