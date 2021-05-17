@@ -19,7 +19,7 @@ namespace MCNMedia_Dev.Repository
         public Dashboard GetDashboardInfo()
         {
             Dashboard dashboard = new Dashboard();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spDashboard_CountData");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -54,8 +54,8 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Dashboard> GetDashboardCountry_Churches()
         {
             List<Dashboard> dashboards = new List<Dashboard>();
-           
 
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spDashboard_Country_Churches");
             foreach (DataRow dataRow in dataTable.Rows)

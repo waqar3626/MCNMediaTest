@@ -19,6 +19,7 @@ namespace MCNMedia_Dev.Repository
 
         public void InsertSetUp(SetUp setup)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UserId", setup.UpdatedBy);
             _dc.AddParameter("SetUpSelectServer", setup.SelectServer);
@@ -38,7 +39,7 @@ namespace MCNMedia_Dev.Repository
         public SetUp getSetUp(int id)
         {
             SetUp setup = new SetUp();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChSetUpId", id);
             DataTable dataTable = _dc.ReturnDataTable("spChurchSetup_GetById");

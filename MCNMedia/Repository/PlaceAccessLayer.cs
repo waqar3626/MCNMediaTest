@@ -52,6 +52,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Place> GetISOCountries()
         {
             List<Place> countryLst = new List<Place>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spISOCountry_Get");
 
@@ -73,6 +74,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Place> GetCounties(int countryId)
         {
             List<Place> countyLst = new List<Place>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("cntryId", countryId);
             DataTable dataTable = _dc.ReturnDataTable("spCounties_Get");
@@ -96,6 +98,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Place> GetCountiesByCountryName(string country)
         {
             List<Place> countyLst = new List<Place>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("cntry", country);
             DataTable dataTable = _dc.ReturnDataTable("spCounties_GetByCountryName");

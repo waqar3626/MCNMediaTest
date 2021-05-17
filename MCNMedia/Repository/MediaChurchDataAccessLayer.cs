@@ -28,6 +28,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddMedia(MediaChurch media)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UserId", media.UpdatedBy);
             _dc.AddParameter("MedType", media.MediaType);
@@ -40,6 +41,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddSlideShowImages(int ChurchMediaId, string MediaUrl, int DisplayOrder, int CreatedBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("churchMediaId", ChurchMediaId);
             _dc.AddParameter("mediaURL", MediaUrl);
@@ -51,7 +53,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<MediaChurch> GetByMediaType(string medType, int ChrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrId", ChrId);
             _dc.AddParameter("MedType", medType);
@@ -74,6 +76,7 @@ namespace MCNMedia_Dev.Repository
         public MediaChurch GetMediaById(int mediaId)
         {
             MediaChurch mediaChurch = new MediaChurch();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("mediaId", mediaId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchMedia_GetById");
@@ -91,6 +94,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateMedia(MediaChurch med)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", med.ChurchMediaId);
             _dc.AddParameter("MedTabName", med.TabName);
@@ -103,6 +107,7 @@ namespace MCNMedia_Dev.Repository
 
         public int DeleteMedia(int chMediaId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", chMediaId);
             _dc.AddParameter("UserId", UpdateBy);
@@ -111,6 +116,7 @@ namespace MCNMedia_Dev.Repository
         }
         public int DeleteSlideShowImages(int chMediaId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", chMediaId);
             _dc.AddParameter("UserId", UpdateBy);
@@ -121,6 +127,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<MediaChurch> SlideShowImaeGetAll(int chrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrId", chrId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchSlideshowImage_GetAll");
@@ -139,6 +146,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<MediaChurch> SlideShowImaeGetByMediaId(int chrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("churchMediaId", chrId);
             DataTable dataTable = _dc.ReturnDataTable("spGetSlideShowImagesByMediaId");
@@ -159,6 +167,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<MediaChurch> spSlideShowImagesGetByChurch(int chrId)
         {
             List<MediaChurch> Balobj = new List<MediaChurch>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrId", chrId);
             DataTable dataTable = _dc.ReturnDataTable("spSlideShowImages_GetByChurch");
@@ -178,6 +187,7 @@ namespace MCNMedia_Dev.Repository
         }
         public int DeleteSlideShowSingleImage(int chMediaId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("MediaId", chMediaId);
             _dc.AddParameter("UserId", UpdateBy);
@@ -187,6 +197,7 @@ namespace MCNMedia_Dev.Repository
 
         public bool ChangeSlideShowImageOrder(int ImageId, int chMediaId, int DisplayOrder, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("imgId", ImageId);
             _dc.AddParameter("medChrId", chMediaId);

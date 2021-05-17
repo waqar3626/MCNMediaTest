@@ -18,7 +18,7 @@ namespace MCNMedia_Dev.Repository
         public Dashboard GetDashboardClientInfoCount(int chrid)
         {
             Dashboard dashboard = new Dashboard();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", chrid);
             DataTable dataTable = _dc.ReturnDataTable("spDashboard_CountData");
@@ -80,6 +80,7 @@ namespace MCNMedia_Dev.Repository
         
         public DashBoardClient GetCountClientDashBoard(int chrid)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", chrid);
             _dc.AddParameter("CurrentDay", "2020-11-13");
@@ -103,6 +104,7 @@ namespace MCNMedia_Dev.Repository
         }
         public int GetUserAssignTopChurchId(int UsrId)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("usrId", UsrId);
             int ChurchId = _dc.ReturnInt("spUserAssignChurch_GetTopChurchId");
@@ -112,6 +114,7 @@ namespace MCNMedia_Dev.Repository
 
         private DataTable GetRecordReport(int chrid,DateTime dateTime)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", chrid);
             _dc.AddParameter("CurrentDay", dateTime);

@@ -20,6 +20,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Notice> GetAllNotices(int ChrId)
         {
             List<Notice> listnotice = new List<Notice>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrId", ChrId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchNotice_GetByChurchId");
@@ -40,6 +41,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddNotice(Notice notice)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UserId", notice.UpdatedBy);
             _dc.AddParameter("NotTitle", notice.NoticeTitle);
@@ -52,7 +54,7 @@ namespace MCNMedia_Dev.Repository
         public Notice GetNoticeById(int ChNoticeId)
         {
             Notice notice = new Notice();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChNoticeId", ChNoticeId);
             DataTable dataTable = _dc.ReturnDataTable("spChurchNotice_GetById");
@@ -69,6 +71,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateNotice(Notice not)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("NoticeId", not.ChurchNoticeId);
             _dc.AddParameter("NotTitle", not.NoticeTitle);
@@ -80,6 +83,7 @@ namespace MCNMedia_Dev.Repository
 
         public bool DeleteNotice(int chnoticeId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChNoticeId", chnoticeId);
             _dc.AddParameter("UserId", UpdateBy);

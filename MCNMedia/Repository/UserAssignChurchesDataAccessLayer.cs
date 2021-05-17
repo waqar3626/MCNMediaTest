@@ -18,6 +18,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<UserAssignChurches> GetChurchList()
         {
             List<UserAssignChurches> Balobj = new List<UserAssignChurches>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spChurchList_Get");
 
@@ -33,6 +34,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetUserDDL()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             return _dc.ReturnDataTable("spUser_Get");
 
@@ -40,6 +42,7 @@ namespace MCNMedia_Dev.Repository
 
         public void AddUserChurch(UserAssignChurches uas)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", uas.UserId);
             _dc.AddParameter("ChId", uas.ChurchId);
@@ -50,6 +53,7 @@ namespace MCNMedia_Dev.Repository
         {
 
             List<UserAssignChurches> Balobj = new List<UserAssignChurches>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable =  _dc.ReturnDataTable("spUser_Churches_Get");
 
@@ -67,7 +71,8 @@ namespace MCNMedia_Dev.Repository
     public IEnumerable<UserAssignChurches> GetSingleUserAssignChurches(int UserId)
     {
         List<UserAssignChurches> Balobj = new List<UserAssignChurches>();
-        _dc.ClearParameters();
+            _dc.CloseAndDispose();
+            _dc.ClearParameters();
             _dc.AddParameter("UsrId", UserId);
             DataTable dataTable = _dc.ReturnDataTable("spUser_Churches_GetSingleUser");
 
@@ -86,6 +91,7 @@ namespace MCNMedia_Dev.Repository
 
         public void DeleteUserChurches(int id,int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
             _dc.AddParameter("UpdateBy", UpdateBy);
@@ -95,6 +101,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<UserAssignChurches> GetUserAssignedChurches(int UserId)
         {
             List<UserAssignChurches> Balobj = new List<UserAssignChurches>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", UserId);
             DataTable dataTable = _dc.ReturnDataTable("spUserChurch_Assigned_GetByUserId");

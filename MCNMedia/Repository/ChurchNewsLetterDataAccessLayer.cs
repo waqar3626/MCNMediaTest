@@ -27,6 +27,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddNewsLetter(NewsLetter newsletter)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UserId", newsletter.UpdatedBy);
             _dc.AddParameter("NewsTitle", newsletter.NewsLetterTitle);
@@ -61,7 +62,7 @@ namespace MCNMedia_Dev.Repository
         private IEnumerable<NewsLetter> GetNewsletterFromDatabase(int churchId, int newsletterId)
         {
             List<NewsLetter> newsLetters = new List<NewsLetter>();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrchId", churchId);
             _dc.AddParameter("NewsletterId", newsletterId);
@@ -89,6 +90,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateNewsLetter(NewsLetter newsletter)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChNewsLetterId", newsletter.ChurchNewsLetterId);
             _dc.AddParameter("NewsTitle", newsletter.NewsLetterTitle);
@@ -102,6 +104,7 @@ namespace MCNMedia_Dev.Repository
 
         public bool DeleteNewsLetter(int chNewsLetterId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChNewsLetterId", chNewsLetterId);
             _dc.AddParameter("UserId", UpdateBy);

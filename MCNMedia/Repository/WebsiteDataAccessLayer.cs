@@ -17,6 +17,7 @@ namespace MCNMedia_Dev.Repository
         }
         public void AddContactForm(Website website)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CntName", website.ContactName);
             _dc.AddParameter("CntMail", website.ContactEmail);
@@ -27,6 +28,7 @@ namespace MCNMedia_Dev.Repository
 
         public void Analytics(int ChurchId,String IP,String visitorLocation)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", ChurchId);
             _dc.AddParameter("ip", IP);

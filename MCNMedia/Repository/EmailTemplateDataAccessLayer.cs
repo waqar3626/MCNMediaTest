@@ -21,7 +21,7 @@ namespace MCNMedia_Dev.Repository
         public EmailTemplate GetEmailTemplateId(int MessageId)
         {
             EmailTemplate emailTemplate = new EmailTemplate();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("MsgId", MessageId);
             DataTable dataTable = _dc.ReturnDataTable("spEmailMessage_Get");

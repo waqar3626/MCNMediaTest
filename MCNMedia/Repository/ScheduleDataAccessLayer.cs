@@ -19,6 +19,7 @@ namespace MCNMedia_Dev.Repository
         //To Add new Schedule record
         public int AddSchedule(Schedule schedules)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchEventName", schedules.EventName);
             _dc.AddParameter("SchEventDate", schedules.EventDate);
@@ -37,6 +38,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Schedule> GetSearchSchedule(int ChurchId, DateTime EventDate, string EventDay, int isRecord)
         {
             List<Schedule> Balobj = new List<Schedule>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", ChurchId);
             _dc.AddParameter("SchDate", EventDate.ToString("yyyy-MM-dd"));
@@ -72,7 +74,7 @@ namespace MCNMedia_Dev.Repository
         public Schedule GetScheduleById(int id)
         {
             Schedule schedule = new Schedule();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchId", id);
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_GetById");
@@ -96,6 +98,7 @@ namespace MCNMedia_Dev.Repository
         //To Update the records of a particluar Schedule
         public int UpdateSchedule(Schedule schedule)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchId", schedule.ScheduleId);
             _dc.AddParameter("SchName", schedule.EventName);
@@ -115,6 +118,7 @@ namespace MCNMedia_Dev.Repository
         //To Delete the record on a particular User
         public bool DeleteSchedule(int id, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchId", id);
             _dc.AddParameter("UpdatedBy", UpdateBy);
@@ -124,6 +128,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Schedule> GetScheduleByChurch(int ChurchId)
         {
             List<Schedule> Balobj = new List<Schedule>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chId", ChurchId);
 
@@ -141,6 +146,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Schedule> GetSchedule_Today()
         {
             List<Schedule> Balobj = new List<Schedule>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
 
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today");
@@ -150,6 +156,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Schedule> GetSchedule_WhatsOnNow()
         {
             List<Schedule> Balobj = new List<Schedule>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNow");
             return ConvertScheduleTableToList(dataTable);
@@ -167,6 +174,7 @@ namespace MCNMedia_Dev.Repository
 
         private IEnumerable<Schedule> GetSchedule_UpComing(int churchId)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", churchId);
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_UpComingEvents");
@@ -176,6 +184,7 @@ namespace MCNMedia_Dev.Repository
 
         public IEnumerable<Schedule> GetSchedule_UpComingHour()
         {
+           
             _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", -1);
@@ -215,6 +224,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetScheduleReadyToStart()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_ReadyForStart");
             return dataTable;
@@ -222,6 +232,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetScheduleReadyToStop()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_ReadyForStop");
             return dataTable;
@@ -229,6 +240,7 @@ namespace MCNMedia_Dev.Repository
 
         public void UpdateScheduleStatus(int scheduleId, int scheduleStatus)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchId", scheduleId);
             _dc.AddParameter("SchStatus", scheduleStatus);
@@ -237,6 +249,7 @@ namespace MCNMedia_Dev.Repository
        
         public void InsertScheduleLog(int scheduleId, int scheduleStatus)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchId", scheduleId);
             _dc.AddParameter("SchStatus", scheduleStatus);
@@ -245,6 +258,7 @@ namespace MCNMedia_Dev.Repository
       
         public void UpdateScheduleLog(int scheduleId, int scheduleStatus)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SchId", scheduleId);
             _dc.AddParameter("SchStatus", scheduleStatus);
@@ -253,6 +267,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable Schedule_NotPublished_GetByCamera(int cameraId)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             DataTable dataTable = _dc.ReturnDataTable("spSchedule_NotPublished_GetByCamera");

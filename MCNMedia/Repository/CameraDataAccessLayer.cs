@@ -27,6 +27,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddCamera(Camera camera)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CreatedBy", camera.CreatedBy);
             _dc.AddParameter("CameraName", camera.CameraName);
@@ -122,6 +123,7 @@ namespace MCNMedia_Dev.Repository
 
         public List<Camera> GetCameraByCounty(string countySlug)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CountySlug", countySlug);
             DataTable dataTable = _dc.ReturnDataTable("spCamera_GetByCounty");
@@ -151,6 +153,7 @@ namespace MCNMedia_Dev.Repository
 
         private DataTable GetCamera(int churchId, int cameraId, _Helper.CameraType camType)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrchId", churchId);
             _dc.AddParameter("camId", cameraId);
@@ -195,6 +198,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateCamera(Camera camera)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", camera.CameraId);
             _dc.AddParameter("CamName", camera.CameraName);
@@ -207,6 +211,7 @@ namespace MCNMedia_Dev.Repository
 
         public bool DeleteCamera(int camId)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", camId);
             _dc.AddParameter("UpdatedBy", 1);
@@ -215,6 +220,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateCameraStatus(int cameraId, bool cameraStatus, int UpdatedBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             _dc.AddParameter("cameraStatus", cameraStatus);
@@ -224,6 +230,7 @@ namespace MCNMedia_Dev.Repository
         }
         public int UpdateMobileCameraStatus(int cameraId, bool cameraStatus, int UpdatedBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             _dc.AddParameter("cameraStatus", cameraStatus);
@@ -234,6 +241,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateCameraStreamingStatus(int cameraId, bool isStreaming)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             _dc.AddParameter("isStreaming", isStreaming);
@@ -242,6 +250,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddMobileCamera(string CameraName, int ChurchId, int UserId)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("cameraName", CameraName);
             _dc.AddParameter("churchId", ChurchId);
@@ -288,6 +297,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetWebsiteMediaByChurch(int chruchId)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", chruchId);
             DataTable dataTable = _dc.ReturnDataTable("spMedia_GetByChurch");
@@ -353,6 +363,7 @@ namespace MCNMedia_Dev.Repository
 
         public int WowzaUrl_Old_Add(int cameraId, string serverName, string streamUri, string serIP, string streamName)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             _dc.AddParameter("serverNam", serverName);
@@ -364,6 +375,7 @@ namespace MCNMedia_Dev.Repository
 
         public int WowzaUrl_Required_Add(int cameraId, string serverName, string streamUri, string serIP, string streamName)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("CamId", cameraId);
             _dc.AddParameter("serverNam", serverName);

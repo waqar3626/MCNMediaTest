@@ -26,6 +26,7 @@ namespace MCNMedia_Dev.Repository
         
         public void AddRecording(Recording recording)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("RecordingName", recording.RecordingTitle);
             _dc.AddParameter("RecordingURL", recording.RecordingURl);
@@ -62,6 +63,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Recording> RecordingSearch(DateTime FromDate, DateTime ToDate,string slug, int ChurchId, string RecodingName)
         {
             List<Recording> recordingList = new List<Recording>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("slug", slug);
             _dc.AddParameter("ChrId", ChurchId);
@@ -93,6 +95,7 @@ namespace MCNMedia_Dev.Repository
         private IEnumerable<Recording> Recording_GetFromDatabase(int churchId,int recordId,string recordName)
         {
             List<Recording> recordingList = new List<Recording>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrchId", churchId);
             _dc.AddParameter("recordId", recordId); ;
@@ -109,6 +112,7 @@ namespace MCNMedia_Dev.Repository
         //To Update the records of a particluar Recording
         public void UpdateRecording(Recording recording)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("RecId", recording.RecordingId);
             _dc.AddParameter("RecName", recording.RecordingTitle);
@@ -124,6 +128,7 @@ namespace MCNMedia_Dev.Repository
 
         public void DeleteRecording(int id, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("RecId", id);
             _dc.AddParameter("UpdateBy", UpdateBy);

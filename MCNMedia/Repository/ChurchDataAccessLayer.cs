@@ -32,6 +32,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Church> GetAllChurch(Church chr)
         {
             List<Church> Balobj = new List<Church>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChurchId", chr.ChurchId);
             _dc.AddParameter("ChurchName", chr.ChurchName);
@@ -74,6 +75,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<ClientType> GetClients()
         {
             List<ClientType> Balobj = new List<ClientType>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spClientTypes_Get");
 
@@ -90,6 +92,7 @@ namespace MCNMedia_Dev.Repository
         //To Add new Church record    
         public void AddChurch(Church church)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UserId", church.CreateBy);
             _dc.AddParameter("ChurchName", church.ChurchName);
@@ -117,6 +120,7 @@ namespace MCNMedia_Dev.Repository
         //To Update the records of a particluar Church
         public void UpdateChurch(Church church)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChurchID1", church.ChurchId);
             _dc.AddParameter("UserId", church.UpdateBy);
@@ -142,6 +146,7 @@ namespace MCNMedia_Dev.Repository
 
         public void DeleteChurch(int id, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", id);
             _dc.AddParameter("UserId", UpdateBy);
@@ -152,7 +157,7 @@ namespace MCNMedia_Dev.Repository
         public Church GetChurchData(int id)
         {
             Church church = new Church();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChurchId", id);
             DataTable dataTable = _dc.ReturnDataTable("spChurch_GetById");
@@ -188,7 +193,7 @@ namespace MCNMedia_Dev.Repository
         public Church GetChurchDataBySlug(string chSlug)
         {
             Church church = new Church();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("churchslug", chSlug);
             DataTable dataTable = _dc.ReturnDataTable("spChurch_GetBySlug");
@@ -221,7 +226,7 @@ namespace MCNMedia_Dev.Repository
         public Church GetChurchByUniqueIdentifier(string uniIdentifier)
         {
             Church church = new Church();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("uniqueIdentifierOfChurch", uniIdentifier);
             DataTable dataTable = _dc.ReturnDataTable("spChurch_GetByUniqueIdentifier");
@@ -254,6 +259,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetChurchDDL()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             return _dc.ReturnDataTable("spchurches_Get");
 
@@ -263,6 +269,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetUserAssignChurchDDL(int id)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("usrId", id);
             return _dc.ReturnDataTable("spuserChurches_Get");
@@ -271,6 +278,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetCameraDDL(int id)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chId", id);
             return _dc.ReturnDataTable("spCameraddl_Get");
@@ -279,12 +287,14 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetClientTypeList()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             return _dc.ReturnDataTable("spClientTypes_Get");
         }
 
         public IEnumerable<Church> GetWebsiteChurch()
         {
+            _dc.CloseAndDispose();
             _dc.CloseAndDispose();
             List<Church> churchList = new List<Church>();
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_GetRandom_Churches");
@@ -310,7 +320,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<Church> GetByClientTypeChurch(int clientTypeId)
         {
             List<Church> churchList = new List<Church>();
-            
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("cTypeId", clientTypeId);
 
@@ -357,6 +367,8 @@ namespace MCNMedia_Dev.Repository
         private IEnumerable<AnalyticsModel> GetChurch(int churchId, DateTime FromDate, DateTime ToDate)
         {
             List<AnalyticsModel> analyticsList = new List<AnalyticsModel>();
+            _dc.CloseAndDispose();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrid", churchId);
             _dc.AddParameter("fromdate", FromDate);

@@ -19,6 +19,7 @@ namespace MCNMedia_Dev.Repository
         public List<Server> GetServer()
         {
             List<Server> Balobj = new List<Server>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spServer_Get");
 

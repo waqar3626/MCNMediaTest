@@ -17,6 +17,7 @@ namespace MCNMedia_Dev.Repository
         }
         public int AddOnlinePaymentLog(StripePayment spayment)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SubscriberId", spayment.SubscriberId);
             _dc.AddParameter("OrderId", spayment.OrderId);
@@ -29,6 +30,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateOnlinePaymentLog(StripePayment spayment)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("SubscriberId", spayment.SubscriberId);
             _dc.AddParameter("OrderId", spayment.OrderId);
@@ -40,6 +42,7 @@ namespace MCNMedia_Dev.Repository
 
         public DataTable GetPackagesDDL()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             return _dc.ReturnDataTable("spPackagesddl_Get");
         }

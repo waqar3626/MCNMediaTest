@@ -21,6 +21,7 @@ namespace MCNMedia_Dev.Repository
 
         public int AddAnnouncement(Announcement announcement)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UserId", announcement.CreatedBy);
             _dc.AddParameter("ChurchId", announcement.ChurchId);
@@ -34,7 +35,7 @@ namespace MCNMedia_Dev.Repository
         {
             List<Announcement> Balobj = new List<Announcement>();
 
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("chrId", ChrId);
             DataTable dataTable = _dc.ReturnDataTable("spAnnouncement_GetByChurchId");
@@ -52,6 +53,7 @@ namespace MCNMedia_Dev.Repository
         }
         public bool DeleteAnnouncement(int ChAnnoaId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("AnnouceId", ChAnnoaId);
             _dc.AddParameter("UpdatedBy", UpdateBy);
@@ -61,7 +63,7 @@ namespace MCNMedia_Dev.Repository
         public Announcement GetAnnouncementById(int announcId)
         {
             Announcement announcement = new Announcement();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChurchAnnounceId", announcId);
             DataTable dataTable = _dc.ReturnDataTable("spAnnouncement_ById");
@@ -78,7 +80,7 @@ namespace MCNMedia_Dev.Repository
         public Announcement GetClientAnnouncementById(int chid)
         {
             Announcement announcement = new Announcement();
-
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChrId", chid);
             DataTable dataTable = _dc.ReturnDataTable("spClientAnnouncement_ByChurchId");
@@ -97,6 +99,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateAnnouncement(Announcement announcement)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("ChurchAnnounId", announcement.ChurchAnnouncementId);
             _dc.AddParameter("AnnouncementTitle", announcement.AnnouncementTitle);

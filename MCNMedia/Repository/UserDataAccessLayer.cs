@@ -22,6 +22,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<User> GetAllUser(User usr)
         {
             List<User> Balobj = new List<User>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", -1);
             _dc.AddParameter("FName", usr.FirstName);
@@ -51,6 +52,7 @@ namespace MCNMedia_Dev.Repository
         public IEnumerable<UserRoles> GetRoles()
         {
             List<UserRoles> Balobj = new List<UserRoles>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spRoles_Get");
 
@@ -67,6 +69,7 @@ namespace MCNMedia_Dev.Repository
         //To Add new User record    
         public void AddUser(User user)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("FirstName", user.FirstName);
             _dc.AddParameter("LastName", user.LastName);
@@ -80,6 +83,7 @@ namespace MCNMedia_Dev.Repository
         //To Update the records of a particluar User
         public void UpdateUser(User user)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", user.UserId);
             _dc.AddParameter("FName", user.FirstName);
@@ -95,6 +99,7 @@ namespace MCNMedia_Dev.Repository
         public User GetUserData(int id)
         {
             User user = new User();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
             DataTable dataTable = _dc.ReturnDataTable("spUser_GetbyId");
@@ -107,6 +112,7 @@ namespace MCNMedia_Dev.Repository
 
         public void ResetUserPassword(int UserId, string newPassword)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("usrId", UserId);
             
@@ -117,6 +123,7 @@ namespace MCNMedia_Dev.Repository
         public User GetUserDataByEmail(string email)
         {
             User user = new User();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("emailAddress", email);
             DataTable dataTable = _dc.ReturnDataTable("spUser_GetByEmail");
@@ -130,6 +137,7 @@ namespace MCNMedia_Dev.Repository
         {
             User user = new User();
             Status sts = new Status();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("EmailAdd", usr.EmailAddress);
             _dc.AddParameter("logPassword", usr.LoginPassword);
@@ -162,6 +170,7 @@ namespace MCNMedia_Dev.Repository
         //To Delete the record on a particular User 
         public void DeleteUser(int id, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", id);
             _dc.AddParameter("UpdateBy", UpdateBy);
@@ -170,6 +179,7 @@ namespace MCNMedia_Dev.Repository
 
         public void ChangeUserPassword(int UserId, string Password, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("UsrId", UserId);
             _dc.AddParameter("LoginPass", Password);

@@ -39,6 +39,7 @@ namespace MCNMedia_Dev.Repository
         private List<ChurchDonation> GetDonationFromDatabase(int churchId,int donationId)
         {
             List<ChurchDonation> donations = new List<ChurchDonation>();
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", churchId);
             _dc.AddParameter("Donation_Id", donationId);
@@ -63,6 +64,7 @@ namespace MCNMedia_Dev.Repository
 
         public int UpdateDonation(ChurchDonation donation)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", donation.ChurchId);
             _dc.AddParameter("Image_Url", donation.ImageUrl);
@@ -75,6 +77,7 @@ namespace MCNMedia_Dev.Repository
 
         public bool DeleteDonation(int DonationId, int UpdateBy)
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Donation_Id", DonationId);
             _dc.AddParameter("UserId", UpdateBy);
