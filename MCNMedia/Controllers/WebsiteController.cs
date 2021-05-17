@@ -109,7 +109,7 @@ namespace MCNMedia_Dev.Controllers
                 gm.ChurchList = _churchDataAccessLayer.GetWebsiteChurch().ToList<Church>();
                 gm.LSchedulesInHour = UpComingSchedulesInCommingHour();
                 gm.CountryList = _placeAccessLayer.GetCountries();
-                //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
+               //gm.testinomial = testinomialDataAccess.GetTestinomials().ToList<Testinomial>();
 
                 List<SelectListItem> listCoutryDDL = LoadCountryDDL();
 

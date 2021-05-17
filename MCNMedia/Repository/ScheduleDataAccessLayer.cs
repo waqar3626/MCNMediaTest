@@ -176,10 +176,11 @@ namespace MCNMedia_Dev.Repository
 
         public IEnumerable<Schedule> GetSchedule_UpComingHour()
         {
+            _dc.CloseAndDispose();
             _dc.ClearParameters();
             _dc.AddParameter("Church_Id", -1);
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_Schedule_Today_WhatsOnNowInHour");
-            _dc.CloseAndDispose();
+            
             return ConvertScheduleTableToList(dataTable);
         }
 

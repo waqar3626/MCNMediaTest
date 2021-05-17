@@ -285,6 +285,7 @@ namespace MCNMedia_Dev.Repository
 
         public IEnumerable<Church> GetWebsiteChurch()
         {
+            _dc.CloseAndDispose();
             List<Church> churchList = new List<Church>();
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_GetRandom_Churches");
             foreach (DataRow dataRow in dataTable.Rows)
@@ -302,7 +303,7 @@ namespace MCNMedia_Dev.Repository
                 church.Slug = dataRow["Slug"].ToString();
                 churchList.Add(church);
             }
-            _dc.CloseAndDispose();
+       
             return churchList;
         }
 

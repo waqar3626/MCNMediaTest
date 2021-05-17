@@ -29,6 +29,7 @@ namespace MCNMedia_Dev.Repository
         /// <returns>The list of countries</returns>
         public IEnumerable<Place> GetCountries()
         {
+            _dc.CloseAndDispose();
             List<Place> countryLst = new List<Place>();
             _dc.ClearParameters();
             DataTable dataTable = _dc.ReturnDataTable("spCountries_Get");
@@ -40,7 +41,7 @@ namespace MCNMedia_Dev.Repository
                 country.PlaceName = dataRow["CountryName"].ToString();
                 countryLst.Add(country);
             }
-            _dc.CloseAndDispose();
+           
             return countryLst;
         }
 
