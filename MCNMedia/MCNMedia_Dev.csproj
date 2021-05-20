@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>b9a25048-c9f3-4da8-961f-a6a3990ca975</UserSecretsId>
+    <StartupObject></StartupObject>
+    <UseGlobalApplicationHostFile>true</UseGlobalApplicationHostFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
   <ItemGroup>
     <Compile Remove="Controllers\PreviewController.cs" />
     <Compile Remove="Repository\PreviewChurchesDataAccessLayer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".well-known\pki-validation\2973E2A0AE49DBA7893620D336DD30EB.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +48,8 @@
     <PackageReference Include="Otp.NET" Version="1.2.2" />
     <PackageReference Include="sautinsoft.pdffocus" Version="7.8.1.29" />
     <PackageReference Include="Spire.PDF" Version="7.3.1" />
+    <PackageReference Include="StackifyLib" Version="2.1.10" />
+    <PackageReference Include="StackifyMiddleware" Version="3.0.5.2" />
     <PackageReference Include="Stripe.net" Version="39.28.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0-preview.2.21154.6" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
@@ -52,10 +60,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include=".ebextensions\Stackify\Stackify.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\WebsiteAssets\js\main.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\UploadFile\" />
     <Folder Include="wwwroot\Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Stackify.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
