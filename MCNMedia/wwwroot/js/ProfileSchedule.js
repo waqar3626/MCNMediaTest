@@ -76,9 +76,9 @@ function ScheduleListDay(scheduleListDay) {
     if (scheduleListDay != null) {
 
         if (scheduleListDay.length > 0) {
-
+            
             $.each(scheduleListDay, function (key, item) {
-                html = '';
+                
                 html += '<tr class="text-white font-12 border-bottom" style="background-color: #2d5a89 !important;">';
                 html += '<td scope="row" class="font-weight-normal text-purple">';
                 if (item.isRepeated == true && item.record == true) {
