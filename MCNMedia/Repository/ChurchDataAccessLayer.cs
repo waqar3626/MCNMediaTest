@@ -294,7 +294,7 @@ namespace MCNMedia_Dev.Repository
 
         public IEnumerable<Church> GetWebsiteChurch()
         {
-            _dc.CloseAndDispose();
+            
             _dc.CloseAndDispose();
             List<Church> churchList = new List<Church>();
             DataTable dataTable = _dc.ReturnDataTable("spWebsite_GetRandom_Churches");

@@ -21,6 +21,7 @@ namespace MCNMedia_Dev.Repository
         /// <param name="userId">User ID</param>
         public static void AddActivityLog(Operation operation, Categories category, string message, int churchId, int userId)
         {
+           
             _dc.CloseAndDispose();
             _dc = new AwesomeDal.DatabaseConnect();
             _dc.ClearParameters();

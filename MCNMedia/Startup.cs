@@ -29,7 +29,7 @@ namespace MCNMedia_Dev
         public static int Progress { get; set; }
 
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
+      
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -88,8 +88,8 @@ namespace MCNMedia_Dev
 
             services.Configure<KestrelServerOptions>(options =>
             {
-                options.Limits.MaxConcurrentConnections = 99999;
-                options.Limits.MaxConcurrentUpgradedConnections = 99999;
+                options.Limits.MaxConcurrentConnections = 999999;
+                options.Limits.MaxConcurrentUpgradedConnections = 999999;
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -132,6 +132,7 @@ namespace MCNMedia_Dev
         {
             if (env.IsDevelopment())
             {
+                app.UseMiddleware<StackifyMiddleware.RequestTracerMiddleware>();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -158,7 +159,9 @@ namespace MCNMedia_Dev
             app.UseStaticFiles();
             app.UseAuthorization();
             app.UseCors(MyAllowSpecificOrigins);
-            
+           
+
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -220,6 +223,10 @@ namespace MCNMedia_Dev
                 endpoints.MapControllerRoute(
                     name: "Profile",
                     pattern: "Camera/{id?}",
+                    defaults: new { controller = "Website", Action = "Profile" });
+            endpoints.MapControllerRoute(
+                    name: "Profile",
+                    pattern: "Cameras/{id?}",
                     defaults: new { controller = "Website", Action = "Profile" });
             //Admin
         }
