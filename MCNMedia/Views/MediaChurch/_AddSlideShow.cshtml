@@ -79,7 +79,7 @@
      
         if (input == 0 && slideshowTabName == '') {
             $('#my-awesome-dropzone').attr('class', 'form-control border-danger');
-            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+            ss += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
             $('#slideshowTabName').attr('class', 'form-control border-danger');
             ss += '<label >Please provide a valid Tab Name </label>';
 
@@ -90,7 +90,7 @@
         }
         else if (input == 0 && slideshowTabName != '') {
             $('#my-awesome-dropzone').attr('class', 'form-control border-danger');
-            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+            ss += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
 
 
             $('#alertLabel33').html(ss);

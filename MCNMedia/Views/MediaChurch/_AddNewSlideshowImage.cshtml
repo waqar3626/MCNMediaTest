@@ -78,8 +78,8 @@
 
         if (input == '') {
 
-            s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label><br/>';
-
+            s += '<label >' + "Only " + '<b>' + fileExtension.join(', ') +'</b>' + " formats are allowed " + '</label><br/>';
+            
 
             $('#alertLabelSlideShow').html(s);
             $('#alertDivSlideShow').show();

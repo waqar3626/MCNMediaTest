@@ -91,7 +91,7 @@
             }
             if (input == '' && VidTabName == '') {
                 $('#VidFile').attr('class', 'form-control border-danger');
-                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label><br/>';
+                ss += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
                 $('#AddMedVidTabName').attr('class', 'form-control border-danger');
                 ss += '<label >Please provide a valid Tab Name </label>';
 
@@ -102,7 +102,7 @@
             }
             else if (input == '' && VidTabName != '') {
                 $('#VidFile').attr('class', 'form-control border-danger');
-                ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+                ss += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
 
 
                 $('#alertLabel11').html(ss);

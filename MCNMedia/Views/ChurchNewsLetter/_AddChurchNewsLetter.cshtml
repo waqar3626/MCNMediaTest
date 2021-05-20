@@ -82,7 +82,7 @@
         }
         if (input == '' && newsletterTitle == '') {
             $('#newsletter_Url').attr('class', 'form-control border-danger');
-            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+            ss += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
             $('#newsletterTitle').attr('class', 'form-control border-danger');
             ss += '<br/><label >Please provide a valid NewsLetter Title </label>';
 
@@ -93,7 +93,7 @@
         }
         else if (input == '' && newsletterTitle != '') {
             $('#newsletter_Url').attr('class', 'form-control border-danger');
-            ss += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label>';
+            ss += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
 
 
             $('#alertLabel9999').html(ss);

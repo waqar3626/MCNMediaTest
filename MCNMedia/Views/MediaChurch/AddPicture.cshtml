@@ -80,7 +80,7 @@
 
         }
         if (input == '' && pictureTabName == '' ) {
-            s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label><br/>';
+            s += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
 
             
             $('#picTabName').attr('class', 'form-control border-danger');
@@ -105,7 +105,7 @@
         }
         else if (pictureTabName != '' && input == '') {
             $('#picTabName').attr('class', 'form-control border-success');
-            s += '<label >' + "Only formats are allowed : " + fileExtension.join(', ') + '</label><br/>';
+            s += '<label >' + "Only " + '<b>' + fileExtension.join(', ') + '</b>' + " formats are allowed " + '</label><br/>';
 
 
             $('#alertLabel').html(s);
