@@ -1,7 +1,7 @@
 {
-  {
-    "ApiKey": "2Bw6Js9Uf0Ts6Lw2Jm8Jb9En1Mc0Dy1Qy1Hd2Rn" ,
-    "AppName": "McnMedia",
-    "Environment": "Production"
-  }
+
+  "ApiKey": "2Bw6Js9Uf0Ts6Lw2Jm8Jb9En1Mc0Dy1Qy1Hd2Rn",
+  "AppName": "McnMedia",
+  "Environment": "Production",
+   "CaptureAllExceptions": true
 }

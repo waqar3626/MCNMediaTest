@@ -416,9 +416,13 @@
         /// </summary>
         public void CloseAndDispose()
         {
-            ClearParameters();
-            _mySqlConnection.Close();
-            _mySqlConnection.Dispose();
+            var Dbstate = _mySqlConnection.State.ToString();
+            if (Dbstate == "Open") {
+                ClearParameters();
+                _mySqlConnection.Close();
+                _mySqlConnection.Dispose();
+            }
+           
         }
 
         /// <summary>
@@ -796,7 +800,7 @@
             
                 if (MaliciousTagsFound)
                     return null;
-
+              
                 _mySqlConnection.Open();
 
                 _mySqlCommand.CommandText = storedProcedureName;

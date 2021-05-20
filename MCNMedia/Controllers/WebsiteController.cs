@@ -99,6 +99,10 @@ namespace MCNMedia_Dev.Controllers
                 return View();
             }
         }
+        private  void AddLogsToLog4Net(string response)
+        {
+            log.DebugFormat("Wowza - Response - IsSuccess: {0}", response);
+        }
         public IActionResult Home()
         {
             try
@@ -125,7 +129,7 @@ namespace MCNMedia_Dev.Controllers
             catch (Exception exp)
             {
 
-                ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
+                ViewBag.ErrorMsg = "Error Occuhomeerreds! " + exp.Message;
                 return View(gm);
             }
         }
@@ -165,7 +169,7 @@ namespace MCNMedia_Dev.Controllers
             }
             catch (Exception exp)
             {
-
+                AddLogsToLog4Net(exp.Message);
                 ViewBag.ErrorMsg = "Error Occurreds! " + exp.Message;
                 return View(gmSch);
             }
