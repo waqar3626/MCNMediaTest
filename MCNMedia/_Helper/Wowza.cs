@@ -58,9 +58,10 @@ namespace MCNMedia_Dev._Helper
             if (res)
             {
                 scheduleDataAccess.UpdateScheduleStatus(scheduleId: scheduleId, scheduleStatus: 2);
+                scheduleDataAccess.UpdateScheduleLog(scheduleId: scheduleId, scheduleStatus: 2);
                 string logMessage = $"Recording (ScheduleId: {scheduleId}) stopped for camera (CameraID: {cameraId}) on {DateTime.Now}";
                 ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Stopped, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
-                scheduleDataAccess.UpdateScheduleLog(scheduleId: scheduleId, scheduleStatus: 2);
+                
             }
             return res;
         }
@@ -111,9 +112,10 @@ namespace MCNMedia_Dev._Helper
             if (res)
             {
                 scheduleDataAccess.UpdateScheduleStatus(scheduleId: scheduleId, scheduleStatus: 1);
+                scheduleDataAccess.InsertScheduleLog(scheduleId: scheduleId, scheduleStatus: 1);
                 string logMessage = $"Recording (ScheduleId: {scheduleId}) started for camera (CameraID: {cameraId}) on {DateTime.Now}";
                 ActivityLogDataAccessLayer.AddActivityLog(Operation.Recording_Started, Categories.Schedule, message: logMessage, churchId: churchId, userId: -1);
-                scheduleDataAccess.InsertScheduleLog(scheduleId: scheduleId, scheduleStatus: 1);
+                
             }
             return res;
         }
