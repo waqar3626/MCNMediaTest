@@ -114,17 +114,17 @@ namespace MCNMedia_Dev
                                              .AllowAnyMethod();
                                   });
             });
-            services
-                .AddCronJob<CronJobEveryFiveMinute>(c =>
-                {
-                    c.TimeZoneInfo = TimeZoneInfo.Local;
-                    c.CronExpression = @"*/5 * * * *";
-                })
-                .AddCronJob<CronJobEveryFiveMinuteSyncCameras>(c =>
-                {
-                    c.TimeZoneInfo = TimeZoneInfo.Local;
-                    c.CronExpression = @"*/5 * * * *";
-                });
+            //services
+            //    .AddCronJob<CronJobEveryFiveMinute>(c =>
+            //    {
+            //        c.TimeZoneInfo = TimeZoneInfo.Local;
+            //        c.CronExpression = @"*/5 * * * *";
+            //    })
+            //    .AddCronJob<CronJobEveryFiveMinuteSyncCameras>(c =>
+            //    {
+            //        c.TimeZoneInfo = TimeZoneInfo.Local;
+            //        c.CronExpression = @"*/5 * * * *";
+            //    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
