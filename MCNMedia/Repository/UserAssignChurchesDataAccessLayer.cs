@@ -112,6 +112,7 @@ namespace MCNMedia_Dev.Repository
                 userAssignChurches.UserId = UserId;
                 userAssignChurches.ChurchId = Convert.ToInt32(dataRow["ChurchId"]);
                 userAssignChurches.ChurchName = dataRow["ChurchName"].ToString();
+                userAssignChurches.Town = dataRow["Town"].ToString();
                 userAssignChurches.Assigned = Convert.ToBoolean(dataRow["Assigned"]);
                 Balobj.Add(userAssignChurches);
             }
