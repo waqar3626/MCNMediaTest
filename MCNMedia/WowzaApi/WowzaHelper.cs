@@ -185,7 +185,7 @@ namespace MCNMedia_Dev.WowzaApi
                 }
                 else
                 {
-                    streamName = $"definst_{cameraId}";
+                    streamName = $"{cam.CameraUrl}";
                 }
                 string uri = GetApplicationUrl(cameraId);
                 uri = UpdateUriBasedOnServer($"{uri}/instances/#instance#/incomingstreams/{streamName}.stream", uniqueIdentifier);

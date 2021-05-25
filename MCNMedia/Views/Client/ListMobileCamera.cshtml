@@ -4,10 +4,7 @@
 }
 
 <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
-<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
-<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
-<script src="~/theme/js/modal-demo.js"></script>
+
 
 <style>
     .toggle.ios, .toggle-on.ios, .toggle-off.ios {
@@ -50,8 +47,8 @@
 {
     <div class="row m-0 m-3">
         <div class="col-lg-12">
-            <div class="alert alert-success" >
-               Camera Added Successfully
+            <div class="alert alert-success">
+                Camera Added Successfully
             </div>
 
         </div>
@@ -62,52 +59,52 @@
     var data2 = data.Split('_');
     var Application = "live/_" + data2[0] + "_";
     var StreamKey = Model.Cameras.CameraUrl + ".stream";
-<div class="row m-3">
+    <div class="row m-3">
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class=" card-body">
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <h4>
-                            Your Mobile Streaming Details
-                        </h4>
-                    </div>
-                    <div class="col-md-12  border-bottom p-3" style="border-color:lightgray">
-                        <span class="font-weight-bolder  float-right font-12">
-                            This information can be optained again by visiting your camera section.
-                        </span>
-                    </div>
-                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+        <div class="col-md-12">
+            <div class="card">
+                <div class=" card-body">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <h4>
+                                Your Mobile Streaming Details
+                            </h4>
+                        </div>
+                        <div class="col-md-12  border-bottom p-3" style="border-color:lightgray">
+                            <span class="font-weight-bolder  float-right font-12">
+                                This information can be optained again by visiting your camera section.
+                            </span>
+                        </div>
+                        <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                        Please download this <a href="~/Files/mcnmobilestreaming.pdf" target="_blank" download="mcnmobilestreaming.pdf" class="text-info">PDF Tutorial </a>on how to set up your phone.
+                            Please download this <a href="~/Files/mcnmobilestreaming.pdf" target="_blank" download="mcnmobilestreaming.pdf" class="text-info">PDF Tutorial </a>on how to set up your phone.
 
-                    </div>
-                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+                        </div>
+                        <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                        <strong>Host:</strong> Stream.mcnmedia.tv
+                            <strong>Host:</strong> Stream.mcnmedia.tv
 
-                    </div>
-                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+                        </div>
+                        <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                        <strong>Port:</strong> 1935
+                            <strong>Port:</strong> 1935
 
-                    </div>
-                    <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
+                        </div>
+                        <div class="col-md-12  border-bottom p-4" style="border-color:lightgray">
 
-                        <strong>Application:</strong>@Application
+                            <strong>Application:</strong>@Application
 
-                    </div>
-                    <div class="col-md-12  p-4">
+                        </div>
+                        <div class="col-md-12  p-4">
 
-                        <strong>Stream Key:</strong>@StreamKey
+                            <strong>Stream Key:</strong>@StreamKey
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 }
 <div class="card">
 
@@ -152,11 +149,11 @@
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="row pt-3">
-                                            <div class="col-sm-6   text-wrap border-bottom border-right text-center"  >
+                                            <div class="col-sm-6   text-wrap border-bottom border-right text-center">
                                                 <label> Camera Name     |</label>
                                                 <i style="color: #1f4a79"></i>&nbsp; @items.CameraName
                                             </div>
-                                            <div class="col-sm-6   text-wrap border-bottom" >
+                                            <div class="col-sm-6   text-wrap border-bottom">
                                                 <label> Application     |</label>
                                                 <i style="color: #1f4a79"></i>&nbsp; @Application
                                             </div>
@@ -225,6 +222,10 @@
         @Html.Partial("~/Views/Client/_StreamtoFacebook.cshtml")
     </div>
 </div>
+<script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+<script src="~/theme/js/modal-demo.js"></script>
 <script src="~/theme/vendors/jquery-contextmenu/jquery.contextMenu.min.js"></script>
 <script src="~/theme/js/CheckCode.js"></script>
 <script type="text/javascript">
@@ -236,8 +237,8 @@
     }
 
     function DeleteCamera(camId) {
-       
-       
+
+
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this file!",
@@ -292,9 +293,9 @@
                         //        $('#addMobileCameraListSuccessMessage').fadeTo(4000, 500).slideUp(500, function () {
                         //            $("#addMobileCameraListSuccessMessage").slideUp(500);
                         //        });
-                                
+
                         //        $('#addMobileCameraListSuccessMessage').attr('hidden');
-                                
+
                         //        window.location.reload();
 
 
@@ -382,7 +383,7 @@
 
                 }
             },
-            error: function (errormessage) { 
+            error: function (errormessage) {
             }
         });
     }
