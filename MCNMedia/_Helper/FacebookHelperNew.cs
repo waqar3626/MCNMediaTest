@@ -39,9 +39,9 @@ namespace MCNMedia_Dev._Helper
                 }
                 else
                 {
-                    string cameraUrl = cam.CameraUrl.Replace("definst_", "");
+                    
 
-                    facebookParameter.camera_id = cameraUrl;
+                    facebookParameter.camera_id = cam.CameraId.ToString();
                 }
                 
                 facebookParameter.client_name = "definst";
