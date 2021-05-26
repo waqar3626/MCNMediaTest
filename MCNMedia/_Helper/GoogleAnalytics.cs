@@ -138,7 +138,8 @@ namespace MCNMedia_Dev._Helper
 
         public List<GoogleAnalyticsProperty> GoogleAnalytics_GetAll(DateTime dateTime)
         {
-            Google.Apis.Analytics.v3.Data.GaData data = GoogleAnalytics_Get(dateTime, "ga:year,ga:month,ga:day,ga:country");
+            //Google.Apis.Analytics.v3.Data.GaData data = GoogleAnalytics_Get(dateTime, "ga:year,ga:month,ga:day,ga:country");
+            Google.Apis.Analytics.v3.Data.GaData data = GoogleAnalytics_Get(dateTime, "ga:userType,ga:month,ga:day,ga:country");
             List<GoogleAnalyticsProperty> googleAnalyticsProperties = new List<GoogleAnalyticsProperty>();
             if (data.Rows != null)
             {
@@ -189,7 +190,8 @@ namespace MCNMedia_Dev._Helper
                "ga:" + websiteCode,
                dateTime.ToString("yyyy-MM-dd"),
                dateTime.ToString("yyyy-MM-dd"),
-               "ga:pageviews");
+               "ga:users");
+               //"ga:pageviews");
         }
 
     }
