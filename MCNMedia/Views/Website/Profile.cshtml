@@ -70,46 +70,11 @@
         }
 
         .LaptopScreenSetup {
-            margin: 3rem !important;
+            margin: 1rem !important;
         }
 
         .ProfileHeadbar {
-            margin-left: 3rem !important;
-        }
-    }
-
-    @@media only screen and (min-width: 800px) and (max-width: 1400px) {
-
-        .maxWidthTitle {
-            max-width: 25ch;
-        }
-    }
-
-    @@media only screen and (min-width: 1401px) and (max-width: 1501px) {
-
-        .maxWidthTitle {
-            max-width: 27ch;
-        }
-    }
-
-    @@media only screen and (min-width: 1501px) and (max-width: 1600px) {
-
-        .maxWidthTitle {
-            max-width: 28ch;
-        }
-    }
-
-    @@media only screen and (min-width: 1601px) {
-
-        .maxWidthTitle {
-            max-width: 35ch;
-        }
-    }
-
-    @@media only screen and (min-width: 200px) and (max-width: 450px) {
-
-        .maxMobileScreenWidth {
-            max-width: 25ch
+            margin-left: 1rem !important;
         }
     }
 
@@ -124,7 +89,7 @@
     }
    
 </style>
-<div class="row m-0 mb-3">
+<div class="row m-0 ">
     <div class="col-lg-12">
         <div class="alert alert-danger" id="DownloadRecordingErrorMessage" hidden>
 
@@ -133,7 +98,7 @@
     </div>
 
 </div>
-<div class="row m-0 mb-3">
+<div class="row m-0 ">
     <div class="col-lg-12">
         <div class="alert alert-success" id="DownloadRecordingSuccessMessage" hidden>
 
@@ -146,7 +111,7 @@
 
 
 <div class="content-wrapper" style="overflow-x:hidden !important">
-    <div class="row m-2">
+    <div class="row m-0">
         <div class="col-lg-12">
             <div class="alert alert-danger" id="alertProfile" hidden>
 
@@ -157,7 +122,7 @@
     </div>
 
     <!-- banner slider start -->
-    <div class="bg-blue pt-2 pb-3 mb-4 text-white font-36">
+    <div class="bg-blue pt-2 pb-3 mb-1 text-white font-36">
 
         <div class="row m-0  ProfileHeadbar pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3">
 
@@ -181,7 +146,7 @@
         <div class="row m-0 LaptopScreenSetup   pl-xl-0 pl-lg-3  pr-xl-0 pr-lg-3" style="background-color: 1c4776;">
 
 
-            <div class="col-xl-9 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3">
+            <div class="col-xl-9 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-1">
                 <div class="card" id="top-card">
                     <div class="tab-content" id="pills-tabContent">
                         @{
@@ -406,7 +371,7 @@
                         <div class="card-body p-0 m-0">
 
 
-                            <table>
+                            <table class="w-100">
                                 <tr class="m-0 pt-2 bg-light-gray">
                                     <td class="p-2"> <i class="fas fa-home font-25 mr-3"></i></td>
                                     <td class="ow text-left">@Model.Churches.ChurchName, @Model.Churches.Town</td>
@@ -458,7 +423,7 @@
             </div>
 
         </div>
-        <div class="row ChurchInfoCard">
+        <div class="row ChurchInfoCard ">
 
             <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 ">
                 <div class="card m-3 p-0">
@@ -486,10 +451,10 @@
                 </div>
                 @if (Model.Churches.ScheduleShowOnWebSite == false)
                 {
-                    <div class="card m-0 p-0">
+                    <div class="card m-3 p-0">
                         <div class="card-header-custom text-white font-20  w-100 rounded-top "
                              style="background-color: #1f4a79;">
-                            <div class="row m-2  ">
+                            <div class="row m-0  ">
 
                                 <div class="col-7">
                                     <span class="m-2  float-left">
@@ -511,16 +476,16 @@
                             <div class="row m-0">
                                 <div class="col-md-12 grid-margin">
                                     <div class="card bg-blue border-0 position-relative">
-                                        <div class="card-body m-0">
+                                        <div class="card-body m-0 p-0">
                                             <div id="performanceOverview-1" class="carousel slide performance-overview-carousel position-static pt-2" data-interval="false">
                                                 <div class="carousel-inner">
                                                     <div class="carousel-item active">
 
-                                                        <div class="d-flex flex-column  mt-4 mt-md-0 mr-0">
+                                                        <div class="d-flex flex-column m-0  mt-4 mt-md-0 mr-0">
 
                                                             <div class="content text-white">
 
-                                                                <div class="row">
+                                                                <div class="row m-0">
                                                                     <div class="col-7">
                                                                         <h4 class="font-weight-light ">Today</h4>
                                                                     </div>
@@ -1030,10 +995,10 @@
                
                
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 "  >
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12  "  >
              
-
-                        <div class="border bg-white rounded-lg" id="ProfileNewsLetter" >
+                
+                        <div class="border  bg-white rounded-lg" id="ProfileNewsLetter" >
                         
                         </div>
                 
