@@ -117,6 +117,11 @@
  
         overflow-x: hidden; /* Hide horizontal scrollbar */
     }
+    .ow {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
    
 </style>
 <div class="row m-0 mb-3">
@@ -396,70 +401,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-top-img p-0 font-14 mt-3 ">
-                    <div class="card">
-                        <div class="card-body p-2">
-                            <p class="icon-top-s">
-
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <div class="float-left">
-                                            <i class="fas fa-home font-25 "></i>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-10  ">
-                                        <div class="float-left text-left maxWidthTitle " style=" text-align:left">
-                                            @Model.Churches.ChurchName, @Model.Churches.Town
-
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="col-top-img p-0 m-0 font-14 mt-3 ">
+                    <div class="card mt-0">
+                        <div class="card-body p-0 m-0">
 
 
-
-                            </p>
-                            <p class="icon-top-s">
-
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <div class="float-left">
-                                            <i class="fas fa-envelope font-25 "></i>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-10 ">
-                                        <div class="float-left text-left maxWidthTitle" style="text-align:left">
-                                            @Model.Churches.EmailAddress
-
-                                        </div>
-                                    </div>
-                                </div>
+                            <table>
+                                <tr class="m-0 pt-2 bg-light-gray">
+                                    <td class="p-2"> <i class="fas fa-home font-25 mr-3"></i></td>
+                                    <td class="ow text-left">@Model.Churches.ChurchName, @Model.Churches.Town</td>
+                                </tr>
+                                <tr class="m-0 pt-2">
+                                    <td class="p-2"> <i class="fas fa-phone font-25 mr-3"></i></td>
+                                    <td class="ow text-left">  @Model.Churches.Phone</td>
+                                </tr>
+                                <tr class="m-0 pt-2 bg-light-gray">
+                                    <td class="p-2"> <i class="fas fa-envelope font-25 mr-3"></i></td>
+                                    <td class="ow text-left">  @Model.Churches.EmailAddress</td>
+                                </tr>
+                                <tr class="m-0 pt-2">
+                                    <td class="p-2"><i class="fas fa-globe font-25 mr-3 "></i></td>
+                                    <td class="ow text-left">  @Model.Churches.Website</td>
+                                </tr>
+                            </table>
 
 
 
-                            </p>
-                            <p class="icon-top-s">
 
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <div class="float-left">
-                                            <i class="fas fa-globe font-25 "></i>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-10 ">
-                                        <div class="float-left text-left wordbreak maxWidthTitle" style=" text-align:left">
-
-                                            @Model.Churches.Website
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                            </p>
                         </div>
                     </div>
 
@@ -492,21 +460,25 @@
         </div>
         <div class="row ChurchInfoCard">
 
-            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 pr-sm-3">
-                <div class="card m-3">
-                    <div class="card-body">
+            <div class="col-xl-8 col-lg-9  col-md-12 pl-lg-0 pr-md-3 pr-sm-0 col-sm-12 ">
+                <div class="card m-3 p-0">
+                    <div class="card-body m-0 p-0">
                         <table>
-                            <tr class="m-2 pt-2">
+                            <tr class="m-0 pt-2 bg-light-gray">
                                 <td class="p-2"> <i class="fas fa-home font-25 mr-3"></i></td>
-                                <td class="maxMobileScreenWidth text-left">@Model.Churches.ChurchName, @Model.Churches.Town</td>
+                                <td class="ow text-left">@Model.Churches.ChurchName, @Model.Churches.Town</td>
                             </tr>
-                            <tr class="m-2 pt-2">
+                            <tr class="m-0 pt-2">
+                                <td class="p-2"> <i class="fas fa-phone font-25 mr-3"></i></td>
+                                <td class="ow text-left">  @Model.Churches.Phone</td>
+                            </tr>
+                            <tr class="m-0 pt-2 bg-light-gray">
                                 <td class="p-2"> <i class="fas fa-envelope font-25 mr-3"></i></td>
-                                <td class="maxMobileScreenWidth text-left">  @Model.Churches.EmailAddress</td>
+                                <td class="ow text-left">  @Model.Churches.EmailAddress</td>
                             </tr>
-                            <tr class="m-2 pt-2">
+                            <tr class="m-0 pt-2">
                                 <td class="p-2"><i class="fas fa-globe font-25 mr-3 "></i></td>
-                                <td class="maxMobileScreenWidth text-left">  @Model.Churches.Website</td>
+                                <td class="ow text-left">  @Model.Churches.Website</td>
                             </tr>
                         </table>
 
