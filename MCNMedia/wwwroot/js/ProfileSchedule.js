@@ -47,7 +47,7 @@ function NextScheduleEvent(nextScheduleEvent) {
         
         var Time = eventTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
         
-        html += '<p>' + nextScheduleEvent.eventDay + '  ' + Time + '</p>';
+        html += '<p class="text-capitalize">' + nextScheduleEvent.eventDay + '  ' + Time + '</p>';
 
         
 
