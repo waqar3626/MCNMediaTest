@@ -152,7 +152,14 @@ namespace MCNMedia_Dev._Helper
             List<Camera> cameraList = camDataAccess.GetAllCameras();
             foreach (Camera cam in cameraList)
             {
-                SyncCameraWithWowza(cam);
+               bool cameraStatus= SyncCameraWithWowza(cam);
+
+                if (cameraStatus == false)
+                {
+                    FacebookDataAccessLayer facebookDataAccessLayer = new FacebookDataAccessLayer();
+                    facebookDataAccessLayer.FacebookCameraStreamingDelete(cam.ChurchId, cam.CameraId);
+                }
+                
             }
         }
 

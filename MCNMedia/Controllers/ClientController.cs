@@ -288,19 +288,41 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public JsonResult LiveStreamToFacebook(string jsonData, string CamId,string stream_key)
         {
-            int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
-            int CameraId = Convert.ToInt32(CamId);
-            WowzaApi.WowzaHelper wowza = new WowzaApi.WowzaHelper();
-            if (wowza.CheckCameraBeforeStreaming(Church_Id, CameraId))
+            try
             {
-                FacebookHelperNew facebookHelper = new FacebookHelperNew();
-                return Json(facebookHelper.FacebookLiveStream(CameraId, stream_key,Church_Id));
+                int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
+                int UserId = (int)HttpContext.Session.GetInt32("UserId");
+                int CameraId = Convert.ToInt32(CamId);
+                WowzaApi.WowzaHelper wowza = new WowzaApi.WowzaHelper();
+                if (wowza.CheckCameraBeforeStreaming(Church_Id, CameraId))
+                {
+                    FacebookHelperNew facebookHelper = new FacebookHelperNew();
+                    bool facebookStatus = facebookHelper.FacebookLiveStream(CameraId, stream_key, Church_Id);
+
+                    if (facebookStatus == true)
+                    {
+                        FacebookDataAccessLayer facebookDataAccessLayer = new FacebookDataAccessLayer();
+                        facebookDataAccessLayer.FacebookCameraStreamingAdd(Church_Id, CameraId, stream_key, UserId);
+                        return Json(true);
+                    }
+                    else
+                    {
+                        return Json(false);
+                    }
+
+                }
+                else
+                {
+                    return Json("stream not avalible on wowza server");
+                    
+                }
             }
-            else
+            catch (Exception exp)
             {
-                
-                return Json(false);
+
+                return Json(exp.Message);
             }
+           
             
         }
 
@@ -308,10 +330,49 @@ namespace MCNMedia_Dev.Controllers
         [HttpPost]
         public JsonResult StopLiveStreamToFacebook(string jsonData,int camId)
         {
-            FacebookHelperNew facebookHelper = new FacebookHelperNew();
-        int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
-        int CameraId = camId;
-            return Json(facebookHelper.StopFacebookLiveStreaming(CameraId, Church_Id));
+            try
+            {
+                FacebookHelperNew facebookHelper = new FacebookHelperNew();
+                int Church_Id = (int)HttpContext.Session.GetInt32("ChurchId");
+                int CameraId = camId;
+                bool faceBookStatus = facebookHelper.StopFacebookLiveStreaming(CameraId, Church_Id);
+                if (faceBookStatus == true)
+                {
+                    FacebookDataAccessLayer facebookDataAccessLayer = new FacebookDataAccessLayer();
+                    facebookDataAccessLayer.FacebookCameraStreamingDelete(Church_Id, CameraId);
+
+                    return Json(true);
+                }
+                else
+                {
+                    return Json(false);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(exp.Message);
+            }
+           
+
+
+        }
+
+
+        [HttpGet]
+        public JsonResult GetCameraStreamDetail(int cameraId)
+        {
+            try
+            {
+                FacebookDataAccessLayer facebookDataAccessLayer = new FacebookDataAccessLayer();
+                FbStreaming fbStreaming = facebookDataAccessLayer.FacebookStreamingGetByCameraId(cameraId);
+                return Json(fbStreaming);
+            }
+            catch (Exception exp)
+            {
+                return Json(exp.Message);
+            }
+            
+            
         }
 
         public void StreamtoFacebook()

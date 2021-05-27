@@ -48,6 +48,7 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
     getPagesList();
     getCamInfo();
     getUserInfo();
+    
     $('#stopStreaming').css('display', 'none');
 
     $('#streamsettings').show();
@@ -125,7 +126,7 @@ function getPagesList() {
     let uid = sessionStorage.getItem('uid');
     //  alert(uac);
     FB.api(
-        // '/' + uid + '/accounts',
+        // '/' + uid + '/accounts',F
         '/me/accounts',
         'GET',
         { "fields": "name,access_token", "access_token": "" + uac + "" },
@@ -565,6 +566,7 @@ function getCamInfo() {
             // alert(errormessage.responseText);
         }
     });
+    
 }
 //#endregion
 

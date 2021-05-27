@@ -65,7 +65,7 @@
                 </div>
                 <div class="row col-sm-12 col-lg-4 col-md-6 pb-3 ">
                     <label class="form-label">Camera</label>
-                    <select class="form-control-sm custom-select" name="camera_list" id="camera_list" required>
+                    <select class="form-control-sm custom-select" name="camera_list" id="camera_list" onchange="DoPostBack();" required>
                         <option id="me" data-camtype="--Select--" dastreamsettingsta-clientname="--Select--" value="" disabled >
                             --Select--
                         </option>
@@ -95,6 +95,8 @@
 </div>
 
 <script>
+
+   
    var AppId = '@ViewBag.FacebookAppKey';
     function saveUserInfo11() {
         var userid = 1;
@@ -124,6 +126,36 @@
 
         });
     }
+
+    function DoPostBack() {
+        var cameraId = document.getElementById('camera_list').value;
+
+        $.ajax({
+            url: "/Client/GetCameraStreamDetail",
+            type: "GET",
+            data: { cameraId: cameraId },
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (result) {
+                if (result.cameraId > 0) {
+                    $('#startStreaming').hide();
+                    $('#stopStreaming').show();
+
+                }
+                else {
+                    $('#startStreaming').show();
+                    $('#stopStreaming').hide();
+                }
+            },
+            error: function (errormessage) {
+               
+            }
+        });
+    }
+
+    window.onload = function () {
+        setTimeout(DoPostBack, 2000)
+    };
 </script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="2k6IFbG5"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
